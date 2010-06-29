@@ -1,0 +1,7 @@
+Para colocar a Federação Educa Brasil em execução é necessário o seguinte cenário:
+
+Sistema operacional Linux. O manual de instalação foi feito se baseando na distribuição OpenSuse, mas qualquer outra distribuição que suporte os softwares necessários pode ser utilizada.
+Softwares necessários:
+ - MySQL versão 
+ - Tomcat versão 6 ou superior
+ - OpenLdap versão 2 com os seguintes pacotes: OpenLDAP2 (OpenLDAP server) e OpenLDAP2-back-meta (OpenLDAP Meta back-end)

@@ -1,0 +1,1 @@
+Para desenvolver os códigos foi utilizado o IDE Netbeans que no momento está na versão 6.7.1.

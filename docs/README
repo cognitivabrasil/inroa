@@ -1,0 +1,10 @@
+FEB - Feredação de Repositórios Educa Brasil
+
+A Federação de Repositórios Educa Brasil, FEB, tem como objetivo disponibilizar em apenas um local informações sobre objetos de diversos repositórios. Com isso, qualquer pessoa tem acesso as informações de todos os repositórios em apenas um local. Porém, o FEB armazena apenas metadados e apontadores para os objetos que estão armazenados em seus servidores de origem, sendo assim, a política de acesso aos objetos fica a critério de cada repositório.
+
+Os metadados coletados dos repositórios de origem, são armazenados em uma estrutura LDAP local, e as consultas realizadas na federação são realizadas nesta estrutura.
+
+O protótipo FEB foi desenvolvido em java e utilizando jsp para ferramentas web, rodando em um servidor tomcat6.
+A cada modificação realizada nos códigos fonte, um novo arquivo .war (Web ARchive file) deve ser gerado, e submetido ao tomcat6 para substituir a versão antiga. A equipe do GT-FEB utiliza o IDE Netbeans para desenvolver e empacotar o código, ou seja, criar o arquivo 'war', mas o arquivo pode ser criado de outra maneira, como por exemplo com a ferramenta JAR. Para gerar este arquivo no netbeans, o procedimento é o seguinte: clique com o botão direito em cima do nome do projeto, e na sequencia em "Limpar e Contruir".
+
+Para executar o projeto, o empacotamento dos códigos deve ser realizado, criação do arquivo 'war', e então inserido dentro da pasta "webapps" do tomcat. Após colocar o arquivo, o tomcat deve ser reiniciado. Com isso, o sistema estará executando.
