@@ -8,3 +8,33 @@ O protótipo FEB foi desenvolvido em java e utilizando jsp para ferramentas web, 
 A cada modificação realizada nos códigos fonte, um novo arquivo .war (Web ARchive file) deve ser gerado, e submetido ao tomcat6 para substituir a versão antiga. A equipe do GT-FEB utiliza o IDE Netbeans para desenvolver e empacotar o código, ou seja, criar o arquivo 'war', mas o arquivo pode ser criado de outra maneira, como por exemplo com a ferramenta JAR. Para gerar este arquivo no netbeans, o procedimento é o seguinte: clique com o botão direito em cima do nome do projeto, e na sequencia em "Limpar e Contruir".
 
 Para executar o projeto, o empacotamento dos códigos deve ser realizado, criação do arquivo 'war', e então inserido dentro da pasta "webapps" do tomcat. Após colocar o arquivo, o tomcat deve ser reiniciado. Com isso, o sistema estará executando.
+
+---------------------
+
+OAICAT
+
+Descrição:
+Utiliza-se um API do OAICat para que repositórios se comuniquem por OAI-PMH com a Confederação FEB.
+Fonte: http://ariadne.cs.kuleuven.be/lomi/index.php/Setting_Up_OAI-PMH
+
+    Software necessários
+
+    - Java SDK 1.5.0 : download do site da Sun
+    - Jakarta Tomcat 5.5.25 : apenas extrair o arquivo em um diretório
+    - Apache Ant : apenas extrair o arquivo em um diretório
+    - Código fonte do Oaicat: oaicat_5.0.zip
+    - Eclipse: para editar o código do oaicat_5.0.zip
+
+    Compilando o código
+
+    1) Em um propmt de comando/terminal, vá para o diretório do oaicat_5.0 (onde se encontra o arquivo build.xml) e digite "ant" (sem as aspas, pois se trata de um comando do Apache Ant).
+
+    2) Um arquivo chamado oaitarget.war será criado no diretório /oaicat_5.0/dist/ . Copie este arquivo para o diretório "webapps" do Tomcat.
+
+    3) Reiniciar o Tomcat. A pasta "oaitarget" será criada no diretório "webapps".
+
+    4) Testar se o webservice está rodando, invocando o verbo "Identify".
+    Se o Tomcat está rodando na máquina local e a porta padrão é 8080 então a url para realizar esta tarefa é:
+    http://localhost:8080/oaitarget/OAIHandler?verb=Identify
+
+    Se estiver funcionando, uma página em XML será recebida com as informações do repositório.

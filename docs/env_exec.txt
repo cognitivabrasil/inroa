@@ -5,3 +5,12 @@ Softwares necessários:
  - MySQL versão 
  - Tomcat versão 6 ou superior
  - OpenLdap versão 2 com os seguintes pacotes: OpenLDAP2 (OpenLDAP server) e OpenLDAP2-back-meta (OpenLDAP Meta back-end)
+
+ 
+ Softwares necessários para a utilização do OAICat em um repositório que não possua oai-pmh:
+ 
+- Java SDK 1.5.0 : download do site da Sun
+- Jakarta Tomcat 5.5.25 : apenas extrair o arquivo em um diretório
+- Apache Ant : apenas extrair o arquivo em um diretório
+- Código fonte do Oaicat: oaicat_5.0.zip
+- Eclipse: para editar o código do oaicat_5.0.zip
