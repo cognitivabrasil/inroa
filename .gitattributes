@@ -213,3 +213,11 @@ src/java/robo/util/Informacoes.java -text
 src/java/robo/util/package.html -text
 src/login/Usuario.java -text
 src/login/package.html -text
+src/mysql/AtualizaBase.java -text
+src/mysql/AtualizacaoRepositorio.java -text
+src/mysql/Conectar.java -text
+src/mysql/Configuracao.java -text
+src/mysql/ConsultaNomeFederacao.java -text
+src/mysql/Excluir.java -text
+src/mysql/package.html -text
+src/mysql/teste.java -text
