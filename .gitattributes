@@ -211,3 +211,5 @@ src/java/robo/main/package.html -text
 src/java/robo/main/testeXML.java -text
 src/java/robo/util/Informacoes.java -text
 src/java/robo/util/package.html -text
+src/login/Usuario.java -text
+src/login/package.html -text
