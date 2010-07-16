@@ -149,6 +149,15 @@ docs/javadoc/robo/util/package-use.html -text
 docs/javadoc/serialized-form.html -text
 docs/javadoc/stylesheet.css -text
 docs/release_notes.txt -text
+src/ferramentaBusca/Busca.java -text
+src/ferramentaBusca/IndexadorBusca.java -text
+src/ferramentaBusca/indexador/Documento.java -text
+src/ferramentaBusca/indexador/Indexador.java -text
+src/ferramentaBusca/indexador/StopWordTAD.java -text
+src/ferramentaBusca/indexador/package.html -text
+src/ferramentaBusca/package.html -text
+src/ferramentaBusca/recuperador/Recuperador.java -text
+src/ferramentaBusca/recuperador/package.html -text
 src/java/ferramentaBusca/Busca.java -text
 src/java/ferramentaBusca/IndexadorBusca.java -text
 src/java/ferramentaBusca/indexador/Documento.java -text
