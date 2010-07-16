@@ -221,3 +221,9 @@ src/mysql/ConsultaNomeFederacao.java -text
 src/mysql/Excluir.java -text
 src/mysql/package.html -text
 src/mysql/teste.java -text
+src/operacoesLdap/Consultar.java -text
+src/operacoesLdap/Editar.java -text
+src/operacoesLdap/Inserir.java -text
+src/operacoesLdap/ReiniciarServico.java -text
+src/operacoesLdap/Remover.java -text
+src/operacoesLdap/package.html -text
