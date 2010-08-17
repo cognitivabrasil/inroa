@@ -7,6 +7,7 @@ import java.sql.*;
  * @author Marcos
  */
 public class AtualizaBase {
+    String teste;
     Configuracao conf = new Configuracao();
     String baseDeDados = conf.getBase();
     String usuario = conf.getUsuario();
