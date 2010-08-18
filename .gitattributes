@@ -276,6 +276,7 @@ src/feb/dist/feb.war -text
 src/feb/lib/API_JLDAP/ldap.jar -text
 src/feb/lib/API_JLDAP/utilities.jar -text
 src/feb/lib/Busca.jar -text
+src/feb/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar -text
 src/feb/lib/com/jsptags/navigation/pager/COPYRIGHT -text
 src/feb/lib/com/jsptags/navigation/pager/FirstTag.class -text
 src/feb/lib/com/jsptags/navigation/pager/IndexTag.class -text
@@ -306,10 +307,17 @@ src/feb/lib/com/jsptags/navigation/pager/parser/TagExportParserConstants.class -
 src/feb/lib/com/jsptags/navigation/pager/parser/TagExportParserTokenManager.class -text
 src/feb/lib/com/jsptags/navigation/pager/parser/Token.class -text
 src/feb/lib/com/jsptags/navigation/pager/parser/TokenMgrError.class -text
+src/feb/lib/junit/junit-3.8.2-api.zip -text
+src/feb/lib/junit/junit-3.8.2.jar -text
+src/feb/lib/junit_4/junit-4.5-api.zip -text
+src/feb/lib/junit_4/junit-4.5-src.jar -text
+src/feb/lib/junit_4/junit-4.5.jar -text
 src/feb/lib/mysql-connector-java-5.1.8-bin.jar -text
+src/feb/lib/nblibraries.properties -text
 src/feb/lib/pager-src.jar -text
 src/feb/lib/pager-taglib.jar -text
 src/feb/lib/ptstemmer.jar -text
+src/feb/lib/servlet-api-2.4.jar -text
 src/feb/lib/simmetrics_jar_v1_6_2_d07_02_07.jar -text
 src/feb/lib/xalan.jar -text
 src/feb/nbproject/ant-deploy.xml -text
