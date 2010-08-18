@@ -330,6 +330,7 @@ src/feb/nbproject/project.xml -text
 src/feb/src/conf/MANIFEST.MF -text
 src/feb/src/java/ferramentaBusca/Busca.java -text
 src/feb/src/java/ferramentaBusca/IndexadorBusca.java -text
+src/feb/src/java/ferramentaBusca/NewClass.java -text
 src/feb/src/java/ferramentaBusca/indexador/Documento.java -text
 src/feb/src/java/ferramentaBusca/indexador/Indexador.java -text
 src/feb/src/java/ferramentaBusca/indexador/StopWordTAD.java -text
