@@ -321,13 +321,6 @@ src/feb/lib/ptstemmer.jar -text
 src/feb/lib/servlet-api-2.4.jar -text
 src/feb/lib/simmetrics_jar_v1_6_2_d07_02_07.jar -text
 src/feb/lib/xalan.jar -text
-src/feb/nbproject/ant-deploy.xml -text
-src/feb/nbproject/build-impl.xml -text
-src/feb/nbproject/genfiles.properties -text
-src/feb/nbproject/private/private.properties -text
-src/feb/nbproject/private/private.xml -text
-src/feb/nbproject/project.properties -text
-src/feb/nbproject/project.xml -text
 src/feb/src/conf/MANIFEST.MF -text
 src/feb/src/java/ferramentaBusca/Busca.java -text
 src/feb/src/java/ferramentaBusca/IndexadorBusca.java -text
