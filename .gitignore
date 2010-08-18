@@ -1,3 +1,5 @@
 src/build
 src/dist
-src/feb/nbproject[!!-~]project.properties[!!-~]project.xml
+src/feb/nbproject
+src/feb/project.properties
+src/feb/project.xml
