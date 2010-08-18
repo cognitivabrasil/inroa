@@ -277,6 +277,7 @@ src/feb/lib/API_JLDAP/ldap.jar -text
 src/feb/lib/API_JLDAP/utilities.jar -text
 src/feb/lib/Busca.jar -text
 src/feb/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar -text
+src/feb/lib/Pears.jar -text svneol=unset#application/octet-stream
 src/feb/lib/com/jsptags/navigation/pager/COPYRIGHT -text
 src/feb/lib/com/jsptags/navigation/pager/FirstTag.class -text
 src/feb/lib/com/jsptags/navigation/pager/IndexTag.class -text
