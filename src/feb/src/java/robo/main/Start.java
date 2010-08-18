@@ -8,6 +8,10 @@ package robo.main;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
+
+//teste
+
+
 /**
  * Servlet que será executana na inicialização do tomcat, para iniciar o timer que chama o robô
  * @author Marcos Nunes
