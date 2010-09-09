@@ -35,6 +35,8 @@
                 int idPadrao = 0;
                 int linha = 1;
                 String yesnocolor = "";
+                String atributoComplementar="";
+                String valorComplementar="";
                 try {
                     String tipoMap = request.getParameter("tipmap");
                     String padrao = request.getParameter("padrao");
@@ -86,13 +88,17 @@
             
                 <%
 
+                    atributoComplementar="";
+                    valorComplementar="";
                     if (idComplementar > 0) { //se tiver mapeamento complementar
+
                         String sql = "SELECT a.atributo as destino, m.valor " + "FROM mapeamentoComposto m, atributos a " + "WHERE m.id_origem=a.id " + "AND m.id=" + idComplementar + ";";
                         ResultSet rs;
                         Statement stm2 = con.createStatement();
                         rs = stm2.executeQuery(sql);
-
-                        rs.next();
+                        rs.next();//procura a próxima ocorrencia
+                        valorComplementar = rs.getString("valor");
+                        atributoComplementar = rs.getString("destino");
                         out.print("<BR>" + rs.getString("destino") + "=" + rs.getString("valor")); //adiciona o mapeamento complementar
                         stm2.close();
                         rs.close();
@@ -100,11 +106,22 @@
 
                     }
                     else
-                        out.println("<td class=\""+yesnocolor+"\">&nbsp;Não</td>");
+                        out.println("<td class=\""+yesnocolor+"\">&nbsp;-</td>");
                 %>
                 <td class="<%=yesnocolor%>">Editar</td>
             </tr>
-            <% 
+            <%
+            if(!atributoComplementar.isEmpty() && !valorComplementar.isEmpty()){
+                %>
+                <tr class='center'>
+                    <td class="<%=yesnocolor%>"><%=atributoComplementar%></td>
+                    <td class="<%=yesnocolor%>"><%=valorComplementar%></td>
+                    <td class="<%=yesnocolor%>"></td>
+                    <td class="<%=yesnocolor%>"></td>
+                </tr>
+            <%
+                
+            }
              linha++;
                       }
 
