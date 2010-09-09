@@ -15,8 +15,55 @@
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js">
+            //necessario para usar o ajax
+        </script>
+        <script type="text/javascript">
+
+            /**
+             * Função utilizada pelo mapeamento dinamico com ajax.
+             * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
+             */
+            function salvar(idResultado, orig)
+            {
+                //var nome = document.getElementById('nome').value; //Note que as variáveis são resgatadas pela função getElementById.
+                
+
+                var exibeResultado = document.getElementById(idResultado);
+                var padrao = <%=request.getParameter("padrao")%>;
+                var ajax = openAjax(); // Inicia o Ajax.
+                //ajax.open("GET", "respostaAjax.jsp?nome=" + nome, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+                ajax.open("GET", "respostaAjax.jsp?tipo=combo&padrao="+padrao+"&origem="+orig, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+                ajax.onreadystatechange = function()
+                {
+                    if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+                    {
+                        exibeResultado.innerHTML = "Aguarde...";
+                    }
+                    if(ajax.readyState == 4) // Quando estiver tudo pronto.
+                    {
+                        if(ajax.status == 200)
+                        {
+                            var resultado = ajax.responseText;
+                            exibeResultado.innerHTML = resultado;
+                        }
+                        else
+                        {
+                            exibeResultado.innerHTML = "Erro nas funções do Ajax";
+                        }
+                    }
+                }
+                ajax.send(null); // submete
+                //document.getElementById("nome").value= "";//limpa os campos
+                //document.getElementById("nome").setFocus=true;
+
+            }
+
+        </script>
     </head>
     <body>
+
+
         <div id="page">
             <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de mapeamentos cadastrados</div>
             <table class='mapeamentos-table' cellpadding=5%>
@@ -24,7 +71,7 @@
             <tr style="background-color: #AEC9E3">
                 <th width="30%">Origem</th>
 
-                <th width="30%">Destino</th>
+                <th width="30%">Destino (OBAA)</th>
                 <th width="10%">Complementar</th>
                 <th width="30%">&nbsp;</th>
 
@@ -64,7 +111,7 @@
                 rs1.next();
                 String nomePadrao = rs1.getString("nome");
                 //rs1.close();
-                out.print("<div class=\"subtitulo\">" + nomePadrao + " / <b>OBAA</b></div>");
+                out.print("<div class=\"subtitulo\">" + nomePadrao + " / <b>OBAA - COLOCAR NOME DO MAPEAMENTO</b></div>");
                 
                 ResultSet rs2 = stm.executeQuery(sqlMap);
                 //pega o proximo resultado retornado pela consulta sql
@@ -82,7 +129,9 @@
             
             <tr class='center'>
                 <td class="<%=yesnocolor%>">&nbsp;<%=origem%></td>
-                <td class="<%=yesnocolor%>">&nbsp;<%=destino%></td>
+                <td class="<%=yesnocolor%>">
+                    <div id='<%="result"+linha%>'>&nbsp;<%=destino%></div>
+                </td>
                 
             
             
@@ -99,7 +148,7 @@
                         rs.next();//procura a próxima ocorrencia
                         valorComplementar = rs.getString("valor");
                         atributoComplementar = rs.getString("destino");
-                        out.print("<BR>" + rs.getString("destino") + "=" + rs.getString("valor")); //adiciona o mapeamento complementar
+                        
                         stm2.close();
                         rs.close();
                         out.println("<td class=\""+yesnocolor+"\">&nbsp;Sim</td>");
@@ -108,7 +157,9 @@
                     else
                         out.println("<td class=\""+yesnocolor+"\">&nbsp;-</td>");
                 %>
-                <td class="<%=yesnocolor%>">Editar</td>
+                <td class="<%=yesnocolor%>">
+                    <input type="button" size="30" name="gravar" id="gravar" value="Editar" onclick="salvar('<%="result"+linha%>', '<%=origem%>')">
+                </td>
             </tr>
             <%
             if(!atributoComplementar.isEmpty() && !valorComplementar.isEmpty()){

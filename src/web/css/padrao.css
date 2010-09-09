@@ -404,6 +404,10 @@ td{vertical-align:top;}
 }
 .mapeamentos-table th{
     color: white;
+    font-weight:bold;
+    font-size:105%;
+    
+
 }
 .mapeamentos-table td{
     vertical-align: middle;

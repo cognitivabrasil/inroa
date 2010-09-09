@@ -114,7 +114,7 @@ function maskIP(e,obj){
 */
 function insereInputValue(id, texto)
 {
- document.getElementById(id).value =texto;
+    document.getElementById(id).value =texto;
 }
 
 /**
@@ -124,5 +124,29 @@ function insereInputValue(id, texto)
 */
 function insereValorDiv(id, texto)
 {
- document.getElementById(id).innerHTML =texto;
+    document.getElementById(id).innerHTML =texto;
 }
+
+            /**
+ * Função que inicia o Ajax
+*/
+function openAjax() {
+
+    var ajax;
+
+    try{
+        ajax = new XMLHttpRequest(); // XMLHttpRequest para Firefox, Safari, dentre outros.
+    }catch(ee){
+        try{
+            ajax = new ActiveXObject("Msxml2.XMLHTTP"); // Para o Internet Explorer
+        }catch(e){
+            try{
+                ajax = new ActiveXObject("Microsoft.XMLHTTP"); // Para o Internet Explorer
+            }catch(E){
+                ajax = false;
+            }
+        }
+    }
+    return ajax;
+}
+

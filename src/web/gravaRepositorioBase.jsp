@@ -160,9 +160,9 @@
                                 out.print("<script type='text/javascript'>fechaRecarrega();</script>");
                             } else {
                                 stm.executeUpdate("delete from repositorios where id=" +key);
-                                out.print("<script type='text/javascript'>alert('Erro ao inserir as informações na base de bados! Ocorreu erro ao adiocionar nodo no LDAP!');</script>");
+                                out.print("<script type='text/javascript'>alert('Erro ao inserir as informações na base de bados! Ocorreu erro ao adicionar nodo no LDAP!');</script>");
                                 out.print("<script type='text/javascript'>history.go(-1);</script>");
-                                out.print("<BR><p class='textoErro'>Erro ao inserir as informa&ccedil;&otilde;es na base de bados! Ocorreu erro ao adiocionar nodo no LDAP!");
+                                out.print("<BR><p class='textoErro'>Erro ao inserir as informa&ccedil;&otilde;es na base de bados! Ocorreu erro ao adicionar nodo no LDAP!");
                             }
 
                         } else {
