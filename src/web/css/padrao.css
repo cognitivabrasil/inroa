@@ -394,6 +394,21 @@ td{vertical-align:top;}
 .repositorios-table td{
     vertical-align: middle;
 }
+.mapeamentos-table
+{
+    width: 100%;
+    padding: 2px;
+    border: 0px solid #AEC9E3;
+    margin-top:3%;
+
+}
+.mapeamentos-table th{
+    color: white;
+}
+.mapeamentos-table td{
+    vertical-align: middle;
+    text-align:center;
+}
 .price-yes
 {
     text-align: center;
