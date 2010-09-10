@@ -20,11 +20,26 @@
         </script>
         <script type="text/javascript">
 
+            function cancelar(idResultado, destino)
+            {
+                processo(idResultado, destino, "cancelar","")
+            }
+
+            function exibeSelect(idResultado, destino)
+            {
+                processo(idResultado, destino, "comboBox", "")
+            }
+
+            function salvarBase(idResultado, destino)
+            {
+                var novo = document.getElementById("atributos");
+                processo(idResultado, destino, "salvar", novo)
+            }
             /**
              * Função utilizada pelo mapeamento dinamico com ajax.
              * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
              */
-            function salvar(idResultado, orig)
+            function processo(idResultado, destino, acao, novoValor)
             {
                 //var nome = document.getElementById('nome').value; //Note que as variáveis são resgatadas pela função getElementById.
                 
@@ -33,7 +48,7 @@
                 var padrao = <%=request.getParameter("padrao")%>;
                 var ajax = openAjax(); // Inicia o Ajax.
                 //ajax.open("GET", "respostaAjax.jsp?nome=" + nome, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
-                ajax.open("GET", "respostaAjax.jsp?tipo=combo&padrao="+padrao+"&origem="+orig, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+                ajax.open("GET", "respostaAjax.jsp?tipo="+acao+"&padrao="+padrao+"&destino="+destino+"&idResultado="+idResultado+"&novo="+novoValor, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
                 ajax.onreadystatechange = function()
                 {
                     if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
@@ -102,7 +117,7 @@
                     }
 
                 String sqlPadrao = "SELECT nome FROM padraometadados p WHERE p.id=" + idPadrao + ";";
-                String sqlMap = "SELECT a1.atributo as origem, a2.atributo as destino, m.mapeamentoComposto_id" +
+                String sqlMap = "SELECT a1.atributo as origem, a1.id as idOrigem, a2.atributo as destino, m.mapeamentoComposto_id" +
                         " FROM atributos a1, mapeamentos m, atributos a2" +
                         " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipoMapeamento_id=" + tipoMapeamento + " AND m.padraometadados_id=" + idPadrao + ";";
 
@@ -118,6 +133,7 @@
                 while (rs2.next()) {
                     String origem = rs2.getString("origem");
                     String destino = rs2.getString("destino");
+                    int idOrigem = rs2.getInt("idOrigem");
                     int idComplementar = rs2.getInt("mapeamentoComposto_id");
 
                     if (linha % 2 == 0) {
@@ -158,7 +174,8 @@
                         out.println("<td class=\""+yesnocolor+"\">&nbsp;-</td>");
                 %>
                 <td class="<%=yesnocolor%>">
-                    <input type="button" size="30" name="gravar" id="gravar" value="Editar" onclick="salvar('<%="result"+linha%>', '<%=origem%>')">
+                    <input type="button" size="30" name="editar" id="editar" value="Editar" onclick="exibeSelect('<%="result"+linha%>', '<%=destino%>')"/>
+                   
                 </td>
             </tr>
             <%
