@@ -37,13 +37,18 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                     out.println("<option value=" + res.getString("id") + ">" + res.getString("atributo"));
                 }
                 out.println("</select>");
-                out.println("Salvar");
+                
                 String idResultado = request.getParameter("idResultado");
+                out.println("<input type=\"button\" name=\"salvar\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('"+idResultado+"', '"+destino+"')\"/>");
                 out.println("<input type=\"button\" name=\"cancelar\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('"+idResultado+"', '"+destino+"')\"/>");
                 
-            }else if(tipo.equalsIgnoreCase("cancelar") && !destino.isEmpty()){
+            }
+
+            else if(tipo.equalsIgnoreCase("cancelar") && !destino.isEmpty()){
                 out.println(destino);
-            } else if(tipo.equalsIgnoreCase("salvar")){ //se for para salvar na base..
+            }
+
+            else if(tipo.equalsIgnoreCase("salvar")){ //se for para salvar na base..
                 String novoValor = request.getParameter("novo");
                 out.println(novoValor);
 

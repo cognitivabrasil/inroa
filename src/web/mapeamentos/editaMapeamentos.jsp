@@ -32,7 +32,7 @@
 
             function salvarBase(idResultado, destino)
             {
-                var novo = document.getElementById("atributos");
+                var novo = document.getElementById("atributos").value;
                 processo(idResultado, destino, "salvar", novo)
             }
             /**
