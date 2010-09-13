@@ -251,10 +251,7 @@ public class IndexadorBusca {
             Long meio = System.currentTimeMillis();
             System.out.println("\n- Levou " + ((meio - inicio) / 1000) + " segundos inserindo objetos.");
             System.out.println("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
-                indexar.populateR1(con); //preenche as tabelas auxiliares
 
-            Long fim = System.currentTimeMillis();
-            System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
 
             stmDadosLdap.close();
         } catch (SQLException e) {
@@ -367,8 +364,11 @@ public class IndexadorBusca {
 
             }
             System.out.println("Calculando o indice....");
+            Long inicio = System.currentTimeMillis();
             indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
-            System.out.println("Indice calculado!");
+            Long fim = System.currentTimeMillis();
+            System.out.println("- Levou " + ((fim - inicio) / 1000) + " segundos calculando tabelas auxiliares.");
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

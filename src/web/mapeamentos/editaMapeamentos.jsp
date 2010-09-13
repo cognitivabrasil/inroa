@@ -20,35 +20,35 @@
         </script>
         <script type="text/javascript">
 
-            function cancelar(idResultado, destino)
+            function cancelar(idResultado, idMap, idPadraoDestino)
             {
-                processo(idResultado, destino, "cancelar","")
+                processo(idResultado, idMap, idPadraoDestino, "cancelar","")
             }
 
-            function exibeSelect(idResultado, destino)
+            function exibeSelect(idResultado, idMap, idPadraoDestino)
             {
-                processo(idResultado, destino, "comboBox", "")
+                processo(idResultado, idMap, idPadraoDestino, "comboBox", "")
             }
 
-            function salvarBase(idResultado, destino)
+            function salvarBase(idResultado, idMap)
             {
                 var novo = document.getElementById("atributos").value;
-                processo(idResultado, destino, "salvar", novo)
+                processo(idResultado, idMap, 0, "salvar", novo)
             }
             /**
              * Função utilizada pelo mapeamento dinamico com ajax.
              * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
              */
-            function processo(idResultado, destino, acao, novoValor)
+            function processo(idResultado, idMap, idPadraoDestino, acao, novoValor)
             {
                 //var nome = document.getElementById('nome').value; //Note que as variáveis são resgatadas pela função getElementById.
                 
 
                 var exibeResultado = document.getElementById(idResultado);
-                var padrao = <%=request.getParameter("padrao")%>;
+                
                 var ajax = openAjax(); // Inicia o Ajax.
                 //ajax.open("GET", "respostaAjax.jsp?nome=" + nome, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
-                ajax.open("GET", "respostaAjax.jsp?tipo="+acao+"&padrao="+padrao+"&destino="+destino+"&idResultado="+idResultado+"&novo="+novoValor, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+                ajax.open("GET", "respostaAjax.jsp?tipo="+acao+"&idPadraoDestino="+idPadraoDestino+"&idMap="+idMap+"&idResultado="+idResultado+"&novo="+novoValor, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
                 ajax.onreadystatechange = function()
                 {
                     if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
@@ -86,9 +86,9 @@
             <tr style="background-color: #AEC9E3">
                 <th width="30%">Origem</th>
 
-                <th width="30%">Destino (OBAA)</th>
+                <th width="50%">Destino (OBAA)</th>
                 <th width="10%">Complementar</th>
-                <th width="30%">&nbsp;</th>
+                <th width="10%">&nbsp;</th>
 
             </tr>
             
@@ -117,7 +117,7 @@
                     }
 
                 String sqlPadrao = "SELECT nome FROM padraometadados p WHERE p.id=" + idPadrao + ";";
-                String sqlMap = "SELECT a1.atributo as origem, a1.id as idOrigem, a2.atributo as destino, m.mapeamentoComposto_id" +
+                String sqlMap = "SELECT m.id as idMap, a1.atributo as origem, a2.atributo as destino, a2.idPadrao as idPadraoDestino, m.mapeamentoComposto_id" +
                         " FROM atributos a1, mapeamentos m, atributos a2" +
                         " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipoMapeamento_id=" + tipoMapeamento + " AND m.padraometadados_id=" + idPadrao + ";";
 
@@ -128,13 +128,14 @@
                 //rs1.close();
                 out.print("<div class=\"subtitulo\">" + nomePadrao + " / <b>OBAA - COLOCAR NOME DO MAPEAMENTO</b></div>");
                 
-                ResultSet rs2 = stm.executeQuery(sqlMap);
-                //pega o proximo resultado retornado pela consulta sql
-                while (rs2.next()) {
+                    ResultSet rs2 = stm.executeQuery(sqlMap);
+                    //pega o proximo resultado retornado pela consulta sql
+                    while (rs2.next()) {
                     String origem = rs2.getString("origem");
                     String destino = rs2.getString("destino");
-                    int idOrigem = rs2.getInt("idOrigem");
                     int idComplementar = rs2.getInt("mapeamentoComposto_id");
+                    int idMapeamento = rs2.getInt("idMap");
+                    int idPadraoDestino = rs2.getInt("idPadraoDestino");
 
                     if (linha % 2 == 0) {
                         yesnocolor = "price-yes";
@@ -174,8 +175,10 @@
                         out.println("<td class=\""+yesnocolor+"\">&nbsp;-</td>");
                 %>
                 <td class="<%=yesnocolor%>">
-                    <input type="button" size="30" name="editar" id="editar" value="Editar" onclick="exibeSelect('<%="result"+linha%>', '<%=destino%>')"/>
-                   
+                    <input type="button" size="30" name="editar" id="editar" value="Editar" onclick="exibeSelect('<%="result"+linha%>', '<%=idMapeamento%>', '<%=idPadraoDestino%>')"/>
+                    <a title="Excluir" onclick="">
+                        <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Laudado!" align="middle">
+                    </a>
                 </td>
             </tr>
             <%
@@ -195,11 +198,29 @@
 
 
             %>
-            
+            <tr class='center'>
+                <td>
+
+                    <a title="Adicionar" onclick="">
+                        <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                    </a>
+
+                
+                    &nbsp;&nbsp;
+                    <a onclick="NewWindow('cadastraRepositorio.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                        Adicionar
+                    </a>
+
+                </td>
+
+                <% linha++;%>
+
+            </tr>
             </table>
         </div>
     </body>
 </html>
 <%
             con.close();
+
 %>
