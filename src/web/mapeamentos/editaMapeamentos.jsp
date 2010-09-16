@@ -49,6 +49,7 @@
             function exibeText(idDivResult){
                 processo(idDivResult, "", "text", "", "")
             }
+            
 
             /**
              * Função utilizada pelo mapeamento dinamico com ajax.
@@ -56,13 +57,13 @@
              */
             function processo(idResultado, idMap, acao, novoValor, valorAnterior)
             {
-                //var nome = document.getElementById('nome').value; //Note que as variáveis são resgatadas pela função getElementById.
                 
-                document.getElementById("descricao").innerHTML="respostaAjax.jsp?tipo="+acao+"&idMap="+idMap+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior=-"+trim(valorAnterior)+"-";
+                
+                
                 var exibeResultado = document.getElementById(idResultado);
                 
                 var ajax = openAjax(); // Inicia o Ajax.
-                //ajax.open("GET", "respostaAjax.jsp?nome=" + nome, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+                
                 ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMap="+idMap+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
                 ajax.onreadystatechange = function()
@@ -132,7 +133,7 @@
                 <div class="Editar">&nbsp;
                     <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editar" value="Editar" onclick="exibeText('tipMap')"/>
                 </div>
-                <div class="Valor" id="tipMap">&nbsp;<%=tipMap%></div>
+                <div class="Valor" id="tipMap"><%=tipMap%></div>
                 
 
                 <div class="Legenda">
@@ -141,7 +142,7 @@
                 <div class="Editar">&nbsp;
                     <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editar" value="Editar" onclick="exibeText('descricao')"/>
                 </div>
-                <div class="Valor" id="descricao">&nbsp;<%=descricao%></div>
+                <div class="Valor" id="descricao"><%=descricao%></div>
                 
             </div>
 
@@ -193,7 +194,7 @@
                 <tr class='center'>
                     <td class="<%=yesnocolor%>">&nbsp;<%=origem%></td>
                     <td class="<%=yesnocolor%>">
-                        <div id='<%="result" + linha%>'>&nbsp;<%=destino%></div>
+                        <div id='<%="result" + linha%>'><%=destino%></div>
                     </td>
 
 

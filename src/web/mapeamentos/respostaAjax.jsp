@@ -26,7 +26,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
             String tipo = request.getParameter("tipo");
             String valorAnterior = request.getParameter("valorAnterior");
-            out.print("valor ant:-"+valorAnterior+"-");
+            
                        
             int idMap = 0;
             String idMapeamento = request.getParameter("idMap");

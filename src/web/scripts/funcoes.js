@@ -127,7 +127,7 @@ function insereValorDiv(id, texto)
     document.getElementById(id).innerHTML =texto;
 }
 
-/**
+            /**
  * Função que inicia o Ajax
 */
 function openAjax() {
@@ -150,6 +150,10 @@ function openAjax() {
     return ajax;
 }
 
+/**
+ * Remove os espaços de antes de depois da string. Igual ao trim() do java.
+ * @param str string que sera retornada sem os espaços antes e depois.
+ */
 function trim(str){
     return str.replace(/^\s+|\s+$/g,"");
 }
