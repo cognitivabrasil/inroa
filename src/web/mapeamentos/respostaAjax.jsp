@@ -25,23 +25,20 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
 
             String tipo = request.getParameter("tipo");
-            int idPadrao = 0;
-            String idPad = request.getParameter("idPadraoDestino");
-            if (!idPad.isEmpty()) {
-                idPadrao = Integer.valueOf(idPad);
-            }
-            
+            String valorAnterior = request.getParameter("valorAnterior");
+            out.print("valor ant:-"+valorAnterior+"-");
+                       
             int idMap = 0;
             String idMapeamento = request.getParameter("idMap");
             if (!idMapeamento.isEmpty()) {
                 idMap = Integer.valueOf(idMapeamento);
             }
 
-            if (tipo.equalsIgnoreCase("comboBox") && idPadrao > 0) {
+            if (tipo.equalsIgnoreCase("comboBox") && idMap > 0) {
                 out.println("<select name='atributos' id='atributos' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
 
                 //consultar o mysql todos os atributos
-                String sqlPadrao = "SELECT a.id, a.atributo FROM atributos a WHERE idPadrao=" + idPadrao + ";";
+                String sqlPadrao = "SELECT a.id, a.atributo FROM atributos a, mapeamentos m where m.id="+idMap+" AND m.padraometadados_id=a.idPadrao ORDER BY a.atributo ASC;";
                 ResultSet res = stm.executeQuery(sqlPadrao);
                 //percorre os resultados retornados pela consulta sql
                 while (res.next()) {
@@ -50,13 +47,16 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 out.println("</select>");
 
                 String idResultado = request.getParameter("idResultado");
-                out.println("<input type=\"button\" name=\"salvar\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idResultado + "', '" + idMap + "')\"/>");
-                out.println("<input type=\"button\" name=\"cancelar\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idResultado + "', '" + idMap + "', '" + idPadrao + "')\"/>");
+                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idResultado + "', '" + idMap + "')\"/>");
+                out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idResultado + "', '" + valorAnterior + "')\"/>");
             }
 
 
-            else if (tipo.equalsIgnoreCase("cancelar") && idMap > 0) { //retorna o atributo de destino que esta salvo na base de dados
-                out.println(consultaAtributoBase(idMap));
+            else if (tipo.equalsIgnoreCase("cancelar")) { //retorna o atributo de destino que esta salvo na base de dados
+                if(valorAnterior.isEmpty())
+                    out.print("em Branco");
+                else
+                out.println(valorAnterior);
             }
 
 
@@ -70,7 +70,11 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
                out.println(consultaAtributoBase(idMap)); //retorna o valor que ficou salvo na base de dados
 
-            } else //Este comando devolverá "Dados inseridos com Sucesso para" o Ajax.
+            }
+            else if(tipo.equalsIgnoreCase("text")){
+                out.println("deu");
+            }
+            else //Este comando devolverá "Dados inseridos com Sucesso para" o Ajax.
             {
                 out.println("Faltando informação para funcionar o Ajax");
             }

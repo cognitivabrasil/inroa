@@ -290,6 +290,23 @@ a:hover{
     text-decoration:underline;
     padding:4px;
 }
+.Mapeamento{
+    margin-top:1%;
+}
+
+.Mapeamento .Legenda{
+    float:left;
+    text-align:right;
+    width:20%
+}
+.Mapeamento .Valor{
+    margin:0 0 20px 21%;
+}
+.Mapeamento .Editar{
+    float:right;
+    text-align:left;
+    margin-right:2%;
+}
 
 .LinhaEntrada .Label{
     float:left;
@@ -446,6 +463,15 @@ td{vertical-align:top;}
     color: #000000;
     font-weight: bold;
     font-family: verdana;
+}
+.BotaoMapeamento
+{
+    background-color: transparent;
+    border-color: #AAAAAA;
+    color: #000000;
+    font-weight: bold;
+    font-family: verdana;
+    font-size:80%;
 }
 .BotaoFechar{
     text-align:center;    

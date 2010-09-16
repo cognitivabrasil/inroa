@@ -85,7 +85,7 @@ Author     : Marcos Nunes
             <tr  class='center'>
                 <td class="<%=yesnocolor%>">
                     <a title="Excluir" onclick="NewWindow('removerRepositorio.jsp?id=<%=res.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Laudado!" align="middle">
+                        <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
                     </a>
                     &nbsp;
                     <a title="Editar / Visualizar" onclick="NewWindow('exibeRepositorios.jsp?id=<%=res.getString("id")%>','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
@@ -141,6 +141,9 @@ Author     : Marcos Nunes
             </tr>
         </table>
 
+<!--Insere codigo que lista os mapeamentos-->
+<%@include file="./mapeamentos/mapeamentos.jsp"%>
+<!--Fim codigo que lista os mapeamentos-->
 
         <table class='repositorios-table' cellpadding=3>
             <tr>
@@ -177,7 +180,7 @@ Author     : Marcos Nunes
             <tr  class='center'>
                 <td class="<%=yesnocolor%>">
                     <a title="Excluir" onclick="NewWindow('removerLDAP.jsp?id=<%=resultLdap.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Laudado!" align="middle">
+                        <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
                     </a>
                     &nbsp;
                     <a title="Editar / Visualizar" onclick="NewWindow('exibeLDAP.jsp?id=<%=resultLdap.getString("id")%>','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">

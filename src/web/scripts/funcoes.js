@@ -127,7 +127,7 @@ function insereValorDiv(id, texto)
     document.getElementById(id).innerHTML =texto;
 }
 
-            /**
+/**
  * Função que inicia o Ajax
 */
 function openAjax() {
@@ -150,3 +150,6 @@ function openAjax() {
     return ajax;
 }
 
+function trim(str){
+    return str.replace(/^\s+|\s+$/g,"");
+}

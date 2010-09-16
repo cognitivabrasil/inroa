@@ -292,6 +292,7 @@ src/web/mapeamentos/editaMapeamentos.jsp -text
 src/web/mapeamentos/mapeamentos.jsp -text
 src/web/mapeamentos/respostaAjax.jsp -text
 src/web/mapeamentos/testeAjax.jsp -text
+src/web/mapeamentos/testetabeladinamica.jsp -text
 src/web/paginacao.jsp -text
 src/web/removerLDAP.jsp -text
 src/web/removerRepositorio.jsp -text
