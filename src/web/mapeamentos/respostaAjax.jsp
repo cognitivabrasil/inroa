@@ -39,6 +39,8 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
                 //consultar o mysql todos os atributos
                 String sqlPadrao = "SELECT a.id, a.atributo FROM atributos a, mapeamentos m where m.id="+idMap+" AND m.padraometadados_id=a.idPadrao ORDER BY a.atributo ASC;";
+                //ERRO NESSE SQL
+                
                 ResultSet res = stm.executeQuery(sqlPadrao);
                 //percorre os resultados retornados pela consulta sql
                 while (res.next()) {
