@@ -71,8 +71,16 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                out.println(consultaAtributoBase(idMap)); //retorna o valor que ficou salvo na base de dados
 
             }
+
             else if(tipo.equalsIgnoreCase("text")){
+                
                 out.println("deu");
+                
+                //inserir um text para salvar o valor depois
+
+
+
+
             }
             else //Este comando devolverá "Dados inseridos com Sucesso para" o Ajax.
             {
