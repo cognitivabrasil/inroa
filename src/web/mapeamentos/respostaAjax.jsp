@@ -38,9 +38,11 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 out.println("<select name='atributos' id='atributos' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
 
                 //consultar o mysql todos os atributos
-                String sqlPadrao = "SELECT a.id, a.atributo FROM atributos a, mapeamentos m where m.id="+idMap+" AND m.padraometadados_id=a.idPadrao ORDER BY a.atributo ASC;";
-                //ERRO NESSE SQL
-                
+                String sqlPadrao = "SELECT a.id, a.atributo " +
+                        "FROM atributos a " +
+                        "WHERE a.idPadrao = (SELECT p.id FROM padraometadados p, mapeamentos m, atributos a WHERE m.destino_id=p.id AND m.destino_id=a.id AND a.idPadrao=p.id GROUP BY p.id)" +
+                        "ORDER BY a.atributo;";
+               
                 ResultSet res = stm.executeQuery(sqlPadrao);
                 //percorre os resultados retornados pela consulta sql
                 while (res.next()) {
@@ -55,9 +57,6 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
 
             else if (tipo.equalsIgnoreCase("cancelar")) { //retorna o atributo de destino que esta salvo na base de dados
-                if(valorAnterior.isEmpty())
-                    out.print("em Branco");
-                else
                 out.println(valorAnterior);
             }
 
@@ -76,8 +75,8 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
             else if(tipo.equalsIgnoreCase("text")){
                 
-                out.println("deu");
-                
+                out.println("<input type=\"text\" id=\"name\" name=\"nome\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" />");
+                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"\"/>");
                 //inserir um text para salvar o valor depois
 
 
