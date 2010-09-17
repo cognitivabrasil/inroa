@@ -1,17 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ferramentaBusca;
 
 import ferramentaBusca.indexador.*;
-import mysql.Conectar;
+import postgres.ConectaPostgres;
 import java.sql.*;
 import com.novell.ldap.*;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Iterator;
-import mysql.ConsultaNomeFederacao;
+import postgres.ConsultaNomeFederacao;
 
 /**
  * Disponibiliza metodos para indexar a base de busca
@@ -38,18 +34,18 @@ public class IndexadorBusca {
 
         String attrs[] = {"obaaEntry", "obaaTitle", "obaaKeyword", "obaaEntity", "obaaDescription", "obaaEducationalDescription", "obaaDate", "obaaLocation", "obaaIdentifier"};
 
-        String sqlDadosLdap = "select l.ip, if(r.nome='todos',l.dn, concat('ou=',i.nome_na_federacao,',',l.dn)) as dn, l.login, l.senha, l.porta from ldaps l, info_repositorios i, repositorios r " +
+        String sqlDadosLdap = "SELECT l.ip, if(r.nome='todos',l.dn, CONCAT('ou=',i.nome_na_federacao,',',l.dn)) AS dn, l.login, l.senha, l.porta from ldaps l, info_repositorios i, repositorios r " +
                 "WHERE r.id=i.id_repositorio " +
                 "AND i.ldapDestino=l.id " +
-                "and r.id=" + repositorio + ";";
-        //sqlDadosLdap = "select ip, dn, login, porta, senha from ldaps where nome='ldap1';";
+                "AND r.id=" + repositorio + ";";
+
         try {
 
             Statement stmDadosLdap = con.createStatement();
             ResultSet rs = stmDadosLdap.executeQuery(sqlDadosLdap); //executa a consulta que esta na string sqlDadosLdap
             rs.next(); //chama o proximo resultado do sql
 
-            //coloca nas variaveis as informacoes coletadas do mysql
+            //coloca nas variaveis as informacoes coletadas do Postgres
             String ldapHost = rs.getString("ip");
             String searchBase = rs.getString("dn");
             String loginDN = rs.getString("login");
@@ -251,11 +247,14 @@ public class IndexadorBusca {
             Long meio = System.currentTimeMillis();
             System.out.println("\n- Levou " + ((meio - inicio) / 1000) + " segundos inserindo objetos.");
             System.out.println("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
+                indexar.populateR1(con); //preenche as tabelas auxiliares
 
+            Long fim = System.currentTimeMillis();
+            System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
 
             stmDadosLdap.close();
         } catch (SQLException e) {
-            System.out.println("SQL Exception... Erro no SQL:");
+            System.out.println("SQL Exception... Erro no SQL: ");
             e.printStackTrace();
         } catch (LDAPException e) {
 
@@ -364,11 +363,8 @@ public class IndexadorBusca {
 
             }
             System.out.println("Calculando o indice....");
-            Long inicio = System.currentTimeMillis();
             indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
-            Long fim = System.currentTimeMillis();
-            System.out.println("- Levou " + ((fim - inicio) / 1000) + " segundos calculando tabelas auxiliares.");
-            
+            System.out.println("Indice calculado!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -377,7 +373,7 @@ public class IndexadorBusca {
     /**
      * M&eacute;todo respons&aacute;vel por indexar um reposit&oacute;rio espec&iacute;fico
      * @param nome Nome do repositorio que sera indexado
-     * @param con Conexao com o mysql
+     * @param con Conexao com o Postgres
      */
     public void indexarRepositorioEspecifico(String nome, Connection con) {
         String sql = "select id, nome from repositorios where nome= '" + nome + "';";
@@ -407,11 +403,11 @@ public class IndexadorBusca {
             Statement stmDadosLdap = con.createStatement();
             stmDadosLdap.execute(sql); //executa a consulta que esta na string sqlDadosLdap
 
-                System.out.println("Foi apagado o indice do mysql.");
+                System.out.println("Foi apagado o indice do Postgres.");
                 indexarTodosRepositorios(con);//reindexar todos os repositorios
            
         } catch (SQLException e) {
-            System.out.println("Erro ao apagar os dados do indice no mysql");
+            System.out.println("Erro ao apagar os dados do indice no Postgres");
             e.printStackTrace();
         }
 
@@ -431,18 +427,15 @@ public class IndexadorBusca {
      */
     public static void main(String args[]) {
         IndexadorBusca run = new IndexadorBusca();
-        Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
-        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
+        ConectaPostgres conectar = new ConectaPostgres(); //instancia uma variavel da classe Postgres.conectar
+        Connection con = conectar.conectaBD();
 
-//          run.recalcularIndice(con); //recalcula o indice
-//        run.indexarRepositorioEspecifico("engeo", con);
-//        run.reindexarTudo(con); //reindexa toda a base de dados. Apaga o indice e cria novamente
         run.indexarTodosRepositorios(con); //cria o indice com todos os repositorios
 
         try {
             con.close(); //fechar conexao com o mysql
         } catch (SQLException e) {
-            System.out.println("Erro ao fechar conexao com o mysql");
+            System.out.println("Erro ao fechar conexao com o Postgres: ");
             e.printStackTrace();
         }
 

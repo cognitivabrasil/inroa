@@ -2,7 +2,6 @@ package ferramentaBusca.indexador;
 
 import java.util.HashSet;
 import java.sql.*;
-import mysql.Conectar;
 
 /**
  *

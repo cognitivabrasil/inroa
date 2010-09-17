@@ -1,4 +1,4 @@
-    package ferramentaBusca.indexador;
+package ferramentaBusca.indexador;
 
 import java.util.ArrayList;
 import ptstemmer.Stemmer;

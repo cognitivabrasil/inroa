@@ -42,7 +42,7 @@ public class Indexador {
     }
 
     /**
-     * M&eacute;todo que adiciona o documento doc na base de dados MySQL
+     * M&eacute;todo que adiciona o documento doc na base de dados Postgres
      * @param doc Docuemnto a ser adicionado
      * @param con A conex&atilde;o do banco de dados
      */
@@ -76,12 +76,7 @@ public class Indexador {
                 ResultSet rs = stmt1.getGeneratedKeys();
                 rs.next();
                 key = rs.getInt(1);
-//        Statement stm = con.createStatement();
-//
-//        stm.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS); //realiza no mysql o insert que esta na variavel sql, pedindo para retornar a key gerada automaticamente
-//        ResultSet rs = stm.getGeneratedKeys();
-//        rs.next();
-//        key = rs.getInt(1);
+
                 doc.setId(key);
                 stmt1.close();
 
@@ -92,7 +87,7 @@ public class Indexador {
                 for (int i = 0; i < tokens.size(); i++) {
 
                     String token = tokens.get(i);
-                    String insert = "insert into r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 1)";
+                    String insert = "INSERT INTO r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 1)";
                     PreparedStatement stmt = con.prepareStatement(insert);
                     stmt.execute();
                     stmt.close();
@@ -106,7 +101,7 @@ public class Indexador {
 
 
                     String token = tokens.get(i);
-                    String insert = "insert into r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 2)";
+                    String insert = "INSERT INTO r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 2)";
                     PreparedStatement stmt = con.prepareStatement(insert);
                     stmt.execute();
                     stmt.close();
@@ -120,7 +115,7 @@ public class Indexador {
 
 
                     String token = tokens.get(i);
-                    String insert = "insert into r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 3)";
+                    String insert = "INSERT INTO r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 3)";
                     PreparedStatement stmt = con.prepareStatement(insert);
                     stmt.execute();
                     stmt.close();
@@ -134,7 +129,7 @@ public class Indexador {
 
 
                     String token = tokens.get(i);
-                    String insert = "insert into r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 4)";
+                    String insert = "INSERT INTO r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 4)";
                     PreparedStatement stmt = con.prepareStatement(insert);
                     stmt.execute();
                     stmt.close();

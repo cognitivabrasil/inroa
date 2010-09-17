@@ -6,11 +6,10 @@
 package ferramentaBusca;
 
 
-import ferramentaBusca.indexador.StopWordTAD;
 import ferramentaBusca.recuperador.Recuperador;
 import java.sql.*;
 import java.util.ArrayList;
-import mysql.Conectar;
+import postgres.ConectaPostgres;
 
 /**
  * Disponibiliza realizar Busca por similaridade
@@ -25,8 +24,8 @@ public class Busca {
      */
     public ArrayList<String> search(String termoBusca, int idRep) throws SQLException{
         
-    Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
-        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
+    ConectaPostgres conectar = new ConectaPostgres(); //instancia uma variavel da classe Postgres.conectar
+        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe Postgres.conectar
 
         ArrayList<Integer> resultadoBusca = new ArrayList<Integer>();
         ArrayList<String> entry = new ArrayList<String>();
@@ -45,7 +44,7 @@ public class Busca {
 				String entryA = rs2.getString("obaaEntry");
                                 entry.add(entryA);
         }
-        con.close(); //fecha a conexao com o mysql
+        con.close(); //fecha a conexao com o Postgres
         return entry;
     }
 
