@@ -34,7 +34,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 idMap = Integer.valueOf(idMapeamento);
             }
 
-            if (tipo.equalsIgnoreCase("comboBox") && idMap > 0) {
+            if (tipo.equalsIgnoreCase("comboBox")) {
                 out.println("<select name='atributos' id='atributos' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
 
                 //consultar o mysql todos os atributos
@@ -50,9 +50,10 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 }
                 out.println("</select>");
 
-
+                if(idMap >0){
                 out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idDivResultado + "', '" + idMap + "', 'atributos')\"/>");
                 out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
+                }
             }
 
             else if (tipo.equalsIgnoreCase("cancelar")) { //retorna o atributo de destino que esta salvo na base de dados

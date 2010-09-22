@@ -21,92 +21,7 @@
         <script language="JavaScript" type="text/javascript" src="./funcoesMapeamento.js">
             //necessario para usar o funcionamento
         </script>
-        <script type="text/javascript">
-            botao='';
-            function removeItem(linha)
-            {
-                var tbl = document.getElementById('tabela');
-                tbl.deleteRow(linha);
-            }
 
-
-            function cancelar(idDivResult, valorAnterior)
-            {                
-                processo(idDivResult, "", "cancelar","", valorAnterior,"")
-                botao.disabled=0; //desbloquear o botao editar
-            }
-
-            function exibeSelect(idDivResult, idMap, idPadraoDestino, bot)
-            {
-                botao = bot;
-                botao.disabled=1; //bloquear o botao editar
-                var valorAnterior = document.getElementById(idDivResult).innerHTML
-                                
-                processo(idDivResult, idMap, "comboBox", "", valorAnterior,"")
-            }
-
-            function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
-            {
-                var novo = "";
-                if(idMap>0){
-                    novo = document.getElementById(input).value
-                }
-                else{
-                    novo = document.getElementById(input).value
-                }
-                processo(idDivResultado, idMap, "salvar", novo,"",idTipoMapeamento)
-                botao.disabled=0; //desbloquear o botao editar
-            }
-
-            function exibeText(idDivResult, idTipoMapeamento, bot){
-                botao = bot;
-                botao.disabled=1; //bloquear o botao editar
-                var valorAnterior = document.getElementById(idDivResult).innerHTML
-                processo(idDivResult, "", "text", "", valorAnterior, idTipoMapeamento)
-            }
-            
-
-            /**
-             * Função utilizada pelo mapeamento dinamico com ajax.
-             * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
-             */
-            function processo(idResultado, idMap, acao, novoValor, valorAnterior, idTipoMapeamento)
-            {
-                
-                
-                
-                var exibeResultado = document.getElementById(idResultado);
-                
-                var ajax = openAjax(); // Inicia o Ajax.
-                
-                ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMap="+idMap+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior+"&idTipMap="+idTipoMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
-
-                ajax.onreadystatechange = function()
-                {
-                    if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-                    {
-                        exibeResultado.innerHTML = "Aguarde...";
-                    }
-                    if(ajax.readyState == 4) // Quando estiver tudo pronto.
-                    {
-                        if(ajax.status == 200)
-                        {
-                            var resultado = ajax.responseText;
-                            exibeResultado.innerHTML = resultado;
-                        }
-                        else
-                        {
-                            exibeResultado.innerHTML = "Erro nas funções do Ajax";
-                        }
-                    }
-                }
-                ajax.send(null); // submete
-                //document.getElementById("nome").value= "";//limpa os campos
-                //document.getElementById("nome").setFocus=true;
-
-            }
-
-        </script>
     </head>
 
     <%
@@ -281,7 +196,11 @@
 
 
                 %>
+
                 </table>
+                <script type="text/javascript">
+                    setLinha(<%=linha%>);
+                </script>
                 <table class='mapeamentos-table-add' id="tblAdicionar" cellpadding=5%>
                 <tr class='left'>
                     <td width="10%">&nbsp;</td>
@@ -294,7 +213,7 @@
 
 
                         &nbsp;&nbsp;
-                        <a onclick="adiciona();">
+                        <a onclick="adiciona(<%=linha%>);">
                             Adicionar Mapeamento
                         </a>
 
