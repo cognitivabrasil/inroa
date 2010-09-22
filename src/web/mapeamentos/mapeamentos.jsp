@@ -23,7 +23,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
         <th width="10%">Opera&ccedil;&otilde;es</th>
 
         <th width="20%">Padrão de Metadados</th>
-        <th width="20%">Tipo de mapeamento</th>
+        <th width="20%">Nome do mapeamento</th>
         <th width="50%">Descri&ccedil;&atilde;o</th>
 
     </tr>
@@ -70,4 +70,20 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
        linhaMap++;
    }
         %>
+        <tr class='center'>
+                <td>
+
+                    <a title="Adicionar um novo mapeamento" onclick="NewWindow('addMapeamento.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                        <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                    </a>
+
+                </td>
+                <td colspan="2"class="left bold" style="font-size:110%">
+                    &nbsp;&nbsp;
+                    <a onclick="NewWindow('addMapeamento.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                        Adicionar novo mapeamento
+                    </a>
+
+                </td>
+            </tr>
 </table>

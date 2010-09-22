@@ -430,6 +430,12 @@ td{vertical-align:top;}
     vertical-align: middle;
     text-align:center;
 }
+.mapeamentos-table-add{
+    padding-left:50%;
+    border: 0px;
+    margin-left:5%;
+    font-size:105%;
+}
 .price-yes
 {
     text-align: center;

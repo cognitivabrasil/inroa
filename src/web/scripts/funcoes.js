@@ -4,7 +4,7 @@
 */
 
 /**
-* Abre uma nova janela conforme par?metros recebidos
+* Abre uma nova janela conforme par&acirc;metros recebidos
 *
 * @param theURL String contendo a url que será aberta
 * @param winName    String contendo o nome da janela que sera aberta
@@ -15,7 +15,7 @@ function MM_openBrWindow(theURL,winName,features) {
 }
 
 /**
-* Abre uma nova janela centralizada com os parametros recebidos
+* Abre uma nova janela centralizada com os par&acirc;metros recebidos
 *
 * @param mypage		String contendo url que sera aberta
 * @param myname		String contendo nome da nova janela
@@ -58,6 +58,15 @@ function formatar_mascara(src, mascara) {
 function fechaRecarrega() {
     // fechando a janela atual ( popup )
     window.close();
+    // dando um refresh na página principal
+    opener.location.href=opener.location.href;
+// fim da função
+}
+
+/**
+ *Função que regarrega a janela principal de onde foi aberta a popup
+ */
+function recarrega() {
     // dando um refresh na página principal
     opener.location.href=opener.location.href;
 // fim da função

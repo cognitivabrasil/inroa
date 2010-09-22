@@ -18,7 +18,11 @@
         <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js">
             //necessario para usar o ajax
         </script>
+        <script language="JavaScript" type="text/javascript" src="./funcoesMapeamento.js">
+            //necessario para usar o funcionamento
+        </script>
         <script type="text/javascript">
+            botao='';
             function removeItem(linha)
             {
                 var tbl = document.getElementById('tabela');
@@ -28,26 +32,37 @@
 
             function cancelar(idDivResult, valorAnterior)
             {                
-                processo(idDivResult, "", "cancelar","", valorAnterior)
+                processo(idDivResult, "", "cancelar","", valorAnterior,"")
+                botao.disabled=0; //desbloquear o botao editar
             }
 
-            function exibeSelect(idDivResult, idMap, idPadraoDestino)
+            function exibeSelect(idDivResult, idMap, idPadraoDestino, bot)
             {
+                botao = bot;
+                botao.disabled=1; //bloquear o botao editar
                 var valorAnterior = document.getElementById(idDivResult).innerHTML
-                processo(idDivResult, idMap, "comboBox", "", valorAnterior)
+                                
+                processo(idDivResult, idMap, "comboBox", "", valorAnterior,"")
             }
 
-            function salvarBase(idResultado, idMap)
+            function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
             {
                 var novo = "";
                 if(idMap>0){
-                novo = document.getElementById("atributos").value;
+                    novo = document.getElementById(input).value
                 }
-                processo(idResultado, idMap, "salvar", novo,"")
+                else{
+                    novo = document.getElementById(input).value
+                }
+                processo(idDivResultado, idMap, "salvar", novo,"",idTipoMapeamento)
+                botao.disabled=0; //desbloquear o botao editar
             }
 
-            function exibeText(idDivResult){
-                processo(idDivResult, "", "text", "", "")
+            function exibeText(idDivResult, idTipoMapeamento, bot){
+                botao = bot;
+                botao.disabled=1; //bloquear o botao editar
+                var valorAnterior = document.getElementById(idDivResult).innerHTML
+                processo(idDivResult, "", "text", "", valorAnterior, idTipoMapeamento)
             }
             
 
@@ -55,7 +70,7 @@
              * Função utilizada pelo mapeamento dinamico com ajax.
              * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
              */
-            function processo(idResultado, idMap, acao, novoValor, valorAnterior)
+            function processo(idResultado, idMap, acao, novoValor, valorAnterior, idTipoMapeamento)
             {
                 
                 
@@ -64,7 +79,7 @@
                 
                 var ajax = openAjax(); // Inicia o Ajax.
                 
-                ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMap="+idMap+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+                ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMap="+idMap+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior+"&idTipMap="+idTipoMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
                 ajax.onreadystatechange = function()
                 {
@@ -93,34 +108,53 @@
 
         </script>
     </head>
-    <body>
+
+    <%
+//testa seção..
+
+            String usr = (String) session.getAttribute("usuario");
+            if (usr == null) {
+                out.print("<script type='text/javascript'>" +
+                        "alert('Seu tempo logado expirou. Efetua o login novamente.');" +
+                        "fechaRecarrega();" +
+                        "</script>");
+            }
+    %>
+    
+    <body onUnLoad="recarrega()">
 
         <%
-                    int tipoMapeamento = 0;
-                    int idPadrao = 0;
-                    int linha = 1;
-                    String yesnocolor = "";
-                    String atributoComplementar = "";
-                    String valorComplementar = "";
-                    try {
-                        String tipoMap = request.getParameter("tipmap");
+            int tipoMapeamento = 0;
+            int idPadrao = 0;
+            int linha = 1;
+            String yesnocolor = "";
+            String atributoComplementar = "";
+            String valorComplementar = "";
+            try {
+                String tipoMap = request.getParameter("tipmap");
 
-                        String padrao = request.getParameter("padrao");
-                        if (tipoMap.isEmpty() || padrao.isEmpty()) { //se não foi informado nenhum valor.
-                            new Exception();
-                        }
-                        tipoMapeamento = Integer.parseInt(tipoMap);
-                        idPadrao = Integer.parseInt(padrao);
-                        if (tipoMapeamento < 1 || idPadrao < 1) {//se for informado um valor invalido
-                            new Exception();
-                        }
-                    } catch (Exception e) {
-                        out.print("<script type='text/javascript'>alert('Informe o tipo do mapeamento e o padrão de metadados');</script>" +
-                                           "<script type='text/javascript'>history.back(-1);</script>");
-                        System.exit(0);
-                        }
-                    String tipMap="teste";
-                    String descricao="descricao";
+                String padrao = request.getParameter("padrao");
+                if (tipoMap.isEmpty() || padrao.isEmpty()) { //se não foi informado nenhum valor.
+                    new Exception();
+                }
+                tipoMapeamento = Integer.parseInt(tipoMap);
+                idPadrao = Integer.parseInt(padrao);
+                if (tipoMapeamento < 1 || idPadrao < 1) {//se for informado um valor invalido
+                    new Exception();
+                }
+            } catch (Exception e) {
+                out.print("<script type='text/javascript'>alert('Informe o tipo do mapeamento e o padrão de metadados');</script>" +
+                        "<script type='text/javascript'>history.back(-1);</script>");
+                System.exit(0);
+            }
+
+            String sqlInfoMapeamento = "SELECT t.nome, t.descricao FROM tipomapeamento t where id=" + tipoMapeamento + ";";
+            ResultSet rsInfoMap = stm.executeQuery(sqlInfoMapeamento);
+            //pega o proximo resultado retornado pela consulta sql
+            rsInfoMap.next();
+            String nomeMap = rsInfoMap.getString("nome");
+            String descricao = rsInfoMap.getString("descricao");
+
         %>
         <div id="page">
             <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de mapeamentos cadastrados</div>
@@ -128,27 +162,27 @@
 
             <div class="Mapeamento">
                 <div class="Legenda">
-                    Tipo de Mapeamento:
+                    Nome do Mapeamento:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editar" value="Editar" onclick="exibeText('tipMap')"/>
+                    <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editarMapeamento" value="Editar" onclick="exibeText('tipoMap', <%=tipoMapeamento%>, this)"/>
                 </div>
-                <div class="Valor" id="tipMap"><%=tipMap%></div>
-                
+                <div class="Valor" id="tipoMap"><%=nomeMap%></div>
+
 
                 <div class="Legenda">
                     Descri&ccedil;&atilde;o:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editar" value="Editar" onclick="exibeText('descricao')"/>
+                    <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editarDescricao" value="Editar" onclick="exibeText('descricao', <%=tipoMapeamento%>, this)"/>
                 </div>
                 <div class="Valor" id="descricao"><%=descricao%></div>
-                
+
             </div>
 
 
             <%--Tabela que exibe o mapeamento--%>
-            
+
             <table class='mapeamentos-table' id="tabela" cellpadding=5%>
 
                 <tr style="background-color: #AEC9E3">
@@ -173,8 +207,8 @@
             rs1.next();
             String nomePadrao = rs1.getString("nome");
             //rs1.close();
-            out.print("<div class=\"subtitulo\">" + nomePadrao + " / <b>OBAA - COLOCAR NOME DO MAPEAMENTO</b></div>");
-
+            out.print("<div class=\"subtitulo\">" + nomePadrao + " / <b>OBAA</b></div>");
+            out.println("<div class='textoErro center'><b>Atenção!</b> Tenha cuidado ao editar este mapeamento, pois pode estar sendo utilizado por mais de um repositório.</div>");
             ResultSet rs2 = stm.executeQuery(sqlMap);
             //pega o proximo resultado retornado pela consulta sql
             while (rs2.next()) {
@@ -201,28 +235,28 @@
 
                     <%
 
-                    atributoComplementar = "";
-                    valorComplementar = "";
-                    if (idComplementar > 0) { //se tiver mapeamento complementar
+                atributoComplementar = "";
+                valorComplementar = "";
+                if (idComplementar > 0) { //se tiver mapeamento complementar
 
-                        String sql = "SELECT a.atributo as destino, m.valor " + "FROM mapeamentocomposto m, atributos a " + "WHERE m.id_origem=a.id " + "AND m.id=" + idComplementar + ";";
-                        ResultSet rs;
-                        Statement stm2 = con.createStatement();
-                        rs = stm2.executeQuery(sql);
-                        rs.next();//procura a próxima ocorrencia
-                        valorComplementar = rs.getString("valor");
-                        atributoComplementar = rs.getString("destino");
+                    String sql = "SELECT a.atributo as destino, m.valor " + "FROM mapeamentocomposto m, atributos a " + "WHERE m.id_origem=a.id " + "AND m.id=" + idComplementar + ";";
+                    ResultSet rs;
+                    Statement stm2 = con.createStatement();
+                    rs = stm2.executeQuery(sql);
+                    rs.next();//procura a próxima ocorrencia
+                    valorComplementar = rs.getString("valor");
+                    atributoComplementar = rs.getString("destino");
 
-                        stm2.close();
-                        rs.close();
-                        out.println("<td class=\"" + yesnocolor + "\">&nbsp;Sim</td>");
+                    stm2.close();
+                    rs.close();
+                    out.println("<td class=\"" + yesnocolor + "\">&nbsp;Sim</td>");
 
-                    } else {
-                        out.println("<td class=\"" + yesnocolor + "\">&nbsp;-</td>");
-                    }
+                } else {
+                    out.println("<td class=\"" + yesnocolor + "\">&nbsp;-</td>");
+                }
                     %>
                     <td class="<%=yesnocolor%>">
-                        <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editar" value="Editar" onclick="exibeSelect('<%="result" + linha%>', '<%=idMapeamento%>', '<%=idPadraoDestino%>')"/>
+                        <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editar" value="Editar" onclick="exibeSelect('<%="result" + linha%>', '<%=idMapeamento%>', '<%=idPadraoDestino%>', this)"/>
 
 <!--<a title="Excluir" onclick="removeItem(<%=linha%>)">
                         <%=linha%>
@@ -231,7 +265,7 @@
                     </td>
                 </tr>
                 <%
-                    if (!atributoComplementar.isEmpty() && !valorComplementar.isEmpty()) {
+                if (!atributoComplementar.isEmpty() && !valorComplementar.isEmpty()) {
                 %>
                 <tr class='center'>
                     <td class="<%=yesnocolor%>"><%=atributoComplementar%></td>
@@ -242,27 +276,30 @@
                 <%
 
                 }
-                linha++;
+                linha++; //se for complementar incrementa a linha tambem
             }
 
 
                 %>
-                <tr class='center'>
-                    <td>
+                </table>
+                <table class='mapeamentos-table-add' id="tblAdicionar" cellpadding=5%>
+                <tr class='left'>
+                    <td width="10%">&nbsp;</td>
+                    <td width="10%">&nbsp;</td>
+                    <td width="80%">
 
-                        <a title="Adicionar" onclick="">
+                        <a title="Adicionar Mapeamento" onclick="">
                             <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                         </a>
 
 
                         &nbsp;&nbsp;
-                        <a onclick="">
-                            Adicionar
+                        <a onclick="adiciona();">
+                            Adicionar Mapeamento
                         </a>
 
                     </td>
 
-                    <% linha++;%>
 
                 </tr>
             </table>

@@ -296,6 +296,7 @@ src/web/listaStowords.jsp -text
 src/web/logando.jsp -text
 src/web/login.html -text
 src/web/mapeamentos/editaMapeamentos.jsp -text
+src/web/mapeamentos/funcoesMapeamento.js -text
 src/web/mapeamentos/mapeamentos.jsp -text
 src/web/mapeamentos/respostaAjax.jsp -text
 src/web/mapeamentos/testeAjax.jsp -text

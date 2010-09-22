@@ -46,7 +46,7 @@
         ResultSet res = stm.executeQuery(sql);
         if(res.next()){
             %>
-
+            
 <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=geral">Editar</a></div>

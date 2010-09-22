@@ -26,8 +26,8 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
             String tipo = request.getParameter("tipo");
             String valorAnterior = request.getParameter("valorAnterior");
+            String idDivResultado = request.getParameter("idResultado");
             
-                       
             int idMap = 0;
             String idMapeamento = request.getParameter("idMap");
             if (!idMapeamento.isEmpty()) {
@@ -42,7 +42,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                         "FROM atributos a " +
                         "WHERE a.idPadrao = (SELECT p.id FROM padraometadados p, mapeamentos m, atributos a WHERE m.destino_id=p.id AND m.destino_id=a.id AND a.idPadrao=p.id GROUP BY p.id)" +
                         "ORDER BY a.atributo;";
-               
+
                 ResultSet res = stm.executeQuery(sqlPadrao);
                 //percorre os resultados retornados pela consulta sql
                 while (res.next()) {
@@ -50,40 +50,59 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 }
                 out.println("</select>");
 
-                String idResultado = request.getParameter("idResultado");
-                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idResultado + "', '" + idMap + "')\"/>");
-                out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idResultado + "', '" + valorAnterior + "')\"/>");
+
+                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idDivResultado + "', '" + idMap + "', 'atributos')\"/>");
+                out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
             }
 
-
             else if (tipo.equalsIgnoreCase("cancelar")) { //retorna o atributo de destino que esta salvo na base de dados
+                
                 out.println(valorAnterior);
             }
 
-
-            else if (tipo.equalsIgnoreCase("salvar") && idMap > 0) { //se for para salvar na base..
+            else if (tipo.equalsIgnoreCase("salvar")) { //se for para salvar na base..
                 String novoValor = request.getParameter("novo");
-                int result = 0;
 
-                String sqlUpdate = "UPDATE mapeamentos SET destino_id="+novoValor+" where id="+idMap+";";
+                if (idMap > 0) { //se for pra salvar algum mapeamento
 
-                result = stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
 
-               out.println(consultaAtributoBase(idMap)); //retorna o valor que ficou salvo na base de dados
 
-            }
+                    String sqlUpdate = "UPDATE mapeamentos SET destino_id=" + novoValor + " where id=" + idMap + ";";
 
-            else if(tipo.equalsIgnoreCase("text")){
-                
-                out.println("<input type=\"text\" id=\"name\" name=\"nome\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" />");
-                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"\"/>");
+                    stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
+
+                    out.println(consultaAtributoBase(idMap)); //retorna o valor que ficou salvo na base de dados
+                } else { //se for pra salvar dados gerais
+                    String id = request.getParameter("idTipMap");
+                                    
+                    if (idDivResultado.equalsIgnoreCase("descricao")) {
+
+                        String sqlUpdate = "UPDATE tipomapeamento SET descricao='" + novoValor + "' where id=" + id + ";";
+
+                        stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
+
+                        out.println(consultaTipoMapeamento("descricao", id)); //retorna o valor que ficou salvo na base de dados
+
+                    } else if (idDivResultado.equalsIgnoreCase("tipoMap")) {
+                        String sqlUpdate = "UPDATE tipomapeamento SET nome='" + novoValor + "' where id=" + id + ";";
+                        stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
+                        
+                        out.println(consultaTipoMapeamento("nome", id)); //retorna o valor que ficou salvo na base de dados
+
+                    }
+                }
+            } else if (tipo.equalsIgnoreCase("text")) {
+
+                String idTipoMapeamento = request.getParameter("idTipMap");
+                out.println("<input type=\"text\" id=\"geral\" name=\"geral\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" />");
+                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idDivResultado + "', '0', 'geral', '"+idTipoMapeamento+"')\"/>");
+                out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
                 //inserir um text para salvar o valor depois
 
 
 
 
-            }
-            else //Este comando devolverá "Dados inseridos com Sucesso para" o Ajax.
+            } else //Este comando devolverá "Dados inseridos com Sucesso para" o Ajax.
             {
                 out.println("Faltando informação para funcionar o Ajax");
             }
@@ -100,5 +119,23 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 rs.next();
                 return rs.getString("atributo");
 
+}
+
+public String consultaTipoMapeamento(String atributo, String id) throws SQLException{
+    
+    Conectar conect = new Conectar();
+            //chama metodo que conecta no mysql
+            Connection con = conect.conectaBD();
+    Statement stm = con.createStatement();
+    String sql = "";
+    if(atributo.equalsIgnoreCase("descricao")){
+        sql = "SELECT t.descricao FROM tipomapeamento t where id="+id+";";
+    }else if(atributo.equalsIgnoreCase("nome")){
+        sql = "SELECT t.nome FROM tipomapeamento t where id="+id+";";
+    }
+                ResultSet rs = stm.executeQuery(sql);
+                rs.next();
+                return rs.getString(1);
+    
 }
 %>
