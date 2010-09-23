@@ -1,7 +1,7 @@
 package ferramentaBusca;
 
 import ferramentaBusca.indexador.*;
-import postgres.ConectaPostgres;
+import postgres.Conectar;
 import java.sql.*;
 import com.novell.ldap.*;
 import java.io.UnsupportedEncodingException;
@@ -34,10 +34,14 @@ public class IndexadorBusca {
 
         String attrs[] = {"obaaEntry", "obaaTitle", "obaaKeyword", "obaaEntity", "obaaDescription", "obaaEducationalDescription", "obaaDate", "obaaLocation", "obaaIdentifier"};
 
-        String sqlDadosLdap = "SELECT l.ip, if(r.nome='todos',l.dn, CONCAT('ou=',i.nome_na_federacao,',',l.dn)) AS dn, l.login, l.senha, l.porta from ldaps l, info_repositorios i, repositorios r " +
-                "WHERE r.id=i.id_repositorio " +
-                "AND i.ldapDestino=l.id " +
-                "AND r.id=" + repositorio + ";";
+        
+        String sqlDadosLdap = "SELECT l.ip, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn, l.login, l.senha, l.porta FROM ldaps l, info_repositorios i, repositorios r WHERE r.id=i.id_repositorio AND i.ldap_destino=l.id AND r.id="+repositorio+";";
+
+        //versão MySQL
+//        String sqlDadosLdap = "SELECT l.ip, if(r.nome='todos',l.dn, CONCAT('ou=',i.nome_na_federacao,',',l.dn)) AS dn, l.login, l.senha, l.porta from ldaps l, info_repositorios i, repositorios r " +
+//                "WHERE r.id=i.id_repositorio " +
+//                "AND i.ldap_destino=l.id " +
+//                "AND r.id=" + repositorio + ";";
 
         try {
 
@@ -131,12 +135,13 @@ public class IndexadorBusca {
                     idRaizVet = idRaizVet[1].split("="); //string que recebera o caminho da arvore ldap sem o identificador e separa pelo =
 
                     ConsultaNomeFederacao nomeBase = new ConsultaNomeFederacao(idRaizVet[1], con); //estancia uma variavel da classe testaNaBase passando o nome do repositorio, ex. lume
-                    nomeServidorResultado = nomeBase.getNomeEncontrado(); //recebe o nome do repositio onde o objeto foi encontrado
+                    nomeServidorResultado = nomeBase.getNomeEncontrado().toLowerCase(); //recebe o nome do repositio onde o objeto foi encontrado
 
-                    String consultaSQL = "select id_repositorio from info_repositorios where nome_na_federacao='" + nomeServidorResultado.trim() + "';";
-                    
+                    String consultaSQL = "SELECT id_repositorio FROM info_repositorios WHERE nome_na_federacao='" + nomeServidorResultado.trim() + "';";
+
                     ResultSet rs2 = stmDadosLdap.executeQuery(consultaSQL);
                     rs2.next();
+
                     servidor = rs2.getInt("id_repositorio"); //coloca o id do servidor da variavel servidor
 
                     Iterator allAttributes = attributeSet.iterator();
@@ -156,7 +161,7 @@ public class IndexadorBusca {
                             while (allValues.hasMoreElements()) {
 
                                 String Value = (String) allValues.nextElement();
-                                if (attributeName.equalsIgnoreCase("obaaEntry")) {//se for obaaEntry adiciona na variavel entry
+                                if (attributeName.equalsIgnoreCase("obaaEntry")) {//se for obaa_entry adiciona na variavel entry
                                     identificador = Value;
                                 }
                                 if (attributeName.equalsIgnoreCase("obaaTitle")) {//se for obaaTitle adiocina na variavel title
@@ -187,7 +192,9 @@ public class IndexadorBusca {
                                         descricao += ";; " + Value;
                                     }
                                 }
-                                if (attributeName.equalsIgnoreCase("obaaEducationalDescription")) {//se for xx adiocina na variavel descricao
+
+                                if (attributeName.equalsIgnoreCase("obaaDescription")) {//se for xx adiocina na variavel descricao
+                                    
                                     if (resumo.isEmpty()) {
                                         resumo = Value;
                                     } else {
@@ -268,18 +275,18 @@ public class IndexadorBusca {
     }
 
     /**
-     * Metodo que recebe como entrada o titulo, palavrachave, entidade, ObaaEntry e a descrição,
+     * Metodo que recebe como entrada o titulo, palavrachave, entidade, obaa_entry e a descrição,
      * efetua testes, armazena-os na classe Documentos, e passa o documentos para a classe Indexador.
      * @param titulo Titulo do documento.
      * @param palavraChave palavraschave do documento. Contatenadas por um " " na string.
      * @param entidade Entidades do documentos. Contatenadas por um " " na string.
-     * @param entry ObaaEntry, ou seja o identificador &uacute;nico do documento.
+     * @param entry obaa_entry, ou seja o identificador &uacute;nico do documento.
      * @param descricao Descrição do documento.
      * @param con conex&atilde;o com mysql.
      * @throws SQLException Exce&ccedil;&atilde;o do mysql.
      */
     public void populaRI(String titulo, String palavraChave, String entidade, String entry, String descricao, String resumo, String data, String localizacao, int servidor, Connection con) throws SQLException {
-        
+
         StopWordTAD stWd = new StopWordTAD();
         stWd.load(con);
         
@@ -323,18 +330,18 @@ public class IndexadorBusca {
     }
 
     /**
-     * Testa se o obaaEntry já existe na base de dados
-     * @param obaaEntry String contendo o obaaEntry
+     * Testa se o obaa_entry já existe na base de dados
+     * @param obaa_entry String contendo o obaa_entry
      * @param con conexão com mysql
      * @return true se o objeto existe e false se não existir
      * @param con Conexao com o mysql
      */
-    public boolean testaEntry(String obaaEntry, Connection con) throws SQLException {
+    public boolean testaEntry(String obaa_entry, Connection con) throws SQLException {
         boolean resultado;
 
         Statement stm = con.createStatement();
         //fazer consulta sql
-        String sql = "SELECT id FROM documentos where obaaEntry='" + obaaEntry + "'";
+        String sql = "SELECT id FROM documentos where obaa_entry='" + obaa_entry + "'";
         ResultSet rs = stm.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
         if (rs.next()) //testa se tem o proximo resultado
         {
@@ -427,11 +434,12 @@ public class IndexadorBusca {
      */
     public static void main(String args[]) {
         IndexadorBusca run = new IndexadorBusca();
-        ConectaPostgres conectar = new ConectaPostgres(); //instancia uma variavel da classe Postgres.conectar
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe Postgres.conectar
         Connection con = conectar.conectaBD();
 
-        run.indexarTodosRepositorios(con); //cria o indice com todos os repositorios
+        //run.indexarTodosRepositorios(con); //cria o indice com todos os repositorios
 
+        run.reindexarTudo(con);
         try {
             con.close(); //fechar conexao com o mysql
         } catch (SQLException e) {
