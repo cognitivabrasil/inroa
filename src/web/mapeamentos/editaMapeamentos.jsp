@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FEB - Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
+        <title>FEB â€“ Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js">
@@ -114,7 +114,7 @@
 
 //consulta os mapeamentos na base de dados
             String sqlPadrao = "SELECT nome FROM padraometadados p WHERE p.id=" + idPadrao + ";";
-            String sqlMap = "SELECT m.id as idMap, a1.atributo as origem, a2.atributo as destino, a2.idPadrao as idPadraoDestino, m.mapeamentoComposto_id" +
+            String sqlMap = "SELECT m.id as id_map, a1.atributo as origem, a2.atributo as destino, a2.id_padrao as id_padrao_destino, m.mapeamento_composto_id" +
                     " FROM atributos a1, mapeamentos m, atributos a2" +
                     " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipoMapeamento_id=" + tipoMapeamento + " AND m.padraometadados_id=" + idPadrao + ";";
 
@@ -124,15 +124,15 @@
             String nomePadrao = rs1.getString("nome");
             //rs1.close();
             out.print("<div class=\"subtitulo\">" + nomePadrao + " / <b>OBAA</b></div>");
-            out.println("<div class='textoErro center'><b>Aten&ccedil;&atilde;o!</b> Tenha cuidado ao editar este mapeamento, pois pode estar sendo utilizado por mais de um reposit&oacute;rio.</div>");
+            out.println("<div class='textoErro center'><b>AtenÃ§Ã£o!</b> Tenha cuidado ao editar este mapeamento, pois pode estar sendo utilizado por mais de um repositÃ³rio.</div>");
             ResultSet rs2 = stm.executeQuery(sqlMap);
             //pega o proximo resultado retornado pela consulta sql
             while (rs2.next()) {
                 String origem = rs2.getString("origem");
                 String destino = rs2.getString("destino");
-                int idComplementar = rs2.getInt("mapeamentoComposto_id");
-                int idMapeamento = rs2.getInt("idMap");
-                int idPadraoDestino = rs2.getInt("idPadraoDestino");
+                int idComplementar = rs2.getInt("mapeamento_composto_id");
+                int idMapeamento = rs2.getInt("id_map");
+                int idPadraoDestino = rs2.getInt("id_padrao_destino");
 
                 if (linha % 2 == 0) {
                     yesnocolor = "price-yes";
