@@ -21,8 +21,8 @@ public class AtualizaBase {
      */
     public boolean atualizaHora(int id){
         //Connection con = null;
-        Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
-        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
+        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         try {
 
            // Class.forName("com.mysql.jdbc.Driver");

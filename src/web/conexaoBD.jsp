@@ -1,5 +1,5 @@
 <%@page import="java.sql.*"%>
-<%@page import="mysql.Conectar"%>
+<%@page import="postgres.Conectar"%>
 <%
 
             Conectar conect = new Conectar();

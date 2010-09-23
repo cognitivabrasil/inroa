@@ -70,7 +70,7 @@ Author     : Marcos Nunes
             String yesnocolor = "";
 
             //Carrega do banco de dados os repositorios cadastrados
-            ResultSet res = stm.executeQuery("SELECT r.nome, r.id, r.descricao, i.dataUltimaAtualizacao FROM repositorios r, info_repositorios i where r.id=i.id_repositorio ORDER BY nome ASC");
+            ResultSet res = stm.executeQuery("SELECT r.nome, r.id, r.descricao, i.data_ultima_atualizacao FROM repositorios r, info_repositorios i where r.id=i.id_repositorio ORDER BY nome ASC");
             while (res.next()) {
                 if (!res.getString("nome").equalsIgnoreCase("todos")) {
 

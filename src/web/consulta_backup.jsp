@@ -12,7 +12,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 <%@page import="operacoesLdap.Consultar"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="mysql.ConsultaNomeFederacao" %>
+<%@page import="postgres.ConsultaNomeFederacao" %>
 <%@include file="conexaoBD.jsp"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">

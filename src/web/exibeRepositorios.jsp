@@ -9,7 +9,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
-<%@page import="mysql.AtualizacaoRepositorio"%>
+<%@page import="postgres.AtualizacaoRepositorio"%>
 <%@page import="java.util.Date" %>
 <html>
     <head>
