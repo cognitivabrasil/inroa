@@ -11,7 +11,7 @@ import ferramentaBusca.indexador.Indexador;
 import ferramentaBusca.indexador.StopWordTAD;
 import java.sql.Connection;
 import java.sql.SQLException;
-import mysql.Conectar;
+import postgres.Conectar;
 import robo.importa_OAI.OAI_Interface;
 
 /**
@@ -174,7 +174,7 @@ public class InsereLdap {
         }
 
 
-        String dn = "obaaEntry=" + header.getIdentifier() + "," + containerName;
+        String dn = "obaa_entry=" + header.getIdentifier() + "," + containerName;
 
         LDAPEntry newEntry = new LDAPEntry(dn, attributeSet);
 

@@ -8,14 +8,14 @@ import robo.importaLDAP.AtualizaLDAP;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import mysql.AtualizaBase;
+import postgres.AtualizaBase;
 import robo.util.Informacoes;
 import ferramentaBusca.indexador.Indexador;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import operacoesLdap.Remover;
-import mysql.Conectar;
+import postgres.Conectar;
 
 /**
  * Ferramenta de Sincronismo (Robô)
@@ -41,18 +41,18 @@ public class Robo1 {
         Connection con = null;
         boolean atualizou = false;
 
-        String sql = "select r.nome, i.dataUltimaAtualizacao, r.id as idrep, l.ip as ipDestino, concat('ou=',i.nome_na_federacao,',',l.dn) as dnDestino, i.urlorip as url, i.tipoSincronizacao, " +
-                "l.login as loginLdapDestino, l.senha as senhaLdapDestino, p.nome as padraoMetadados, p.metadataPrefix, l.porta as portaLdapDestino, " +
-                "d.loginLdapOrigem, d.senhaLdapOrigem, d.portaLdapOrigem, d.dnOrigem, " +
-                "DATE_FORMAT(i.dataUltimaAtualizacao, '%Y-%m-%dT%H:%i:%sZ') as ultimaAtualizacaoForm " +
+        String sql = "select r.nome, i.data_ultima_atualizacao, r.id as idrep, l.ip as ipDestino, ('ou='||i.nome_na_federacao||','||l.dn) as dnDestino, i.url_or_ip as url, i.tipo_sincronizacao, " +
+                "l.login as loginLdapDestino, l.senha as senhaLdapDestino, p.nome as padrao_metadados, p.metadataPrefix, l.porta as portaLdapDestino, " +
+                "d.login_ldap_origem, d.senhaLdapOrigem, d.portaLdapOrigem, d.dnOrigem, " +
+                "DATE_FORMAT(i.data_ultima_atualizacao, '%Y-%m-%dT%H:%i:%sZ') as ultimaAtualizacaoForm " +
                 "FROM repositorios r, info_repositorios i, padraometadados p, dadosldap d, ldaps l " +
                 "WHERE r.id=i.id_repositorio " +
                 "AND r.id=d.id_repositorio " +
-                "AND i.padraoMetadados=p.id " +
-                "AND i.ldapDestino=l.id " +
+                "AND i.padrao_metadados=p.id " +
+                "AND i.ldap_destino=l.id " +
                 "AND r.nome!='todos' " +
                 "AND r.nome!='obaa' " +
-                "AND i.dataUltimaAtualizacao<DATE_SUB(now(), INTERVAL i.periodicidadeHoras HOUR);";
+                "AND i.data_ultima_atualizacao<DATE_SUB(now(), INTERVAL i.periodicidade_horas HOUR);";
 
 
         con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
@@ -90,21 +90,21 @@ public class Robo1 {
                     int idRep = rs.getInt("idrep");
                     String loginDestino = rs.getString("loginLdapDestino");
                     String senhaDestino = rs.getString("senhaLdapDestino");
-                    String padraoMetadados = rs.getString("padraoMetadados");
+                    String padrao_metadados = rs.getString("padrao_metadados");
                     int portaLDAPDestino = rs.getInt("portaLdapDestino");
-                    String loginOrigem = rs.getString("loginLdapOrigem");
+                    String loginOrigem = rs.getString("login_ldap_origem");
                     String senhaOrigem = rs.getString("senhaLdapOrigem");
                     int portaLDAPOrigem = rs.getInt("portaLdapOrigem");
 
                     String dnOrigem = rs.getString("dnOrigem");
-                    String tipoSinc = rs.getString("tipoSincronizacao");
-                    Date dataUltimaAtualizacao = rs.getDate("dataUltimaAtualizacao");
+                    String tipoSinc = rs.getString("tipo_sincronizacao");
+                    Date data_ultima_atualizacao = rs.getDate("data_ultima_atualizacao");
                     ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que aramzanara os caminhos para os xmls
 
 
 
                     //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio o LDAP
-                    if (testarDataAnteriorMil(dataUltimaAtualizacao)) {
+                    if (testarDataAnteriorMil(data_ultima_atualizacao)) {
                         Remover deleta = new Remover();
                         System.out.println("Deletando toda a base de dados do repositório: " + nome.toUpperCase());
                         deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro
@@ -127,7 +127,7 @@ public class Robo1 {
                     if (tipoSinc.equalsIgnoreCase("OAI-PMH")) {
 
 
-                        if (padraoMetadados.equalsIgnoreCase("Dublin Core")) { //testar em que padrao sera feita a sincrinizacao com o OAI-PMH
+                        if (padrao_metadados.equalsIgnoreCase("Dublin Core")) { //testar em que padrao sera feita a sincrinizacao com o OAI-PMH
                             System.out.println("\nAtualizando repositorio: " + nome + "...\n Está no padrão dublin core e a sincrinização será por: " + tipoSinc);
 
                             System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
@@ -159,18 +159,18 @@ public class Robo1 {
                                 System.out.println("O caminho informado não é um diretório. E não pode ser criado. " + caminhoDiretorioTemporario);
                             }
 
-                        } else if (padraoMetadados.equalsIgnoreCase("lom")) {
+                        } else if (padrao_metadados.equalsIgnoreCase("lom")) {
                             System.out.println("\nAtualizando repositorio: " + nome + "...\n Está no padrão LOM e a sincrinização será por: " + tipoSinc);
                             System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
                             System.err.println("Não tem nenhuma classe que faça a sincronização com o padrão LOM!");
                         }
 
                     } else if (tipoSinc.equalsIgnoreCase("LDAP")) { //se a sincronizacao for por LDAP
-                        if (padraoMetadados.equalsIgnoreCase("Dublin Core")) { //se o padrao de metadados for dublincore
+                        if (padrao_metadados.equalsIgnoreCase("Dublin Core")) { //se o padrao de metadados for dublincore
                             System.out.println("\nAtualizando repositorio: " + nome + "...\n Está no padrão dublin core e a sincrinização será por: " + tipoSinc);
                             System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
                             System.err.println(" Não tem nenhuma classe que faça a sincronização com o padrão dublin core!");
-                        } else if (padraoMetadados.equalsIgnoreCase("lom")) {
+                        } else if (padrao_metadados.equalsIgnoreCase("lom")) {
                             System.out.println("\nAtualizando repositorio: " + nome + "...\n Está no padrão LOM e a sincrinização será por: " + tipoSinc);
                             System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
                             try {
@@ -238,7 +238,7 @@ public class Robo1 {
                 " WHERE r.id=i.id_repositorio" +
                 " AND r.nome!='todos'" +
                 " AND r.nome!='obaa'" +
-                " AND i.dataUltimaAtualizacao<DATE_SUB(now(), INTERVAL i.periodicidadeHoras HOUR);";
+                " AND i.data_ultima_atualizacao<DATE_SUB(now(), INTERVAL i.periodicidade_horas HOUR);";
 
         
 
@@ -285,15 +285,15 @@ public class Robo1 {
         Connection con = null;
         String caminhoDiretorioTemporario = conf.getCaminho();
 
-        String sql = "select r.nome, i.dataUltimaAtualizacao, l.ip as ipDestino, concat('ou=',i.nome_na_federacao,',',l.dn) as dnDestino, i.urlorip as url, i.tipoSincronizacao," +
-                " l.login as loginLdapDestino, l.senha as senhaLdapDestino, p.nome as padraoMetadados, p.metadataPrefix, p.namespace, l.porta as portaLdapDestino," +
-                " d.loginLdapOrigem, d.senhaLdapOrigem, d.portaLdapOrigem, d.dnOrigem," +
-                " DATE_FORMAT(i.dataUltimaAtualizacao, '%Y-%m-%dT%H:%i:%sZ') as ultimaAtualizacaoForm" +
+        String sql = "select r.nome, i.data_ultima_atualizacao, l.ip as ipDestino, ('ou='||i.nome_na_federacao||','||l.dn) as dnDestino, i.url_or_ip as url, i.tipo_sincronizacao," +
+                " l.login as loginLdapDestino, l.senha as senhaLdapDestino, p.nome as padrao_metadados, p.metadataPrefix, p.namespace, l.porta as portaLdapDestino," +
+                " d.login_ldap_origem, d.senhaLdapOrigem, d.portaLdapOrigem, d.dnOrigem," +
+                " DATE_FORMAT(i.data_ultima_atualizacao, '%Y-%m-%dT%H:%i:%sZ') as ultimaAtualizacaoForm" +
                 " FROM repositorios r, info_repositorios i, padraometadados p, dadosldap d, ldaps l" +
                 " WHERE r.id=i.id_repositorio" +
                 " AND r.id=d.id_repositorio" +
-                " AND i.padraoMetadados=p.id" +
-                " AND i.ldapDestino=l.id" +
+                " AND i.padrao_metadados=p.id" +
+                " AND i.ldap_destino=l.id" +
                 " AND r.id=" + idRepositorio+";";
 
         con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
@@ -326,22 +326,22 @@ public class Robo1 {
                 int idRep = idRepositorio;
                 String loginDestino = rs.getString("loginLdapDestino");
                 String senhaDestino = rs.getString("senhaLdapDestino");
-                String padraoMetadados = rs.getString("padraoMetadados");
+                String padrao_metadados = rs.getString("padrao_metadados");
                 int portaLDAPDestino = rs.getInt("portaLdapDestino");
-                String loginOrigem = rs.getString("loginLdapOrigem");
+                String loginOrigem = rs.getString("login_ldap_origem");
                 String senhaOrigem = rs.getString("senhaLdapOrigem");
                 int portaLDAPOrigem = rs.getInt("portaLdapOrigem");
 
                 String dnOrigem = rs.getString("dnOrigem");
-                String tipoSinc = rs.getString("tipoSincronizacao");
-                Date dataUltimaAtualizacao = rs.getDate("dataUltimaAtualizacao");
+                String tipoSinc = rs.getString("tipo_sincronizacao");
+                Date data_ultima_atualizacao = rs.getDate("data_ultima_atualizacao");
                 ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que aramzanara os caminhos para os xmls
 
                 System.out.println("Ultima Atualização: "+ultimaAtualizacao+" nome do rep: "+nome);
                 
 
                 //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio o LDAP
-                if (testarDataAnteriorMil(dataUltimaAtualizacao)) {
+                if (testarDataAnteriorMil(data_ultima_atualizacao)) {
                     Remover deleta = new Remover();
                     System.out.println("Deletando toda a base de dados do repositório: " + nome.toUpperCase());
                     deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro
@@ -363,7 +363,7 @@ public class Robo1 {
                 //testar se a sincronicazao deve ser feita por OAI-PMH
                 if (tipoSinc.equalsIgnoreCase("OAI-PMH")) {
 
-                    if (padraoMetadados.equalsIgnoreCase("Dublin Core")) { //testar em que padrao sera feita a sincrinizacao com o OAI-PMH
+                    if (padrao_metadados.equalsIgnoreCase("Dublin Core")) { //testar em que padrao sera feita a sincrinizacao com o OAI-PMH
                         System.out.println("Está no padrão dublin core e a sincrinização será por: " + tipoSinc);
 
                         System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
@@ -399,14 +399,14 @@ public class Robo1 {
                     }
 
                     //OAI-PMH com o padrao LOM
-                    else if (padraoMetadados.equalsIgnoreCase("lom")) {
+                    else if (padrao_metadados.equalsIgnoreCase("lom")) {
                         System.out.println("\nRepositorio " + nome + " deve ser atualizado!");
                         System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
                         System.err.println("Não tem nenhuma classe que faça a sincronização com o padrão LOM!");
                     } 
                     
                     //OAI-PMH com o padrao OBAA
-                    else if (padraoMetadados.equalsIgnoreCase("obaa")) {
+                    else if (padrao_metadados.equalsIgnoreCase("obaa")) {
                         System.out.println("Está no padrão OBAA e a sincrinização será por: " + tipoSinc);
                         System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
 
@@ -440,11 +440,11 @@ public class Robo1 {
 
 
                 } else if (tipoSinc.equalsIgnoreCase("LDAP")) { //se a sincronizacao for por LDAP
-                    if (padraoMetadados.equalsIgnoreCase("Dublin Core")) { //se o padrao de metadados for dublincore
+                    if (padrao_metadados.equalsIgnoreCase("Dublin Core")) { //se o padrao de metadados for dublincore
                         System.out.println("\nAtualizando repositorio: " + nome + "...\n Está no padrão dublin core e a sincrinização será por: " + tipoSinc);
                         
                         System.err.println(" Não tem nenhuma classe que faça a sincronização com o padrão dublin core!");
-                    } else if (padraoMetadados.equalsIgnoreCase("lom")) {
+                    } else if (padrao_metadados.equalsIgnoreCase("lom")) {
                         System.out.println("\nAtualizando repositorio: " + nome + "...\n Está no padrão LOM e a sincrinização será por: " + tipoSinc);
                         System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
                         try {

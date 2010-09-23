@@ -10,8 +10,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import mysql.Conectar;
-import mysql.Excluir;
+import postgres.Conectar;
+import postgres.Excluir;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class Remover {
 
     /**
      * Método responsável por apagar objetos de um base LDAP
-     * @param nomeId Nome do atributo identificador do ojeto a ser apagado. Ex.: obaaEntry
+     * @param nomeId Nome do atributo identificador do ojeto a ser apagado. Ex.: obaa_entry
      * @param valorId Valor do atributo identificador do objeto a ser apagado. Ex: obaa0001
      * @param dnRecebido DN da base onde se encontra o objeto
      * @param lc Conex&atilde;o com o ldap. Deve ter conexão e bind realizados.
@@ -77,7 +77,7 @@ public class Remover {
 
 
         //recebe como parametro a palavra chave ou frase que sera buscada
-        String searchFilter = "(obaaEntry=*)";
+        String searchFilter = "(obaa_entry=*)";
 
 //        LDAPConnection lc = new LDAPConnection();
         String nomeIdentificador = "";
@@ -104,7 +104,7 @@ public class Remover {
                 nextEntry = searchResults.next();
 
 
-                LDAPAttribute atributo = new LDAPAttribute(nextEntry.getAttribute("obaaEntry"));
+                LDAPAttribute atributo = new LDAPAttribute(nextEntry.getAttribute("obaa_entry"));
                 nomeIdentificador = atributo.getName();
                 valorIdentificador = atributo.getStringValue();
 
@@ -262,7 +262,7 @@ public class Remover {
             Statement stm = con.createStatement();
             //executa a consulta que esta na variavel sql
 
-            String sql2 = "SELECT l.ip, l.dn, l.login, l.senha, l.porta, i.nome_na_federacao as nomeNodo from ldaps l, info_repositorios i where i.ldapDestino=l.id AND i.id_repositorio=" + id;
+            String sql2 = "SELECT l.ip, l.dn, l.login, l.senha, l.porta, i.nome_na_federacao as nomeNodo from ldaps l, info_repositorios i where i.ldap_destino=l.id AND i.id_repositorio=" + id;
             //pegar dados do mysql para informar ao metodo
             ResultSet infoLdap = stm.executeQuery(sql2);
             infoLdap.next();

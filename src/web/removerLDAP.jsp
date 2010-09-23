@@ -74,6 +74,7 @@
                     out.print("<p class='textoErro'>Erro:" + e);
 
                 } catch (SQLException k) {
+                    System.out.println("ERRO SQL: "+k);
                     out.print("<p class='textoErro'>Erro no sql: " + k);
 
                     out.print("<script type='text/javascript'>alert('Erro ao remover a base de bados LDAP! \\n Tente novamente mais tarde!');</script></p>" +

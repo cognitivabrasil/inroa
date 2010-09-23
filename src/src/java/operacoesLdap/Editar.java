@@ -1,7 +1,7 @@
 package operacoesLdap;
 
 import java.sql.*;
-import mysql.Conectar;
+import postgres.Conectar;
 
 /**
  * Classe que disponibiliza operações de edição no LDAP.
@@ -26,7 +26,7 @@ public class Editar {
 
         //chama metodo que conecta ao mysql
         Connection con = conectar.conectaBD();
-        String consultaSql = "SELECT l.id, l.ip, l.dn, l.login, l.senha, l.porta, i.nome_na_federacao as nomeNodo from ldaps l, info_repositorios i where i.ldapDestino=l.id AND i.id_repositorio=" + idRep;
+        String consultaSql = "SELECT l.id, l.ip, l.dn, l.login, l.senha, l.porta, i.nome_na_federacao as nomeNodo from ldaps l, info_repositorios i where i.ldap_destino=l.id AND i.id_repositorio=" + idRep;
         String sqlLdapNovo = "SELECT l.ip, l.dn, l.login, l.senha, l.porta FROM ldaps l where id=" + idLdapNovo;
 
         try {
@@ -57,11 +57,11 @@ public class Editar {
             System.out.println(nodoinserido);
             if (nodoinserido) {//se inseriu entra no if
                 //alterar no mysql as informações
-                String sql = "UPDATE info_repositorios SET ldapDestino=" + idLdapNovo + " WHERE id_repositorio=" + idRep;
+                String sql = "UPDATE info_repositorios SET ldap_destino=" + idLdapNovo + " WHERE id_repositorio=" + idRep;
                 int result = 0;
                 result = stm.executeUpdate(sql);
                 if (result > 0) {//se alterou no mysql segue
-                    String sqlUpdtData = "UPDATE info_repositorios SET dataUltimaAtualizacao='0001-01-01 00:00:00' where id_repositorio=" + idRep;
+                    String sqlUpdtData = "UPDATE info_repositorios SET data_ultima_atualizacao='0001-01-01 00:00:00' where id_repositorio=" + idRep;
                     int result2 = 0;
                     result2 = stm.executeUpdate(sqlUpdtData);
                     if (result2 > 0) {

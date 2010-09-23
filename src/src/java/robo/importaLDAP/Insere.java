@@ -23,7 +23,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
-import mysql.Conectar;
+import postgres.Conectar;
 
 public class Insere {
 
@@ -74,7 +74,7 @@ public class Insere {
                 "objectclass", new String[]{"top", "obaa"}));
 
 
-        doc.setObaaEntry(objetos.get("lomIdentifier").toString()); //envia o obaaEntry para o indice
+        doc.setObaaEntry(objetos.get("lomIdentifier").toString()); //envia o obaa_entry para o indice
         doc.setServidor(idRep); // envia o id do servidor para o indice
 
         /*funcao recursiva que adiciona todos os atributos contidos no hashmap*/
@@ -137,7 +137,7 @@ public class Insere {
         /*fim da funcao recursiva*/
 
 
-        String dn = "obaaEntry=" + objetos.get("lomIdentifier") + "," + containerName;
+        String dn = "obaa_entry=" + objetos.get("lomIdentifier") + "," + containerName;
 
         LDAPEntry newEntry = new LDAPEntry(dn, attributeSet);
 

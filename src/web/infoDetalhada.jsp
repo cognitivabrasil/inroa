@@ -60,8 +60,8 @@ modelo de tópico:
             if (dados.containsKey("obaaIdentifier")) {
                 String obaaIdentifier[] = dados.get("obaaIdentifier").toString().split(";; ");
                 out.print(obaaIdentifier[0]);
-            } else if (dados.containsKey("obaaEntry")) {
-                out.print(dados.get("obaaEntry"));
+            } else if (dados.containsKey("obaa_entry")) {
+                out.print(dados.get("obaa_entry"));
             }
                     %>
                 </div>

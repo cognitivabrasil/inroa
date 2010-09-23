@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package mysql;
+package postgres;
 
 
 import java.sql.Connection;
@@ -91,7 +91,7 @@ public class teste {
     }
 
     public void teste() {
-        String sql = "SELECT a1.atributo as mapeado FROM atributos a1, mapeamentos m, atributos a2 WHERE a1.id=m.origem_id and a2.id=m.destino_id and a2.atributo='title';";
+        String sql = "SELECT titulo FROM documentos WHERE id=29845;";
         try {
             Conectar conecta = new Conectar();
             Connection con = conecta.conectaBD();

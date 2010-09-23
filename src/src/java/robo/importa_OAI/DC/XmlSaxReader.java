@@ -160,10 +160,10 @@ public class XmlSaxReader extends DefaultHandler {
                 headerAux.setidDeletado(valorAtual.toString().trim());
                 System.out.println("deletar o objeto: " + valorAtual.toString().trim());
                 try {
-                    funcLdap.apagaObjeto("obaaEntry", valorAtual.toString(), dn, conexaoLdap);
+                    funcLdap.apagaObjeto("obaa_entry", valorAtual.toString(), dn, conexaoLdap);
                 } catch (LDAPException e) {
                     if (e.getResultCode() == LDAPException.NO_SUCH_OBJECT) {
-                        System.err.println("Erro ao apagar: Não foi encontrado o objeto: " + "obaaEntry=" + valorAtual.toString() + "," + dn);
+                        System.err.println("Erro ao apagar: Não foi encontrado o objeto: " + "obaa_entry=" + valorAtual.toString() + "," + dn);
                     } else if (e.getResultCode() ==
                             LDAPException.INSUFFICIENT_ACCESS_RIGHTS) {
                         System.err.println("Erro ao apagar: Insufficient rights");

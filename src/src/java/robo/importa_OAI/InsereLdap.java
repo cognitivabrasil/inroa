@@ -52,7 +52,7 @@ public class InsereLdap {
             
 
 
-        String dn = "obaaEntry=" + header.getIdentifier() + "," + containerName;
+        String dn = "obaa_entry=" + header.getIdentifier() + "," + containerName;
 
         LDAPEntry newEntry = new LDAPEntry(dn, attributeSet);
 

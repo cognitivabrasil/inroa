@@ -65,11 +65,11 @@ Primeira etapa do cadastro de um repositorio
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
-                        <select name="padraoMetadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                        <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                             <option value="" selected>Selecione
                                 <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
-                ResultSet res = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
+                ResultSet res = stm.executeQuery("SELECT nome, id FROM padrao_metadados ORDER BY nome ASC");
                 while (res.next()) {
                     if (!res.getString("nome").equalsIgnoreCase("todos")) {
                         out.println("<option value=" + res.getString("id") + ">" + res.getString("nome").toUpperCase());

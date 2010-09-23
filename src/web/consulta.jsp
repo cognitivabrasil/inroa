@@ -169,11 +169,12 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
 
                     //fazer consulta no mysql para pegar as informações necessárias
-                    String resultadoSQL = "select d.obaaEntry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as servidor, l.ip, if(r.nome='todos',l.dn, concat('ou=',i.nome_na_federacao,',',l.dn)) as dn from documentos d, repositorios r, ldaps l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.ldapDestino=l.id;";
+                    String resultadoSQL = "SELECT d.obaa_entry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as servidor, l.ip, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn from documentos d, repositorios r, ldaps l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.ldap_destino=l.id;";
+
                     ResultSet rs = stm.executeQuery(resultadoSQL);
                     //pega o proximo resultado retornado pela consulta sql
                     rs.next();
-                    String identificador = rs.getString("obaaEntry");
+                    String identificador = rs.getString("obaa_entry");
                     String titulo = rs.getString("titulo");
                     String resumo = rs.getString("resumo");
                     String data = rs.getString("data");

@@ -7,12 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import mysql.AtualizaBase;
+import postgres.AtualizaBase;
 import ferramentaBusca.indexador.Indexador;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.util.HashMap;
-import mysql.Conectar;
+import postgres.Conectar;
 
 /*
  * To change this template, choose Tools | Templates

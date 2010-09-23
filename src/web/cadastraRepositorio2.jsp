@@ -48,7 +48,7 @@ Segunda etapa do cadastro de um repositorio
             //armazena em variaveis os dados preenchidos no formulario
             String nome = request.getParameter("nomeRep").trim();
             String descricao = request.getParameter("descricao").trim();
-            String padraoMetadados = request.getParameter("padraoMetadados").trim();
+            String padrao_metadados = request.getParameter("padrao_metadados").trim();
 
             String periodicidade = request.getParameter("periodicidade").trim();
             //String nomeNaFederacao = request.getParameter("nomeNaFederacao").trim();
@@ -60,7 +60,7 @@ Segunda etapa do cadastro de um repositorio
 
             //se algum campo estiver em branco exibe alerta e volta ao formulario
             if (nome.isEmpty() || descricao.isEmpty() || periodicidade.isEmpty() ||
-                    tipoSinc.isEmpty() || padraoMetadados.isEmpty()) {
+                    tipoSinc.isEmpty() || padrao_metadados.isEmpty()) {
                 //nomeNaFederacao.isEmpty() ||
                 out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
                         "<script type='text/javascript'>history.back(-1);</script>");
@@ -69,7 +69,7 @@ Segunda etapa do cadastro de um repositorio
             //armazena os valores na sessao
             session.setAttribute("nomeRep", nome);
             session.setAttribute("descricao", descricao);
-            session.setAttribute("padraoMetadados", padraoMetadados);
+            session.setAttribute("padrao_metadados", padrao_metadados);
             session.setAttribute("periodicidade", periodicidade);
             //session.setAttribute("nomeNaFederacao", nomeNaFederacao);
             session.setAttribute("sincronizacao", tipoSinc);
@@ -90,11 +90,11 @@ Segunda etapa do cadastro de um repositorio
                         Base LDAP:
                     </div>
                     <div class="Value">
-                        <select name="ldapDestino" id="ldapDesc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                        <select name="ldap_destino" id="ldapDesc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                             <option value="" selected onclick="insereValorDiv('divDesc','Selecione um LDAP')">Selecione
                                 <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
-                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps where not nome like '%meta%diretorio%' ORDER BY nome ASC;");
+                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps WHERE nome NOT LIKE '%Meta%Diretorio%' ORDER BY nome ASC;");
                 while (res.next()) {
                     descricaoLDAP=res.getString("descricao");
                     

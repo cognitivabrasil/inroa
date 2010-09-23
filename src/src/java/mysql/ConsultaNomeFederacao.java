@@ -1,4 +1,4 @@
-package mysql;
+package postgres;
 
 import java.sql.*;
 
@@ -24,11 +24,11 @@ public class ConsultaNomeFederacao {
         nomeRepositorio = nomeRepositorio.trim().toLowerCase().replaceAll(",", "");
 
 
-        String sql = "SELECT r.nome, i.nome_na_federacao,concat('ou=',i.nome_na_federacao,',',l.dn)as dn, l.ip " +
+        String sql = "SELECT r.nome, i.nome_na_federacao,('ou='||i.nome_na_federacao||','||l.dn)as dn, l.ip " +
                 "FROM repositorios r, info_repositorios i, ldaps l " +
                 "WHERE i.nome_na_federacao='" + nomeRepositorio + "' " +
                 "AND r.id=i.id_repositorio " +
-                "AND i.ldapDestino=l.id;";
+                "AND i.ldap_destino=l.id;";
         
         try {
 

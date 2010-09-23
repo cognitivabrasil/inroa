@@ -37,10 +37,10 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 //                " AND r.id=i.id_repositorio" +
 //                " AND r.id=d.id_repositorio";
 
-            String sql = "SELECT r.nome, if(r.nome='todos',l.dn, concat('ou=',i.nome_na_federacao,',',l.dn)) as dn, l.ip, l.login, l.senha, l.porta, i.nome_na_federacao " +
+            String sql = "SELECT r.nome, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn, l.ip, l.login, l.senha, l.porta, i.nome_na_federacao " +
                     " FROM repositorios r, info_repositorios i, ldaps l " +
                     " WHERE r.id=" + request.getParameter("repositorio") +
-                    " AND i.ldapDestino=l.id " +
+                    " AND i.ldap_destino=l.id " +
                     " AND r.id=i.id_repositorio";
 
             ResultSet res = stm.executeQuery(sql);
@@ -80,7 +80,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
             }
 //out.print(ipServidor+" "+consulta+" "+searchBase+" "+login+" "+senha+" "+porta);
             
-            String[] attributos = {"obaaTitle", "obaaEntry", "obaaEducationalDescription", "obaaLocation", "obaaResourceEntry", "obaaIdentifier", "obaaDate"};
+            String[] attributos = {"obaaTitle", "obaa_entry", "obaaEducationalDescription", "obaaLocation", "obaaResourceEntry", "obaaIdentifier", "obaaDate"};
             ipServidor="143.54.95.74";
                     Consultar busca = new Consultar(ipServidor, consulta, searchBase, login, senha, porta, attributos);
             resultHash = busca.getResultado();
@@ -218,7 +218,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                 //String[] id = internoHash.get("obaaIdentifier").toString().trim().split(";; ");
 
                 String title = internoHash.get("obaaTitle").toString().trim();
-                String identificador = internoHash.get("obaaEntry").toString().trim();
+                String identificador = internoHash.get("obaa_entry").toString().trim();
 
 
                                                 %>

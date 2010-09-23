@@ -180,6 +180,7 @@
 
                     } catch (SQLException k) {
                         out.print("<p class='textoErro'>Erro no sql: " + k);
+                        System.out.println("ERRO NO SQL: "+k);
                     }
                     if (result > 0) { //se o insert funcionar entra no if
                         boolean inseriuLdap=false;

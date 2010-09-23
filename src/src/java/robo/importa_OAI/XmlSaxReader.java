@@ -2,7 +2,7 @@ package robo.importa_OAI;
 
 import ferramentaBusca.indexador.Indexador;
 import operacoesLdap.Remover;
-import mysql.Conectar;
+import postgres.Conectar;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import com.novell.ldap.LDAPConnection;
@@ -43,8 +43,8 @@ public class XmlSaxReader extends DefaultHandler {
     private Indexador indexa;
     private LDAPConnection conexaoLdap;
     private int idRepositorio;
-    private int tipoMapeamentoId;
-    private int padraoMetadados;
+    private int tipo_mapeamento_id;
+    private int padrao_metadados;
     private String namespace;
     private String metadataPrefix;
     private Connection ConMysql;
@@ -126,13 +126,13 @@ public class XmlSaxReader extends DefaultHandler {
             try{
                 Statement stm1 = ConMysql.createStatement();
                 //idTipoMapeamento;namespace;metadataPrefix;
-                String sqlInfo = "SELECT i.padraoMetadados, i.tipoMapeamento_id as tipoMap, p.nameSpace, metadataPrefix" +
+                String sqlInfo = "SELECT i.padrao_metadados, i.tipo_mapeamento_id as tipoMap, p.nameSpace, metadataPrefix" +
                         " FROM info_repositorios i, padraometadados p" +
-                        " WHERE i.padraoMetadados=p.id AND i.id_repositorio="+this.idRepositorio+";";
+                        " WHERE i.padrao_metadados=p.id AND i.id_repositorio="+this.idRepositorio+";";
                 ResultSet rsInfo = stm1.executeQuery(sqlInfo);
                 if(rsInfo.next()){
-                    this.padraoMetadados = rsInfo.getInt("padraoMetadados");
-                    this.tipoMapeamentoId = rsInfo.getInt("tipoMap");
+                    this.padrao_metadados = rsInfo.getInt("padrao_metadados");
+                    this.tipo_mapeamento_id = rsInfo.getInt("tipoMap");
                     this.namespace = rsInfo.getString("nameSpace");
                     this.metadataPrefix = rsInfo.getString("metadataPrefix");
                 }
@@ -158,8 +158,8 @@ public class XmlSaxReader extends DefaultHandler {
                             " WHERE a1.id=m.origem_id" +
                             " AND a2.id=m.destino_id" +
                             " AND a2.atributo='" + indiceVet[i] + "'" +
-                            " AND m.tipoMapeamento_id=" + tipoMapeamentoId+
-                            " AND a1.idPadrao=" + this.padraoMetadados + ";";
+                            " AND m.tipo_mapeamento_id=" + tipo_mapeamento_id+
+                            " AND a1.idPadrao=" + this.padrao_metadados + ";";
                     
                     ResultSet res = stm.executeQuery(sqlAtrib);
                     while (res.next()) {
@@ -168,16 +168,16 @@ public class XmlSaxReader extends DefaultHandler {
                     }
                 }
 
-                String sql = "SELECT a1.atributo as origem, a2.atributo as destino, m.mapeamentoComposto_id" +
+                String sql = "SELECT a1.atributo as origem, a2.atributo as destino, m.mapeamento_composto_id" +
                         " FROM atributos a1, mapeamentos m, atributos a2" +
-                        " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipoMapeamento_id=" + tipoMapeamentoId + " AND m.padraometadados_id="+this.padraoMetadados+";";
+                        " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipo_mapeamento_id=" + tipo_mapeamento_id + " AND m.padraometadados_id="+this.padrao_metadados+";";
                 ResultSet rs = stm.executeQuery(sql);
 
                 while (rs.next()) { //percorre todos os resultados do sql
 //colocar em uma estrutura todos os atributos do padrao selecionado                    
                     String origem = rs.getString("origem");
                     String destino = rs.getString("destino");
-                    int idComplementar = rs.getInt("mapeamentoComposto_id");
+                    int idComplementar = rs.getInt("mapeamento_composto_id");
                     if (!origem.isEmpty() && !destino.isEmpty()) {
                         HashMap conteudo = new HashMap();
                         conteudo.put("origem", origem);
@@ -240,10 +240,10 @@ public class XmlSaxReader extends DefaultHandler {
                 headerAux.setidDeletado(valorAtual.toString().trim());
                 System.out.println("deletar o objeto: " + valorAtual.toString().trim());
                 try {
-                    funcLdap.apagaObjeto("obaaEntry", valorAtual.toString(), dn, conexaoLdap);
+                    funcLdap.apagaObjeto("obaa_entry", valorAtual.toString(), dn, conexaoLdap);
                 } catch (LDAPException e) {
                     if (e.getResultCode() == LDAPException.NO_SUCH_OBJECT) {
-                        System.err.println("Erro ao apagar: Não foi encontrado o objeto: " + "obaaEntry=" + valorAtual.toString() + "," + dn);
+                        System.err.println("Erro ao apagar: Não foi encontrado o objeto: " + "obaa_entry=" + valorAtual.toString() + "," + dn);
                     } else if (e.getResultCode() ==
                             LDAPException.INSUFFICIENT_ACCESS_RIGHTS) {
                         System.err.println("Erro ao apagar: Insufficient rights");

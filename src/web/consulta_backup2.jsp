@@ -33,10 +33,10 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
         <%
         
-            String sql = "SELECT r.nome, if(r.nome='todos',l.dn, concat('ou=',i.nome_na_federacao,',',l.dn)) as dn, l.ip, l.login, l.senha, l.porta, i.nome_na_federacao " +
+            String sql = "SELECT r.nome, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn, l.ip, l.login, l.senha, l.porta, i.nome_na_federacao " +
                     " FROM repositorios r, info_repositorios i, ldaps l " +
                     " WHERE r.id=" + request.getParameter("repositorio") +
-                    " AND i.ldapDestino=l.id " +
+                    " AND i.ldap_destino=l.id " +
                     " AND r.id=i.id_repositorio";
 
 
@@ -72,6 +72,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                 //resultadoBusca.add("obaa0003");
                 numObjetosEncontrados = resultadoBusca.size(); //armazena o numero de objetos
             } catch (SQLException e) {
+                System.out.println("ERRO NO SQL: "+e);
                 numObjetosEncontrados = 0;
                 }
             
@@ -150,9 +151,9 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                 for (int result = 0; result < numObjetosEncontrados; result++) {//percorre o resultado da ferramenta de RI(recuperacao de informacao)
 
                     ArrayList resultHash = new ArrayList(); //ArrayList que recebera o resultado da busca LDAP
-                    String consulta = "obaaEntry=" + resultadoBusca.get(result);//concatena o entry retornado pela busca com obaaEntry=
+                    String consulta = "obaa_entry=" + resultadoBusca.get(result);//concatena o entry retornado pela busca com obaa_entry=
                     System.out.println(consulta);
-                    String[] attributos = {"obaaTitle","obaaEntry","obaaEducationalDescription","obaaLocation","obaaResourceEntry","obaaIdentifier","obaaDate"};
+                    String[] attributos = {"obaaTitle","obaa_entry","obaaEducationalDescription","obaaLocation","obaaResourceEntry","obaaIdentifier","obaaDate"};
                     Consultar busca = new Consultar(ipServidor, consulta, searchBase, login, senha, porta, attributos);
                     resultHash = busca.getResultado(); //solicita o resultado da consulta
                     
@@ -201,7 +202,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                         //String[] id = internoHash.get("obaaIdentifier").toString().trim().split(";; ");
 
                         String title = internoHash.get("obaaTitle").toString().trim();
-                        String identificador = internoHash.get("obaaEntry").toString().trim();
+                        String identificador = internoHash.get("obaa_entry").toString().trim();
 
 
                                                 %>

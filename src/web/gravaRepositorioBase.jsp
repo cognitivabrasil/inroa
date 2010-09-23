@@ -48,7 +48,7 @@
 
             //armazena em variaveis os dados armazenados na sessao
             String descricao = session.getAttribute("descricao").toString();
-            String padraoMetadados = session.getAttribute("padraoMetadados").toString();
+            String padrao_metadados = session.getAttribute("padrao_metadados").toString();
             String periodicidade = session.getAttribute("periodicidade").toString();
             //String nomeNaFederacao = session.getAttribute("nomeNaFederacao").toString();
             String nomeNaFederacao = nome.toLowerCase().replaceAll(" ", "_");
@@ -56,7 +56,7 @@
 
 
             //armazena em variaveis os dados preenchidos no formulario
-             String idLdapDestino = request.getParameter("ldapDestino").trim();
+             String idLdapDestino = request.getParameter("ldap_destino").trim();
 
             //se for do tipo de sincronizacao. Se for LDAP entra no primeiro if
             if (tipoSinc.equalsIgnoreCase("LDAP")) {
@@ -131,8 +131,9 @@
                             ResultSet rs = stm.getGeneratedKeys();
                             rs.next();
                             key = rs.getLong(1);
-                            String sql2 = "INSERT INTO info_repositorios (id_repositorio, dataUltimaAtualizacao, periodicidadeHoras, nome_na_federacao, URLorIP, tipoSincronizacao, padraoMetadados, ldapDestino) " +
-                                    "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidade + ", '" + nomeNaFederacao + "', '" + url + "', '" + tipoSinc + "', '" + padraoMetadados + "', " + idLdapDestino + ");";
+
+                            String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, tipo_sincronizacao, padrao_metadados, ldap_destino) " +
+                                    "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidade + ", '" + nomeNaFederacao + "', '" + url + "', '" + tipoSinc + "', '" + padrao_metadados + "', " + idLdapDestino + ");";
 
 
                             result2 = stm.executeUpdate(sql2); //executa o que tem na variavel slq2 no mysql
@@ -141,7 +142,7 @@
                                 gravadoSql2 = true; //informa que o segundo insert foi realizado
 
                                 //string que contem um insert com os dados da tabela dadosldap
-                                String sql3 = "INSERT INTO dadosldap (id_repositorio, LoginLdapOrigem, senhaLdapOrigem, portaLdapOrigem, dnOrigem) " +
+                                String sql3 = "INSERT INTO dadosldap (id_repositorio, login_ldap_origem, senhaLdapOrigem, portaLdapOrigem, dnOrigem) " +
                                         "VALUES (" + key + ", '" + loginOrigem + "', '" + senhaOrigem + "', " + portaOrigem + ", '" + dnOrigem + "');";
                                 result3 = stm.executeUpdate(sql3); //executa o que tem na variavel slq3 no mysql
 
@@ -187,6 +188,7 @@
                         }
 
                     } catch (SQLException k) {
+                        System.out.println("ERRO SQL: "+k);
                         out.print("<p class='textoErro'>Erro no sql: " + k);
                         if (gravadoSql1) { //se o primeiro insert foi realizado, aqui ele sera apagado
                             if (key > 0) {

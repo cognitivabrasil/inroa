@@ -166,7 +166,7 @@ public class Consultar {
 
 
     public static void main(String[] args) {
-        String[] arg = {"obaaTitle", "obaaEntry"};
+        String[] arg = {"obaaTitle", "obaa_entry"};
         Consultar run = new Consultar("143.54.95.74", "obaaKeyword=couro", "dc=br", "cn=Manager,dc=ufrgs,dc=br", "secret", 389, arg);
         System.out.println(run.getResultado());
     }

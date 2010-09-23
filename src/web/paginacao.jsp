@@ -42,7 +42,7 @@
   while(rs2.next()) {
     int id = rs2.getInt("id");
     out.println("ID: " + id + "<br>");
-    String nome = rs2.getString("obaaEntry");
+    String nome = rs2.getString("obaa_entry");
     out.println("NOME: " + nome + "<br>");
   }
 

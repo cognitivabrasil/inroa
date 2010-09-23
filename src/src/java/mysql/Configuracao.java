@@ -1,4 +1,4 @@
-package mysql;
+package postgres;
 
 /**
  * Classe auxiliar que armazena e informa dados sobre a base Mysql
@@ -8,12 +8,15 @@ public class Configuracao {
 
     //informacoes para conexao ao banco de dados
     String base = "federacao";
-    String usuario = "cinted";
-//    String usuario = "marcos";
-    String senha = "teste";
-    String ipMysql = "localhost";
+    String usuario = "feb";
+//    String usuario = "cinted";
+//    String senha = "teste";
+    String senha = "12345";
+//    String ipMysql = "localhost";
+    String ip = "143.54.95.20";
 //    String ipMysql = "143.54.95.74";
-    String portaMysql = "3306";
+    //String portaMysql = "3306";
+    String porta = "5432";
 
     /**
      * Informa o nome da base que está sendo utilizada no projeto.
@@ -43,16 +46,16 @@ public class Configuracao {
      * Informa o ip do banco de dados mysql
      * @return Retorna uma String contendo o ip do mysql
      */
-    public String getIpMysql() {
-        return ipMysql;
+    public String getIp() {
+        return ip;
     }
 
     /**
      * Informa a porta do bando de dados mysql
      * @return Retorna uma String contendo a porta do mysql
      */
-    public String getPortaMysql() {
-        return portaMysql;
+    public String getPorta() {
+        return porta;
     }
 
 

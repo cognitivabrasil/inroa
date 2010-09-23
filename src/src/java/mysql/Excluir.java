@@ -1,4 +1,4 @@
-package mysql;
+package postgres;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -34,10 +34,10 @@ public class Excluir {
         Connection con = conectar.conectaBD();
 
 
-        String sqlTeste = "select nome from repositorios where id=" + id;
+        String sqlTeste = "SELECT nome FROM repositorios WHERE id=" + id;
 
 
-        String sql = "delete from repositorios where id=" + id;
+        String sql = "DELETE FROM repositorios WHERE id=" + id;
 
         int result = 0;
         try {
@@ -79,11 +79,11 @@ public class Excluir {
 
     /**
      * Remove um documento (objeto) do indice de busca no mysql
-     * @param obaaEntry String contendo o obaaEntry do documento a ser deletado
+     * @param obaa_entry String contendo o obaa_entry do documento a ser deletado
      * @return true se a exclus&atilde;o foi realizada com sucesso e false se n&atilde;o foi possível excluir
      * @throws SQLException
      */
-    public static boolean removerDocumentoIndice(String obaaEntry) throws SQLException {
+    public static boolean removerDocumentoIndice(String obaa_entry) throws SQLException {
 
         boolean resultado = false;
         int result = 0;
@@ -92,7 +92,7 @@ public class Excluir {
         Connection con = conectar.conectaBD();
 
         Statement stm = con.createStatement();
-        String sql = "delete from documentos where obaaEntry='" + obaaEntry + "';";
+        String sql = "delete from documentos where obaa_entry='" + obaa_entry + "';";
 
         //testar conexao com mysql
         try {

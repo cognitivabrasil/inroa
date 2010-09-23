@@ -33,7 +33,7 @@ COLOCAR STILO NO CSS E TIRAR OS <FONTE> DO CODIGO
             String ipServidor = request.getParameter("ip");
             String id = request.getParameter("id");
             String dn = request.getParameter("dn");
-            String consulta = "(obaaEntry=" + id + ")";
+            String consulta = "(obaa_entry=" + id + ")";
 
             Consultar busca = new Consultar(ipServidor, consulta, dn, "", "", 389);
             resultHash = busca.getResultado();
@@ -75,9 +75,9 @@ COLOCAR STILO NO CSS E TIRAR OS <FONTE> DO CODIGO
                                 %>
                                 <em>Objeto <%=obaaIdentifier[0]%></em>
                                 <%} else {
-                                     if (dados.containsKey("obaaEntry")){
+                                     if (dados.containsKey("obaa_entry")){
                                 %>
-                                    <em>Objeto <%=dados.get("obaaEntry")%></em>
+                                    <em>Objeto <%=dados.get("obaa_entry")%></em>
                                     <%}}%>
                             </font>
                         </strong>

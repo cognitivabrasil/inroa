@@ -47,16 +47,23 @@
 
                 if (tipo.equalsIgnoreCase("geral")) {
 
-                    String sql = "SELECT r.nome, r.descricao, p.nome as nomePadrao " +
-                            " FROM repositorios r, info_repositorios i, dadosldap d, padraometadados p " +
-                            " WHERE r.id=" + id + " " +
-                            "AND r.id=i.id_repositorio " +
-                            "AND i.padraoMetadados=p.id;";
+ //                   String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao " +
+ //                           " FROM repositorios r, info_repositorios i, dadosldap d, padraometadados p " +
+ //                           " WHERE r.id=" + id + " " +
+ //                           "AND r.id=i.id_repositorio " +
+ //                           "AND i.padrao_metadados=p.id;";
+
+                    String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao" +
+                             " FROM repositorios r, info_repositorios i, dadosldap d, padraometadados p"+
+                             " WHERE r.id=4"+
+                             " AND r.id=i.id_repositorio"+
+                             " AND i.padrao_metadados=p.id"+
+                             " GROUP BY r.nome, r.descricao, p.nome;";
 
                     ResultSet res = stm.executeQuery(sql);
 
                     res.next();
-                    String nomePadrao = res.getString("nomePadrao");
+                    String nomePadrao = res.getString("nome_padrao");
             %>
             <script type="text/javascript">
                 var myForm = new Validate();
@@ -92,7 +99,7 @@
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
-                        <select name="padraoMetadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                        <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                             <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
                 ResultSet resPadrao = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
@@ -126,18 +133,18 @@
             <%
             } else if (tipo.equalsIgnoreCase("config")) {
 
-                String sql = "SELECT r.*, i.*, d.*, p.nome as nomePadrao " +
+                String sql = "SELECT r.*, i.*, d.*, p.nome as nome_padrao " +
                         " FROM repositorios r, info_repositorios i, dadosldap d, padraometadados p " +
                         " WHERE r.id=" + id + " " +
                         "AND r.id=i.id_repositorio " +
                         "AND r.id=d.id_repositorio " +
-                        "AND i.padraoMetadados=p.id " +
+                        "AND i.padrao_metadados=p.id " +
                         "ORDER BY r.nome ASC;";
 
                 ResultSet res = stm.executeQuery(sql);
 
                 res.next();
-                String tipoSincronizacao = res.getString("tipoSincronizacao");
+                String tipo_sincronizacao = res.getString("tipo_sincronizacao");
             %>
 
             <script type="text/javascript">
@@ -157,7 +164,7 @@
                         Periodicidade de atualiza&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <input name="periodicidade" value="<%=res.getInt("periodicidadeHoras")%>" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="periodicidade" value="<%=res.getInt("periodicidade_horas")%>" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -175,7 +182,7 @@
                         <select name="sincronizacao" id="tipoSinc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" >
                             <%
                 for (int i = 0; i < tiposSincronizacaoDisponiveis.length; i++) {
-                    if (tiposSincronizacaoDisponiveis[i].equalsIgnoreCase(tipoSincronizacao)) {
+                    if (tiposSincronizacaoDisponiveis[i].equalsIgnoreCase(tipo_sincronizacao)) {
                         out.println("<option value='" + tiposSincronizacaoDisponiveis[i] + "' selected>" + tiposSincronizacaoDisponiveis[i]);
                     } else {
                         out.println("<option value='" + tiposSincronizacaoDisponiveis[i] + "'>" + tiposSincronizacaoDisponiveis[i]);
@@ -188,7 +195,7 @@
                 </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
                 <input type="hidden" name="campo" value="<%=tipo%>"/>
-                <input type="hidden" name="tipoSincOriginal" value="<%=tipoSincronizacao%>"/>
+                <input type="hidden" name="tipoSincOriginal" value="<%=tipo_sincronizacao%>"/>
                 <input type="hidden" name="apagar" value="sim"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
@@ -206,7 +213,7 @@
                 //        "AND r.id=d.id_repositorio";
 
                 //ResultSet res = stm.executeQuery(sql);
-                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps where not nome like '%meta%diretorio%' ORDER BY nome ASC;");
+                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps WHERE nome NOT LIKE '%Meta%Diretorio%' ORDER BY nome ASC;");
                 //res.next();
 
                 String nomeLdapLocal = request.getParameter("ldapLocal");
@@ -226,7 +233,7 @@
                         Base LDAP:
                     </div>
                     <div class="Value">
-                        <select name="ldapDestino" id="ldapDesc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                        <select name="ldap_destino" id="ldapDesc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                             <%
             //Carrega do banco de dados os padroes de metadados cadastrados
 
@@ -262,18 +269,18 @@
             <%
                 //Informações Ldap Origem
                 } else if (tipo.equalsIgnoreCase("ldaporigem")) {
-                String sql = "SELECT d.*, r.nome, i.URLorIP FROM dadosldap d, repositorios r, info_repositorios i WHERE d.id_repositorio=" + id + " " +
+                String sql = "SELECT d.*, r.nome, i.url_or_ip FROM dadosldap d, repositorios r, info_repositorios i WHERE d.id_repositorio=" + id + " " +
                         "AND r.id=d.id_repositorio " +
                         "AND r.id=i.id_repositorio;";
 
                 ResultSet res = stm.executeQuery(sql);
                 res.next();
 
-                String ip = res.getString("URLorIP");
+                String ip = res.getString("url_or_ip");
                 int portaLdapOrigem = res.getInt("portaLdapOrigem");
                 String portaOrigem = "";
                 String dnOrigem = res.getString("dnOrigem");
-                String loginLdapOrigem = res.getString("loginLdapOrigem");
+                String login_ldap_origem = res.getString("login_ldap_origem");
                 if (ip == null) {
                     ip = "";
                 }
@@ -287,8 +294,8 @@
                     dnOrigem = "";
                 }
 
-                if (loginLdapOrigem.equalsIgnoreCase("null")) {
-                    loginLdapOrigem = "";
+                if (login_ldap_origem.equalsIgnoreCase("null")) {
+                    login_ldap_origem = "";
                 }
 
             %>
@@ -339,7 +346,7 @@
                         Login:
                     </div>
                     <div class="Value">
-                        <input name="loginOrigem" value="<%=loginLdapOrigem%>" id="loginOr" type="text" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="loginOrigem" value="<%=login_ldap_origem%>" id="loginOr" type="text" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -372,7 +379,7 @@
 
                 //Informações OAI-PMH
                 } else if (tipo.equalsIgnoreCase("OAI-PMH")) {
-                String sql = "SELECT i.URLorIP, r.nome FROM info_repositorios i, repositorios r WHERE r.id=i.id_repositorio AND i.id_repositorio=" + id;
+                String sql = "SELECT i.url_or_ip, r.nome FROM info_repositorios i, repositorios r WHERE r.id=i.id_repositorio AND i.id_repositorio=" + id;
 
                 ResultSet res = stm.executeQuery(sql);
                 res.next();
@@ -394,7 +401,7 @@
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <input name="url" value="<%=res.getString("URLorIP")%>" id="url" type="text" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="url" value="<%=res.getString("url_or_ip")%>" id="url" type="text" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
@@ -421,10 +428,10 @@
 
                     String nome = request.getParameter("nomeRep").trim();
                     String descricao = request.getParameter("descricao").trim();
-                    String padraoMetadados = request.getParameter("padraoMetadados").trim();
+                    String padrao_metadados = request.getParameter("padrao_metadados").trim();
 
 
-                    //out.println("<p>ome: " + nome + " descricao " + descricao + " padrao " + padraoMetadados + "</p>");
+                    //out.println("<p>ome: " + nome + " descricao " + descricao + " padrao " + padrao_metadados + "</p>");
                     int result = 0, result2 = 0;
 
                     String sql1 = "UPDATE repositorios set nome='" + nome + "', descricao='" + descricao + "' where id=" + id; //sql que possui o update
@@ -432,7 +439,7 @@
                     result = stm.executeUpdate(sql1); //realiza no mysql oque esta na variavel sql1
 
                     if (result > 0) { //se o insert funcionar entra no if
-                        String sql2 = "UPDATE info_repositorios set padraoMetadados=" + padraoMetadados + " where id_repositorio=" + id;
+                        String sql2 = "UPDATE info_repositorios set padrao_metadados=" + padrao_metadados + " where id_repositorio=" + id;
                         result2 = stm.executeUpdate(sql2);
                         if (result2 > 0) {
                             out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); " +
@@ -459,7 +466,8 @@
 
                     int result = 0;
 
-                    String sql = "UPDATE info_repositorios set periodicidadeHoras=" + periodicidade + ", tipoSincronizacao='" + tipoSinc + "' where id_repositorio=" + id;
+
+                    String sql = "UPDATE info_repositorios set periodicidade_horas=" + periodicidade + ", tipo_sincronizacao='" + tipoSinc + "' where id_repositorio=" + id;
                     result = stm.executeUpdate(sql);
                     if (result > 0) {
 
@@ -478,9 +486,9 @@
                 } else if (campo.equalsIgnoreCase("ldaplocal")) { //se o campo a ser editador for o ldaplocal entra no if
                   
                   
-                    int idLdapDestino = Integer.parseInt(request.getParameter("ldapDestino").trim());
+                    int idLdapDestino = Integer.parseInt(request.getParameter("ldap_destino").trim());
 
-                    if (request.getParameter("ldapDestino").trim().isEmpty()) {
+                    if (request.getParameter("ldap_destino").trim().isEmpty()) {
                         out.print("<script type='text/javascript'>alert('Deve ser selecionada uma base LDAP!');</script>" +
                                 "<script type='text/javascript'>history.back(-1);</script>");
                         out.close();
@@ -496,7 +504,7 @@
                     }
 
                     /*
-                    String sql = "UPDATE info_repositorios SET ldapDestino="+idLdapDestino+" WHERE id_repositorio=" + id;
+                    String sql = "UPDATE info_repositorios SET ldap_destino="+idLdapDestino+" WHERE id_repositorio=" + id;
 
                     int result = 0;
                     result = stm.executeUpdate(sql);
@@ -510,13 +518,13 @@
 
                     String portaOrigem = request.getParameter("portaOrigem").trim();
                     String dnOrigem = request.getParameter("dnOrigem").trim();
-                    String loginLdapOrigem = request.getParameter("loginOrigem").trim();
+                    String login_ldap_origem = request.getParameter("loginOrigem").trim();
                     String senhaLdapOrigem = request.getParameter("senhaOrigem").trim();
                     String confirmaSenhaOrigem = request.getParameter("confSenhaOrigem").trim();
                     String ipOrigem = request.getParameter("ipOrigem").trim();
 
                     //testa se os campos foram preenchidos
-                    if (portaOrigem.isEmpty() || dnOrigem.isEmpty() || loginLdapOrigem.isEmpty() || senhaLdapOrigem.isEmpty() || confirmaSenhaOrigem.isEmpty()) {
+                    if (portaOrigem.isEmpty() || dnOrigem.isEmpty() || login_ldap_origem.isEmpty() || senhaLdapOrigem.isEmpty() || confirmaSenhaOrigem.isEmpty()) {
                         out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
                                 "<script type='text/javascript'>history.back(-1);</script>");
                         out.close();
@@ -528,11 +536,11 @@
                         out.close();
                     }
 
-                    String sql = "UPDATE dadosldap set loginLdapOrigem='" + loginLdapOrigem + "', senhaLdapOrigem='" + senhaLdapOrigem + "', portaLdapOrigem=" + portaOrigem + ", dnOrigem='" + dnOrigem + "' where id_repositorio=" + id;
+                    String sql = "UPDATE dadosldap set login_ldap_origem='" + login_ldap_origem + "', senhaLdapOrigem='" + senhaLdapOrigem + "', portaLdapOrigem=" + portaOrigem + ", dnOrigem='" + dnOrigem + "' where id_repositorio=" + id;
                     int result = 0, result2 = 0;
                     result = stm.executeUpdate(sql);
                     if (result > 0) {
-                        String sql2 = "Update info_repositorios set URLorIP='" + ipOrigem + "' where id_repositorio=" + id;
+                        String sql2 = "Update info_repositorios set url_or_ip='" + ipOrigem + "' where id_repositorio=" + id;
                         result2 = stm.executeUpdate(sql2);
                         if (result2 > 0) {
                             out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); " +
@@ -551,7 +559,7 @@
                                 "<script type='text/javascript'>history.back(-1);</script>");
                         out.close();
                     }
-                    String sql = "Update info_repositorios set URLorIP='" + url + "' where id_repositorio=" + id;
+                    String sql = "Update info_repositorios set url_or_ip='" + url + "' where id_repositorio=" + id;
                     result = stm.executeUpdate(sql);
                     if (result > 0) {
                         out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); " +

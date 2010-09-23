@@ -63,10 +63,10 @@ int numeroMaximoDeObjetosPorPagina=5;
                        
 
             
-            String sql = "SELECT r.nome, if(r.nome='todos',l.dn, concat('ou=',i.nome_na_federacao,',',l.dn)) as dn, l.ip, l.login, l.senha, l.porta, i.nome_na_federacao " +
+            String sql = "SELECT r.nome, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn, l.ip, l.login, l.senha, l.porta, i.nome_na_federacao " +
                     " FROM repositorios r, info_repositorios i, ldaps l " +
                     " WHERE r.id=" + idRepositorio +
-                    " AND i.ldapDestino=l.id " +
+                    " AND i.ldap_destino=l.id " +
                     " AND r.id=i.id_repositorio";
 
 
@@ -111,6 +111,7 @@ int numeroMaximoDeObjetosPorPagina=5;
             tamanhoHash= 50;
             tamanhoDoHash=resultadoBusca.size();
             } catch (SQLException e) {
+                System.out.println("ERRO NO SQL: "+e);
                 out.println("");
             numObjetosEncontrados = 0;
             }
@@ -224,9 +225,9 @@ int numeroMaximoDeObjetosPorPagina=5;
                 for (int result = offset.intValue(), l = Math.min(result + maxPageItems, tamanhoDoHash); result < l; result++) {//percorre o resultado da ferramenta de RI(recuperacao de informacao)
                     //colocar aqui para imprimir as consultas. Ele vai entrar aqui uma vez para cada resultado do hashmap
                     ArrayList resultHash = new ArrayList(); //ArrayList que recebera o resultado da busca LDAP
-                    String consulta = "obaaEntry=" + resultadoBusca.get(result);//concatena o entry retornado pela busca com obaaEntry=
+                    String consulta = "obaa_entry=" + resultadoBusca.get(result);//concatena o entry retornado pela busca com obaa_entry=
 
-                    String[] attributos = {"obaaTitle", "obaaEntry", "obaaEducationalDescription", "obaaLocation", "obaaResourceEntry", "obaaIdentifier", "obaaDate"};
+                    String[] attributos = {"obaaTitle", "obaa_entry", "obaaEducationalDescription", "obaaLocation", "obaaResourceEntry", "obaaIdentifier", "obaaDate"};
                     Consultar busca = new Consultar(ipServidor, consulta, searchBase, login, senha, porta, attributos);
                     resultHash = busca.getResultado(); //solicita o resultado da consulta
 
@@ -274,7 +275,7 @@ int numeroMaximoDeObjetosPorPagina=5;
                         //String[] id = internoHash.get("obaaIdentifier").toString().trim().split(";; ");
 
                         String title = internoHash.get("obaaTitle").toString().trim();
-                        String identificador = internoHash.get("obaaEntry").toString().trim();
+                        String identificador = internoHash.get("obaa_entry").toString().trim();
 
 
                                                                 %>
