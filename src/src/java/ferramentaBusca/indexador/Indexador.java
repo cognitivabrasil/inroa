@@ -22,15 +22,15 @@ public class Indexador {
     }
 
     /**
-     * Testa se o obaaEntry já existe na base de dados
-     * @param obaaEntry String contendo o obaaEntry
+     * Testa se o obaa_entry já existe na base de dados
+     * @param obaa_entry String contendo o obaa_entry
      * @return true se o objeto existe e false se não existir
      */
-    public boolean testaEntry(String obaaEntry, Connection con) throws SQLException {
+    public boolean testaEntry(String obaa_entry, Connection con) throws SQLException {
 
         Statement stm = con.createStatement();
         //fazer consulta sql
-        String sql = "SELECT id FROM documentos where obaaEntry='" + obaaEntry + "'";
+        String sql = "SELECT id FROM documentos where obaa_entry='" + obaa_entry + "'";
         ResultSet rs = stm.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
         if (rs.next()) //testa se tem o proximo resultado
         {
@@ -58,9 +58,9 @@ public class Indexador {
         try {
             if (!testaEntry(doc.getObaaEntry(), con)) {
 
-                //String sql = "INSERT INTO documentos (obaaEntry, titulo, resumo, data, localizacao, id_repositorio) VALUES ('" + doc.getObaaEntry() + "','"+doc.getTituloOriginal() + "','"+doc.getResumo()+ "','"+ doc.getData() + "','"+ doc.getLocalizacao() + "',"+ doc.getServidor() + ");";
+                //String sql = "INSERT INTO documentos (obaa_entry, titulo, resumo, data, localizacao, id_repositorio) VALUES ('" + doc.getObaaEntry() + "','"+doc.getTituloOriginal() + "','"+doc.getResumo()+ "','"+ doc.getData() + "','"+ doc.getLocalizacao() + "',"+ doc.getServidor() + ");";
 
-                String sql2 = "INSERT INTO documentos (obaaEntry, titulo, resumo, data, localizacao, id_repositorio) VALUES (?,?,?,?,?,?);";
+                String sql2 = "INSERT INTO documentos (obaa_entry, titulo, resumo, data, localizacao, id_repositorio) VALUES (?,?,?,?,?,?);";
                 
                 int key = 0;
                 
@@ -71,6 +71,7 @@ public class Indexador {
                 stmt1.setString(4, doc.getData());
                 stmt1.setString(5, doc.getLocalizacao());
                 stmt1.setInt(6, doc.getServidor());
+  
                 stmt1.execute();
 
                 ResultSet rs = stmt1.getGeneratedKeys();
@@ -165,7 +166,11 @@ public class Indexador {
         R1IDF.close();
 
         //PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, if(T.field=1||T.field=2,COUNT(*)*2, COUNT(*)) FROM r1tokens T GROUP BY T.id, T.token;");
-        PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, if(T.field=1,3, 1) FROM r1tokens T GROUP BY T.id, T.token;");
+       
+        //MySQL
+        //PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, if(T.field=1,3, 1) FROM r1tokens T GROUP BY T.id, T.token;");
+
+        PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, sum(CASE t.field WHEN 1 THEN 3 ELSE 1 END)FROM r1tokens t GROUP BY T.id, T.token;");
         R1TF.execute();
         R1TF.close();
 
