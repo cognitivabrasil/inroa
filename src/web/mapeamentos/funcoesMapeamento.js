@@ -26,7 +26,8 @@ function cancelar(idDivResult, valorAnterior)
 }
 
 function exibeSelect(idDivResult, idMap, idPadraoDestino, bot)
-{   
+{
+    botao.disabled=0;
     botao = bot;
     botao.disabled=1; //bloquear o botao editar
     var valorAnterior = document.getElementById(idDivResult).innerHTML
@@ -107,7 +108,9 @@ function setLinha(linha){
     totals = linha-1;
 }
 /**
- * Função que adiciona nova linha na tabela sem recarregar a p&aacute;gina
+ * Função que adiciona nova linha na tabela sem recarregar a p&aacute;gina.
+ * @param linha n&uacute;mero da linha na tabela.
+ * @param idPadrao id do padr&atilde;o de metadados.
  */
 function adiciona(linha, idPadrao){
  
@@ -138,7 +141,7 @@ function adiciona(linha, idPadrao){
     novaCelula = novaLinha.insertCell(2);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = "complementar";
+    novaCelula.innerHTML = '<input type="button" class="BotaoMapeamento" size="30" name="addMap" id="addMap" value="+ Mapeamento Composto" onclick="setMapeamentoComposto(\''+totals+'\', \''+cl+'\');"/>';
 
 
     novaCelula = novaLinha.insertCell(3);
@@ -149,7 +152,34 @@ function adiciona(linha, idPadrao){
     addMap('result'+totals, 'destino'+totals, idPadrao); //chama a funcao que adiciona os selects por ajax
 }
 
-function setMapeamentoComposto(linha){
+function setMapeamentoComposto(linha, cl){
+    //adicionar linha com os divs antes.
+    
+    var tbl = document.getElementById("tabela")
+    var novaLinha = tbl.insertRow(-1);
+    var novaCelula;
+
+    novaCelula = novaLinha.insertCell(0);
+    novaCelula.align = "center";
+    novaCelula.className = cl;
+    novaCelula.innerHTML = "<div class='center' id=resultComplementar"+linha+">origem</div>";
+
+    novaCelula = novaLinha.insertCell(1);
+    novaCelula.align = "center";
+    novaCelula.className = cl;
+    novaCelula.innerHTML = "<div class='center' id=destinoComplementar"+linha+">destino</div>"
+
+    novaCelula = novaLinha.insertCell(2);
+    novaCelula.align = "left";
+    novaCelula.className = cl;
+    novaCelula.innerHTML = '';
+
+
+    novaCelula = novaLinha.insertCell(3);
+    novaCelula.align = "left";
+    novaCelula.className = cl;
+    novaCelula.innerHTML = '';
+
     processo('resultComplementar'+linha, 0, "comboBox", "", "","");
     processo('destinoComplementar'+linha, 0, "textComp", "", "","");
 }

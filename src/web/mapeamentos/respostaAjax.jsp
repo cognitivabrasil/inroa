@@ -35,7 +35,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
             }
 
             if (tipo.equalsIgnoreCase("comboBox")) {
-                out.println("<select name='atributos' id='atributos' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
+                out.println("<select name='atributos' id='atrb"+idDivResultado+"' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
 
                 //consultar o mysql todos os atributos
                 String sqlPadrao = "SELECT a.id, a.atributo " +
@@ -51,7 +51,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 out.println("</select>");
 
                 if(idMapOuPadrao >0){
-                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idDivResultado + "', '" + idMapOuPadrao + "', 'atributos')\"/>");
+                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idDivResultado + "', '" + idMapOuPadrao + "', 'atrb"+idDivResultado+"')\"/>");
                 out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
                 }
             }
@@ -111,7 +111,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 String idTipoMapeamento = request.getParameter("idTipMap");
                 out.println("<input type=\"text\" id=\"geral\" name=\"geral\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" />");
                 
-                out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
+                out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelarAddComposto('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
                 //inserir um text para salvar o valor depois
 
 
