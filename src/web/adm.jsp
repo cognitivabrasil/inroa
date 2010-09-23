@@ -103,8 +103,8 @@ Author     : Marcos Nunes
                     <%
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-                            if (!Robo.testarDataAnteriorMil(res.getDate("dataUltimaAtualizacao"))) {
-                                out.println("Dia "+format.format(res.getDate("dataUltimaAtualizacao")) + " &agrave;s " + res.getTime("dataUltimaAtualizacao"));
+                            if (!Robo.testarDataAnteriorMil(res.getDate("data_ultima_atualizacao"))) {
+                                out.println("Dia "+format.format(res.getDate("data_ultima_atualizacao")) + " &agrave;s " + res.getTime("data_ultima_atualizacao"));
                                 
                             } else {
                                 out.println("Ainda n&atilde;o foi atualizado!");
@@ -267,5 +267,5 @@ Author     : Marcos Nunes
     </BODY>
 </html>
 <%
-con.close(); //fechar conexao com mysql
+con.close(); //fechar conexao o banco de dados
 %>
