@@ -1,7 +1,7 @@
 package login;
 
 import java.sql.*;
-import mysql.Conectar;
+import postgres.Conectar;
 
 
 /**
