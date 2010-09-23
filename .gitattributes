@@ -208,13 +208,6 @@ src/src/java/operacoesLdap/Inserir.java -text
 src/src/java/operacoesLdap/ReiniciarServico.java -text
 src/src/java/operacoesLdap/Remover.java -text
 src/src/java/operacoesLdap/package.html -text
-src/src/java/postgres/AtualizaBase.java -text
-src/src/java/postgres/AtualizacaoRepositorio.java -text
-src/src/java/postgres/ConectaPostgres.java -text
-src/src/java/postgres/ConfiguracaoPostgres.java -text
-src/src/java/postgres/ConsultaNomeFederacao.java -text
-src/src/java/postgres/Excluir.java -text
-src/src/java/postgres/package.html -text
 src/src/java/robo/harvesterOAI/GetRecord.java -text
 src/src/java/robo/harvesterOAI/HarvesterVerb.java -text
 src/src/java/robo/harvesterOAI/Identify.java -text
