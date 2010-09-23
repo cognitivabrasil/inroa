@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : mapeamentos
     Created on : 13/09/2010, 18:27:41
     Author     : Marcos
@@ -30,14 +30,20 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
     <%
 
         int linhaMap = 1;
-        
+
 
         //funcionalidades
         //adicionar, adicionar a partir de um pronto, remover, visualizar/editar
-        String sql = "SELECT p.nome as 'nomePadrao', t.nome as 'tipoTipMap', t.descricao, t.id as 'idMap', p.id as 'idPadrao'" +
-                "FROM mapeamentos m, padraometadados p, tipomapeamento t " +
-                "WHERE m.tipoMapeamento_id=t.id AND m.padraometadados_id=p.id " +
-                "GROUP BY t.id, p.id;";
+//               String sql = "SELECT p.nome as 'nome_padrao', t.nome as 'tipo_map', t.descricao, t.id as 'id_map', p.id as 'id_padrao'" +
+//                "FROM mapeamentos m, padraometadados p, tipomapeamento t " +
+ //               "WHERE m.tipo_mapeamento_id=t.id AND m.padraometadados_id=p.id " +
+ //               "GROUP BY t.id, p.id;";
+
+        String sql = "SELECT p.nome as nome_padrao, t.nome as tipo_map, t.descricao, t.id as id_map, p.id as id_padrao"+
+                    " FROM mapeamentos m, padraometadados p, tipomapeamento t"+
+                    " WHERE m.tipo_mapeamento_id=t.id AND m.padraometadados_id=p.id"+
+                    " GROUP BY t.id, p.id, t.nome, p.nome, t.descricao;";
+
         ResultSet rs = stm.executeQuery(sql);
         //pega o proximo resultado retornado pela consulta sql
         while (rs.next()) {
@@ -46,11 +52,11 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
             } else {
                 yesnocolor = "price-no";
             }
-            String nomePadrao = rs.getString("nomePadrao");
-            String tipoMap = rs.getString("tipoTipMap");
+            String nomePadrao = rs.getString("nome_padrao");
+            String tipoMap = rs.getString("tipo_map");
             String descricaoMap = rs.getString("descricao");
-            int idTipMap = rs.getInt("idMap");
-            int idPadrao = rs.getInt("idPadrao");
+            int idTipMap = rs.getInt("id_map");
+            int idPadrao = rs.getInt("id_padrao");
     %>
     <tr  class='center'>
         <td class="<%=yesnocolor%>">
