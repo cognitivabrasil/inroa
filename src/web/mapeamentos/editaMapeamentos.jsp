@@ -213,7 +213,7 @@
 
 
                         &nbsp;&nbsp;
-                        <a onclick="adiciona(<%=linha%>);">
+                        <a onclick="adiciona(<%=linha%>, <%=idPadrao%>);">
                             Adicionar Mapeamento
                         </a>
 

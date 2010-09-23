@@ -5,6 +5,13 @@
  */
 
 botao='';
+
+function addMap(idDivOrigem, idDivDestino, padraoMetadados){
+    processo(idDivDestino, 0, "comboBox", "", "","");
+    processo(idDivOrigem, padraoMetadados, "comboOrigem", "", "","");
+
+}
+
 function removeItem(linha)
 {
     var tbl = document.getElementById('tabela');
@@ -19,19 +26,13 @@ function cancelar(idDivResult, valorAnterior)
 }
 
 function exibeSelect(idDivResult, idMap, idPadraoDestino, bot)
-{
-    //document.getElementById(idDivResult).innerHTML = "deu!";
-    var valorAnterior = "";
-    if(idMap > 0){
-    
+{   
     botao = bot;
     botao.disabled=1; //bloquear o botao editar
-    valorAnterior = document.getElementById(idDivResult).innerHTML
-    }
-    else {
-        //colocar codigo novo
-    }
-    //processo(idDivResult, idMap, "comboBox", "", valorAnterior,"")
+    var valorAnterior = document.getElementById(idDivResult).innerHTML
+    
+ 
+    processo(idDivResult, idMap, "comboBox", "", valorAnterior,"")
 }
 
 function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
@@ -64,7 +65,7 @@ function exibeText(idDivResult, idTipoMapeamento, bot){
              * Função utilizada pelo mapeamento dinamico com ajax.
              * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
              */
-function processo(idResultado, idMap, acao, novoValor, valorAnterior, idTipoMapeamento)
+function processo(idResultado, idMapOuIdPadrao, acao, novoValor, valorAnterior, idTipoMapeamento)
 {
                 
                 
@@ -73,7 +74,7 @@ function processo(idResultado, idMap, acao, novoValor, valorAnterior, idTipoMape
                 
     var ajax = openAjax(); // Inicia o Ajax.
                 
-    ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMap="+idMap+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior+"&idTipMap="+idTipoMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMapOuIdPadrao="+idMapOuIdPadrao+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior+"&idTipMap="+idTipoMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
     ajax.onreadystatechange = function()
     {
@@ -108,7 +109,7 @@ function setLinha(linha){
 /**
  * Função que adiciona nova linha na tabela sem recarregar a p&aacute;gina
  */
-function adiciona(linha){
+function adiciona(linha, idPadrao){
  
     totals++
         
@@ -116,14 +117,13 @@ function adiciona(linha){
     var novaLinha = tbl.insertRow(-1);
     var novaCelula;
     var cl = "";
-    var idMapeamento=0;
-    var idPadraoDestino=0;
+
     if(totals%2==0) cl = "price-yes";
 
     else cl = "price-no";
 
     novaCelula = novaLinha.insertCell(0);
-    //      novaCelula.style.backgroundColor = cl
+    novaCelula.align = "center";
     novaCelula.style.className = "price-yes";
     novaCelula.innerHTML = "<div class='center' id=result"+totals+">origem</div>";
     
@@ -132,7 +132,7 @@ function adiciona(linha){
     novaCelula = novaLinha.insertCell(1);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = "Destino"
+    novaCelula.innerHTML = "<div class='center' id=destino"+totals+">destino</div>"
 
 
     novaCelula = novaLinha.insertCell(2);
@@ -146,5 +146,10 @@ function adiciona(linha){
     novaCelula.className = cl;
     novaCelula.innerHTML = '<input type="button" class="BotaoMapeamento" size="30" name="salvar" id="salvar" value="Salvar" onclick="salvarNovoMapeamento("origem", "destino", "","");"/>';
 
-    processo('result'+totals, 0, "comboBox", "", "","");
+    addMap('result'+totals, 'destino'+totals, idPadrao); //chama a funcao que adiciona os selects por ajax
+}
+
+function setMapeamentoComposto(linha){
+    processo('resultComplementar'+linha, 0, "comboBox", "", "","");
+    processo('destinoComplementar'+linha, 0, "textComp", "", "","");
 }

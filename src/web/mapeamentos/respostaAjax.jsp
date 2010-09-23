@@ -28,10 +28,10 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
             String valorAnterior = request.getParameter("valorAnterior");
             String idDivResultado = request.getParameter("idResultado");
             
-            int idMap = 0;
-            String idMapeamento = request.getParameter("idMap");
+            int idMapOuPadrao = 0;
+            String idMapeamento = request.getParameter("idMapOuIdPadrao");
             if (!idMapeamento.isEmpty()) {
-                idMap = Integer.valueOf(idMapeamento);
+                idMapOuPadrao = Integer.valueOf(idMapeamento);
             }
 
             if (tipo.equalsIgnoreCase("comboBox")) {
@@ -50,8 +50,8 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 }
                 out.println("</select>");
 
-                if(idMap >0){
-                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idDivResultado + "', '" + idMap + "', 'atributos')\"/>");
+                if(idMapOuPadrao >0){
+                out.println("<input type=\"button\" name=\"salvar\" class=\"BotaoMapeamento\" id=\"salvar\"  value=\"Salvar\" onclick=\"salvarBase('" + idDivResultado + "', '" + idMapOuPadrao + "', 'atributos')\"/>");
                 out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
                 }
             }
@@ -64,16 +64,17 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
             else if (tipo.equalsIgnoreCase("salvar")) { //se for para salvar na base..
                 String novoValor = request.getParameter("novo");
 
-                if (idMap > 0) { //se for pra salvar algum mapeamento
+                if (idMapOuPadrao > 0) { //se for pra salvar algum mapeamento
 
 
 
-                    String sqlUpdate = "UPDATE mapeamentos SET destino_id=" + novoValor + " where id=" + idMap + ";";
+                    String sqlUpdate = "UPDATE mapeamentos SET destino_id=" + novoValor + " where id=" + idMapOuPadrao + ";";
 
                     stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
 
-                    out.println(consultaAtributoBase(idMap)); //retorna o valor que ficou salvo na base de dados
-                } else { //se for pra salvar dados gerais
+                    out.println(consultaAtributoBase(idMapOuPadrao)); //retorna o valor que ficou salvo na base de dados
+                }
+                else { //se for pra salvar dados gerais
                     String id = request.getParameter("idTipMap");
                                     
                     if (idDivResultado.equalsIgnoreCase("descricao")) {
@@ -92,7 +93,8 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
                     }
                 }
-            } else if (tipo.equalsIgnoreCase("text")) {
+            }
+            else if (tipo.equalsIgnoreCase("text")) {
 
                 String idTipoMapeamento = request.getParameter("idTipMap");
                 out.println("<input type=\"text\" id=\"geral\" name=\"geral\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" />");
@@ -103,7 +105,37 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
 
 
-            } else //Este comando devolverá "Dados inseridos com Sucesso para" o Ajax.
+            }
+            else if (tipo.equalsIgnoreCase("textComp")) {
+
+                String idTipoMapeamento = request.getParameter("idTipMap");
+                out.println("<input type=\"text\" id=\"geral\" name=\"geral\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" />");
+                
+                out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelar('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
+                //inserir um text para salvar o valor depois
+
+
+
+
+            }
+            else if (tipo.equalsIgnoreCase("comboOrigem")) {
+                out.println("<select name='atributosOrigem' id='atribOrigem' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
+
+                //consultar o mysql todos os atributos
+                String sqlPadrao = "SELECT a.id, a.atributo " +
+                        "FROM atributos a " +
+                        "WHERE a.idPadrao =" +idMapOuPadrao+
+                        " ORDER BY a.atributo;";
+
+                ResultSet res = stm.executeQuery(sqlPadrao);
+                //percorre os resultados retornados pela consulta sql
+                while (res.next()) {
+                    out.println("<option value=" + res.getString("id") + ">" + res.getString("atributo"));
+                }
+                out.println("</select>");
+
+            }
+            else //Este comando devolverá "Dados inseridos com Sucesso para" o Ajax.
             {
                 out.println("Faltando informação para funcionar o Ajax");
             }
