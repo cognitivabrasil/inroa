@@ -9,7 +9,7 @@ package ferramentaBusca;
 import ferramentaBusca.recuperador.Recuperador;
 import java.sql.*;
 import java.util.ArrayList;
-import postgres.ConectaPostgres;
+import postgres.Conectar;
 
 /**
  * Disponibiliza realizar Busca por similaridade
@@ -20,11 +20,11 @@ public class Busca {
     /**
      * Realiza uma busca por similaridade e relev&acirc;ncia no indice criado.
      * @param termoBusca Palava ou express&atilde;o que ser&aacute; buscada.
-     * @return ArrayList de Strings contendo os obaaEntry resultantes da busca.
+     * @return ArrayList de Strings contendo os obaa_entry resultantes da busca.
      */
     public ArrayList<String> search(String termoBusca, int idRep) throws SQLException{
         
-    ConectaPostgres conectar = new ConectaPostgres(); //instancia uma variavel da classe Postgres.conectar
+    Conectar conectar = new Conectar(); //instancia uma variavel da classe Postgres.conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe Postgres.conectar
 
         ArrayList<Integer> resultadoBusca = new ArrayList<Integer>();
@@ -36,12 +36,12 @@ public class Busca {
         resultadoBusca = rep.search2(termoBusca, con, idRep);
         for (int i=0; i<resultadoBusca.size(); i++){
             
-        String entryQ = "SELECT obaaEntry FROM documentos WHERE id=" + resultadoBusca.get(i);
+        String entryQ = "SELECT obaa_entry FROM documentos WHERE id=" + resultadoBusca.get(i);
 
 				Statement stm = con.createStatement();
 				ResultSet rs2 = stm.executeQuery(entryQ);
 				rs2.next();
-				String entryA = rs2.getString("obaaEntry");
+				String entryA = rs2.getString("obaa_entry");
                                 entry.add(entryA);
         }
         con.close(); //fecha a conexao com o Postgres
