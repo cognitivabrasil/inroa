@@ -50,8 +50,19 @@ function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
     botao.disabled=0; //desbloquear o botao editar
 }
 
-function salvarNovoMapeamento(origem, destino, orgComplementar, destComplementar){
-                
+/**
+ * Salva na base de dados atraves de ajax o novo mapeamento criado
+ * @param inputOrigem id do input da origem
+ * @param inputDestino id do input do destino
+ * @param inpOrgigemComplementar id do input do mapeamento complementar origem
+ * @param inpDestinoComplementar id do input do mapeamento complementar destino
+*/
+function salvarNovoMapeamento(inputOrigem, inputDestino, inpOrgigemComplementar, inpDestinoComplementar){
+    var origem = document.getElementById(inputOrigem).value;
+    var destino = document.getElementById(inputDestino).value;
+    var compOrigem = document.getElementById(inpOrgigemComplementar).value;
+    var compDestino = document.getElementById(inpDestinoComplementar).value;
+    document.write("org: "+origem+" dest: "+destino+" compOrg:"+compOrigem+" compDest"+compDestino);
 }
 
 function exibeText(idDivResult, idTipoMapeamento, bot){
@@ -147,7 +158,12 @@ function adicionaMap(linhaReal,idPadrao){
     novaCelula = novaLinha.insertCell(3);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = '<a title="Salvar" onclick="salvarNovoMapeamento("origem", "destino", "","");"> <img src="../imagens/ico24_salvar.gif" border="0" width="24" height="24" alt="Salvar" align="middle"></a>&nbsp;<a title="Remover Linha" onclick="removeLinha(\'tabela\', \''+linhaReal+'\');"><img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle"></a>';
+    novaCelula.innerHTML = '<a title="Salvar" onclick="salvarNovoMapeamento("origem", "destino", "","");"> \n\
+                                <img src="../imagens/ico24_salvar.gif" border="0" width="24" height="24" alt="Salvar" align="middle">\n\
+                            </a>&nbsp;\n\
+                            <a id="removeLinha" title="Remover Linha" onclick="removeLinha(\'tabela\', \''+linhaReal+'\');">\n\
+                                <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">\n\
+                            </a>';
 
     addMap('result'+totals, 'destino'+totals, idPadrao); //chama a funcao que adiciona os selects por ajax
 }
