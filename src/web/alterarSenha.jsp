@@ -101,7 +101,7 @@
                 }
 
                 try {
-                    String sql = "select nome from usuarios WHERE login='" + login + "' and senha=md5('" + senhaAtual + "');";
+                    String sql = "SELECT nome from usuarios WHERE login='" + login + "' and senha=md5('" + senhaAtual + "');";
                     ResultSet res = stm.executeQuery(sql);
                     if (res.next()) {
                         int result = 0;
@@ -122,6 +122,7 @@
                     }
 
                 } catch (SQLException e) {
+                    System.out.println("ERRO SQL: Erro ao alterar senha"+e);
                     out.print("<script type='text/javascript'>alert(' Erro ao atualizar a senha: " +
                             "history.back(-1);</script>");
 
@@ -133,5 +134,5 @@
     </body>
 </html>
 <%
-con.close(); //fechar conexao com mysql
+con.close(); //fechar conexao com o banco de dados
 %>
