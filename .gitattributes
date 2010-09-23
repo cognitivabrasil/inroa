@@ -202,15 +202,6 @@ src/src/java/ferramentaBusca/recuperador/Recuperador.java -text
 src/src/java/ferramentaBusca/recuperador/package.html -text
 src/src/java/login/Usuario.java -text
 src/src/java/login/package.html -text
-src/src/java/mysql/AtualizaBase.java -text
-src/src/java/mysql/AtualizacaoRepositorio.java -text
-src/src/java/mysql/Conectar.java -text
-src/src/java/mysql/Conectar_mysql.java -text
-src/src/java/mysql/Configuracao.java -text
-src/src/java/mysql/ConsultaNomeFederacao.java -text
-src/src/java/mysql/Excluir.java -text
-src/src/java/mysql/package.html -text
-src/src/java/mysql/teste.java -text
 src/src/java/operacoesLdap/Consultar.java -text
 src/src/java/operacoesLdap/Editar.java -text
 src/src/java/operacoesLdap/Inserir.java -text
