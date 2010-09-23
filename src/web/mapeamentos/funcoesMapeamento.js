@@ -5,6 +5,7 @@
  */
 
 botao='';
+linhaComposto=0;
 
 function addMap(idDivOrigem, idDivDestino, padraoMetadados){
     processo(idDivDestino, 0, "comboBox", "", "","");
@@ -17,7 +18,6 @@ function removeItem(linha)
     var tbl = document.getElementById('tabela');
     tbl.deleteRow(linha);
 }
-
 
 function cancelar(idDivResult, valorAnterior)
 {                
@@ -109,10 +109,10 @@ function setLinha(linha){
 }
 /**
  * Função que adiciona nova linha na tabela sem recarregar a p&aacute;gina.
- * @param linha n&uacute;mero da linha na tabela.
+ * @param linhaReal n&uacute;mero da linha na tabela, contando todas as linhas da tabela.
  * @param idPadrao id do padr&atilde;o de metadados.
  */
-function adiciona(linha, idPadrao){
+function adicionaMap(linhaReal,idPadrao){
  
     totals++
         
@@ -141,20 +141,21 @@ function adiciona(linha, idPadrao){
     novaCelula = novaLinha.insertCell(2);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = '<input type="button" class="BotaoMapeamento" size="30" name="addMap" id="addMap" value="+ Mapeamento Composto" onclick="setMapeamentoComposto(\''+totals+'\', \''+cl+'\');"/>';
+    novaCelula.innerHTML = '<input type="button" class="BotaoMapeamento" size="30" name="addMap" id="addMap" value="+ Mapeamento Complementar" onclick="setMapeamentoComposto(\''+linhaReal+'\', \''+cl+'\');"/>';
 
 
     novaCelula = novaLinha.insertCell(3);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = '<input type="button" class="BotaoMapeamento" size="30" name="salvar" id="salvar" value="Salvar" onclick="salvarNovoMapeamento("origem", "destino", "","");"/>';
+    novaCelula.innerHTML = '<a title="Salvar" onclick="salvarNovoMapeamento("origem", "destino", "","");"> <img src="../imagens/ico24_salvar.gif" border="0" width="24" height="24" alt="Salvar" align="middle"></a>&nbsp;<a title="Remover Linha" onclick="removeLinha(\'tabela\', \''+linhaReal+'\');"><img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle"></a>';
 
     addMap('result'+totals, 'destino'+totals, idPadrao); //chama a funcao que adiciona os selects por ajax
 }
 
 function setMapeamentoComposto(linha, cl){
     //adicionar linha com os divs antes.
-    
+    linhaComposto = linha;
+    linhaComposto++;
     var tbl = document.getElementById("tabela")
     var novaLinha = tbl.insertRow(-1);
     var novaCelula;
@@ -182,4 +183,15 @@ function setMapeamentoComposto(linha, cl){
 
     processo('resultComplementar'+linha, 0, "comboBox", "", "","");
     processo('destinoComplementar'+linha, 0, "textComp", "", "","");
+}
+
+function removeComplementar()
+{
+    var tbl = document.getElementById('tabela');
+    tbl.deleteRow(linhaComposto);
+}
+function removeLinha(nomeTabela, linha)
+{
+    var tbl = document.getElementById(nomeTabela);
+    tbl.deleteRow(linha);
 }
