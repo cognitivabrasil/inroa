@@ -69,7 +69,7 @@ Primeira etapa do cadastro de um repositorio
                             <option value="" selected>Selecione
                                 <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
-                ResultSet res = stm.executeQuery("SELECT nome, id FROM padrao_metadados ORDER BY nome ASC");
+                ResultSet res = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
                 while (res.next()) {
                     if (!res.getString("nome").equalsIgnoreCase("todos")) {
                         out.println("<option value=" + res.getString("id") + ">" + res.getString("nome").toUpperCase());

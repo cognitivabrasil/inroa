@@ -160,7 +160,7 @@
                 }
 
                 //testar se ja existe um LDAP cadastrado com o mesmo nome
-                ResultSet testeExiste = stm.executeQuery("SELECT l.nome, l.descricao, l.ip from ldaps l WHERE l.nome='" + nome + "';");
+                ResultSet testeExiste = stm.executeQuery("SELECT l.nome, l.descricao, l.ip FROM ldaps l WHERE l.nome='" + nome + "';");
 
                 if (testeExiste.next()) {
                     out.print("<script type='text/javascript'>alert('Já existe um LDAP cadastrado com esse nome!\\nO seu ip é: " + testeExiste.getString("ip") + "\\nSeu nome é: " + testeExiste.getString("nome") + "\\nSua descrição é: " + testeExiste.getString("descricao") + "');</script>");
