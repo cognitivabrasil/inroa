@@ -280,6 +280,7 @@ src/web/imagens/apagar.png -text
 src/web/imagens/erro_sincronizar.png -text
 src/web/imagens/favicon.ico -text
 src/web/imagens/ico24_deletar.gif -text
+src/web/imagens/ico24_salvar.gif -text
 src/web/imagens/sincronizar.png -text
 src/web/index.jsp -text
 src/web/index2.jsp -text
