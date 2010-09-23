@@ -111,7 +111,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 String idTipoMapeamento = request.getParameter("idTipMap");
                 out.println("<input type=\"text\" id=\"geral\" name=\"geral\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" />");
                 
-                out.println("<input type=\"button\" name=\"cancelar\" class=\"BotaoMapeamento\" id=\"cancelar\"  value=\"Cancelar\" onclick=\"cancelarAddComposto('" + idDivResultado + "', '" + valorAnterior + "')\"/>");
+                out.println("<a title=\"Remover Complementar\" onclick=\"removeComplementar()\"><img src=\"../imagens/ico24_deletar.gif\" border=\"0\" width=\"24\" height=\"24\" alt=\"Excluir\" align=\"middle\"></a>");
                 //inserir um text para salvar o valor depois
 
 
