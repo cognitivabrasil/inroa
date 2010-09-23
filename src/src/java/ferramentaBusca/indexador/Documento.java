@@ -15,7 +15,7 @@ public class Documento {
     private String data;
     private String localizacao;
     private int servidor;
-    private String obaaEntry;
+    private String obaa_entry;
     private String tituloOriginal;
     private int id;
     private StopWordTAD StopWd;
@@ -28,12 +28,12 @@ public class Documento {
 //        ent = new ArrayList<String>();
 //        desc = new ArrayList<String>();
 //        id = 1;
-//        obaaEntry="";
+//        obaa_entry="";
 //        resumo = "";
 //        data = "";
 //        localizacao = "";
 //        servidor = 0;
-//        obaaEntry = "";
+//        obaa_entry = "";
 //        tituloOriginal = "";
 //
 //
@@ -46,12 +46,12 @@ public class Documento {
         ent = new ArrayList<String>();
         desc = new ArrayList<String>();
         id = 1;
-        obaaEntry="";
+        obaa_entry="";
         resumo = "";
         data = "";
         localizacao = "";
         servidor = 0;
-        obaaEntry = "";
+        obaa_entry = "";
         tituloOriginal = "";
         this.StopWd = StopWd;
 
@@ -64,7 +64,7 @@ public class Documento {
         ent = new ArrayList<String>();
         desc = tokeniza(query);
         id = 1;
-        obaaEntry="";
+        obaa_entry="";
         resumo = "";
         data = "";
         localizacao = "";
@@ -74,11 +74,11 @@ public class Documento {
     }
 
     public String getObaaEntry() {
-        return obaaEntry;
+        return obaa_entry;
     }
 
-    public void setObaaEntry(String obaaEntry) {
-        this.obaaEntry = obaaEntry;
+    public void setObaaEntry(String obaa_entry) {
+        this.obaa_entry = obaa_entry;
     }
 
     public ArrayList<String> getTitulo() {
