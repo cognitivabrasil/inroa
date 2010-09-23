@@ -36,7 +36,7 @@ public class Recuperador {
 //     *            a string a ser consultada
 //     * @param con
 //     *            a conex&atilde;o com o banco de dados
-//     * @return uma lista de Strings com o obaaEntry de cada objeto
+//     * @return uma lista de Strings com o obaa_entry de cada objeto
 //     * @throws SQLException
 //     * @deprecated
 //     */
@@ -68,11 +68,11 @@ public class Recuperador {
 //        while (rs.next()) {
 //            id = rs.getInt("tid1");
 //            System.out.println("id: " + id);
-//            String entryQ = "SELECT obaaEntry FROM documentos WHERE id=" + id + ";";
+//            String entryQ = "SELECT obaa_entry FROM documentos WHERE id=" + id + ";";
 //            Statement stm = con.createStatement();
 //            ResultSet rs2 = stm.executeQuery(entryQ);
 //            rs2.next();
-//            String entryA = rs2.getString("obaaEntry");
+//            String entryA = rs2.getString("obaa_entry");
 //            System.out.println("entry: " + entryA);
 //            Entry.add(entryA);
 //
@@ -123,12 +123,12 @@ public class Recuperador {
             id = rs.getInt("tid");
             idDoc.add(id);
 
-//				String entryQ = "SELECT obaaEntry FROM documentos WHERE id=" + id
+//				String entryQ = "SELECT obaa_entry FROM documentos WHERE id=" + id
 //						+ ";";
 //				Statement stm = con.createStatement();
 //				ResultSet rs2 = stm.executeQuery(entryQ);
 //				rs2.next();
-//				String entryA = rs2.getString("obaaEntry");
+//				String entryA = rs2.getString("obaa_entry");
 //
 //				Entry.add(entryA);
 
