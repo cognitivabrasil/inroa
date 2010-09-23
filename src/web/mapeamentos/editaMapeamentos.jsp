@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FEB â€“ Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
+        <title>FEB - Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js">
@@ -124,7 +124,7 @@
             String nomePadrao = rs1.getString("nome");
             //rs1.close();
             out.print("<div class=\"subtitulo\">" + nomePadrao + " / <b>OBAA</b></div>");
-            out.println("<div class='textoErro center'><b>AtenÃ§Ã£o!</b> Tenha cuidado ao editar este mapeamento, pois pode estar sendo utilizado por mais de um repositÃ³rio.</div>");
+            out.println("<div class='textoErro center'><b>Aten&ccedil;&atilde;o!</b> Tenha cuidado ao editar este mapeamento, pois pode estar sendo utilizado por mais de um reposit&oacute;rio.</div>");
             ResultSet rs2 = stm.executeQuery(sqlMap);
             //pega o proximo resultado retornado pela consulta sql
             while (rs2.next()) {
