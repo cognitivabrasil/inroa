@@ -1,9 +1,9 @@
-package mysql;
+package postgres;
 
 import java.sql.*;
 
 /**
- * Atualiza informações na base de dados mysql.
+ * Atualiza informações na base de dados.
  * @author Marcos
  */
 public class AtualizaBase {
@@ -11,12 +11,12 @@ public class AtualizaBase {
     String baseDeDados = conf.getBase();
     String usuario = conf.getUsuario();
     String senha = conf.getSenha();
-    String ipBase = conf.getIpMysql();
-    String portarBase = conf.getPortaMysql();
+    String ipBase = conf.getIp();
+    String portarBase = conf.getPorta();
 
     /**
-     * Atualiza a hora do campo dataUltimaatualizacao da tabela info_repositorios para a hora atual.
-     * @param id Identificador do repositorio que deseja atualizar a dataUltimaAtualizacao.
+     * Atualiza a hora do campo data_ultima_atualizacao da tabela info_repositorios para a hora atual.
+     * @param id Identificador do repositorio que deseja atualizar a data_ultima_atualizacao.
      * @return Retorna true se a alteração foi realizada ou false se ocorreu algum erro ao atualizar a data.
      */
     public boolean atualizaHora(int id){
@@ -30,7 +30,7 @@ public class AtualizaBase {
             Statement stmUpdt = con.createStatement();
 
     int result = 0;
-        result = stmUpdt.executeUpdate("UPDATE info_repositorios SET dataUltimaAtualizacao=now() WHERE id_repositorio=" + id + ";");
+        result = stmUpdt.executeUpdate("UPDATE info_repositorios SET data_ultima_atualizacao=now() WHERE id_repositorio=" + id + ";");
         
         if (result > 0) {
                     return true;
