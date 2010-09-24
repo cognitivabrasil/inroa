@@ -160,7 +160,7 @@
                 if (idComplementar > 0) { //se tiver mapeamento complementar
 
                     //rodou no postgres, nao consegui fazer o teste pois nao ha mapeamentos compostos na base
-                    String sql = "SELECT a.atributo as destino, m.valor FROM mapeamentocomposto m, atributos a WHERE m.id_origem=a.id AND m.id=" + idComplementar + ";";
+                    String sql = "SELECT a.atributo as destino, m.valor FROM mapeamentocomposto m, atributos a WHERE m.id_origem=a.id AND m.id= " + idComplementar + ";";
                     ResultSet rs;
                     Statement stm2 = con.createStatement();
                     rs = stm2.executeQuery(sql);
