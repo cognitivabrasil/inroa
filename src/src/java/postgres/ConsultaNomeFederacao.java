@@ -23,7 +23,7 @@ public class ConsultaNomeFederacao {
 
         nomeRepositorio = nomeRepositorio.trim().toLowerCase().replaceAll(",", "");
 
-
+//postgres ok
         String sql = "SELECT r.nome, i.nome_na_federacao,('ou='||i.nome_na_federacao||','||l.dn)as dn, l.ip " +
                 "FROM repositorios r, info_repositorios i, ldaps l " +
                 "WHERE i.nome_na_federacao='" + nomeRepositorio + "' " +

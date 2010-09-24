@@ -97,7 +97,7 @@
 
 
             //testar se ja existe um repositorio cadastrado com o mesmo nome
-            ResultSet testeExiste = stm.executeQuery("select r.nome from repositorios r where r.nome='" + nome + "';");
+            ResultSet testeExiste = stm.executeQuery("SELECT r.nome FROM repositorios r WHERE r.nome='" + nome + "';");
 
             if (testeExiste.next()) {//se existir imprime o alerta
                 out.print("<script type='text/javascript'>alert('Já existe um repositório cadastrado com esse nome (" + nome + ")!');</script>");
@@ -107,7 +107,7 @@
 
             } else {
                 //testa se ja existe um repositorio identificado na federacao pelo nomeNaFederacao informado
-                ResultSet testeNomeFederacao = stm.executeQuery("select id_repositorio from info_repositorios i where i.nome_na_federacao='" + nomeNaFederacao + "';");
+                ResultSet testeNomeFederacao = stm.executeQuery("SELECT id_repositorio FROM info_repositorios i where i.nome_na_federacao='" + nomeNaFederacao + "';");
                 if (testeNomeFederacao.next()) {
                     //se ja existir exibe um alerta e retorna para o formulario
                     out.print("<script type='text/javascript'>alert('Já existe na federacao um repositorio identificado por: " + nomeNaFederacao + "!\\nPor favor informe outro nome!');</script></p>");
@@ -120,8 +120,8 @@
                         int result = 0, result2 = 0, result3 = 0;
 
 
-                        String sql1 = "insert into repositorios(nome, descricao) " +
-                                "values ('" + nome + "', '" + descricao + "');"; //sql que possui um insert com os dados da tabela repositorio
+                        String sql1 = "INSERT INTO repositorios(nome, descricao) " +
+                                "VALUES ('" + nome + "', '" + descricao + "');"; //sql que possui um insert com os dados da tabela repositorio
 
 
                         result = stm.executeUpdate(sql1, Statement.RETURN_GENERATED_KEYS); //realiza no mysql o insert que esta na variavel sql1, pedindo para retornar a key gerada automaticamente
@@ -142,7 +142,7 @@
                                 gravadoSql2 = true; //informa que o segundo insert foi realizado
 
                                 //string que contem um insert com os dados da tabela dadosldap
-                                String sql3 = "INSERT INTO dadosldap (id_repositorio, login_ldap_origem, senhaLdapOrigem, portaLdapOrigem, dnOrigem) " +
+                                String sql3 = "INSERT INTO dadosldap (id_repositorio, login_ldap_origem, senha_ldap_origem, porta_ldap_origem, dn_origem) " +
                                         "VALUES (" + key + ", '" + loginOrigem + "', '" + senhaOrigem + "', " + portaOrigem + ", '" + dnOrigem + "');";
                                 result3 = stm.executeUpdate(sql3); //executa o que tem na variavel slq3 no mysql
 
@@ -151,7 +151,7 @@
 ////////////////////////////////////chamar metodo que insere nodo no LDAP
                                     Inserir cadastraRep = new Inserir();
                                     //consulta sql que retorna os dados necessário para criar o novo nodo
-                                    ResultSet infoLdap = stm.executeQuery("SELECT ip, dn, login, senha, porta from ldaps where id="+idLdapDestino+";");
+                                    ResultSet infoLdap = stm.executeQuery("SELECT ip, dn, login, senha, porta FROM ldaps where id="+idLdapDestino+";");
                                     infoLdap.next();
                                     resultadoCadastraNodo=cadastraRep.insereNodo(nomeNaFederacao, infoLdap.getString("ip"), infoLdap.getString("dn"), infoLdap.getString("login"), infoLdap.getString("senha"), infoLdap.getInt("porta"));
                                 }
@@ -160,7 +160,7 @@
                                 out.print("<script type='text/javascript'>alert('Informações do repositório " + nome.toUpperCase() + " gravadas com sucesso!');</script></p>");
                                 out.print("<script type='text/javascript'>fechaRecarrega();</script>");
                             } else {
-                                stm.executeUpdate("delete from repositorios where id=" +key);
+                                stm.executeUpdate("DELETE FROM repositorios WHERE id=" +key);
                                 out.print("<script type='text/javascript'>alert('Erro ao inserir as informações na base de bados! Ocorreu erro ao adicionar nodo no LDAP!');</script>");
                                 out.print("<script type='text/javascript'>history.go(-1);</script>");
                                 out.print("<BR><p class='textoErro'>Erro ao inserir as informa&ccedil;&otilde;es na base de bados! Ocorreu erro ao adicionar nodo no LDAP!");

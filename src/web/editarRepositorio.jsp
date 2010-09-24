@@ -277,9 +277,9 @@
                 res.next();
 
                 String ip = res.getString("url_or_ip");
-                int portaLdapOrigem = res.getInt("portaLdapOrigem");
+                int portaLdapOrigem = res.getInt("porta_ldap_origem");
                 String portaOrigem = "";
-                String dnOrigem = res.getString("dnOrigem");
+                String dnOrigem = res.getString("dn_origem");
                 String login_ldap_origem = res.getString("login_ldap_origem");
                 if (ip == null) {
                     ip = "";
@@ -362,7 +362,7 @@
                         Repita a senha:
                     </div>
                     <div class="Value">
-                        <input name="confSenhaOrigem" value="<%=res.getString("senhaLdapOrigem")%>" id="confSenhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="confSenhaOrigem" value="<%=res.getString("senha_ldap_origem")%>" id="confSenhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
@@ -536,7 +536,7 @@
                         out.close();
                     }
 
-                    String sql = "UPDATE dadosldap set login_ldap_origem='" + login_ldap_origem + "', senhaLdapOrigem='" + senhaLdapOrigem + "', portaLdapOrigem=" + portaOrigem + ", dnOrigem='" + dnOrigem + "' where id_repositorio=" + id;
+                    String sql = "UPDATE dadosldap set login_ldap_origem='" + login_ldap_origem + "', senha_ldap_origem='" + senhaLdapOrigem + "', porta_ldap_origem=" + portaOrigem + ", dn_origem='" + dnOrigem + "' where id_repositorio=" + id;
                     int result = 0, result2 = 0;
                     result = stm.executeUpdate(sql);
                     if (result > 0) {

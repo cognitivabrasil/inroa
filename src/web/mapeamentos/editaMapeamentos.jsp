@@ -64,6 +64,7 @@
                 System.exit(0);
             }
 
+            //postgres ok
             String sqlInfoMapeamento = "SELECT t.nome, t.descricao FROM tipomapeamento t where id=" + tipoMapeamento + ";";
             ResultSet rsInfoMap = stm.executeQuery(sqlInfoMapeamento);
             //pega o proximo resultado retornado pela consulta sql
@@ -113,7 +114,10 @@
                 <%
 
 //consulta os mapeamentos na base de dados
+                //potgres ok
             String sqlPadrao = "SELECT nome FROM padraometadados p WHERE p.id=" + idPadrao + ";";
+
+            //potgres ok
             String sqlMap = "SELECT m.id as id_map, a1.atributo as origem, a2.atributo as destino, a2.id_padrao as id_padrao_destino, m.mapeamento_composto_id" +
                     " FROM atributos a1, mapeamentos m, atributos a2" +
                     " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipo_mapeamento_id=" + tipoMapeamento + " AND m.padraometadados_id=" + idPadrao + ";";
@@ -155,7 +159,8 @@
                 valorComplementar = "";
                 if (idComplementar > 0) { //se tiver mapeamento complementar
 
-                    String sql = "SELECT a.atributo as destino, m.valor " + "FROM mapeamentocomposto m, atributos a " + "WHERE m.id_origem=a.id " + "AND m.id=" + idComplementar + ";";
+                    //rodou no postgres, nao consegui fazer o teste pois nao ha mapeamentos compostos na base
+                    String sql = "SELECT a.atributo as destino, m.valor FROM mapeamentocomposto m, atributos a WHERE m.id_origem=a.id AND m.id=" + idComplementar + ";";
                     ResultSet rs;
                     Statement stm2 = con.createStatement();
                     rs = stm2.executeQuery(sql);

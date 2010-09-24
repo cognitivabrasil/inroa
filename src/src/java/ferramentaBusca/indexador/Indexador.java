@@ -30,7 +30,7 @@ public class Indexador {
 
         Statement stm = con.createStatement();
         //fazer consulta sql
-        String sql = "SELECT id FROM documentos where obaa_entry='" + obaa_entry + "'";
+        String sql = "SELECT id FROM documentos WHERE obaa_entry='" + obaa_entry + "'";
         ResultSet rs = stm.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
         if (rs.next()) //testa se tem o proximo resultado
         {

@@ -92,7 +92,7 @@ public class Excluir {
         Connection con = conectar.conectaBD();
 
         Statement stm = con.createStatement();
-        String sql = "delete from documentos where obaa_entry='" + obaa_entry + "';";
+        String sql = "DELETE FROM documentos where obaa_entry='" + obaa_entry + "';";
 
         //testar conexao com mysql
         try {

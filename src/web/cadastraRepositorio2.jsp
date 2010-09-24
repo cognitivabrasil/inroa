@@ -94,6 +94,7 @@ Segunda etapa do cadastro de um repositorio
                             <option value="" selected onclick="insereValorDiv('divDesc','Selecione um LDAP')">Selecione
                                 <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
+                //postgres ok
                 ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps WHERE nome NOT LIKE '%Meta%Diretorio%' ORDER BY nome ASC;");
                 while (res.next()) {
                     descricaoLDAP=res.getString("descricao");

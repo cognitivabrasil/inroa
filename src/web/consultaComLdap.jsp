@@ -62,7 +62,7 @@ int numeroMaximoDeObjetosPorPagina=5;
             }
                        
 
-            
+            //potgres ok
             String sql = "SELECT r.nome, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn, l.ip, l.login, l.senha, l.porta, i.nome_na_federacao " +
                     " FROM repositorios r, info_repositorios i, ldaps l " +
                     " WHERE r.id=" + idRepositorio +

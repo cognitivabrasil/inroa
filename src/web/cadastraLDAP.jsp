@@ -160,6 +160,7 @@
                 }
 
                 //testar se ja existe um LDAP cadastrado com o mesmo nome
+                //postgres ok
                 ResultSet testeExiste = stm.executeQuery("SELECT l.nome, l.descricao, l.ip FROM ldaps l WHERE l.nome='" + nome + "';");
 
                 if (testeExiste.next()) {

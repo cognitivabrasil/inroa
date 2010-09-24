@@ -126,15 +126,15 @@ public class XmlSaxReader extends DefaultHandler {
             try{
                 Statement stm1 = ConMysql.createStatement();
                 //idTipoMapeamento;namespace;metadataPrefix;
-                String sqlInfo = "SELECT i.padrao_metadados, i.tipo_mapeamento_id as tipoMap, p.nameSpace, metadataPrefix" +
+                String sqlInfo = "SELECT i.padrao_metadados, i.tipo_mapeamento_id as tipo_map, p.name_space, metadata_prefix" +
                         " FROM info_repositorios i, padraometadados p" +
                         " WHERE i.padrao_metadados=p.id AND i.id_repositorio="+this.idRepositorio+";";
                 ResultSet rsInfo = stm1.executeQuery(sqlInfo);
                 if(rsInfo.next()){
                     this.padrao_metadados = rsInfo.getInt("padrao_metadados");
-                    this.tipo_mapeamento_id = rsInfo.getInt("tipoMap");
-                    this.namespace = rsInfo.getString("nameSpace");
-                    this.metadataPrefix = rsInfo.getString("metadataPrefix");
+                    this.tipo_mapeamento_id = rsInfo.getInt("tipo_map");
+                    this.namespace = rsInfo.getString("name_space");
+                    this.metadataPrefix = rsInfo.getString("metadata_prefix");
                 }
                 stm1.close();
                 
@@ -159,7 +159,7 @@ public class XmlSaxReader extends DefaultHandler {
                             " AND a2.id=m.destino_id" +
                             " AND a2.atributo='" + indiceVet[i] + "'" +
                             " AND m.tipo_mapeamento_id=" + tipo_mapeamento_id+
-                            " AND a1.idPadrao=" + this.padrao_metadados + ";";
+                            " AND a1.id_padrao=" + this.padrao_metadados + ";";
                     
                     ResultSet res = stm.executeQuery(sqlAtrib);
                     while (res.next()) {
@@ -273,7 +273,7 @@ public class XmlSaxReader extends DefaultHandler {
             }
 
             if (idComplementar > 0) { //se tiver mapeamento complementar
-                String sql = "SELECT a.atributo as destino, m.valor " + "FROM mapeamentoComposto m, atributos a " + "WHERE m.id_origem=a.id " + "AND m.id=" + idComplementar + ";";
+                String sql = "SELECT a.atributo as destino, m.valor " + "FROM mapeamentocomposto m, atributos a " + "WHERE m.id_origem=a.id " + "AND m.id=" + idComplementar + ";";
                 try {
                     Statement stm = ConMysql.createStatement();
                     ResultSet rs = stm.executeQuery(sql);

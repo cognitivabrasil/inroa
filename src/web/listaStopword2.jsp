@@ -95,7 +95,7 @@
                         <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                             <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
-                ResultSet resPadrao = stm.executeQuery("SELECT nome, id FROM padrao_metadados ORDER BY nome ASC");
+                ResultSet resPadrao = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
                 while (resPadrao.next()) {
                     String nomePadraoTemp = resPadrao.getString("nome");
 
@@ -206,7 +206,8 @@
                 //        "AND r.id=d.id_repositorio";
 
                 //ResultSet res = stm.executeQuery(sql);
-                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps where not nome like '%meta%diretorio%' ORDER BY nome ASC;");
+                    //postgres ok
+                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps WHERE NOT nome LIKE '%Meta%Diretorio%' ORDER BY nome ASC;");
                 //res.next();
 
                 String nomeLdapLocal = request.getParameter("ldapLocal");
@@ -270,9 +271,9 @@
                 res.next();
 
                 String ip = res.getString("url_or_ip");
-                int portaLdapOrigem = res.getInt("portaLdapOrigem");
+                int portaLdapOrigem = res.getInt("porta_ldap_origem");
                 String portaOrigem = "";
-                String dnOrigem = res.getString("dnOrigem");
+                String dnOrigem = res.getString("dn_origem");
                 String login_ldap_origem = res.getString("login_ldap_origem");
                 if (ip == null) {
                     ip = "";
@@ -347,7 +348,7 @@
                         Senha:
                     </div>
                     <div class="Value">
-                        <input name="senhaOrigem" value="<%=res.getString("senhaLdapOrigem")%>" id="senhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="senhaOrigem" value="<%=res.getString("senha_ldap_origem")%>" id="senhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -355,7 +356,7 @@
                         Repita a senha:
                     </div>
                     <div class="Value">
-                        <input name="confSenhaOrigem" value="<%=res.getString("senhaLdapOrigem")%>" id="confSenhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="confSenhaOrigem" value="<%=res.getString("senha_ldap_origem")%>" id="confSenhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
@@ -529,7 +530,7 @@
                         out.close();
                     }
 
-                    String sql = "UPDATE dadosldap set login_ldap_origem='" + login_ldap_origem + "', senhaLdapOrigem='" + senhaLdapOrigem + "', portaLdapOrigem=" + portaOrigem + ", dnOrigem='" + dnOrigem + "' where id_repositorio=" + id;
+                    String sql = "UPDATE dadosldap set login_ldap_origem='" + login_ldap_origem + "', senha_ldap_origem='" + senhaLdapOrigem + "', porta_ldap_origem=" + portaOrigem + ", dn_origem='" + dnOrigem + "' where id_repositorio=" + id;
                     int result = 0, result2 = 0;
                     result = stm.executeUpdate(sql);
                     if (result > 0) {

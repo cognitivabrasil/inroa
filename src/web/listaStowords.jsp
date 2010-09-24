@@ -41,7 +41,7 @@
 
             </form>
             <%
-            String sql = "SELECT id, stopword from stopwords";
+            String sql = "SELECT id, stopword FROM stopwords";
 
         ResultSet res = stm.executeQuery(sql);
         while(res.next()){

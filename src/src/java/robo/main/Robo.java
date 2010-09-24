@@ -46,7 +46,7 @@ public class Robo {
                 " WHERE r.id=i.id_repositorio" +
                 " AND r.nome!='todos'" +
                 " AND r.nome!='obaa'" +
-                " AND i.data_ultima_atualizacao<DATE_SUB(now(), INTERVAL i.periodicidade_horas HOUR);";
+                " AND i.data_ultima_atualizacao < (now() - i.periodicidade_horas*('1 HOUR')::INTERVAL);";
 
 
 
@@ -93,17 +93,31 @@ public class Robo {
         Connection con = null;
         String caminhoDiretorioTemporario = conf.getCaminho();
 
-        String sql = "SELECT r.nome, i.data_ultima_atualizacao, l.ip AS ipDestino, ('ou='||i.nome_na_federacao||','||l.dn) as dnDestino, i.url_or_ip as url, i.tipo_sincronizacao," +
-                " l.login as loginLdapDestino, l.senha as senhaLdapDestino, p.nome as padrao_metadados, p.metadataPrefix, p.namespace, l.porta as portaLdapDestino," +
-                " d.login_ldap_origem, d.senhaLdapOrigem, d.portaLdapOrigem, d.dnOrigem," +
-                " DATE_FORMAT(i.data_ultima_atualizacao, '%Y-%m-%dT%H:%i:%sZ') as ultimaAtualizacaoForm" +
+
+
+         String sql = "SELECT r.nome, i.data_ultima_atualizacao, l.ip AS ipDestino, ('ou='||i.nome_na_federacao||','||l.dn) as dnDestino, i.url_or_ip as url, i.tipo_sincronizacao,"+
+                " l.login as loginLdapDestino, l.senha as senhaLdapDestino, p.nome as padrao_metadados, p.metadata_prefix, p.name_space, l.porta as portaLdapDestino,"+
+                " d.login_ldap_origem, d.senha_ldap_origem, d.porta_ldap_origem, d.dn_origem,"+
+                " i.data_ultima_atualizacao as ultima_atualizacao_form"+
+                " FROM repositorios r, info_repositorios i, padraometadados p, dadosldap d, ldaps l"+
+                " WHERE r.id=i.id_repositorio"+
+                " AND r.id=d.id_repositorio"+
+                " AND i.padrao_metadados=p.id"+
+                " AND i.ldap_destino=l.id"+
+                " AND r.id"+ idRepositorio + ";";
+
+        /*
+        String sql = "SELECT r.nome, i.data_ultima_atualizacao, l.ip AS ip_destino, ('ou='||i.nome_na_federacao||','||l.dn) as dn_destino, i.url_or_ip as url, i.tipo_sincronizacao," +
+                " l.login as login_ldap_destino, l.senha as senha_ldap_destino, p.nome as padrao_metadados, p.metadata_prefix, p.name_space, l.porta as porta_ldap_destino," +
+                " d.login_ldap_origem, d.senha_ldap_origem, d.porta_ldap_origem, d.dn_origem," +
+                " DATE_FORMAT(i.data_ultima_atualizacao, '%Y-%m-%dT%H:%i:%sZ') as ultima_atualizacao_form" +
                 " FROM repositorios r, info_repositorios i, padraometadados p, dadosldap d, ldaps l" +
                 " WHERE r.id=i.id_repositorio" +
                 " AND r.id=d.id_repositorio" +
                 " AND i.padrao_metadados=p.id" +
                 " AND i.ldap_destino=l.id" +
                 " AND r.id=" + idRepositorio + ";";
-
+*/
         con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
 
         try {
@@ -119,26 +133,26 @@ public class Robo {
             System.out.println("Atualizando repositorio: " + nome);//imprime o nome do repositorio
 
             String url = rs.getString("url"); //pega a url retornada pela consulta sql
-            String metadataPrefix = rs.getString("metadataPrefix");
-            String namespace = rs.getString("namespace");
+            String metadataPrefix = rs.getString("metadata_prefix");
+            String namespace = rs.getString("name_space");
 
             if (url.isEmpty()) { //testa se a string url esta vazia.
                 System.out.println("Não existe uma url associada ao repositório " + nome);
 
             } else {//repositorio possui url para atualizacao
 
-                String ultimaAtualizacao = rs.getString("ultimaAtualizacaoForm");
+                String ultimaAtualizacao = rs.getString("ultima_atualizacao_form");
                 //String horaAtual = rs.getString("horaAtualForm");
-                String ipDestino = rs.getString("ipDestino");
-                String dnDestino = rs.getString("dnDestino");
+                String ipDestino = rs.getString("ip_destino");
+                String dnDestino = rs.getString("dn_destino");
                 int idRep = idRepositorio;
-                String loginDestino = rs.getString("loginLdapDestino");
-                String senhaDestino = rs.getString("senhaLdapDestino");
+                String loginDestino = rs.getString("login_ldap_destino");
+                String senhaDestino = rs.getString("senha_ldap_destino");
                 String padrao_metadados = rs.getString("padrao_metadados");
-                int portaLDAPDestino = rs.getInt("portaLdapDestino");
+                int portaLDAPDestino = rs.getInt("porta_ldap_destino");
                 String loginOrigem = rs.getString("login_ldap_origem");
-                String senhaOrigem = rs.getString("senhaLdapOrigem");
-                int portaLDAPOrigem = rs.getInt("portaLdapOrigem");
+                String senhaOrigem = rs.getString("senha_ldap_origem");
+                int portaLDAPOrigem = rs.getInt("porta_ldap_origem");
 
                 String dnOrigem = rs.getString("dnOrigem");
                 String tipoSinc = rs.getString("tipo_sincronizacao");

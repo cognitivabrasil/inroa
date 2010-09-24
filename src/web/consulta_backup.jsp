@@ -37,6 +37,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 //                " AND r.id=i.id_repositorio" +
 //                " AND r.id=d.id_repositorio";
 
+        //potgres ok
             String sql = "SELECT r.nome, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn, l.ip, l.login, l.senha, l.porta, i.nome_na_federacao " +
                     " FROM repositorios r, info_repositorios i, ldaps l " +
                     " WHERE r.id=" + request.getParameter("repositorio") +

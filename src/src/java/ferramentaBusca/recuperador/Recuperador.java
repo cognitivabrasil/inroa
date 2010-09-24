@@ -36,7 +36,7 @@ public class Recuperador {
 //     *            a string a ser consultada
 //     * @param con
 //     *            a conex&atilde;o com o banco de dados
-//     * @return uma lista de Strings com o obaa_entry de cada objeto
+//     * @return uma lista de integer com o id de cada documento
 //     * @throws SQLException
 //     * @deprecated
 //     */

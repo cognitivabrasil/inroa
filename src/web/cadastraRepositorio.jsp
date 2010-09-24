@@ -69,6 +69,7 @@ Primeira etapa do cadastro de um repositorio
                             <option value="" selected>Selecione
                                 <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
+                //postgres ok
                 ResultSet res = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
                 while (res.next()) {
                     if (!res.getString("nome").equalsIgnoreCase("todos")) {

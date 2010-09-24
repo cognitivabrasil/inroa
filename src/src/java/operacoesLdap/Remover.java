@@ -262,12 +262,12 @@ public class Remover {
             Statement stm = con.createStatement();
             //executa a consulta que esta na variavel sql
 
-            String sql2 = "SELECT l.ip, l.dn, l.login, l.senha, l.porta, i.nome_na_federacao as nomeNodo from ldaps l, info_repositorios i where i.ldap_destino=l.id AND i.id_repositorio=" + id;
+            String sql2 = "SELECT l.ip, l.dn, l.login, l.senha, l.porta, i.nome_na_federacao as nome_nodo FROM ldaps l, info_repositorios i where i.ldap_destino=l.id AND i.id_repositorio=" + id;
             //pegar dados do mysql para informar ao metodo
             ResultSet infoLdap = stm.executeQuery(sql2);
             infoLdap.next();
 
-            apagou = removeNodo(infoLdap.getString("nomeNodo"), infoLdap.getString("ip"), infoLdap.getString("dn"), infoLdap.getString("login"), infoLdap.getString("senha"), infoLdap.getInt("porta"));
+            apagou = removeNodo(infoLdap.getString("nome_nodo"), infoLdap.getString("ip"), infoLdap.getString("dn"), infoLdap.getString("login"), infoLdap.getString("senha"), infoLdap.getInt("porta"));
             if (apagou) {
                 resultado = true;
             }

@@ -37,10 +37,11 @@
                 formNull = true;
 
             }
+            //postgres ok
             if (formNull) {
                 String sql = "";
                 sql += "SELECT * FROM usuarios ";
-                sql += "where login='" + login + "';";
+                sql += "WHERE login='" + login + "';";
 
                 ResultSet res = stm.executeQuery(sql);
                 if (res.next()) {
@@ -101,11 +102,13 @@
                 }
 
                 try {
-                    String sql = "SELECT nome from usuarios WHERE login='" + login + "' and senha=md5('" + senhaAtual + "');";
+                    //postgres ok
+                    String sql = "SELECT nome FROM usuarios WHERE login='" + login + "' and senha=md5('" + senhaAtual + "');";
                     ResultSet res = stm.executeQuery(sql);
                     if (res.next()) {
                         int result = 0;
-                        String sqlUpdate = "UPDATE usuarios set senha=md5('" + senhaNova + "') where login='" + login + "'";
+                        //potgres ok
+                        String sqlUpdate = "UPDATE usuarios SET senha=md5('" + senhaNova + "') WHERE login='" + login + "'";
                         result = stm.executeUpdate(sqlUpdate); //executa o update da senha
                         if (result > 0) { //se result for maior que zero é pq atualizou a senha
                             session.removeAttribute("usuario");//remove o usuario da sessao para que tenha que digitar a nova senha
