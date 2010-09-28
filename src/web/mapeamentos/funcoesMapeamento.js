@@ -7,10 +7,48 @@
 botao='';
 linhaComposto=0;
 
+idOrigem = '';
+idDestino = '';
+idOrigemComp = '';
+idDestinoComp = '';
+
 function addMap(idDivOrigem, idDivDestino, padraoMetadados){
     processo(idDivDestino, 0, "comboBox", "", "","");
     processo(idDivOrigem, padraoMetadados, "comboOrigem", "", "","");
 
+     var link  = document.getElementById("salvar");
+      idOrigem = 'atribOrigem';
+      idDestino ='atrb'+idDivDestino;
+      idOrigemComp = '';
+      idDestinoComp = '';
+      link.onclick = salvarNovoMapeamento;
+
+}
+
+/**
+ * Salva na base de dados atraves de ajax o novo mapeamento criado.
+ * inputOrigem: id do input da origem. É passado por variavel global.
+ * inputDestino: id do input do destino. É passado por variavel global.
+ * inpOrgigemComplementar: id do input do mapeamento complementar origem. É passado por variavel global.
+ * inpDestinoComplementar: id do input do mapeamento complementar destino. É passado por variavel global.
+*/
+function salvarNovoMapeamento(){
+//pegando valores de variaveis globais
+   var inputOrigem = idOrigem;
+    var inputDestino = idDestino;
+    var inputOrigemComplementar = idOrigemComp;
+    var inputDestinoComplementar = idDestinoComp;
+//fim variaveis globais
+    var origem = document.getElementById(inputOrigem).value;
+    var destino = document.getElementById(inputDestino).value;
+    var compOrigem = '';
+    var compDestino = '';
+    if(!inputOrigemComplementar == ''){
+        compOrigem = document.getElementById(inputOrigemComplementar).value;
+        compDestino= document.getElementById(inputDestinoComplementar).value;
+     }
+    
+    alert("org: "+origem+" dest: "+destino+" compOrg:"+compOrigem+" compDest"+compDestino);
 }
 
 function removeItem(linha)
@@ -48,21 +86,6 @@ function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
     processo(idDivResultado, idMap, "salvar", novo,"",idTipoMapeamento)
 
     botao.disabled=0; //desbloquear o botao editar
-}
-
-/**
- * Salva na base de dados atraves de ajax o novo mapeamento criado
- * @param inputOrigem id do input da origem
- * @param inputDestino id do input do destino
- * @param inpOrgigemComplementar id do input do mapeamento complementar origem
- * @param inpDestinoComplementar id do input do mapeamento complementar destino
-*/
-function salvarNovoMapeamento(inputOrigem, inputDestino, inpOrgigemComplementar, inpDestinoComplementar){
-    var origem = document.getElementById(inputOrigem).value;
-    var destino = document.getElementById(inputDestino).value;
-    var compOrigem = document.getElementById(inpOrgigemComplementar).value;
-    var compDestino = document.getElementById(inpDestinoComplementar).value;
-    document.write("org: "+origem+" dest: "+destino+" compOrg:"+compOrigem+" compDest"+compDestino);
 }
 
 function exibeText(idDivResult, idTipoMapeamento, bot){
@@ -139,7 +162,7 @@ function adicionaMap(linhaReal,idPadrao){
     novaCelula = novaLinha.insertCell(0);
     novaCelula.align = "center";
     novaCelula.style.className = "price-yes";
-    novaCelula.innerHTML = "<div class='center' id=result"+totals+">origem</div>";
+    novaCelula.innerHTML = "<div class='center' id=result"+totals+">Javascript não está funcionando</div>";
     
     novaCelula.className = cl;
 
@@ -158,7 +181,8 @@ function adicionaMap(linhaReal,idPadrao){
     novaCelula = novaLinha.insertCell(3);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = '<a title="Salvar" onclick="salvarNovoMapeamento("origem", "destino", "","");"> \n\
+    //salvarNovoMapeamento(\'origem\', \'destino\', \'\',\'\');
+    novaCelula.innerHTML = '<a title="Salvar" id="salvar"> \n\
                                 <img src="../imagens/ico24_salvar.gif" border="0" width="24" height="24" alt="Salvar" align="middle">\n\
                             </a>&nbsp;\n\
                             <a id="removeLinha" title="Remover Linha" onclick="removeLinha(\'tabela\', \''+linhaReal+'\');">\n\
@@ -168,6 +192,11 @@ function adicionaMap(linhaReal,idPadrao){
     addMap('result'+totals, 'destino'+totals, idPadrao); //chama a funcao que adiciona os selects por ajax
 }
 
+/**
+ * Adiciona uma linha na tabela para informar o mapeamento composto
+ * @param linha numero da linha que será inserido
+ * @param cl cor da linha. Deve ser passado uma class do css.
+ */
 function setMapeamentoComposto(linha, cl){
     //adicionar linha com os divs antes.
     linhaComposto = linha;
@@ -199,6 +228,11 @@ function setMapeamentoComposto(linha, cl){
 
     processo('resultComplementar'+linha, 0, "comboBox", "", "","");
     processo('destinoComplementar'+linha, 0, "textComp", "", "","");
+    var link  = document.getElementById("salvar");
+    
+    idOrigemComp = 'atrbresultComplementar'+linha;
+    idDestinoComp = 'geral';
+    link.onclick = salvarNovoMapeamento
 }
 
 function removeComplementar()
