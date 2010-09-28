@@ -11,17 +11,18 @@ idOrigem = '';
 idDestino = '';
 idOrigemComp = '';
 idDestinoComp = '';
+totals =0;
 
 function addMap(idDivOrigem, idDivDestino, padraoMetadados){
     processo(idDivDestino, 0, "comboBox", "", "","");
     processo(idDivOrigem, padraoMetadados, "comboOrigem", "", "","");
 
-     var link  = document.getElementById("salvar");
-      idOrigem = 'atribOrigem';
-      idDestino ='atrb'+idDivDestino;
-      idOrigemComp = '';
-      idDestinoComp = '';
-      link.onclick = salvarNovoMapeamento;
+    var link  = document.getElementById("salvar");
+    idOrigem = 'atribOrigem';
+    idDestino ='atrb'+idDivDestino;
+    idOrigemComp = '';
+    idDestinoComp = '';
+    link.onclick = salvarNovoMapeamento;
 
 }
 
@@ -33,12 +34,12 @@ function addMap(idDivOrigem, idDivDestino, padraoMetadados){
  * inpDestinoComplementar: id do input do mapeamento complementar destino. É passado por variavel global.
 */
 function salvarNovoMapeamento(){
-//pegando valores de variaveis globais
-   var inputOrigem = idOrigem;
+    //pegando valores de variaveis globais
+    var inputOrigem = idOrigem;
     var inputDestino = idDestino;
     var inputOrigemComplementar = idOrigemComp;
     var inputDestinoComplementar = idDestinoComp;
-//fim variaveis globais
+    //fim variaveis globais
     var origem = document.getElementById(inputOrigem).value;
     var destino = document.getElementById(inputDestino).value;
     var compOrigem = '';
@@ -46,11 +47,14 @@ function salvarNovoMapeamento(){
     if(!inputOrigemComplementar == ''){
         compOrigem = document.getElementById(inputOrigemComplementar).value;
         compDestino= document.getElementById(inputDestinoComplementar).value;
-     }
-    
-    alert("org: "+origem+" dest: "+destino+" compOrg:"+compOrigem+" compDest"+compDestino);
+    }
+    salvarAjax('result'+totals, origem, destino, compOrigem, compDestino);
 }
 
+/**
+ * Remove linha da tabela cujo id é 'tabela'
+ * @param linha linha a ser removida
+*/
 function removeItem(linha)
 {
     var tbl = document.getElementById('tabela');
@@ -96,47 +100,7 @@ function exibeText(idDivResult, idTipoMapeamento, bot){
 }
             
 
-/**
-             * Função utilizada pelo mapeamento dinamico com ajax.
-             * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
-             */
-function processo(idResultado, idMapOuIdPadrao, acao, novoValor, valorAnterior, idTipoMapeamento)
-{
-                
-                
-                
-    var exibeResultado = document.getElementById(idResultado);
-                
-    var ajax = openAjax(); // Inicia o Ajax.
-                
-    ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMapOuIdPadrao="+idMapOuIdPadrao+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior+"&idTipMap="+idTipoMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
-    ajax.onreadystatechange = function()
-    {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-        {
-            exibeResultado.innerHTML = "Aguarde...";
-        }
-        if(ajax.readyState == 4) // Quando estiver tudo pronto.
-        {
-            if(ajax.status == 200)
-            {
-                var resultado = ajax.responseText;
-                exibeResultado.innerHTML = resultado;
-            }
-            else
-            {
-                exibeResultado.innerHTML = "Erro nas funções do Ajax";
-            }
-        }
-    }
-    ajax.send(null); // submete
-//document.getElementById("nome").value= "";//limpa os campos
-//document.getElementById("nome").setFocus=true;
-
-}
-
-totals =0;
   
 function setLinha(linha){
     totals = linha-1;
@@ -162,14 +126,14 @@ function adicionaMap(linhaReal,idPadrao){
     novaCelula = novaLinha.insertCell(0);
     novaCelula.align = "center";
     novaCelula.style.className = "price-yes";
-    novaCelula.innerHTML = "<div class='center' id=result"+totals+">Javascript não está funcionando</div>";
+    novaCelula.innerHTML = "<div class='center' id=result"+totals+">Javascript n&atilde;o est&aacute; funcionando</div>";
     
     novaCelula.className = cl;
 
     novaCelula = novaLinha.insertCell(1);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = "<div class='center' id=destino"+totals+">destino</div>"
+    novaCelula.innerHTML = "<div class='center' id=destino"+totals+">Javascript n&atilde;o est&aacute; funcionando</div>"
 
 
     novaCelula = novaLinha.insertCell(2);
@@ -235,13 +199,105 @@ function setMapeamentoComposto(linha, cl){
     link.onclick = salvarNovoMapeamento
 }
 
+/**
+ * Remove a linha complementar que tinha sido adicionada.
+*/
 function removeComplementar()
 {
     var tbl = document.getElementById('tabela');
     tbl.deleteRow(linhaComposto);
+    idOrigemComp = '';
+    idDestinoComp = '';
 }
+/**
+ * Remove uma linha de uma tabela especificada
+ * @param nomeTabela nome da tabela que ter&aacute; a linha exclu&iacute;da
+ * @param linha n&uacute;mero da linha a ser exclu&iacute;da
+ */
 function removeLinha(nomeTabela, linha)
 {
     var tbl = document.getElementById(nomeTabela);
     tbl.deleteRow(linha);
+}
+
+/**
+ * Função utilizada pelo mapeamento dinamico com ajax.
+ * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
+*/
+function processo(idResultado, idMapOuIdPadrao, acao, novoValor, valorAnterior, idTipoMapeamento)
+{
+
+    //div onde sera adicionado o resultado
+    var exibeResultado = document.getElementById(idResultado);
+
+    var ajax = openAjax(); // Inicia o Ajax.
+
+    ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMapOuIdPadrao="+idMapOuIdPadrao+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior+"&idTipMap="+idTipoMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        {
+            exibeResultado.innerHTML = "Aguarde...";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
+            {
+                var resultado = ajax.responseText;
+                exibeResultado.innerHTML = resultado;
+            }
+            else
+            {
+                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+            }
+        }
+    }
+    ajax.send(null); // submete
+//document.getElementById("nome").value= "";//limpa os campos
+//document.getElementById("nome").setFocus=true;
+
+}
+
+
+/**
+ * Utilizada para salvar mapeamentos na base utilizando ajax
+ * @param idResultado id do div onde ser&aacute; colocado o resultado do ajax
+ * @param origem id da origem a ser salva, deve ser o identificador do atributo na base de dados.
+ * @param destino id do destino a ser salvo, deve ser o identificador do atributo na base de dados.
+ * @param origemComplementar id da origem complementar, mapeamento complementar, a ser salva, deve ser o identificador do atributo na base de dados.
+ * @param destinoComplementar id do destino complementar, mapeamento complementar, a ser salvo, deve ser o identificador do atributo na base de dados.
+ */
+function salvarAjax(idResultado, origem, destino, origemComplementar, destinoComplementar)
+{
+    //div onde sera adicionado o resultado
+    var exibeResultado = document.getElementById(idResultado);
+
+    var ajax = openAjax(); // Inicia o Ajax.
+
+    ajax.open("POST", "salvarBaseAjax.jsp?origem="+origem+"&destino="+destino+"&origemcomplementar="+origemComplementar+"&destinocomplementar="+destinoComplementar, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        {
+            exibeResultado.innerHTML = "Aguarde...";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
+            {
+                var resultado = ajax.responseText;
+                exibeResultado.innerHTML = resultado;
+            }
+            else
+            {
+                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+            }
+        }
+    }
+    ajax.send(null); // submete
+//document.getElementById("nome").value= "";//limpa os campos
+//document.getElementById("nome").setFocus=true;
+
 }
