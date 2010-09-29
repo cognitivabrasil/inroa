@@ -4,7 +4,6 @@
  */
 package postgres;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,26 +90,81 @@ public class teste {
     }
 
     public void teste() {
-        String sql = "SELECT titulo FROM documentos WHERE id=29845;";
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
+        String sql = "";
         try {
-            Conectar conecta = new Conectar();
-            Connection con = conecta.conectaBD();
-            Statement stm = con.createStatement();
-            ResultSet res = stm.executeQuery(sql);
-            if (res.next()) {
-                String resultado = res.getString(1);
-                System.out.println(resultado);
-                
-            }
+            int result = 0;
+
+            // PrepareStatement sta = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            //sta.executeUpdate();
+
+            //ResultSet rsID = sta.getGeneratedKeys();
+
+//if(rsID.next())
+
+            int id = 0;
+            // rsID.getInt("id");
+
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public int gravaMapeamentosBase(String padrao, String origem, String destino, String tipoMap, String origemComp, String destinoComp) throws SQLException {
+
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
+        int retornoIdComp = 0;
+
+
+        if (!origemComp.isEmpty() || !destinoComp.isEmpty()) {
+            String sqlComp = "INSERT INTO mapeamentocomposto (valor, id_origem) VALUES (?, ?);";
+            PreparedStatement stmt = con.prepareStatement(sqlComp, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, destinoComp);
+            stmt.setInt(2, Integer.parseInt(origemComp));
+            stmt.execute();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            retornoIdComp = rs.getInt(1);
+        }
+
+
+        String sql = "INSERT INTO mapeamentos (padraometadados_id, origem_id, destino_id, tipo_mapeamento_id, mapeamento_composto_id ) VALUES " +
+                "(?, ?, ?, ?, ?)";
+        if (retornoIdComp <= 0) {
+            sql = "INSERT INTO mapeamentos (padraometadados_id, origem_id, destino_id, tipo_mapeamento_id) VALUES " +
+                    "(?, ?, ?, ?)";
+        }
+
+        PreparedStatement stmt1 = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        stmt1.setInt(1, Integer.parseInt(padrao));
+        stmt1.setInt(2, Integer.parseInt(origem));
+        stmt1.setInt(3, Integer.parseInt(destino));
+        stmt1.setInt(4, Integer.parseInt(tipoMap));
+        if (retornoIdComp > 0) {
+            stmt1.setInt(5, retornoIdComp);
+        } 
+        int resultado = stmt1.executeUpdate();
+        ResultSet rs = stmt1.getGeneratedKeys();
+            rs.next();
+            return rs.getInt(1);
+            
+    }
+
     public static void main(String[] args) {
 
         teste run = new teste();
-        run.teste();
+        //run.testando2();
+        int result = 0;
+        try {
+            result = run.gravaMapeamentosBase("1", "117", "117", "1", "", "");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(result);
     }
 }

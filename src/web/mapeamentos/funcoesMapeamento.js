@@ -11,15 +11,19 @@ idOrigem = '';
 idDestino = '';
 idOrigemComp = '';
 idDestinoComp = '';
+padraoMet = '';
+tipoMapeamento = '';
 totals =0;
 
-function addMap(idDivOrigem, idDivDestino, padraoMetadados){
+function addMap(idDivOrigem, idDivDestino, padraoMetadados, tipoMap){
     processo(idDivDestino, 0, "comboBox", "", "","");
     processo(idDivOrigem, padraoMetadados, "comboOrigem", "", "","");
 
     var link  = document.getElementById("salvar");
     idOrigem = 'atribOrigem';
     idDestino ='atrb'+idDivDestino;
+    padraoMet = padraoMetadados;
+    tipoMapeamento = tipoMap;
     idOrigemComp = '';
     idDestinoComp = '';
     link.onclick = salvarNovoMapeamento;
@@ -39,6 +43,9 @@ function salvarNovoMapeamento(){
     var inputDestino = idDestino;
     var inputOrigemComplementar = idOrigemComp;
     var inputDestinoComplementar = idDestinoComp;
+    var padrao = padraoMet;
+    var tipoMap = tipoMapeamento;
+
     //fim variaveis globais
     var origem = document.getElementById(inputOrigem).value;
     var destino = document.getElementById(inputDestino).value;
@@ -48,7 +55,7 @@ function salvarNovoMapeamento(){
         compOrigem = document.getElementById(inputOrigemComplementar).value;
         compDestino= document.getElementById(inputDestinoComplementar).value;
     }
-    salvarAjax('result'+totals, origem, destino, compOrigem, compDestino);
+    salvarAjax('result'+totals, origem, destino, compOrigem, compDestino, padrao, tipoMap);
 }
 
 /**
@@ -109,8 +116,9 @@ function setLinha(linha){
  * Função que adiciona nova linha na tabela sem recarregar a p&aacute;gina.
  * @param linhaReal n&uacute;mero da linha na tabela, contando todas as linhas da tabela.
  * @param idPadrao id do padr&atilde;o de metadados.
+ * @param tipoMap id do tipomapeamento
  */
-function adicionaMap(linhaReal,idPadrao){
+function adicionaMap(linhaReal,idPadrao, tipoMap){
  
     totals++
         
@@ -153,7 +161,7 @@ function adicionaMap(linhaReal,idPadrao){
                                 <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">\n\
                             </a>';
 
-    addMap('result'+totals, 'destino'+totals, idPadrao); //chama a funcao que adiciona os selects por ajax
+    addMap('result'+totals, 'destino'+totals, idPadrao, tipoMap); //chama a funcao que adiciona os selects por ajax
 }
 
 /**
@@ -267,15 +275,17 @@ function processo(idResultado, idMapOuIdPadrao, acao, novoValor, valorAnterior, 
  * @param destino id do destino a ser salvo, deve ser o identificador do atributo na base de dados.
  * @param origemComplementar id da origem complementar, mapeamento complementar, a ser salva, deve ser o identificador do atributo na base de dados.
  * @param destinoComplementar id do destino complementar, mapeamento complementar, a ser salvo, deve ser o identificador do atributo na base de dados.
+ * @param padrao id do padr&atilde;o de metadados
+ * @param tipoMap id do tipo do mapeamento
  */
-function salvarAjax(idResultado, origem, destino, origemComplementar, destinoComplementar)
+function salvarAjax(idResultado, origem, destino, origemComplementar, destinoComplementar, padrao, tipoMap)
 {
     //div onde sera adicionado o resultado
     var exibeResultado = document.getElementById(idResultado);
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "salvarBaseAjax.jsp?origem="+origem+"&destino="+destino+"&origemcomplementar="+origemComplementar+"&destinocomplementar="+destinoComplementar, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    ajax.open("POST", "salvarBaseAjax.jsp?origem="+origem+"&destino="+destino+"&origemcomplementar="+origemComplementar+"&destinocomplementar="+destinoComplementar+"&padrao="+padrao+"&tipoMap="+tipoMap, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
     ajax.onreadystatechange = function()
     {
@@ -288,7 +298,12 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
             if(ajax.status == 200)
             {
                 var resultado = ajax.responseText;
-                exibeResultado.innerHTML = resultado;
+                //exibeResultado.innerHTML = resultado;
+                
+                    document.reload();
+                    alert("Salvo!"+resultado);
+                
+                //exibeResultado.innerHTML = "<p class='textoErro'>Erro. N&atilde;o foram informados todos os valores. Ou ocorreu erro com a conexao postgre</p>";
             }
             else
             {
