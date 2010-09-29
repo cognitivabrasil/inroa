@@ -153,6 +153,7 @@ src/build.xml -text
 src/lib/API_JLDAP/ldap.jar -text
 src/lib/API_JLDAP/utilities.jar -text
 src/lib/Busca.jar -text
+src/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar -text
 src/lib/com/jsptags/navigation/pager/COPYRIGHT -text
 src/lib/com/jsptags/navigation/pager/FirstTag.class -text
 src/lib/com/jsptags/navigation/pager/IndexTag.class -text
@@ -183,7 +184,13 @@ src/lib/com/jsptags/navigation/pager/parser/TagExportParserConstants.class -text
 src/lib/com/jsptags/navigation/pager/parser/TagExportParserTokenManager.class -text
 src/lib/com/jsptags/navigation/pager/parser/Token.class -text
 src/lib/com/jsptags/navigation/pager/parser/TokenMgrError.class -text
+src/lib/junit/junit-3.8.2-api.zip -text
+src/lib/junit/junit-3.8.2.jar -text
+src/lib/junit_4/junit-4.5-api.zip -text
+src/lib/junit_4/junit-4.5-src.jar -text
+src/lib/junit_4/junit-4.5.jar -text
 src/lib/mysql-connector-java-5.1.8-bin.jar -text
+src/lib/nblibraries.properties -text
 src/lib/pager-src.jar -text
 src/lib/pager-taglib.jar -text
 src/lib/postgresql-8.4-702.jdbc4.jar -text
