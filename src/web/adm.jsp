@@ -141,7 +141,9 @@ Author     : Marcos Nunes
 
             </tr>
         </table>
-
+<!--Insere codigo que lista os padroes de metadados-->
+<%@include file="./mapeamentos/padraoMetadados.jsp"%>
+<!--Fim codigo que lista os padroes-->
 <!--Insere codigo que lista os mapeamentos-->
 <%@include file="./mapeamentos/mapeamentos.jsp"%>
 <!--Fim codigo que lista os mapeamentos-->

@@ -113,46 +113,48 @@ public class teste {
         }
     }
 
-    public int gravaMapeamentosBase(String padrao, String origem, String destino, String tipoMap, String origemComp, String destinoComp) throws SQLException {
-
+    public boolean inserePadrao(String nome, String metadaPrefix, String nameSpace, String atributos) throws SQLException {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
-        int retornoIdComp = 0;
+        int idPadrao = 0;
+        boolean result = false;
+        String sqlInsert = "INSERT INTO padraometadados (nome, metadata_prefix, name_space) " +
+                "VALUES (?, ?, ?);";
+        PreparedStatement stmt = con.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
+        stmt.setString(1, nome);
+        stmt.setString(2, metadaPrefix);
+        stmt.setString(3, nameSpace);
+        stmt.execute();
 
+        ResultSet rs = stmt.getGeneratedKeys();
+        rs.next();
+        idPadrao = rs.getInt(1);
+        
+        if (idPadrao > 0) {
+            String[] vetAtributos = atributos.split(";");
+            String sqlAtributos = "INSERT INTO atributos (id_padrao, atributo) VALUES";
 
-        if (!origemComp.isEmpty() || !destinoComp.isEmpty()) {
-            String sqlComp = "INSERT INTO mapeamentocomposto (valor, id_origem) VALUES (?, ?);";
-            PreparedStatement stmt = con.prepareStatement(sqlComp, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, destinoComp);
-            stmt.setInt(2, Integer.parseInt(origemComp));
-            stmt.execute();
-
-            ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();
-            retornoIdComp = rs.getInt(1);
+            for (int i = 0; i < vetAtributos.length; i++) {
+                if (i == vetAtributos.length - 1) {
+                    sqlAtributos += " (" + idPadrao + ",'" + vetAtributos[i] + "');";
+                } else {
+                    sqlAtributos += " (" + idPadrao + ",'" + vetAtributos[i] + "'),";
+                }
+            }
+            PreparedStatement stmtAtrib = con.prepareStatement(sqlAtributos);
+                    int resultSQL = stmtAtrib.executeUpdate();
+                    stmtAtrib.close();
+                    if(resultSQL >0){
+                        result = true;
+                    }
+                    else{
+                        String sqlDelete = "DELETE FROM padraometadados WHERE id="+idPadrao;
+                        PreparedStatement stmtDel = con.prepareStatement(sqlDelete);
+                        stmtDel.executeUpdate();
+                        result = false;
+                    }            
         }
-
-
-        String sql = "INSERT INTO mapeamentos (padraometadados_id, origem_id, destino_id, tipo_mapeamento_id, mapeamento_composto_id ) VALUES " +
-                "(?, ?, ?, ?, ?)";
-        if (retornoIdComp <= 0) {
-            sql = "INSERT INTO mapeamentos (padraometadados_id, origem_id, destino_id, tipo_mapeamento_id) VALUES " +
-                    "(?, ?, ?, ?)";
-        }
-
-        PreparedStatement stmt1 = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        stmt1.setInt(1, Integer.parseInt(padrao));
-        stmt1.setInt(2, Integer.parseInt(origem));
-        stmt1.setInt(3, Integer.parseInt(destino));
-        stmt1.setInt(4, Integer.parseInt(tipoMap));
-        if (retornoIdComp > 0) {
-            stmt1.setInt(5, retornoIdComp);
-        } 
-        int resultado = stmt1.executeUpdate();
-        ResultSet rs = stmt1.getGeneratedKeys();
-            rs.next();
-            return rs.getInt(1);
-            
+        return result;
     }
 
     public static void main(String[] args) {
@@ -161,7 +163,7 @@ public class teste {
         //run.testando2();
         int result = 0;
         try {
-            result = run.gravaMapeamentosBase("1", "117", "117", "1", "", "");
+            result = run.inserePadrao("nome", "metadata", "namespace", "titulo;marcos;freitas;nunes;abvx");
         } catch (SQLException e) {
             e.printStackTrace();
         }

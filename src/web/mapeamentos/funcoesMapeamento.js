@@ -299,9 +299,12 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
             {
                 var resultado = ajax.responseText;
                 //exibeResultado.innerHTML = resultado;
-                
-                    document.reload();
-                    alert("Salvo!"+resultado);
+                    if(isNaN(parseInt(resultado))){
+                        alert("Erro ao salvar o mapeamento na base de dados. Verifique o log.");
+                    }else{
+                        alert("Salvo!");
+                    }
+                    document.location.reload();
                 
                 //exibeResultado.innerHTML = "<p class='textoErro'>Erro. N&atilde;o foram informados todos os valores. Ou ocorreu erro com a conexao postgre</p>";
             }
@@ -312,7 +315,64 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
         }
     }
     ajax.send(null); // submete
-//document.getElementById("nome").value= "";//limpa os campos
-//document.getElementById("nome").setFocus=true;
+
 
 }
+
+function confirmaExclusao(id) {
+  if( confirm( 'Deseja realmente exluir este mapeamento?' ) ) {
+    excluirAjax(id);
+  } else {
+    
+  }
+}
+
+/**
+ * Utilizada para exluir mapeamentos na base utilizando ajax
+ * @param idMapeamento id do mapeamento a ser excluido
+ */
+function excluirAjax(idMapeamento)
+{
+    //div onde sera adicionado o resultado
+    var exibeResultado = document.getElementById('msgerro');
+
+    var ajax = openAjax(); // Inicia o Ajax.
+
+    ajax.open("POST", "deletaBaseAjax.jsp?idmap="+idMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+                       
+
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        {
+            exibeResultado.innerHTML = "Aguarde...";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
+            {
+                var resultado = ajax.responseText;
+                //exibeResultado.innerHTML = resultado;
+                    if(isNaN(parseInt(resultado))){
+                        exibeResultado.innerHTML = resultado;
+                    }else{
+                        if(parseInt(resultado)>0){
+                            exibeResultado.innerHTML = "Mapeamento excluido com sucesso.";
+                            document.location.reload();
+                        }
+                        else{
+                            exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
+                        }
+                    }                    
+            }
+            else
+            {
+                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+            }
+        }
+    }
+    ajax.send(null); // submete
+
+
+}
+"deletaBaseAjax.jsp?idmap=38&origem=122&destino=10&padrao=1&tipomap=1"

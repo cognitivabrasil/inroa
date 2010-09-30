@@ -10,6 +10,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
 import operacoesLdap.Remover;
 
+
 /**
  * Classe responsável por operações de exclusão no mysql
  *

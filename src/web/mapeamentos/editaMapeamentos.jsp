@@ -82,7 +82,7 @@
                     Nome do Mapeamento:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editarMapeamento" value="Editar" onclick="exibeText('tipoMap', <%=tipoMapeamento%>, this)"/>
+                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarMapeamento" onclick="exibeText('tipoMap', <%=tipoMapeamento%>, this)"/>
                 </div>
                 <div class="Valor" id="tipoMap"><%=nomeMap%></div>
 
@@ -91,7 +91,7 @@
                     Descri&ccedil;&atilde;o:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editarDescricao" value="Editar" onclick="exibeText('descricao', <%=tipoMapeamento%>, this)"/>
+                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarDescricao"  onclick="exibeText('descricao', <%=tipoMapeamento%>, this)"/>
                 </div>
                 <div class="Valor" id="descricao"><%=descricao%></div>
 
@@ -114,7 +114,7 @@
                 <%
 
 //consulta os mapeamentos na base de dados
-                //potgres ok
+            //potgres ok
             String sqlPadrao = "SELECT nome FROM padraometadados p WHERE p.id=" + idPadrao + ";";
 
             //potgres ok
@@ -128,6 +128,7 @@
             String nomePadrao = rs1.getString("nome");
             //rs1.close();
             out.print("<div class=\"subtitulo\">" + nomePadrao + " / <b>OBAA</b></div>");
+            out.println("<div id='msgerro' class='textoErro center'></div>");
             out.println("<div class='textoErro center'><b>Aten&ccedil;&atilde;o!</b> Tenha cuidado ao editar este mapeamento, pois pode estar sendo utilizado por mais de um reposit&oacute;rio.</div>");
             ResultSet rs2 = stm.executeQuery(sqlMap);
             //pega o proximo resultado retornado pela consulta sql
@@ -177,12 +178,12 @@
                 }
                     %>
                     <td class="<%=yesnocolor%>">
-                        <input type="button" class="BotaoMapeamento" size="30" name="editar" id="editar" value="Editar" onclick="exibeSelect('<%="result" + linha%>', '<%=idMapeamento%>', '<%=idPadraoDestino%>', this)"/>
+                        <input type="button" class="botaoEditar" size="30" name="editar" id="editar"  onclick="exibeSelect('<%="result" + linha%>', '<%=idMapeamento%>', '<%=idPadraoDestino%>', this)"/>
 
-<!--<a title="Excluir" onclick="removeItem(<%=linha%>)">
-                        <%=linha%>
-                        <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
-                    </a> -->
+                        <a title="Excluir" onclick="confirmaExclusao(<%=idMapeamento%>)">
+
+                            <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
+                        </a>
                     </td>
                 </tr>
                 <%
@@ -204,11 +205,11 @@
 
                 %>
 
-                </table>
-                <script type="text/javascript">
-                    setLinha(<%=linha%>);
-                </script>
-                <table class='mapeamentos-table-add' id="tblAdicionar" cellpadding=5%>
+            </table>
+            <script type="text/javascript">
+                setLinha(<%=linha%>);
+            </script>
+            <table class='mapeamentos-table-add' id="tblAdicionar" cellpadding=5%>
                 <tr class='left'>
                     <td width="10%">&nbsp;</td>
                     <td width="10%">&nbsp;</td>

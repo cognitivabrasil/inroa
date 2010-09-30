@@ -40,7 +40,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 //consultar o mysql todos os atributos
                 String sqlPadrao = "SELECT a.id, a.atributo " +
                         "FROM atributos a " +
-                        "WHERE a.id_padrao = (SELECT p.id FROM padraometadados p, mapeamentos m, atributos a WHERE m.destino_id=p.id AND m.destino_id=a.id AND a.id_padrao=p.id GROUP BY p.id)" +
+                        "WHERE a.id_padrao = (SELECT p.id FROM padraometadados p, mapeamentos m, atributos a WHERE  m.destino_id=a.id AND a.id_padrao=p.id GROUP BY p.id)" +
                         "ORDER BY a.atributo;";
 
                 ResultSet res = stm.executeQuery(sqlPadrao);

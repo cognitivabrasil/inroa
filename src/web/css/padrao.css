@@ -307,6 +307,18 @@ a:hover{
     text-align:left;
     margin-right:2%;
 }
+.Mapeamento .Buttons{
+    margin:0 0 10px 0%;
+    padding-top:2%;
+    text-align:center;
+}
+.Mapeamento .Buttons input{
+    background-color: #AEC9E3;
+    border-color: #AAAAAA;
+    color: #000000;
+    font-weight: bold;
+    font-family: verdana;
+}
 
 .LinhaEntrada .Label{
     float:left;
@@ -403,7 +415,6 @@ td{vertical-align:top;}
     padding: 2px;
     border: 2px solid #AEC9E3;
     margin-top:3%;
-
 }
 .repositorios-table th{
     color: white;
@@ -478,6 +489,14 @@ td{vertical-align:top;}
     font-weight: bold;
     font-family: verdana;
     font-size:80%;
+}
+.botaoEditar { 
+    background-color: transparent;
+    background-image:url(/feb/imagens/Lapiz-24x24.png);
+    height: 24px;
+    width: 24px;
+    border:0px;
+    cursor:pointer;
 }
 .BotaoFechar{
     text-align:center;    
