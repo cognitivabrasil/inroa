@@ -163,7 +163,7 @@ public class teste {
         //run.testando2();
         int result = 0;
         try {
-            result = run.inserePadrao("nome", "metadata", "namespace", "titulo;marcos;freitas;nunes;abvx");
+            run.inserePadrao("nome", "metadata", "namespace", "titulo;marcos;freitas;nunes;abvx");
         } catch (SQLException e) {
             e.printStackTrace();
         }

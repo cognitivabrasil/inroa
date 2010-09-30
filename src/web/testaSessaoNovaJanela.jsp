@@ -15,7 +15,7 @@
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     </head>
     <body>
-<script type="text/javascript" src="./scripts/funcoes.js"></script>
+<script type="text/javascript" src="/feb/scripts/funcoes.js"></script>
 <%
     String usr = (String)session.getAttribute("usuario");
     if (usr==null){

@@ -498,6 +498,14 @@ td{vertical-align:top;}
     border:0px;
     cursor:pointer;
 }
+.botaoExcluir {
+    background-color: transparent;
+    background-image:url(/feb/imagens/ico24_deletar.gif);
+    height: 21px;
+    width: 22px;
+    border:0px;
+    cursor:pointer;
+}
 .BotaoFechar{
     text-align:center;    
     margin-top:2%;

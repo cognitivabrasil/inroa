@@ -111,7 +111,7 @@
                 String metPrefix = request.getParameter("metPrefix").trim();
                 String nameSpace = request.getParameter("namespace").trim();
 
-                out.println("nome: " + nome + " atributo: " + atributos);
+                
 
                 //testa se os atributos estão preenchidos
                 if (nome.isEmpty() || atributos.isEmpty() || metPrefix.isEmpty() || nameSpace.isEmpty()) {

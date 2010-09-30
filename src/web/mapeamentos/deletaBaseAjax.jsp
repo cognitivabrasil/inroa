@@ -6,21 +6,30 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% // Importação de conexão com a base de dados %>
-<%@include file="../conexaoBD.jsp"%>
-<%
-            String idMap = "";
 
-            boolean resultado = false;
+<%@page import="java.sql.*"%>
+<%@page import="postgres.Conectar"%>
+<%
+Conectar conect = new Conectar();
+            //chama metodo que conecta no mysql
+            Connection con = conect.conectaBD();
+
+            Statement stm = con.createStatement();
+
+            String idMap = "";
+            String tabela ="";
+      
             try {
                 idMap = request.getParameter("idmap");
+                tabela = request.getParameter("tabela");
 
             if (idMap!=null) {
 
-                String sql = "DELETE FROM mapeamentos WHERE id="+idMap+";";
+                String sql = "DELETE FROM "+tabela+" WHERE id="+idMap+";";
                 PreparedStatement stmt = con.prepareStatement(sql);
                 int result = stmt.executeUpdate();
                 stmt.close();
-                out.println(result);
+                out.print(result);
 
             }
                 else{
@@ -31,4 +40,5 @@
                 out.print("<p class='textoErro'>Faltou informar o id do mapeamento a ser excluido</p>");
                 e.printStackTrace();
             }
+ 
 %>

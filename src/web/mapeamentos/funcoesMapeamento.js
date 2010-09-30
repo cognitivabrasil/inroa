@@ -319,9 +319,15 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
 
 }
 
-function confirmaExclusao(id) {
-  if( confirm( 'Deseja realmente exluir este mapeamento?' ) ) {
-    excluirAjax(id);
+/**
+ * Confirma se realmente deseja excluir, se sim exclui por ajax.
+ * @param id id do objeto a ser excluido
+ * @param tabela tabela de onde ser&aacute; exclu&iacute;do.
+ * @param idResultado id de onde ser&aacute; exibido o resultado.
+ */
+function confirmaExclusao(id, tabela, idResultado) {
+  if( confirm( 'Deseja realmente exluir?' ) ) {
+    excluirAjax(id, tabela, idResultado);
   } else {
     
   }
@@ -330,17 +336,24 @@ function confirmaExclusao(id) {
 /**
  * Utilizada para exluir mapeamentos na base utilizando ajax
  * @param idMapeamento id do mapeamento a ser excluido
+ * @param tabela tabela de onde ser&aacute; exclu&iacute;do.
+ * @param idResultado id de onde ser&aacute; exibido o resultado.
  */
-function excluirAjax(idMapeamento)
+function excluirAjax(idMapeamento, tabela, idResultado)
 {
+    
     //div onde sera adicionado o resultado
-    var exibeResultado = document.getElementById('msgerro');
+    var exibeResultado = document.getElementById(idResultado);
 
     var ajax = openAjax(); // Inicia o Ajax.
-
-    ajax.open("POST", "deletaBaseAjax.jsp?idmap="+idMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    
+    var gambi = "";
+    if(tabela=="padraometadados"){
+        gambi = "mapeamentos/";
+    }
+    ajax.open("POST", gambi+"deletaBaseAjax.jsp?idmap="+idMapeamento+"&tabela="+tabela, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
                        
-
+    
     ajax.onreadystatechange = function()
     {
         if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
@@ -357,7 +370,7 @@ function excluirAjax(idMapeamento)
                         exibeResultado.innerHTML = resultado;
                     }else{
                         if(parseInt(resultado)>0){
-                            exibeResultado.innerHTML = "Mapeamento excluido com sucesso.";
+                            exibeResultado.innerHTML = "Exclu&iacute;do com sucesso.";
                             document.location.reload();
                         }
                         else{
@@ -375,4 +388,3 @@ function excluirAjax(idMapeamento)
 
 
 }
-"deletaBaseAjax.jsp?idmap=38&origem=122&destino=10&padrao=1&tipomap=1"
