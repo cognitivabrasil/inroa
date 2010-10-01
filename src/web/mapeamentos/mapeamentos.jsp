@@ -15,7 +15,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
 <table class='repositorios-table' cellpadding=3>
     <tr>
         <th colspan=4>
-            <font size="3%" color=black>Lista de Mapeamentos Cadastrados na Federa&ccedil;&atilde;o</font>
+            <font size="3%" color=black>Lista de Mapeamentos</font>
         </th>
     </tr>
 
@@ -86,7 +86,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
                 </td>
                 <td colspan="2"class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
-                    <a onclick="NewWindow('addMapeamento.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a onclick="NewWindow('./mapeamentos/selecionaPadraoAddMap.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         Adicionar novo mapeamento
                     </a>
 
