@@ -20,9 +20,6 @@
         <title>FEB - Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js">
-            //necessario para usar o ajax
-        </script>
 
     </head>
     <body>
@@ -31,8 +28,8 @@
             <div class="subTitulo-center">&nbsp;Adicionar novo mapeamento</div>
             <div class="subtitulo">Selecione o padr&atilde;o de metadados que deseja mapear para o OBAA</div>
             <div class="EspacoAntes">&nbsp;</div>
-            <form name="adicionarMap" action="addMapeamento.jsp" method="post">
-            <div class="Mapeamento">s
+            <form name="adicionarMap" action="selecionaTipoAddMap.jsp" method="post">
+            <div class="Mapeamento">
                 <div class="Legenda">
                     Padr&otilde;es cadastrados:
                 </div>
@@ -41,7 +38,7 @@
                     <%
                 String sql = "SELECT id, nome FROM padraometadados ORDER BY nome;";
                 ResultSet rs = stm.executeQuery(sql);
-                out.println("<select name='padroes' id='padroes' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
+                out.println("<select name='padrao' id='padrao' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
                 while (rs.next()) {
                     out.println("<option value=" + rs.getInt("id") + ">" + rs.getString("nome"));
                 }
@@ -54,7 +51,7 @@
                 <div class="Buttons">
 
                     <input class="BOTAO" id="cancelar" onclick="javascript:window.close();" value="Cancelar" type="button" class="CancelButton"/>
-                    <input class="BOTAO" type="submit" value="Gravar >" name="submit" />
+                    <input class="BOTAO" type="submit" value="Pr&oacute;ximo >" name="submit" />
                 </div>
                 
 
