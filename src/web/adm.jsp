@@ -142,7 +142,7 @@ Author     : Marcos Nunes
             </tr>
         </table>
 <!--Insere codigo que lista os padroes de metadados-->
-<%@include file="./mapeamentos/padraoMetadados.jsp"%>
+<%@include file="./padraoMetadados/padraoMetadados.jsp"%>
 <!--Fim codigo que lista os padroes-->
 <!--Insere codigo que lista os mapeamentos-->
 <%@include file="./mapeamentos/mapeamentos.jsp"%>
@@ -236,14 +236,14 @@ Author     : Marcos Nunes
                     <td>
                         <img src="./imagens/Lapiz-32x32.png" border="0" width="32" height="32" alt="Laudar" align="middle">
                     </td>
-                    <td>&nbsp;Visualizar / Editar dados do reposit&oacute;rio</td>
+                    <td>&nbsp;Visualizar / Editar</td>
 
                     <td><h1>&nbsp;&nbsp;</h1></td>
 
                     <td>
                         <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </td>
-                    <td>&nbsp;Remove reposit&oacute;rio</td>
+                    <td>&nbsp;Remover</td>
 
                     <td><h1>&nbsp;&nbsp;</h1></td>
 
@@ -257,7 +257,7 @@ Author     : Marcos Nunes
                     <td>
                         <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </td>
-                    <td>&nbsp;Adicionar novo reposit&oacute;rio</td>
+                    <td>&nbsp;Adicionar</td>
 
 
 

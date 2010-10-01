@@ -9,9 +9,10 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
     Author     : Marcos
 --%>
 
-<script language="JavaScript" type="text/javascript" src="./mapeamentos/funcoesMapeamento.js">
+<script language="JavaScript" type="text/javascript" src="../mapeamentos/funcoesMapeamento.js">
     //necessario para usar o funcionamento
 </script>
+
 
 <table class='repositorios-table' cellpadding=3>
     <tr>
@@ -53,8 +54,8 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
         <td class="<%=yesnocolor%>">
             <input type="button" class="botaoExcluir" name="excluir" id="excluirPadrao" onclick="confirmaExclusao(<%=idPadrao%>,'padraometadados','msgerro');"/>
             &nbsp;
-            <a title="Editar / Visualizar" onclick="">
-                <img src="./imagens/Lapiz-32x32.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+            <a title="Editar / Visualizar" onclick="NewWindow('./padraoMetadados/editaPadrao.jsp?id=<%=idPadrao%>','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                <img src="./imagens/Lapiz-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
             </a>
 
         </td>
@@ -73,14 +74,14 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
     <tr class='center'>
         <td>
 
-            <a title="Adicionar novo padr&atilde;o" onclick="NewWindow('addPadrao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+            <a title="Adicionar novo padr&atilde;o" onclick="NewWindow('addPadrao.jsp','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                 <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
             </a>
 
         </td>
         <td colspan="2"class="left bold" style="font-size:110%">
             &nbsp;&nbsp;
-            <a onclick="NewWindow('./mapeamentos/addPadrao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+            <a onclick="NewWindow('./padraoMetadados/addPadrao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                 Adicionar novo padr&atilde;o
             </a>
             <div id='msgerro' class='textoErro center'></div>

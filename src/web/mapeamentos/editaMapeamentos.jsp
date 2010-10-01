@@ -50,7 +50,7 @@
                 String tipoMap = request.getParameter("tipmap");
 
                 String padrao = request.getParameter("padrao");
-                if (tipoMap.isEmpty() || padrao.isEmpty()) { //se nÃ£o foi informado nenhum valor.
+                if (tipoMap.isEmpty() || padrao.isEmpty()) { //se nao foi informado nenhum valor.
                     new Exception();
                 }
                 tipoMapeamento = Integer.parseInt(tipoMap);
@@ -59,9 +59,8 @@
                     new Exception();
                 }
             } catch (Exception e) {
-                out.print("<script type='text/javascript'>alert('Informe o tipo do mapeamento e o padrÃ£o de metadados');</script>" +
+                out.print("<script type='text/javascript'>alert('Informe o tipo do mapeamento e o padrao de metadados');</script>" +
                         "<script type='text/javascript'>history.back(-1);</script>");
-                System.exit(0);
             }
 
             //postgres ok

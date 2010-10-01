@@ -88,12 +88,8 @@ function exibeSelect(idDivResult, idMap, idPadraoDestino, bot)
 function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
 {
     var novo = "";
-    if(idMap>0){
-        novo = document.getElementById(input).value
-    }
-    else{
-        novo = document.getElementById(input).value
-    }
+    novo = document.getElementById(input).value
+
     processo(idDivResultado, idMap, "salvar", novo,"",idTipoMapeamento)
 
     botao.disabled=0; //desbloquear o botao editar

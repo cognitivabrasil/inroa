@@ -66,8 +66,6 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
                 if (idMapOuPadrao > 0) { //se for pra salvar algum mapeamento
 
-
-
                     String sqlUpdate = "UPDATE mapeamentos SET destino_id=" + novoValor + " where id=" + idMapOuPadrao + ";";
 
                     stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
@@ -93,6 +91,11 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
                     }
                 }
+            }
+            else if (tipo.equalsIgnoreCase("salvarPadrao")) {
+                String novoValor = request.getParameter("novo");
+                String id = request.getParameter("idTipMap"); //to usando o mesmo nome do idTipMap para nao editar os codigos jsp
+                out.println("id="+id+" novoValor: "+novoValor);
             }
             else if (tipo.equalsIgnoreCase("text")) {
 
