@@ -23,7 +23,7 @@
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
         <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js"></script>
-        <script language="JavaScript" type="text/javascript" src="funcoesMapeamento.js"></script>
+        <script language="JavaScript" type="text/javascript" src="funcoesPadrao.js"></script>
 
         <script type="text/javascript" src="../scripts/validatejs.js"></script>
         <script type="text/javascript">
@@ -62,9 +62,13 @@
                 ResultSet rs = stm.executeQuery(sql);
                 //pega o proximo resultado retornado pela consulta sql
                 rs.next();
-                String nome = rs.getString("nome");
-                String metadata_prefix = rs.getString("metadata_prefix");
-                String nameSpace = rs.getString("name_space");
+                String atributoNome = "nome";
+                String atributoMetadata = "metadata_prefix";
+                String atributoNameSpace = "name_space";
+
+                String nome = rs.getString(atributoNome);
+                String metadata_prefix = rs.getString(atributoMetadata);
+                String nameSpace = rs.getString(atributoNameSpace);
                 
             %>
 
@@ -76,7 +80,7 @@
                     Nome do Mapeamento:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarMapeamento" onclick="exibeText('nome', <%=idPadrao%>, this)"/>
+                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarMapeamento" onclick="exibeText('nome', <%=idPadrao%>, '<%=atributoNome%>', this)"/>
                 </div>
                 <div class="Valor" id="nome"><%=nome%></div>
 
@@ -85,7 +89,7 @@
                     metadataPrefix:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarDescricao"  onclick="exibeText('metadataprefix', <%=idPadrao%>, this)"/>
+                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarDescricao"  onclick="exibeText('metadataprefix', <%=idPadrao%>, '<%=atributoMetadata%>', this)"/>
                 </div>
                 <div class="Valor" id="metadataprefix"><%=metadata_prefix%></div>
 
@@ -93,7 +97,7 @@
                     nameSpace:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarDescricao"  onclick="exibeText('namespace',<%=idPadrao%>, this)"/>
+                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarDescricao"  onclick="exibeText('namespace',<%=idPadrao%>, '<%=atributoNameSpace%>', this)"/>
                 </div>
                 <div class="Valor" id="namespace"><%=nameSpace%></div>
 
@@ -113,7 +117,7 @@
             int linha = 1;
             String yesnocolor = "";
 
-             String sqlAtributos = "SELECT id, atributo FROM atributos WHERE id_padrao="+idPadrao;
+             String sqlAtributos = "SELECT id, atributo FROM atributos WHERE id_padrao="+idPadrao+" ORDER BY atributo";
              ResultSet rs2 = stm.executeQuery(sqlAtributos);
             //pega o proximo resultado retornado pela consulta sql
             while (rs2.next()) {
@@ -128,9 +132,11 @@
 
                 %>
                 <tr class='center'>
-                         <td class="<%=yesnocolor%>">&nbsp;<%=atributo%></td>
                          <td class="<%=yesnocolor%>">
-                        <input type="button" class="botaoEditar" size="30" name="editar" id="editar"  onclick=""/>
+                             <div id="atributo<%=linha%>"><%=atributo%></div>
+                         </td>
+                         <td class="<%=yesnocolor%>">
+                        <input type="button" class="botaoEditar" size="30" name="editar" id="editar"  onclick="exibeTextAtributo('atributo<%=linha%>', '<%=idAtributo%>', this)"/>
                         <a title="Excluir" onclick="">
                             <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
                         </a>

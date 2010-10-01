@@ -68,9 +68,15 @@ function removeItem(linha)
     tbl.deleteRow(linha);
 }
 
+/**
+ * Remove o que tiver no div e coloca o que for informado como valor anterior
+ * @param idDivResult id do div que ter&aacute; seu valor substituido
+ * @param valorAnterior valor que ser&aacute; colocado no div
+ */
 function cancelar(idDivResult, valorAnterior)
-{                
-    processo(idDivResult, "", "cancelar","", valorAnterior,"")
+{
+    var exibeResultado = document.getElementById(idDivResult);
+    exibeResultado.innerHTML = valorAnterior;
     botao.disabled=0; //desbloquear o botao editar
 }
 
