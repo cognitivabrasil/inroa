@@ -51,7 +51,7 @@
         <div id="page">
             <div class="subTitulo-center">&nbsp;Adicionar novo mapeamento</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
-            <form name="adicionarRepositorio" action="gravaRepositorioBase.jsp" method="post">
+            <form name="adicionarRepositorio" action="addMapeamento.jsp" method="post">
                 <div class="Mapeamento">
                     <div class="Legenda">
                         Tipo do mapeamento:

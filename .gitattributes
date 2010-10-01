@@ -299,6 +299,7 @@ src/web/listaStopword2.jsp -text
 src/web/listaStowords.jsp -text
 src/web/logando.jsp -text
 src/web/login.html -text
+src/web/mapeamentos/addMapeamento.jsp -text
 src/web/mapeamentos/deletaBaseAjax.jsp -text
 src/web/mapeamentos/editaMapeamentos.jsp -text
 src/web/mapeamentos/funcoesMapeamento.js -text
