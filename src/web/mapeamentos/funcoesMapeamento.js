@@ -112,7 +112,10 @@ function exibeText(idDivResult, idTipoMapeamento, bot){
     var valorAnterior = document.getElementById(idDivResult).innerHTML
     processo(idDivResult, "", "text", "", valorAnterior, idTipoMapeamento)
 }
-            
+
+/**
+ * Apaga todos os atributos da tabela mapeamentos cujo, destino_id &eacute; zero.
+ */
 function apagarMapeamentoBranco(){
     processo("msgerro", "", "apagarBranco", "", "", "");
     // fechando a janela atual ( popup )
@@ -120,7 +123,10 @@ function apagarMapeamentoBranco(){
 
 }
 
-  
+/**
+ * Seta a vari&aacute;vel global totals com a linha informada
+ * @param linha n&uacute;mero da linha que deseja armazenar na vari&aacute;vel global.
+ */
 function setLinha(linha){
     totals = linha-1;
 }
