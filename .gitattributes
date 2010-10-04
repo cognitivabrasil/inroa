@@ -262,7 +262,6 @@ src/web/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
 src/web/WEB-INF/web.xml -text
 src/web/adm.jsp -text
 src/web/alterarSenha.jsp -text
-src/web/cadastraLDAP.jsp -text
 src/web/cadastraRepositorio.jsp -text
 src/web/cadastraRepositorio2.jsp -text
 src/web/conexaoBD.jsp -text
