@@ -138,6 +138,9 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
                 out.println("</select>");
 
             }
+            else if(tipo.equalsIgnoreCase("apagarBranco")){
+                apagaMapeamentosBranco();
+            }
             else //Este comando devolverá "Dados inseridos com Sucesso para" o Ajax.
             {
                 out.println("Faltando informação para funcionar o Ajax");
@@ -147,7 +150,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
 <%! public String consultaAtributoBase(int id) throws SQLException{
     Conectar conect = new Conectar();
-            //chama metodo que conecta no mysql
+            //chama metodo que conecta no postgre
             Connection con = conect.conectaBD();
     Statement stm = con.createStatement();
     String sql = "SELECT a.atributo FROM mapeamentos m, atributos a WHERE m.destino_id=a.id AND m.id=" + id + ";";
@@ -157,21 +160,31 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
 }
 
-public String consultaTipoMapeamento(String atributo, String id) throws SQLException{
-    
-    Conectar conect = new Conectar();
-            //chama metodo que conecta no mysql
-            Connection con = conect.conectaBD();
-    Statement stm = con.createStatement();
-    String sql = "";
-    if(atributo.equalsIgnoreCase("descricao")){
-        sql = "SELECT t.descricao FROM tipomapeamento t where id="+id+";";
-    }else if(atributo.equalsIgnoreCase("nome")){
-        sql = "SELECT t.nome FROM tipomapeamento t where id="+id+";";
-    }
-                ResultSet rs = stm.executeQuery(sql);
-                rs.next();
-                return rs.getString(1);
-    
+public String consultaTipoMapeamento(String atributo, String id) throws SQLException {
+
+        Conectar conect = new Conectar();
+        //chama metodo que conecta no posgre
+        Connection con = conect.conectaBD();
+        Statement stm = con.createStatement();
+        String sql = "";
+        if (atributo.equalsIgnoreCase("descricao")) {
+            sql = "SELECT t.descricao FROM tipomapeamento t where id=" + id + ";";
+        } else if (atributo.equalsIgnoreCase("nome")) {
+            sql = "SELECT t.nome FROM tipomapeamento t where id=" + id + ";";
+        }
+        ResultSet rs = stm.executeQuery(sql);
+        rs.next();
+        return rs.getString(1);
+
 }
+
+public void apagaMapeamentosBranco() throws SQLException {
+        Conectar conect = new Conectar();
+        //chama metodo que conecta no posgre
+        Connection con = conect.conectaBD();
+        Statement stm = con.createStatement();
+        String sql = "DELETE FROM mapeamentos WHERE destino_id=0;";
+        stm.executeUpdate(sql);
+
+    }
 %>

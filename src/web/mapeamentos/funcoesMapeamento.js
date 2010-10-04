@@ -80,7 +80,7 @@ function cancelar(idDivResult, valorAnterior)
     botao.disabled=0; //desbloquear o botao editar
 }
 
-function exibeSelect(idDivResult, idMap, idPadraoDestino, bot)
+function exibeSelect(idDivResult, idMap, bot)
 {
     botao.disabled=0;
     botao = bot;
@@ -101,6 +101,11 @@ function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
     botao.disabled=0; //desbloquear o botao editar
 }
 
+function novoTipos(div){
+    
+    document.getElementById(div).innerHTML = "";
+}
+
 function exibeText(idDivResult, idTipoMapeamento, bot){
     botao = bot;
     botao.disabled=1; //bloquear o botao editar
@@ -108,7 +113,12 @@ function exibeText(idDivResult, idTipoMapeamento, bot){
     processo(idDivResult, "", "text", "", valorAnterior, idTipoMapeamento)
 }
             
+function apagarMapeamentoBranco(){
+    processo("msgerro", "", "apagarBranco", "", "", "");
+    // fechando a janela atual ( popup )
+    window.close();
 
+}
 
   
 function setLinha(linha){

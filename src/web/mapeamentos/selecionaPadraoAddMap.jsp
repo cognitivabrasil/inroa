@@ -20,7 +20,9 @@
         <title>FEB - Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+        <script language="JavaScript" type="text/javascript" src="./funcoesMapeamento.js">
+            //necessario para usar o funcionamento
+        </script>
     </head>
     <body>
         <div id="page">
@@ -28,7 +30,7 @@
             <div class="subTitulo-center">&nbsp;Adicionar novo mapeamento</div>
             <div class="subtitulo">Selecione o padr&atilde;o de metadados que deseja mapear para o OBAA</div>
             <div class="EspacoAntes">&nbsp;</div>
-            <form name="adicionarMap" action="selecionaTipoAddMap.jsp" method="post">
+            <form name="adicionarMap" action="adicionaMapBranco.jsp" method="post">
             <div class="Mapeamento">
                 <div class="Legenda">
                     Padr&otilde;es cadastrados:
@@ -48,6 +50,36 @@
 
                 </div>
 
+                <div class="Legenda">
+                        Tipo do mapeamento:
+                    </div>
+                    <div class="Valor" id="tipoMap">
+                        <select name='tipoMap' id='tipoMap' onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                            <option value="" selected onclick="insereValorDiv('divDesc','Selecione um tipo de mapeamento acima')">Selecione
+                                <%
+                            String sqlTipMap = "SELECT t.id, t.nome, t.descricao FROM tipomapeamento t;";
+                            ResultSet rsTipo = stm.executeQuery(sqlTipMap);
+
+                            out.println("");
+
+                            //pega o proximo resultado retornado pela consulta sql
+                            while (rsTipo.next()) {
+                                out.println("<option value=" + rsTipo.getInt("id") + " onclick=\"insereValorDiv('divDesc','" + rsTipo.getString("descricao") + "')\">" + rsTipo.getString("nome"));
+                            }
+                                %>
+                            
+                        </select>
+                    </div>
+                    <div class="Legenda">
+                        Descrição:
+                    </div>
+                    <div class="Valor">
+
+                        <div id="divDesc">Selecione o tipo de mapeamento e veja aqui sua descrição.</div>
+                    </div>
+
+
+
                 <div class="Buttons">
 
                     <input class="BOTAO" id="cancelar" onclick="javascript:window.close();" value="Cancelar" type="button" class="CancelButton"/>
@@ -58,6 +90,7 @@
 
 
             </div>
+                            
             </form>
            
         </div>

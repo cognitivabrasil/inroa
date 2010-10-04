@@ -36,7 +36,7 @@
             }
     %>
 
-    <body onUnLoad="recarrega()">
+    <body onUnLoad="apagarMapeamentoBranco(); recarrega();">
 
         <%
             int tipoMapeamento = 0;
@@ -177,7 +177,7 @@
                 }
                     %>
                     <td class="<%=yesnocolor%>">
-                        <input type="button" class="botaoEditar" size="30" name="editar" id="editar"  onclick="exibeSelect('<%="result" + linha%>', '<%=idMapeamento%>', '<%=idPadraoDestino%>', this)"/>
+                        <input type="button" class="botaoEditar" size="30" name="editar" id="editar"  onclick="exibeSelect('<%="result" + linha%>', '<%=idMapeamento%>', this)"/>
 
                         <a title="Excluir" onclick="confirmaExclusao(<%=idMapeamento%>,'mapeamentos','msgerro')">
 
@@ -210,9 +210,9 @@
             </script>
             <table class='mapeamentos-table-add' id="tblAdicionar" cellpadding=5%>
                 <tr class='left'>
+                    
                     <td width="10%">&nbsp;</td>
-                    <td width="10%">&nbsp;</td>
-                    <td width="80%">
+                    <td width="60%">
 
                         <a title="Adicionar Mapeamento" onclick="">
                             <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
@@ -224,6 +224,9 @@
                             Adicionar Mapeamento
                         </a>
 
+                    </td>
+                    <td width="30%" class="right">
+                        <input class="BOTAO" id="salvar" onclick="javascript:apagarMapeamentoBranco();" value="Salvar Mapeamento" type="button" class="CancelButton"/>
                     </td>
 
 
