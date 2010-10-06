@@ -55,6 +55,7 @@ public class Indexador {
          * 			4 para descriç&atilde;o
          */
 
+        doc.setId(-1);
         try {
             if (!testaEntry(doc.getObaaEntry(), con)) {
 
@@ -141,7 +142,8 @@ public class Indexador {
             System.out.println("\nErro no SQL ao indexar. Ao adicionar o objeto: " + doc.getObaaEntry());
             System.out.println("String Resumo: " + doc.getResumo());
             e.printStackTrace();
-        }
+            
+        }        
     }
 
     /**
@@ -189,7 +191,7 @@ public class Indexador {
     }
 
     /**
-     * Apaga as tabelas r1idf, r1size, r1sum, r1tf e r1length do mysql. Estas tabelas armazenam os calculos do indice.
+     * Apaga as tabelas r1idf, r1size, r1sum, r1tf e r1length da base de dados. Estas tabelas armazenam os calculos do indice.
      * @param con  conex&atilde;o como banco de dados
      * @throws SQLException
      * @author Marcos Nunes
@@ -203,7 +205,7 @@ public class Indexador {
 
 
         Statement stm = con.createStatement();
-        stm.executeUpdate(sql1); //executa o que tem na variavel slq no mysql
+        stm.executeUpdate(sql1); //executa o que tem na variavel sql1
         stm.executeUpdate(sql2);
         stm.executeUpdate(sql3);
         stm.executeUpdate(sql4);

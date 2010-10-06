@@ -8,6 +8,7 @@ import com.novell.ldap.LDAPException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import java.sql.*;
 
 /**
  *
@@ -66,4 +67,77 @@ public class InsereLdap {
         }
 
     }
+
+   /**
+     * Método que insere dados na base de dados, recebendo metadados em OBAA e inserindo em OBAA.
+     *
+     * @param attributeSet Referência para a classe LDAPAttributeSet que contém as entradas a serem inseridas na base.
+     * @param header Refêrencia para a classe Header que contém os dados da tag Header do XML.
+     * @param con Conexão com a base de dados
+    *  @param idDoc identificador do documento para aquele atributo na base de dados
+     */
+     public static void insereObaa(DadosParaLdap dadosLdap, Header header, Connection con, int idDoc) {
+
+        LDAPAttribute attribute = null;
+        LDAPAttributeSet attributeSet = new LDAPAttributeSet();
+
+        System.out.println(" =============================");
+        System.out.println("  Inserindo objeto: " + header.getIdentifier());
+        System.out.println(" =============================\n");
+
+        attributeSet.add(new LDAPAttribute(
+                "objectclass", new String[]{"top", "obaa"}));
+
+        //adiciona os valores lidos do xml no atributo ldap
+        HashMap<String, ArrayList<String>> atributos = dadosLdap.getAtributos();
+        Set<String> chaves = atributos.keySet();
+        //percorre todo o HashMap
+         for (String chave : chaves) //enquanto tiver chaves chave recebe o conteudo de chaves
+         {
+             if(chave != null){ // testa se a string chave é diferente de nulo
+                 ArrayList<String> lista = dadosLdap.getAtributos().get(chave); //adiciona no ArrayList todos os valores para a chave atual(do for)
+                String[] valores = (String[]) lista.toArray (new String[lista.size()]); //transforma o arraylist em um vetor de string pq é só o que o LDAPAttribute aceita para multiplos valores
+                //attributeSet.add(new LDAPAttribute(chave, valores));
+                addBaseDados(chave, valores, con, idDoc);
+             }
+         }
+    }
+
+    
+    private static boolean addBaseDados(String atributo, String[] valores, Connection con, int idDoc) {
+
+        for (int i = 0; i < valores.length; i++) {
+            String valor = valores[i];
+            try {
+                String insert = "INSERT INTO objetos (atributo, valor, documento) VALUES ('" + atributo + "', '" + valor + "', " + idDoc + ")";
+                PreparedStatement stmt = con.prepareStatement(insert);
+                stmt.execute();
+                stmt.close();
+
+            } catch (SQLException e) {
+                System.out.println("ERRO AO ADICIONAR ATRIBUTO: " + e);
+                return false;
+            }
+        }
+        return true;
+    }
+
+//    private static int getDocID(String obaa_entry, Connection con) {
+//
+//
+//
+//            try {
+//                String select = "SELECT id FROM objetos WHERE (obaa_entry='"+obaa_entry+")";
+//                PreparedStatement stmt = con.prepareStatement(select);
+//                stmt.execute();
+//                ResultSet rs = stmt.executeQuery(entryQ);
+//                stmt.close();
+//
+//            } catch (SQLException e) {
+//                System.out.println("ERRO AO ADICIONAR ATRIBUTO: " + e);
+//
+//            }
+//
+//
+//    }
 }

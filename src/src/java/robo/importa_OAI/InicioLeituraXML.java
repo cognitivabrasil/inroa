@@ -157,7 +157,6 @@ public class InicioLeituraXML {
                     //apaga arquivo XML
                     arquivoXML.delete();
 
-
                     //atualizar hora da ultima atualização
                     AtualizaBase atualiza = new AtualizaBase();
                     //chama metodo que atualiza a hora da ultima atualizacao
@@ -166,7 +165,6 @@ public class InicioLeituraXML {
                     System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
                 }
             }
-
 
         } catch (ParserConfigurationException e) {
             System.err.println("O parser nao foi configurado corretamente. " + e);
@@ -247,7 +245,7 @@ public class InicioLeituraXML {
                         Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
                         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
 
-                        reader.parser("ou=teste,dc=ufrgs,dc=br", "C:/engeo.xml", indexar, lc, con, 9);
+                        reader.parser("ou=teste,dc=ufrgs,dc=br", "C:/request.xml", indexar, lc, con, 4);
                         lc.disconnect();
                     } catch (LDAPException e) {
                         System.out.println("Error:  " + e.toString());
@@ -256,8 +254,5 @@ public class InicioLeituraXML {
                     } catch (Exception e){
                         e.printStackTrace();
                     }
-
-
     }
-
 }

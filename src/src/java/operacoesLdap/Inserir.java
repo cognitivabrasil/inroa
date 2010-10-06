@@ -1,5 +1,8 @@
 package operacoesLdap;
 
+!!!! provocado para dar erros!!!!
+
+
 import com.novell.ldap.LDAPAttribute;
 import com.novell.ldap.LDAPAttributeSet;
 import com.novell.ldap.LDAPConnection;

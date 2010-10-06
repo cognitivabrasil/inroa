@@ -19,6 +19,8 @@ modelo de tópico:
 <%@page import="operacoesLdap.Consultar"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
+<%@page import="postgres.Conectar"%>
+<%@page import="java.sql.*"%>
 
 <html>
     <head>
@@ -33,15 +35,24 @@ modelo de tópico:
         <div id="page">
             <%
             ArrayList<HashMap> resultHash = new ArrayList<HashMap>(); //instancia um ArrayList de HashMaps
-            String ipServidor = request.getParameter("ip"); //coleta o ip informado
-            String id = request.getParameter("id"); //coleta o id informado
-            String dn = request.getParameter("dn"); //coleta o dn informado
-            String consulta = "(obaaEntry=" + id + ")"; //cria o criterio de busca. Busca no atrubuto Entry o id informado
+            String id = request.getParameter("id"); //coleta o obaaEntry
+            
+            Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
+            Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
 
-            Consultar busca = new Consultar(ipServidor, consulta, dn, "", "", 389, null); //efetua a busca no ldap
-            resultHash = busca.getResultado(); //adicona no ArreyList o resultado da busca
+            try {
+                     Consultar busca = new Consultar(id, con); //faz a con
+                     con.close();
+                     resultHash = busca.getResultado(); //adicona no ArreyList o resultado da busca
+                } catch (NullPointerException err) {
+                    out.print("Nenhum atributo encontrado na consulta!\n");
+                        }
+
 
             HashMap dados = new HashMap(); //instancia um HashMap
+            if (dados.isEmpty()){
+                out.print("Nenhum atributo encontrado na consulta!\n");
+                } else{
 
 
             dados = (HashMap) resultHash.get(0); //coloca no HashMap dados do primeiro resultado recebido
@@ -963,6 +974,7 @@ modelo de tópico:
                 %>
             </div>
             <%
+            }
             }
             %>
             <input class="BOTAO" type="button" value="< Voltar" onclick="javascript:history.back(-1);"/>
