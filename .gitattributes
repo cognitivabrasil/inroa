@@ -287,7 +287,6 @@ src/web/imagens/ico24_salvar.gif -text
 src/web/imagens/sincronizar.png -text
 src/web/index.jsp -text
 src/web/infoDetalhada.jsp -text
-src/web/listaStopword2.jsp -text
 src/web/listaStowords.jsp -text
 src/web/logando.jsp -text
 src/web/login.html -text
