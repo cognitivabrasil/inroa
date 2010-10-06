@@ -268,7 +268,6 @@ src/web/conexaoBD.jsp -text
 src/web/consulta.jsp -text
 src/web/css/mobile.css -text
 src/web/css/padrao.css -text
-src/web/editarLDAP.jsp -text
 src/web/editarRepositorio.jsp -text
 src/web/exibeLDAP.jsp -text
 src/web/exibeRepositorios.jsp -text
