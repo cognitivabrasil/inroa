@@ -56,8 +56,6 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
             }
 
-
-
             //Se a busca nao for preenchida, volta a pagina para ser preenchida
             if (palavraChave.isEmpty()) {
                 out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>" +
@@ -67,7 +65,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
             int numObjetosEncontrados = 0; //inicializa int que tera o numero de resultados retornados
 
-            ArrayList<Integer> resultadoBusca = new ArrayList<Integer>(); //ArrayList que recebera o resultado da busca MySQL
+            ArrayList<Integer> resultadoBusca = new ArrayList<Integer>(); //ArrayList que recebera o resultado da busca
 
             //chama o metodo de busca inteligente
             Recuperador rep = new Recuperador();
@@ -168,9 +166,9 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     ArrayList resultHash = new ArrayList(); //ArrayList que recebera o resultado da busca LDAP
 
 
-                    //fazer consulta no mysql para pegar as informações necessárias
+                    //fazer consulta na base de dados para pegar as informações necessárias
                     //postgres ok
-                    String resultadoSQL = "SELECT d.obaa_entry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as servidor, l.ip, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn FROM documentos d, repositorios r, ldaps l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.ldap_destino=l.id;";
+                    String resultadoSQL = "SELECT d.obaa_entry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as servidor, l.ip FROM documentos d, repositorios r, dados_subfederacoes l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.id_federacao=l.id;";
 
                     ResultSet rs = stm.executeQuery(resultadoSQL);
                     //pega o proximo resultado retornado pela consulta sql
@@ -182,7 +180,6 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     String localizacao = rs.getString("localizacao");
                     String Servidor = rs.getString("servidor");
                     String ipResultado = rs.getString("ip");
-                    String dn = rs.getString("dn");
 
 
                     // out.println("<p>" + identificador + "<br>" + titulo + "<br>" + resumo + "<br>" + localizacao + "<br>" + data + "<br>" + Servidor + "<br>" + ipResultado + "<br>" + dn + "</p>");
@@ -196,7 +193,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     if (!titulo.isEmpty()) {
                                 %>
                                 <div class="titulo">
-                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&ip=<%=ipResultado%>&dn=<%=dn%>'>
+                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&ip=<%=ipResultado%>'>
                                         <%
                                                     String[] tempObaa = titulo.split(";; ");
                                                     for (int kk = 0; kk < tempObaa.length; kk++) { //percorrer todos os resultados separados por ;;
@@ -212,7 +209,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                                 </div>
                                 <%
                     } else {//se nao existir titulo informa que nao tem titulo mas cria o link para o objeto
-                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&ip=" + ipResultado + "&dn=" + dn + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
+                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&ip=" + ipResultado + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
                     }
 //fim tratamento titulo
 //inicio tratamento resumo
@@ -295,6 +292,6 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
     </body>
 </html>
 <%
-            con.close(); //fechar conexao com mysql
+            con.close(); //fechar conexao
 
 %>
