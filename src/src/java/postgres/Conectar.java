@@ -10,6 +10,17 @@ public class Conectar {
 
     Configuracao conf = new Configuracao();
     
+    public Conectar() {}
+   /**
+     * Conexão com uma subfederacao
+     * @param subfed arquivo da configuracao da base federada
+     * @return
+     */
+    public Conectar(Configuracao subfed) {
+        conf = subfed;
+    }
+
+    
     public Connection conectaBD() {
 
         Connection con = null;
