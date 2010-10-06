@@ -271,6 +271,7 @@ src/web/css/mobile.css -text
 src/web/css/padrao.css -text
 src/web/editarFederacao.jsp -text
 src/web/editarRepositorio.jsp -text
+src/web/exibeFederacao.jsp -text
 src/web/exibeLDAP.jsp -text
 src/web/exibeRepositorios.jsp -text
 src/web/googleAnalytics -text
