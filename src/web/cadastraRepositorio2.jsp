@@ -25,14 +25,14 @@ Segunda etapa do cadastro de um repositorio
         <script type="text/javascript">
             var myForm = new Validate();
 
-            myForm.addRules({id:'ldapDesc',option:'required',error:'* Deve ser selecionado uma base LDAP para armazenar os metadados!'});
+   //         myForm.addRules({id:'ldapDesc',option:'required',error:'* Deve ser selecionado uma base LDAP para armazenar os metadados!'});
 
 
-            myForm.addRules({id:'ipOr',option:'isIP',error:'* O ip informado para o Ldap de origem n&atilde;o est&aacute; correto!'});
-            myForm.addRules({id:'portaOr',option:'required',error:'* Deve ser informada a porta do Ldap de origem!'});
-            myForm.addRules({id:'dnOr',option:'required',error:'* Deve ser informado o DN do Ldap de origem!'});
-            myForm.addRules({id:'loginOr',option:'required',error:'* Deve ser informado o login do Ldap de origem!'});
-            myForm.addRules({id:'senhaOr',option:'required',error:'* Deve ser informada a senha do Ldap de origem!'});
+     //       myForm.addRules({id:'ipOr',option:'isIP',error:'* O ip informado para o Ldap de origem n&atilde;o est&aacute; correto!'});
+     //       myForm.addRules({id:'portaOr',option:'required',error:'* Deve ser informada a porta do Ldap de origem!'});
+     //       myForm.addRules({id:'dnOr',option:'required',error:'* Deve ser informado o DN do Ldap de origem!'});
+     //       myForm.addRules({id:'loginOr',option:'required',error:'* Deve ser informado o login do Ldap de origem!'});
+     //       myForm.addRules({id:'senhaOr',option:'required',error:'* Deve ser informada a senha do Ldap de origem!'});
             myForm.addRules({id:'confSenhaOr',option:'required',error:'* A senha do LDAP de origem deve ser repetida no campo indicado!'});
             myForm.addRules({id:'senhaOr', to:'confSenhaOr', option:'isEqual',error:'* As senhas digitadas para o LDAP origem n&atilde;o est&atilde;o iguais!'});
             myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
@@ -84,18 +84,24 @@ Segunda etapa do cadastro de um repositorio
 
 
 
-                <div class="subtitle">Ldap local - Onde ser&atilde;o armazenados os metadados</div>
+                <div class="subtitle">Federacao - Onde ser&atilde;o armazenados os metadados</div>
                 <div class="LinhaEntrada">
                     <div class="Label">
-                        Base LDAP:
+                        Federa&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
                         <select name="ldap_destino" id="ldapDesc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
-                            <option value="" selected onclick="insereValorDiv('divDesc','Selecione um LDAP')">Selecione
+                            <option value="" selected onclick="insereValorDiv('divDesc','Selecione uma federacao')">Selecione
                                 <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
                 //postgres ok
-                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps WHERE nome NOT LIKE '%Meta%Diretorio%' ORDER BY nome ASC;");
+                /*
+                 *
+                 *  conferir o que fazer quando se tem metadiretorios nos ldaps*/
+
+
+
+                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM dados_subfederacoes WHERE nome NOT LIKE '%Meta%Diretorio%' ORDER BY nome ASC;");
                 while (res.next()) {
                     descricaoLDAP=res.getString("descricao");
                     
@@ -116,12 +122,12 @@ Segunda etapa do cadastro de um repositorio
                     </div>
                     <div class="Value">
                         
-                        <div id="divDesc">Selecione a base LDAP e veja aqui sua descrição.</div>
+                        <div id="divDesc">Selecione a federa&ccedil;&atilde;o e veja aqui sua descrição.</div>
                     </div>
                 </div>
                                 <div class="LinhaEntrada">
                     <div class="Label">
-                        &nbsp;<a href="./cadastraLDAP.jsp">Cadastrar novo LDAP</a>
+                        &nbsp;<a href="./cadastraFederacao.jsp">Cadastrar nova subfedera&ccedil;&atilde;o</a>
                     </div>
                     <div class="Value">
                         &nbsp;
@@ -148,60 +154,6 @@ Segunda etapa do cadastro de um repositorio
                 <input type="hidden" id="senhaOr" value="null">
                 <input type="hidden" id="confSenhaOr" value="null">
                 <input type="hidden" id="senhaOr" value="null">
-                <%                } else if (tipoSinc.equalsIgnoreCase("LDAP")) {
-                %>
-                <input type="hidden" id="url" value="http://null.com.br">
-                <div class="subtitle">Sincroniza&ccedil;&atilde;o dos metadados
-                    <p>- Dados sobre o Ldap de origem</div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Endere&ccedil;o ip:
-                    </div>
-                    <div class="Value">
-                        <input name="ipOrigem" id="ipOr" type="text" onkeypress ="return ( maskIP(event,this) );" maxlength="15" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Porta:
-                    </div>
-                    <div class="Value">
-                        <input name="portaOrigem" id="portaOr" type="text" maxlength="4" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        DN:
-                    </div>
-                    <div class="Value">
-                        <input name="dnOrigem" id="dnOr" type="text" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Login:
-                    </div>
-                    <div class="Value">
-                        <input name="loginOrigem" id="loginOr" type="text" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Senha:
-                    </div>
-                    <div class="Value">
-                        <input name="senhaOrigem" id="senhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Repita a senha:
-                    </div>
-                    <div class="Value">
-                        <input name="confSenhaOrigem" id="confSenhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-
                 <%                }
                 %>
                 <div class="LinhaEntrada">
@@ -218,5 +170,5 @@ Segunda etapa do cadastro de um repositorio
     </body>
 </html>
 <%
-con.close(); //fechar conexao com mysql
+con.close(); //fechar conexao
 %>
