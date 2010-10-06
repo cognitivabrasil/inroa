@@ -25,8 +25,7 @@
 
             out.print("<p>Gravando dados na base...</p>");
             //inicializa variaveis do LDAP origem, pois se o tipo de sincronizacao for OAI, elas ficaram com null.
-            String portaOrigem = null;
-            String dnOrigem = null;
+            String portaOrigem = null;            
             String loginOrigem = null;
             String senhaOrigem = null;
             String confirmaSenhaOrigem = null;
@@ -59,31 +58,7 @@
              String idLdapDestino = request.getParameter("ldap_destino").trim();
 
             //se for do tipo de sincronizacao. Se for LDAP entra no primeiro if
-            if (tipoSinc.equalsIgnoreCase("LDAP")) {
-                //armazena os dados referente ao LDAP Origem
-                portaOrigem = request.getParameter("portaOrigem").trim();
-                dnOrigem = request.getParameter("dnOrigem").trim();
-                loginOrigem = request.getParameter("loginOrigem").trim();
-                senhaOrigem = request.getParameter("senhaOrigem").trim();
-                confirmaSenhaOrigem = request.getParameter("confSenhaOrigem").trim();
-                url = request.getParameter("ipOrigem").trim();
-
-                //testa se os campos foram preenchidos
-                if (portaOrigem.isEmpty() || dnOrigem.isEmpty() || loginOrigem.isEmpty() || senhaOrigem.isEmpty() || confirmaSenhaOrigem.isEmpty()) {
-                    out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
-                            "<script type='text/javascript'>history.back(-1);</script>");
-                    out.close();
-                }
-                //testa se a senha do origem confere com a repeticao
-                if (!senhaOrigem.equals(confirmaSenhaOrigem)) {
-                    out.print("<script type='text/javascript'>alert('As senhas informadas para o Ldap Origem não conferem. Digite novamente!');</script>" +
-                            "<script type='text/javascript'>history.back(-1);</script>");
-                }
-
-                //out.println("LDAP Origem: \nporta: " + portaOrigem + "\ndnOrigem: " + dnOrigem + "\nloginOrigem: " + loginOrigem + "\n senha: " + senhaOrigem + "\nconfirma Senha: " + confirmaSenhaOrigem);
-
-
-            } else if (tipoSinc.equalsIgnoreCase("OAI-PMH")) {
+            if (tipoSinc.equalsIgnoreCase("OAI-PMH")) {
                 url = request.getParameter("url").trim();
             }
 
@@ -124,7 +99,7 @@
                                 "VALUES ('" + nome + "', '" + descricao + "');"; //sql que possui um insert com os dados da tabela repositorio
 
 
-                        result = stm.executeUpdate(sql1, Statement.RETURN_GENERATED_KEYS); //realiza no mysql o insert que esta na variavel sql1, pedindo para retornar a key gerada automaticamente
+                        result = stm.executeUpdate(sql1, Statement.RETURN_GENERATED_KEYS); //realiza na base o insert que esta na variavel sql1, pedindo para retornar a key gerada automaticamente
 
                         if (result > 0) { //se o insert funcionar entra no if
                             gravadoSql1 = true;
@@ -132,41 +107,23 @@
                             rs.next();
                             key = rs.getLong(1);
 
-                            String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, tipo_sincronizacao, padrao_metadados, ldap_destino) " +
+                            String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, tipo_sincronizacao, padrao_metadados, id_federacao) " +
                                     "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidade + ", '" + nomeNaFederacao + "', '" + url + "', '" + tipoSinc + "', '" + padrao_metadados + "', " + idLdapDestino + ");";
 
 
-                            result2 = stm.executeUpdate(sql2); //executa o que tem na variavel slq2 no mysql
+                            result2 = stm.executeUpdate(sql2); //executa o que tem na variavel slq2
                             //se o insert funcionou seta pra true o boolean
                             if (result2 > 0) {
-                                gravadoSql2 = true; //informa que o segundo insert foi realizado
-
-                                //string que contem um insert com os dados da tabela dadosldap
-                                String sql3 = "INSERT INTO dadosldap (id_repositorio, login_ldap_origem, senha_ldap_origem, porta_ldap_origem, dn_origem) " +
-                                        "VALUES (" + key + ", '" + loginOrigem + "', '" + senhaOrigem + "', " + portaOrigem + ", '" + dnOrigem + "');";
-                                result3 = stm.executeUpdate(sql3); //executa o que tem na variavel slq3 no mysql
-
-                                if (result3 > 0) {//se o insert funcionou seta pra true o boolean
-                                    gravadoSql3 = true; //informa que o terceiro insert foi realizado
-////////////////////////////////////chamar metodo que insere nodo no LDAP
-                                    Inserir cadastraRep = new Inserir();
-                                    //consulta sql que retorna os dados necessário para criar o novo nodo
-                                    ResultSet infoLdap = stm.executeQuery("SELECT ip, dn, login, senha, porta FROM ldaps where id="+idLdapDestino+";");
-                                    infoLdap.next();
-                                    resultadoCadastraNodo=cadastraRep.insereNodo(nomeNaFederacao, infoLdap.getString("ip"), infoLdap.getString("dn"), infoLdap.getString("login"), infoLdap.getString("senha"), infoLdap.getInt("porta"));
+                                gravadoSql2 = true;
+                                resultadoCadastraNodo = true; //informa que o segundo insert foi realizado
                                 }
                             }
                             if (resultadoCadastraNodo) { //se todos os insert e a insersao do nodo no ldap foram realizados
                                 out.print("<script type='text/javascript'>alert('Informações do repositório " + nome.toUpperCase() + " gravadas com sucesso!');</script></p>");
                                 out.print("<script type='text/javascript'>fechaRecarrega();</script>");
-                            } else {
-                                stm.executeUpdate("DELETE FROM repositorios WHERE id=" +key);
-                                out.print("<script type='text/javascript'>alert('Erro ao inserir as informações na base de bados! Ocorreu erro ao adicionar nodo no LDAP!');</script>");
-                                out.print("<script type='text/javascript'>history.go(-1);</script>");
-                                out.print("<BR><p class='textoErro'>Erro ao inserir as informa&ccedil;&otilde;es na base de bados! Ocorreu erro ao adicionar nodo no LDAP!");
                             }
 
-                        } else {
+                        else {
                             out.print("<script type='text/javascript'>alert('Erro ao inserir as informações na base de bados!');</script>");
                             out.print("<script type='text/javascript'>history.go(-1);</script>");
                             out.print("<BR><p class='textoErro'>Erro ao inserir as informa&ccedil;&otilde;es na base de bados!");
@@ -216,5 +173,5 @@
     </body>
 </html>
 <%
-con.close(); //fechar conexao com mysql
+con.close(); //fechar conexao
 %>

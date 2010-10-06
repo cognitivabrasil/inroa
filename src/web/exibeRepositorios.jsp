@@ -34,9 +34,9 @@
                     "AND r.id=d.id_repositorio " +
                     "AND i.padrao_metadados=p.id " +
                     "ORDER BY r.nome ASC;";*/
-        String sql = "SELECT r.*, i.*, d.*, p.nome as nome_padrao, l.nome as nome_ldap, l.descricao as descricao_ldap, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao"
-+" FROM repositorios r, info_repositorios i, ldaps l, dadosldap d, padraometadados p"
-+" WHERE r.id="+id+" AND r.id=i.id_repositorio AND r.id=d.id_repositorio AND i.padrao_metadados=p.id AND i.ldap_destino=l.id ORDER BY r.nome ASC;";
+        String sql = "SELECT r.*, i.*, p.nome as nome_padrao, l.nome as nome_federacao, l.descricao as descricao_federacao, l.porta, l.login, l.senha, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao"
++" FROM repositorios r, info_repositorios i, dados_subfederacoes l, padraometadados p"
++" WHERE r.id="+id+" AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.id_federacao=l.id ORDER BY r.nome ASC";
 
         ResultSet res = stm.executeQuery(sql);
         if(res.next()){
@@ -91,20 +91,20 @@
             </div>
 
 <!--Ldap Local-->
-            <div class="subtitulo">Informa&ccedil;&otilde;es sobre o Ldap local</div>
-            <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&ldapLocal=<%=res.getString("nome_ldap")%>&campo=LdapLocal">Editar</a></div>
+            <div class="subtitulo">Informa&ccedil;&otilde;es sobre a Federa&ccedil;&atilde;o local</div>
+            <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&ldapLocal=<%=res.getString("nome_federacao")%>&campo=LdapLocal">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
                     Nome:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("nome_ldap")%></div>
+                <div class="Value">&nbsp;<%=res.getString("nome_federacao")%></div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Descri&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("descricao_ldap")%></div>
+                <div class="Value">&nbsp;<%=res.getString("descricao_federacao")%></div>
             </div>
             
             <%
@@ -128,7 +128,7 @@
             <input type="hidden" id="url" value="http://null.com.br">
 
 <!--Informações Ldap Origem -->
-            <div class="subtitulo">Dados sobre o Ldap de origem</div>
+            <div class="subtitulo">Dados sobre a Subfederação de origem</div>
             <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=LdapOrigem">Editar</a></div>
             
             <div class="LinhaEntrada">
@@ -141,25 +141,19 @@
                 <div class="Label">
                     Porta:
                 </div>
-                <div class="Value">&nbsp;<%=res.getInt("porta_ldap_origem")%></div>
-            </div>
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    DN:
-                </div>
-                <div class="Value">&nbsp;<%=res.getString("dn_origem")%></div>
-            </div>
+                <div class="Value">&nbsp;<%=res.getInt("porta")%></div>
+            </div>        
             <div class="LinhaEntrada">
                 <div class="Label">
                     Login:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("login_ldap_origem")%></div>
+                <div class="Value">&nbsp;<%=res.getString("login")%></div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Senha:
                 </div>
-                <div class="Value">&nbsp;<font size="+1"><%=res.getString("senha_ldap_origem").replaceAll(".", "*")%></font></div>
+                <div class="Value">&nbsp;<font size="+1"><%=res.getString("senha").replaceAll(".", "*")%></font></div>
             </div>
             <%            }
         }else
@@ -199,5 +193,5 @@
 
 </html>
 <%
-con.close(); //fechar conexao com mysql
+con.close(); //fechar conexao
 %>
