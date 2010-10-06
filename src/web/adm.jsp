@@ -151,7 +151,7 @@ Author     : Marcos Nunes
         <table class='repositorios-table' cellpadding=3>
             <tr>
                 <th colspan=3>
-                    <font size="3%" color=black>Lista de Bases LDAP cadastradas</font>
+                    <font size="3%" color=black>Lista de Subfedera&ccedil;&atilde;o cadastradas</font>
                 </th>
             </tr>
 
@@ -169,9 +169,9 @@ Author     : Marcos Nunes
             yesnocolor = "";
 
             //Carrega do banco de dados os repositorios cadastrados
-            //potgres ok
-            ResultSet resultLdap = stm.executeQuery("SELECT l.nome, l.id, l.descricao FROM ldaps l ORDER BY nome ASC;");
-            while (resultLdap.next()) {
+
+             ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao FROM dados_subfederacoes l ORDER BY nome ASC;");
+            while (resultFederacao.next()) {
 
                 if (linha2 % 2 == 0) {
                     yesnocolor = "price-yes";
@@ -180,20 +180,19 @@ Author     : Marcos Nunes
                 }
             %>
 
-
             <tr  class='center'>
                 <td class="<%=yesnocolor%>">
-                    <a title="Excluir" onclick="NewWindow('removerLDAP.jsp?id=<%=resultLdap.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Excluir" onclick="NewWindow('removerFederacao.jsp?id=<%=resultFederacao.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
                     </a>
                     &nbsp;
-                    <a title="Editar / Visualizar" onclick="NewWindow('exibeLDAP.jsp?id=<%=resultLdap.getString("id")%>','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Editar / Visualizar" onclick="NewWindow('exibeFederacao.jsp?id=<%=resultFederacao.getString("id")%>','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/Lapiz-32x32.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
-                <td class="<%=yesnocolor%>">&nbsp;<%=resultLdap.getString("nome")%></td>
-                <td class="<%=yesnocolor%>">&nbsp;<%=resultLdap.getString("descricao")%></td>
+                <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("nome")%></td>
+                <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("descricao")%></td>
 
                 <% linha2++;%>
 
@@ -206,15 +205,15 @@ Author     : Marcos Nunes
             <tr class='center'>
                 <td>
 
-                    <a title="Adicionar nova base LDAP" onclick="NewWindow('cadastraLDAP.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Adicionar nova subfedera&ccedil;&atilde;" onclick="NewWindow('cadastraFederacao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
                 <td colspan="2"class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
-                    <a onclick="NewWindow('cadastraLDAP.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        Adicionar nova base LDAP
+                    <a onclick="NewWindow('cadastraFederacao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                        Adicionar nova subfedera&ccedil;&atilde;o
                     </a>
 
                 </td>
