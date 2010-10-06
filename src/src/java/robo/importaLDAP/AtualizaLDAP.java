@@ -10,6 +10,8 @@ import operacoesLdap.Consultar;
 import java.util.ArrayList;
 import java.util.HashMap;
 import operacoesLdap.Remover;
+import postgres.Conectar;
+import java.sql.*;
 
 /**
  * Classe que possibilita sincronizar dois diretórios LDAP.
@@ -42,7 +44,7 @@ public class AtualizaLDAP {
             String loginOrigem,
             String senhaOrigem,
             int portaOrigem,
-            String nomeAtribIdentificador,
+            String obaa_entry,
             String dnDestino,
             LDAPConnection lc,
             Indexador indexar,
@@ -50,7 +52,13 @@ public class AtualizaLDAP {
         ArrayList<HashMap> resultado = new ArrayList<HashMap>();
         Insere insere = new Insere();
         boolean apaga = false;
-        Consultar consulta = new Consultar(ipOrigem, nomeAtribIdentificador + "=*", dnOrigem, loginOrigem, senhaOrigem, portaOrigem, null);
+
+        //Consultar consulta = new Consultar(ipOrigem, nomeAtribIdentificador + "=*", dnOrigem, loginOrigem, senhaOrigem, portaOrigem, null);
+
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
+        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+
+        Consultar consulta = new Consultar(dnDestino, con);
 
         resultado = consulta.getResultado();
 
