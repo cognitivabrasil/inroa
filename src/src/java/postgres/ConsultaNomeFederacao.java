@@ -3,7 +3,7 @@ package postgres;
 import java.sql.*;
 
 /**
- * Disponibiliza metodos para recuperar informações sobre um ldap apartir do nome do seu nodo. Tais informações estão armazenadas na base de dados MySQL.
+ * Disponibiliza metodos para recuperar informações sobre um ldap apartir do nome do seu nodo. Tais informações estão armazenadas na base de dados.
  * @author Marcos
  */
 public class ConsultaNomeFederacao {
@@ -14,7 +14,7 @@ public class ConsultaNomeFederacao {
 
     /**
      *  Recebe como entrada o nome do repositório no ldap e consulta
-     * no mysql por esse nome para encontrar o nome real do
+     * no banco de dados por esse nome para encontrar o nome real do
      * repositorio, o ip e o seu dn.
      * Exemplo: Existe um repositório chamado CESTA que é idenficado na federação(ldap) como pgie3.
      * @param nomeRepositorio nome do repositório no ldap. Ex.: pgie3
@@ -24,8 +24,8 @@ public class ConsultaNomeFederacao {
         nomeRepositorio = nomeRepositorio.trim().toLowerCase().replaceAll(",", "");
 
 //postgres ok
-        String sql = "SELECT r.nome, i.nome_na_federacao,('ou='||i.nome_na_federacao||','||l.dn)as dn, l.ip " +
-                "FROM repositorios r, info_repositorios i, ldaps l " +
+        String sql = "SELECT r.nome, i.nome_na_federacao, l.ip " +
+                "FROM repositorios r, info_repositorios i, dados_subfederacoes l " +
                 "WHERE i.nome_na_federacao='" + nomeRepositorio + "' " +
                 "AND r.id=i.id_repositorio " +
                 "AND i.ldap_destino=l.id;";
