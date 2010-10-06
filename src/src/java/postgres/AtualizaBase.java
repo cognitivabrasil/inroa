@@ -45,7 +45,7 @@ public class AtualizaBase {
             return false;
         }finally {
             try {
-                con.close(); //fechar conexao mysql
+                con.close(); //fechar conexao
                 } catch (SQLException e) {
                 System.out.println("Erro ao fechar a conexão: " + e.getMessage());
             }
