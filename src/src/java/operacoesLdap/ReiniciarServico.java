@@ -4,6 +4,9 @@
  */
 package operacoesLdap;
 
+!!!! provocado para dar erros!!!!
+
+
 /**
  * Reinicia o serviço Ldap para que utilize a nova configuração do arquivo slapd conf. É necessário dar permissão de sudo para o usuário tomcat para o serviço "/etc/init.d/ldap" sem solicitar senha.
  * @author Marcos

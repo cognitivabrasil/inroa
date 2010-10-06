@@ -122,8 +122,8 @@ public class XmlSaxReader extends DefaultHandler {
         if(tag.equalsIgnoreCase("OAI-PMH")){ //se achar a tag OAI-PMH efetua a consulta na base
             this.dadosLDAP = new DadosParaLdap();
             Conectar conectar = new Conectar();
-            ConMysql = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
-            try{
+            ConMysql = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+            try{               
                 Statement stm1 = ConMysql.createStatement();
                 //idTipoMapeamento;namespace;metadataPrefix;
                 String sqlInfo = "SELECT i.padrao_metadados, i.tipo_mapeamento_id as tipo_map, p.name_space, metadata_prefix" +
@@ -217,15 +217,24 @@ public class XmlSaxReader extends DefaultHandler {
      */
     @Override
     public void endElement(String uri, String localName, String tag) {
+             
         
         if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
-            
+            //System.out.println("Fim elemento...");
             doc.setServidor(idRepositorio); //adiciona no indice o id do repositorio
-            InsereLdap.insereObaa(this.dadosLDAP, headerAux, dn, conexaoLdap); //chama classe que insere os dados no ldap
+
+
+            //InsereLdap.insereObaa(this.dadosLDAP, headerAux, dn, conexaoLdap); //chama classe que insere os dados no ldap
             
             try {
                 System.out.println("adicionando documento ao indice");
-                indexa.addDoc(doc, this.ConMysql); //adciona o documento no indice mysql
+                indexa.addDoc(doc, this.ConMysql); //adciona o documento no indice SQL
+
+
+                //insere os atributos an base de dados, substituindo o LDAP, se o valor do id é -1 é que o objeto já está na base
+                if (doc.getId() != -1) {
+                    InsereLdap.insereObaa(this.dadosLDAP, headerAux, this.ConMysql, doc.getId()); //chama classe que insere os dados na base de dados
+                } else {System.out.println("Objeto já adicionado! "+headerAux.getIdentifier());}
             } catch (SQLException e) {
                 System.err.println("Erro ao inserir o documento no indice: " + e.getMessage());
             }

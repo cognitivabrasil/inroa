@@ -1,5 +1,10 @@
 package operacoesLdap;
 
+
+!!!! provocado para dar erros!!!!
+
+
+
 import com.novell.ldap.*;
 import com.novell.ldap.LDAPConnection;
 import com.novell.ldap.LDAPException;
