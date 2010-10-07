@@ -30,14 +30,14 @@ public class Conectar {
         String usuario = conf.getUsuario();
         String senha = conf.getSenha();
         String ipBase = conf.getIp();
-        String portarBase = conf.getPorta();
+        int portaBase = conf.getPorta();
 
         try {
             // Este é um dos meios para registrar um driver
             Class.forName("org.postgresql.Driver");
 
             // Registrado o driver, vamos estabelecer uma conexão
-            con = DriverManager.getConnection("jdbc:postgresql://" + ipBase + ":" + portarBase + "/" + baseDeDados, usuario, senha);
+            con = DriverManager.getConnection("jdbc:postgresql://" + ipBase + ":" + portaBase + "/" + baseDeDados, usuario, senha);
 
 
    //         return con;

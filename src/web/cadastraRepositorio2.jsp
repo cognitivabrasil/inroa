@@ -46,13 +46,13 @@ Segunda etapa do cadastro de um repositorio
 
             <%
             //armazena em variaveis os dados preenchidos no formulario
-            String nome = request.getParameter("nomeRep").trim();
+            String nome = request.getParameter("nomeRep").trim().toUpperCase();
             String descricao = request.getParameter("descricao").trim();
             String padrao_metadados = request.getParameter("padrao_metadados").trim();
 
             String periodicidade = request.getParameter("periodicidade").trim();
             //String nomeNaFederacao = request.getParameter("nomeNaFederacao").trim();
-            String tipoSinc = request.getParameter("sincronizacao").trim();
+            
 
 
             //request.setAttribute("nomeRep", nome);
@@ -60,7 +60,7 @@ Segunda etapa do cadastro de um repositorio
 
             //se algum campo estiver em branco exibe alerta e volta ao formulario
             if (nome.isEmpty() || descricao.isEmpty() || periodicidade.isEmpty() ||
-                    tipoSinc.isEmpty() || padrao_metadados.isEmpty()) {
+                     padrao_metadados.isEmpty()) {
                 //nomeNaFederacao.isEmpty() ||
                 out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
                         "<script type='text/javascript'>history.back(-1);</script>");
@@ -72,7 +72,7 @@ Segunda etapa do cadastro de um repositorio
             session.setAttribute("padrao_metadados", padrao_metadados);
             session.setAttribute("periodicidade", periodicidade);
             //session.setAttribute("nomeNaFederacao", nomeNaFederacao);
-            session.setAttribute("sincronizacao", tipoSinc);
+            
 
             String descricaoLDAP="";
 
@@ -134,9 +134,7 @@ Segunda etapa do cadastro de um repositorio
                     </div>
                 </div>
                 
-                <%
-            if (tipoSinc.equalsIgnoreCase("OAI-PMH")) {
-                %>
+               
                 <div class="subtitle">Sincroniza&ccedil;&atilde;o dos metadados</div>
                 <div class="LinhaEntrada">
                     <div class="Label">
@@ -154,8 +152,7 @@ Segunda etapa do cadastro de um repositorio
                 <input type="hidden" id="senhaOr" value="null">
                 <input type="hidden" id="confSenhaOr" value="null">
                 <input type="hidden" id="senhaOr" value="null">
-                <%                }
-                %>
+                
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="button" value="< Voltar" onclick="javascript:history.back(-1);"/>

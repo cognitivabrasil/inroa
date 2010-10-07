@@ -12,7 +12,7 @@ public class AtualizaBase {
     String usuario = conf.getUsuario();
     String senha = conf.getSenha();
     String ipBase = conf.getIp();
-    String portarBase = conf.getPorta();
+    int portaBase = conf.getPorta();
 
     /**
      * Atualiza a hora do campo data_ultima_atualizacao da tabela info_repositorios para a hora atual.

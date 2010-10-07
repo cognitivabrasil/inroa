@@ -14,7 +14,7 @@ import java.sql.*;
  *
  * @author Marcos
  */
-public class InsereLdap {
+public class InsereObjetoBase {
 
     /**
      * Método que insere dados no LDAP, recebendo metadados em OBAA e inserindo em OBAA.
@@ -24,7 +24,7 @@ public class InsereLdap {
      * @param dnRecebido dn do LDAP onde serão armazenados os objetos.
      * @param lc Conex&atild;o com o Ldap. Conex&atilde;o e bind.
      */
-    public static void insereObaa(DadosParaLdap dadosLdap, Header header, String dnRecebido, LDAPConnection lc) {
+    public static void insereObaa(DadosObjetos dadosLdap, Header header, String dnRecebido, LDAPConnection lc) {
       
         String containerName = dnRecebido.trim();
 
@@ -76,7 +76,7 @@ public class InsereLdap {
      * @param con Conexão com a base de dados
     *  @param idDoc identificador do documento para aquele atributo na base de dados
      */
-     public static void insereObaa(DadosParaLdap dadosLdap, Header header, Connection con, int idDoc) {
+     public static void insereObaa(DadosObjetos dadosLdap, Header header, Connection con, int idDoc) {
 
         LDAPAttribute attribute = null;
         LDAPAttributeSet attributeSet = new LDAPAttributeSet();

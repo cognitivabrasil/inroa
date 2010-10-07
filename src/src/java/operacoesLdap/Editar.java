@@ -41,29 +41,5 @@ public class Editar {
         }
     }
 
-    /**
-     * Edita informações referente ao ldap no arquivo de configuração do metadiretorio (slapd dot conf). Se o endereço ip ou dn da base ldap foi alterada, é necessário alterar o arquivo de configuração do metadiretório.
-     * @param ipAntigo Endereço ip que estava cadastrado para o ldap
-     * @param dnAntigo DN que estava cadastrado para o ldap
-     * @param ipNovo Novo endereço ip do ldap
-     * @param dnNovo Novo dn do ldap
-     * @return retorna true se foi possível remover as informações antigas e inserir as novas, e false se uma das duas deu erro.
-     */
-//    public boolean editaLdapSlapd(String ipAntigo, String dnAntigo, String ipNovo, String dnNovo) {
-//        boolean resultado = false;
-//
-//        Remover removeLdap = new Remover();
-//        boolean removeuLdap = false;
-//        removeuLdap = removeLdap.excluiLdapSlapd(ipAntigo, dnAntigo); //remove as informacoes antigas
-//        if (removeuLdap) {
-//            Inserir insereLdap = new Inserir();
-//            boolean inseriuLdap = false;
-//            inseriuLdap = insereLdap.insereRepositorioSldap(ipNovo, dnNovo); //insere as novas informacoes
-//            if (inseriuLdap) { //se as info foram inseridas
-//                ReiniciarServico restartLdap = new ReiniciarServico(); //reinicia o servico ldap no linux
-//                resultado = restartLdap.getResultado(); //retorna o resultado da operacao de reiniciar o servico
-//            }
-//        }
-//        return resultado;
-//    }
+
 }

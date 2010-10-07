@@ -11,7 +11,7 @@ public class Configuracao {
     String usuario;
     String senha;
     String ip;
-    String porta;
+    int porta;
 
 //    String usuario = "cinted";
 //    String senha = "teste";
@@ -29,7 +29,7 @@ public class Configuracao {
     usuario = "feb";
     senha = "12345";
     ip = "143.54.95.20";
-    porta = "5432";
+    porta = 5432;
     }
     /**
      * Configuração
@@ -39,7 +39,7 @@ public class Configuracao {
      * @param ip ip do servidor da subfederacao
      * @param porta porta que responde o sql da subfederacao, padrao do postgres 2345
      */
-     public Configuracao(String base, String usuario, String senha, String ip, String porta){
+     public Configuracao(String base, String usuario, String senha, String ip, int porta){
 
     this.base = base;
     this.usuario = usuario;
@@ -83,7 +83,7 @@ public class Configuracao {
      * Informa a porta do banco de dados
      * @return Retorna uma String contendo a porta do banco de dados
      */
-    public String getPorta() {
+    public int getPorta() {
         return porta;
     }
 }

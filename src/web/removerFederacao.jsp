@@ -9,8 +9,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
-<%--@page import="operacoesLdap.Remover" %>
-<%@page import="operacoesLdap.ReiniciarServico" --%>
+
 
 <html>
     <head>

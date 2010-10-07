@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : editarRepositorio
     Created on : 18/08/2009, 14:59:26
     Author     : Marcos
@@ -55,7 +55,8 @@
 
                     String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao" +
                              " FROM repositorios r, info_repositorios i, dadosldap d, padraometadados p"+
-                             " WHERE r.id="+id+" AND r.id=i.id_repositorio"+
+                             " WHERE r.id=4"+
+                             " AND r.id=i.id_repositorio"+
                              " AND i.padrao_metadados=p.id"+
                              " GROUP BY r.nome, r.descricao, p.nome;";
 
@@ -72,7 +73,7 @@
 
             </script>
 
-            <div class="subTitulo-center">&nbsp;Editando reposit&oacute;rio <%=res.getString("nome")%></div>
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <div class="EspacoAntes">&nbsp;</div>
             <form name="editaGeral" action="editarRepositorio.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
@@ -132,26 +133,27 @@
             <%
             } else if (tipo.equalsIgnoreCase("config")) {
 
-                String sql = "SELECT r.*, i.*, p.nome as nome_padrao " +
-                        " FROM repositorios r, info_repositorios i, padraometadados p " +
+                String sql = "SELECT r.*, i.*, d.*, p.nome as nome_padrao " +
+                        " FROM repositorios r, info_repositorios i, dadosldap d, padraometadados p " +
                         " WHERE r.id=" + id + " " +
-                        " AND r.id=i.id_repositorio" +
-                        " AND i.padrao_metadados=p.id" +
-                        " ORDER BY r.nome ASC";
-                
+                        "AND r.id=i.id_repositorio " +
+                        "AND r.id=d.id_repositorio " +
+                        "AND i.padrao_metadados=p.id " +
+                        "ORDER BY r.nome ASC;";
+
                 ResultSet res = stm.executeQuery(sql);
 
-                res.next();                
+                res.next();
+                String tipo_sincronizacao = res.getString("tipo_sincronizacao");
             %>
 
             <script type="text/javascript">
                 var myForm = new Validate();
                 myForm.addRules({id:'periodicidade',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em horas!'});
-                myForm.addRules({id:'tipoSinc',option:'required',error:'* Deve ser informado o tipo de sincroniza&ccedil;&atilde;o que o reposit&oacute;rio suporta!'});
             </script>
 
             <!--Informações configuração-->
-            <div class="subTitulo-center">&nbsp;Editando reposit&oacute;rio <%=res.getString("nome")%></div>
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
             <form name="editaConfig" action="editarRepositorio.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
                 <div class="subtitulo">Informa&ccedil;&otilde;es sobre o configura&ccedil;&atilde;o da federa&ccedil;&atilde;o</div>
@@ -168,17 +170,12 @@
                     <div class="Label">
                         Nome na federa&ccedil;&atilde;o:
                     </div>
-                    <div class="Value"><%=res.getString("nome")%></div>
+                    <div class="Value"><%=res.getString("nome_na_federacao")%></div>
                 </div>
 
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Tipo de Sincroniza&ccedil;&atilde;o:
-                    </div>
-
-                </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
                 <input type="hidden" name="campo" value="<%=tipo%>"/>
+                <input type="hidden" name="tipoSincOriginal" value="<%=tipo_sincronizacao%>"/>
                 <input type="hidden" name="apagar" value="sim"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
@@ -189,34 +186,34 @@
             </form>
 
             <%
-                //Informações sobre a federação local
+                //Informações sobre Ldap local
                 } else if (tipo.equalsIgnoreCase("ldaplocal")) {
 
                 //String sql = "SELECT d.*, r.nome FROM dadosldap d, repositorios r WHERE d.id_repositorio=" + id + " " +
                 //        "AND r.id=d.id_repositorio";
 
                 //ResultSet res = stm.executeQuery(sql);
-                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM dados_subfederacoes WHERE nome NOT LIKE '%Meta%Diretorio%' ORDER BY nome ASC;");
+                ResultSet res = stm.executeQuery("SELECT nome, id, descricao FROM ldaps WHERE nome NOT LIKE '%Meta%Diretorio%' ORDER BY nome ASC;");
                 //res.next();
 
                 String nomeLdapLocal = request.getParameter("ldapLocal");
 
             %>
 
-            <div class="subTitulo-center">&nbsp;Editando reposit&oacute;rio</div>
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio</div>
             <form name="editaGeral" action="editarRepositorio.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
 
-                <div class="subtitle">Dados da Federa&ccedil;&atilde;o - Onde ser&atilde;o armazenados os metadados</div>
-                
-                <div class="TextoDivAlerta"><b>Aten&ccedil;&atilde;o:</b> Se o repositorio for alterado, seus metadados ser&atilde;o perdidos, ou n&atilde;o.</div>
+                <div class="subtitle">Ldap local - Onde ser&atilde;o armazenados os metadados</div>
+
+                <div class="TextoDivAlerta"><b>Aten&ccedil;&atilde;o:</b> Se a base Ldap for alterada, seus metadados ser&atilde;o perdidos. Então, ser&aacute; necess&aacute;rio fazer uma nova sincronização.</div>
                 <div class="EspacoAntes">&nbsp;</div>
                 <div class="LinhaEntrada">
                     <div class="Label">
-                        Federa&ccedil;&atilde;o:
+                        Base LDAP:
                     </div>
                     <div class="Value">
-                        <select name="nome" id="ldapDesc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                        <select name="ldap_destino" id="ldapDesc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                             <%
             //Carrega do banco de dados os padroes de metadados cadastrados
 
@@ -250,26 +247,26 @@
             </form>
 
             <%
-                //Informações Federação de origem
-                } else if (tipo.equalsIgnoreCase("ldaporigem")) {
-                String sql = "SELECT r.nome as nome, d.*, i.url_or_ip FROM dados_subfederacoes d, repositorios r, info_repositorios i WHERE r.id= " + id + " " +
-                        " AND i.id_federacao=d.id" +
-                        " AND r.id=i.id_repositorio";
+                //Informações Ldap Origem
+                } else if (tipo.equalsIgnoreCase("subFederacao")) {
+                String sql = "SELECT d.*, r.nome, i.url_or_ip FROM dadosldap d, repositorios r, info_repositorios i WHERE d.id_repositorio=" + id + " " +
+                        "AND r.id=d.id_repositorio " +
+                        "AND r.id=i.id_repositorio;";
 
                 ResultSet res = stm.executeQuery(sql);
                 res.next();
 
                 String ip = res.getString("url_or_ip");
-                int portaLdapOrigem = res.getInt("porta");
-                String portaOrigem = "";                
-                String login_ldap_origem = res.getString("login");
+                int portaBase = res.getInt("porta_ldap_origem");
+                String portaBaseString = "";
+                String login_ldap_origem = res.getString("login_ldap_origem");
                 if (ip == null) {
                     ip = "";
                 }
-                if (portaLdapOrigem == 0) {
-                    portaOrigem = "";
+                if (portaBase == 0) {
+                    portaBaseString = "";
                 } else {
-                    portaOrigem = String.valueOf(portaLdapOrigem);
+                    portaBaseString = String.valueOf(portaBase);
                 }
 
                 if (login_ldap_origem.equalsIgnoreCase("null")) {
@@ -280,21 +277,20 @@
             <script type="text/javascript">
                 var myForm = new Validate();
 
-            myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
-            myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
-            myForm.addRules({id:'ipDes',option:'isIP',error:'* O ip informado para a federa&ccedil;&atilde;o local n&atilde;o est&aacute; correto!'});
-            myForm.addRules({id:'portaDes',option:'required',error:'* Deve ser informada a porta da base de dados (Padr&atilde;o PostgreSQL 2345)!'});
-            myForm.addRules({id:'loginDes',option:'required',error:'* Deve ser informado o login do da base de dados da subfedera&ccedil;&atilde;o!'});
-            myForm.addRules({id:'senhaDes',option:'required',error:'* Deve ser informada a senha do da base de dados da subfedera&ccedil;&atilde;o!'});
-            myForm.addRules({id:'confSenhaDes',option:'required',error:'* A senha da base de dados da da subfedera&ccedil;&atilde;o deve ser repetida no campo indicado!'});
-            myForm.addRules({id:'senhaDes', to:'confSenhaDes', option:'isEqual',error:'* As senhas digitadas n&atilde;o est&atilde;o iguais!'});
+                myForm.addRules({id:'ipOr',option:'isIP',error:'* O ip informado para o Ldap de origem n&atilde;o est&aacute; correto!'});
+                myForm.addRules({id:'portaOr',option:'required',error:'* Deve ser informada a porta do Ldap de origem!'});
+                myForm.addRules({id:'dnOr',option:'required',error:'* Deve ser informado o DN do Ldap de origem!'});
+                myForm.addRules({id:'loginOr',option:'required',error:'* Deve ser informado o login do Ldap de origem!'});
+                myForm.addRules({id:'senhaOr',option:'required',error:'* Deve ser informada a senha do Ldap de origem!'});
+                myForm.addRules({id:'confSenhaOr',option:'required',error:'* A senha do Ldap origem deve ser repetida no campo indicado!'});
+                myForm.addRules({id:'senhaOr', to:'confSenhaOr', option:'isEqual',error:'* As senhas digitadas para o Ldap origem n&atilde;o est&atilde;o iguais!'});
 
             </script>
-            <div class="subTitulo-center">&nbsp;Editando reposit&oacute;rio <%=res.getString("nome")%></div>
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
             <form name="editaGeral" action="editarRepositorio.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
 
-                <div class="subtitulo">Dados sobre a Federa&ccedil;&atilde; de origem</div>
+                <div class="subtitulo">Dados sobre o Ldap de origem</div>
                 <div class="EspacoAntes">&nbsp;</div>
                 <div class="LinhaEntrada">
                     <div class="Label">
@@ -309,7 +305,7 @@
                         Porta:
                     </div>
                     <div class="Value">
-                        <input name="portaOrigem" value="<%=portaOrigem%>" id="portaOr" type="text" maxlength="4" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="portaBaseString" value="<%=portaBaseString%>" id="portaOr" type="text" maxlength="4" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -325,7 +321,7 @@
                         Senha:
                     </div>
                     <div class="Value">
-                        <input name="senhaOrigem" value="<%=res.getString("senha")%>" id="senhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="senhaOrigem" value="<%=res.getString("senhaLdapOrigem")%>" id="senhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -333,7 +329,7 @@
                         Repita a senha:
                     </div>
                     <div class="Value">
-                        <input name="confSenhaOrigem" value="<%=res.getString("senha")%>" id="confSenhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="confSenhaOrigem" value="<%=res.getString("senha_ldap_origem")%>" id="confSenhaOr" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
@@ -361,7 +357,7 @@
                 myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
             </script>
 
-            <div class="subTitulo-center">&nbsp;Editando reposit&oacute;rio <%=res.getString("nome")%></div>
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
             <form name="editaGeral" action="editarRepositorio.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
 
@@ -389,6 +385,7 @@
                 }
             } //fim do if que testa se eh para aparecer o formulario ou se eh para editar
             else { //se o formulario ja foi preenchido entra no else
+///////
                 out.println("<script language=\"JavaScript\" type=\"text/javascript\">" +
                         "document.body.style.cursor=\"default\";" +
                         "</script>");
@@ -407,7 +404,7 @@
 
                     String sql1 = "UPDATE repositorios set nome='" + nome + "', descricao='" + descricao + "' where id=" + id; //sql que possui o update
 
-                    result = stm.executeUpdate(sql1); //executa a consluta
+                    result = stm.executeUpdate(sql1); //realiza no mysql oque esta na variavel sql1
 
                     if (result > 0) { //se o insert funcionar entra no if
                         String sql2 = "UPDATE info_repositorios set padrao_metadados=" + padrao_metadados + " where id_repositorio=" + id;
@@ -425,11 +422,10 @@
                     String periodicidade = request.getParameter("periodicidade").trim();
                     //String nomeNaFederacao = request.getParameter("nomeNaFederacao").trim();
                     //para atualizar o nome na federacao. Tem que fazer um script que altere o arquivo de configuracao do ldap
-                    String tipoSinc = request.getParameter("sincronizacao").trim();
-                    String tipoSincOriginal = request.getParameter("tipoSincOriginal");
 
 
-                    if (periodicidade.isEmpty() || tipoSinc.isEmpty()) {
+
+                    if (periodicidade.isEmpty()) {
                         out.print("<script type='text/javascript'>alert('O campo url deve estar devidamente preenchido!');</script>" +
                                 "<script type='text/javascript'>history.back(-1);</script>");
                         out.close();
@@ -438,39 +434,35 @@
                     int result = 0;
 
 
-                    String sql = "UPDATE info_repositorios set periodicidade_horas=" + periodicidade + ", tipo_sincronizacao='" + tipoSinc + "' where id_repositorio=" + id;
+                    String sql = "UPDATE info_repositorios set periodicidade_horas=" + periodicidade + " where id_repositorio=" + id;
                     result = stm.executeUpdate(sql);
                     if (result > 0) {
 
                         out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!');</script>");
 
-                        if (!tipoSinc.equalsIgnoreCase(tipoSincOriginal)) { //se foi alterado o tipo de sincronizacao redirecionar para o tipo de sincronizacao
-
-                            out.print("<script type='text/javascript'>window.location=\"exibeRepositorios.jsp?id=" + id + "&campo=" + tipoSinc + "\";</script>");
-                        } else {
-                            out.print("<script type='text/javascript'>window.location=\"exibeRepositorios.jsp?id=" + id + "\";</script>");
-                        }
+                        out.print("<script type='text/javascript'>window.location=\"exibeRepositorios.jsp?id=" + id + "\";</script>");
+                        
                     }
 
 
 
                 } else if (campo.equalsIgnoreCase("ldaplocal")) { //se o campo a ser editador for o ldaplocal entra no if
-                  
-                  
-                    int idLdapDestino = Integer.parseInt(request.getParameter("id_federacao").trim());
 
-                    if (request.getParameter("id_federacao").trim().isEmpty()) {
-                        out.print("<script type='text/javascript'>alert('Deve ser selecionada federacao!');</script>" +
+
+                    int idLdapDestino = Integer.parseInt(request.getParameter("ldap_destino").trim());
+
+                    if (request.getParameter("ldap_destino").trim().isEmpty()) {
+                        out.print("<script type='text/javascript'>alert('Deve ser selecionada uma base LDAP!');</script>" +
                                 "<script type='text/javascript'>history.back(-1);</script>");
                         out.close();
                     }
-                    
+
                     boolean resultado = false;
                     Editar edit = new Editar();
                     resultado = edit.trocarBaseLdap(Integer.parseInt(id), idLdapDestino);
-                    
+
                     if (resultado) {
-                        out.print("<script type='text/javascript'>alert('Atualizado com sucesso!'); " +
+                        out.print("<script type='text/javascript'>alert('A base LDAP foi atualizada com sucesso!'); " +
                                 "window.location=\"exibeRepositorios.jsp?id=" + id + "\";</script>");
                     }
 
@@ -502,7 +494,7 @@
                     }
                     //testa se a senha do origem confere com a repeticao
                     if (!senhaLdapOrigem.equals(confirmaSenhaOrigem)) {
-                        out.print("<script type='text/javascript'>alert('As senhas não conferem. Digite novamente!');</script>" +
+                        out.print("<script type='text/javascript'>alert('As senhas informadas para o Ldap Origem não conferem. Digite novamente!');</script>" +
                                 "<script type='text/javascript'>history.back(-1);</script>");
                         out.close();
                     }
@@ -540,7 +532,7 @@
 
 
             }
-            con.close(); //fechar conexao
+            con.close(); //fechar conexao mysql
             %>
 
 

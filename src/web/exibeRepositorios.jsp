@@ -83,14 +83,10 @@
                 <div class="Value">&nbsp;<%=res.getString("nome_na_federacao")%></div>
             </div>
 
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Tipo de Sincroniza&ccedil;&atilde;o:
-                </div>
-                <div class="Value">&nbsp;<%=res.getString("tipo_sincronizacao")%></div>
-            </div>
 
-<!--Ldap Local-->
+
+<!--Informacoes da base onde serao armazenados os dados-->
+<!--
             <div class="subtitulo">Informa&ccedil;&otilde;es sobre a Federa&ccedil;&atilde;o local</div>
             <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&ldapLocal=<%=res.getString("nome_federacao")%>&campo=LdapLocal">Editar</a></div>
 
@@ -106,56 +102,10 @@
                 </div>
                 <div class="Value">&nbsp;<%=res.getString("descricao_federacao")%></div>
             </div>
-            
+            -->
+<!-- Fim informacoes sobre a base de dados -->
             <%
-        if (res.getString("tipo_sincronizacao").equalsIgnoreCase("OAI-PMH")) {
-            %>
-
-<!--Informação OAI-PMH-->
-            <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
-            <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=OAI-PMH">Editar</a></div>
-
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    URL que responde OAI-PMH:
-                </div>
-                <div class="Value">&nbsp;<%=res.getString("url_or_ip")%></div>
-            </div>
-
-            <%            } else if (res.getString("tipo_sincronizacao").equalsIgnoreCase("LDAP"))//se for do tipo LDAP apresenta as informacoes a baixo
-            {
-            %>
-            <input type="hidden" id="url" value="http://null.com.br">
-
-<!--Informações Ldap Origem -->
-            <div class="subtitulo">Dados sobre a Subfederação de origem</div>
-            <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=LdapOrigem">Editar</a></div>
-            
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Endere&ccedil;o ip:
-                </div>
-                <div class="Value">&nbsp;<%=res.getString("url_or_ip")%></div>
-            </div>
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Porta:
-                </div>
-                <div class="Value">&nbsp;<%=res.getInt("porta")%></div>
-            </div>        
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Login:
-                </div>
-                <div class="Value">&nbsp;<%=res.getString("login")%></div>
-            </div>
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Senha:
-                </div>
-                <div class="Value">&nbsp;<font size="+1"><%=res.getString("senha").replaceAll(".", "*")%></font></div>
-            </div>
-            <%            }
+        
         }else
             out.println("<p class='textoErro'>Ocorreu um erro ao consultar a base de dados.</p>");
             %>

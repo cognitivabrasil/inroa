@@ -40,15 +40,6 @@ public class Excluir {
             result = stm.executeUpdate(sql); //executa o que tem na variavel sql
             resultado = true;
 
-      //      if (testeMysql.next()) { //se positivo excluir o nodo
-                //Remover excluiNodo = new Remover();
-                //resultadoNodo = excluiNodo.removeNodo(id, con); //exclui nodo do ldap
-        //        if (resultadoNodo) {//se positivo excluir a base
-                   
-        //            if (result > 0) {//se a exclusao ocorreu entra no if
-        //                
-        //            }
-       //         }
             }
 
          catch (SQLFeatureNotSupportedException e) {
@@ -77,32 +68,23 @@ public class Excluir {
      * @return true se a exclus&atilde;o foi realizada com sucesso e false se n&atilde;o foi possível excluir
      * @throws SQLException
      */
-    public static boolean removerDocumentoIndice(String obaa_entry) throws SQLException {
+    public static boolean removerDocumentoIndice(String obaa_entry, int idRepositorio, Connection con) throws SQLException {
 
-        boolean resultado = false;
         int result = 0;
-        Conectar conectar = new Conectar();
-        //chama metodo que conecta ao banco de dados
-        Connection con = conectar.conectaBD();
-
+        
         Statement stm = con.createStatement();
-        String sql = "DELETE FROM documentos where obaa_entry='" + obaa_entry + "';";
+        String sql = "DELETE FROM documentos where obaa_entry='" + obaa_entry + "' AND id_repositorio ="+idRepositorio;
 
         //testar conexao
         try {
             result = stm.executeUpdate(sql); //executa o que tem na variavel
             if (result > 0) {
-                resultado = true;
-            }
+                return true;
+            } else
+                return false;
         } catch (SQLException e) {
             System.out.println("Erro ao deletar documento do indice " + e);
-        } finally {
-            try {
-                con.close(); //fechar conexao
-                } catch (SQLException e) {
-                System.out.println("Erro ao fechar a conexão: " + e.getMessage());
-            }
-            return resultado;
+            return false;
         }
     }
 
@@ -110,7 +92,10 @@ public class Excluir {
         Excluir run = new Excluir();
         //run.removeStopWords();
         try {
-            System.out.println(run.removerDocumentoIndice("obaa0003"));
+            Conectar conn = new Conectar();
+            Connection con = conn.conectaBD();
+            System.out.println(run.removerDocumentoIndice("apagar", 8,con));
+            con.close();
         } catch (SQLException e) {
             System.out.println(e);
         }

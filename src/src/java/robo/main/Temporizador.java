@@ -20,6 +20,7 @@ public class Temporizador {
      * Temporizador que executa o robô de hora em hora.
      */
     public void start() {
+        System.out.println(">>>>");
         System.out.println(">>>>Inicio do processo temporizador");
 
         Timer timer = null;

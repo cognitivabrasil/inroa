@@ -168,7 +168,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
                     //fazer consulta na base de dados para pegar as informações necessárias
                     //postgres ok
-                    String resultadoSQL = "SELECT d.obaa_entry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as servidor, l.ip FROM documentos d, repositorios r, dados_subfederacoes l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.id_federacao=l.id;";
+                    String resultadoSQL = "SELECT l.id as id_base, d.obaa_entry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as repositorio FROM documentos d, repositorios r, dados_subfederacoes l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.id_federacao=l.id;";
 
                     ResultSet rs = stm.executeQuery(resultadoSQL);
                     //pega o proximo resultado retornado pela consulta sql
@@ -178,8 +178,8 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     String resumo = rs.getString("resumo");
                     String data = rs.getString("data");
                     String localizacao = rs.getString("localizacao");
-                    String Servidor = rs.getString("servidor");
-                    String ipResultado = rs.getString("ip");
+                    String repositorio = rs.getString("repositorio");
+                    String idBase = rs.getString("id_base");
 
 
                     // out.println("<p>" + identificador + "<br>" + titulo + "<br>" + resumo + "<br>" + localizacao + "<br>" + data + "<br>" + Servidor + "<br>" + ipResultado + "<br>" + dn + "</p>");
@@ -193,7 +193,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     if (!titulo.isEmpty()) {
                                 %>
                                 <div class="titulo">
-                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&ip=<%=ipResultado%>'>
+                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&idBase=<%=idBase%>&repositorio=<%=repositorio%>'>
                                         <%
                                                     String[] tempObaa = titulo.split(";; ");
                                                     for (int kk = 0; kk < tempObaa.length; kk++) { //percorrer todos os resultados separados por ;;
@@ -209,7 +209,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                                 </div>
                                 <%
                     } else {//se nao existir titulo informa que nao tem titulo mas cria o link para o objeto
-                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&ip=" + ipResultado + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
+                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id="+identificador+"&idBase="+idBase+"&repositorio="+repositorio+"'>T&iacute;tulo n&atilde;o informado.</a></div>");
                     }
 //fim tratamento titulo
 //inicio tratamento resumo
@@ -259,11 +259,11 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     }
                     out.println("</div>");
 //fim tratamento data
-//inicio tratamento servidor
-                    if (!Servidor.isEmpty()) {
+//inicio tratamento repositorio
+                    if (!repositorio.isEmpty()) {
 
                         out.println("<div class=\"atributo\">" +
-                                "Reposit&oacute;rio: " + Servidor +
+                                "Reposit&oacute;rio: " + repositorio +
                                 "</div>");
                     }
 

@@ -1,12 +1,8 @@
 package robo.importa_OAI;
 
 import ferramentaBusca.indexador.Indexador;
-import operacoesLdap.Remover;
 import postgres.Conectar;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import com.novell.ldap.LDAPConnection;
-import com.novell.ldap.LDAPException;
 import ferramentaBusca.indexador.Documento;
 import ferramentaBusca.indexador.StopWordTAD;
 import java.sql.Connection;
@@ -20,6 +16,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+import postgres.Excluir;
 
 /**
  * Classe que faz o parser/leitura de um arquivo XML
@@ -31,8 +28,8 @@ public class XmlSaxReader extends DefaultHandler {
 
     /** Buffer que guarda as informacoes quando um texto e encontrado */
     private StringBuffer valorAtual = new StringBuffer(50);
-    //InsereLdap inserir = new InsereLdap();
-    Remover funcLdap = new Remover();
+    //InsereObjetoBase inserir = new InsereObjetoBase();
+
     private String dn;
     //OAI_Interface que ira receber os dados do xml
     private Header headerAux = new Header();
@@ -41,16 +38,15 @@ public class XmlSaxReader extends DefaultHandler {
     private final String NO_IDENTIFIER_HEADER = "identifier";
     boolean statusDel = false;
     private Indexador indexa;
-    private LDAPConnection conexaoLdap;
     private int idRepositorio;
     private int tipo_mapeamento_id;
     private int padrao_metadados;
     private String namespace;
     private String metadataPrefix;
-    private Connection ConMysql;
+    private Connection Conexao;
     private HashMap listaMap = new HashMap();
     private HashMap<String, String> atributosIndice = new HashMap<String, String>();
-    private DadosParaLdap dadosLDAP;
+    private DadosObjetos dadosObjetos;
     private Documento doc;
     private Indice indiceClass = new Indice();
 
@@ -58,20 +54,16 @@ public class XmlSaxReader extends DefaultHandler {
      * Constutor que inicializa os objetos necessarios para fazer o parser
      * do arquivo contato.xml
      *
-     * @param dnRec dn do servidor LDAP
      * @param caminhoXML caminho completo para o arquivo xml que sera lido
      * @param indexar variavel do tipo Indexador
-     * @param lc Conex&atilde;o com o ldap. Deve ter conexão e bind realizados.
-     * @param idRep id do repositorio no MySQL
+     * @param idRep id do repositorio na base de dados
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
      */
-    public void parser(
-            String dnRec,
+    public void parser( 
             String caminhoXML,
             Indexador indexar,
-            LDAPConnection lc,
             Connection con,
             int idRep)
             throws ParserConfigurationException,
@@ -81,10 +73,8 @@ public class XmlSaxReader extends DefaultHandler {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         SAXParser parser = spf.newSAXParser();
         this.indexa = indexar;
-        this.dn = dnRec;
-        this.conexaoLdap = lc;
         this.idRepositorio = idRep;
-        this.ConMysql = con;
+        this.Conexao = con;
         StopWordTAD stWd = new StopWordTAD();
         stWd.load(con);
         doc = new Documento(stWd);
@@ -118,13 +108,14 @@ public class XmlSaxReader extends DefaultHandler {
      */
     @Override
     public void startElement(String uri, String localName, String tag, Attributes atributos) {
-        
+
+
         if(tag.equalsIgnoreCase("OAI-PMH")){ //se achar a tag OAI-PMH efetua a consulta na base
-            this.dadosLDAP = new DadosParaLdap();
+            this.dadosObjetos = new DadosObjetos();
             Conectar conectar = new Conectar();
-            ConMysql = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+            Conexao = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
             try{               
-                Statement stm1 = ConMysql.createStatement();
+                Statement stm1 = Conexao.createStatement();
                 //idTipoMapeamento;namespace;metadataPrefix;
                 String sqlInfo = "SELECT i.padrao_metadados, i.tipo_mapeamento_id as tipo_map, p.name_space, metadata_prefix" +
                         " FROM info_repositorios i, padraometadados p" +
@@ -145,9 +136,8 @@ public class XmlSaxReader extends DefaultHandler {
         }
         if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
             
-            
             try {
-                Statement stm = ConMysql.createStatement();
+                Statement stm = Conexao.createStatement();
                 
                 String[] indiceVet = {"title", "description", "keyword", "date", "entity", "location"};
 
@@ -213,7 +203,7 @@ public class XmlSaxReader extends DefaultHandler {
 
     /**
      * Indica que o parser achou o fim de uma tag/elemento.
-     * A cada tag encontrada armazena a informação, e ao final do xml chama o método insereDctoObaa para inserir os dados encontrados no ldap no padrão OBAA
+     * A cada tag encontrada armazena a informação, e ao final do xml chama o método insereObaa para inserir os dados encontrados na base de dados no padrão OBAA
      */
     @Override
     public void endElement(String uri, String localName, String tag) {
@@ -224,16 +214,14 @@ public class XmlSaxReader extends DefaultHandler {
             doc.setServidor(idRepositorio); //adiciona no indice o id do repositorio
 
 
-            //InsereLdap.insereObaa(this.dadosLDAP, headerAux, dn, conexaoLdap); //chama classe que insere os dados no ldap
-            
             try {
                 System.out.println("adicionando documento ao indice");
-                indexa.addDoc(doc, this.ConMysql); //adciona o documento no indice SQL
+                indexa.addDoc(doc, this.Conexao); //adciona o documento no indice SQL
 
 
-                //insere os atributos an base de dados, substituindo o LDAP, se o valor do id é -1 é que o objeto já está na base
+                //insere os atributos na base de dados, se o valor do id é -1 é que o objeto já está na base
                 if (doc.getId() != -1) {
-                    InsereLdap.insereObaa(this.dadosLDAP, headerAux, this.ConMysql, doc.getId()); //chama classe que insere os dados na base de dados
+                    InsereObjetoBase.insereObaa(this.dadosObjetos, headerAux, this.Conexao, doc.getId()); //chama classe que insere os dados na base de dados
                 } else {System.out.println("Objeto já adicionado! "+headerAux.getIdentifier());}
             } catch (SQLException e) {
                 System.err.println("Erro ao inserir o documento no indice: " + e.getMessage());
@@ -249,22 +237,12 @@ public class XmlSaxReader extends DefaultHandler {
                 headerAux.setidDeletado(valorAtual.toString().trim());
                 System.out.println("deletar o objeto: " + valorAtual.toString().trim());
                 try {
-                    funcLdap.apagaObjeto("obaa_entry", valorAtual.toString(), dn, conexaoLdap);
-                } catch (LDAPException e) {
-                    if (e.getResultCode() == LDAPException.NO_SUCH_OBJECT) {
-                        System.err.println("Erro ao apagar: Não foi encontrado o objeto: " + "obaa_entry=" + valorAtual.toString() + "," + dn);
-                    } else if (e.getResultCode() ==
-                            LDAPException.INSUFFICIENT_ACCESS_RIGHTS) {
-                        System.err.println("Erro ao apagar: Insufficient rights");
-                    } else {
-                        System.err.println("Erro ao apagar: " + e.toString());
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    System.err.println("Erro ao apagar: " + e.toString());
+                    Excluir.removerDocumentoIndice(valorAtual.toString(), idRepositorio, Conexao);
+                    
                 } catch (SQLException e) {
                     System.err.println("Erro no SQL ao apagar: " + e);
                 }
-                statusDel = false;
+            statusDel = false;
             }
 
 
@@ -275,7 +253,7 @@ public class XmlSaxReader extends DefaultHandler {
             String destino = resultado.get("destino").toString(); //armazena o atributo de destino correspondente ao lido
             int idComplementar = Integer.parseInt(resultado.get("idComplementar").toString()); //armazena o id do mapeamento complementar
 
-            this.dadosLDAP.setAtributos("obaa"+destino, valorAtual.toString().trim());//adiciona as informações que serao inseridas no ldap
+            this.dadosObjetos.setAtributos("obaa"+destino, valorAtual.toString().trim());//adiciona as informações que serao inseridas na base
             
             if (this.atributosIndice.containsKey(tagTratada)) { //se for um dos atributos que compoe o indice entra no if
                 this.indiceClass.setIndice(this.atributosIndice.get(tagTratada), valorAtual.toString().trim(), this.doc); //envia o atributo e o valor para a classe que idenfica e envia para a classe Documento
@@ -284,10 +262,10 @@ public class XmlSaxReader extends DefaultHandler {
             if (idComplementar > 0) { //se tiver mapeamento complementar
                 String sql = "SELECT a.atributo as destino, m.valor " + "FROM mapeamentocomposto m, atributos a " + "WHERE m.id_origem=a.id " + "AND m.id=" + idComplementar + ";";
                 try {
-                    Statement stm = ConMysql.createStatement();
+                    Statement stm = Conexao.createStatement();
                     ResultSet rs = stm.executeQuery(sql);
                     while (rs.next()) {
-                        this.dadosLDAP.setAtributos("obaa"+rs.getString("destino"), rs.getString("valor")); //adiciona o mapeamento complementar
+                        this.dadosObjetos.setAtributos("obaa"+rs.getString("destino"), rs.getString("valor")); //adiciona o mapeamento complementar
                         }
                 } catch (SQLException e) {
                     System.err.println("Erro ao fazer a consulta do mapeamento composto");

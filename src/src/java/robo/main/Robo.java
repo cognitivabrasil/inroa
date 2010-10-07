@@ -1,18 +1,13 @@
 package robo.main;
 
-import com.novell.ldap.LDAPConnection;
-import com.novell.ldap.LDAPException;
 import robo.importa_OAI.InicioLeituraXML;
 import robo.harvesterOAI.Principal;
-import robo.importaLDAP.AtualizaLDAP;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import postgres.AtualizaBase;
 import robo.util.Informacoes;
 import ferramentaBusca.indexador.Indexador;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import operacoesLdap.Remover;
 import postgres.Conectar;
@@ -26,7 +21,7 @@ public class Robo {
     Informacoes conf = new Informacoes();
     Principal importar = new Principal();
     InicioLeituraXML gravacao = new InicioLeituraXML();
-    AtualizaLDAP atualizaLDAP = new AtualizaLDAP();
+    
     Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
 
 
@@ -199,10 +194,10 @@ public class Robo {
 //                            lc.bind(LDAPConnection.LDAP_V3, loginDestino, senhaDestino.getBytes("UTF8")); // autentica no servidor
 //
 //                            caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
-//                            //leXMLgravaLdap le do xml e armazena no ldap idependente de padrao de metadado
+//                            //leXMLgravaBase le do xml e armazena no ldap idependente de padrao de metadado
 //
 //                            //Primeira operação do robô com LDAP
-//                            gravacao.leXMLgravaLdap(dnDestino, caminhoXML, idRep, indexar, lc, con); //chama a classe que le o xml e grava os dados no ldap
+//                            gravacao.leXMLgravaBase(dnDestino, caminhoXML, idRep, indexar, lc, con); //chama a classe que le o xml e grava os dados no ldap
 //
 //                            atualizou = true;
 //                            lc.disconnect(); //desconecta do ldap
@@ -271,12 +266,11 @@ public class Robo {
 
 
 
-         String sql = "SELECT r.nome, i.data_ultima_atualizacao, l.ip AS ipDestino, i.url_or_ip as url, i.tipo_sincronizacao,"+
-                " l.login as loginLdapDestino, l.senha as senhaLdapDestino, p.nome as padrao_metadados, p.metadata_prefix, p.name_space, l.porta as portaLdapDestino,"+
+         String sql = "SELECT l.base, r.nome, i.data_ultima_atualizacao, l.ip, i.url_or_ip as url, i.tipo_sincronizacao,"+
+                " l.login, l.senha, p.metadata_prefix, l.porta as portaLdapDestino,"+
                 " i.data_ultima_atualizacao as ultima_atualizacao_form"+
                 " FROM repositorios r, info_repositorios i, padraometadados p, dados_subfederacoes l"+
                 " WHERE r.id = i.id_repositorio"+
-                " AND r.id = d.id_repositorio"+
                 " AND i.padrao_metadados = p.id"+
                 " AND i.ldap_destino = l.id"+
                 " AND r.id = "+ idRepositorio + ";";
@@ -309,29 +303,25 @@ public class Robo {
 
             String url = rs.getString("url"); //pega a url retornada pela consulta sql
             String metadataPrefix = rs.getString("metadata_prefix"); // para o OAI-PMH
-            String namespace = rs.getString("name_space");
 
             if (url.isEmpty()) { //testa se a string url esta vazia.
                 System.out.println("Não existe uma url associada ao repositório " + nome);
 
             } else {//repositorio possui url para atualizacao
 
+                String base = rs.getString("base");
                 String ultimaAtualizacao = rs.getString("ultima_atualizacao_form");
                 //String horaAtual = rs.getString("horaAtualForm");
-                String ipDestino = rs.getString("ip_destino");
-                int idRep = idRepositorio;
-                String loginDestino = rs.getString("login_ldap_destino");
-                String senhaDestino = rs.getString("senha_ldap_destino");
-                String padrao_metadados = rs.getString("padrao_metadados");
-                int portaLDAPDestino = rs.getInt("porta_ldap_destino");
-                String loginOrigem = rs.getString("login_ldap_origem");
-                String senhaOrigem = rs.getString("senha_ldap_origem");
-                int portaLDAPOrigem = rs.getInt("porta_ldap_origem");
+                String ip = rs.getString("ip_destino");
+                String login = rs.getString("login");
+                String senha = rs.getString("senha");
+                int porta = rs.getInt("porta");
+                
 
-                String dnOrigem = rs.getString("dnOrigem");
-                String tipoSinc = rs.getString("tipo_sincronizacao");
+                //Configuracao subFedconf = new Configuracao(base, login, senha, ip, porta);
+                
                 Date data_ultima_atualizacao = rs.getDate("data_ultima_atualizacao");
-                ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que aramzanara os caminhos para os xmls
+                ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
 
                 System.out.println("Ultima Atualização: " + ultimaAtualizacao + " nome do rep: " + nome);
 
@@ -342,24 +332,15 @@ public class Robo {
                     System.out.println("Deletando toda a base de dados do repositório: " + nome.toUpperCase());
                     deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro
                     try {
+                        deleta.apagaTodosObjetos(idRepositorio, con);
 
-                        //LDAPConnection lc = new LDAPConnection();
-                        //lc.connect(ipDestino, portaLDAPDestino); // conecta no servidor ldap
-                        //lc.bind(LDAPConnection.LDAP_V3, loginDestino, senhaDestino.getBytes("UTF8")); // autentica no servidor
-
-                            //************************************************
-                            // AQUI ERAM EXLUIDOS TODOS OS OBJETOS DA BASE LDAP
-                            //************************************************
-
-                        //deleta.apagaTodosObjetos(dnDestino, lc); //apaga todos os objetos da base
-                        //lc.disconnect();
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (Exception e) {
                         System.out.println("Error: " + e.toString());
                     }
                 }
 
-                //sincronicazao feita por OAI-PMH
 
+                //sincronicazao feita por OAI-PMH
 
                     System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
                     File caminhoTeste = new File(caminhoDiretorioTemporario);
@@ -368,43 +349,28 @@ public class Robo {
                         }
 
                     if (caminhoTeste.isDirectory()) {
-                        //conectar o ldap e mandar a conexao pronta
-                        try {
-                           // LDAPConnection lc = new LDAPConnection();
-                           // lc.connect(ipDestino, portaLDAPDestino); // conecta no servidor ldap
-                           // lc.bind(LDAPConnection.LDAP_V3, loginDestino, senhaDestino.getBytes("UTF8")); // autentica no servidor
-
+                        
+                        
                             caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
-                            //leXMLgravaLdap le do xml e armazena no ldap idependente de padrao de metadado
+                            //leXMLgravaBase le do xml e armazena no ldap idependente de padrao de metadado
 
                             //Primeira operação do robô com LDAP
-                            //gravacao.leXMLgravaLdap(dnDestino, caminhoXML, idRep, indexar, lc, con); //chama a classe que le o xml e grava os dados no ldap
-
-                            //************************************************
-                            // AQUI TEM DE SER FEITA A GRAVAÇÃO DOS XML NO BANCO DE DADOS
-                            //************************************************
-
+                            gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con); //chama a classe que le o xml e grava os dados no ldap
                             atualizou = true;
-
-                        } catch (UnsupportedEncodingException e) {
-                            System.out.println("Error: " + e.toString());
-                        }
+                       
 
                     } else {
                         System.out.println("O caminho informado não é um diretório. E não pode ser criado. " + caminhoDiretorioTemporario);
                     }
 
-
-
             }
-
 
         } catch (SQLException e) {
             System.err.println("SQL Exception... Erro na consulta:");
             e.printStackTrace();
         } finally {
             try {
-                con.close(); //fechar conexao mysql
+                con.close(); //fechar conexao
                 } catch (SQLException e) {
                 System.out.println("Erro ao fechar a conexão: " + e.getMessage());
             }
@@ -412,10 +378,10 @@ public class Robo {
         }
 
     }
+
+
     public boolean atualizarComIndice(int idRepositorio) {
         boolean resultado = false;
-
-
         return resultado;
     }
 

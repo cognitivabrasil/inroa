@@ -30,8 +30,7 @@ Primeira etapa do cadastro de um repositorio
             myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
             myForm.addRules({id:'padraoMet',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
             myForm.addRules({id:'periodicidade',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em horas!'});
-            myForm.addRules({id:'tipoSinc',option:'required',error:'* Deve ser informado o tipo de sincroniza&ccedil;&atilde;o que o reposit&oacute;rio suporta!'});
-
+            
         </script>
     </head>
     <body id="bodyMenor">
@@ -101,23 +100,7 @@ Primeira etapa do cadastro de um repositorio
                       </div>
                   </div> -->
 
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Tipo de Sincroniza&ccedil;&atilde;o:
-                    </div>
-                    <div class="Value">
-                        <select name="sincronizacao" id="tipoSinc" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
-                            <option value="" selected>Selecione
-                                <%
-                for (int i = 0; i < tiposSincronizacaoDisponiveis.length; i++) {
-                    out.println("<option value='" + tiposSincronizacaoDisponiveis[i] + "'>" + tiposSincronizacaoDisponiveis[i].toUpperCase());
-                }
-                                %>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="LinhaEntrada">
+                                <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="reset" value="Limpar" class="CancelButton" onclick="javascript:window.location.reload();"/>
                         <input id="cancelar" onclick="javascript:window.close();" value="Cancelar" type="button" class="CancelButton"/>

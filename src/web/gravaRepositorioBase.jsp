@@ -29,7 +29,7 @@
             String loginOrigem = null;
             String senhaOrigem = null;
             String confirmaSenhaOrigem = null;
-            String url = null;
+            String url = request.getParameter("url").trim();
             Long key = new Long(0);
 
 
@@ -51,16 +51,13 @@
             String periodicidade = session.getAttribute("periodicidade").toString();
             //String nomeNaFederacao = session.getAttribute("nomeNaFederacao").toString();
             String nomeNaFederacao = nome.toLowerCase().replaceAll(" ", "_");
-            String tipoSinc = session.getAttribute("sincronizacao").toString();
-
+            
 
             //armazena em variaveis os dados preenchidos no formulario
              String idLdapDestino = request.getParameter("ldap_destino").trim();
 
-            //se for do tipo de sincronizacao. Se for LDAP entra no primeiro if
-            if (tipoSinc.equalsIgnoreCase("OAI-PMH")) {
-                url = request.getParameter("url").trim();
-            }
+            
+            
 
 
             //testa se os campos em comum dos dois tipos de sincronizacao foram preenchidos
@@ -107,8 +104,8 @@
                             rs.next();
                             key = rs.getLong(1);
 
-                            String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, tipo_sincronizacao, padrao_metadados, id_federacao) " +
-                                    "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidade + ", '" + nomeNaFederacao + "', '" + url + "', '" + tipoSinc + "', '" + padrao_metadados + "', " + idLdapDestino + ");";
+                            String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, padrao_metadados, id_federacao) " +
+                                    "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidade + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', " + idLdapDestino + ");";
 
 
                             result2 = stm.executeUpdate(sql2); //executa o que tem na variavel slq2
@@ -167,7 +164,6 @@
             }
 
         %>
-
 
         <%@include file="googleAnalytics"%>
     </body>

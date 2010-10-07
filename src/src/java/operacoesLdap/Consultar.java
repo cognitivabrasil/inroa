@@ -49,30 +49,38 @@ public class Consultar {
      * @param obaa_entry Identificador único do objeto a ser detalhado
      * @param con Conexão com a base de dados local
      */
-    public Consultar(String obaa_entry, Connection con) throws NullPointerException {
+    public Consultar(String obaa_entry, String repositorio, String idBase, Connection con) throws NullPointerException {
         try {
-            //vai na base para descobrir a subfederacao do objeto
 
-            String consultaFed = "SELECT ip, login, senha, porta, base FROM dados_subfederacoes s, documentos d, info_repositorios r WHERE d.id_repositorio = r.id_repositorio AND r.id_federacao = s.id AND d.obaa_entry = '" + obaa_entry+"'";
-            PreparedStatement stm = con.prepareStatement(consultaFed);
+            //vai na base para descobrir a subfederacao do objeto
+            String sql = "SELECT ip, login, senha, porta, base FROM dados_subfederacoes WHERE id="+idBase;
+            
+            PreparedStatement stm = con.prepareStatement(sql);
             ResultSet rs1 = stm.executeQuery();
-            Configuracao subFed;
+            Configuracao configuracaoSubFed;
             if (rs1.next()) { // testa se retornou alguma sufederacao
-                subFed = new Configuracao(rs1.getString("base"), rs1.getString("login"), rs1.getString("senha"), rs1.getString("ip"), rs1.getString("porta"));
+                System.out.println("");
+                configuracaoSubFed = new Configuracao(rs1.getString("base"), rs1.getString("login"), rs1.getString("senha"), rs1.getString("ip"), rs1.getInt("porta"));
 
             } else { //se não poe a conexão com a base local soh para tratar essa excecao
-                subFed = new Configuracao();
+                configuracaoSubFed = new Configuracao();
                 System.out.println("Base de dados não encontrada!");
             }
 
             //conecta na subfederacao
-            Conectar conexaoSubfederacao = new Conectar(subFed);
+            Conectar conexaoSubfederacao = new Conectar(configuracaoSubFed);
             Connection conSub = conexaoSubfederacao.conectaBD(); //chama o metodo conectaBD da classe conectar
             //faz a consulta na subfederacao
-            String consulta = "SELECT atributo, valor FROM objetos, documentos WHERE documentos.obaa_entry = '" + obaa_entry + "' AND objetos.documento = documentos.id";
+            String consulta = "SELECT o.atributo, o.valor "
+                    + "FROM objetos o, documentos d, repositorios r "
+                    + "WHERE d.obaa_entry = '" + obaa_entry.trim() + "' "
+                    + "AND o.documento = d.id "
+                    + "AND d.id_repositorio=r.id "
+                    + "AND r.nome='"+repositorio.trim()+"'";
+
             PreparedStatement stmt = conSub.prepareStatement(consulta);
             ResultSet rs = stmt.executeQuery();
-            HashMap resultInterno = new HashMap();
+            HashMap<String, String> resultInterno = new HashMap<String, String>();
             while (rs.next()) {
                 //System.out.println("atrbuto: " + rs.getString("atributo") + "valor: " + rs.getString("valor"));
                 resultInterno.put(rs.getString("atributo"), rs.getString("valor"));
@@ -81,7 +89,7 @@ public class Consultar {
             conSub.close();
             
         } catch (SQLException e) {
-            System.out.println("ERRO AO CARREGAR ATRIBUTOS DO OBJETO OU CONETANDO COM A SUBFEDERAÇÃO! " + e);
+            System.out.println("ERRO AO CARREGAR ATRIBUTOS DO OBJETO OU CONECTANDO COM A SUBFEDERAÇÃO! " + e);
          
         }
 
@@ -100,10 +108,9 @@ public class Consultar {
 
         Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-
-        String[] arg = {"obaaTitle", "obaaKeyword"};
+        
         //Consultar run = new Consultar("objetodementira171", arg, con);
-        Consultar run = new Consultar("objetodementira171", con);
+        Consultar run = new Consultar("oai:www.lume.ufrgs.br:10183/15888", "LUME", "1", con);
         System.out.println(run.getResultado());
     }
 }

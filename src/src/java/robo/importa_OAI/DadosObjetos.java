@@ -12,7 +12,7 @@ import java.util.HashMap;
  *
  * @author Marcos
  */
-public class DadosParaLdap {
+public class DadosObjetos {
 
     HashMap<String, ArrayList<String>> atributos = new HashMap<String, ArrayList<String>>();
 
