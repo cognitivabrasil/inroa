@@ -21,9 +21,7 @@ public class Robo {
     Informacoes conf = new Informacoes();
     Principal importar = new Principal();
     InicioLeituraXML gravacao = new InicioLeituraXML();
-    
     Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
-
 
     /**
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma consulta na base de dados, procurando por reposit&oacute;rios que est&atilde;o desatualizados, quando encontra algum, chama o m&eacute;todo que atualiza o repositório.
@@ -54,15 +52,14 @@ public class Robo {
             while (rs.next()) {
                 int idRep = rs.getInt("idrep");
 
-                atualizou = robo.atualizaRepositorio(idRep, indexar); //chama o metodo que atualiza o repositorio
+                robo.atualizaRepositorio(idRep, indexar); //chama o metodo que atualiza o repositorio
 
             }
 
-            if (atualizou) {
-                System.out.println("recalculando o indice " + new Date());
-                indexar.populateR1(con);
-                System.out.println("indice recalculado! " + new Date());
-            }
+            System.out.println("recalculando o indice " + new Date());
+            indexar.populateR1(con);
+            System.out.println("indice recalculado! " + new Date());
+
 
         } catch (SQLException e) {
             System.err.println("SQL Exception... Erro na consulta:");
@@ -258,35 +255,34 @@ public class Robo {
 //        }
 //
 //    }
-
-        public boolean atualizaRepositorio(int idRepositorio, Indexador indexar) {
+    public boolean atualizaRepositorio(int idRepositorio, Indexador indexar) {
         boolean atualizou = false;
         Connection con = null;
         String caminhoDiretorioTemporario = conf.getCaminho();
 
 
 
-         String sql = "SELECT l.base, r.nome, i.data_ultima_atualizacao, l.ip, i.url_or_ip as url, i.tipo_sincronizacao,"+
-                " l.login, l.senha, p.metadata_prefix, l.porta as portaLdapDestino,"+
-                " i.data_ultima_atualizacao as ultima_atualizacao_form"+
-                " FROM repositorios r, info_repositorios i, padraometadados p, dados_subfederacoes l"+
-                " WHERE r.id = i.id_repositorio"+
-                " AND i.padrao_metadados = p.id"+
-                " AND i.ldap_destino = l.id"+
-                " AND r.id = "+ idRepositorio + ";";
+        String sql = "SELECT l.base, r.nome, i.data_ultima_atualizacao, l.ip, i.url_or_ip as url, i.tipo_sincronizacao," +
+                " l.login, l.senha, p.metadata_prefix, l.porta as portaLdapDestino," +
+                " i.data_ultima_atualizacao as ultima_atualizacao_form" +
+                " FROM repositorios r, info_repositorios i, padraometadados p, dados_subfederacoes l" +
+                " WHERE r.id = i.id_repositorio" +
+                " AND i.padrao_metadados = p.id" +
+                " AND i.ldap_destino = l.id" +
+                " AND r.id = " + idRepositorio + ";";
 
         /*
         String sql = "SELECT r.nome, i.data_ultima_atualizacao, l.ip AS ip_destino, ('ou='||i.nome_na_federacao||','||l.dn) as dn_destino, i.url_or_ip as url, i.tipo_sincronizacao," +
-                " l.login as login_ldap_destino, l.senha as senha_ldap_destino, p.nome as padrao_metadados, p.metadata_prefix, p.name_space, l.porta as porta_ldap_destino," +
-                " d.login_ldap_origem, d.senha_ldap_origem, d.porta_ldap_origem, d.dn_origem," +
-                " DATE_FORMAT(i.data_ultima_atualizacao, '%Y-%m-%dT%H:%i:%sZ') as ultima_atualizacao_form" +
-                " FROM repositorios r, info_repositorios i, padraometadados p, dadosldap d, ldaps l" +
-                " WHERE r.id=i.id_repositorio" +
-                " AND r.id=d.id_repositorio" +
-                " AND i.padrao_metadados=p.id" +
-                " AND i.ldap_destino=l.id" +
-                " AND r.id=" + idRepositorio + ";";
-*/
+        " l.login as login_ldap_destino, l.senha as senha_ldap_destino, p.nome as padrao_metadados, p.metadata_prefix, p.name_space, l.porta as porta_ldap_destino," +
+        " d.login_ldap_origem, d.senha_ldap_origem, d.porta_ldap_origem, d.dn_origem," +
+        " DATE_FORMAT(i.data_ultima_atualizacao, '%Y-%m-%dT%H:%i:%sZ') as ultima_atualizacao_form" +
+        " FROM repositorios r, info_repositorios i, padraometadados p, dadosldap d, ldaps l" +
+        " WHERE r.id=i.id_repositorio" +
+        " AND r.id=d.id_repositorio" +
+        " AND i.padrao_metadados=p.id" +
+        " AND i.ldap_destino=l.id" +
+        " AND r.id=" + idRepositorio + ";";
+         */
         con = conectar.conectaBD(); //chama o metodo conectaBD da classe Conectar
 
         try {
@@ -316,10 +312,10 @@ public class Robo {
                 String login = rs.getString("login");
                 String senha = rs.getString("senha");
                 int porta = rs.getInt("porta");
-                
+
 
                 //Configuracao subFedconf = new Configuracao(base, login, senha, ip, porta);
-                
+
                 Date data_ultima_atualizacao = rs.getDate("data_ultima_atualizacao");
                 ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
 
@@ -342,26 +338,26 @@ public class Robo {
 
                 //sincronicazao feita por OAI-PMH
 
-                    System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
-                    File caminhoTeste = new File(caminhoDiretorioTemporario);
-                    if (!caminhoTeste.isDirectory()) {//se o caminho informado nao for um diretorio
-                        caminhoTeste.mkdirs();//cria o diretorio
-                        }
+                System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
+                File caminhoTeste = new File(caminhoDiretorioTemporario);
+                if (!caminhoTeste.isDirectory()) {//se o caminho informado nao for um diretorio
+                    caminhoTeste.mkdirs();//cria o diretorio
+                }
 
-                    if (caminhoTeste.isDirectory()) {
-                        
-                        
-                            caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
-                            //leXMLgravaBase le do xml e armazena no ldap idependente de padrao de metadado
+                if (caminhoTeste.isDirectory()) {
 
-                            //Primeira operação do robô com LDAP
-                            gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con); //chama a classe que le o xml e grava os dados no ldap
-                            atualizou = true;
-                       
 
-                    } else {
-                        System.out.println("O caminho informado não é um diretório. E não pode ser criado. " + caminhoDiretorioTemporario);
-                    }
+                    caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
+                    //leXMLgravaBase le do xml e armazena no ldap idependente de padrao de metadado
+
+                    //Primeira operação do robô com LDAP
+                    gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con); //chama a classe que le o xml e grava os dados no ldap
+                    atualizou = true;
+
+
+                } else {
+                    System.out.println("O caminho informado não é um diretório. E não pode ser criado. " + caminhoDiretorioTemporario);
+                }
 
             }
 
@@ -378,7 +374,6 @@ public class Robo {
         }
 
     }
-
 
     public boolean atualizarComIndice(int idRepositorio) {
         boolean resultado = false;

@@ -1,7 +1,6 @@
 package robo.importa_OAI;
 
 import ferramentaBusca.indexador.Indexador;
-import postgres.Conectar;
 import java.io.IOException;
 import ferramentaBusca.indexador.Documento;
 import ferramentaBusca.indexador.StopWordTAD;
@@ -20,7 +19,7 @@ import postgres.Excluir;
 
 /**
  * Classe que faz o parser/leitura de um arquivo XML
- * 
+ *
  * @author Marcos Nunes
  *
  */
@@ -28,9 +27,8 @@ public class XmlSaxReader extends DefaultHandler {
 
     /** Buffer que guarda as informacoes quando um texto e encontrado */
     private StringBuffer valorAtual = new StringBuffer(50);
-    //InsereObjetoBase inserir = new InsereObjetoBase();
 
-    private String dn;
+    private StopWordTAD stWd = new StopWordTAD();
     //OAI_Interface que ira receber os dados do xml
     private Header headerAux = new Header();
     //contantes que representam as tags do arquivo XML
@@ -50,6 +48,8 @@ public class XmlSaxReader extends DefaultHandler {
     private Documento doc;
     private Indice indiceClass = new Indice();
 
+
+
     /**
      * Constutor que inicializa os objetos necessarios para fazer o parser
      * do arquivo contato.xml
@@ -61,7 +61,7 @@ public class XmlSaxReader extends DefaultHandler {
      * @throws SAXException
      * @throws IOException
      */
-    public void parser( 
+    public void parser(
             String caminhoXML,
             Indexador indexar,
             Connection con,
@@ -75,9 +75,7 @@ public class XmlSaxReader extends DefaultHandler {
         this.indexa = indexar;
         this.idRepositorio = idRep;
         this.Conexao = con;
-        StopWordTAD stWd = new StopWordTAD();
-        stWd.load(con);
-        doc = new Documento(stWd);
+
         parser.parse(caminhoXML, this);
 
     }
@@ -110,61 +108,71 @@ public class XmlSaxReader extends DefaultHandler {
     public void startElement(String uri, String localName, String tag, Attributes atributos) {
 
 
-        if(tag.equalsIgnoreCase("OAI-PMH")){ //se achar a tag OAI-PMH efetua a consulta na base
-            this.dadosObjetos = new DadosObjetos();
-            Conectar conectar = new Conectar();
-            Conexao = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-            try{               
+        if (tag.equalsIgnoreCase("OAI-PMH")) { //se achar a tag OAI-PMH efetua a consulta na base
+
+////            Conectar conectar = new Conectar();
+////            Conexao = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+
+            try {
                 Statement stm1 = Conexao.createStatement();
                 //idTipoMapeamento;namespace;metadataPrefix;
                 String sqlInfo = "SELECT i.padrao_metadados, i.tipo_mapeamento_id as tipo_map, p.name_space, metadata_prefix" +
                         " FROM info_repositorios i, padraometadados p" +
-                        " WHERE i.padrao_metadados=p.id AND i.id_repositorio="+this.idRepositorio+";";
+                        " WHERE i.padrao_metadados=p.id AND i.id_repositorio=" + this.idRepositorio + ";";
                 ResultSet rsInfo = stm1.executeQuery(sqlInfo);
-                if(rsInfo.next()){
+                if (rsInfo.next()) {
                     this.padrao_metadados = rsInfo.getInt("padrao_metadados");
                     this.tipo_mapeamento_id = rsInfo.getInt("tipo_map");
                     this.namespace = rsInfo.getString("name_space");
                     this.metadataPrefix = rsInfo.getString("metadata_prefix");
                 }
                 stm1.close();
-                
-                } catch (SQLException e) {
+
+            } catch (SQLException e) {
                 System.err.println("SQL Exception... Erro ao carregar as informações iniciais do banco de dados");
                 e.printStackTrace();
             }
         }
         if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
-            
+
             try {
                 Statement stm = Conexao.createStatement();
-                
-                String[] indiceVet = {"title", "description", "keyword", "date", "entity", "location"};
 
+                String[] indiceVet = {"Title", "Description", "Keyword", "Date", "Entity", "Location"};
+
+
+                //recupera o atributo referente ao indiceVet[i] do padrao que esta sendo utilizado
+                //ex. padrao dublin core indiveVet[i]=Keyword mapeamento referente = Subject
+                String sqlAtrib = "SELECT a1.atributo as mapeado, a2.atributo as origem" +
+                        " FROM atributos a1, mapeamentos m, atributos a2" +
+                        " WHERE a1.id=m.origem_id" +
+                        " AND a2.id=m.destino_id" +
+                        " AND m.tipo_mapeamento_id=" + tipo_mapeamento_id +
+                        " AND a1.id_padrao=" + this.padrao_metadados +
+                        " AND (";
                 for (int i = 0; i < indiceVet.length; i++) {
-
-                    String sqlAtrib = "SELECT a1.atributo as mapeado" +
-                            " FROM atributos a1, mapeamentos m, atributos a2" +
-                            " WHERE a1.id=m.origem_id" +
-                            " AND a2.id=m.destino_id" +
-                            " AND a2.atributo='" + indiceVet[i] + "'" +
-                            " AND m.tipo_mapeamento_id=" + tipo_mapeamento_id+
-                            " AND a1.id_padrao=" + this.padrao_metadados + ";";
-                    
-                    ResultSet res = stm.executeQuery(sqlAtrib);
-                    while (res.next()) {
-                        this.atributosIndice.put(res.getString("mapeado").toLowerCase(), indiceVet[i]); //adiciona ao HashMap os atributos correspondentes que devem ser adiocionados ao indice
-                        
+                    if (i == 0) {
+                        sqlAtrib += "a2.atributo='" + indiceVet[i] + "'";
+                    } else {
+                        sqlAtrib += "OR a2.atributo='" + indiceVet[i] + "'";
                     }
                 }
+                sqlAtrib += ")";
+
+                ResultSet res = stm.executeQuery(sqlAtrib);
+                while (res.next()) {
+                    //armazena o mapeamento dos atributos que sera inseridos no indice
+                    this.atributosIndice.put(res.getString("mapeado").toLowerCase(), res.getString("origem")); //adiciona ao HashMap os atributos correspondentes que devem ser adiocionados ao indice
+                    }
+
 
                 String sql = "SELECT a1.atributo as origem, a2.atributo as destino, m.mapeamento_composto_id" +
                         " FROM atributos a1, mapeamentos m, atributos a2" +
-                        " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipo_mapeamento_id=" + tipo_mapeamento_id + " AND m.padraometadados_id="+this.padrao_metadados+";";
+                        " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipo_mapeamento_id=" + tipo_mapeamento_id + " AND m.padraometadados_id=" + this.padrao_metadados + ";";
                 ResultSet rs = stm.executeQuery(sql);
 
                 while (rs.next()) { //percorre todos os resultados do sql
-//colocar em uma estrutura todos os atributos do padrao selecionado                    
+//colocar em uma estrutura todos os atributos do padrao selecionado
                     String origem = rs.getString("origem");
                     String destino = rs.getString("destino");
                     int idComplementar = rs.getInt("mapeamento_composto_id");
@@ -177,11 +185,11 @@ public class XmlSaxReader extends DefaultHandler {
                         }
                         conteudo.put("idComplementar", idComplementar);
                         this.listaMap.put(origem.toLowerCase(), conteudo);
-                       // System.out.println("->"+origem.toLowerCase()+" "+conteudo+"<-");
+                        // System.out.println("->"+origem.toLowerCase()+" "+conteudo+"<-");
 
                     }
                 }
-                
+
             } catch (SQLException e) {
                 System.err.println("SQL Exception... Erro na consulta:");
                 e.printStackTrace();
@@ -207,22 +215,24 @@ public class XmlSaxReader extends DefaultHandler {
      */
     @Override
     public void endElement(String uri, String localName, String tag) {
-             
-        
+
+
         if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
+
             //System.out.println("Fim elemento...");
             doc.setServidor(idRepositorio); //adiciona no indice o id do repositorio
 
-
             try {
                 System.out.println("adicionando documento ao indice");
-                indexa.addDoc(doc, this.Conexao); //adciona o documento no indice SQL
 
+                int key = InsereObjetoBase.insereObaa(this.dadosObjetos, headerAux, this.Conexao, idRepositorio); //chama classe que insere os dados na base de dados
 
-                //insere os atributos na base de dados, se o valor do id é -1 é que o objeto já está na base
-                if (doc.getId() != -1) {
-                    InsereObjetoBase.insereObaa(this.dadosObjetos, headerAux, this.Conexao, doc.getId()); //chama classe que insere os dados na base de dados
-                } else {System.out.println("Objeto já adicionado! "+headerAux.getIdentifier());}
+                if (key > 0) { //se o documento foi inserido corretamente entra no if
+                    doc.setId(key);
+                    //adiciona na base os tokens
+                    indexa.addDoc(doc, this.Conexao); //adciona o documento no indice SQL
+                }
+
             } catch (SQLException e) {
                 System.err.println("Erro ao inserir o documento no indice: " + e.getMessage());
             }
@@ -230,6 +240,10 @@ public class XmlSaxReader extends DefaultHandler {
         } //senao, seta os atributos
         //elementos da tag header
         else if (tag.equalsIgnoreCase(NO_IDENTIFIER_HEADER)) {
+
+            this.dadosObjetos = new DadosObjetos();
+            this.doc = new Documento(stWd);
+
             headerAux.setIdentifier(valorAtual.toString().trim()); //insere o valor na classer header
             doc.setObaaEntry(valorAtual.toString().trim()); //insere o a entry no indice
 
@@ -238,24 +252,26 @@ public class XmlSaxReader extends DefaultHandler {
                 System.out.println("deletar o objeto: " + valorAtual.toString().trim());
                 try {
                     Excluir.removerDocumentoIndice(valorAtual.toString(), idRepositorio, Conexao);
-                    
+
                 } catch (SQLException e) {
                     System.err.println("Erro no SQL ao apagar: " + e);
                 }
-            statusDel = false;
+                statusDel = false;
             }
 
 
         } else if (this.listaMap.containsKey(tag.replace(this.namespace + ":", "").toLowerCase().trim()) && !valorAtual.toString().trim().isEmpty()) {
 
             String tagTratada = tag.replace(this.namespace + ":", "").toLowerCase();
+            //mapeamento
             HashMap resultado = (HashMap) listaMap.get(tagTratada); //cria um HashMap para receber os valores do HashMap listaMap que contem os mapeamentos lidos do banco de dados
             String destino = resultado.get("destino").toString(); //armazena o atributo de destino correspondente ao lido
             int idComplementar = Integer.parseInt(resultado.get("idComplementar").toString()); //armazena o id do mapeamento complementar
 
-            this.dadosObjetos.setAtributos("obaa"+destino, valorAtual.toString().trim());//adiciona as informações que serao inseridas na base
-            
+            this.dadosObjetos.setAtributos("obaa" + destino, valorAtual.toString().trim());//adiciona as informações que serao inseridas na base
+
             if (this.atributosIndice.containsKey(tagTratada)) { //se for um dos atributos que compoe o indice entra no if
+                //passa o atributo obaa correspondente e o seu valor lido do xml
                 this.indiceClass.setIndice(this.atributosIndice.get(tagTratada), valorAtual.toString().trim(), this.doc); //envia o atributo e o valor para a classe que idenfica e envia para a classe Documento
             }
 
@@ -265,7 +281,7 @@ public class XmlSaxReader extends DefaultHandler {
                     Statement stm = Conexao.createStatement();
                     ResultSet rs = stm.executeQuery(sql);
                     while (rs.next()) {
-                        this.dadosObjetos.setAtributos("obaa"+rs.getString("destino"), rs.getString("valor")); //adiciona o mapeamento complementar
+                        this.dadosObjetos.setAtributos("obaa" + rs.getString("destino"), rs.getString("valor")); //adiciona o mapeamento complementar
                         }
                 } catch (SQLException e) {
                     System.err.println("Erro ao fazer a consulta do mapeamento composto");

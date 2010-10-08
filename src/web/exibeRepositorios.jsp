@@ -83,7 +83,15 @@
                 <div class="Value">&nbsp;<%=res.getString("nome_na_federacao")%></div>
             </div>
 
+<div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
+            <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=OAI-PMH">Editar</a></div>
 
+            <div class="LinhaEntrada">
+                <div class="Label">
+                    URL que responde OAI-PMH:
+                </div>
+                <div class="Value">&nbsp;<%=res.getString("url_or_ip")%></div>
+            </div>
 
 <!--Informacoes da base onde serao armazenados os dados-->
 <!--

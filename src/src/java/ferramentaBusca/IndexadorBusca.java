@@ -1,13 +1,23 @@
 package ferramentaBusca;
 
+import com.novell.ldap.LDAPAttribute;
+import com.novell.ldap.LDAPAttributeSet;
+import com.novell.ldap.LDAPConnection;
+import com.novell.ldap.LDAPEntry;
+import com.novell.ldap.LDAPException;
+import com.novell.ldap.LDAPMessage;
+import com.novell.ldap.LDAPResponse;
+import com.novell.ldap.LDAPSearchConstraints;
+import com.novell.ldap.LDAPSearchQueue;
+import com.novell.ldap.LDAPSearchResult;
+import com.novell.ldap.LDAPSearchResultReference;
 import ferramentaBusca.indexador.*;
 import postgres.Conectar;
 import java.sql.*;
-import com.novell.ldap.*;
-import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Iterator;
-import postgres.ConsultaNomeFederacao;
+import mysql.ConsultaNomeFederacao;
+import robo.importa_OAI.Indice;
 
 /**
  * Disponibiliza metodos para indexar a base de busca
@@ -15,8 +25,69 @@ import postgres.ConsultaNomeFederacao;
  */
 public class IndexadorBusca {
 
-   
     Indexador indexar = new Indexador();
+
+    /**
+     * M&aacute;todo respons&aacute;vel por indexar a base de dados LDAP.
+     * Efetua uma busca no metadiretorio do LDAP procurando por todos os objetos do repositorio informado e passa para a ferramenta de Recuperação de Informações (RI) para indexar os termos.
+     * @param nomeRepMeta Nome do repositorio ou do metadiretorio contido da tabela repositorios do mysql. O padrão para o metadiret&oacute;rio é 'todos'
+     * @param con conex&atilde;o com mysql.
+     */
+    public void IndexaRep(int repositorio, Connection con) {
+
+        Long inicio = System.currentTimeMillis();
+        StopWordTAD stWd = new StopWordTAD();
+        Indice indice = new Indice();
+        String atributos[] = {"obaaEntry", "obaaTitle", "obaaKeyword", "obaaEntity", "obaaDescription", "obaaEducationalDescription", "obaaDate", "obaaLocation", "obaaIdentifier"};
+
+        try {
+            String sqlDoc = "SELECT id, obaa_entry FROM documentos WHERE id_repositorio=" + repositorio;
+            Statement stmtDoc = con.createStatement();
+            ResultSet resDoc = stmtDoc.executeQuery(sqlDoc);
+            while (resDoc.next()) { //percorre os documentos do repositorio informado
+            int idRep = resDoc.getInt("id");
+                String sql = "SELECT o.valor, o.atributo FROM objetos o, documentos d WHERE d.id=" + idRep + " AND d.id=o.documento AND (";
+                for (int i = 0; i < atributos.length; i++) {
+                    if (i == 0) {
+                        sql += " o.atributo = '" + atributos[i] + "'";
+                    } else {
+                        sql += " OR o.atributo = '" + atributos[i] + "'";
+                    }
+                }
+                sql += ")";
+
+                Statement stm = con.createStatement();
+                ResultSet rs = stm.executeQuery(sql);
+
+                Documento doc = new Documento(stWd);
+                doc.setId(idRep);//adiciona o id do documento
+                while (rs.next()) {
+                    String atributo = rs.getString("atributo").replace("obaa", "").toLowerCase();
+                    String valor = rs.getString("valor");
+                    indice.setIndice(atributo, valor, doc);
+                }
+                //apagar os tokens existentes
+                indexar.addDocLimpantoTokens(doc, con);
+            }
+
+
+
+            Long meio = System.currentTimeMillis();
+            System.out.println("\n- Levou " + ((meio - inicio) / 1000) + " segundos inserindo objetos.");
+            System.out.println("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
+
+            indexar.populateR1(con); //preenche as tabelas auxiliares
+
+            Long fim = System.currentTimeMillis();
+            System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
+
+
+        } catch (SQLException e) {
+            System.out.println("SQL Exception... Erro no SQL: ");
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Método responsável por indexar a base de dados LDAP.
@@ -24,9 +95,12 @@ public class IndexadorBusca {
      * @param nomeRepMeta Nome do repositorio ou do metadiretorio contido da tabela repositorios do mysql. O padrão para o metadiret&oacute;rio é 'todos'
      * @param con conex&atilde;o com mysql.
      */
-    public void IndexaRep(int repositorio, Connection con) {
-        
+    public void IndexaRepOLD(int repositorio, Connection con) {
+
         Long inicio = System.currentTimeMillis();
+
+        try {
+
         int searchScope = LDAPConnection.SCOPE_SUB;//buscar nos nodos filhos tb
         int ldapVersion = LDAPConnection.LDAP_V3;
 
@@ -34,16 +108,10 @@ public class IndexadorBusca {
 
         String attrs[] = {"obaaEntry", "obaaTitle", "obaaKeyword", "obaaEntity", "obaaDescription", "obaaEducationalDescription", "obaaDate", "obaaLocation", "obaaIdentifier"};
 
-        
-        String sqlDadosLdap = "SELECT l.ip, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn, l.login, l.senha, l.porta FROM ldaps l, info_repositorios i, repositorios r WHERE r.id=i.id_repositorio AND i.ldap_destino=l.id AND r.id="+repositorio+";";
 
-        //versão MySQL
-//        String sqlDadosLdap = "SELECT l.ip, if(r.nome='todos',l.dn, CONCAT('ou=',i.nome_na_federacao,',',l.dn)) AS dn, l.login, l.senha, l.porta from ldaps l, info_repositorios i, repositorios r " +
-//                "WHERE r.id=i.id_repositorio " +
-//                "AND i.ldap_destino=l.id " +
-//                "AND r.id=" + repositorio + ";";
+        String sqlDadosLdap = "SELECT l.ip, CASE r.nome WHEN 'todos' THEN l.dn ELSE ('ou='||i.nome_na_federacao||','||l.dn) END AS dn, l.login, l.senha, l.porta FROM ldaps l, info_repositorios i, repositorios r WHERE r.id=i.id_repositorio AND i.ldap_destino=l.id AND r.id=" + repositorio + ";";
 
-        try {
+
 
             Statement stmDadosLdap = con.createStatement();
             ResultSet rs = stmDadosLdap.executeQuery(sqlDadosLdap); //executa a consulta que esta na string sqlDadosLdap
@@ -194,7 +262,7 @@ public class IndexadorBusca {
                                 }
 
                                 if (attributeName.equalsIgnoreCase("obaaDescription")) {//se for xx adiocina na variavel descricao
-                                    
+
                                     if (resumo.isEmpty()) {
                                         resumo = Value;
                                     } else {
@@ -251,10 +319,11 @@ public class IndexadorBusca {
 
             }
             lc.disconnect(); //disconecta do servidor LDAP
+            
             Long meio = System.currentTimeMillis();
             System.out.println("\n- Levou " + ((meio - inicio) / 1000) + " segundos inserindo objetos.");
             System.out.println("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
-                indexar.populateR1(con); //preenche as tabelas auxiliares
+            indexar.populateR1(con); //preenche as tabelas auxiliares
 
             Long fim = System.currentTimeMillis();
             System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
@@ -263,15 +332,9 @@ public class IndexadorBusca {
         } catch (SQLException e) {
             System.out.println("SQL Exception... Erro no SQL: ");
             e.printStackTrace();
-        } catch (LDAPException e) {
-
-            System.out.println("Erro LDAP: " + e.toString());
-
-        } catch (UnsupportedEncodingException e) {
-
-            System.out.println("Erro LDAP: " + e.toString());
-
-        } 
+        } catch (Exception e){
+            //APAGAR ESSE EXCETION
+        }
     }
 
     /**
@@ -288,8 +351,7 @@ public class IndexadorBusca {
     public void populaRI(String titulo, String palavraChave, String entidade, String entry, String descricao, String resumo, String data, String localizacao, int servidor, Connection con) throws SQLException {
 
         StopWordTAD stWd = new StopWordTAD();
-        stWd.load(con);
-        
+
         Documento doc = new Documento(stWd);
 
         if (testaEntry(entry, con)) {
@@ -353,7 +415,6 @@ public class IndexadorBusca {
         return resultado;
     }
 
-
     /**
      * M&eacute;todo respons&aacute;vel por indexar todos reposit&oacute;rios cadastrados no mysql
      * @param con Conexao com o mysql
@@ -410,21 +471,22 @@ public class IndexadorBusca {
             Statement stmDadosLdap = con.createStatement();
             stmDadosLdap.execute(sql); //executa a consulta que esta na string sqlDadosLdap
 
-                System.out.println("Foi apagado o indice do Postgres.");
-                indexarTodosRepositorios(con);//reindexar todos os repositorios
-           
+            System.out.println("Foi apagado o indice do Postgres.");
+            indexarTodosRepositorios(con);//reindexar todos os repositorios
+
         } catch (SQLException e) {
             System.out.println("Erro ao apagar os dados do indice no Postgres");
             e.printStackTrace();
         }
 
     }
-    public void recalcularIndice(Connection con){
-        try{
+
+    public void recalcularIndice(Connection con) {
+        try {
             System.out.println("recalculando o indice...");
-        indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
-        System.out.println("indice recalculado.");
-        }catch(SQLException e){
+            indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
+            System.out.println("indice recalculado.");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -438,8 +500,9 @@ public class IndexadorBusca {
         Connection con = conectar.conectaBD();
 
         //run.indexarTodosRepositorios(con); //cria o indice com todos os repositorios
+        run.IndexaRep(9, con);
 
-        run.reindexarTudo(con);
+        //run.reindexarTudo(con);
         try {
             con.close(); //fechar conexao com o mysql
         } catch (SQLException e) {

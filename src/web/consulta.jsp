@@ -38,16 +38,20 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
 
 
-            
+
             String idRepositorio = "";
             String palavraChave = "";
-            
+
             idRepositorio = request.getParameter("repositorio");
+
             palavraChave = request.getParameter("key"); //recebe a consulta informada no formulario
+            boolean testaConsulta = false;
             try {
                 if (idRepositorio.isEmpty() || palavraChave.isEmpty()) {
                     out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>" +
                             "<script type='text/javascript'>history.back(-1);</script>");
+                } else {
+                    testaConsulta = true;
                 }
             } catch (Exception e) {
                 out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>" +
@@ -55,33 +59,30 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                 e.printStackTrace();
 
             }
+            if (testaConsulta) { //se nao foi informada a consulta nao entra no if
 
-            //Se a busca nao for preenchida, volta a pagina para ser preenchida
-            if (palavraChave.isEmpty()) {
-                out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>" +
-                        "<script type='text/javascript'>history.back(-1);</script>");
-            }
+                int numObjetosEncontrados = 0; //inicializa int que tera o numero de resultados retornados
 
+                ArrayList<Integer> resultadoBusca = new ArrayList<Integer>(); //ArrayList que recebera o resultado da busca
 
-            int numObjetosEncontrados = 0; //inicializa int que tera o numero de resultados retornados
-
-            ArrayList<Integer> resultadoBusca = new ArrayList<Integer>(); //ArrayList que recebera o resultado da busca
-
-            //chama o metodo de busca inteligente
-            Recuperador rep = new Recuperador();
+                //chama o metodo de busca inteligente
+                Recuperador rep = new Recuperador();
 
 
-            try {
-                resultadoBusca = rep.search2(palavraChave, con, Integer.valueOf(idRepositorio));//efetua a busca com o metodo de recuperacao de informacoes
+                try {
 
-                numObjetosEncontrados = resultadoBusca.size(); //armazena o numero de objetos
+                    resultadoBusca = rep.search2(palavraChave, con, Integer.valueOf(idRepositorio));//efetua a busca com o metodo de recuperacao de informacoes
 
-            } catch (SQLException e) {
-                out.println("");
-                System.out.println("Erro na consulta: ");
-                e.printStackTrace(); //imprime o erro.
-                numObjetosEncontrados = 0;
-            }
+                    numObjetosEncontrados = resultadoBusca.size(); //armazena o numero de objetos
+
+                } catch (SQLException e) {
+                    out.println("");
+                    System.out.println("Erro na consulta: ");
+                    e.printStackTrace(); //imprime o erro.
+                    numObjetosEncontrados = 0;
+                    out.print("<script type='text/javascript'>alert('Nao foi possivel efetuar a consulta na base de dados');</script>" +
+                            "<script type='text/javascript'>history.back(-1);</script>");
+                }
 %>
 
 <html>
@@ -110,7 +111,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
         <div id="body-resultado">
 
             <%
-            if (numObjetosEncontrados == 0) { //se nao retorno nenhum objeto
+                if (numObjetosEncontrados == 0) { //se nao retorno nenhum objeto
             %>
             <p align="center">
                 <strong>
@@ -168,19 +169,45 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
                     //fazer consulta na base de dados para pegar as informações necessárias
                     //postgres ok
-                    String resultadoSQL = "SELECT l.id as id_base, d.obaa_entry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as repositorio FROM documentos d, repositorios r, dados_subfederacoes l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.id_federacao=l.id;";
+                    //String resultadoSQL = "SELECT l.id as id_base, d.obaa_entry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as repositorio FROM documentos d, repositorios r, dados_subfederacoes l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.id_federacao=l.id;";
 
-                    ResultSet rs = stm.executeQuery(resultadoSQL);
-                    //pega o proximo resultado retornado pela consulta sql
-                    rs.next();
-                    String identificador = rs.getString("obaa_entry");
-                    String titulo = rs.getString("titulo");
-                    String resumo = rs.getString("resumo");
-                    String data = rs.getString("data");
-                    String localizacao = rs.getString("localizacao");
-                    String repositorio = rs.getString("repositorio");
-                    String idBase = rs.getString("id_base");
+                    ArrayList<String> titulo = new ArrayList<String>();
+                    ArrayList<String> resumo = new ArrayList<String>();
+                    ArrayList<String> data = new ArrayList<String>();
+                    ArrayList<String> localizacao = new ArrayList<String>();
 
+                    String identificador = "";
+                    String repositorio = "";
+                    String idBase = "";
+                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, r.nome as repositorio, ds.id as id_base FROM documentos d, dados_subfederacoes ds, repositorios r, objetos o, info_repositorios i WHERE d.id=o.documento AND d.id_repositorio=r.id AND r.id = i.id_repositorio AND i.id_federacao=ds.id AND d.id=" + resultadoBusca.get(result);
+
+                    try {
+                        ResultSet rs = stm.executeQuery(resultadoSQL);
+                        //pega o proximo resultado retornado pela consulta sql
+
+
+                        while (rs.next()) {
+                            if (rs.isFirst()) {
+                                identificador = rs.getString("obaa_entry");
+                                repositorio = rs.getString("repositorio");
+                                idBase = rs.getString("id_base");
+                            }
+                            String valor = rs.getString("valor");
+                            String atributo = rs.getString("atributo");
+                            if (atributo.equalsIgnoreCase("obaaTitle")) {
+                                titulo.add(valor);
+                            } else if (atributo.equalsIgnoreCase("obaaDate")) {
+                                data.add(valor);
+                            } else if (atributo.equalsIgnoreCase("obaaLocation")) {
+                                localizacao.add(valor);
+                            } else if (atributo.equalsIgnoreCase("obaaDescription")) {
+                                resumo.add(valor);
+                            }
+                        }
+                    } catch (SQLException e) {
+                        out.print("<script type='text/javascript'>alert('Nao foi possivel recuperar as informacoes da base de dados');</script>" +
+                                "<script type='text/javascript'>history.back(-1);</script>");
+                    }
 
                     // out.println("<p>" + identificador + "<br>" + titulo + "<br>" + resumo + "<br>" + localizacao + "<br>" + data + "<br>" + Servidor + "<br>" + ipResultado + "<br>" + dn + "</p>");
 
@@ -195,48 +222,46 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                                 <div class="titulo">
                                     <a href='infoDetalhada.jsp?id=<%=identificador%>&idBase=<%=idBase%>&repositorio=<%=repositorio%>'>
                                         <%
-                                                    String[] tempObaa = titulo.split(";; ");
-                                                    for (int kk = 0; kk < tempObaa.length; kk++) { //percorrer todos os resultados separados por ;;
-
-                                                        if (kk > 0) { //apos o primeiro elemento colocar um "<BR>"
-                                                            out.print("<br>");
-                                                        }
-
-                                                        out.print("- " + tempObaa[kk].trim());
-                                                    }
+                                          for (int j = 0; j < titulo.size(); j++) { //percorrer todos os resultados separados por ;;
+                                              if (j > 0) { //apos o primeiro elemento colocar um "<BR>"
+                                                  out.print("<br>");
+                                              }
+                                              out.print("- " + titulo.get(j).trim());
+                                          }
                                         %>
                                     </a>
                                 </div>
                                 <%
                     } else {//se nao existir titulo informa que nao tem titulo mas cria o link para o objeto
-                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id="+identificador+"&idBase="+idBase+"&repositorio="+repositorio+"'>T&iacute;tulo n&atilde;o informado.</a></div>");
+                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idBase + "&repositorio=" + repositorio + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
                     }
 //fim tratamento titulo
+
 //inicio tratamento resumo
                     if (!resumo.isEmpty()) {
                         out.println("<div class=\"atributo\">");
-                        String[] tempObaa = resumo.split(";; ");
-                        for (int kk = 0; kk < tempObaa.length; kk++) {
+
+                        for (int j = 0; j < resumo.size(); j++) {
                             //apos o primeiro elemento colocar um "<BR>"
-                            if (kk > 0) {
+                            if (j > 0) {
                                 out.print("<br>");
                             }
-
-                            out.print(tempObaa[kk].trim());
+                            out.print(resumo.get(j).trim());
                         }
                         out.println("</div>");
                     }
 //fim tratamento resumo
+
 //inicio tratamento localizacao
                     if (!localizacao.isEmpty()) {
                         out.println("<div class=\"atributo\">");
                         out.println("Localiza&ccedil;&atilde;o:");
 
-                        String[] tempObaa = localizacao.split(";;");
-                        for (int kk = 0; kk < tempObaa.length; kk++) {                         
+
+                        for (int j = 0; j < localizacao.size(); j++) {
 
                             out.println("<div class=\"valor\">" +
-                                    "<a href=\"" + tempObaa[kk].trim() + "\" target=\"_new\">" + tempObaa[kk].trim() + "</a>" +
+                                    "<a href=\"" + localizacao.get(j).trim() + "\" target=\"_new\">" + localizacao.get(j).trim() + "</a>" +
                                     "</div>");
                         }
                         out.println("</div>");
@@ -246,12 +271,13 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     out.println("<div class=\"atributo\">");
                     out.println("Data:");
 
-                    if (!data.isEmpty() && !data.equalsIgnoreCase("Ano-Mês-Dia")) {
-                        String[] tempObaa = data.split(";;");
-                        for (int kk = 0; kk < tempObaa.length; kk++) {                            
-                            out.print("<div class=\"valor\">"
-                                    + tempObaa[kk].trim().replaceAll("[A-Z,a-z,ê,Ê]", " ").replaceAll(" -", "")+
-                                    "</div>");
+                    if (!data.isEmpty()) {
+
+                        for (int j = 0; j < data.size(); j++) {
+                            if (!data.get(j).equalsIgnoreCase("Ano-Mês-Dia")) {
+                                out.print("<div class=\"valor\">" + data.get(j).trim().replaceAll("[A-Z,a-z,ê,Ê]", " ").replaceAll(" -", "") +
+                                        "</div>");
+                            }
                         } //fim for
 
                     } else {
@@ -259,6 +285,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     }
                     out.println("</div>");
 //fim tratamento data
+
 //inicio tratamento repositorio
                     if (!repositorio.isEmpty()) {
 
@@ -283,7 +310,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
             </form>
 
             <%
-            }
+                }
             %>
         </div>
 
@@ -292,6 +319,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
     </body>
 </html>
 <%
-            con.close(); //fechar conexao
+                con.close(); //fechar conexao
+            }
 
 %>

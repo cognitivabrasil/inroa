@@ -34,6 +34,7 @@
                 if (apagar.equals("sim")) {
                     formNull = false;
                 }
+
             } catch (Exception e) {
                 formNull = true;
 
@@ -55,7 +56,7 @@
 
                     String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao" +
                              " FROM repositorios r, info_repositorios i, dadosldap d, padraometadados p"+
-                             " WHERE r.id=4"+
+                             " WHERE r.id="+id+
                              " AND r.id=i.id_repositorio"+
                              " AND i.padrao_metadados=p.id"+
                              " GROUP BY r.nome, r.descricao, p.nome;";

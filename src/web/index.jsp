@@ -35,7 +35,7 @@
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
 <div class="linkCantoDireito"><a href="./adm.jsp">Ferramenta Administrativa</a></div>
             <div class="Espaco">&nbsp;</div>
-            <form name="consulta" action="consulta.jsp" method="post">
+            <form name="consulta" action="consulta.jsp" method="GET">
 
                 <div class="LinhaEntrada">
                     <div class="EspacoAntes">&nbsp;</div>

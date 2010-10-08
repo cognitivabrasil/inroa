@@ -1,14 +1,9 @@
 package robo.importa_OAI;
 
-import com.novell.ldap.LDAPAttribute;
-import com.novell.ldap.LDAPAttributeSet;
-import com.novell.ldap.LDAPConnection;
-import com.novell.ldap.LDAPEntry;
-import com.novell.ldap.LDAPException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Set;
 import java.sql.*;
+import postgres.Conectar;
 
 /**
  *
@@ -17,111 +12,187 @@ import java.sql.*;
 public class InsereObjetoBase {
 
     /**
-     * Método que insere dados no LDAP, recebendo metadados em OBAA e inserindo em OBAA.
-     *
-     * @param attributeSet Referência para a classe LDAPAttributeSet que contém as entradas a serem inseridas no LDAP.
-     * @param header Refêrencia para a classe Header que contém os dados da tag Header do XML.
-     * @param dnRecebido dn do LDAP onde serão armazenados os objetos.
-     * @param lc Conex&atild;o com o Ldap. Conex&atilde;o e bind.
-     */
-    public static void insereObaa(DadosObjetos dadosLdap, Header header, String dnRecebido, LDAPConnection lc) {
-      
-        String containerName = dnRecebido.trim();
-
-        LDAPAttribute attribute = null;
-        LDAPAttributeSet attributeSet = new LDAPAttributeSet();
-        
-        System.out.println(" =============================");
-        System.out.println("  Inserindo objeto: " + header.getIdentifier());
-        System.out.println(" =============================\n");
-
-        attributeSet.add(new LDAPAttribute(
-                "objectclass", new String[]{"top", "obaa"}));
-
-        //adiciona os valores lidos do xml no atributo ldap
-        HashMap<String, ArrayList<String>> atributos = dadosLdap.getAtributos();
-        Set<String> chaves = atributos.keySet();
-        //percorre todo o HashMap
-         for (String chave : chaves) //enquanto tiver chaves chave recebe o conteudo de chaves
-         {
-             if(chave != null){ // testa se a string chave é diferente de nulo
-                 ArrayList<String> lista = dadosLdap.getAtributos().get(chave); //adiciona no ArrayList todos os valores para a chave atual(do for)
-                String[] valores = (String[]) lista.toArray (new String[lista.size()]); //transforma o arraylist em um vetor de string pq é só o que o LDAPAttribute aceita para multiplos valores
-                attributeSet.add(new LDAPAttribute(chave, valores));
-             }
-         }
-            
-
-
-        String dn = "obaa_entry=" + header.getIdentifier() + "," + containerName;
-
-        LDAPEntry newEntry = new LDAPEntry(dn, attributeSet);
-
-        //Insert LDAP
-
-        try {
-            lc.add(newEntry);
-
-        } catch (LDAPException e) {
-            System.out.println("Error:  " + e.toString());
-        }
-
-    }
-
-   /**
      * Método que insere dados na base de dados, recebendo metadados em OBAA e inserindo em OBAA.
      *
      * @param attributeSet Referência para a classe LDAPAttributeSet que contém as entradas a serem inseridas na base.
      * @param header Refêrencia para a classe Header que contém os dados da tag Header do XML.
      * @param con Conexão com a base de dados
-    *  @param idDoc identificador do documento para aquele atributo na base de dados
+     *  @param idDoc identificador do documento para aquele atributo na base de dados
      */
-     public static void insereObaa(DadosObjetos dadosLdap, Header header, Connection con, int idDoc) {
-
-        LDAPAttribute attribute = null;
-        LDAPAttributeSet attributeSet = new LDAPAttributeSet();
-
+    public static int insereObaa(DadosObjetos dadosObjetos, Header header, Connection con, int idRep) {
+        System.out.println("insere Base");
+        int idDoc = -1;
         System.out.println(" =============================");
         System.out.println("  Inserindo objeto: " + header.getIdentifier());
-        System.out.println(" =============================\n");
+        System.out.println(" =============================");
 
-        attributeSet.add(new LDAPAttribute(
-                "objectclass", new String[]{"top", "obaa"}));
+////        if(header.getIdentifier().equalsIgnoreCase("oai:localhost:123456789/693")){
+////            int i=0;
+////        }
+        try {
+            if (!testaEntry(header.getIdentifier(), idRep, con)) {
 
-        //adiciona os valores lidos do xml no atributo ldap
-        HashMap<String, ArrayList<String>> atributos = dadosLdap.getAtributos();
-        Set<String> chaves = atributos.keySet();
-        //percorre todo o HashMap
-         for (String chave : chaves) //enquanto tiver chaves chave recebe o conteudo de chaves
-         {
-             if(chave != null){ // testa se a string chave é diferente de nulo
-                 ArrayList<String> lista = dadosLdap.getAtributos().get(chave); //adiciona no ArrayList todos os valores para a chave atual(do for)
-                String[] valores = (String[]) lista.toArray (new String[lista.size()]); //transforma o arraylist em um vetor de string pq é só o que o LDAPAttribute aceita para multiplos valores
-                //attributeSet.add(new LDAPAttribute(chave, valores));
-                addBaseDados(chave, valores, con, idDoc);
-             }
-         }
+                String sql2 = "INSERT INTO documentos (obaa_entry, id_repositorio) VALUES (?,?);";
+
+
+
+                PreparedStatement stmt1 = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
+                stmt1.setString(1, header.getIdentifier());
+                stmt1.setInt(2, idRep);
+
+                stmt1.execute();
+
+                ResultSet rs = stmt1.getGeneratedKeys();
+                rs.next();
+                idDoc = rs.getInt(1);
+                stmt1.close();
+
+
+                addBaseDados(dadosObjetos, con, idDoc);
+                //adiciona os valores lidos do xml na base
+
+//                Set<String> chaves = dadosObjetos.getAtributos().keySet();
+//                //percorre todo o HashMap
+//                for (String chave : chaves) //enquanto tiver chaves chave recebe o conteudo de chaves
+//                {
+//                    if (chave != null) { // testa se a string chave é diferente de nulo
+//                        ArrayList<String> lista = dadosObjetos.getAtributos().get(chave); //adiciona no ArrayList todos os valores para a chave atual(do for)
+//                        String[] valores = (String[]) lista.toArray(new String[lista.size()]); //transforma o arraylist em um vetor de string pq é só o que o LDAPAttribute aceita para multiplos valores
+//
+//                        addBaseDados(chave, valores, con, idDoc);
+//                    }
+//                }
+
+                return idDoc;
+            } else {
+
+                /*************************************************************
+                 * ATUALIZAR OS ATRIBUTOS DOS DOCUMENTOS QUE JA ESTAO NA BASE
+                 *************************************************************/
+                System.out.println("Ja existe um documento com o entry informado. Entry: " + header.getIdentifier()+"\n");
+                return idDoc;
+            }
+        } catch (SQLException e) {
+            System.out.println("ERRO Inserindo dados na tabela documentos. ->" + e);
+            return idDoc;
+        }
     }
 
-    
-    private static boolean addBaseDados(String atributo, String[] valores, Connection con, int idDoc) {
+    private static boolean addBaseDados(DadosObjetos dadosObjetos, Connection con, int idDoc) {
 
-        for (int i = 0; i < valores.length; i++) {
-            String valor = valores[i];
-            try {
-                String insert = "INSERT INTO objetos (atributo, valor, documento) VALUES ('" + atributo + "', '" + valor + "', " + idDoc + ")";
-                PreparedStatement stmt = con.prepareStatement(insert);
-                stmt.execute();
-                stmt.close();
+        String insert = "INSERT INTO objetos (atributo, valor, documento) VALUES ";
 
-            } catch (SQLException e) {
-                System.out.println("ERRO AO ADICIONAR ATRIBUTO: " + e);
-                return false;
+        Set<String> chaves = dadosObjetos.getAtributos().keySet();
+        //percorre todo o HashMap
+        int numChave = 0;
+        for (String chave : chaves) //enquanto tiver chaves chave recebe o conteudo de chaves
+        {
+            if (chave != null) { // testa se a string chave é diferente de nulo
+                ArrayList<String> lista = dadosObjetos.getAtributos().get(chave); //adiciona no ArrayList todos os valores para a chave atual(do for)
+
+                for (int i = 0; i < lista.size(); i++) {
+
+                    if (numChave == 0 && i == 0) {
+                        insert += " (?,?,?)";
+                    } else {
+                        insert += ", (?,?,?)";
+                    }
+
+                }
             }
+            numChave++;
         }
+        try {
+            PreparedStatement stmt = con.prepareStatement(insert);
+
+            int cont = 0;
+            for (String chave : chaves) //enquanto tiver chaves chave recebe o conteudo de chaves
+            {
+                if (chave != null) { // testa se a string chave é diferente de nulo
+                    ArrayList<String> lista = dadosObjetos.getAtributos().get(chave); //adiciona no ArrayList todos os valores para a chave atual(do for)
+
+                    for (int i = 0; i < lista.size(); i++) {
+                        int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+
+                        stmt.setString(i2 + 1, chave);
+                        stmt.setString(i2 + 2, lista.get(i));
+                        stmt.setInt(i2 + 3, idDoc);
+                        cont++;
+                    }
+                }
+
+            }
+
+            stmt.executeUpdate();
+
+            stmt.close();
+
+        } catch (SQLException e) {
+            System.out.println("ERRO AO ADICIONAR ATRIBUTO: " + e);
+            return false;
+        }
+
         return true;
     }
 
+//    private static boolean addBaseDados(String atributo, String[] valores, Connection con, int idDoc) {
+//
+//
+//        try {
+//            String insert = "INSERT INTO objetos (atributo, valor, documento) VALUES ";
+//
+//            //adicionar 3 interrogacoes para cada novo valor a ser inserido na base
+//            for (int i = 0; i < valores.length; i++) {
+//                if (i == 0) {
+//                    insert += " (?,?,?)";
+//                } else {
+//                    insert += ", (?,?,?)";
+//                }
+//            }
+//
+//            PreparedStatement stmt = con.prepareStatement(insert);
+//
+//            for (int i = 0; i < valores.length; i++) {
+//                int i2 = i * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+//
+//                stmt.setString(i2 + 1, atributo);
+//                stmt.setString(i2 + 2, valores[i]);
+//                stmt.setInt(i2 + 3, idDoc);
+//            }
+//
+//
+//            stmt.executeUpdate();
+//
+//
+//            stmt.close();
+//
+//        } catch (SQLException e) {
+//            System.out.println("ERRO AO ADICIONAR ATRIBUTO: " + e);
+//            return false;
+//        }
+//
+//        return true;
+//    }
+
+    /**
+     * Testa se o obaa_entry já existe na base de dados
+     * @param obaa_entry String contendo o obaa_entry
+     * @return true se o objeto existe e false se não existir
+     */
+    public static boolean testaEntry(String obaa_entry, int idRep, Connection con) throws SQLException {
+
+        Statement stm = con.createStatement();
+        //fazer consulta sql
+        String sql = "SELECT id FROM documentos WHERE obaa_entry='" + obaa_entry + "' AND id_repositorio=" + idRep;
+        ResultSet rs = stm.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
+        if (rs.next()) //testa se tem o proximo resultado
+        {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 //    private static int getDocID(String obaa_entry, Connection con) {
 //
 //
@@ -140,4 +211,11 @@ public class InsereObjetoBase {
 //
 //
 //    }
+
+    public static void main(String[] args) {
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
+        String[] kk = {"a", "b"};
+//        addBaseDados("obaaMarcos", kk, con, 69743);
+    }
 }

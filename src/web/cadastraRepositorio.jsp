@@ -30,7 +30,7 @@ Primeira etapa do cadastro de um repositorio
             myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
             myForm.addRules({id:'padraoMet',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
             myForm.addRules({id:'periodicidade',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em horas!'});
-            
+            myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
         </script>
     </head>
     <body id="bodyMenor">
@@ -40,7 +40,7 @@ Primeira etapa do cadastro de um repositorio
             <div class="subTitulo-center">&nbsp;Entre com as informa&ccedil;&otilde;es para cadastrar um novo reposit&oacute;rio</div>
             <div class="EspacoAntes">&nbsp;</div>
 
-            <form name="adicionarRepositorio" action="cadastraRepositorio2.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
+            <form name="adicionarRepositorio" action="gravaRepositorioBase.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
                 <div class="subtitle">Informa&ccedil;&otilde;es gerais sobre o reposit&oacute;rio</div>
                 <div class="LinhaEntrada">
@@ -99,6 +99,16 @@ Primeira etapa do cadastro de um repositorio
                           <input name="nomeNaFederacao" id="nomeFed" type="text" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                       </div>
                   </div> -->
+
+                <div class="subtitle">Sincroniza&ccedil;&atilde;o dos metadados</div>
+                <div class="LinhaEntrada">
+                    <div class="Label">
+                        URL que responde OAI-PMH:
+                    </div>
+                    <div class="Value">
+                        <input name="url" id="url" type="text" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                    </div>
+                </div>
 
                                 <div class="LinhaEntrada">
                     <div class="Buttons">

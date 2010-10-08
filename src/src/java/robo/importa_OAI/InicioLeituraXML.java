@@ -1,7 +1,6 @@
 package robo.importa_OAI;
 
-import com.novell.ldap.LDAPConnection;
-import com.novell.ldap.LDAPException;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import postgres.AtualizaBase;
 import ferramentaBusca.indexador.Indexador;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
-import java.util.HashMap;
 import postgres.Conectar;
 
 /*
@@ -135,7 +133,7 @@ public class InicioLeituraXML {
                         Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
                         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
 
-                        reader.parser("C:/engeo.xml", indexar, con, 8);
+                        reader.parser("C:/bndigital.xml", indexar, con, 9);
                         con.close();
                     } catch (UnsupportedEncodingException e) {
                         System.out.println("Error: " + e.toString());

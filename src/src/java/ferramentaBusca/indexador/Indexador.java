@@ -5,7 +5,6 @@ package ferramentaBusca.indexador;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,23 +21,17 @@ public class Indexador {
     }
 
     /**
-     * Testa se o obaa_entry já existe na base de dados
-     * @param obaa_entry String contendo o obaa_entry
-     * @return true se o objeto existe e false se não existir
+     * M&eacute;todo que adiciona o documento doc na base de dados Postgres
+     * @param doc Docuemnto a ser adicionado
+     * @param con A conex&atilde;o do banco de dados
      */
-    public boolean testaEntry(String obaa_entry, Connection con) throws SQLException {
-
+    public void addDocLimpantoTokens(Documento doc, Connection con) throws SQLException {
+        String sqlDel = "DELETE FROM r1tokens where id=" + doc.getId();
         Statement stm = con.createStatement();
-        //fazer consulta sql
-        String sql = "SELECT id FROM documentos WHERE obaa_entry='" + obaa_entry + "'";
-        ResultSet rs = stm.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
-        if (rs.next()) //testa se tem o proximo resultado
-        {
-            return true;
-        } else {
-            return false;
+        int result = stm.executeUpdate(sqlDel); //executa o que tem na variavel sql1
+        if (result > 0) {
+            addDoc(doc, con);
         }
-
     }
 
     /**
@@ -55,95 +48,118 @@ public class Indexador {
          * 			4 para descriç&atilde;o
          */
 
-        doc.setId(-1);
+        //NAO TERIA QUE DELETAR OS TOKENS ANTES?
+
+        int id = doc.getId(); //recebe o id do documento que foi inserido na tabela documentos
+
         try {
-            if (!testaEntry(doc.getObaaEntry(), con)) {
 
-                //String sql = "INSERT INTO documentos (obaa_entry, titulo, resumo, data, localizacao, id_repositorio) VALUES ('" + doc.getObaaEntry() + "','"+doc.getTituloOriginal() + "','"+doc.getResumo()+ "','"+ doc.getData() + "','"+ doc.getLocalizacao() + "',"+ doc.getServidor() + ");";
+            //1 titulo
+            ArrayList<String> tokensTitulo = doc.getTitulo();
+            ArrayList<String> tokensPChave = doc.getPalavrasChave();
+            ArrayList<String> tokensEntidade = doc.getEntidade();
+            ArrayList<String> tokensDescricao = doc.getDescricao();
 
-                String sql2 = "INSERT INTO documentos (obaa_entry, titulo, resumo, data, localizacao, id_repositorio) VALUES (?,?,?,?,?,?);";
-                
-                int key = 0;
-                
-                PreparedStatement stmt1 = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
-                stmt1.setString(1, doc.getObaaEntry());
-                stmt1.setString(2, doc.getTituloOriginal());
-                stmt1.setString(3, doc.getResumo());
-                stmt1.setString(4, doc.getData());
-                stmt1.setString(5, doc.getLocalizacao());
-                stmt1.setInt(6, doc.getServidor());
-  
-                stmt1.execute();
 
-                ResultSet rs = stmt1.getGeneratedKeys();
-                rs.next();
-                key = rs.getInt(1);
+            String insert = "INSERT INTO r1tokens (token, id, field) VALUES";
 
-                doc.setId(key);
-                stmt1.close();
-
-                //1 titulo
-                ArrayList<String> tokens = doc.getTitulo();
-                int id = doc.getId();
-
-                for (int i = 0; i < tokens.size(); i++) {
-
-                    String token = tokens.get(i);
-                    String insert = "INSERT INTO r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 1)";
-                    PreparedStatement stmt = con.prepareStatement(insert);
-                    stmt.execute();
-                    stmt.close();
+            int cont = 0;
+            //for para preencher as interrogacoes dos titulos
+            for (int i = 0; i < tokensTitulo.size(); i++) {
+                if (cont == 0) {
+                    insert += " (?,?,?)";
+                } else {
+                    insert += ", (?,?,?)";
                 }
-
-                //2 palavras chave
-                tokens = new ArrayList<String>();
-                tokens = doc.getPalavrasChave();
-
-                for (int i = 0; i < tokens.size(); i++) {
-
-
-                    String token = tokens.get(i);
-                    String insert = "INSERT INTO r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 2)";
-                    PreparedStatement stmt = con.prepareStatement(insert);
-                    stmt.execute();
-                    stmt.close();
-                }
-
-                //3 entidade
-                tokens = new ArrayList<String>();
-                tokens = doc.getEntidade();
-
-                for (int i = 0; i < tokens.size(); i++) {
-
-
-                    String token = tokens.get(i);
-                    String insert = "INSERT INTO r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 3)";
-                    PreparedStatement stmt = con.prepareStatement(insert);
-                    stmt.execute();
-                    stmt.close();
-                }
-
-                //4 descricao
-                tokens = new ArrayList<String>();
-                tokens = doc.getDescricao();
-
-                for (int i = 0; i < tokens.size(); i++) {
-
-
-                    String token = tokens.get(i);
-                    String insert = "INSERT INTO r1tokens (token, id, field) VALUES ('" + token + "'," + id + ", 4)";
-                    PreparedStatement stmt = con.prepareStatement(insert);
-                    stmt.execute();
-                    stmt.close();
-                }
+                cont++;
             }
+            //for para preencher as interrogacoes das palavras chaves
+            for (int i = 0; i < tokensPChave.size(); i++) {
+                if (cont == 0) {
+                    insert += " (?,?,?)";
+                } else {
+                    insert += ", (?,?,?)";
+                }
+                cont++;
+            }
+            //for para preencher as interrogacoes das entidades
+            for (int i = 0; i < tokensEntidade.size(); i++) {
+                if (cont == 0) {
+                    insert += " (?,?,?)";
+                } else {
+                    insert += ", (?,?,?)";
+                }
+                cont++;
+            }
+            //for para preencher as interrogacoes das descricoes
+            for (int i = 0; i < tokensDescricao.size(); i++) {
+                if (cont == 0) {
+                    insert += " (?,?,?)";
+                } else {
+                    insert += ", (?,?,?)";
+                }
+                cont++;
+            }
+
+            PreparedStatement stmt = con.prepareStatement(insert);
+            cont = 0;
+            //1 titulo
+            int atributo = 1;
+            //for para preencher os values do titulo
+            for (int i = 0; i < tokensTitulo.size(); i++) {
+                int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+                String token = tokensTitulo.get(i);
+                stmt.setString(i2 + 1, token);
+                stmt.setInt(i2 + 2, id);
+                stmt.setInt(i2 + 3, atributo);
+                cont++;
+            }
+            //for para preencher os values das palavras chaves
+            //2 palavras chave
+            atributo = 2;
+            for (int i = 0; i < tokensPChave.size(); i++) {
+                int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+                String token = tokensPChave.get(i);
+                stmt.setString(i2 + 1, token);
+                stmt.setInt(i2 + 2, id);
+                stmt.setInt(i2 + 3, atributo);
+                cont++;
+            }
+            //for para preencher os values das Entidades
+            //3 entidade
+            atributo = 3;
+            for (int i = 0; i < tokensEntidade.size(); i++) {
+                int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+                String token = tokensEntidade.get(i);
+                stmt.setString(i2 + 1, token);
+                stmt.setInt(i2 + 2, id);
+                stmt.setInt(i2 + 3, atributo);
+                cont++;
+            }
+            //for para preencher os values do xx
+            //4 descricao
+            atributo = 4;
+            for (int i = 0; i < tokensDescricao.size(); i++) {
+                int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+                String token = tokensDescricao.get(i);
+                stmt.setString(i2 + 1, token);
+                stmt.setInt(i2 + 2, id);
+                stmt.setInt(i2 + 3, atributo);
+                cont++;
+            }
+
+
+            stmt.executeUpdate();
+            stmt.close();
+
 
         } catch (SQLException e) {
             System.out.println("\nErro no SQL ao indexar. Ao adicionar o objeto: " + doc.getObaaEntry());
-            System.out.println("String Resumo: " + doc.getResumo());
+//            System.out.println("String Resumo: " + doc.getResumo());
             e.printStackTrace();
-            
-        }        
+
+        }
+
     }
 
     /**
@@ -168,7 +184,7 @@ public class Indexador {
         R1IDF.close();
 
         //PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, if(T.field=1||T.field=2,COUNT(*)*2, COUNT(*)) FROM r1tokens T GROUP BY T.id, T.token;");
-       
+
         //MySQL
         //PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, if(T.field=1,3, 1) FROM r1tokens T GROUP BY T.id, T.token;");
 
@@ -184,9 +200,11 @@ public class Indexador {
         R1Weights.execute();
         R1Weights.close();
 
-        PreparedStatement R1Sum = con.prepareStatement("INSERT INTO r1sum(token, total) SELECT R.token, SUM(R.weight) FROM r1weights R GROUP BY R.token;");
-        R1Sum.execute();
-        R1Sum.close();
+//////        PreparedStatement R1Sum = con.prepareStatement("INSERT INTO r1sum(token, total) SELECT R.token, SUM(R.weight) FROM r1weights R GROUP BY R.token;");
+//////        R1Sum.execute();
+//////        R1Sum.close();
+
+        apagarCalculosAposIndiceCalculado(con);
 
     }
 
@@ -200,6 +218,28 @@ public class Indexador {
         String sql1 = "DELETE FROM r1idf;";
         String sql2 = "DELETE FROM r1size;";
         String sql3 = "DELETE FROM r1sum;";
+        String sql4 = "DELETE FROM r1tf;";
+        String sql5 = "DELETE FROM r1length;";
+
+
+        Statement stm = con.createStatement();
+        stm.executeUpdate(sql1); //executa o que tem na variavel sql1
+        stm.executeUpdate(sql2);
+        stm.executeUpdate(sql3);
+        stm.executeUpdate(sql4);
+        stm.executeUpdate(sql5);
+    }
+
+    /**
+     * Apaga as tabelas r1idf, r1size, r1sum, r1tf e r1length da base de dados. Estas tabelas armazenam os calculos do indice.
+     * @param con  conex&atilde;o como banco de dados
+     * @throws SQLException
+     * @author Marcos Nunes
+     */
+    private static void apagarCalculosAposIndiceCalculado(Connection con) throws SQLException {
+        String sql1 = "DELETE FROM r1idf;";
+        String sql2 = "DELETE FROM r1size;";
+        String sql3 = "DELETE FROM r1tokens;";
         String sql4 = "DELETE FROM r1tf;";
         String sql5 = "DELETE FROM r1length;";
 

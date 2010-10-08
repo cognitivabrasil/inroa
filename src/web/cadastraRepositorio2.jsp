@@ -1,4 +1,9 @@
 <%--
+
+!!!!!!!!!!!!!!ATENCAO!!!!!!!!!!!!!!!!!!!
+ESTA DESATIVADO. O CADASTRAREPOSITORIO PASSA DIRETO PARA O GRAVAREPOSITORIOBASE
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     Document   : cadastraRepositorio2
     Created on : 13/08/2009, 12:33:05
     Author     : Marcos
@@ -53,7 +58,7 @@ Segunda etapa do cadastro de um repositorio
             String periodicidade = request.getParameter("periodicidade").trim();
             //String nomeNaFederacao = request.getParameter("nomeNaFederacao").trim();
             
-
+            String url = request.getParameter("url");
 
             //request.setAttribute("nomeRep", nome);
 
@@ -84,6 +89,7 @@ Segunda etapa do cadastro de um repositorio
 
 
 
+                <%--
                 <div class="subtitle">Federacao - Onde ser&atilde;o armazenados os metadados</div>
                 <div class="LinhaEntrada">
                     <div class="Label">
@@ -114,7 +120,7 @@ Segunda etapa do cadastro de um repositorio
                         </select>
                                 
                     </div>
-                </div>
+                </div> 
 
                 <div class="LinhaEntrada">
                     <div class="Label">
@@ -133,6 +139,7 @@ Segunda etapa do cadastro de um repositorio
                         &nbsp;
                     </div>
                 </div>
+                --%>
                 
                
                 <div class="subtitle">Sincroniza&ccedil;&atilde;o dos metadados</div>
@@ -141,7 +148,7 @@ Segunda etapa do cadastro de um repositorio
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <input name="url" id="url" type="text" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="url" id="url" type="text" value="<%=url%>" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 

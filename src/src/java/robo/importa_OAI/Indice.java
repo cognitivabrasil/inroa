@@ -5,18 +5,14 @@
 package robo.importa_OAI;
 
 import ferramentaBusca.indexador.Documento;
-import java.util.HashMap;
-import ferramentaBusca.indexador.StopWordTAD;
-import java.sql.Connection;
 
 /**
  *
- * @author Helena
+ * @author Marcos
  */
 public class Indice {
 
-    private HashMap<String, String> indice = new HashMap<String, String>();
-
+    
     /**
      * Método que recebe o nome do atributo, o valor do atributo e adiciona-os no índice identificando o atributo. Se identificar como title efetua um setTitulo na classe Documento, etc.
      * @param atributo Nome do atributo fornecido.

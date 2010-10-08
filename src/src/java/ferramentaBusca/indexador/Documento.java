@@ -19,9 +19,9 @@ public class Documento {
     private String tituloOriginal;
     private int id;
     private StopWordTAD StopWd;
-  
 
-    
+
+
 //    public Documento() {
 //        titulo = new ArrayList<String>();
 //        palCh = new ArrayList<String>();
@@ -45,7 +45,7 @@ public class Documento {
         palCh = new ArrayList<String>();
         ent = new ArrayList<String>();
         desc = new ArrayList<String>();
-        id = 1;
+        id = 0;
         obaa_entry="";
         resumo = "";
         data = "";
@@ -63,7 +63,7 @@ public class Documento {
         palCh = new ArrayList<String>();
         ent = new ArrayList<String>();
         desc = tokeniza(query);
-        id = 1;
+        id = 0;
         obaa_entry="";
         resumo = "";
         data = "";
@@ -232,7 +232,7 @@ public class Documento {
         return Words;
 
     }
-        
+
 
     /**
      * Esse método retorna uma lista de palavras stemizada, sem stopwords
@@ -267,15 +267,15 @@ public class Documento {
             String tokens[];
             tokens = st.phraseStemming(S);
 
-            
+
 
             for (int i = 0; i < tokens.length; i++) {
-                
+
 
                 if (!tokens[i].isEmpty() && !StopwdPort.isStopWord(tokens[i])){
                     Words.add(tokens[i]);
                 }
-                    
+
             }
 
           if (Words.size() < 1) {
