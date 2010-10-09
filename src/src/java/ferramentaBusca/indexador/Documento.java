@@ -248,7 +248,6 @@ public class Documento {
         ArrayList<String> Words = new ArrayList<String>();
 
         S = S.toLowerCase();
-
         StopWordList StopwdPort = new StopWordsFromHashSet(StopWords.getRes());
         st.ignoreStopWords(StopwdPort);
 
@@ -262,13 +261,11 @@ public class Documento {
         S = S.replaceAll("ç", "c");
 
         S = S.trim();
-
+        
 
             String tokens[];
             tokens = st.phraseStemming(S);
-
-
-
+            
             for (int i = 0; i < tokens.length; i++) {
 
 
@@ -279,7 +276,7 @@ public class Documento {
             }
 
           if (Words.size() < 1) {
-                System.out.println("Nenhuma palavra capturada! String: "+S+"\n");
+                System.err.println("Nenhuma palavra capturada! String: "+S+"\n");
             }
         return Words;
 

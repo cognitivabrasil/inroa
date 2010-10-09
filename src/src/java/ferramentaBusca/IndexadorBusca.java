@@ -47,25 +47,26 @@ public class IndexadorBusca {
 
                 Documento doc = new Documento(stWd);
                 doc.setId(idRep);//adiciona o id do documento
+                doc.setObaaEntry(resDoc.getString("obaa_entry"));
                 while (rs.next()) {
                     String atributo = rs.getString("atributo").replace("obaa", "").toLowerCase();
                     String valor = rs.getString("valor");
                     indice.setIndice(atributo, valor, doc);
                 }
                 //apagar os tokens existentes
-                indexar.addDocLimpantoTokens(doc, con);
+                indexar.addDoc(doc, con);
             }
 
 
 
             Long meio = System.currentTimeMillis();
             System.out.println("\n- Levou " + ((meio - inicio) / 1000) + " segundos inserindo objetos.");
-            System.out.println("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
-
-            indexar.populateR1(con); //preenche as tabelas auxiliares
-
-            Long fim = System.currentTimeMillis();
-            System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
+//            System.out.println("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
+//
+//            indexar.populateR1(con); //preenche as tabelas auxiliares
+//
+//            Long fim = System.currentTimeMillis();
+//            System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
 
 
         } catch (SQLException e) {
@@ -168,7 +169,14 @@ public class IndexadorBusca {
                 IndexaRep(rset.getInt("id"), con); //indexa o repositorio informado
 
             }
+           System.out.println("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
             System.out.println("Calculando o indice....");
+           Long meio = System.currentTimeMillis();
+
+            indexar.populateR1(con); //preenche as tabelas auxiliares
+
+            Long fim = System.currentTimeMillis();
+            System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
             indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
             System.out.println("Indice calculado!");
         } catch (SQLException e) {
@@ -238,9 +246,11 @@ public class IndexadorBusca {
         Connection con = conectar.conectaBD();
 
         //run.indexarTodosRepositorios(con); //cria o indice com todos os repositorios
-        run.IndexaRep(9, con);
+        run.IndexaRep(7, con);
+        run.recalcularIndice(con);
+//        run.indexarTodosRepositorios(con);
 
-        //run.reindexarTudo(con);
+        
         try {
             con.close(); //fechar conexao com o mysql
         } catch (SQLException e) {

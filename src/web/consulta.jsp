@@ -178,12 +178,12 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     String identificador = "";
                     String repositorio = "";
                     String idBase = "";
-                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, r.nome as repositorio, ds.id as id_base FROM documentos d, dados_subfederacoes ds, repositorios r, objetos o, info_repositorios i WHERE d.id=o.documento AND d.id_repositorio=r.id AND r.id = i.id_repositorio AND i.id_federacao=ds.id AND d.id=" + resultadoBusca.get(result);
+                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, r.nome as repositorio, ds.id as id_base FROM documentos d, dados_subfederacoes ds, repositorios r, objetos o, info_repositorios i WHERE d.id=o.documento AND d.id_repositorio=r.id AND r.id = i.id_repositorio AND i.id_federacao=ds.id AND d.id=" + resultadoBusca.get(result) +
+                            " AND (o.atributo ~* '^obaadate$' OR o.atributo ~* '^obaaLocation$' OR o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$')";
 
                     try {
                         ResultSet rs = stm.executeQuery(resultadoSQL);
                         //pega o proximo resultado retornado pela consulta sql
-
 
                         while (rs.next()) {
                             if (rs.isFirst()) {

@@ -69,6 +69,8 @@
                                 %>
                             
                         </select>
+                                <a onclick="javascript:window.location='addTipoMap.jsp'">
+                                    Adicionar novo tipo</a>
                     </div>
                     <div class="Legenda">
                         Descrição:

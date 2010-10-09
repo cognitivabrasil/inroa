@@ -60,7 +60,7 @@ public class Indexador {
             ArrayList<String> tokensEntidade = doc.getEntidade();
             ArrayList<String> tokensDescricao = doc.getDescricao();
 
-
+            if(!(tokensDescricao.isEmpty() && tokensEntidade.isEmpty() && tokensPChave.isEmpty() && tokensTitulo.isEmpty())){
             String insert = "INSERT INTO r1tokens (token, id, field) VALUES";
 
             int cont = 0;
@@ -102,6 +102,7 @@ public class Indexador {
             }
 
             PreparedStatement stmt = con.prepareStatement(insert);
+
             cont = 0;
             //1 titulo
             int atributo = 1;
@@ -151,10 +152,11 @@ public class Indexador {
 
             stmt.executeUpdate();
             stmt.close();
-
+            }
 
         } catch (SQLException e) {
             System.out.println("\nErro no SQL ao indexar. Ao adicionar o objeto: " + doc.getObaaEntry());
+            System.out.println("");
 //            System.out.println("String Resumo: " + doc.getResumo());
             e.printStackTrace();
 
@@ -196,6 +198,10 @@ public class Indexador {
         R1Lenght.execute();
         R1Lenght.close();
 
+        String sqlDeletar1weights = "DELETE FROM r1weights";
+        PreparedStatement deletar1weights = con.prepareStatement(sqlDeletar1weights);
+        deletar1weights.executeUpdate();
+
         PreparedStatement R1Weights = con.prepareStatement("INSERT INTO r1weights(tid, token, weight) SELECT T.tid, T.token, I.idf*T.tf/L.len FROM r1idf I, r1tf T, r1length L WHERE I.token = T.token AND T.tid = L.tid;");
         R1Weights.execute();
         R1Weights.close();
@@ -204,7 +210,7 @@ public class Indexador {
 //////        R1Sum.execute();
 //////        R1Sum.close();
 
-        apagarCalculosAposIndiceCalculado(con);
+        //apagarCalculosAposIndiceCalculado(con);
 
     }
 
