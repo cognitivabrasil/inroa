@@ -264,7 +264,7 @@ public class Robo {
 
         String sql = "SELECT l.base, r.nome, i.data_ultima_atualizacao, l.ip, i.url_or_ip as url, i.tipo_sincronizacao," +
                 " l.login, l.senha, p.metadata_prefix, l.porta as portaLdapDestino," +
-                " i.data_ultima_atualizacao as ultima_atualizacao_form" +
+                " to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form" +
                 " FROM repositorios r, info_repositorios i, padraometadados p, dados_subfederacoes l" +
                 " WHERE r.id = i.id_repositorio" +
                 " AND i.padrao_metadados = p.id" +
@@ -308,10 +308,10 @@ public class Robo {
                 String base = rs.getString("base");
                 String ultimaAtualizacao = rs.getString("ultima_atualizacao_form");
                 //String horaAtual = rs.getString("horaAtualForm");
-                String ip = rs.getString("ip_destino");
-                String login = rs.getString("login");
-                String senha = rs.getString("senha");
-                int porta = rs.getInt("porta");
+////                String ip = rs.getString("ip_destino");
+////                String login = rs.getString("login");
+////                String senha = rs.getString("senha");
+////                int porta = rs.getInt("porta");
 
 
                 //Configuracao subFedconf = new Configuracao(base, login, senha, ip, porta);
@@ -319,7 +319,7 @@ public class Robo {
                 Date data_ultima_atualizacao = rs.getDate("data_ultima_atualizacao");
                 ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
 
-                System.out.println("Ultima Atualização: " + ultimaAtualizacao + " nome do rep: " + nome);
+                System.out.println("\t Ultima Atualização: " + ultimaAtualizacao + " nome do rep: " + nome);
 
 
                 //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio o LDAP
@@ -338,10 +338,13 @@ public class Robo {
 
                 //sincronicazao feita por OAI-PMH
 
-                System.out.println(" ultima atualizacao: " + ultimaAtualizacao);
                 File caminhoTeste = new File(caminhoDiretorioTemporario);
                 if (!caminhoTeste.isDirectory()) {//se o caminho informado nao for um diretorio
                     caminhoTeste.mkdirs();//cria o diretorio
+                }else{
+                    /**************************
+                     * APAGAR TODOS ARQUIVOS XML DA PASTA
+                     **************************/
                 }
 
                 if (caminhoTeste.isDirectory()) {

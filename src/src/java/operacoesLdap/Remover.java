@@ -1,16 +1,6 @@
 package operacoesLdap;
 
-import com.novell.ldap.LDAPConnection;
-import com.novell.ldap.LDAPException;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.sql.*;
-import java.util.ArrayList;
 
 /**
  * Classe com metodos responsáveis por remover dados de uma base Ldap

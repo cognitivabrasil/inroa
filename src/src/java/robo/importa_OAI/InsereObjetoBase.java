@@ -20,7 +20,7 @@ public class InsereObjetoBase {
      *  @param idDoc identificador do documento para aquele atributo na base de dados
      */
     public static int insereObaa(DadosObjetos dadosObjetos, Header header, Connection con, int idRep) {
-        System.out.println("insere Base");
+        
         int idDoc = -1;
         System.out.println(" =============================");
         System.out.println("  Inserindo objeto: " + header.getIdentifier());

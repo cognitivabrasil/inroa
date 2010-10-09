@@ -72,7 +72,6 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                 try {
 
                     resultadoBusca = rep.search2(palavraChave, con, Integer.valueOf(idRepositorio));//efetua a busca com o metodo de recuperacao de informacoes
-
                     numObjetosEncontrados = resultadoBusca.size(); //armazena o numero de objetos
 
                 } catch (SQLException e) {
