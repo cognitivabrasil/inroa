@@ -10,7 +10,6 @@ Primeira etapa do cadastro de um repositorio
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="conexaoBD.jsp"%>
-<%@include file="tiposdeSincronizacaoSuportados.jsp"%>
 <%
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");

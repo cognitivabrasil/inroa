@@ -226,7 +226,7 @@
 
                     </td>
                     <td width="30%" class="right">
-                        <input class="BOTAO" id="salvar" onclick="javascript:apagarMapeamentoBranco();" value="Salvar Mapeamento" type="button" class="CancelButton"/>
+                        <input class="BOTAO" id="salvar" onclick="javascript:apagarMapeamentoBranco();" value="Salvar Mapeamentos" type="button" class="CancelButton"/>
                     </td>
 
 

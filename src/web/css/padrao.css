@@ -294,13 +294,22 @@ a:hover{
     margin-top:1%;
 }
 
+.Mapeamento .TextoInformativo{
+    text-align:left;
+    padding-bottom:3%;
+    padding-left:5%;
+}
+.Mapeamento .TextoInformativo p{
+    padding-left:5%;
+}
+
 .Mapeamento .Legenda{
     float:left;
     text-align:right;
-    width:20%
+    width:24%
 }
 .Mapeamento .Valor{
-    margin:0 0 20px 21%;
+    margin:0 0 20px 26%;
 }
 .Mapeamento .Editar{
     float:right;

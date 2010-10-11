@@ -37,14 +37,15 @@
                 } else {
                     exibeForm = false;
                 }
-                descricao = request.getParameter("descricao");
-                if (descricao.isEmpty()) {
-                    out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
-                            "<script type='text/javascript'>history.back(-1);</script>");
-                    exibeForm = true;
+                if (!exibeForm) {
+                    descricao = request.getParameter("descricao");
+                    if (descricao.isEmpty() && nome.isEmpty()) {
+                        out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
+                                "<script type='text/javascript'>history.back(-1);</script>");
+                        exibeForm = true;
+                    }
                 }
             } catch (NullPointerException n) {
-                out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>");
                 exibeForm = true;
             }
 
@@ -56,8 +57,14 @@
             <div class="EspacoAntes">&nbsp;</div>
             <form name="adicionarMap" action="" method="post">
                 <div class="Mapeamento">
+                <div class="TextoInformativo">
+                Informe um nome e uma descri&ccedil;&atilde;o para o novo tipo de mapeamento.
+                <p>Exemplo
+                    <BR>&nbsp;Nome: &nbsp;&nbsp;&nbsp;&nbsp;"repOBAA" <BR>Destri&ccedil;&atilde;o: "mapeamento especifico para o reposit&oacute;rio OBAA.</p>
+                </div>
+                
                     <div class="Legenda">
-                        Tipo do mapeamento:
+                        <div> Nome:</div>
                     </div>
 
                     <div class="Valor" id="tipoMap">
@@ -73,6 +80,7 @@
                     </div>
 
                     <div class="Buttons">
+                        <input type="button" value="< Voltar" onclick="javascript:history.go(-1);"/>
                         <input class="BOTAO" id="cancelar" onclick="javascript:window.close();" value="Cancelar" type="button" class="CancelButton"/>
                         <input class="BOTAO" type="submit" value="Pr&oacute;ximo >" name="submit" />
                     </div>
@@ -85,16 +93,23 @@
             </form>
             <%            } else {
                 String sql = "INSERT INTO tipomapeamento (nome, descricao) VALUES (?,?)";
-                PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setString(1, nome);
-                stmt.setString(2, descricao);
-                int res = stmt.executeUpdate();
-                if (res > 0) {
-                    String redirectURL = "selecionaPadraoAddMap.jsp";
-                    response.sendRedirect(redirectURL);
-                } else {
-                    exibeForm = true;
-                    //recarregar a pagina
+                try {
+                    PreparedStatement stmt = con.prepareStatement(sql);
+                    stmt.setString(1, nome);
+                    stmt.setString(2, descricao);
+                    int res = stmt.executeUpdate();
+                    if (res > 0) {
+                        String redirectURL = "selecionaPadraoAddMap.jsp";
+                        response.sendRedirect(redirectURL);
+                    } else {
+                        exibeForm = true;
+                        out.print("<script type='text/javascript'>alert('Nao foi inserido nenhum valor na base de dados!');</script>" +
+                                "<script type='text/javascript'>history.back(-1);</script>");
+
+                    }
+                } catch (SQLException s) {
+                    out.println("ERRO ao adicionar as informa&ccdil;&otilde;es na base de dados: " + s.getMessage());
+                    out.print("<script type='text/javascript'>javascript:window.location.reload();</script>");
                 }
             }
             %>
