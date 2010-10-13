@@ -27,10 +27,10 @@ public class Configuracao {
 
     base = "federacao";
     usuario = "feb";
-//    senha = "12345";
-//    ip = "143.54.95.20";
-    senha = "123456";
-    ip = "143.54.95.74";
+    senha = "12345";
+    ip = "143.54.95.20";
+//    senha = "123456";
+//    ip = "143.54.95.74";
     porta = 5432;
     }
     /**

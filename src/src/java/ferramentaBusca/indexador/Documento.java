@@ -227,7 +227,7 @@ public class Documento {
             }
 
           if (Words.size() < 1) {
-                System.out.println("Nenhuma palavra capturada! String: "+S+"\n");
+//                System.out.println("Nenhuma palavra capturada! String: "+S+"\n");
             }
         return Words;
 
@@ -276,7 +276,7 @@ public class Documento {
             }
 
           if (Words.size() < 1) {
-                System.err.println("Nenhuma palavra capturada! String: "+S+"\n");
+//                System.err.println("Nenhuma palavra capturada! String: "+S+"\n");
             }
         return Words;
 

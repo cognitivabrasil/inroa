@@ -24,15 +24,15 @@ public class IndexadorBusca {
         Long inicio = System.currentTimeMillis();
         StopWordTAD stWd = new StopWordTAD();
         Indice indice = new Indice();
-        String atributos[] = {"obaaEntry", "obaaTitle", "obaaKeyword", "obaaEntity", "obaaDescription", "obaaEducationalDescription", "obaaDate", "obaaLocation", "obaaIdentifier"};
+        String atributos[] = {"obaaEntry", "obaaTitle", "obaaKeyword", "obaaEntity"};
 
         try {
             String sqlDoc = "SELECT id, obaa_entry FROM documentos WHERE id_repositorio=" + repositorio;
             Statement stmtDoc = con.createStatement();
             ResultSet resDoc = stmtDoc.executeQuery(sqlDoc);
             while (resDoc.next()) { //percorre os documentos do repositorio informado
-            int idRep = resDoc.getInt("id");
-                String sql = "SELECT o.valor, o.atributo FROM objetos o, documentos d WHERE d.id=" + idRep + " AND d.id=o.documento AND (";
+            int idDoc = resDoc.getInt("id");
+                String sql = "SELECT o.valor, o.atributo FROM objetos o, documentos d WHERE d.id=" + idDoc + " AND d.id=o.documento AND (";
                 for (int i = 0; i < atributos.length; i++) {
                     if (i == 0) {
                         sql += " o.atributo = '" + atributos[i] + "'";
@@ -46,7 +46,7 @@ public class IndexadorBusca {
                 ResultSet rs = stm.executeQuery(sql);
 
                 Documento doc = new Documento(stWd);
-                doc.setId(idRep);//adiciona o id do documento
+                doc.setId(idDoc);//adiciona o id do documento
                 doc.setObaaEntry(resDoc.getString("obaa_entry"));
                 while (rs.next()) {
                     String atributo = rs.getString("atributo").replace("obaa", "").toLowerCase();
@@ -54,7 +54,7 @@ public class IndexadorBusca {
                     indice.setIndice(atributo, valor, doc);
                 }
                 //apagar os tokens existentes
-                indexar.addDoc(doc, con);
+                indexar.addDocLimpantoTokens(doc, con);
             }
 
 
@@ -75,60 +75,6 @@ public class IndexadorBusca {
         }
     }
 
-
-    /**
-     * Metodo que recebe como entrada o titulo, palavrachave, entidade, obaa_entry e a descrição,
-     * efetua testes, armazena-os na classe Documentos, e passa o documentos para a classe Indexador.
-     * @param titulo Titulo do documento.
-     * @param palavraChave palavraschave do documento. Contatenadas por um " " na string.
-     * @param entidade Entidades do documentos. Contatenadas por um " " na string.
-     * @param entry obaa_entry, ou seja o identificador &uacute;nico do documento.
-     * @param descricao Descrição do documento.
-     * @param con conex&atilde;o com mysql.
-     * @throws SQLException Exce&ccedil;&atilde;o do mysql.
-     */
-    public void populaRI(String titulo, String palavraChave, String entidade, String entry, String descricao, String resumo, String data, String localizacao, int servidor, Connection con) throws SQLException {
-
-        StopWordTAD stWd = new StopWordTAD();
-
-        Documento doc = new Documento(stWd);
-
-        if (testaEntry(entry, con)) {
-            //System.out.println("Este documento já se encontra na base. "+entry);
-        } else {
-
-            //System.out.println(entry+"\n"+titulo +"\n"+palavraChave+"\n"+entidade+"\n"+descricao);
-
-            doc.setObaaEntry(entry);//aciona o entry para o tipo abstato Documento
-
-            if (!titulo.isEmpty()) {
-                doc.setTitulo(titulo); //adiciona o titulo para o tipo abstrato Documento
-            }
-            if (!palavraChave.isEmpty()) {
-                doc.setPalavrasChave(palavraChave);
-            }
-            if (!entidade.isEmpty()) {
-                doc.setEntidade(entidade);
-            }
-            if (!descricao.isEmpty()) {
-                doc.setDescricao(descricao);
-            }
-            if (!resumo.isEmpty()) {
-                doc.setResumo(resumo);
-            }
-            if (!data.isEmpty()) {
-                doc.setData(data);
-            }
-            if (!localizacao.isEmpty()) {
-                doc.setLocalizacao(localizacao);
-            }
-            if (servidor != 0) {
-                doc.setServidor(servidor);
-            }
-
-            indexar.addDoc(doc, con); //adiciona o documento doc na base de dados da conexao con
-        }
-    }
 
     /**
      * Testa se o obaa_entry já existe na base de dados
@@ -177,55 +123,14 @@ public class IndexadorBusca {
 
             Long fim = System.currentTimeMillis();
             System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
-            indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
             System.out.println("Indice calculado!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * M&eacute;todo respons&aacute;vel por indexar um reposit&oacute;rio espec&iacute;fico
-     * @param nome Nome do repositorio que sera indexado
-     * @param con Conexao com o Postgres
-     */
-    public void indexarRepositorioEspecifico(String nome, Connection con) {
-        String sql = "select id, nome from repositorios where nome= '" + nome + "';";
 
-        try {
-            Statement stmDadosLdap = con.createStatement();
-            ResultSet rs = stmDadosLdap.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
-            if (rs.next()) {
-                System.out.println("Indexando repositorio " + rs.getString("nome"));
-                IndexaRep(rs.getInt("id"), con); //indexa o repositorio informado
 
-            }
-            System.out.println("Calculando o indice....");
-            indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
-            System.out.println("Indice calculado!");
-        } catch (SQLException e) {
-            System.out.println("Nome informado nao foi encontrado na base de dados");
-            e.printStackTrace();
-        }
-    }
-
-    public void reindexarTudo(Connection con) {
-        System.out.println("Deletando tabela documentos");
-        String sql = "delete from documentos;";
-
-        try {
-            Statement stmDadosLdap = con.createStatement();
-            stmDadosLdap.execute(sql); //executa a consulta que esta na string sqlDadosLdap
-
-            System.out.println("Foi apagado o indice do Postgres.");
-            indexarTodosRepositorios(con);//reindexar todos os repositorios
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao apagar os dados do indice no Postgres");
-            e.printStackTrace();
-        }
-
-    }
 
     public void recalcularIndice(Connection con) {
         try {
@@ -246,9 +151,9 @@ public class IndexadorBusca {
         Connection con = conectar.conectaBD();
 
         //run.indexarTodosRepositorios(con); //cria o indice com todos os repositorios
-        run.IndexaRep(7, con);
-        run.recalcularIndice(con);
-//        run.indexarTodosRepositorios(con);
+//        run.IndexaRep(7, con);
+//        run.recalcularIndice(con);
+        run.indexarTodosRepositorios(con);
 
         
         try {

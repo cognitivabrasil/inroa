@@ -48,7 +48,7 @@ Author     : Marcos Nunes
             //se retornar algum resultado{
             // Cria uma tabela HTML onde ficarao os repositorios cadastrados
             //        <table valign="center" width=100% aling="center" cellspacing=5 cellpadding=5 border=3 >
-        %>
+%>
         <table class='repositorios-table' cellpadding=3>
             <tr>
                 <th colspan=3>
@@ -92,25 +92,29 @@ Author     : Marcos Nunes
                     <a title="Editar / Visualizar" onclick="NewWindow('exibeRepositorios.jsp?id=<%=res.getString("id")%>','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/Lapiz-32x32.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
-                        &nbsp;
-                    <a title="Atualizar agora" onclick="">
-                        <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                    </a>
+
 
                 </td>
                 <td class="<%=yesnocolor%>">&nbsp;<%=res.getString("nome")%></td>
                 <td class="<%=yesnocolor%>">&nbsp;<%=res.getString("descricao")%></td>
                 <td class="<%=yesnocolor%>">&nbsp;
-                    <%
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                    <div id="textResult<%=res.getString("id")%>">
+                        <%
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-                            if (!Robo.testarDataAnteriorMil(res.getDate("data_ultima_atualizacao"))) {
-                                out.println("Dia "+format.format(res.getDate("data_ultima_atualizacao")) + " &agrave;s " + res.getTime("data_ultima_atualizacao"));
-                                
-                            } else {
-                                out.println("Ainda n&atilde;o foi atualizado!");
-                            }
-                    %></td>
+                        if (!Robo.testarDataAnteriorMil(res.getDate("data_ultima_atualizacao"))) {
+                            out.println("Dia " + format.format(res.getDate("data_ultima_atualizacao")) + " &agrave;s " + res.getTime("data_ultima_atualizacao"));
+
+                        } else {
+                            out.println("Ainda n&atilde;o foi atualizado!");
+                        }
+                        %>
+
+                        <a title="Atualizar agora" onclick="javaScript:ataualizaRepAjax(<%=res.getString("id")%>, document.getElementById('textResult'+<%=res.getString("id")%>));">
+                            <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        </a>
+                    </div>
+                </td>
 
 
                 <% linha++;%>
@@ -136,17 +140,21 @@ Author     : Marcos Nunes
                     </a>
 
                 </td>
-
+                <td>
+                    <div id="textResultTodos">
+                    <a style="text-decoration:none" onclick="javaScript:ataualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
+                    </div>
+                </td>
                 <% linha++;%>
 
             </tr>
         </table>
-<!--Insere codigo que lista os padroes de metadados-->
-<%@include file="./padraoMetadados/padraoMetadados.jsp"%>
-<!--Fim codigo que lista os padroes-->
-<!--Insere codigo que lista os mapeamentos-->
-<%@include file="./mapeamentos/mapeamentos.jsp"%>
-<!--Fim codigo que lista os mapeamentos-->
+        <!--Insere codigo que lista os padroes de metadados-->
+        <%@include file="./padraoMetadados/padraoMetadados.jsp"%>
+        <!--Fim codigo que lista os padroes-->
+        <!--Insere codigo que lista os mapeamentos-->
+        <%@include file="./mapeamentos/mapeamentos.jsp"%>
+        <!--Fim codigo que lista os mapeamentos-->
 
         <table class='repositorios-table' cellpadding=3>
             <tr>
@@ -170,7 +178,7 @@ Author     : Marcos Nunes
 
             //Carrega do banco de dados os repositorios cadastrados
 
-             ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao FROM dados_subfederacoes l ORDER BY nome ASC;");
+            ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao FROM dados_subfederacoes l ORDER BY nome ASC;");
             while (resultFederacao.next()) {
 
                 if (linha2 % 2 == 0) {
@@ -270,5 +278,5 @@ Author     : Marcos Nunes
     </BODY>
 </html>
 <%
-con.close(); //fechar conexao o banco de dados
+            con.close(); //fechar conexao o banco de dados
 %>

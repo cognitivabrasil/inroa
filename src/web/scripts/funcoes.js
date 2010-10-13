@@ -166,3 +166,46 @@ function openAjax() {
 function trim(str){
     return str.replace(/^\s+|\s+$/g,"");
 }
+
+
+
+
+/**
+ * Função que atualiza o repositorio solicitado utilizando ajax.
+ * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
+ * @param id id do repositorio a ser atualizado
+ * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
+*/
+function ataualizaRepAjax(id, exibeResultado)
+{
+
+
+    var ajax = openAjax(); // Inicia o Ajax.
+
+    ajax.open("POST", "atualizaRepAjax.jsp?id="+id+"&divResultado="+exibeResultado, true); // Envia o termo da busca como uma querystring
+
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        {
+            exibeResultado.innerHTML = "Aguarde, atualizando...";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
+            {
+//                var resultado = ajax.responseText;
+//                exibeResultado.innerHTML = resultado;
+                    exibeResultado.innerHTML = "Atualizado!";
+            }
+            else
+            {
+                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+            }
+        }
+    }
+    ajax.send(null); // submete
+//document.getElementById("nome").value= "";//limpa os campos
+//document.getElementById("nome").setFocus=true;
+
+}

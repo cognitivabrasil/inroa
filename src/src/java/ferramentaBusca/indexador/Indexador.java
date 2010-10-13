@@ -28,10 +28,8 @@ public class Indexador {
     public void addDocLimpantoTokens(Documento doc, Connection con) throws SQLException {
         String sqlDel = "DELETE FROM r1tokens where id=" + doc.getId();
         Statement stm = con.createStatement();
-        int result = stm.executeUpdate(sqlDel); //executa o que tem na variavel sql1
-        if (result > 0) {
-            addDoc(doc, con);
-        }
+        stm.executeUpdate(sqlDel); //executa o que tem na variavel sql1
+        addDoc(doc, con);
     }
 
     /**
@@ -176,7 +174,7 @@ public class Indexador {
         //apaga as tabelas antes de inserir
         apagarCalculosIndice(con);
 
-        PreparedStatement R1Size = con.prepareStatement("INSERT INTO r1size(size) SELECT COUNT(DISTINCT(id)) FROM r1tokens;");
+        PreparedStatement R1Size = con.prepareStatement("INSERT INTO r1size(size) SELECT COUNT(id) FROM documentos;");
 
         R1Size.execute();
         R1Size.close();
@@ -187,9 +185,7 @@ public class Indexador {
 
         //PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, if(T.field=1||T.field=2,COUNT(*)*2, COUNT(*)) FROM r1tokens T GROUP BY T.id, T.token;");
 
-        //MySQL
-        //PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, if(T.field=1,3, 1) FROM r1tokens T GROUP BY T.id, T.token;");
-
+     
         PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, sum(CASE t.field WHEN 1 THEN 3 ELSE 1 END)FROM r1tokens t GROUP BY T.id, T.token;");
         R1TF.execute();
         R1TF.close();
@@ -210,7 +206,7 @@ public class Indexador {
 //////        R1Sum.execute();
 //////        R1Sum.close();
 
-        //apagarCalculosAposIndiceCalculado(con);
+        apagarCalculosIndice(con);
 
     }
 
@@ -223,7 +219,7 @@ public class Indexador {
     private static void apagarCalculosIndice(Connection con) throws SQLException {
         String sql1 = "DELETE FROM r1idf;";
         String sql2 = "DELETE FROM r1size;";
-        String sql3 = "DELETE FROM r1sum;";
+//        String sql3 = "DELETE FROM r1sum;";
         String sql4 = "DELETE FROM r1tf;";
         String sql5 = "DELETE FROM r1length;";
 
@@ -231,30 +227,9 @@ public class Indexador {
         Statement stm = con.createStatement();
         stm.executeUpdate(sql1); //executa o que tem na variavel sql1
         stm.executeUpdate(sql2);
-        stm.executeUpdate(sql3);
+//        stm.executeUpdate(sql3);
         stm.executeUpdate(sql4);
         stm.executeUpdate(sql5);
     }
 
-    /**
-     * Apaga as tabelas r1idf, r1size, r1sum, r1tf e r1length da base de dados. Estas tabelas armazenam os calculos do indice.
-     * @param con  conex&atilde;o como banco de dados
-     * @throws SQLException
-     * @author Marcos Nunes
-     */
-    private static void apagarCalculosAposIndiceCalculado(Connection con) throws SQLException {
-        String sql1 = "DELETE FROM r1idf;";
-        String sql2 = "DELETE FROM r1size;";
-        String sql3 = "DELETE FROM r1tokens;";
-        String sql4 = "DELETE FROM r1tf;";
-        String sql5 = "DELETE FROM r1length;";
-
-
-        Statement stm = con.createStatement();
-        stm.executeUpdate(sql1); //executa o que tem na variavel sql1
-        stm.executeUpdate(sql2);
-        stm.executeUpdate(sql3);
-        stm.executeUpdate(sql4);
-        stm.executeUpdate(sql5);
-    }
 }
