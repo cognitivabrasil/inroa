@@ -89,7 +89,7 @@ public class teste {
         }
     }
 
-    public void teste() {
+    public void teste() throws SQLException {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
         String sql = "";
@@ -163,7 +163,8 @@ public class teste {
         //run.testando2();
         int result = 0;
         try {
-            run.inserePadrao("nome", "metadata", "namespace", "titulo;marcos;freitas;nunes;abvx");
+//            run.inserePadrao("nome", "metadata", "namespace", "titulo;marcos;freitas;nunes;abvx");
+            run.teste();
         } catch (SQLException e) {
             e.printStackTrace();
         }
