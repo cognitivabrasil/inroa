@@ -29,7 +29,9 @@ Author     : Marcos Nunes
                 <td width =50% class="adm-title">
                     Ferramenta Administrativa
                 </td>
-
+                <td width ="10%" class="center middle">
+                    <a href="" onclick="javascript:NewWindow('recalcularIndice.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">Recalcular o Indice</a>
+                </td>
                 <td width ="10%" class="center middle">
                     <a href="" onclick="javascript:NewWindow('alterarSenha.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Senha</a>
                 </td>

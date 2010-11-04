@@ -182,7 +182,7 @@ function ataualizaRepAjax(id, exibeResultado)
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "atualizaRepAjax.jsp?id="+id+"&divResultado="+exibeResultado, true); // Envia o termo da busca como uma querystring
+    ajax.open("POST", "atualizaRepAjax.jsp?id="+id, true); // Envia o termo da busca como uma querystring
 
     ajax.onreadystatechange = function()
     {

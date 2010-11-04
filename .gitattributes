@@ -296,6 +296,7 @@ src/web/padraoMetadados/funcoesPadrao.js -text
 src/web/padraoMetadados/padraoMetadados.jsp -text
 src/web/padraoMetadados/respostaAjaxPadrao.jsp -text
 src/web/paginacao.jsp -text
+src/web/recalcularIndice.jsp -text
 src/web/removerFederacao.jsp -text
 src/web/removerRepositorio.jsp -text
 src/web/sair.jsp -text
