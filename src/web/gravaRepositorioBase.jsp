@@ -9,7 +9,10 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="conexaoBD.jsp"%>
 <%@page import="operacoesLdap.*" %>
-
+<%
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
