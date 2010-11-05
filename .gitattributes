@@ -195,6 +195,7 @@ src/lib/ptstemmer.jar -text
 src/lib/simmetrics_jar_v1_6_2_d07_02_07.jar -text
 src/lib/xalan.jar -text
 src/src/conf/MANIFEST.MF -text
+src/src/java/RSS/Rss.java -text
 src/src/java/ferramentaBusca/Busca.java -text
 src/src/java/ferramentaBusca/IndexadorBusca.java -text
 src/src/java/ferramentaBusca/indexador/Documento.java -text
@@ -240,6 +241,7 @@ src/src/java/robo/main/Temporizador.java -text
 src/src/java/robo/main/package.html -text
 src/src/java/robo/util/Informacoes.java -text
 src/src/java/robo/util/package.html -text
+src/web/Index3.jsp -text
 src/web/META-INF/context.xml -text
 src/web/WEB-INF/jsp/pager-taglib.tld -text
 src/web/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
@@ -269,6 +271,7 @@ src/web/imagens/add-24x24.png -text
 src/web/imagens/apagar.png -text
 src/web/imagens/erro_sincronizar.png -text
 src/web/imagens/favicon.ico -text
+src/web/imagens/gerarRss.png -text
 src/web/imagens/ico24_deletar.gif -text
 src/web/imagens/ico24_salvar.gif -text
 src/web/imagens/sincronizar.png -text
@@ -296,6 +299,7 @@ src/web/paginacao.jsp -text
 src/web/recalcularIndice.jsp -text
 src/web/removerFederacao.jsp -text
 src/web/removerRepositorio.jsp -text
+src/web/rss.jsp -text
 src/web/sair.jsp -text
 src/web/scripts/funcoes.js -text
 src/web/scripts/validatejs.js -text
