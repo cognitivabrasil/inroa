@@ -20,7 +20,17 @@
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-    </head>
+        <script language="JavaScript" type="text/javascript">
+            function geraRss() {
+                var consulta = document.getElementById("key").value;
+                var repositorio = document.getElementById("repositorio").value;
+
+                window.location='rss.jsp?search='+consulta+'&idRep='+repositorio;
+
+            }
+        </script>
+
+    </head>      
 
     <body id="bodyMenor">
         <!-- incluir um arquivo %@ include file="top.html" %> -->
@@ -43,7 +53,7 @@
                         Servidor:
                     </div>
                     <div class="Value">
-                        <select name="repositorio" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                        <select name="repositorio" id="repositorio" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                             <option selected value="0">Federa&ccedil;&atilde;o
                                 <%
                 //Carrega do banco de dados os repositorios cadastrados
@@ -66,7 +76,7 @@
                             Texto para a busca:
                         </div>
                         <div class="Value">
-                            <input type="text" name="key" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                            <input type="text" name="key" id="key" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
                         </div>
                     </div>
                 </div>
@@ -77,6 +87,12 @@
                     </div>
                 </div>
             </form>
+            <div ALIGN="CENTER">
+                <a href="./Index3.jsp">Selecionar Repositórios</a>
+            </div>
+                    <div  ALIGN="RIGHT">
+                        <img src="imagens/gerarRss.png" width="17%" height="17%" alt="rsslogo" onclick= "geraRss()"/>
+                    </div>
         </div>
         <%@include file="googleAnalytics"%>
     </body>

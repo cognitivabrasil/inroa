@@ -20,10 +20,12 @@ public class Busca {
     /**
      * Realiza uma busca por similaridade e relev&acirc;ncia no indice criado.
      * @param termoBusca Palava ou express&atilde;o que ser&aacute; buscada.
+     * @param idRep identificador do reposit&oacute;rio onde ser&aacute; feita a busca. Usar 0 caso se queira buscar todos em todos os reposit&oacute;rios
      * @return ArrayList de Strings contendo os obaa_entry resultantes da busca.
+     * @throws SQLException
      */
     public ArrayList<String> search(String termoBusca, int idRep) throws SQLException{
-        
+
     Conectar conectar = new Conectar(); //instancia uma variavel da classe Postgres.conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe Postgres.conectar
 
@@ -32,10 +34,44 @@ public class Busca {
         //resultadoBusca = TfIdf.search(termoBusca, con);
 
         Recuperador rep = new Recuperador();
-        
+
         resultadoBusca = rep.search2(termoBusca, con, idRep);
         for (int i=0; i<resultadoBusca.size(); i++){
-            
+
+        String entryQ = "SELECT obaa_entry FROM documentos WHERE id=" + resultadoBusca.get(i);
+
+				Statement stm = con.createStatement();
+				ResultSet rs2 = stm.executeQuery(entryQ);
+				rs2.next();
+				String entryA = rs2.getString("obaa_entry");
+                                entry.add(entryA);
+        }
+        con.close(); //fecha a conexao com o Postgres
+        return entry;
+    }
+
+
+    /**
+     * Realiza uma busca por similaridade e relev&acirc;ncia no indice criado.
+     * @param termoBusca Palava ou express&atilde;o que ser&aacute; buscada.
+     * @param idRep ArrayList de reposit&oacute;rios onde ser&aacute; feita a busca.
+     * @return ArrayList de Strings contendo os obaa_entry resultantes da busca.
+     * @throws SQLException
+     */
+    public ArrayList<String> search(String termoBusca, ArrayList <Integer>idRep) throws SQLException{
+
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe Postgres.conectar
+        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe Postgres.conectar
+
+        ArrayList<Integer> resultadoBusca = new ArrayList<Integer>();
+        ArrayList<String> entry = new ArrayList<String>();
+        //resultadoBusca = TfIdf.search(termoBusca, con);
+
+        Recuperador rep = new Recuperador();
+
+        resultadoBusca = rep.search2(termoBusca, con, idRep);
+        for (int i=0; i<resultadoBusca.size(); i++){
+
         String entryQ = "SELECT obaa_entry FROM documentos WHERE id=" + resultadoBusca.get(i);
 
 				Statement stm = con.createStatement();
@@ -50,13 +86,18 @@ public class Busca {
 
     public static void main(String[] args) {
         Busca run = new Busca();
+        ArrayList <Integer>idRep = new ArrayList <Integer>();
+
+        for (int i=1;i<=9;i++){
+            idRep.add(i);
+        }
+
         try{
-        System.out.println(run.search("sapato de couro", 0));
-        }catch (SQLException e){
-         e.printStackTrace();
+            System.out.println(run.search("sapato de couro", idRep));
+            System.out.println(run.search("sapato de couro", 0));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
 }
-
-
