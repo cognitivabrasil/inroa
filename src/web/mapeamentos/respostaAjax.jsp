@@ -37,7 +37,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
             if (tipo.equalsIgnoreCase("comboBox")) {
                 out.println("<select name='atributos' id='atrb"+idDivResultado+"' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
 
-                //consultar o mysql todos os atributos
+                //consultar na base todos os atributos
                 String sqlPadrao = "SELECT a.id, a.atributo " +
                         "FROM atributos a " +
                         "WHERE a.id_padrao = (SELECT a.id_padrao FROM mapeamentos m, atributos a WHERE m.destino_id=a.id GROUP BY a.id_padrao)" +
@@ -68,7 +68,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
                     String sqlUpdate = "UPDATE mapeamentos SET destino_id=" + novoValor + " where id=" + idMapOuPadrao + ";";
 
-                    stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
+                    stm.executeUpdate(sqlUpdate); //submete o que esta na variavel sqlUpdate
 
                     out.println(consultaAtributoBase(idMapOuPadrao)); //retorna o valor que ficou salvo na base de dados
                 }
@@ -79,13 +79,13 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 
                         String sqlUpdate = "UPDATE tipomapeamento SET descricao='" + novoValor + "' where id=" + id + ";";
 
-                        stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
+                        stm.executeUpdate(sqlUpdate); //subemete o que esta na variavel sqlUpdate
 
                         out.println(consultaTipoMapeamento("descricao", id)); //retorna o valor que ficou salvo na base de dados
 
                     } else if (idDivResultado.equalsIgnoreCase("tipoMap")) {
                         String sqlUpdate = "UPDATE tipomapeamento SET nome='" + novoValor + "' where id=" + id + ";";
-                        stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
+                        stm.executeUpdate(sqlUpdate); //subemete o que esta na variavel sqlUpdate
                         
                         out.println(consultaTipoMapeamento("nome", id)); //retorna o valor que ficou salvo na base de dados
 
@@ -124,7 +124,7 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
             else if (tipo.equalsIgnoreCase("comboOrigem")) {
                 out.println("<select name='atributosOrigem' id='atribOrigem' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
 
-                //consultar o mysql todos os atributos
+                //consultar todos os atributos
                 String sqlPadrao = "SELECT a.id, a.atributo " +
                         "FROM atributos a " +
                         "WHERE a.id_padrao =" +idMapOuPadrao+

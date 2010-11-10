@@ -25,8 +25,6 @@ public class AtualizaBase {
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         try {
 
-           // Class.forName("com.mysql.jdbc.Driver");
-            //con = DriverManager.getConnection("jdbc:mysql://"+ipBase+":"+portarBase+"/" + baseDeDados, usuario, senha);
             Statement stmUpdt = con.createStatement();
 
     int result = 0;

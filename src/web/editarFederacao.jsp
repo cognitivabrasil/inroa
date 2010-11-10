@@ -167,7 +167,7 @@
 
                 String sqlUp = "UPDATE dados_subfederacoes set nome='" + nome + "', descricao='" + descricao + "', login='" + loginLdap + "', senha='" + senhaLdap + "', porta=" + porta + ", ip='" + ip + "' where id=" + id;
 
-                result = stm.executeUpdate(sqlUp); //realiza no mysql oque esta na variavel sql1
+                result = stm.executeUpdate(sqlUp); //realiza no banco o que esta na variavel sqlUp
 
                 if (result > 0) { //se o insert funcionar entra no if
                       out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); " +
@@ -187,5 +187,5 @@
     </body>
 </html>
 <%
-con.close(); //fechar conexao com mysql
+con.close(); //fechar conexao com o postgre
 %>

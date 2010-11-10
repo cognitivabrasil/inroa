@@ -38,7 +38,7 @@ public class Usuario {
             System.out.println(e);
         }finally {
             try {
-                con.close(); //fechar conexao mysql
+                con.close(); //fechar conexao com a base
                 } catch (SQLException e) {
                 System.out.println("Erro ao fechar a conexão: " + e.getMessage());
             }

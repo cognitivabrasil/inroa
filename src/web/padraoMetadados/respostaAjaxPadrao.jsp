@@ -43,7 +43,7 @@
 
                 String sqlUpdate = "UPDATE padraometadados SET "+atributo+"='" + novoValor + "' where id=" + idPadrao + ";";
       
-                stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
+                stm.executeUpdate(sqlUpdate); //submete o que esta na variavel sqlUpdate
 
                 out.println(consultaPadrao(idPadrao, atributo)); //retorna o valor que ficou salvo na base de dados
 
@@ -54,7 +54,7 @@
 
                 String sqlUpdate = "UPDATE atributos SET atributo='" + novoValor + "' where id=" + idAtributo + ";";
 
-                stm.executeUpdate(sqlUpdate); //realiza no mysql oque esta na variavel sqlUpdate
+                stm.executeUpdate(sqlUpdate); //submete o que esta na variavel sqlUpdate
 
                 out.println(consultaAtributos(idAtributo)); //retorna o valor que ficou salvo na base de dados
 
@@ -63,7 +63,7 @@
 
 <%! public String consultaPadrao(String id, String atributo) throws SQLException{
     Conectar conect = new Conectar();
-            //chama metodo que conecta no mysql
+            //conecta na base
             Connection con = conect.conectaBD();
     Statement stm = con.createStatement();
     String sql = "SELECT "+atributo+" FROM padraometadados WHERE id=" + id + ";";
@@ -74,7 +74,7 @@
 
 public String consultaAtributos(String id) throws SQLException{
     Conectar conect = new Conectar();
-            //chama metodo que conecta no mysql
+            //conecta na base
             Connection con = conect.conectaBD();
     Statement stm = con.createStatement();
     String sql = "SELECT atributo FROM atributos WHERE id=" + id + ";";

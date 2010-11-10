@@ -16,8 +16,8 @@ public class IndexadorBusca {
     /**
      * M&aacute;todo respons&aacute;vel por indexar a base de dados LDAP.
      * Efetua uma busca no metadiretorio do LDAP procurando por todos os objetos do repositorio informado e passa para a ferramenta de Recuperação de Informações (RI) para indexar os termos.
-     * @param nomeRepMeta Nome do repositorio ou do metadiretorio contido da tabela repositorios do mysql. O padrão para o metadiret&oacute;rio é 'todos'
-     * @param con conex&atilde;o com mysql.
+     * @param nomeRepMeta Nome do repositorio ou do metadiretorio contido da tabela repositorios do banco de dados. O padrão para o metadiret&oacute;rio é 'todos'
+     * @param con conex&atilde;o com banco de dados.
      */
     public void IndexaRep(int repositorio, Connection con) {
 
@@ -79,9 +79,8 @@ public class IndexadorBusca {
     /**
      * Testa se o obaa_entry já existe na base de dados
      * @param obaa_entry String contendo o obaa_entry
-     * @param con conexão com mysql
+     * @param con conexão com banco de dados
      * @return true se o objeto existe e false se não existir
-     * @param con Conexao com o mysql
      */
     public boolean testaEntry(String obaa_entry, Connection con) throws SQLException {
         boolean resultado;
@@ -101,8 +100,8 @@ public class IndexadorBusca {
     }
 
     /**
-     * M&eacute;todo respons&aacute;vel por indexar todos reposit&oacute;rios cadastrados no mysql
-     * @param con Conexao com o mysql
+     * M&eacute;todo respons&aacute;vel por indexar todos reposit&oacute;rios cadastrados no banco de dados
+     * @param con Conexao com o banco de dados
      */
     public void indexarTodosRepositorios(Connection con) {
         String sql = "select id, nome from repositorios where nome != 'todos';";
@@ -157,7 +156,7 @@ public class IndexadorBusca {
 
         
         try {
-            con.close(); //fechar conexao com o mysql
+            con.close(); //fechar conexao com o banco de dados
         } catch (SQLException e) {
             System.out.println("Erro ao fechar conexao com o Postgres: ");
             e.printStackTrace();

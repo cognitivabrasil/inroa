@@ -131,7 +131,7 @@
                     boolean result = false;
                     
                     try {
-                        result = inserePadrao(nome, metPrefix, nameSpace, atributos); //realiza no mysql o insert do novo padrao
+                        result = inserePadrao(nome, metPrefix, nameSpace, atributos); //realiza no Portgre o insert do novo padrao
                     } catch (SQLException k) {
                         out.print("<p class='textoErro'>Erro ao inserir o padr&atilde;o na base de dados: </p>" + k);
                         System.err.println("ERRO NO SQL ao inserir o novo padr&atilde;o na base de dados: " + k);

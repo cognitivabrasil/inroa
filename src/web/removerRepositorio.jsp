@@ -84,5 +84,5 @@
     </body>
 </html>
 <%
-con.close(); //fechar conexao com mysql
+con.close(); //fechar conexao com o portgres
 %>

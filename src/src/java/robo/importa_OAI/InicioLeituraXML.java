@@ -130,8 +130,8 @@ public class InicioLeituraXML {
             //efetua a leitura do xml e insere os objetos no ldap
         try {
 
-                        Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
-                        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
+                        Conectar conectar = new Conectar(); //instancia uma variavel da classe portgres.conectar
+                        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe portgres.conectar
 
                         reader.parser("C:/bndigital.xml", indexar, con, 9);
                         con.close();

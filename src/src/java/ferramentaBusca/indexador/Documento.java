@@ -1,8 +1,9 @@
 package ferramentaBusca.indexador;
 
 import java.util.ArrayList;
-import ptstemmer.Stemmer;
-import ptstemmer.support.stopwords.*;
+import ptstemmer.*;
+import ptstemmer.exceptions.PTStemmerException;
+
 
 
 public class Documento {
@@ -124,8 +125,6 @@ public class Documento {
         return id;
     }
 
-
-
     public String getTituloOriginal() {
         return tituloOriginal;
     }
@@ -189,47 +188,53 @@ public class Documento {
         return servidor;
     }
 
-
-
     /**
      * Esse método retorna uma lista de palavras stemizada
      * @param S String que será tokenizada
      * @return lista de palavras stemizada
      */
-     public static ArrayList<String> tokeniza(String S) {
-
-        Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
-        st.enableCaching(1000);
+    public static ArrayList<String> tokeniza(String S) {
 
         ArrayList<String> Words = new ArrayList<String>();
 
-        S = S.toLowerCase();
+        try {
+            Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
 
-        S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
-        S = S.replaceAll("á|à|â|ã|ä", "a");
-        S = S.replaceAll("é|è|ê|ë", "e");
-        S = S.replaceAll("í|ì|î|ï", "i");
-        S = S.replaceAll("ó|ò|ô|õ|ö", "o");
-        S = S.replaceAll("ú|ù|û|ü", "u");
-        S = S.replaceAll("ç", "c");
+            st.enableCaching(1000);
 
-        S = S.trim();
+            S = S.toLowerCase();
+
+            S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
+            S = S.replaceAll("á|à|â|ã|ä", "a");
+            S = S.replaceAll("é|è|ê|ë", "e");
+            S = S.replaceAll("í|ì|î|ï", "i");
+            S = S.replaceAll("ó|ò|ô|õ|ö", "o");
+            S = S.replaceAll("ú|ù|û|ü", "u");
+            S = S.replaceAll("ç", "c");
+
+            S = S.trim();
 
             String tokens[];
-            tokens = st.phraseStemming(S);
+            tokens = st.getPhraseStems(S);
 
             for (int i = 0; i < tokens.length; i++) {
 
 
-                if (!tokens[i].isEmpty()){
+                if (!tokens[i].isEmpty()) {
                     Words.add(tokens[i]);
                 }
             }
 
-          if (Words.size() < 1) {
+            if (Words.size() < 1) {
 //                System.out.println("Nenhuma palavra capturada! String: "+S+"\n");
             }
-        return Words;
+
+            return Words;
+        } catch (PTStemmerException e) {
+            System.out.println("Erro ao stemmizar a frase: " + S);
+            System.out.println("Erro: " + e);
+            return Words;
+        }
 
     }
 
@@ -242,15 +247,17 @@ public class Documento {
      */
     public static ArrayList<String> tokeniza(String S, StopWordTAD StopWords) {
 
-        Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
-        st.enableCaching(1000);
-
         ArrayList<String> Words = new ArrayList<String>();
 
-        S = S.toLowerCase();
-        StopWordList StopwdPort = new StopWordsFromHashSet(StopWords.getRes());
-        st.ignoreStopWords(StopwdPort);
+        try{
+        Stemmer st;
+        st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
 
+        st.enableCaching(1000);
+
+        S = S.toLowerCase();
+        //StopWordList StopwdPort = new StopWordsFromHashSet(StopWords.getRes());
+        st.ignore(StopWords.getRes());
 
         S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
         S = S.replaceAll("á|à|â|ã|ä", "a");
@@ -264,21 +271,23 @@ public class Documento {
         
 
             String tokens[];
-            tokens = st.phraseStemming(S);
+            tokens = st.getPhraseStems(S);
             
             for (int i = 0; i < tokens.length; i++) {
 
-
-                if (!tokens[i].isEmpty() && !StopwdPort.isStopWord(tokens[i])){
+                if (!tokens[i].isEmpty())
                     Words.add(tokens[i]);
-                }
 
             }
 
-          if (Words.size() < 1) {
+        //  if (Words.size() < 1) {
 //                System.err.println("Nenhuma palavra capturada! String: "+S+"\n");
-            }
-        return Words;
-
+       //    }
+            return Words;
+        } catch (PTStemmerException e){
+            System.out.println("Erro ao stemmizar a frase: " + S);
+            System.out.println("Erro: " + e);
+            return Words;
+        }
     }
 }

@@ -12,7 +12,7 @@
 
 <%
   // Este exemplo mostra como paginar os resultados de uma
-  // tabela MySQL
+  // tabela o portgres
   // o nome da base de dados é "test"
 
 
@@ -84,7 +84,7 @@
   else
     out.println("Próximos " + limit);
 
-  con.close(); // fechar conexao mysql
+  con.close(); // fechar conexao o portgres
 %>
 
 </body>

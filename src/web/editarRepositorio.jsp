@@ -404,7 +404,7 @@
 
                     String sql1 = "UPDATE repositorios set nome='" + nome + "', descricao='" + descricao + "' where id=" + id; //sql que possui o update
 
-                    result = stm.executeUpdate(sql1); //realiza no mysql oque esta na variavel sql1
+                    result = stm.executeUpdate(sql1); //submete o UPDATE ao banco de dados
 
                     if (result > 0) { //se o insert funcionar entra no if
                         String sql2 = "UPDATE info_repositorios set padrao_metadados=" + padrao_metadados + " where id_repositorio=" + id;
@@ -532,7 +532,7 @@
 
 
             }
-            con.close(); //fechar conexao mysql
+            con.close(); //fechar conexao com o banco de dados
             %>
 
 

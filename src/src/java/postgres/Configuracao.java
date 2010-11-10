@@ -13,13 +13,6 @@ public class Configuracao {
     String ip;
     int porta;
 
-//    String usuario = "cinted";
-//    String senha = "teste";
-//    String ipMysql = "143.54.95.74";
-//    String portaMysql = "3306";
-//    String ipMysql = "localhost";
-
-
    /**
      * conexão com a base local
      */
