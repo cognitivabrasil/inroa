@@ -20,6 +20,7 @@
     String usr = (String)session.getAttribute("usuario");
     if (usr==null){
         out.print("<script type='text/javascript'>fechaRecarrega();</script>");
+        out.print("<script type='text/javascript'>window.location=\"/feb/login.html\";</script>");
     }
 %>
 </body>
