@@ -228,6 +228,7 @@ src/src/java/robo/harvesterOAI/ListRecords.java -text
 src/src/java/robo/harvesterOAI/ListSets.java -text
 src/src/java/robo/harvesterOAI/Principal.java -text
 src/src/java/robo/harvesterOAI/package.html -text
+src/src/java/robo/importaSubFederacao/ImportaSubFederacao.java -text
 src/src/java/robo/importa_OAI/DadosObjetos.java -text
 src/src/java/robo/importa_OAI/Header.java -text
 src/src/java/robo/importa_OAI/Indice.java -text
