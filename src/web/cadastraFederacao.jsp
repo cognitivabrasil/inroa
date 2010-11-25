@@ -52,10 +52,10 @@
             if (formNull) {
             %>
 
-            <div class="subTitulo-center">&nbsp;Entre com as informa&ccedil;&otilde;es para cadastrar um novo reposit&oacute;rio</div>
+            <div class="subTitulo-center">&nbsp;Entre com as informa&ccedil;&otilde;es para cadastrar uma nova federa&atilde;o</div>
             <div class="EspacoAntes">&nbsp;</div>
             <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
-            <form name="adicionarLDAP" action="" method="post" onsubmit="return myForm.Apply('MensagemErro')">
+            <form name="adicionarFederacao" action="" method="post" onsubmit="return myForm.Apply('MensagemErro')">
 
 
                 <div class="LinhaEntrada">
@@ -131,19 +131,19 @@
                 String ip = request.getParameter("ip").trim();
                 String porta = request.getParameter("porta").trim();
                 String login = request.getParameter("loginDestino").trim();
-                String senhaLdap = request.getParameter("senhaDestino").trim();
+                String senhaFed = request.getParameter("senhaDestino").trim();
                 String confimaSenha = request.getParameter("confSenhaDestino").trim();
                 String nome = request.getParameter("nome").trim();
                 String descricao = request.getParameter("descricao").trim();
 
                 //testa se os campos em comum dos dois tipos de sincronizacao foram preenchidos
-                if (ip.isEmpty() || porta.isEmpty() || login.isEmpty() || senhaLdap.isEmpty() || confimaSenha.isEmpty() || nome.isEmpty() || descricao.isEmpty()) {
+                if (ip.isEmpty() || porta.isEmpty() || login.isEmpty() || senhaFed.isEmpty() || confimaSenha.isEmpty() || nome.isEmpty() || descricao.isEmpty()) {
                     out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
                             "<script type='text/javascript'>history.back(-1);</script>");
                 }
 
                 //testa se a senha informada e a repeticao estao iguais
-                if (!senhaLdap.equals(confimaSenha)) {
+                if (!senhaFed.equals(confimaSenha)) {
                     out.print("<script type='text/javascript'>alert('As senhas informadas para o Ldap destino não conferem. Digite novamente!');</script>" +
                             "<script type='text/javascript'>history.back(-1);</script>");
                 }
@@ -161,7 +161,7 @@
                 } else {
                     int result = 0;
                     String sql = "INSERT INTO dados_subfederacoes (login, senha, ip, porta, descricao, nome) " +
-                            "VALUES ('" + login + "', '" + senhaLdap + "', '" + ip + "', " + porta + ", '" + descricao + "', '" + nome + "');";
+                            "VALUES ('" + login + "', '" + senhaFed + "', '" + ip + "', " + porta + ", '" + descricao + "', '" + nome + "');";
                     try {
                         result = stm.executeUpdate(sql); //realiza na base o insert que esta na variavel sql
                     } catch (SQLFeatureNotSupportedException e) {
