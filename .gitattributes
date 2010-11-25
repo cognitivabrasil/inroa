@@ -215,7 +215,6 @@ src/src/java/postgres/AtualizaBase.java -text
 src/src/java/postgres/AtualizacaoRepositorio.java -text
 src/src/java/postgres/Conectar.java -text
 src/src/java/postgres/Configuracao.java -text
-src/src/java/postgres/ConsultaNomeFederacao.java -text
 src/src/java/postgres/Excluir.java -text
 src/src/java/postgres/package.html -text
 src/src/java/postgres/teste.java -text

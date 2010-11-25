@@ -34,12 +34,11 @@ public class Robo {
 //        boolean atualizou = false;
         Robo robo = new Robo();
 
-        String sql = "SELECT r.nome, r.id as idrep"
-                + " FROM repositorios r, info_repositorios i"
-                + " WHERE r.id=i.id_repositorio"
-                + " AND r.nome!='todos'"
-                + " AND r.nome!='OBAA'"
-                + " AND i.data_ultima_atualizacao < (now() - i.periodicidade_horas*('1 HOUR')::INTERVAL);";
+        String sql = "SELECT r.nome, r.id as idrep" + " FROM repositorios r, info_repositorios i " +
+                " WHERE r.id=i.id_repositorio" +
+                " AND r.nome!='todos'" +
+                " AND r.nome!='OBAA'" +
+                " AND i.data_ultima_atualizacao < (now() - i.periodicidade_horas*('1 HOUR')::INTERVAL);";
 
 
 
@@ -48,18 +47,18 @@ public class Robo {
         try {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-
+            boolean repAtualizado = false;
             while (rs.next()) {
                 int idRep = rs.getInt("idrep");
-
                 robo.atualizaRepositorio(idRep, indexar); //chama o metodo que atualiza o repositorio
-
+                repAtualizado = true;
             }
 
-            System.out.println("recalculando o indice " + new Date());
-            indexar.populateR1(con);
-            System.out.println("indice recalculado! " + new Date());
-
+            if (repAtualizado) {
+                System.out.println("recalculando o indice " + new Date());
+                indexar.populateR1(con);
+                System.out.println("indice recalculado! " + new Date());
+            }
 
         } catch (SQLException e) {
             System.err.println("SQL Exception... Erro na consulta:");
@@ -87,14 +86,7 @@ public class Robo {
 
 
 
-        String sql = "SELECT l.base, r.nome, i.data_ultima_atualizacao, l.ip, i.url_or_ip as url, i.tipo_sincronizacao,"
-                + " l.login, l.senha, p.metadata_prefix, l.porta as portaLdapDestino,"
-                + " to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form"
-                + " FROM repositorios r, info_repositorios i, padraometadados p, dados_subfederacoes l"
-                + " WHERE r.id = i.id_repositorio"
-                + " AND i.padrao_metadados = p.id"
-                + " AND i.ldap_destino = l.id"
-                + " AND r.id = " + idRepositorio + ";";
+        String sql = "SELECT l.base, r.nome, i.data_ultima_atualizacao, l.ip, i.url_or_ip as url, i.tipo_sincronizacao," + " l.login, l.senha, p.metadata_prefix, l.porta as portaLdapDestino," + " to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form" + " FROM repositorios r, info_repositorios i, padraometadados p, dados_subfederacoes l" + " WHERE r.id = i.id_repositorio" + " AND i.padrao_metadados = p.id" + " AND i.ldap_destino = l.id" + " AND r.id = " + idRepositorio + ";";
 
         con = conectar.conectaBD(); //chama o metodo conectaBD da classe Conectar
 
@@ -234,9 +226,7 @@ public class Robo {
             if (idRep > 0) {
                 recalcularIndice = robo.atualizaRepositorio(idRep, indexar);
             } else {
-                String sql = "SELECT r.id as idrep"
-                        + " FROM repositorios r"
-                        + " WHERE r.nome!='todos';";
+                String sql = "SELECT r.id as idrep" + " FROM repositorios r" + " WHERE r.nome!='todos';";
 
                 Statement stm = con.createStatement();
                 ResultSet rs = stm.executeQuery(sql);

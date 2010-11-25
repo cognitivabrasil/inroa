@@ -8,9 +8,10 @@ import java.sql.*;
  */
 public class Conectar {
 
-    Configuracao conf = new Configuracao();
+    Configuracao conf;
     
-    public Conectar() {}
+    public Conectar() {
+    conf = new Configuracao();}
    /**
      * Conexão com uma subfederacao
      * @param subfed arquivo da configuracao da base federada
