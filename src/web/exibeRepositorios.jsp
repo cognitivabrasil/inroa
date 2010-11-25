@@ -27,13 +27,6 @@
             <%
         String id = request.getParameter("id");
        
-        /*String sql = "SELECT r.*, i.*, d.*, p.nome as nomePadrao " +
-                    " FROM repositorios r, info_repositorios i, dadosldap d, padrao_metadados p " +
-                    " WHERE r.id=" + id + " " +
-                    "AND r.id=i.id_repositorio " +
-                    "AND r.id=d.id_repositorio " +
-                    "AND i.padrao_metadados=p.id " +
-                    "ORDER BY r.nome ASC;";*/
         String sql = "SELECT r.*, i.*, p.nome as nome_padrao, l.nome as nome_federacao, l.descricao as descricao_federacao, l.porta, l.login, l.senha, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao"
 +" FROM repositorios r, info_repositorios i, dados_subfederacoes l, padraometadados p"
 +" WHERE r.id="+id+" AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.id_federacao=l.id ORDER BY r.nome ASC";
@@ -66,22 +59,12 @@
                 <div class="Value">&nbsp;<%=res.getString("nome_padrao").toUpperCase()%></div>
             </div>
 
-<!--Informações configuração-->
+<!--Informações configuração
             <div class="subtitulo">Informa&ccedil;&otilde;es sobre a configura&ccedil;&atilde;o da federa&ccedil;&atilde;o</div>
             <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=config">Editar</a></div>
 
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Periodicidade de atualiza&ccedil;&atilde;o :
-                </div>
-                <div class="Value">&nbsp;<%=res.getInt("periodicidade_horas")%> (horas)</div>
-            </div>
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Nome na federa&ccedil;&atilde;o:
-                </div>
-                <div class="Value">&nbsp;<%=res.getString("nome_na_federacao")%></div>
-            </div>
+            
+-->
 
 <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
             <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=OAI-PMH">Editar</a></div>
@@ -92,11 +75,18 @@
                 </div>
                 <div class="Value">&nbsp;<%=res.getString("url_or_ip")%></div>
             </div>
+            
+            <div class="LinhaEntrada">
+                <div class="Label">
+                    Periodicidade de atualiza&ccedil;&atilde;o :
+                </div>
+                <div class="Value">&nbsp;<%=res.getInt("periodicidade_horas")%> (horas)</div>
+            </div>
 
 <!--Informacoes da base onde serao armazenados os dados-->
 <!--
             <div class="subtitulo">Informa&ccedil;&otilde;es sobre a Federa&ccedil;&atilde;o local</div>
-            <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&ldapLocal=<%=res.getString("nome_federacao")%>&campo=LdapLocal">Editar</a></div>
+<div class="editar"><a href="./editarRepositorio.jsp?id=<%--=id%>&ldapLocal=<%=res.getString("nome_federacao")--%>&campo=LdapLocal">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
@@ -111,7 +101,7 @@
                 <div class="Value">&nbsp;<%=res.getString("descricao_federacao")%></div>
             </div>
             -->
-<!-- Fim informacoes sobre a base de dados -->
+            <!-- Fim informacoes sobre a base de dados -->
             <%
         
         }else
