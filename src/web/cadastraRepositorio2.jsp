@@ -101,9 +101,7 @@ Segunda etapa do cadastro de um repositorio
                                 <%
                 //Carrega do banco de dados os padroes de metadados cadastrados
                 //postgres ok
-                /*
-                 *
-                 *  conferir o que fazer quando se tem metadiretorios nos ldaps*/
+                
 
 
 
