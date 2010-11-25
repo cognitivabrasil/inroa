@@ -12,7 +12,6 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 <%@page import="operacoesLdap.Consultar"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="postgres.ConsultaNomeFederacao" %>
 <%@include file="conexaoBD.jsp"%>
 <%@page import="ferramentaBusca.recuperador.Recuperador"%>
 
