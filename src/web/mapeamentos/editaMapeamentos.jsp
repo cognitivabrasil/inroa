@@ -19,13 +19,13 @@
             //necessario para usar o ajax
         </script>
         <script language="JavaScript" type="text/javascript" src="./funcoesMapeamento.js">
-            //necessario para usar o funcionamento
+            //necessario para o funcionamento
         </script>
 
     </head>
 
     <%
-//testa seÃ§Ã£o..
+//testa sessao..
 
             String usr = (String) session.getAttribute("usuario");
             if (usr == null) {
@@ -119,7 +119,7 @@
             //potgres ok
             String sqlMap = "SELECT m.id as id_map, a1.atributo as origem, a2.atributo as destino, a2.id_padrao as id_padrao_destino, m.mapeamento_composto_id" +
                     " FROM atributos a1, mapeamentos m, atributos a2" +
-                    " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipo_mapeamento_id=" + tipoMapeamento + " AND m.padraometadados_id=" + idPadrao + ";";
+                    " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipo_mapeamento_id=" + tipoMapeamento + " AND m.padraometadados_id=" + idPadrao + "ORDER BY origem;";
 
             ResultSet rs1 = stm.executeQuery(sqlPadrao);
             //pega o proximo resultado retornado pela consulta sql

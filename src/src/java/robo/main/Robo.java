@@ -86,7 +86,11 @@ public class Robo {
 
 
 
-        String sql = "SELECT l.base, r.nome, i.data_ultima_atualizacao, l.ip, i.url_or_ip as url, i.tipo_sincronizacao," + " l.login, l.senha, p.metadata_prefix, l.porta as portaLdapDestino," + " to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form" + " FROM repositorios r, info_repositorios i, padraometadados p, dados_subfederacoes l" + " WHERE r.id = i.id_repositorio" + " AND i.padrao_metadados = p.id" + " AND i.ldap_destino = l.id" + " AND r.id = " + idRepositorio + ";";
+        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, p.metadata_prefix, to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form" +
+                " FROM repositorios r, info_repositorios i, padraometadados p" +
+                " WHERE r.id = i.id_repositorio" +
+                " AND i.padrao_metadados = p.id" +
+                " AND r.id = " + idRepositorio + ";";
 
         con = conectar.conectaBD(); //chama o metodo conectaBD da classe Conectar
 
@@ -111,7 +115,7 @@ public class Robo {
 
                 } else {//repositorio possui url para atualizacao
 
-                    String base = rs.getString("base");
+//                    String base = rs.getString("base");
                     String ultimaAtualizacao = rs.getString("ultima_atualizacao_form");
                     //String horaAtual = rs.getString("horaAtualForm");
 ////                String ip = rs.getString("ip_destino");
@@ -154,7 +158,6 @@ public class Robo {
                     }
 
                     if (caminhoTeste.isDirectory()) {
-
 
                         caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
                         //leXMLgravaBase le do xml e armazena no ldap idependente de padrao de metadado
@@ -258,6 +261,8 @@ public class Robo {
 
     public static void main(String[] args) {
         Robo run = new Robo();
-        run.testaUltimaIportacao();
+//        run.testaUltimaIportacao();
+        Indexador indexar = new Indexador();
+        run.atualizaRepositorio(562, indexar);
     }
 }

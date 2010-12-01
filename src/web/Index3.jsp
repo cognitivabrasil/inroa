@@ -57,24 +57,25 @@
                     <div class="Label">
                         Servidor:
                     </div>
-                    <div class="Value">
+                                            
                         <%
                                     //Carrega do banco de dados os repositorios cadastrados
                                     ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
                                     int i = 0;
                                     while (res.next()) {
                                         if (!res.getString("nome").equalsIgnoreCase("todos")) {
-                                            out.println("<input value='"+res.getString("id")+"' type=checkbox id=\"" + res.getString("id") + "\""
+                                            out.println("<div class='ValueIndex'><input value='"+res.getString("id")+"' type=checkbox id=\"" + res.getString("id") + "\""
                                                     + " name=\"repositorios\""
                                                     + ">" + res.getString("nome").toUpperCase()
-                                                    + "<BR>");
+                                                    + "</div>");
                                         }
                                         i++;
 
                                     }
                         %>
+                    
                     </div>
-                </div>
+                
 <div class="clear"> </div>
                 <div id="modificavel">
                     <div class="LinhaEntrada">
@@ -97,7 +98,7 @@
                 <a href="./index.jsp">Ocultar Repositórios</a>
             </div>
                     <div  ALIGN="RIGHT">
-                        <img src="imagens/gerarRss.png" width="17%" height="17%" alt="rsslogo" onclick= "geraRss()"/>
+                        <a class="linkRSS" onclick= "geraRss()"><img src="imagens/rss_300x300.png" width="3%" height="3%" alt="rsslogo" onclick= "geraRss()"/> <b>Gerar RSS</b></a>
                     </div>
         </div>
         <%@include file="googleAnalytics"%>

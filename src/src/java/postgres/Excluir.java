@@ -87,6 +87,32 @@ public class Excluir {
             return false;
         }
     }
+    
+    /**
+     * Remove um mapeamento da base de dados. Deve ser informado o id do tipo do mapeamento e o id do padr&atilde;o de metadados
+     * @param tipoMapId id do tipo do mapeamento
+     * @param padraoId id do padr&atilde;o de metadados
+     * @return true se removeu o mapeamento da base de dados ou false se n&atilde;o foi removido
+     */
+    public static boolean removeMapeamento(int tipoMapId, int padraoId){
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
+        int result = 0;
+        try{
+            Statement stm = con.createStatement();
+            String sql = "DELETE FROM mapeamentos " +
+                    " WHERE tipo_mapeamento_id=" +tipoMapId+
+                    " AND padraometadados_id="+padraoId;
+            result = stm.executeUpdate(sql); //executa o que tem na variavel
+            if (result > 0) {
+                return true;
+            } else
+                return false;
+        } catch(SQLException s){
+            System.out.println("ERRO ao remover um mapeamento. -> "+s);
+            return false;
+        }
+    }
 
     public static void main(String[] args) {
         Excluir run = new Excluir();

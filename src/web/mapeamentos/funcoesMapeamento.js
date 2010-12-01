@@ -389,7 +389,7 @@ function excluirAjax(idMapeamento, tabela, idResultado)
                     }else{
                         if(parseInt(resultado)>0){
                             exibeResultado.innerHTML = "Exclu&iacute;do com sucesso.";
-                            document.location.reload();
+                            document.reload();
                         }
                         else{
                             exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";

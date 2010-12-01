@@ -22,7 +22,7 @@ public class Configuracao {
     usuario = "feb";
     senha = "123456";
 //    ip = "143.54.95.20";
-//    ip = "localhost";
+//    ip = "127.0.0.1";
 //    porta = 5000;
 //    senha = "123456";
     ip = "143.54.95.74";

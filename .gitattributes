@@ -274,6 +274,7 @@ src/web/imagens/favicon.ico -text
 src/web/imagens/gerarRss.png -text
 src/web/imagens/ico24_deletar.gif -text
 src/web/imagens/ico24_salvar.gif -text
+src/web/imagens/rss_300x300.png -text
 src/web/imagens/sincronizar.png -text
 src/web/index.jsp -text
 src/web/infoDetalhada.jsp -text
@@ -287,6 +288,7 @@ src/web/mapeamentos/deletaBaseAjax.jsp -text
 src/web/mapeamentos/editaMapeamentos.jsp -text
 src/web/mapeamentos/funcoesMapeamento.js -text
 src/web/mapeamentos/mapeamentos.jsp -text
+src/web/mapeamentos/removerMapeamento.jsp -text
 src/web/mapeamentos/respostaAjax.jsp -text
 src/web/mapeamentos/salvarBaseAjax.jsp -text
 src/web/mapeamentos/selecionaPadraoAddMap.jsp -text

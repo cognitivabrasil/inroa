@@ -60,7 +60,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
     %>
     <tr  class='center'>
         <td class="<%=yesnocolor%>">
-            <a title="Excluir" onclick="NewWindow('removerMapeamento.jsp?id=<%=idTipMap%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+            <a title="Excluir" onclick="NewWindow('./mapeamentos/removerMapeamento.jsp?idTipoMap=<%=idTipMap%>&idPadrao=<%=idPadrao%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                 <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
             </a>
             &nbsp;

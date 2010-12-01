@@ -36,7 +36,7 @@
         <!-- incluir um arquivo %@ include file="top.html" %> -->
         <div id="page">
 
-                <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="11%" height="10%" alt="Logo FEB_reduzido"/></div>
+                <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="11%" height="11%" alt="Logo FEB_reduzido"/></div>
 
 
             <div class="clear"> </div>
@@ -84,6 +84,7 @@
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input class="BOTAO" type="submit" value="Consultar"/>
+                                                
                     </div>
                 </div>
             </form>
@@ -91,7 +92,8 @@
                 <a href="./Index3.jsp">Selecionar Repositórios</a>
             </div>
                     <div  ALIGN="RIGHT">
-                        <img src="imagens/gerarRss.png" width="17%" height="17%" alt="rsslogo" onclick= "geraRss()"/>
+                        <a class="linkRSS" onclick= "geraRss()"><img src="imagens/rss_300x300.png" width="3%" height="3%" alt="rsslogo" onclick= "geraRss()"/> <b>Gerar RSS</b></a>
+                        <!--<img src="imagens/gerarRss.png" width="17%" height="17%" alt="rsslogo" onclick= "geraRss()"/>-->
                     </div>
         </div>
         <%@include file="googleAnalytics"%>

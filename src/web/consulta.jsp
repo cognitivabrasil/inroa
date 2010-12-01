@@ -100,7 +100,14 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
     </head>
     <body id="body">
-        <div id="page-header">Resultado da Pesquisa</div>
+        <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="7%" height="7%" alt="Logo FEB_reduzido"/></div>
+
+
+            <div class="clear"> </div>
+
+            <div class="EspacoPequeno">&nbsp;</div>
+            <div class="subTituloBusca">&nbsp;Resultado da Pesquisa</div>
+        
         <div id="page-sub-header">
             <a href="index.jsp">Efetuar nova consulta</a>
         </div>

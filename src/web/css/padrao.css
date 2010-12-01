@@ -15,7 +15,6 @@ root {
     display: block;
 }
 
-
 body
 {
     font-family: Tahoma,verdana, arial, sans;
@@ -24,8 +23,6 @@ body
     color: #000000;
     
 }
-
-
 
 #bodyMenor{
     width: 735px;
@@ -40,6 +37,7 @@ a{
     color:#0066CC;
     cursor:pointer;
 }
+
 a:visited{
     color:#0066CC;
 }
@@ -342,6 +340,9 @@ a:hover{
 .LinhaEntrada .Value{
     margin:0 0 20px 41%;
 }
+.LinhaEntrada .ValueIndex{
+    margin:0 0 5px 41%;
+}
 .LinhaEntrada .ValueErro{
     margin:0 0 20px 41%;
     color:red;
@@ -499,11 +500,13 @@ td{vertical-align:top;}
     font-family: verdana;
     font-size:80%;
 }
+
+}
 .botaoEditar { 
     background-color: transparent;
     background-image:url(/feb/imagens/Lapiz-24x24.png);
-    height: 24px;
-    width: 24px;
+    height: 100px;
+    width: 100px;
     border:0px;
     cursor:pointer;
 }
@@ -616,4 +619,20 @@ td{vertical-align:top;}
     margin:1% 0% 1% 9%;
     font-size:110%;
     text-decoration:underline;
+}
+
+.linkRSS{
+    font-weight:inherit;
+    color:black;
+    cursor:pointer;
+}
+.linkRSS:hover{
+    font-weight:inherit;
+    color:black;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:102%;
+}
+.linkRSS:visited{
+    color:black;
 }

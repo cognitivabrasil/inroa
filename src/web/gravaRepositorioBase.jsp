@@ -147,8 +147,7 @@
                 }
             }
         }
-    }
-
+    
         %>
 
         <%@include file="googleAnalytics"%>
