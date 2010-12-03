@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.Date;
 import operacoesLdap.Remover;
 import postgres.Conectar;
+import robo.importaSubFederacao.ImportaSubFederacao;
 
 /**
  * Ferramenta de Sincronismo (Robô)
@@ -31,7 +32,12 @@ public class Robo {
 
         Indexador indexar = new Indexador();
         Connection con = null;
-//        boolean atualizou = false;
+        
+//TESTA/ATUALIZA SUBFEDERACAO
+        ImportaSubFederacao subFed = new ImportaSubFederacao();
+        subFed.atualiza_subFederacao(con);
+
+//TESTA REPOSITORIO
         Robo robo = new Robo();
 
         String sql = "SELECT r.nome, r.id as idrep" + " FROM repositorios r, info_repositorios i " +

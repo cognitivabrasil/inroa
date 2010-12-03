@@ -57,7 +57,7 @@ public class ImportaSubFederacao {
     }
 
     public void documentos(int idSubFed, Timestamp ultimaAtualizacao, Connection con, Connection conSub) throws SQLException {
-
+        System.out.println("FEB: Atualizando Subfederacao");
         String sqlSub = "SELECT id_repositorio||';FEB;'||obaa_entry as entry from  documentos d where timestamp >= '" + ultimaAtualizacao + "'";
         
         Statement stm = conSub.createStatement();
@@ -111,7 +111,9 @@ public class ImportaSubFederacao {
         Statement stmSub = conSub.createStatement();
         ResultSet rsSub = stmSub.executeQuery(consultaSub);
         while (rsSub.next()) {
-            //insert
+            //
+            //FAZER EM UM INSERT SÓ
+            //
             String insertObjeto = "INSERT INTO objetos (atributo, valor, documento) VALUES (?,?,?);";
             PreparedStatement stmt1 = con.prepareStatement(insertObjeto);
             stmt1.setString(1, rsSub.getString("atributo"));
