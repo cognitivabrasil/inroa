@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import postgres.Conectar;
 import postgres.Configuracao;
 
@@ -59,14 +60,14 @@ public class ImportaSubFederacao {
     public void documentos(int idSubFed, Timestamp ultimaAtualizacao, Connection con, Connection conSub) throws SQLException {
         System.out.println("FEB: Atualizando Subfederacao");
         String sqlSub = "SELECT id_repositorio||';FEB;'||obaa_entry as entry from  documentos d where timestamp >= '" + ultimaAtualizacao + "'";
-        
+
         Statement stm = conSub.createStatement();
         ResultSet rs = stm.executeQuery(sqlSub);
 
         while (rs.next()) {
             String obaaEntry = rs.getString("entry");
             String insert = "INSERT INTO documentos (obaa_entry, id_subfed) VALUES (?,?);";
-            
+
             try {
                 PreparedStatement stmt1 = con.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
                 stmt1.setString(1, obaaEntry);
@@ -101,26 +102,50 @@ public class ImportaSubFederacao {
                 }
             }
         }
+        System.out.println("FEB: Subfederacao atualizada.");
 
     }
 
     public void objetos(int idDoc, String obaaEntry, Connection con, Connection conSub) throws SQLException {
 
         String idEntry[] = obaaEntry.split(";FEB;");
-        String consultaSub = "SELECT atributo, valor FROM documentos d, objetos o WHERE o.documento=d.id AND d.obaa_entry='" + idEntry[1] + "' AND d.id_repositorio=" + idEntry[0];
+        String consultaSub = "SELECT atributo, valor FROM documentos d, objetos o " +
+                " WHERE o.documento=d.id" +
+                " AND d.obaa_entry='" + idEntry[1] + "'" +
+                " AND d.id_repositorio=" + idEntry[0] +
+                " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$' )";
         Statement stmSub = conSub.createStatement();
         ResultSet rsSub = stmSub.executeQuery(consultaSub);
+        ArrayList<String> atributos = new ArrayList<String>();
+        ArrayList<String> valores = new ArrayList<String>();
         while (rsSub.next()) {
-            //
-            //FAZER EM UM INSERT SÓ
-            //
-            String insertObjeto = "INSERT INTO objetos (atributo, valor, documento) VALUES (?,?,?);";
-            PreparedStatement stmt1 = con.prepareStatement(insertObjeto);
-            stmt1.setString(1, rsSub.getString("atributo"));
-            stmt1.setString(2, rsSub.getString("valor"));
-            stmt1.setInt(3, idDoc);
-            stmt1.execute();
+            atributos.add(rsSub.getString("atributo"));
+            valores.add(rsSub.getString("valor"));
         }
+        String insertObjeto = "INSERT INTO objetos (atributo, valor, documento) VALUES";
+
+        //for para preencher as interrogacoes
+        for (int i = 0; i < atributos.size(); i++) {
+            if (i == 0) {
+                insertObjeto += " (?,?,?)";
+            } else {
+                insertObjeto += ", (?,?,?)";
+            }
+        }
+        PreparedStatement stmt = con.prepareStatement(insertObjeto);
+
+        //form para preencher os valores a serem inseridos
+        for (int i = 0; i < atributos.size(); i++) {
+            int i2 = i * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+
+            stmt.setString(i2 + 1, atributos.get(i));
+            stmt.setString(i2 + 2, valores.get(i));
+            stmt.setInt(i2 + 3, idDoc);
+        }
+
+        stmt.executeUpdate();
+        stmt.close();
+
 
     }
 
@@ -136,12 +161,4 @@ public class ImportaSubFederacao {
         stm.executeUpdate(sql);
     }
 
-    public static void main(String[] args) {
-        Conectar conectar = new Conectar();
-        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-        ImportaSubFederacao subFed = new ImportaSubFederacao();
-
-        subFed.atualiza_subFederacao(con);
-
-    }
 }
