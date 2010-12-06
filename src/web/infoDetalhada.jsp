@@ -37,13 +37,13 @@ modelo de tópico:
 
                         String obaaEntry = "";
                         String idBase = "";
-                        String repositorio = "";
+                        int repositorio = 0;
                         boolean variaveisParametro = false;
                         try {
                             obaaEntry = request.getParameter("id"); //coleta o obaaEntry
                             idBase = request.getParameter("idBase");
-                            repositorio = request.getParameter("repositorio");
-                            if (obaaEntry.isEmpty() || idBase.isEmpty() || repositorio.isEmpty()) {
+                            repositorio = Integer.parseInt(request.getParameter("repositorio"));
+                            if (obaaEntry.isEmpty() || idBase.isEmpty() || repositorio<=0) {
                                 out.print("<p class='textoErro'>Erro! Parametros sem valor</p>");
                                 out.print("<script type='text/javascript'>alert(Erro! Parametros sem valor');</script>"
                                         + "<script type='text/javascript'>history.go(-1);</script>");

@@ -191,11 +191,13 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     ArrayList<String> localizacao = new ArrayList<String>();
 
                     String identificador = "";
-                    String repositorio = "";
+                    int repositorio = 0;
+                    String nomeRepositorio = "";
                     String idBase = "";
-                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, r.nome as repositorio, ds.id as id_base FROM documentos d, dados_subfederacoes ds, repositorios r, objetos o, info_repositorios i WHERE d.id=o.documento AND d.id_repositorio=r.id AND r.id = i.id_repositorio AND i.id_federacao=ds.id AND d.id=" + resultadoBusca.get(result) +
-                            " AND (o.atributo ~* '^obaadate$' OR o.atributo ~* '^obaaLocation$' OR o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$')";
-
+                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_subfed as id_base, d.id_repositorio as repositorio" +
+                            " FROM documentos d, objetos o" +
+                            " WHERE d.id=o.documento AND d.id=" + resultadoBusca.get(result) +
+                            "AND (o.atributo ~* '^obaadate$' OR o.atributo ~* '^obaaLocation$' OR o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$')";
                     try {
                         ResultSet rs = stm.executeQuery(resultadoSQL);
                         //pega o proximo resultado retornado pela consulta sql
@@ -203,7 +205,8 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                         while (rs.next()) {
                             if (rs.isFirst()) {
                                 identificador = rs.getString("obaa_entry");
-                                repositorio = rs.getString("repositorio");
+                                repositorio = rs.getInt("repositorio");
+                                //nomeRepositorio = rs.getString("nomeRep");
                                 idBase = rs.getString("id_base");
                             }
                             String valor = rs.getString("valor");
@@ -222,7 +225,17 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                         out.print("<script type='text/javascript'>alert('Nao foi possivel recuperar as informacoes da base de dados');</script>" +
                                 "<script type='text/javascript'>history.back(-1);</script>");
                     }
+                    
+                        if(idBase == null){
+                            String sql = "SELECT r.nome as nomeRep, r.id as repositorio from documentos d, repositorios r WHERE d.id_repositorio=r.id AND d.id="+ resultadoBusca.get(result);
+                            ResultSet rs = stm.executeQuery(sql);
+                            rs.next();
+                            nomeRepositorio = rs.getString("nomeRep");
+                        }else{
+                            nomeRepositorio = "SubFedera&ccdil;&atilde;o";
+                        }
 
+                    
                     // out.println("<p>" + identificador + "<br>" + titulo + "<br>" + resumo + "<br>" + localizacao + "<br>" + data + "<br>" + Servidor + "<br>" + ipResultado + "<br>" + dn + "</p>");
 
                             %>
@@ -301,10 +314,10 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 //fim tratamento data
 
 //inicio tratamento repositorio
-                    if (!repositorio.isEmpty()) {
+                    if (!nomeRepositorio.isEmpty()) {
 
                         out.println("<div class=\"atributo\">" +
-                                "Reposit&oacute;rio: " + repositorio +
+                                "Reposit&oacute;rio: " + nomeRepositorio +
                                 "</div>");
                     }
 

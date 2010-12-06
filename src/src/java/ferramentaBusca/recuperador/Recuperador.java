@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import postgres.Conectar;
 
 /**
  * Classe para a busca de objetos armazenados pela classe {@link Indexador}
@@ -223,6 +224,17 @@ public class Recuperador {
         PreparedStatement delsum = con.prepareStatement(submit3);
         delsum.execute();
         delsum.close();
+    }
+
+    public static void main(String[] args) {
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
+        Recuperador run = new Recuperador();
+        try{
+            System.out.println(run.search2("gremio", con, "0"));
+        }catch(SQLException s){
+            System.out.println(s);
+        }
     }
 
 

@@ -151,8 +151,8 @@ public class IndexadorBusca {
 
         //run.indexarTodosRepositorios(con); //cria o indice com todos os repositorios
 //        run.IndexaRep(7, con);
-//        run.recalcularIndice(con);
-        run.indexarTodosRepositorios(con);
+        run.recalcularIndice(con);
+//        run.indexarTodosRepositorios(con);
 
         
         try {

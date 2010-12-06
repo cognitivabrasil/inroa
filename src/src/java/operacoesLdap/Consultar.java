@@ -45,11 +45,12 @@ public class Consultar {
     }
 
     /**
-     * Metodo para consultar na base de dados todos os atributos para um determinado objeto, essa conexao é feita em seguida copm a subfederacao a qual o objeto pertence
+     * Metodo para consultar na base de dados todos os atributos para um determinado objeto, essa conexao &eacute; feita em seguida com a subfederacao a qual o objeto pertence
      * @param obaa_entry Identificador único do objeto a ser detalhado
+     * @param repositorio id do reposit&oacute;rio o qual o objeto pertence
      * @param con Conexão com a base de dados local
      */
-    public Consultar(String obaa_entry, String repositorio, String idBase, Connection con) throws NullPointerException {
+    public Consultar(String obaa_entry, int repositorio, String idBase, Connection con) throws NullPointerException {
         try {
 
             //vai na base para descobrir a subfederacao do objeto
@@ -59,7 +60,6 @@ public class Consultar {
             ResultSet rs1 = stm.executeQuery();
             Configuracao configuracaoSubFed;
             if (rs1.next()) { // testa se retornou alguma sufederacao
-                System.out.println("");
                 configuracaoSubFed = new Configuracao(rs1.getString("base"), rs1.getString("login"), rs1.getString("senha"), rs1.getString("ip"), rs1.getInt("porta"));
 
             } else { //se não poe a conexão com a base local soh para tratar essa excecao
@@ -76,7 +76,7 @@ public class Consultar {
                     + "WHERE d.obaa_entry = '" + obaa_entry.trim() + "' "
                     + "AND o.documento = d.id "
                     + "AND d.id_repositorio=r.id "
-                    + "AND r.nome='"+repositorio.trim()+"'";
+                    + "AND r.id="+repositorio;
 
             PreparedStatement stmt = conSub.prepareStatement(consulta);
             ResultSet rs = stmt.executeQuery();
@@ -108,9 +108,9 @@ public class Consultar {
 
         Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-        
+        System.out.println("conectou");
         //Consultar run = new Consultar("objetodementira171", arg, con);
-        Consultar run = new Consultar("oai:www.lume.ufrgs.br:10183/15888", "LUME", "1", con);
+        Consultar run = new Consultar("oai:www.lume.ufrgs.br:10183/15888", 3, "1", con);
         System.out.println(run.getResultado());
     }
 }
