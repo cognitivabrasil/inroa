@@ -232,7 +232,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                             rs.next();
                             nomeRepositorio = rs.getString("nomeRep");
                         }else{
-                            nomeRepositorio = "SubFedera&ccdil;&atilde;o";
+                            nomeRepositorio = "SubFedera&ccedil;&atilde;o";
                         }
 
                     

@@ -43,10 +43,10 @@ modelo de tópico:
                             obaaEntry = request.getParameter("id"); //coleta o obaaEntry
                             idBase = request.getParameter("idBase");
                             repositorio = Integer.parseInt(request.getParameter("repositorio"));
-                            if (obaaEntry.isEmpty() || idBase.isEmpty() || repositorio<=0) {
+                            if (obaaEntry.isEmpty() || idBase.isEmpty() || (repositorio<=0 && idBase==null)) {
                                 out.print("<p class='textoErro'>Erro! Parametros sem valor</p>");
-                                out.print("<script type='text/javascript'>alert(Erro! Parametros sem valor');</script>"
-                                        + "<script type='text/javascript'>history.go(-1);</script>");
+                                out.print("<script type='text/javascript'>alert(Erro! Parametros sem valor'); " +
+                                        "history.go(-1);</script>");
                             } else {
                                 variaveisParametro = true;
                             }

@@ -52,31 +52,34 @@ public class Consultar {
      */
     public Consultar(String obaa_entry, int repositorio, String idBase, Connection con) throws NullPointerException {
         try {
-
-            //vai na base para descobrir a subfederacao do objeto
-            String sql = "SELECT ip, login, senha, porta, base FROM dados_subfederacoes WHERE id="+idBase;
-            
-            PreparedStatement stm = con.prepareStatement(sql);
-            ResultSet rs1 = stm.executeQuery();
             Configuracao configuracaoSubFed;
-            if (rs1.next()) { // testa se retornou alguma sufederacao
-                configuracaoSubFed = new Configuracao(rs1.getString("base"), rs1.getString("login"), rs1.getString("senha"), rs1.getString("ip"), rs1.getInt("porta"));
 
-            } else { //se não poe a conexão com a base local soh para tratar essa excecao
+            if (obaa_entry.contains(";FEB;")) { //se for subfederacao
+                String idEntry[] = obaa_entry.split(";FEB;");
+                repositorio = Integer.parseInt(idEntry[0]);
+                obaa_entry = idEntry[1];
+
+                //vai na base para descobrir a subfederacao do objeto
+                String sql = "SELECT ip, login, senha, porta, base FROM dados_subfederacoes WHERE id=" + idBase;
+
+                PreparedStatement stm = con.prepareStatement(sql);
+                ResultSet rs1 = stm.executeQuery();
+
+                if (rs1.next()) { // testa se retornou alguma sufederacao
+                    configuracaoSubFed = new Configuracao(rs1.getString("base"), rs1.getString("login"), rs1.getString("senha"), rs1.getString("ip"), rs1.getInt("porta"));
+
+                } else { //se não poe a conexão com a base local soh para tratar essa excecao
+                    configuracaoSubFed = new Configuracao();
+                    System.out.println("FEB: Base de dados não encontrada!");
+                }
+            } else { //se nao for subfederacao
                 configuracaoSubFed = new Configuracao();
-                System.out.println("Base de dados não encontrada!");
             }
-
-            //conecta na subfederacao
-            Conectar conexaoSubfederacao = new Conectar(configuracaoSubFed);
-            Connection conSub = conexaoSubfederacao.conectaBD(); //chama o metodo conectaBD da classe conectar
+            //conecta na base de dados (federacao ou nao)
+            Conectar conexao = new Conectar(configuracaoSubFed);
+            Connection conSub = conexao.conectaBD(); //chama o metodo conectaBD da classe conectar
             //faz a consulta na subfederacao
-            String consulta = "SELECT o.atributo, o.valor "
-                    + "FROM objetos o, documentos d, repositorios r "
-                    + "WHERE d.obaa_entry = '" + obaa_entry.trim() + "' "
-                    + "AND o.documento = d.id "
-                    + "AND d.id_repositorio=r.id "
-                    + "AND r.id="+repositorio;
+            String consulta = "SELECT o.atributo, o.valor " + "FROM objetos o, documentos d, repositorios r " + "WHERE d.obaa_entry = '" + obaa_entry.trim() + "' " + "AND o.documento = d.id " + "AND d.id_repositorio=r.id " + "AND r.id=" + repositorio;
 
             PreparedStatement stmt = conSub.prepareStatement(consulta);
             ResultSet rs = stmt.executeQuery();
@@ -87,10 +90,10 @@ public class Consultar {
             }
             resultado.add(resultInterno);
             conSub.close();
-            
+
         } catch (SQLException e) {
             System.out.println("ERRO AO CARREGAR ATRIBUTOS DO OBJETO OU CONECTANDO COM A SUBFEDERAÇÃO! " + e);
-         
+
         }
 
     }
@@ -102,7 +105,6 @@ public class Consultar {
     public ArrayList<HashMap> getResultado() {
         return resultado;
     }
-
 
     public static void main(String[] args) {
 

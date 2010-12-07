@@ -31,7 +31,7 @@ public class Robo {
     public void testaUltimaIportacao() {
 
         Indexador indexar = new Indexador();
-        Connection con = null;
+        Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         
 //TESTA/ATUALIZA SUBFEDERACAO
         ImportaSubFederacao subFed = new ImportaSubFederacao();
@@ -45,10 +45,7 @@ public class Robo {
                 " AND r.nome!='todos'" +
                 " AND r.nome!='OBAA'" +
                 " AND i.data_ultima_atualizacao < (now() - i.periodicidade_horas*('1 HOUR')::INTERVAL);";
-
-
-
-        con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+        
 
         try {
             Statement stm = con.createStatement();
