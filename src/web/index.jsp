@@ -54,15 +54,28 @@
                     </div>
                     <div class="Value">
                         <select name="repositorio" id="repositorio" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
-                            <option selected value="0">Federa&ccedil;&atilde;o
+                            <option selected value="0">Confedera&ccedil;&atilde;o
                                 <%
                 //Carrega do banco de dados os repositorios cadastrados
                 ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
                 while (res.next()) {
+                    if(res.isFirst()){
+                        out.println("<option value='' disabled>- Reposit&oacute;rios");
+                    }
                     if (!res.getString("nome").equalsIgnoreCase("todos")) {
-                        out.println("<option value=" + res.getInt("id") + ">" + res.getString("nome").toUpperCase());
+                        out.println("<option value=rep;" + res.getInt("id") + ">" + res.getString("nome").toUpperCase());
                     }
 
+                }
+                ResultSet rsSub = stm.executeQuery("SELECT nome, id FROM dados_subfederacoes ORDER BY nome ASC");
+
+                while (rsSub.next()) {
+                    if(rsSub.isFirst()){
+                        out.println("<option value='' disabled>- Subfedera&ccedil;&otilde;es");
+                    }
+                    if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
+                        out.println("<option value=subFed;" + rsSub.getInt("id") + ">" + rsSub.getString("nome").toUpperCase());
+                    }
                 }
                                 %>
 

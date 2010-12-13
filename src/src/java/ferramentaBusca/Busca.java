@@ -55,10 +55,11 @@ public class Busca {
      * Realiza uma busca por similaridade e relev&acirc;ncia no indice criado.
      * @param termoBusca Palava ou express&atilde;o que ser&aacute; buscada.
      * @param idRep ArrayList de reposit&oacute;rios onde ser&aacute; feita a busca.
+     * @param idSubfed ArrayList de Subfedera&ccedil;&otilde;es onde ser&aacute; feita a busca.
      * @return ArrayList de Strings contendo os obaa_entry resultantes da busca.
      * @throws SQLException
      */
-    public ArrayList<String> search(String termoBusca, ArrayList <Integer>idRep) throws SQLException{
+    public ArrayList<String> search(String termoBusca, ArrayList <Integer>idRep, ArrayList <Integer>idSubfed) throws SQLException{
 
         Conectar conectar = new Conectar(); //instancia uma variavel da classe Postgres.conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe Postgres.conectar
@@ -69,7 +70,7 @@ public class Busca {
 
         Recuperador rep = new Recuperador();
 
-        resultadoBusca = rep.search2(termoBusca, con, idRep);
+        resultadoBusca = rep.search2(termoBusca, con, idRep, idSubfed);
         for (int i=0; i<resultadoBusca.size(); i++){
 
         String entryQ = "SELECT obaa_entry FROM documentos WHERE id=" + resultadoBusca.get(i);
@@ -84,20 +85,5 @@ public class Busca {
         return entry;
     }
 
-    public static void main(String[] args) {
-        Busca run = new Busca();
-        ArrayList <Integer>idRep = new ArrayList <Integer>();
 
-        for (int i=1;i<=9;i++){
-            idRep.add(i);
-        }
-
-        try{
-            System.out.println(run.search("sapato de couro", idRep));
-            System.out.println(run.search("sapato de couro", 0));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 }

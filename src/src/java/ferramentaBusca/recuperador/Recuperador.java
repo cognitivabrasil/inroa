@@ -19,9 +19,7 @@ import postgres.Conectar;
  */
 public class Recuperador {
 
-
     public Recuperador() {
-
     }
 
     /**
@@ -29,14 +27,15 @@ public class Recuperador {
      * @param s String de inteiros separados por v&iacute;rgulas
      * @return ArrayList de inteiros correspondente &agrave; string
      **/
-    private ArrayList <Integer> stringToIntegerArrayList (String s){
+    private ArrayList<Integer> stringToIntegerArrayList(String s) {
         int posfim = 0, posini = 0;
-        ArrayList <Integer> array = new ArrayList<Integer>();
+        ArrayList<Integer> array = new ArrayList<Integer>();
         while (!s.isEmpty()) {
-            if (s.contains(","))
+            if (s.contains(",")) {
                 posfim = s.indexOf(',');
-            else
+            } else {
                 posfim = s.length();
+            }
             try {
                 array.add(Integer.parseInt(s.substring(posini, posfim)));
             } catch (NumberFormatException e) {
@@ -44,13 +43,15 @@ public class Recuperador {
             } catch (Exception e) {
                 System.out.println(e);
             }
-            if (s.contains(","))
+            if (s.contains(",")) {
                 posfim += 1;
+            }
             s = s.substring(posfim);
         }
         return array;
     }
-        /**
+
+    /**
      * Realiza a consulta na base de dados do termo 'query' na base tranferida no 'con'
      * @param query
      *            a string a ser consultada
@@ -62,10 +63,22 @@ public class Recuperador {
      */
     public ArrayList<Integer> search2(String query, Connection con, String idRep)
             throws SQLException {
-        if (idRep.contains("0"))
+        if (idRep.equals("0")) {
             return search2(query, con, 0);
-        else
-            return search2(query, con, stringToIntegerArrayList(idRep));
+        } else {
+            ArrayList<Integer> repId = new ArrayList<Integer>();
+            ArrayList<Integer> subfedId = new ArrayList<Integer>();
+            String ids[] = idRep.split(",");
+            for (int i = 0; i < ids.length; i++) {
+                if (ids[i].contains("rep;")) {
+                    repId.add(Integer.parseInt(ids[i].replace("rep;", "")));
+                } else if (ids[i].contains("subFed;")) {
+                    subfedId.add(Integer.parseInt(ids[i].replace("subFed;", "")));
+                }
+            }
+
+            return search2(query, con, repId, subfedId);
+        }
     }
 
     /**
@@ -78,7 +91,7 @@ public class Recuperador {
      * @return uma lista de Integer com o id de cada documento
      * @throws SQLException
      */
-    public ArrayList<Integer> search2(String query, Connection con, ArrayList<Integer> idRep)
+    public ArrayList<Integer> search2(String query, Connection con, ArrayList<Integer> idRep, ArrayList<Integer> idSubfed)
             throws SQLException {
 
 
@@ -89,11 +102,26 @@ public class Recuperador {
 
         consult = "SELECT tid FROM r1weights r1w, documentos d "
                 + " WHERE r1w.tid=d.id "
-                + " AND (d.id_repositorio=" + idRep.get(0);
+                + " AND ( ";
 
-        for (int i = 1; i < idRep.size(); i++) {
-            consult += " OR d.id_repositorio=" + idRep.get(i);
+        for (int i = 0; i < idRep.size(); i++) {
+            if (i == 0) {
+                consult += " d.id_repositorio=" + idRep.get(i);
+            } else {
+                consult += " OR d.id_repositorio=" + idRep.get(i);
+            }
         }
+
+        for (int f = 0; f < idSubfed.size(); f++) {
+            if (f == 0 && idRep.size() > 0) {
+                consult += " OR d.id_subfed=" + idSubfed.get(f);
+            } else if (f == 0) {
+                consult += "d.id_subfed=" + idSubfed.get(f);
+            } else {
+                consult += " OR d.id_subfed=" + idSubfed.get(f);
+            }
+        }
+
         consult += ") AND (r1w.token=";
         //System.out.println(consult);
 
@@ -108,7 +136,7 @@ public class Recuperador {
 
         }
         int id;
-
+        
         PreparedStatement stmt = con.prepareStatement(consult);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
@@ -141,10 +169,10 @@ public class Recuperador {
 
         String consult = "";
         if (idRep > 0) {
-            consult = "SELECT tid FROM r1weights r1w, documentos d " +
-                    " WHERE r1w.tid=d.id " +
-                    " AND d.id_repositorio=" + idRep +
-                    " AND (r1w.token=";
+            consult = "SELECT tid FROM r1weights r1w, documentos d "
+                    + " WHERE r1w.tid=d.id "
+                    + " AND d.id_repositorio=" + idRep
+                    + " AND (r1w.token=";
         } else {
             consult = "SELECT tid FROM r1weights r1w WHERE (r1w.token=";
         }
@@ -182,27 +210,8 @@ public class Recuperador {
         return idDoc;
     }
 
-
-    ///////////
     /**
-     * M&eacute;todo para popular os relacionamentos tempor&aacute;rios de R2
-     * @param con
-     * @throws SQLException
-     * @deprecated
-     */
-    private static void populateR2(Connection con) throws SQLException {
-
-        PreparedStatement R2Weights = con.prepareStatement("INSERT INTO R2Weights(tid, token, weight) SELECT T.id, T.token, 1 FROM R2Tokens T;");
-        R2Weights.execute();
-        R2Weights.close();
-
-        PreparedStatement R2Sum = con.prepareStatement("INSERT INTO R2Sum(token, total) SELECT R.token, SUM(R.weight) FROM R2Weights R GROUP BY R.token;");
-        R2Sum.execute();
-        R2Sum.close();
-    }
-
-    /**
-     * M�todo para exluir os relacionamentos auxiliares de R2
+     * M&eacute;todo para exluir os relacionamentos auxiliares de R2
      * @param con
      * @throws SQLException
      */
@@ -230,21 +239,28 @@ public class Recuperador {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
         Recuperador run = new Recuperador();
-        try{
-            System.out.println(run.search2("gremio", con, "0"));
-        }catch(SQLException s){
+//        ArrayList<Integer> idRep = new ArrayList<Integer>();
+//        ArrayList<Integer> idSubfed = new ArrayList<Integer>();
+        ArrayList<Integer> resultado = new ArrayList<Integer>();
+//        idRep.add(7);
+//        idRep.add(4);
+//        idSubfed.add(7);
+//        idSubfed.add(4);
+        try {
+//            resultado = run.search2("educa", con, idRep, idSubfed);
+            resultado = run.search2("educa", con, "rep;7,rep;4,subFed;7");
+            System.out.println(resultado.size());
+            resultado = run.search2("educa", con, "0");
+            System.out.println(resultado.size());
+        } catch (SQLException s) {
             System.out.println(s);
         }
     }
-
-
     //sem lista de stop words
-
 //    public Recuperador() {
 //        stWd = null;
 //        ret = new Documento(null);
 //    }
-
 //    /**
 //     * Realiza a consulta na base de dados do termo 'query' na base tranferida no 'con'
 //     * @param query

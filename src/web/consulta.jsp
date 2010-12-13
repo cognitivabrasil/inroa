@@ -193,8 +193,8 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     String identificador = "";
                     int repositorio = 0;
                     String nomeRepositorio = "";
-                    String idBase = "";
-                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_subfed as id_base, d.id_repositorio as repositorio" +
+                    String idSubfed = "";
+                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_subfed, d.id_repositorio as repositorio" +
                             " FROM documentos d, objetos o" +
                             " WHERE d.id=o.documento AND d.id=" + resultadoBusca.get(result) +
                             "AND (o.atributo ~* '^obaadate$' OR o.atributo ~* '^obaaLocation$' OR o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$')";
@@ -207,7 +207,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                                 identificador = rs.getString("obaa_entry");
                                 repositorio = rs.getInt("repositorio");
                                 //nomeRepositorio = rs.getString("nomeRep");
-                                idBase = rs.getString("id_base");
+                                idSubfed = rs.getString("id_subfed");
                             }
                             String valor = rs.getString("valor");
                             String atributo = rs.getString("atributo");
@@ -226,13 +226,16 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                                 "<script type='text/javascript'>history.back(-1);</script>");
                     }
                     
-                        if(idBase == null){
-                            String sql = "SELECT r.nome as nomeRep, r.id as repositorio from documentos d, repositorios r WHERE d.id_repositorio=r.id AND d.id="+ resultadoBusca.get(result);
+                        if(idSubfed == null){
+                            String sql = "SELECT r.nome as nomeRep from documentos d, repositorios r WHERE d.id_repositorio=r.id AND d.id="+ resultadoBusca.get(result);
                             ResultSet rs = stm.executeQuery(sql);
                             rs.next();
                             nomeRepositorio = rs.getString("nomeRep");
                         }else{
-                            nomeRepositorio = "SubFedera&ccedil;&atilde;o";
+                            String sql = "SELECT ds.nome from documentos d, dados_subfederacoes ds WHERE d.id_subfed=ds.id AND d.id="+ resultadoBusca.get(result);
+                            ResultSet rs = stm.executeQuery(sql);
+                            rs.next();
+                            nomeRepositorio = "Subfedera&ccedil;&atilde;o "+rs.getString("nome");
                         }
 
                     
@@ -247,7 +250,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                     if (!titulo.isEmpty()) {
                                 %>
                                 <div class="titulo">
-                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&idBase=<%=idBase%>&repositorio=<%=repositorio%>'>
+                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&idBase=<%=idSubfed%>&repositorio=<%=repositorio%>'>
                                         <%
                                           for (int j = 0; j < titulo.size(); j++) { //percorrer todos os resultados separados por ;;
                                               if (j > 0) { //apos o primeiro elemento colocar um "<BR>"
@@ -260,7 +263,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                                 </div>
                                 <%
                     } else {//se nao existir titulo informa que nao tem titulo mas cria o link para o objeto
-                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idBase + "&repositorio=" + repositorio + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
+                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idSubfed + "&repositorio=" + repositorio + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
                     }
 //fim tratamento titulo
 

@@ -27,6 +27,8 @@ public class Rss {
     private String search;
     private int idRep;
     private ArrayList <Integer>idRepArray = new ArrayList();
+//marcos: eu que coloquei para nao dar o erro. Tem que arrumar
+    private ArrayList <Integer>idSubfedArray = new ArrayList();
 
     /**
      * Transforma um string de inteiros em um ArrayList de inteiros
@@ -158,7 +160,7 @@ public class Rss {
                     System.out.println("int:" + this.search + " " + this.idRep);
                     idArray = rec.search2(this.search, con, this.idRep);
                 } else {
-                    idArray = rec.search2(this.search, con, this.idRepArray);
+                    idArray = rec.search2(this.search, con, this.idRepArray, this.idSubfedArray);
                 }
             } catch (SQLException e) {
                 System.out.println("Problemas com a busca\n" + e);

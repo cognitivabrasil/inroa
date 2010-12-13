@@ -388,8 +388,8 @@ a:hover{
     padding-bottom:5px;
 }
 
-.LinhaEntrada .Value input{width:50%;}
-.LinhaEntrada .Value select{width:50%;}
+.LinhaEntrada .Value input{width:50%; border-color: #006699}
+.LinhaEntrada .Value select{width:50%; border-color: #006699}
 .textoErro{
     color:red
 }
