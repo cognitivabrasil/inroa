@@ -22,43 +22,13 @@ public class Recuperador {
     public Recuperador() {
     }
 
-    /**
-     * Transforma um string de inteiros em um ArrayList de inteiros
-     * @param s String de inteiros separados por v&iacute;rgulas
-     * @return ArrayList de inteiros correspondente &agrave; string
-     **/
-    private ArrayList<Integer> stringToIntegerArrayList(String s) {
-        int posfim = 0, posini = 0;
-        ArrayList<Integer> array = new ArrayList<Integer>();
-        while (!s.isEmpty()) {
-            if (s.contains(",")) {
-                posfim = s.indexOf(',');
-            } else {
-                posfim = s.length();
-            }
-            try {
-                array.add(Integer.parseInt(s.substring(posini, posfim)));
-            } catch (NumberFormatException e) {
-                System.out.println("Id de repositorio invalido " + e);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-            if (s.contains(",")) {
-                posfim += 1;
-            }
-            s = s.substring(posfim);
-        }
-        return array;
-    }
 
     /**
      * Realiza a consulta na base de dados do termo 'query' na base tranferida no 'con'
-     * @param query
-     *            a string a ser consultada
-     * @param con
-     *            a conex&atilde;o com o banco de dados
+     * @param query String a ser consultada
+     * @param con Conex&atilde;o com o banco de dados
      * @param idRep ArrayList de reposit&oacute;rios onde ser&aacute; feita a busca
-     * @return uma lista de Integer com o id de cada documento
+     * @return Um ArrayList de inteiros contendo os ids de cada documento
      * @throws SQLException
      */
     public ArrayList<Integer> search2(String query, Connection con, String idRep)

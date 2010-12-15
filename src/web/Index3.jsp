@@ -41,14 +41,14 @@
         <!-- incluir um arquivo %@ include file="top.html" %> -->
         <div id="page">
 
-                <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="11%" height="10%" alt="Logo FEB_reduzido"/></div>
+            <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="11%" height="10%" alt="Logo FEB_reduzido"/></div>
 
 
             <div class="clear"> </div>
 
             <div class="EspacoPequeno">&nbsp;</div>
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
-<div class="linkCantoDireito"><a href="./adm.jsp">Ferramenta Administrativa</a></div>
+            <div class="linkCantoDireito"><a href="./adm.jsp">Ferramenta Administrativa</a></div>
             <div class="Espaco">&nbsp;</div>
             <form name="consulta" action="consulta.jsp" method="post">
 
@@ -57,26 +57,49 @@
                     <div class="Label">
                         Servidor:
                     </div>
-                                            
-                        <%
-                                    //Carrega do banco de dados os repositorios cadastrados
-                                    ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
-                                    int i = 0;
-                                    while (res.next()) {
-                                        if (!res.getString("nome").equalsIgnoreCase("todos")) {
-                                            out.println("<div class='ValueIndex'><input value='"+res.getString("id")+"' type=checkbox id=\"" + res.getString("id") + "\""
-                                                    + " name=\"repositorios\""
-                                                    + ">" + res.getString("nome").toUpperCase()
-                                                    + "</div>");
-                                        }
-                                        i++;
 
-                                    }
-                        %>
-                    
-                    </div>
-                
-<div class="clear"> </div>
+                    <%
+                            //Carrega do banco de dados os repositorios cadastrados
+                            ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
+                            //int i = 0;
+                            while (res.next()) {
+                                if (!res.getString("nome").equalsIgnoreCase("todos")) {
+                                    if (res.isFirst()) {
+                                        out.println("<div class='ValueIndex'>- Reposit&oacute;rios</div>");
+                                }
+
+                                out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
+                                        + "<input value='rep;" + res.getString("id") + "' type=checkbox id=\"" + res.getString("id") + "\""
+                                        + " name=\"repositorios\""
+                                        + ">" + res.getString("nome").toUpperCase()
+                                        + "</div>");
+                            }
+                            // i++;
+
+                        }
+                        ResultSet rsSub = stm.executeQuery("SELECT nome, id FROM dados_subfederacoes ORDER BY nome ASC");
+                        while
+
+                         (
+                             rsSub.next()) {
+                                if (rsSub.isFirst()) {
+                                    out.println("<div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div>");
+                            }
+
+                            if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
+                                out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;<input value='subFed;" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
+                                        + " name=\"repositorios\""
+                                        + ">" + rsSub.getString("nome").toUpperCase()
+                                        + "</div>");
+                            }
+
+
+                        }
+                    %>
+
+                </div>
+
+                <div class="clear"> </div>
                 <div id="modificavel">
                     <div class="LinhaEntrada">
                         <div class="Label">
@@ -87,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-<div class="clear"> </div>
+                <div class="clear"> </div>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input class="BOTAO" type="submit" value="Consultar" ALIGN="CENTER"/>
@@ -97,13 +120,12 @@
             <div ALIGN="CENTER">
                 <a href="./index.jsp">Ocultar Repositórios</a>
             </div>
-                    <div  ALIGN="RIGHT">
-                        <a class="linkRSS" onclick= "geraRss()"><img src="imagens/rss_300x300.png" width="3%" height="3%" alt="rsslogo" onclick= "geraRss()"/> <b>Gerar RSS</b></a>
-                    </div>
+            <div  ALIGN="RIGHT">
+                <a class="linkRSS" onclick= "geraRss()"><img src="imagens/rss_300x300.png" width="3%" height="3%" alt="rsslogo" onclick= "geraRss()"/> <b>Gerar RSS</b></a>
+            </div>
         </div>
         <%@include file="googleAnalytics"%>
     </body>
 </html>
-<%
-            con.close(); //fechar conexao com mysql
+<%    con.close (); //fechar conexao com mysql
 %>

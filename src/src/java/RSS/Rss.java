@@ -27,35 +27,8 @@ public class Rss {
     private String search;
     private int idRep;
     private ArrayList <Integer>idRepArray = new ArrayList();
-//marcos: eu que coloquei para nao dar o erro. Tem que arrumar
     private ArrayList <Integer>idSubfedArray = new ArrayList();
 
-    /**
-     * Transforma um string de inteiros em um ArrayList de inteiros
-     * @param s String de inteiros separados por v&iacute;rgulas
-     * @return ArrayList de inteiros correspondente &agrave; string
-     **/
-    private ArrayList <Integer> stringToIntegerArrayList (String s){
-        int posfim = 0, posini = 0;
-        ArrayList <Integer> array = new ArrayList<Integer>();
-        while (!s.isEmpty()) {
-            if (s.contains(","))
-                posfim = s.indexOf(',');
-            else
-                posfim = s.length();
-            try {
-                array.add(Integer.parseInt(s.substring(posini, posfim)));
-            } catch (NumberFormatException e) {
-                System.out.println("Id de repositorio invalido " + e);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-            if (s.contains(","))
-                posfim += 1;
-            s = s.substring(posfim);
-        }
-        return array;
-    }
 
     /**
      * Construtor da classe Rss
@@ -97,18 +70,28 @@ public class Rss {
      * @param search string a ser buscada nos reposit&oacute;rios
      * @param s  string com os id dos reposit&oacute;rios (inteiros) separados por v&iacute;rgulas
      **/
-    public Rss(String search, String s) {
+    public Rss(String search, String idBusca) {
         if (search == null) {
             this.search = "";
         } else {
             this.search = search;
         }
-        if (s.contains("0"))
+        if (idBusca.equals("0"))
         {
             this.idRep = 0;
             this.idRepArray.clear();
+            this.idSubfedArray.clear();
         } else {
-            this.idRepArray = stringToIntegerArrayList(s);
+            
+            String ids[] = idBusca.split(",");
+            for (int i = 0; i < ids.length; i++) {
+                if (ids[i].contains("rep;")) {
+                    this.idRepArray.add(Integer.parseInt(ids[i].replace("rep;", "")));
+                } else if (ids[i].contains("subFed;")) {
+                    this.idSubfedArray.add(Integer.parseInt(ids[i].replace("subFed;", "")));
+                }
+            }
+            
             this.idRep = 0;
         }
     }
@@ -116,7 +99,7 @@ public class Rss {
     /**
      * Faz a busca da string passada no construtor no banco de dados, utilizando
      * a mesma fun&ccedil;&atilde;o que a busca normal.
-     * @return string correspondente ao xml do rss que será gerado
+     * @return string correspondente ao xml do rss que ser&aacute; gerado
      **/
     public String generateFeed() {
         ArrayList<Integer> idArray = new ArrayList<Integer>();
@@ -156,8 +139,9 @@ public class Rss {
             //faz a busca da string search, com o id do repositorio escolhido na base de dados
             //idDoc é um array com os identificadores correspondentes à pesquisa
             try {
-                if (idRepArray.isEmpty()) {
-                    System.out.println("int:" + this.search + " " + this.idRep);
+
+               
+                if (this.idRepArray.isEmpty() && this.idSubfedArray.isEmpty()) {
                     idArray = rec.search2(this.search, con, this.idRep);
                 } else {
                     idArray = rec.search2(this.search, con, this.idRepArray, this.idSubfedArray);
@@ -165,16 +149,16 @@ public class Rss {
             } catch (SQLException e) {
                 System.out.println("Problemas com a busca\n" + e);
             }
-
+            
             //adiciona um item no rss para cada elemento encontrado
             for (int i = 0; i < idArray.size(); i++) {
                 //faz a busca pelo id
                     String titulo = "";
                     String resumo = "";
-
+                    
                     Statement stm = con.createStatement();
-                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, r.nome as repositorio, ds.id as id_base FROM documentos d, dados_subfederacoes ds, repositorios r, objetos o, info_repositorios i WHERE d.id=o.documento AND d.id_repositorio=r.id AND r.id = i.id_repositorio AND i.id_federacao=ds.id AND d.id=" + idArray.get(i);
-
+//                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, r.nome as repositorio, ds.id as id_base FROM documentos d, dados_subfederacoes ds, repositorios r, objetos o, info_repositorios i WHERE d.id=o.documento AND d.id_repositorio=r.id AND r.id = i.id_repositorio AND i.id_federacao=ds.id AND d.id=" + idArray.get(i);
+                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_subfed, d.id_repositorio as repositorio FROM documentos d, objetos o WHERE (o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$') AND d.id=o.documento AND d.id=" + idArray.get(i);
                     try {
                         ResultSet rs = stm.executeQuery(resultadoSQL);
                         //pega o proximo resultado retornado pela consulta sql
@@ -186,13 +170,13 @@ public class Rss {
                             if (rs.isFirst()) {
 
                                 Element tag = doc.createElement("idBase");
-                                text = doc.createTextNode(rs.getString("id_base"));
+                                text = doc.createTextNode(rs.getString("id_subfed"));
                                 tag.appendChild(text);
                                 item.appendChild(tag);
 
                                 tag = doc.createElement("link");
                                 text = doc.createTextNode("http://localhost:8084/feb/infoDetalhada.jsp?id=" + rs.getString("obaa_entry")
-                                        + "&idBase=" + rs.getString("id_base")
+                                        + "&idBase=" + rs.getString("id_subfed")
                                         + "&repositorio=" + rs.getString("repositorio"));
                                 tag.appendChild(text);
                                 item.appendChild(tag);
@@ -253,7 +237,7 @@ public class Rss {
         } catch (TransformerException e) {
             System.out.print("Erro com o Transformer para a geração do RSS\n" + e);
         } catch (Exception e) {
-            System.out.print("Erro na geração do RSS\n" + e);
+            System.out.print("Erro na geração do RSS:" + e);
         }
         return xml;
 
