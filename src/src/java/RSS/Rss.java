@@ -147,7 +147,7 @@ public class Rss {
                     idArray = rec.search2(this.search, con, this.idRepArray, this.idSubfedArray);
                 }
             } catch (SQLException e) {
-                System.out.println("Problemas com a busca\n" + e);
+                System.out.println("FEB: RSS - Problemas com a busca\n" + e);
             }
             
             //adiciona um item no rss para cada elemento encontrado
@@ -169,26 +169,35 @@ public class Rss {
                         while (rs.next()) {
                             if (rs.isFirst()) {
 
+                                String repositorio = rs.getString("repositorio");
+                                String subFed = rs.getString("id_subfed");
+                                if(repositorio==null)
+                                    repositorio = "";
+                                if(subFed==null)
+                                    subFed = "";
+
                                 Element tag = doc.createElement("idBase");
-                                text = doc.createTextNode(rs.getString("id_subfed"));
+                                text = doc.createTextNode(subFed);
                                 tag.appendChild(text);
                                 item.appendChild(tag);
 
                                 tag = doc.createElement("link");
                                 text = doc.createTextNode("http://localhost:8084/feb/infoDetalhada.jsp?id=" + rs.getString("obaa_entry")
-                                        + "&idBase=" + rs.getString("id_subfed")
-                                        + "&repositorio=" + rs.getString("repositorio"));
+                                        + "&idBase=" + subFed
+                                        + "&repositorio=" + repositorio);
                                 tag.appendChild(text);
                                 item.appendChild(tag);
 
                                 tag = doc.createElement("repositorio");
-                                text = doc.createTextNode(rs.getString("repositorio"));
+                                text = doc.createTextNode(repositorio);
                                 tag.appendChild(text);
                                 item.appendChild(tag);
+                                
                             }
 
                             String valor = rs.getString("valor");
                             String atributo = rs.getString("atributo");
+                            
                             if (atributo.equalsIgnoreCase("obaaTitle")) {
                                 titulo += valor;
                             } else if (atributo.equalsIgnoreCase("obaaDescription")) {
@@ -211,7 +220,7 @@ public class Rss {
                         item.appendChild(tag);
 
                     } catch (SQLException e) {
-                        System.out.println("Nao foi possivel recuperar as informacoes da base de dados" + e);
+                        System.out.println("FEB: RSS - Nao foi possivel recuperar as informacoes da base de dados" + e);
                     }
                 }
 
@@ -231,22 +240,18 @@ public class Rss {
             con.close(); //fecha a conexao com o mysql
 
         } catch (DOMException e) {
-            System.out.print("Erro gerado pelo DOM para a geração de um RSS\n" + e);
+            System.out.print("FEB: Erro gerado pelo DOM para a geração de um RSS\n" + e);
         } catch (SQLException e) {
-            System.out.print("Erro na busca SQL para a geração do RSS\n" + e);
+            System.out.print("FEB: Erro na busca SQL para a geração do RSS\n" + e);
         } catch (TransformerException e) {
-            System.out.print("Erro com o Transformer para a geração do RSS\n" + e);
+            System.out.print("FEB: Erro com o Transformer para a geração do RSS\n" + e);
         } catch (Exception e) {
-            System.out.print("Erro na geração do RSS:" + e);
+            System.out.print("FEB: Erro na geração do RSS:" + e);
+            e.printStackTrace();
         }
         return xml;
 
     }
 
 
-
-    public static void main(String[] args) {
-        Rss rss = new Rss("educa", "3");
-        System.out.println(rss.generateFeed());
-    }
 }

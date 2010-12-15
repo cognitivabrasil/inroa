@@ -125,7 +125,7 @@
                     }
 
                 } catch (SQLException e) {
-                    System.out.println("ERRO SQL: Erro ao alterar senha"+e);
+                    System.err.println("FEB: ERRO SQL. Erro ao alterar senha"+e);
                     out.print("<script type='text/javascript'>alert(' Erro ao atualizar a senha: " +
                             "history.back(-1);</script>");
 
