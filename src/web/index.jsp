@@ -54,7 +54,7 @@
                     </div>
                     <div class="Value">
                         <select name="repositorio" id="repositorio" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
-                            <option selected value="0">Confedera&ccedil;&atilde;o
+                            <option selected value="0">Federa&ccedil;&atilde;o
                                 <%
                 //Carrega do banco de dados os repositorios cadastrados
                 ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");

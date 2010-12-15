@@ -20,7 +20,8 @@ import postgres.Configuracao;
  */
 public class ImportaSubFederacao {
 
-    public void atualiza_subFederacao(Connection con) {
+    public boolean atualiza_subFederacao(Connection con) {
+        boolean atualizou = false;
         String sql = "SELECT id, login, senha, porta, ip, base, data_ultima_atualizacao FROM dados_subfederacoes where data_ultima_atualizacao <= (now() - ('24 HOUR')::INTERVAL);";
 
         try {
@@ -47,6 +48,7 @@ public class ImportaSubFederacao {
                 conSub.close();//fecha conexao com a subfederacao
 
                 atualizaTimestampSubFed(con, id); //atualiza a hora da ultima atualizacao
+                atualizou = true;
             }
 
 
@@ -55,6 +57,7 @@ public class ImportaSubFederacao {
             System.err.println("SQL Exception... Erro na classe importaSubFederacao:" + e.getMessage());
             e.printStackTrace();
         }
+        return atualizou;
     }
 
     public void documentos(int idSubFed, Timestamp ultimaAtualizacao, Connection con, Connection conSub) throws SQLException {
@@ -109,8 +112,9 @@ public class ImportaSubFederacao {
     public void objetos(int idDoc, String obaaEntry, Connection con, Connection conSub) throws SQLException {
 
         String idEntry[] = obaaEntry.split(";FEB;");
-        String consultaSub = "SELECT atributo, valor FROM documentos d, objetos o " +
+        String consultaSub = "SELECT atributo, valor, r.nome FROM documentos d, objetos o, repositorios r" +
                 " WHERE o.documento=d.id" +
+                " AND d.id_repositorio=r.id" +
                 " AND d.obaa_entry='" + idEntry[1] + "'" +
                 " AND d.id_repositorio=" + idEntry[0] +
                 " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$' OR atributo ~* '^obaaDate$' )";
@@ -119,6 +123,11 @@ public class ImportaSubFederacao {
         ArrayList<String> atributos = new ArrayList<String>();
         ArrayList<String> valores = new ArrayList<String>();
         while (rsSub.next()) {
+            //necessario para aparecer o nome do repositorio na busca da confederacao
+            if(rsSub.isFirst()){
+                atributos.add("nomeRepositorio");
+                valores.add(rsSub.getString("nome"));
+            }
             atributos.add(rsSub.getString("atributo"));
             valores.add(rsSub.getString("valor"));
         }

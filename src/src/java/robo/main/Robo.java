@@ -32,10 +32,11 @@ public class Robo {
 
         Indexador indexar = new Indexador();
         Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-        
+        boolean repAtualizado = false;
+
 //TESTA/ATUALIZA SUBFEDERACAO
         ImportaSubFederacao subFed = new ImportaSubFederacao();
-        subFed.atualiza_subFederacao(con);
+        repAtualizado = subFed.atualiza_subFederacao(con);
 
 //TESTA REPOSITORIO
         Robo robo = new Robo();
@@ -50,7 +51,7 @@ public class Robo {
         try {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-            boolean repAtualizado = false;
+            
             while (rs.next()) {
                 int idRep = rs.getInt("idrep");
                 robo.atualizaRepositorio(idRep, indexar); //chama o metodo que atualiza o repositorio
