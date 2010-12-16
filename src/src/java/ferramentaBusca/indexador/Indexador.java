@@ -232,4 +232,9 @@ public class Indexador {
         stm.executeUpdate(sql5);
     }
 
+
+    public void preencheR1Tokens(){
+        //retorna todos documentos que nao possuem r1tokens preenchido
+        String sql = "select d.id from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL";
+    }
 }
