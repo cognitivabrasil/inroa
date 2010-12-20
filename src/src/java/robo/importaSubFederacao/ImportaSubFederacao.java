@@ -117,7 +117,8 @@ public class ImportaSubFederacao {
                 " AND d.id_repositorio=r.id" +
                 " AND d.obaa_entry='" + idEntry[1] + "'" +
                 " AND d.id_repositorio=" + idEntry[0] +
-                " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$' OR atributo ~* '^obaaDate$' )";
+                " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaKeyword$')";
+//                " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$')";
         Statement stmSub = conSub.createStatement();
         ResultSet rsSub = stmSub.executeQuery(consultaSub);
         ArrayList<String> atributos = new ArrayList<String>();

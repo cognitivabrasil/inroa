@@ -5,9 +5,13 @@ package ferramentaBusca.indexador;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+import postgres.Conectar;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
@@ -58,98 +62,98 @@ public class Indexador {
             ArrayList<String> tokensEntidade = doc.getEntidade();
             ArrayList<String> tokensDescricao = doc.getDescricao();
 
-            if(!(tokensDescricao.isEmpty() && tokensEntidade.isEmpty() && tokensPChave.isEmpty() && tokensTitulo.isEmpty())){
-            String insert = "INSERT INTO r1tokens (token, id, field) VALUES";
+            if (!(tokensDescricao.isEmpty() && tokensEntidade.isEmpty() && tokensPChave.isEmpty() && tokensTitulo.isEmpty())) {
+                String insert = "INSERT INTO r1tokens (token, id, field) VALUES";
 
-            int cont = 0;
-            //for para preencher as interrogacoes dos titulos
-            for (int i = 0; i < tokensTitulo.size(); i++) {
-                if (cont == 0) {
-                    insert += " (?,?,?)";
-                } else {
-                    insert += ", (?,?,?)";
+                int cont = 0;
+                //for para preencher as interrogacoes dos titulos
+                for (int i = 0; i < tokensTitulo.size(); i++) {
+                    if (cont == 0) {
+                        insert += " (?,?,?)";
+                    } else {
+                        insert += ", (?,?,?)";
+                    }
+                    cont++;
                 }
-                cont++;
-            }
-            //for para preencher as interrogacoes das palavras chaves
-            for (int i = 0; i < tokensPChave.size(); i++) {
-                if (cont == 0) {
-                    insert += " (?,?,?)";
-                } else {
-                    insert += ", (?,?,?)";
+                //for para preencher as interrogacoes das palavras chaves
+                for (int i = 0; i < tokensPChave.size(); i++) {
+                    if (cont == 0) {
+                        insert += " (?,?,?)";
+                    } else {
+                        insert += ", (?,?,?)";
+                    }
+                    cont++;
                 }
-                cont++;
-            }
-            //for para preencher as interrogacoes das entidades
-            for (int i = 0; i < tokensEntidade.size(); i++) {
-                if (cont == 0) {
-                    insert += " (?,?,?)";
-                } else {
-                    insert += ", (?,?,?)";
+                //for para preencher as interrogacoes das entidades
+                for (int i = 0; i < tokensEntidade.size(); i++) {
+                    if (cont == 0) {
+                        insert += " (?,?,?)";
+                    } else {
+                        insert += ", (?,?,?)";
+                    }
+                    cont++;
                 }
-                cont++;
-            }
-            //for para preencher as interrogacoes das descricoes
-            for (int i = 0; i < tokensDescricao.size(); i++) {
-                if (cont == 0) {
-                    insert += " (?,?,?)";
-                } else {
-                    insert += ", (?,?,?)";
+                //for para preencher as interrogacoes das descricoes
+                for (int i = 0; i < tokensDescricao.size(); i++) {
+                    if (cont == 0) {
+                        insert += " (?,?,?)";
+                    } else {
+                        insert += ", (?,?,?)";
+                    }
+                    cont++;
                 }
-                cont++;
-            }
 
-            PreparedStatement stmt = con.prepareStatement(insert);
+                PreparedStatement stmt = con.prepareStatement(insert);
 
-            cont = 0;
-            //1 titulo
-            int atributo = 1;
-            //for para preencher os values do titulo
-            for (int i = 0; i < tokensTitulo.size(); i++) {
-                int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
-                String token = tokensTitulo.get(i);
-                stmt.setString(i2 + 1, token);
-                stmt.setInt(i2 + 2, id);
-                stmt.setInt(i2 + 3, atributo);
-                cont++;
-            }
-            //for para preencher os values das palavras chaves
-            //2 palavras chave
-            atributo = 2;
-            for (int i = 0; i < tokensPChave.size(); i++) {
-                int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
-                String token = tokensPChave.get(i);
-                stmt.setString(i2 + 1, token);
-                stmt.setInt(i2 + 2, id);
-                stmt.setInt(i2 + 3, atributo);
-                cont++;
-            }
-            //for para preencher os values das Entidades
-            //3 entidade
-            atributo = 3;
-            for (int i = 0; i < tokensEntidade.size(); i++) {
-                int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
-                String token = tokensEntidade.get(i);
-                stmt.setString(i2 + 1, token);
-                stmt.setInt(i2 + 2, id);
-                stmt.setInt(i2 + 3, atributo);
-                cont++;
-            }
-            //for para preencher os values do xx
-            //4 descricao
-            atributo = 4;
-            for (int i = 0; i < tokensDescricao.size(); i++) {
-                int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
-                String token = tokensDescricao.get(i);
-                stmt.setString(i2 + 1, token);
-                stmt.setInt(i2 + 2, id);
-                stmt.setInt(i2 + 3, atributo);
-                cont++;
-            }
+                cont = 0;
+                //1 titulo
+                int atributo = 1;
+                //for para preencher os values do titulo
+                for (int i = 0; i < tokensTitulo.size(); i++) {
+                    int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+                    String token = tokensTitulo.get(i);
+                    stmt.setString(i2 + 1, token);
+                    stmt.setInt(i2 + 2, id);
+                    stmt.setInt(i2 + 3, atributo);
+                    cont++;
+                }
+                //for para preencher os values das palavras chaves
+                //2 palavras chave
+                atributo = 2;
+                for (int i = 0; i < tokensPChave.size(); i++) {
+                    int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+                    String token = tokensPChave.get(i);
+                    stmt.setString(i2 + 1, token);
+                    stmt.setInt(i2 + 2, id);
+                    stmt.setInt(i2 + 3, atributo);
+                    cont++;
+                }
+                //for para preencher os values das Entidades
+                //3 entidade
+                atributo = 3;
+                for (int i = 0; i < tokensEntidade.size(); i++) {
+                    int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+                    String token = tokensEntidade.get(i);
+                    stmt.setString(i2 + 1, token);
+                    stmt.setInt(i2 + 2, id);
+                    stmt.setInt(i2 + 3, atributo);
+                    cont++;
+                }
+                //for para preencher os values do xx
+                //4 descricao
+                atributo = 4;
+                for (int i = 0; i < tokensDescricao.size(); i++) {
+                    int i2 = cont * 3; //variavel para contar o numero da interrogacao do values. A cada iteracao do for ele increnta 3 vezes
+                    String token = tokensDescricao.get(i);
+                    stmt.setString(i2 + 1, token);
+                    stmt.setInt(i2 + 2, id);
+                    stmt.setInt(i2 + 3, atributo);
+                    cont++;
+                }
 
 
-            stmt.executeUpdate();
-            stmt.close();
+                stmt.executeUpdate();
+                stmt.close();
             }
 
         } catch (SQLException e) {
@@ -174,6 +178,8 @@ public class Indexador {
         //apaga as tabelas antes de inserir
         apagarCalculosIndice(con);
 
+        preencheR1Tokens(con);
+        
         PreparedStatement R1Size = con.prepareStatement("INSERT INTO r1size(size) SELECT COUNT(id) FROM documentos;");
 
         R1Size.execute();
@@ -185,7 +191,7 @@ public class Indexador {
 
         //PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, if(T.field=1||T.field=2,COUNT(*)*2, COUNT(*)) FROM r1tokens T GROUP BY T.id, T.token;");
 
-     
+
         PreparedStatement R1TF = con.prepareStatement("INSERT INTO r1tf(tid, token, tf) SELECT T.id, T.token, sum(CASE t.field WHEN 1 THEN 3 ELSE 1 END)FROM r1tokens t GROUP BY T.id, T.token;");
         R1TF.execute();
         R1TF.close();
@@ -232,9 +238,87 @@ public class Indexador {
         stm.executeUpdate(sql5);
     }
 
-
-    public void preencheR1Tokens(){
+    public void preencheR1Tokens(Connection con) throws SQLException {
         //retorna todos documentos que nao possuem r1tokens preenchido
-        String sql = "select d.id from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL";
+        String sql = "select d.id, d.obaa_entry, d.id_repositorio from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL";
+        StopWordTAD stWd = new StopWordTAD();
+        Documento doc = new Documento(stWd);
+        Statement stm = con.createStatement();
+        ResultSet rs1 = stm.executeQuery(sql);
+        ArrayList<Integer> idsApagar = new ArrayList<Integer>();
+        HashMap<String, Integer> docErro = new HashMap<String, Integer>();
+        while (rs1.next()) {
+
+            int id = rs1.getInt("id");
+            String obaaEntry = rs1.getString("obaa_entry");
+            int repositorio = rs1.getInt("id_repositorio");
+
+            Statement stm2 = con.createStatement();
+            String sqlDoc = "SELECT atributo, valor"
+                    + " FROM objetos"
+                    + " WHERE documento=" + id
+                    + " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaKeyword$')";
+//                " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$')";
+
+            ResultSet rsDoc = stm2.executeQuery(sqlDoc);
+            boolean semAtributo = true;
+            while (rsDoc.next()) {
+                semAtributo = false;
+                String atributo = rsDoc.getString("atributo");
+                String valor = rsDoc.getString("valor");
+
+                if (atributo.equalsIgnoreCase("obaaTitle")) {
+                    doc.setTitulo(valor);
+                } else if (atributo.equalsIgnoreCase("obaaDescription")) {
+                    doc.setDescricao(valor);
+                } else if (atributo.equalsIgnoreCase("obaaKeyword")) {
+                    doc.setPalavrasChave(valor);
+                }
+            }
+            if (semAtributo) { //se nao entrou no while insere o id no arraylist para o log
+                docErro.put(obaaEntry, repositorio);
+                idsApagar.add(id);
+            } else {
+                doc.setId(id);
+                addDoc(doc, con);
+            }
+        }
+
+
+        if (!docErro.isEmpty()) {
+            System.err.println("FEB: Foram encontrados documentos sem nenhum atributo. \n Lista de obaaEntrys e ids dos repositorios:");
+
+            Set<String> chaves = docErro.keySet();
+//                //percorre todo o HashMap
+
+            for (String chave : chaves) //enquanto tiver chaves chave recebe o conteudo de chaves
+                {
+                   System.err.println("id repositorio: "+docErro.get(chave)+" ObaaEntry: "+chave);
+               }
+            
+            String sqlDelete = "DELETE FROM documentos WHERE id=";
+            for (int i = 0; i < idsApagar.size(); i++) {
+                if(i==0){
+                    sqlDelete+=idsApagar.get(i);
+                }else{
+                    sqlDelete+=" OR id="+idsApagar.get(i);
+                }
+
+            }
+            stm.executeUpdate(sqlDelete);
+            System.err.println("Estes documentos foram excluidos agora.");
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Indexador run = new Indexador();
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
+        try {
+            run.preencheR1Tokens(con);
+        } catch (SQLException s) {
+            s.printStackTrace();
+        }
     }
 }
