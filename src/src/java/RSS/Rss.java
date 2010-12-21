@@ -8,7 +8,6 @@ import ferramentaBusca.recuperador.Recuperador;
 import java.util.ArrayList;
 import java.sql.*;
 import postgres.Conectar;
-
 import java.io.*;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;

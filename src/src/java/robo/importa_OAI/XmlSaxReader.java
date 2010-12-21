@@ -223,7 +223,7 @@ public class XmlSaxReader extends DefaultHandler {
             doc.setServidor(idRepositorio); //adiciona no indice o id do repositorio
 
             try {
-                
+
                 int key = InsereObjetoBase.insereObaa(this.dadosObjetos, headerAux, this.Conexao, idRepositorio); //chama classe que insere os dados na base de dados
 
                 if (key > 0) { //se o documento foi inserido corretamente entra no if
