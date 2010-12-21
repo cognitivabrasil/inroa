@@ -28,7 +28,7 @@ public class Robo {
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma consulta na base de dados, procurando por reposit&oacute;rios que est&atilde;o desatualizados, quando encontra algum, chama o m&eacute;todo que atualiza o repositório.
      * @author Marcos Nunes
      */
-    public void testaUltimaIportacao() {
+    public void testaUltimaImportacao() {
 
         Indexador indexar = new Indexador();
         Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar

@@ -35,7 +35,7 @@ public class Temporizador {
                     try {
                         
                         //chamar metodo que testa na base se precisa atualizar o repositório
-                        iniciaRobo.testaUltimaIportacao();
+                        iniciaRobo.testaUltimaImportacao();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
