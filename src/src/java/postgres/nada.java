@@ -3,7 +3,7 @@ package postgres;
 import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 
 public class DadosTeste {
-    
+
     public DadosTeste() {
     }
 
