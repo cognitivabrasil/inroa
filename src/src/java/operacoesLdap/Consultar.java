@@ -79,14 +79,24 @@ public class Consultar {
             Conectar conexao = new Conectar(configuracaoSubFed);
             Connection conSub = conexao.conectaBD(); //chama o metodo conectaBD da classe conectar
             //faz a consulta na subfederacao
-            String consulta = "SELECT o.atributo, o.valor " + "FROM objetos o, documentos d, repositorios r " + "WHERE d.obaa_entry = '" + obaa_entry.trim() + "' " + "AND o.documento = d.id " + "AND d.id_repositorio=r.id " + "AND r.id=" + repositorio;
+            String consulta = "SELECT o.atributo, o.valor "
+                    + "FROM objetos o, documentos d, repositorios r "
+                    + "WHERE d.obaa_entry = '" + obaa_entry.trim() + "' "
+                    + "AND o.documento = d.id "
+                    + "AND d.id_repositorio=r.id "
+                    + "AND r.id=" + repositorio;
 
             PreparedStatement stmt = conSub.prepareStatement(consulta);
             ResultSet rs = stmt.executeQuery();
             HashMap<String, String> resultInterno = new HashMap<String, String>();
             while (rs.next()) {
                 //System.out.println("atrbuto: " + rs.getString("atributo") + "valor: " + rs.getString("valor"));
-                resultInterno.put(rs.getString("atributo"), rs.getString("valor"));
+                
+                String atributo = rs.getString("atributo");
+                if(resultInterno.containsKey(atributo)){
+                    resultInterno.put(atributo, resultInterno.get(atributo)+";; "+rs.getString("valor"));
+                }else
+                    resultInterno.put(rs.getString("atributo"), rs.getString("valor"));
             }
             resultado.add(resultInterno);
             conSub.close();
@@ -112,7 +122,7 @@ public class Consultar {
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         System.out.println("conectou");
         //Consultar run = new Consultar("objetodementira171", arg, con);
-        Consultar run = new Consultar("oai:www.lume.ufrgs.br:10183/15888", 3, "1", con);
+        Consultar run = new Consultar("obaa004", 4, "null", con);
         System.out.println(run.getResultado());
     }
 }
