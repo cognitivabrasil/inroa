@@ -10,6 +10,8 @@
 
             String search = "";
 
+            request.setCharacterEncoding("UTF-8");
+            
             search = request.getParameter("search");
             String id = request.getParameter("idRep");
             

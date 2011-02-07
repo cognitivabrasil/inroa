@@ -181,7 +181,7 @@ public class Rss {
                                 item.appendChild(tag);
 
                                 tag = doc.createElement("link");
-                                text = doc.createTextNode("http://localhost:8084/feb/infoDetalhada.jsp?id=" + rs.getString("obaa_entry")
+                                text = doc.createTextNode("http://feb.ufrgs.br:8080/feb/infoDetalhada.jsp?id=" + rs.getString("obaa_entry")
                                         + "&idBase=" + subFed
                                         + "&repositorio=" + repositorio);
                                 tag.appendChild(text);
