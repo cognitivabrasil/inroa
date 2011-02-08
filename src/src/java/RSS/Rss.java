@@ -100,12 +100,13 @@ public class Rss {
      * a mesma fun&ccedil;&atilde;o que a busca normal.
      * @return string correspondente ao xml do rss que ser&aacute; gerado
      **/
-    public String generateFeed() {
+    public String generateFeed(String currentURL) {
         ArrayList<Integer> idArray = new ArrayList<Integer>();
         Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
         Recuperador rec = new Recuperador();
         String xml = "";
+        String link = currentURL.substring(0, currentURL.indexOf("rss.jsp"));
 
         try {
             //cria documento xml
@@ -171,9 +172,9 @@ public class Rss {
                                 String repositorio = rs.getString("repositorio");
                                 String subFed = rs.getString("id_subfed");
                                 if(repositorio==null)
-                                    repositorio = "";
+                                    repositorio = "null";
                                 if(subFed==null)
-                                    subFed = "";
+                                    subFed = "null";
 
                                 Element tag = doc.createElement("idBase");
                                 text = doc.createTextNode(subFed);
@@ -181,7 +182,7 @@ public class Rss {
                                 item.appendChild(tag);
 
                                 tag = doc.createElement("link");
-                                text = doc.createTextNode("http://feb.ufrgs.br:8080/feb/infoDetalhada.jsp?id=" + rs.getString("obaa_entry")
+                                text = doc.createTextNode(link + "infoDetalhada.jsp?id=" + rs.getString("obaa_entry")
                                         + "&idBase=" + subFed
                                         + "&repositorio=" + repositorio);
                                 tag.appendChild(text);

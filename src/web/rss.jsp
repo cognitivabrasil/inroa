@@ -32,7 +32,7 @@
             if (testaConsulta) { //se nao foi informada a consulta nao entra no if
                 out.clear();    //limpa a página. Sem isso, ele geraria o rss com algumas quebras de linha antes do inicio, que o navegador não reconhece como um rss
                 Rss rss = new Rss(search, id);
-                out.print(rss.generateFeed() + "\n");
+                out.print(rss.generateFeed(request.getRequestURL().toString()) + "\n");
                 //out.print(search + " " + id);
             }
 %>
