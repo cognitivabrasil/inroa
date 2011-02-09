@@ -9,7 +9,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="operacoesLdap.Consultar"%>
+<%@page import="operacoesPostgre.Consultar"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@include file="conexaoBD.jsp"%>
@@ -58,6 +58,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                 if (idRepositorio.isEmpty() || palavraChave.isEmpty()) {
                     out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
                             + "<script type='text/javascript'>history.back(-1);</script>");
+                 //   response.sendRedirect("/feb/index.jsp");
                 } else {
                     testaConsulta = true;
                 }
@@ -281,7 +282,12 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
                                                             if (j > 0) {
                                                                 out.print("<br>");
                                                             }
-                                                            out.print(resumo.get(j).trim());
+                                                            String resumoLimitado = resumo.get(j).trim();
+                                                            if(resumoLimitado.length()>=500){
+                                                                resumoLimitado = resumoLimitado.substring(0, 500);
+                                                                resumoLimitado+=" <a style='text-decoration: none;' href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idSubfed + "&repositorio=" + repositorio + "'>(...)</a>";
+                                                            }
+                                                            out.print(resumoLimitado);
                                                         }
                                                         out.println("</div>");
                                                     }

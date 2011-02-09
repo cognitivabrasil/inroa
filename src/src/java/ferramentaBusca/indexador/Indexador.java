@@ -151,12 +151,14 @@ public class Indexador {
                     cont++;
                 }
 
-
+                
                 stmt.executeUpdate();
                 stmt.close();
             }
 
-        } catch (SQLException e) {
+        }
+
+        catch (SQLException e) {
             System.out.println("\nErro no SQL ao indexar. Ao adicionar o objeto: " + doc.getObaaEntry());
             System.out.println("");
 //            System.out.println("String Resumo: " + doc.getResumo());
@@ -242,13 +244,14 @@ public class Indexador {
         //retorna todos documentos que nao possuem r1tokens preenchido
         String sql = "select d.id, d.obaa_entry, d.id_repositorio from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL";
         StopWordTAD stWd = new StopWordTAD();
-        Documento doc = new Documento(stWd);
+
+        
         Statement stm = con.createStatement();
         ResultSet rs1 = stm.executeQuery(sql);
         ArrayList<Integer> idsApagar = new ArrayList<Integer>();
         HashMap<String, Integer> docErro = new HashMap<String, Integer>();
         while (rs1.next()) {
-
+            Documento doc = new Documento(stWd);
             int id = rs1.getInt("id");
             String obaaEntry = rs1.getString("obaa_entry");
             int repositorio = rs1.getInt("id_repositorio");
@@ -257,8 +260,7 @@ public class Indexador {
             String sqlDoc = "SELECT atributo, valor"
                     + " FROM objetos"
                     + " WHERE documento=" + id
-                    + " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaKeyword$')";
-//                " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$')";
+                    + " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaKeyword$' OR atributo ~* '^obaaDescription$')";
 
             ResultSet rsDoc = stm2.executeQuery(sqlDoc);
             boolean semAtributo = true;
@@ -280,7 +282,7 @@ public class Indexador {
                 idsApagar.add(id);
             } else {
                 doc.setId(id);
-                addDoc(doc, con);
+                addDoc(doc, con); //preenche r1tokens
             }
         }
 

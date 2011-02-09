@@ -205,6 +205,10 @@ src/src/java/ferramentaBusca/recuperador/Recuperador.java -text
 src/src/java/ferramentaBusca/recuperador/package.html -text
 src/src/java/login/Usuario.java -text
 src/src/java/login/package.html -text
+src/src/java/operacoesPostgre/Consultar.java -text
+src/src/java/operacoesPostgre/Editar.java -text
+src/src/java/operacoesPostgre/Remover.java -text
+src/src/java/operacoesPostgre/package.html -text
 src/src/java/postgres/AtualizaBase.java -text
 src/src/java/postgres/AtualizacaoRepositorio.java -text
 src/src/java/postgres/Conectar.java -text

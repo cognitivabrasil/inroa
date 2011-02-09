@@ -148,8 +148,7 @@ public class Documento {
     }
 
     public void setDescricao(String descricao) {
-//        nao estamos utilizando temporariamente esta tag no indice
-//        this.descaddAll(tokeniza(descricao, StopWd));
+        this.desc.addAll(tokeniza(descricao, StopWd));
     }
 
     public void setData(String data) {
@@ -257,6 +256,7 @@ public class Documento {
 
         S = S.toLowerCase();
         //StopWordList StopwdPort = new StopWordsFromHashSet(StopWords.getRes());
+
         st.ignore(StopWords.getRes());
 
         S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");

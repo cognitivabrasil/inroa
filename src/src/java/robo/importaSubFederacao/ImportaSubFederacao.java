@@ -11,8 +11,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import operacoesPostgre.Remover;
 import postgres.Conectar;
 import postgres.Configuracao;
+import robo.main.Robo;
 
 /**
  *
@@ -22,22 +24,35 @@ public class ImportaSubFederacao {
 
     public boolean atualiza_subFederacao(Connection con) {
         boolean atualizou = false;
-        String sql = "SELECT id, login, senha, porta, ip, base, data_ultima_atualizacao FROM dados_subfederacoes where data_ultima_atualizacao <= (now() - ('24 HOUR')::INTERVAL);";
+        String sql = "SELECT id, login, senha, porta, ip, base, nome, data_ultima_atualizacao FROM dados_subfederacoes where data_ultima_atualizacao <= (now() - ('24 HOUR')::INTERVAL);";
 
         try {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-
+            
             while (rs.next()) {
-
                 int id = rs.getInt("id");
                 String base = rs.getString("base");
                 String login = rs.getString("login");
                 String senha = rs.getString("senha");
                 String ip = rs.getString("ip");
+                String nome = rs.getString("nome");
                 int porta = rs.getInt("porta");
                 Timestamp dataAtualizacao = rs.getTimestamp("data_ultima_atualizacao");
 
+
+                //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio o LDAP
+                if (Robo.testarDataAnteriorMil(rs.getDate("data_ultima_atualizacao"))) {
+                    Remover deleta = new Remover();
+                    System.out.println("Deletando toda a base de dados da Subfederação: " + nome.toUpperCase());
+                    deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro
+                    try {
+                        deleta.apagaObjetosSubfederacao(id, con);
+                        System.out.println("Base deletada!");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.toString());
+                    }
+                }
 
                 Configuracao conf = new Configuracao(base, login, senha, ip, porta);
 
@@ -112,20 +127,20 @@ public class ImportaSubFederacao {
     public void objetos(int idDoc, String obaaEntry, Connection con, Connection conSub) throws SQLException {
 
         String idEntry[] = obaaEntry.split(";FEB;");
-        String consultaSub = "SELECT atributo, valor, r.nome FROM documentos d, objetos o, repositorios r" +
-                " WHERE o.documento=d.id" +
-                " AND d.id_repositorio=r.id" +
-                " AND d.obaa_entry='" + idEntry[1] + "'" +
-                " AND d.id_repositorio=" + idEntry[0] +
-                " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaKeyword$')";
-//                " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$')";
+        String consultaSub = "SELECT atributo, valor, r.nome FROM documentos d, objetos o, repositorios r"
+                + " WHERE o.documento=d.id"
+                + " AND d.id_repositorio=r.id"
+                + " AND d.obaa_entry='" + idEntry[1] + "'"
+                + " AND d.id_repositorio=" + idEntry[0]
+                + " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$' OR atributo ~* '^obaaDate$' OR atributo ~* '^obaaLocation$')";
+//        " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaKeyword$')";
         Statement stmSub = conSub.createStatement();
         ResultSet rsSub = stmSub.executeQuery(consultaSub);
         ArrayList<String> atributos = new ArrayList<String>();
         ArrayList<String> valores = new ArrayList<String>();
         while (rsSub.next()) {
             //necessario para aparecer o nome do repositorio na busca da confederacao
-            if(rsSub.isFirst()){
+            if (rsSub.isFirst()) {
                 atributos.add("nomeRepositorio");
                 valores.add(rsSub.getString("nome"));
             }
@@ -170,5 +185,4 @@ public class ImportaSubFederacao {
         Statement stm = con.createStatement();
         stm.executeUpdate(sql);
     }
-
 }

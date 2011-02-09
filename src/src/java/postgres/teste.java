@@ -10,8 +10,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.Date;
+import ptstemmer.*;
+import ptstemmer.Stemmer.StemmerType;
+import ptstemmer.exceptions.PTStemmerException;
+import ptstemmer.support.PTStemmerUtilities;
 
 /**
  *
@@ -22,8 +24,8 @@ public class teste {
     public void testandoPreparedStatement() {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
-        String sql = "INSERT INTO repositorios (nome, descricao) VALUES " +
-                "(?, ?)";
+        String sql = "INSERT INTO repositorios (nome, descricao) VALUES "
+                + "(?, ?)";
         try {
             PreparedStatement addAuthor = con.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
@@ -61,8 +63,8 @@ public class teste {
     public void testando2() {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
-        String sql = "INSERT INTO repositorios (nome, descricao) VALUES " +
-                "(?, ?)";
+        String sql = "INSERT INTO repositorios (nome, descricao) VALUES "
+                + "(?, ?)";
         try {
 
             PreparedStatement stmt1 = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -118,8 +120,8 @@ public class teste {
         Connection con = conecta.conectaBD();
         int idPadrao = 0;
         boolean result = false;
-        String sqlInsert = "INSERT INTO padraometadados (nome, metadata_prefix, name_space) " +
-                "VALUES (?, ?, ?);";
+        String sqlInsert = "INSERT INTO padraometadados (nome, metadata_prefix, name_space) "
+                + "VALUES (?, ?, ?);";
         PreparedStatement stmt = con.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, nome);
         stmt.setString(2, metadaPrefix);
@@ -129,7 +131,7 @@ public class teste {
         ResultSet rs = stmt.getGeneratedKeys();
         rs.next();
         idPadrao = rs.getInt(1);
-        
+
         if (idPadrao > 0) {
             String[] vetAtributos = atributos.split(";");
             String sqlAtributos = "INSERT INTO atributos (id_padrao, atributo) VALUES";
@@ -142,32 +144,47 @@ public class teste {
                 }
             }
             PreparedStatement stmtAtrib = con.prepareStatement(sqlAtributos);
-                    int resultSQL = stmtAtrib.executeUpdate();
-                    stmtAtrib.close();
-                    if(resultSQL >0){
-                        result = true;
-                    }
-                    else{
-                        String sqlDelete = "DELETE FROM padraometadados WHERE id="+idPadrao;
-                        PreparedStatement stmtDel = con.prepareStatement(sqlDelete);
-                        stmtDel.executeUpdate();
-                        result = false;
-                    }            
+            int resultSQL = stmtAtrib.executeUpdate();
+            stmtAtrib.close();
+            if (resultSQL > 0) {
+                result = true;
+            } else {
+                String sqlDelete = "DELETE FROM padraometadados WHERE id=" + idPadrao;
+                PreparedStatement stmtDel = con.prepareStatement(sqlDelete);
+                stmtDel.executeUpdate();
+                result = false;
+            }
         }
         return result;
     }
 
-    public static void main(String[] args) {
-
-        teste run = new teste();
-        //run.testando2();
-        int result = 0;
-        try {
-//            run.inserePadrao("nome", "metadata", "namespace", "titulo;marcos;freitas;nunes;abvx");
-            run.teste();
-        } catch (SQLException e) {
+    public void testeStemmer() {
+        try{
+        Stemmer stemmer = Stemmer.StemmerFactory(StemmerType.ORENGO);
+        stemmer.enableCaching(1000);
+        stemmer.ignore(PTStemmerUtilities.fileToSet("data/stopwords.txt"));
+//        stemmer.ignore(PTStemmerUtilities.fileToSet("data/namedEntities.txt"));
+        String[] stem = stemmer.getPhraseStems("ciências a para bacana");
+        for(int i=0;i<stem.length; i++)
+        System.out.println(PTStemmerUtilities.removeDiacritics(stem[i]));
+        }
+        catch(PTStemmerException e){
             e.printStackTrace();
         }
-        System.out.println(result);
+    }
+
+    public static void main(String[] args) {
+//
+        teste run = new teste();
+//        //run.testando2();
+//        int result = 0;
+//        try {
+////            run.inserePadrao("nome", "metadata", "namespace", "titulo;marcos;freitas;nunes;abvx");
+//            run.teste();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(result);
+        run.testeStemmer();
     }
 }

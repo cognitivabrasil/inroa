@@ -9,7 +9,7 @@ import robo.util.Informacoes;
 import ferramentaBusca.indexador.Indexador;
 import java.io.File;
 import java.util.Date;
-import operacoesLdap.Remover;
+import operacoesPostgre.Remover;
 import postgres.Conectar;
 import robo.importaSubFederacao.ImportaSubFederacao;
 
@@ -37,7 +37,7 @@ public class Robo {
 //TESTA/ATUALIZA SUBFEDERACAO
         ImportaSubFederacao subFed = new ImportaSubFederacao();
         repAtualizado = subFed.atualiza_subFederacao(con);
-
+        
 //TESTA REPOSITORIO
         Robo robo = new Robo();
 
@@ -142,7 +142,7 @@ public class Robo {
                         System.out.println("Deletando toda a base de dados do repositório: " + nome.toUpperCase());
                         deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro
                         try {
-                            deleta.apagaTodosObjetos(idRepositorio, con);
+                            deleta.apagaObjetosRepositorio(idRepositorio, con);
 
                         } catch (Exception e) {
                             System.out.println("Error: " + e.toString());
@@ -163,7 +163,7 @@ public class Robo {
 
                     if (caminhoTeste.isDirectory()) {
 
-                        caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
+                        caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "2014-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
                         //leXMLgravaBase le do xml e armazena no ldap idependente de padrao de metadado
 
                         //Primeira operação do robô com LDAP
@@ -267,6 +267,7 @@ public class Robo {
         Robo run = new Robo();
 //        run.testaUltimaIportacao();
         Indexador indexar = new Indexador();
-        run.atualizaRepositorio(562, indexar);
+//        run.atualizaRepositorio(562, indexar);
+        run.testaUltimaImportacao();
     }
 }

@@ -133,7 +133,7 @@ public class InicioLeituraXML {
                         Conectar conectar = new Conectar(); //instancia uma variavel da classe portgres.conectar
                         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe portgres.conectar
 
-                        reader.parser("C:/bndigital.xml", indexar, con, 9);
+                        reader.parser("C:/engeo.xml", indexar, con, 8);
                         con.close();
                     } catch (UnsupportedEncodingException e) {
                         System.out.println("Error: " + e.toString());

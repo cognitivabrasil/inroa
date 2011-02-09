@@ -9,7 +9,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
-<%@page import="operacoesLdap.Editar" %>
+<%@page import="operacoesPostgre.Editar" %>
 <%
             request.setCharacterEncoding("UTF-8");
 //response.setCharacterEncoding("UTF-8");

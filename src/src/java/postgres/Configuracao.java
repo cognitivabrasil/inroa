@@ -20,10 +20,10 @@ public class Configuracao {
 
     base = "federacao";
     usuario = "feb";
-//    ip = "143.54.95.74";
+    ip = "143.54.95.74";
     senha = "123456";
 //    ip = "143.54.95.20";
-    ip = "127.0.0.1";
+//    ip = "127.0.0.1";
 //    senha = "12345";
     //    porta = 5000;
 
