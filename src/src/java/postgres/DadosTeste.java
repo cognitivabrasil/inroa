@@ -1,13 +1,10 @@
 package postgres;
 
-import com.sun.org.apache.xerces.internal.parsers.DOMParser;
 import java.io.FileNotFoundException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class DadosTeste {

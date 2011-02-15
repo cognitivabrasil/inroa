@@ -196,11 +196,13 @@ public class Documento {
 
         ArrayList<String> Words = new ArrayList<String>();
 
+
         try {
             Stemmer st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
 
             st.enableCaching(1000);
 
+            
             S = S.toLowerCase();
 
             S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
@@ -256,8 +258,7 @@ public class Documento {
 
         S = S.toLowerCase();
         //StopWordList StopwdPort = new StopWordsFromHashSet(StopWords.getRes());
-
-        st.ignore(StopWords.getRes());
+        st.remove(StopWords.getRes());
 
         S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
         S = S.replaceAll("á|à|â|ã|ä", "a");

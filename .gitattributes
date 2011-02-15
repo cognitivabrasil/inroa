@@ -152,6 +152,7 @@ docs/release_notes.txt -text
 src/build.xml -text
 src/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar -text
 src/lib/PTStemmer_v2.jar -text
+src/lib/PTStemmer_v3.jar -text
 src/lib/com/jsptags/navigation/pager/COPYRIGHT -text
 src/lib/com/jsptags/navigation/pager/FirstTag.class -text
 src/lib/com/jsptags/navigation/pager/IndexTag.class -text
