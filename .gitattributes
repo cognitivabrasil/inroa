@@ -253,7 +253,6 @@ src/web/alterarSenha.jsp -text
 src/web/atualizaRepAjax.jsp -text
 src/web/cadastraFederacao.jsp -text
 src/web/cadastraRepositorio.jsp -text
-src/web/cadastraRepositorio2.jsp -text
 src/web/conexaoBD.jsp -text
 src/web/consulta.jsp -text
 src/web/css/mobile.css -text
@@ -289,6 +288,7 @@ src/web/mapeamentos/adicionaMapBranco.jsp -text
 src/web/mapeamentos/deletaBaseAjax.jsp -text
 src/web/mapeamentos/editaMapeamentos.jsp -text
 src/web/mapeamentos/funcoesMapeamento.js -text
+src/web/mapeamentos/listaMapeamentoPadraoSelecionado.jsp -text
 src/web/mapeamentos/mapeamentos.jsp -text
 src/web/mapeamentos/removerMapeamento.jsp -text
 src/web/mapeamentos/respostaAjax.jsp -text

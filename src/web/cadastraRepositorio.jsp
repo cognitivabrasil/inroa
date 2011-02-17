@@ -66,18 +66,22 @@ Primeira etapa do cadastro de um repositorio
                         <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                             <option value="" selected>Selecione
                                 <%
-                //Carrega do banco de dados os padroes de metadados cadastrados
-                //postgres ok
-                ResultSet res = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
-                while (res.next()) {
-                    if (!res.getString("nome").equalsIgnoreCase("todos")) {
-                        out.println("<option value=" + res.getString("id") + ">" + res.getString("nome").toUpperCase());
-                    }
+                                            //Carrega do banco de dados os padroes de metadados cadastrados
+                                            //postgres ok
+                                            ResultSet res = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
+                                            while (res.next()) {
+                                                if (!res.getString("nome").equalsIgnoreCase("todos")) {
+                                                    out.println("<option value=" + res.getString("id") + ">" + res.getString("nome").toUpperCase());
+                                                }
 
-                }
+                                            }
+
                                 %>
 
                         </select>
+                    </div>
+                    <div class="Value">
+                            <!--colocar aqui o código para selecionar o tipo de mapeamento e colocar opcao para adicionar mapeamento-->
                     </div>
                 </div>
 
@@ -109,7 +113,7 @@ Primeira etapa do cadastro de um repositorio
                     </div>
                 </div>
 
-                                <div class="LinhaEntrada">
+                <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="reset" value="Limpar" class="CancelButton" onclick="javascript:window.location.reload();"/>
                         <input id="cancelar" onclick="javascript:window.close();" value="Cancelar" type="button" class="CancelButton"/>
@@ -124,5 +128,5 @@ Primeira etapa do cadastro de um repositorio
     </body>
 </html>
 <%
-con.close(); //fechar conexao
+            con.close(); //fechar conexao
 %>

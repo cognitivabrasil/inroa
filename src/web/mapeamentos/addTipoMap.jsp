@@ -82,7 +82,7 @@
                     <div class="Buttons">
                         <input type="button" value="< Voltar" onclick="javascript:history.go(-1);"/>
                         <input class="BOTAO" id="cancelar" onclick="javascript:window.close();" value="Cancelar" type="button" class="CancelButton"/>
-                        <input class="BOTAO" type="submit" value="Pr&oacute;ximo >" name="submit" />
+                        <input class="BOTAO" type="submit" value="Adicionar >" name="submit" />
                     </div>
 
 

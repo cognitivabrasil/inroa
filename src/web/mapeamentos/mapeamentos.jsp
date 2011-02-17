@@ -34,10 +34,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
 
         //funcionalidades
         //adicionar, adicionar a partir de um pronto, remover, visualizar/editar
-//               String sql = "SELECT p.nome as 'nome_padrao', t.nome as 'tipo_map', t.descricao, t.id as 'id_map', p.id as 'id_padrao'" +
-//                "FROM mapeamentos m, padraometadados p, tipomapeamento t " +
- //               "WHERE m.tipo_mapeamento_id=t.id AND m.padraometadados_id=p.id " +
- //               "GROUP BY t.id, p.id;";
+
 
         String sql = "SELECT p.nome as nome_padrao, t.nome as tipo_map, t.descricao, t.id as id_map, p.id as id_padrao"+
                     " FROM mapeamentos m, padraometadados p, tipomapeamento t"+
