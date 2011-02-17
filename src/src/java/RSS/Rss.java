@@ -21,78 +21,27 @@ import javax.xml.transform.stream.*;
  */
 public class Rss {
 
-    static final String feedLink = "http://feb.ufrgs.br";
+    private String link;
     static final String feedDescription = "Alimentador de objetos de aprendizagem. ";
     private String search;
-    private int idRep;
-    private ArrayList <Integer>idRepArray = new ArrayList();
-    private ArrayList <Integer>idSubfedArray = new ArrayList();
+    private String idBusca;
+    private int rssTamMax = 30;
 
 
     /**
      * Construtor da classe Rss
-     * @param search string a ser buscada nos reposit&oacute;rios
-     * @param idRep identificador do reposit&oacute;rio a ser buscado. Caso se queira buscar em todos os reposit&oacute;rios, utilizar 0.
+     * @param search String a ser buscada nos reposit&oacute;rios
+     * @param idBusca String com os id dos reposit&oacute;rios (inteiros) separados por v&iacute;rgulas
+     * @param link String com a atual url. Como será
      **/
-    public Rss(String search, int idRep) {
+    public Rss(String search, String idBusca, String link) {
         if (search == null) {
             this.search = "";
         } else {
             this.search = search;
         }
-        this.idRep = idRep;
-    }
-
-    /**
-     * Construtor da classe Rss
-     * @param search string a ser buscada nos reposit&oacute;rios
-     * @param idRepArray ArrayList dos identificadores dos reposit&oacute;rios a serem usados na busca
-     **/
-    public Rss(String search, ArrayList <Integer>idRepArray) {
-        if (search == null) {
-            this.search = "";
-        } else {
-            this.search = search;
-        }
-        if (idRepArray.contains(0))
-        {
-            this.idRep = 0;
-            this.idRepArray.clear();
-        } else {
-            this.idRepArray = idRepArray;
-            this.idRep = 0;
-        }
-    }
-
-    /**
-     * Construtor da classe Rss
-     * @param search string a ser buscada nos reposit&oacute;rios
-     * @param s  string com os id dos reposit&oacute;rios (inteiros) separados por v&iacute;rgulas
-     **/
-    public Rss(String search, String idBusca) {
-        if (search == null) {
-            this.search = "";
-        } else {
-            this.search = search;
-        }
-        if (idBusca.equals("0"))
-        {
-            this.idRep = 0;
-            this.idRepArray.clear();
-            this.idSubfedArray.clear();
-        } else {
-            
-            String ids[] = idBusca.split(",");
-            for (int i = 0; i < ids.length; i++) {
-                if (ids[i].contains("rep;")) {
-                    this.idRepArray.add(Integer.parseInt(ids[i].replace("rep;", "")));
-                } else if (ids[i].contains("subFed;")) {
-                    this.idSubfedArray.add(Integer.parseInt(ids[i].replace("subFed;", "")));
-                }
-            }
-            
-            this.idRep = 0;
-        }
+        this.idBusca = idBusca;
+        this.link = link.substring(0, link.indexOf("rss.jsp"));
     }
 
     /**
@@ -100,13 +49,12 @@ public class Rss {
      * a mesma fun&ccedil;&atilde;o que a busca normal.
      * @return string correspondente ao xml do rss que ser&aacute; gerado
      **/
-    public String generateFeed(String currentURL) {
+    public String generateFeed() {
         ArrayList<Integer> idArray = new ArrayList<Integer>();
         Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
         Recuperador rec = new Recuperador();
         String xml = "";
-        String link = currentURL.substring(0, currentURL.indexOf("rss.jsp"));
 
         try {
             //cria documento xml
@@ -131,7 +79,7 @@ public class Rss {
             rssDescription.appendChild(text);
             channel.appendChild(rssDescription);
             Element rssLink = doc.createElement("link");
-            text = doc.createTextNode(feedLink);
+            text = doc.createTextNode(link);
             rssLink.appendChild(text);
             channel.appendChild(rssLink);
 
@@ -140,18 +88,13 @@ public class Rss {
             //idDoc é um array com os identificadores correspondentes à pesquisa
             try {
 
-               
-                if (this.idRepArray.isEmpty() && this.idSubfedArray.isEmpty()) {
-                    idArray = rec.search2(this.search, con, this.idRep);
-                } else {
-                    idArray = rec.search2(this.search, con, this.idRepArray, this.idSubfedArray);
-                }
+                idArray = rec.search2(this.search, con, this.idBusca, "data");
             } catch (SQLException e) {
                 System.out.println("FEB: RSS - Problemas com a busca\n" + e);
             }
             
             //adiciona um item no rss para cada elemento encontrado
-            for (int i = 0; i < idArray.size(); i++) {
+            for (int i = 0; i < idArray.size() && i < rssTamMax; i++) {
                 //faz a busca pelo id
                     String titulo = "";
                     String resumo = "";
@@ -172,7 +115,7 @@ public class Rss {
                                 String repositorio = rs.getString("repositorio");
                                 String subFed = rs.getString("id_subfed");
                                 if(repositorio==null)
-                                    repositorio = "null";
+                                    repositorio = "0";
                                 if(subFed==null)
                                     subFed = "null";
 

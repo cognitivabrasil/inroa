@@ -38,12 +38,12 @@ public class Busca {
         resultadoBusca = rep.search2(termoBusca, con, idRep);
         for (int i=0; i<resultadoBusca.size(); i++){
 
-        String entryQ = "SELECT obaa_entry FROM documentos WHERE id=" + resultadoBusca.get(i);
+        String entryQ = "SELECT obaa_entry, timestamp FROM documentos WHERE id=" + resultadoBusca.get(i);
 
 				Statement stm = con.createStatement();
 				ResultSet rs2 = stm.executeQuery(entryQ);
 				rs2.next();
-				String entryA = rs2.getString("obaa_entry");
+				String entryA = rs2.getString("timestamp");
                                 entry.add(entryA);
         }
         con.close(); //fecha a conexao com o Postgres
@@ -83,6 +83,18 @@ public class Busca {
         }
         con.close(); //fecha a conexao com o Postgres
         return entry;
+    }
+
+    public static void main(String args[]) {
+        ArrayList<String> entry = new ArrayList<String>();
+        try{
+            Busca busca = new Busca();
+            entry = busca.search("Sapato de Couro", 0);
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+        System.out.println(entry);
     }
 
 

@@ -28,7 +28,7 @@
 
                 for (var i=0;i<repositorios.length;i = i+1){
                     if (repositorios[i].checked == true){
-                        repChecked +=repositorios[i].id + ",";
+                        repChecked +=repositorios[i].value + ",";
                     }
                 }
                 window.location='rss.jsp?search='+consulta+'&idRep='+repChecked;

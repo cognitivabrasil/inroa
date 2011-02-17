@@ -33,8 +33,13 @@ public class Recuperador {
      */
     public ArrayList<Integer> search2(String query, Connection con, String idRep)
             throws SQLException {
+        return search2(query, con, idRep, "relevancia");
+    }
+
+    public ArrayList<Integer> search2(String query, Connection con, String idRep, String ordenar)
+            throws SQLException {
         if (idRep.equals("0")) {
-            return search2(query, con, 0);
+            return search2(query, con, 0, ordenar);
         } else {
             ArrayList<Integer> repId = new ArrayList<Integer>();
             ArrayList<Integer> subfedId = new ArrayList<Integer>();
@@ -47,7 +52,7 @@ public class Recuperador {
                 }
             }
 
-            return search2(query, con, repId, subfedId);
+            return search2(query, con, repId, subfedId, ordenar);
         }
     }
 
@@ -60,10 +65,26 @@ public class Recuperador {
      * @param idRep ArrayList de reposit&oacute;rios onde ser&aacute; feita a busca
      * @return uma lista de Integer com o id de cada documento
      * @throws SQLException
-     */
+     **/
     public ArrayList<Integer> search2(String query, Connection con, ArrayList<Integer> idRep, ArrayList<Integer> idSubfed)
             throws SQLException {
+        return search2(query, con, idRep, idSubfed, "relevancia");
+    }
 
+    /**
+     * Realiza a consulta na base de dados do termo 'query' na base tranferida no 'con'
+     * @param query
+     *            a string a ser consultada
+     * @param con
+     *            a conex&atilde;o com o banco de dados
+     * @param idRep ArrayList de reposit&oacute;rios onde ser&aacute; feita a busca
+     * @param ordenar String que define como ordenar os resultados da consulta.
+     * Deve ser "relevancia", para ordenar por relevancia, ou "data", para ordenar por data
+     * @return uma lista de Integer com o id de cada documento
+     * @throws SQLException
+     **/
+    public ArrayList<Integer> search2(String query, Connection con, ArrayList<Integer> idRep, ArrayList<Integer> idSubfed, String ordenar)
+            throws SQLException {
 
         Documento ret = new Documento(query);
         ArrayList<String> tokens = ret.getTokens();
@@ -99,7 +120,11 @@ public class Recuperador {
 
             String token = tokens.get(i);
             if (i == tokens.size() - 1) {
-                consult += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                if (ordenar.equalsIgnoreCase("data")){
+                    consult += "'" + token + "') GROUP BY r1w.tid, timestamp ORDER BY timestamp DESC;";
+                } else{
+                    consult += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                }
             } else {
                 consult += "'" + token + "' OR r1w.token=";
             }
@@ -129,7 +154,24 @@ public class Recuperador {
      */
     public ArrayList<Integer> search2(String query, Connection con, int idRep)
             throws SQLException {
+        return search2(query, con, idRep);
+    }
 
+
+    /**
+     * Realiza a consulta na base de dados do termo 'query' na base tranferida no 'con'
+     * @param query
+     *            a string a ser consultada
+     * @param con
+     *            a conex&atilde;o com o banco de dados
+     * @param idRep identificador do reposit&oacute;rio onde ser&aacute; feita a busca. Usar 0 caso se queira buscar todos em todos os reposit&oacute;rios
+     * @param ordenar String que define como ordenar os resultados da consulta.
+     * Deve ser "relevancia", para ordenar por relevancia, ou "data", para ordenar por data
+     * @return uma lista de integer com o id de cada documento
+     * @throws SQLException
+     */
+    public ArrayList<Integer> search2(String query, Connection con, int idRep, String ordenar)
+            throws SQLException {
 
         Documento ret = new Documento(query);
         ArrayList<String> tokens = ret.getTokens();
@@ -144,14 +186,19 @@ public class Recuperador {
                     + " AND d.id_repositorio=" + idRep
                     + " AND (r1w.token=";
         } else {
-            consult = "SELECT tid FROM r1weights r1w WHERE (r1w.token=";
+            consult = "SELECT tid FROM r1weights r1w, documentos d WHERE r1w.tid=d.id "
+                    + " AND (r1w.token=";
         }
 
         for (int i = 0; i < tokens.size(); i++) {
 
             String token = tokens.get(i);
             if (i == tokens.size() - 1) {
-                consult += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                if (ordenar.equalsIgnoreCase("data")){
+                    consult += "'" + token + "') GROUP BY r1w.tid, timestamp ORDER BY timestamp DESC;";
+                } else {
+                    consult += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                }
             } else {
                 consult += "'" + token + "' OR r1w.token=";
             }
