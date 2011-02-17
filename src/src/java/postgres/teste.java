@@ -162,7 +162,7 @@ public class teste {
         try{
         Stemmer stemmer = Stemmer.StemmerFactory(StemmerType.ORENGO);
         stemmer.enableCaching(1000);
-        stemmer.ignore(PTStemmerUtilities.fileToSet("data/stopwords.txt"));
+        stemmer.remove(PTStemmerUtilities.fileToSet("data/stopwords.txt"));
 //        stemmer.ignore(PTStemmerUtilities.fileToSet("data/namedEntities.txt"));
         String[] stem = stemmer.getPhraseStems("ciências a para bacana");
         for(int i=0;i<stem.length; i++)

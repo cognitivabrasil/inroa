@@ -144,7 +144,7 @@
 
                 //testa se a senha informada e a repeticao estao iguais
                 if (!senhaFed.equals(confimaSenha)) {
-                    out.print("<script type='text/javascript'>alert('As senhas informadas para o Ldap destino não conferem. Digite novamente!');</script>" +
+                    out.print("<script type='text/javascript'>alert('As senhas informadas para a base de dados não conferem. Digite novamente!');</script>" +
                             "<script type='text/javascript'>history.back(-1);</script>");
                 }
 

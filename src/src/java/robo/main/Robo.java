@@ -163,7 +163,7 @@ public class Robo {
 
                     if (caminhoTeste.isDirectory()) {
 
-                        caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "2014-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
+                        caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
                         //leXMLgravaBase le do xml e armazena no ldap idependente de padrao de metadado
 
                         //Primeira operação do robô com LDAP
