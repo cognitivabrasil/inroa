@@ -257,7 +257,7 @@ public class Documento {
         st.enableCaching(1000);
 
         S = S.toLowerCase();
-        //StopWordList StopwdPort = new StopWordsFromHashSet(StopWords.getRes());
+        
         st.remove(StopWords.getRes());
 
         S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
