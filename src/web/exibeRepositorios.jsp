@@ -30,10 +30,11 @@
 //        String sql = "SELECT r.*, i.*, p.nome as nome_padrao, l.nome as nome_federacao, l.descricao as descricao_federacao, l.porta, l.login, l.senha, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao"
 //+" FROM repositorios r, info_repositorios i, dados_subfederacoes l, padraometadados p"
 //+" WHERE r.id="+id+" AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.id_federacao=l.id ORDER BY r.nome ASC";
-                        String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao, i.url_or_ip, i.periodicidade_horas, i.data_ultima_atualizacao, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao "
-                                + " FROM repositorios r, info_repositorios i, padraometadados p "
-                                + " WHERE r.id=" + id + " AND r.id=i.id_repositorio AND i.padrao_metadados=p.id "
+                        String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao, i.url_or_ip, i.periodicidade_horas, t.nome as nometipomap, t.descricao as descricaotm, i.data_ultima_atualizacao, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao "
+                                + " FROM repositorios r, info_repositorios i, padraometadados p, tipomapeamento t "
+                                + " WHERE r.id=" + id + " AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.tipo_mapeamento_id=t.id "
                                 + " ORDER BY r.nome ASC";
+                        
                         ResultSet res = stm.executeQuery(sql);
                         if (res.next()) {
 
@@ -60,6 +61,12 @@
                     Padr&atilde;o de metadados utilizado:
                 </div>
                 <div class="Value">&nbsp;<%=res.getString("nome_padrao").toUpperCase()%></div>
+            </div>
+            <div class="LinhaEntrada">
+                <div class="Label">
+                    Tipo de mapeamento:
+                </div>
+                <div class="Value">&nbsp;<%out.println(res.getString("nometipomap")+" - "+res.getString("descricaotm"));%></div>
             </div>
 
             <!--Informações configuração

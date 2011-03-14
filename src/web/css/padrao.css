@@ -501,12 +501,11 @@ td{vertical-align:top;}
     font-size:80%;
 }
 
-}
 .botaoEditar { 
     background-color: transparent;
     background-image:url(/feb/imagens/Lapiz-24x24.png);
-    height: 100px;
-    width: 100px;
+    height: 24px;
+    width: 24px;
     border:0px;
     cursor:pointer;
 }

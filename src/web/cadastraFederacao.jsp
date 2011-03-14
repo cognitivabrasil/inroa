@@ -52,7 +52,7 @@
             if (formNull) {
             %>
 
-            <div class="subTitulo-center">&nbsp;Entre com as informa&ccedil;&otilde;es para cadastrar uma nova federa&atilde;o</div>
+            <div class="subTitulo-center">&nbsp;Entre com as informa&ccedil;&otilde;es para cadastrar uma nova federa&ccedil;&atilde;o</div>
             <div class="EspacoAntes">&nbsp;</div>
             <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
             <form name="adicionarFederacao" action="" method="post" onsubmit="return myForm.Apply('MensagemErro')">

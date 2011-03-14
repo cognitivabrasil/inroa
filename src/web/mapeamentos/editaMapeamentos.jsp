@@ -19,7 +19,7 @@
             //necessario para usar o ajax
         </script>
         <script language="JavaScript" type="text/javascript" src="./funcoesMapeamento.js">
-            //necessario para o funcionamento
+             //funcoes javascript que chamam o ajax
         </script>
 
     </head>

@@ -45,8 +45,8 @@ function salvarNovoMapeamento(){
     var inputDestinoComplementar = idDestinoComp;
     var padrao = padraoMet;
     var tipoMap = tipoMapeamento;
-
     //fim variaveis globais
+
     var origem = document.getElementById(inputOrigem).value;
     var destino = document.getElementById(inputDestino).value;
     var compOrigem = '';
@@ -404,5 +404,49 @@ function excluirAjax(idMapeamento, tabela, idResultado)
     }
     ajax.send(null); // submete
 
+
+}
+
+
+
+/////
+
+/**
+ * Fun&ccedil;&atilde;o utilizada para apresentar os tipos de mapeamentos disponiveis para o padrao selecionado.
+ * Esta fun&ccedil;&atilde;o deve ser chamamada da pasta raiz.
+ * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodar&aacute; sem que a pagina principal seja recarregada.
+*/
+function selecionaMapeamento(idResultado, idInput, acao)
+{
+ 
+ 
+ var idPadrao = document.getElementById(idInput).value;
+    //div onde sera adicionado o resultado
+    var exibeResultado = document.getElementById(idResultado);
+    
+    var ajax = openAjax(); // Inicia o Ajax.
+
+    ajax.open("POST", "./mapeamentos/listaMapeamentoPadraoSelecionado.jsp?idpadrao="+idPadrao+"&acao="+acao, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        {
+            exibeResultado.innerHTML = "Aguarde...";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
+            {
+                var resultado = ajax.responseText;
+                exibeResultado.innerHTML = resultado;
+            }
+            else
+            {
+                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+            }
+        }
+    }
+    ajax.send(null); // submete
 
 }

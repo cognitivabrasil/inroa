@@ -3,6 +3,7 @@
     <servlet>
         <servlet-name>Start</servlet-name>
         <servlet-class>robo.main.Start</servlet-class>
+        <load-on-startup>10</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>Start</servlet-name>

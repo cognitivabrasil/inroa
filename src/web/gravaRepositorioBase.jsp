@@ -24,12 +24,7 @@
     <body>
 
         <%
-        /*******************************************
-         *  VER SE PRECISA INSERIR O IDLDAPDESTINO. COLOQUEI 1 PARA FUNCIONAR O INSERT
-         *******************************************/
-        String idLdapDestino = "1";
-
-
+   
         Long key = new Long(0);
         boolean testaParametros = false;
         String url = "";
@@ -37,6 +32,7 @@
         String descricao = "";
         String padrao_metadados = "";
         String periodicidade = "";
+        String tipo_mapeamento = "";
 
         try {
             //armazena em variaveis os dados preenchidos no formulario
@@ -45,8 +41,8 @@
             descricao = request.getParameter("descricao").trim();
             padrao_metadados = request.getParameter("padrao_metadados").trim();
             periodicidade = request.getParameter("periodicidade").trim();
-
-            if (url.isEmpty() || nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || periodicidade.isEmpty()) {
+            tipo_mapeamento = request.getParameter("tipo_map").trim();
+            if (url.isEmpty() || nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || periodicidade.isEmpty() || tipo_mapeamento.isEmpty()) {
                 out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
                         "<script type='text/javascript'>history.back(-1);</script>");
             } else {
@@ -66,7 +62,6 @@
 
             String nomeNaFederacao = nome.toLowerCase().replaceAll(" ", "_");
 
-////        String idLdapDestino = request.getParameter("ldap_destino").trim();
 
             out.print("<p>Gravando dados na base...</p>");
 
@@ -97,13 +92,13 @@
                         rs.next();
                         key = rs.getLong(1);
 
-                        String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, padrao_metadados, id_federacao) " +
-                                "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidade + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', " + idLdapDestino + ");";
+                        String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, padrao_metadados, tipo_mapeamento_id) " +
+                                "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidade + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', "+tipo_mapeamento+");";
 
 
                         result2 = stm.executeUpdate(sql2); //executa o que tem na variavel slq2
                         //se o insert funcionou seta pra true o boolean
-                        if (result2 > 0) { //se todos os insert e a insersao do nodo no ldap foram realizados
+                        if (result2 > 0) { //se todos os insert foram realizados
                             gravadoSql2 = true;
                             out.print("<script type='text/javascript'>alert('Informações do repositório " + nome.toUpperCase() + " gravadas com sucesso!');</script></p>");
                             out.print("<script type='text/javascript'>fechaRecarrega();</script>");

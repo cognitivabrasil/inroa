@@ -22,7 +22,9 @@ Primeira etapa do cadastro de um repositorio
         <link rel="StyleSheet" href="./css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="./scripts/validatejs.js"></script>
         <script type="text/javascript" src="./scripts/funcoes.js"></script>
-
+        <script language="JavaScript" type="text/javascript" src="./mapeamentos/funcoesMapeamento.js">
+            //funcoes javascript que chamam o ajax
+        </script>
         <script type="text/javascript">
             var myForm = new Validate();
             myForm.addRules({id:'nameRep',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
@@ -30,6 +32,7 @@ Primeira etapa do cadastro de um repositorio
             myForm.addRules({id:'padraoMet',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
             myForm.addRules({id:'periodicidade',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em horas!'});
             myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
+            myForm.addRules({id:'rdMap',option:'required',error:'* Deve ser selecionado o tipo de mapeamento!'});
         </script>
     </head>
     <body id="bodyMenor">
@@ -64,14 +67,14 @@ Primeira etapa do cadastro de um repositorio
                     </div>
                     <div class="Value">
                         <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
-                            <option value="" selected>Selecione
+                            <option value="" selected onclick="selecionaMapeamento('resultado', 'padraoMet', 'cadastra')">Selecione
                                 <%
                                             //Carrega do banco de dados os padroes de metadados cadastrados
                                             //postgres ok
                                             ResultSet res = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
                                             while (res.next()) {
                                                 if (!res.getString("nome").equalsIgnoreCase("todos")) {
-                                                    out.println("<option value=" + res.getString("id") + ">" + res.getString("nome").toUpperCase());
+                                                    out.println("<option value='" + res.getString("id") + "' onclick=\"selecionaMapeamento('resultado', 'padraoMet', 'cadastra')\">" + res.getString("nome").toUpperCase());
                                                 }
 
                                             }
@@ -80,10 +83,17 @@ Primeira etapa do cadastro de um repositorio
 
                         </select>
                     </div>
-                    <div class="Value">
-                            <!--colocar aqui o código para selecionar o tipo de mapeamento e colocar opcao para adicionar mapeamento-->
                     </div>
-                </div>
+                    <div class="LinhaEntrada">
+                    <div class="Label">
+                        Tipo de mapeamento:
+                    </div>
+                                <div id='resultado'>
+                                    <div class="Value">Selecione um padr&atilde;o</div>
+                                    <input type="hidden" id="rdMap"  name="tipo_map" value=""> </div>
+                            <div class="Espaco"> &nbsp;</div>
+                    </div>
+                
 
                 <div class="subtitle">Informa&ccedil;&otilde;es sobre o configura&ccedil;&atilde;o da federa&ccedil;&atilde;o</div>
                 <div class="LinhaEntrada">
@@ -94,14 +104,6 @@ Primeira etapa do cadastro de um repositorio
                         <input name="periodicidade" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
-                <!--  <div class="LinhaEntrada">
-                      <div class="Label">
-                          Nome que ter&aacute; na federa&ccedil;&atilde;o:
-                      </div>
-                      <div class="Value">
-                          <input name="nomeNaFederacao" id="nomeFed" type="text" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                      </div>
-                  </div> -->
 
                 <div class="subtitle">Sincroniza&ccedil;&atilde;o dos metadados</div>
                 <div class="LinhaEntrada">
