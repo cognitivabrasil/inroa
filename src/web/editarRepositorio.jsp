@@ -83,7 +83,7 @@
                 myForm.addRules({id:'nameRep',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
                 myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
                 myForm.addRules({id:'padraoMet',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
-                myForm.addRules({id:'rdMap',option:'required',error:'* Deve ser selecionado o tipo de mapeamento!'});
+                myForm.addRules({id:'rdMap',option:'isNotEmpty',error:'* Deve ser selecionado o tipo de mapeamento!'});
             </script>
 
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
@@ -145,13 +145,14 @@
                                                             while (rsTM.next()) {
                                                                 int idtMap = rsTM.getInt("id_map");
                                                                 if (idtMap == idTipoMap) {//se for o tipo que esta sendo usado deixa marcado o radio
-                                                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" checked=true id='rdMap' name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
+                                                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" checked=true id=\"rdMap\" name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
                                                                 } else {
-                                                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" id='rdMap' name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
+                                                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" id=\"rdMap\" name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
                                                                 }
                                                             }
 
                         %>
+                        
                     </div>
                 </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
@@ -241,7 +242,9 @@
                                     out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>"
                                             + "<script type='text/javascript'>history.back(-1);</script>");
                                 }
-                                if(nullpointer){
+                                
+
+                                if(!nullpointer){
                                 if ((nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || tipo_mapeamento.isEmpty())) {
                                     out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>"
                                             + "<script type='text/javascript'>history.back(-1);</script>");
