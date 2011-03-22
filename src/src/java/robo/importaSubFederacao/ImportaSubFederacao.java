@@ -44,13 +44,13 @@ public class ImportaSubFederacao {
                 //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio o LDAP
                 if (Robo.testarDataAnteriorMil(rs.getDate("data_ultima_atualizacao"))) {
                     Remover deleta = new Remover();
-                    System.out.println("Deletando toda a base de dados da Subfederação: " + nome.toUpperCase());
+                    System.out.println("FEB: Deletando toda a base de dados da Subfederação: " + nome.toUpperCase());
                     deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro
                     try {
                         deleta.apagaObjetosSubfederacao(id, con);
-                        System.out.println("Base deletada!");
+                        System.out.println("FEB: Base deletada!");
                     } catch (Exception e) {
-                        System.out.println("Error: " + e.toString());
+                        System.out.println("FEB: Error: " + e.toString());
                     }
                 }
 
@@ -58,7 +58,7 @@ public class ImportaSubFederacao {
 
                 Conectar conecta = new Conectar(conf);
                 Connection conSub = conecta.conectaBD(); //chama o metodo conectaBD da classe conectar
-
+                verificaObjetosDeletados(con, conSub); //verifica na subfederacao se tem objetos a serem deletados
                 documentos(id, dataAtualizacao, con, conSub);
                 conSub.close();//fecha conexao com a subfederacao
 
@@ -69,7 +69,7 @@ public class ImportaSubFederacao {
 
 
         } catch (SQLException e) {
-            System.err.println("SQL Exception... Erro na classe importaSubFederacao:" + e.getMessage());
+            System.err.println("FEB: SQL Exception... Erro na classe importaSubFederacao:" + e.getMessage());
             e.printStackTrace();
         }
         return atualizou;
@@ -171,6 +171,32 @@ public class ImportaSubFederacao {
         stmt.executeUpdate();
         stmt.close();
 
+
+    }
+    /**
+     * Verifica se na subfedera&ccedil;&atilde;o existem objetos deletados, e deleta na federa&ccedil;&atilde;o local
+     * @param con conex&atilde;o com a base de dados local
+     * @param conSub conex&atilde;o com a base de dados da subfedera&ccedil;&atilde;o
+     * @throws SQLException
+     */
+    public void verificaObjetosDeletados(Connection conLocal, Connection conSub){
+        String sql = "SELECT obaa_entry, id_repositorio FROM excluidos WHERE data >= (now() - ('30 HOUR')::INTERVAL);";
+        try{
+        Statement stmSub = conSub.createStatement();
+        ResultSet rsSub = stmSub.executeQuery(sql);
+        while(rsSub.next()){
+            String obaaEntry = rsSub.getString("obaa_entry");
+            String idRepositorio = rsSub.getString("id_repositorio");
+
+            System.out.println("FEB: Deletando objeto com obaaEntry: "+obaaEntry +" do repositorio:"+idRepositorio);
+
+            String sqlDelete = "DELETE FROM documentos WHERE obaa_entry="+obaaEntry+" AND id_repositorio="+idRepositorio;
+            Statement stmLocal = conLocal.createStatement();
+            stmLocal.executeUpdate(sqlDelete);//executa o sql que tem na variavel sqlDelete
+        }
+        }catch (SQLException s){
+            System.err.println("FEB: Exluindo objetos... "+s);
+        }
 
     }
 
