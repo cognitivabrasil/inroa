@@ -185,17 +185,18 @@ public class ImportaSubFederacao {
         Statement stmSub = conSub.createStatement();
         ResultSet rsSub = stmSub.executeQuery(sql);
         while(rsSub.next()){
-            String obaaEntry = rsSub.getString("obaa_entry");
-            String idRepositorio = rsSub.getString("id_repositorio");
+            String obaaEntry = rsSub.getString("id_repositorio")+";FEB;"+rsSub.getString("obaa_entry");
 
-            System.out.println("FEB: Deletando objeto com obaaEntry: "+obaaEntry +" do repositorio:"+idRepositorio);
+            System.out.println("FEB: Deletando objeto com obaaEntry: '"+obaaEntry +"'");
 
-            String sqlDelete = "DELETE FROM documentos WHERE obaa_entry="+obaaEntry+" AND id_repositorio="+idRepositorio;
+            String sqlDelete = "DELETE FROM documentos WHERE obaa_entry='"+obaaEntry+"'";
+            System.out.println(sqlDelete);
             Statement stmLocal = conLocal.createStatement();
             stmLocal.executeUpdate(sqlDelete);//executa o sql que tem na variavel sqlDelete
         }
         }catch (SQLException s){
-            System.err.println("FEB: Exluindo objetos... "+s);
+            System.err.println("FEB: Exluindo objetos... ");
+            s.printStackTrace();
         }
 
     }
