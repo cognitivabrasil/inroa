@@ -87,6 +87,7 @@ public class Recuperador {
             throws SQLException {
 
         Documento ret = new Documento(query);
+        int nElementos = ret.getDescricao().size();
         ArrayList<String> tokens = ret.getTokens();
         ArrayList<Integer> idDoc = new ArrayList<Integer>();
         String consult = "";
@@ -121,7 +122,8 @@ public class Recuperador {
             String token = tokens.get(i);
             if (i == tokens.size() - 1) {
                 if (ordenar.equalsIgnoreCase("data")){
-                    consult += "'" + token + "') GROUP BY r1w.tid, timestamp ORDER BY timestamp DESC;";
+                    //Aqui se usou uma constante arbitrária 0.2 para restringir os resultados, pois uma busca classificada por data pode trazer resultados irrelevantes
+                    consult += "'" + token + "') GROUP BY r1w.tid, timestamp HAVING SUM(r1w.weight)>= 0.2*" + nElementos + " ORDER BY timestamp DESC;";
                 } else{
                     consult += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
                 }
@@ -174,6 +176,7 @@ public class Recuperador {
             throws SQLException {
 
         Documento ret = new Documento(query);
+        int nElementos = ret.getDescricao().size();
         ArrayList<String> tokens = ret.getTokens();
 //        ArrayList<String> Entry = new ArrayList<String>();
         ArrayList<Integer> idDoc = new ArrayList<Integer>();
@@ -195,7 +198,8 @@ public class Recuperador {
             String token = tokens.get(i);
             if (i == tokens.size() - 1) {
                 if (ordenar.equalsIgnoreCase("data")){
-                    consult += "'" + token + "') GROUP BY r1w.tid, timestamp ORDER BY timestamp DESC;";
+                    //Aqui se usou uma constante arbitrária 0.2 para restringir os resultados, pois uma busca classificada por data pode trazer resultados irrelevantes
+                    consult += "'" + token + "') GROUP BY r1w.tid, timestamp HAVING SUM(r1w.weight)>= 0.2*" + nElementos + " ORDER BY timestamp DESC;";
                 } else {
                     consult += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
                 }
