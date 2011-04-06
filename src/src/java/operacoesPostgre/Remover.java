@@ -3,7 +3,7 @@ package operacoesPostgre;
 import java.sql.*;
 
 /**
- * Classe com metodos responsáveis por remover dados de uma base Ldap
+ * Classe com metodos responsáveis por remover dados da base.
  *
  * @author Marcos Nunes
  */

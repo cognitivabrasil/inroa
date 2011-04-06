@@ -136,7 +136,7 @@ public class Robo {
                     System.out.println("\t Ultima Atualização: " + ultimaAtualizacao + " nome do rep: " + nome);
 
 
-                    //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio o LDAP
+                    //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
                     if (testarDataAnteriorMil(data_ultima_atualizacao)) {
                         Remover deleta = new Remover();
                         System.out.println("Deletando toda a base de dados do repositório: " + nome.toUpperCase());
@@ -164,10 +164,9 @@ public class Robo {
                     if (caminhoTeste.isDirectory()) {
 
                         caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
-                        //leXMLgravaBase le do xml e armazena no ldap idependente de padrao de metadado
 
-                        //Primeira operação do robô com LDAP
-                        gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con); //chama a classe que le o xml e grava os dados no ldap
+                        //leXMLgravaBase le do xml traduz para o padrao OBAA e armazena na base de dados
+                        gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con);
                         atualizou = true;
 
 

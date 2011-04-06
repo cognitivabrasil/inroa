@@ -127,5 +127,5 @@
         <%@include file="googleAnalytics"%>
     </body>
 </html>
-<%    con.close (); //fechar conexao com mysql
+<%    con.close (); //fechar conexao com a base de dados
 %>

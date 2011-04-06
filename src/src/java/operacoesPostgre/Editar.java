@@ -4,7 +4,7 @@ import java.sql.*;
 import postgres.Conectar;
 
 /**
- * Classe que disponibiliza operações de edição no LDAP.
+ * Classe que disponibiliza operações de edição na base de dados.
  * @author Marcos Nunes
  */
 public class Editar {
@@ -15,7 +15,7 @@ public class Editar {
      * @param idNovaFed Id da Federação nova para qual se quer trocar os metadados do repositório
      * @return Retorna true ou false, se o processo foi executado com sucesso ou não.
      */
-    public boolean trocarBaseLdap(int idRep, int idNovaFed) {
+    public boolean trocarSubFederacao(int idRep, int idNovaFed) {
 
         Conectar conectar = new Conectar();
 

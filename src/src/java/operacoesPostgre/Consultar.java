@@ -10,7 +10,7 @@ import postgres.Configuracao;
  * Disponibiliza método para efetuar consultas
  * @author Marcos Nunes
  */
-//não deve apagar, foi reaproveitado mesmo sem LDAP
+
 public class Consultar {
 
     ArrayList<HashMap> resultado = new ArrayList<HashMap>();

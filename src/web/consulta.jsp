@@ -179,7 +179,7 @@ o dnRaiz deve ter essa ordem: obaaIdentifier=obaa000000,ou=obaa,dc=ufrgs,dc=br
 
                                                 for (int result = offset.intValue(), l = Math.min(result + maxPageItems, numObjetosEncontrados); result < l; result++) {//percorre o resultado da ferramenta de RI(recuperacao de informacao)
 //colocar aqui para imprimir as consultas. Ele vai entrar aqui uma vez para cada resultado do hashmap
-                                                    ArrayList resultHash = new ArrayList(); //ArrayList que recebera o resultado da busca LDAP
+                                                    ArrayList resultHash = new ArrayList(); //ArrayList que recebera o resultado da busca
 
 
                                                     //fazer consulta na base de dados para pegar as informações necessárias

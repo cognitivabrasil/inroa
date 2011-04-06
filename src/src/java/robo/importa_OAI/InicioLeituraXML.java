@@ -45,7 +45,7 @@ public class InicioLeituraXML {
             for (int i = 0; i < caminhoXML.size(); i++) {
                 File arquivoXML = new File(caminhoXML.get(i));
                 if (arquivoXML.isFile() || arquivoXML.canRead()) {
-                    //efetua a leitura do xml e insere os objetos no ldap
+                    //efetua a leitura do xml e insere os objetos na base de dados
                     reader.parser(caminhoXML.get(i), indexar, con, id);
 
                     //apaga arquivo XML
@@ -92,7 +92,7 @@ public class InicioLeituraXML {
             XmlSaxReader reader = new XmlSaxReader();
                 File arquivoXML = new File(caminhoXML);
                 if (arquivoXML.isFile() || arquivoXML.canRead()) {
-                    //efetua a leitura do xml e insere os objetos no ldap
+                    //efetua a leitura do xml e insere os objetos na base de dados
                     reader.parser(caminhoXML, indexar, con, id);
 
                     //apaga arquivo XML
@@ -127,7 +127,7 @@ public class InicioLeituraXML {
     public static void main(String[] args) {
         XmlSaxReader reader = new XmlSaxReader();
         Indexador indexar = new Indexador();
-            //efetua a leitura do xml e insere os objetos no ldap
+            //efetua a leitura do xml e insere os objetos na base de dados
         try {
 
                         Conectar conectar = new Conectar(); //instancia uma variavel da classe portgres.conectar

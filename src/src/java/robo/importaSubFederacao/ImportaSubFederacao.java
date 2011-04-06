@@ -41,7 +41,7 @@ public class ImportaSubFederacao {
                 Timestamp dataAtualizacao = rs.getTimestamp("data_ultima_atualizacao");
 
 
-                //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio o LDAP
+                //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
                 if (Robo.testarDataAnteriorMil(rs.getDate("data_ultima_atualizacao"))) {
                     Remover deleta = new Remover();
                     System.out.println("FEB: Deletando toda a base de dados da Subfederação: " + nome.toUpperCase());

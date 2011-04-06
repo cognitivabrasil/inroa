@@ -51,8 +51,8 @@ public class Rss {
      **/
     public String generateFeed() {
         ArrayList<Integer> idArray = new ArrayList<Integer>();
-        Conectar conectar = new Conectar(); //instancia uma variavel da classe mysql.conectar
-        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe mysql.conectar
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
+        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         Recuperador rec = new Recuperador();
         String xml = "";
 
@@ -180,7 +180,7 @@ public class Rss {
             trans.transform(source, result);
             xml = sw.toString();
 
-            con.close(); //fecha a conexao com o mysql
+            con.close(); //fecha a conexao com a base de dados
 
         } catch (DOMException e) {
             System.out.print("FEB: Erro gerado pelo DOM para a geração de um RSS\n" + e);
