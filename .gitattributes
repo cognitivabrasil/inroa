@@ -281,7 +281,7 @@ src/web/infoDetalhada.jsp -text
 src/web/listaStowords.jsp -text
 src/web/logando.jsp -text
 src/web/login.html -text
-src/web/mapeamentos/addMapeamento.jsp -text
+src/web/mapeamentos/APAGAR-addMapeamento.jsp -text
 src/web/mapeamentos/addTipoMap.jsp -text
 src/web/mapeamentos/adicionaMapBranco.jsp -text
 src/web/mapeamentos/deletaBaseAjax.jsp -text

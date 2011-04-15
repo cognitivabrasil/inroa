@@ -80,6 +80,30 @@
                         <div id="divDesc">Selecione o tipo de mapeamento e veja aqui sua descrição.</div>
                     </div>
 
+                    <div class="Legenda">
+                    Criar a partir de um existente:
+                </div>
+
+                <div class="Valor" id="padroes">
+                    <%
+                String sql2 = "SELECT p.nome as nome_padrao, t.nome as tipo_map, t.id as id_map, p.id as id_padrao"
+                        + " FROM mapeamentos m, padraometadados p, tipomapeamento t"
+                        + " WHERE m.tipo_mapeamento_id = t.id AND m.padraometadados_id = p.id"
+                        + " GROUP BY t.id, p.id, t.nome, p.nome;";
+                ResultSet rs2 = stm.executeQuery(sql2);
+                out.println("<select name='existente' id='existente' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
+                out.println("<option selected value=''> N&atilde;o");
+                while (rs2.next()) {
+                    if(rs2.isFirst())
+                        out.println("<option value='' disabled>- Padr&atilde;o / Tipo do mapeamento");
+                    out.println("<option value="+rs2.getString("id_padrao")+";;"+rs2.getString("id_map")+">"
+                            + rs2.getString("nome_padrao")+" / "+ rs2.getString("tipo_map"));
+                }
+                out.println("</select>");
+
+                    %>
+
+                </div>
 
 
                 <div class="Buttons">
