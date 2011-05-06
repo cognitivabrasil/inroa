@@ -177,7 +177,7 @@
             <script type="text/javascript">
                 var myForm = new Validate();
                 myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
-                myForm.addRules({id:'periodicidade',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em horas!'});
+                myForm.addRules({id:'periodicidade',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
             </script>
 
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
@@ -199,7 +199,7 @@
                         Periodicidade de atualiza&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <input name="periodicidade" value="<%=res.getInt("periodicidade_horas")%>" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="periodicidade" value="<%=res.getInt("periodicidade_horas")/24%>" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
@@ -277,7 +277,9 @@
                                             + "<script type='text/javascript'>history.back(-1);</script>");
                                     out.close();
                                 } else {
-                                    String sql = "UPDATE info_repositorios SET url_or_ip='" + url + "', periodicidade_horas=" + periodicidade + " WHERE id_repositorio=" + id;
+                                    //trocar de dias para horas
+                                    int periodicidadeHoras = Integer.parseInt(periodicidade)*24;
+                                    String sql = "UPDATE info_repositorios SET url_or_ip='" + url + "', periodicidade_horas=" + periodicidadeHoras + " WHERE id_repositorio=" + id;
                                     result = stm.executeUpdate(sql);
                                     if (result > 0) {
                                         out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); "

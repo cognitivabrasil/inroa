@@ -31,7 +31,7 @@
         String nome = "";
         String descricao = "";
         String padrao_metadados = "";
-        String periodicidade = "";
+        String periodicidadeDias = "";
         String tipo_mapeamento = "";
 
         try {
@@ -40,9 +40,9 @@
             nome = request.getParameter("nomeRep").trim().toUpperCase();
             descricao = request.getParameter("descricao").trim();
             padrao_metadados = request.getParameter("padrao_metadados").trim();
-            periodicidade = request.getParameter("periodicidade").trim();
+            periodicidadeDias = request.getParameter("periodicidade").trim();
             tipo_mapeamento = request.getParameter("tipo_map").trim();
-            if (url.isEmpty() || nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || periodicidade.isEmpty() || tipo_mapeamento.isEmpty()) {
+            if (url.isEmpty() || nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || periodicidadeDias.isEmpty() || tipo_mapeamento.isEmpty()) {
                 out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
                         "<script type='text/javascript'>history.back(-1);</script>");
             } else {
@@ -91,9 +91,9 @@
                         ResultSet rs = stm.getGeneratedKeys();
                         rs.next();
                         key = rs.getLong(1);
-
+                        int periodicidadeHoras = Integer.parseInt(periodicidadeDias)*24; //mudar dias para horas
                         String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, padrao_metadados, tipo_mapeamento_id) " +
-                                "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidade + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', "+tipo_mapeamento+");";
+                                "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidadeHoras + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', "+tipo_mapeamento+");";
 
 
                         result2 = stm.executeUpdate(sql2); //executa o que tem na variavel slq2

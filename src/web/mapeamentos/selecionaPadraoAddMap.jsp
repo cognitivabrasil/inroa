@@ -51,11 +51,11 @@
                 </div>
 
                 <div class="Legenda">
-                        Tipo do mapeamento:
+                        Nome do mapeamento:
                     </div>
                     <div class="Valor" id="tipoMap">
                         <select name='tipoMap' id='tipoMap' onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
-                            <option value="" selected onclick="insereValorDiv('divDesc','Selecione um tipo de mapeamento acima')">Selecione
+                            <option value="" selected onclick="insereValorDiv('divDesc','Selecione o nome do mapeamento acima')">Selecione
                                 <%
                             String sqlTipMap = "SELECT t.id, t.nome, t.descricao FROM tipomapeamento t;";
                             ResultSet rsTipo = stm.executeQuery(sqlTipMap);
@@ -70,14 +70,14 @@
                             
                         </select>
                                 <a onclick="javascript:window.location='addTipoMap.jsp'">
-                                    Adicionar novo tipo</a>
+                                    Adicionar nome</a>
                     </div>
                     <div class="Legenda">
                         Descrição:
                     </div>
                     <div class="Valor">
 
-                        <div id="divDesc">Selecione o tipo de mapeamento e veja aqui sua descrição.</div>
+                        <div id="divDesc">Selecione o nome do mapeamento e veja aqui sua descri&ccedil;&atilde;o.</div>
                     </div>
 
                     <div class="Legenda">
@@ -95,7 +95,7 @@
                 out.println("<option selected value=''> N&atilde;o");
                 while (rs2.next()) {
                     if(rs2.isFirst())
-                        out.println("<option value='' disabled>- Padr&atilde;o / Tipo do mapeamento");
+                        out.println("<option value='' disabled>- Padr&atilde;o / Nome do mapeamento");
                     out.println("<option value="+rs2.getString("id_padrao")+";;"+rs2.getString("id_map")+">"
                             + rs2.getString("nome_padrao")+" / "+ rs2.getString("tipo_map"));
                 }

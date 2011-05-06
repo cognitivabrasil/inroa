@@ -90,7 +90,7 @@
                 <div class="Label">
                     Periodicidade de atualiza&ccedil;&atilde;o :
                 </div>
-                <div class="Value">&nbsp;<%=res.getInt("periodicidade_horas")%> (horas)</div>
+                <div class="Value">&nbsp;<%=res.getInt("periodicidade_horas")/24%> dia(s)</div>
             </div>
 
 

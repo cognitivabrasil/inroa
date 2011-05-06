@@ -72,12 +72,12 @@
                 
             %>
 
-            <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de mapeamentos cadastrados</div>
+            <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de padr&otilde;es cadastrados</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
 
             <div class="Mapeamento">
                 <div class="Legenda">
-                    Nome do Mapeamento:
+                    Nome do Padr&atilde;o:
                 </div>
                 <div class="Editar">&nbsp;
                     <input type="button" class="botaoEditar" size="30" name="editar" id="editarMapeamento" onclick="exibeText('nome', <%=idPadrao%>, '<%=atributoNome%>', this)"/>
@@ -160,14 +160,14 @@
                     <td width="10%">&nbsp;</td>
                     <td width="80%">
 
-                        <a title="Adicionar Mapeamento" onclick="">
+                        <a title="Adicionar Atributo" onclick="">
                             <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                         </a>
 
 
                         &nbsp;&nbsp;
                         <a onclick="">
-                            Adicionar Mapeamento
+                            Adicionar Atributo
                         </a>
 
                     </td>
