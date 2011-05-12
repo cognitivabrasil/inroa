@@ -63,7 +63,7 @@
 
                                 if (tipo.equalsIgnoreCase("geral")) {
 
-                                    String sql = "SELECT r.nome, r.descricao, p.id as id_padrao, p.nome as nome_padrao, i.tipo_mapeamento_id"
+                                    String sql = "SELECT r.nome, r.descricao, p.id as id_padrao, p.nome as nome_padrao, i.tipo_mapeamento_id, i.name_space, i.metadata_prefix"
                                             + " FROM repositorios r, info_repositorios i, padraometadados p"
                                             + " WHERE r.id=" + id
                                             + " AND r.id=i.id_repositorio"
@@ -75,7 +75,8 @@
                                     String nomePadrao = res.getString("nome_padrao");
                                     int idPadrao = res.getInt("id_padrao");
                                     int idTipoMap = res.getInt("tipo_mapeamento_id");
-
+                                    String nameSpace = res.getString("name_space");
+                                    String metadataPrefix=res.getString("metadata_prefix");
 
             %>
             <script type="text/javascript">
@@ -84,6 +85,8 @@
                 myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
                 myForm.addRules({id:'padraoMet',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
                 myForm.addRules({id:'rdMap',option:'isNotEmpty',error:'* Deve ser selecionado o tipo de mapeamento!'});
+                myForm.addRules({id:'metPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
+                myForm.addRules({id:'namespace',option:'required',error:'* Deve ser informado o NameSpace!'});
             </script>
 
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
@@ -152,9 +155,21 @@
                                                             }
 
                         %>
-                        
+
                     </div>
                 </div>
+                <div class="LinhaEntrada">
+                    <div> &nbsp;</div>
+                    <div class="Label">MetadataPrefix:</div>
+                    <div class="Value">
+                        <input type="text" value="<%=metadataPrefix%>" id="metPrefix" name="metPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                    </div>
+                    <div class="Label">NameSpace:</div>
+                    <div class="Value">
+                        <input type="text" value="<%=nameSpace%>" id="namespace" name="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                    </div>
+                </div>
+
                 <input type="hidden" name="id" value="<%=id%>"/>
                 <input type="hidden" name="campo" value="<%=tipo%>"/>
                 <input type="hidden" name="apagar" value="sim"/>
@@ -199,7 +214,7 @@
                         Periodicidade de atualiza&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <input name="periodicidade" value="<%=res.getInt("periodicidade_horas")/24%>" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="periodicidade" value="<%=res.getInt("periodicidade_horas") / 24%>" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <input type="hidden" name="id" value="<%=id%>"/>
@@ -230,42 +245,46 @@
                                 String descricao = "";
                                 String padrao_metadados = "";
                                 String tipo_mapeamento = "";
+                                String name_space = "";
+                                String metadata_prefix = "";
                                 boolean nullpointer = true;
                                 try {
                                     nome = request.getParameter("nomeRep").trim();
                                     descricao = request.getParameter("descricao").trim();
                                     padrao_metadados = request.getParameter("padrao_metadados").trim();
                                     tipo_mapeamento = request.getParameter("tipo_map").trim();
+                                    name_space = request.getParameter("namespace").trim();
+                                    metadata_prefix = request.getParameter("metPrefix").trim();
                                     nullpointer = false;
                                 } catch (NullPointerException n) {
                                     nullpointer = true;
                                     out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>"
                                             + "<script type='text/javascript'>history.back(-1);</script>");
                                 }
-                                
 
-                                if(!nullpointer){
-                                if ((nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || tipo_mapeamento.isEmpty())) {
-                                    out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>"
-                                            + "<script type='text/javascript'>history.back(-1);</script>");
-                                } else {
-                                    //out.println("<p>ome: " + nome + " descricao " + descricao + " padrao " + padrao_metadados + "</p>");
-                                    int result = 0, result2 = 0;
 
-                                    String sql1 = "UPDATE repositorios set nome='" + nome + "', descricao='" + descricao + "' where id=" + id; //sql que possui o update
+                                if (!nullpointer) {
+                                    if ((nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || tipo_mapeamento.isEmpty() || metadata_prefix.isEmpty() || name_space.isEmpty())) {
+                                        out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>"
+                                                + "<script type='text/javascript'>history.back(-1);</script>");
+                                    } else {
+                                        //out.println("<p>ome: " + nome + " descricao " + descricao + " padrao " + padrao_metadados + "</p>");
+                                        int result = 0, result2 = 0;
 
-                                    result = stm.executeUpdate(sql1); //submete o UPDATE ao banco de dados
+                                        String sql1 = "UPDATE repositorios set nome='" + nome + "', descricao='" + descricao + "' where id=" + id; //sql que possui o update
 
-                                    if (result > 0) { //se o insert funcionar entra no if
-                                        String sql2 = "UPDATE info_repositorios set padrao_metadados=" + padrao_metadados + ", tipo_mapeamento_id=" + tipo_mapeamento + " where id_repositorio=" + id;
-                                        result2 = stm.executeUpdate(sql2);
-                                        if (result2 > 0) {
-                                            out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); "
-                                                    + "opener.location.href=opener.location.href; "
-                                                    + "window.location=\"exibeRepositorios.jsp?id=" + id + "\";</script>");
+                                        result = stm.executeUpdate(sql1); //submete o UPDATE ao banco de dados
+
+                                        if (result > 0) { //se o insert funcionar entra no if
+                                            String sql2 = "UPDATE info_repositorios set padrao_metadados=" + padrao_metadados + ", tipo_mapeamento_id=" + tipo_mapeamento + ", metadata_prefix='" + metadata_prefix + "', name_space='" + name_space + "' where id_repositorio=" + id;
+                                            result2 = stm.executeUpdate(sql2);
+                                            if (result2 > 0) {
+                                                out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); "
+                                                        + "opener.location.href=opener.location.href; "
+                                                        + "window.location=\"exibeRepositorios.jsp?id=" + id + "\";</script>");
+                                            }
                                         }
                                     }
-}
                                 }
                             } else if (campo.equalsIgnoreCase("OAI-PMH")) { //se o campo a ser editador for o OAI-PMH entra no if
                                 int result = 0;
@@ -278,7 +297,7 @@
                                     out.close();
                                 } else {
                                     //trocar de dias para horas
-                                    int periodicidadeHoras = Integer.parseInt(periodicidade)*24;
+                                    int periodicidadeHoras = Integer.parseInt(periodicidade) * 24;
                                     String sql = "UPDATE info_repositorios SET url_or_ip='" + url + "', periodicidade_horas=" + periodicidadeHoras + " WHERE id_repositorio=" + id;
                                     result = stm.executeUpdate(sql);
                                     if (result > 0) {
@@ -291,7 +310,7 @@
 
                         }
                         con.close(); //fechar conexao com o banco de dados
-            %>
+%>
 
 
         </div>

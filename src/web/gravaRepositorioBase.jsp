@@ -33,6 +33,8 @@
         String padrao_metadados = "";
         String periodicidadeDias = "";
         String tipo_mapeamento = "";
+        String metadataPrefix = "";
+        String nameSpace = "";
 
         try {
             //armazena em variaveis os dados preenchidos no formulario
@@ -42,7 +44,10 @@
             padrao_metadados = request.getParameter("padrao_metadados").trim();
             periodicidadeDias = request.getParameter("periodicidade").trim();
             tipo_mapeamento = request.getParameter("tipo_map").trim();
-            if (url.isEmpty() || nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || periodicidadeDias.isEmpty() || tipo_mapeamento.isEmpty()) {
+            metadataPrefix = request.getParameter("metPrefix").trim();
+            nameSpace = request.getParameter("namespace").trim();
+
+            if (url.isEmpty() || nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || periodicidadeDias.isEmpty() || tipo_mapeamento.isEmpty() || metadataPrefix.isEmpty() || nameSpace.isEmpty()) {
                 out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
                         "<script type='text/javascript'>history.back(-1);</script>");
             } else {
@@ -92,8 +97,8 @@
                         rs.next();
                         key = rs.getLong(1);
                         int periodicidadeHoras = Integer.parseInt(periodicidadeDias)*24; //mudar dias para horas
-                        String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, padrao_metadados, tipo_mapeamento_id) " +
-                                "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidadeHoras + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', "+tipo_mapeamento+");";
+                        String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, padrao_metadados, tipo_mapeamento_id, metadata_prefix, name_space) " +
+                                "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidadeHoras + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', "+tipo_mapeamento+", '"+metadataPrefix+"','"+nameSpace+"');";
 
 
                         result2 = stm.executeUpdate(sql2); //executa o que tem na variavel slq2

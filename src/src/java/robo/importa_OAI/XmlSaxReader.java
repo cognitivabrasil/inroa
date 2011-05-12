@@ -116,9 +116,9 @@ public class XmlSaxReader extends DefaultHandler {
             try {
                 Statement stm1 = Conexao.createStatement();
                 //idTipoMapeamento;namespace;metadataPrefix;
-                String sqlInfo = "SELECT i.padrao_metadados, i.tipo_mapeamento_id as tipo_map, p.name_space, metadata_prefix" +
-                        " FROM info_repositorios i, padraometadados p" +
-                        " WHERE i.padrao_metadados=p.id AND i.id_repositorio=" + this.idRepositorio + ";";
+                String sqlInfo = "SELECT i.padrao_metadados, i.tipo_mapeamento_id as tipo_map, i.name_space, i.metadata_prefix" +
+                        " FROM info_repositorios i" +
+                        " WHERE i.id_repositorio=" + this.idRepositorio + ";";
                 ResultSet rsInfo = stm1.executeQuery(sqlInfo);
                 if (rsInfo.next()) {
                     this.padrao_metadados = rsInfo.getInt("padrao_metadados");

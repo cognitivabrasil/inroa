@@ -33,6 +33,9 @@ Primeira etapa do cadastro de um repositorio
             myForm.addRules({id:'periodicidade',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
             myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
             myForm.addRules({id:'rdMap',option:'required',error:'* Deve ser selecionado o tipo de mapeamento!'});
+            myForm.addRules({id:'metPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
+            myForm.addRules({id:'namespace',option:'required',error:'* Deve ser informado o NameSpace!'});
+
         </script>
     </head>
     <body id="bodyMenor">
@@ -86,11 +89,16 @@ Primeira etapa do cadastro de um repositorio
                     </div>
                     <div class="LinhaEntrada">
                     <div class="Label">
-                        Tipo de mapeamento:
+                        Mapeamento:
                     </div>
                                 <div id='resultado'>
                                     <div class="Value">Selecione um padr&atilde;o</div>
-                                    <input type="hidden" id="rdMap"  name="tipo_map" value=""> </div>
+                                    <input type="hidden" id="rdMap"  name="tipo_map" value=""> 
+                                    <input type="hidden" id="metPrefix"  name="metPrefix" value="">
+                                    <input type="hidden" id="namespace"  name="namespace" value="">
+                                </div>
+                                     
+
                             <div class="Espaco"> &nbsp;</div>
                     </div>
                 
