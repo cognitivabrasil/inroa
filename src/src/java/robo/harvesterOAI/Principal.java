@@ -18,7 +18,7 @@ public class Principal {
      * @param dirXML Diretório onde serão salvos os arquivos XML's. Ex.: "c:/pasta" ou "/home/fulano/pasta"
      * @return Retorna um ArrayList de Strings contendo o(s) caminho(s) para o(s) xml(s) salvo(s).
      */
-    public ArrayList<String> buscaXmlRepositorio(String endereco, String dataInicial, String dataFinal, String nomeRepositorio, String dirXML, String metadataPrefix){
+    public ArrayList<String> buscaXmlRepositorio(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix){
 
         String barra = System.getProperty("file.separator");
         int numeroXML =1;
@@ -28,8 +28,8 @@ public class Principal {
 		
 try{
         //efetua o ver lisRecord com a url, a data inicial e datafinal recebida como parametro
-        System.out.println("end: "+endereco+" dataInic: "+dataInicial+" datafin: "+dataFinal);
-        ListRecords listRecords = new ListRecords(endereco,dataInicial,dataFinal,"",metadataPrefix);
+        System.out.println("end: "+endereco+" dataInic: "+dataInicial);
+        ListRecords listRecords = new ListRecords(endereco,dataInicial,null,null,metadataPrefix);
         //cria uma variavel do tipo ListRecords para efetuar o ResumptionToken se necessario
         ListRecords listRecordsResume;
 

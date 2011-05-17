@@ -90,10 +90,9 @@ public class Robo {
 
 
 
-        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, p.metadata_prefix, to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form" +
-                " FROM repositorios r, info_repositorios i, padraometadados p" +
+        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, i.metadata_prefix, to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form" +
+                " FROM repositorios r, info_repositorios i" +
                 " WHERE r.id = i.id_repositorio" +
-                " AND i.padrao_metadados = p.id" +
                 " AND r.id = " + idRepositorio + ";";
 
         con = conectar.conectaBD(); //chama o metodo conectaBD da classe Conectar
@@ -163,7 +162,7 @@ public class Robo {
 
                     if (caminhoTeste.isDirectory()) {
 
-                        caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, "9999-12-31T00:00:00Z", nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
+                        caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
 
                         //leXMLgravaBase le do xml traduz para o padrao OBAA e armazena na base de dados
                         gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con);
@@ -228,7 +227,7 @@ public class Robo {
         boolean recalcularIndice = false;
         try {
             con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-            System.out.println("id= " + idRep);
+            
             if (idRep > 0) {
                 recalcularIndice = robo.atualizaRepositorio(idRep, indexar);
             } else {

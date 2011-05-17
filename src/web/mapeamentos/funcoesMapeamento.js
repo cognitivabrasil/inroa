@@ -1,7 +1,7 @@
 /* 
  * Criado em Setembro de 2010 por Marcos Freitas Nunes
  *
- * Funções Utilizadas pelo mapeamento dinâmico
+ * Funcoes utilizadas pelo mapeamento dinamico
  */
 
 botao='';
@@ -32,10 +32,10 @@ function addMap(idDivOrigem, idDivDestino, padraoMetadados, tipoMap){
 
 /**
  * Salva na base de dados atraves de ajax o novo mapeamento criado.
- * inputOrigem: id do input da origem. É passado por variavel global.
- * inputDestino: id do input do destino. É passado por variavel global.
- * inpOrgigemComplementar: id do input do mapeamento complementar origem. É passado por variavel global.
- * inpDestinoComplementar: id do input do mapeamento complementar destino. É passado por variavel global.
+ * inputOrigem: id do input da origem. &Eacute; passado por variavel global.
+ * inputDestino: id do input do destino. &Eacute; passado por variavel global.
+ * inpOrgigemComplementar: id do input do mapeamento complementar origem. &Eacute; passado por variavel global.
+ * inpDestinoComplementar: id do input do mapeamento complementar destino. &Eacute; passado por variavel global.
 */
 function salvarNovoMapeamento(){
     //pegando valores de variaveis globais
@@ -59,7 +59,7 @@ function salvarNovoMapeamento(){
 }
 
 /**
- * Remove linha da tabela cujo id é 'tabela'
+ * Remove linha da tabela cujo id &eacute; 'tabela'
  * @param linha linha a ser removida
 */
 function removeItem(linha)
@@ -407,10 +407,6 @@ function excluirAjax(idMapeamento, tabela, idResultado)
 
 }
 
-
-
-/////
-
 /**
  * Fun&ccedil;&atilde;o utilizada para apresentar os tipos de mapeamentos disponiveis para o padrao selecionado.
  * Esta fun&ccedil;&atilde;o deve ser chamamada da pasta raiz.
@@ -418,8 +414,6 @@ function excluirAjax(idMapeamento, tabela, idResultado)
 */
 function selecionaMapeamento(idResultado, idInput, acao)
 {
- 
- 
  var idPadrao = document.getElementById(idInput).value;
     //div onde sera adicionado o resultado
     var exibeResultado = document.getElementById(idResultado);
@@ -448,5 +442,4 @@ function selecionaMapeamento(idResultado, idInput, acao)
         }
     }
     ajax.send(null); // submete
-
 }
