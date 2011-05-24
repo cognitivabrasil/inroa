@@ -9,7 +9,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
     Author     : Marcos
 --%>
 
-<script language="JavaScript" type="text/javascript" src="../mapeamentos/funcoesMapeamento.js">
+<script language="JavaScript" type="text/javascript" src="./mapeamentos/funcoesMapeamento.js">
     //necessario para usar o funcionamento
 </script>
 

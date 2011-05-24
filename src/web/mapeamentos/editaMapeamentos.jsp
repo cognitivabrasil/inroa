@@ -214,7 +214,7 @@
                     <td width="10%">&nbsp;</td>
                     <td width="60%">
 
-                        <a title="Adicionar Mapeamento" onclick="">
+                        <a title="Adicionar Mapeamento" onclick="adicionaMap(<%=linhaCompleta%>, <%=idPadrao%>, <%=tipoMapeamento%>);">
                             <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                         </a>
 

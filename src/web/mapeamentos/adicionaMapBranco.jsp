@@ -22,7 +22,7 @@
                 String padrao = request.getParameter("padrao");
                 idPadrao = Integer.parseInt(padrao);
                 mapExistente = request.getParameter("existente");
-                System.out.println("mapExistente: '"+ mapExistente+"'");
+                
                 if (tipoMap.isEmpty() || idTipoMap <= 0) {
                     out.print("<script type='text/javascript'>alert('O id do tipo de mapeamento deve ser informado');</script>"
                             + "<script type='text/javascript'>fechaRecarrega();</script>");
@@ -60,7 +60,7 @@
                                 + " SELECT a1.id as origem_id, a1.id_padrao as padraometadados_id, a2.id as destino_id, " + idTipoMap + ", m.mapeamento_composto_id"
                                 + " FROM atributos a1, mapeamentos m, atributos a2"
                                 + " WHERE a1.id=m.origem_id and a2.id=m.destino_id and m.tipo_mapeamento_id=" + idsExistentes[1] + " AND m.padraometadados_id="+idsExistentes[0]+" ORDER BY origem_id;";
-                        System.out.println(sqlInsert);
+                        
                     } else {
 
                         sqlInsert = "INSERT INTO mapeamentos (origem_id, padraometadados_id, destino_id, tipo_mapeamento_id, mapeamento_composto_id) "
