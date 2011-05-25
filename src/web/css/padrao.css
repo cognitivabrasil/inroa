@@ -51,6 +51,8 @@ img{
 
 #page
 {
+    vertical-align: middle;
+    text-align: center;
     padding: 10px;
     border: 2px solid #AEC9E3;
     background-color:white;

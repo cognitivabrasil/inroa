@@ -23,9 +23,9 @@ public class Configuracao {
 //    ip = "143.54.95.74";
     senha = "feb@RNP";
 //    ip = "143.54.95.20";
-    ip = "127.0.0.1";
+    ip = "143.54.95.86";
 //    senha = "12345";
-//        porta = 5000;
+        porta = 5432;
 
     porta = 5432;
     }
