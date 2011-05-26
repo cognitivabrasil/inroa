@@ -80,7 +80,7 @@
                     Nome do Padr&atilde;o:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarMapeamento" onclick="exibeText('nome', <%=idPadrao%>, '<%=atributoNome%>', this)"/>
+                    <input type="button" class="botaoEditar" size="30" name="editarNome" id="editarNome" onclick="exibeText('nome', <%=idPadrao%>, '<%=atributoNome%>', this)"/>
                 </div>
                 <div class="Valor" id="nome"><%=nome%></div>
 
@@ -89,7 +89,7 @@
                     metadataPrefix:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarDescricao"  onclick="exibeText('metadataprefix', <%=idPadrao%>, '<%=atributoMetadata%>', this)"/>
+                    <input type="button" class="botaoEditar" size="30" name="editarMetadataPrefix" id="editarMetadataPrefix"  onclick="exibeText('metadataprefix', <%=idPadrao%>, '<%=atributoMetadata%>', this)"/>
                 </div>
                 <div class="Valor" id="metadataprefix"><%=metadata_prefix%></div>
 
@@ -97,14 +97,14 @@
                     nameSpace:
                 </div>
                 <div class="Editar">&nbsp;
-                    <input type="button" class="botaoEditar" size="30" name="editar" id="editarDescricao"  onclick="exibeText('namespace',<%=idPadrao%>, '<%=atributoNameSpace%>', this)"/>
+                    <input type="button" class="botaoEditar" size="30" name="editarNameSpace" id="editarNameSpace"  onclick="exibeText('namespace',<%=idPadrao%>, '<%=atributoNameSpace%>', this)"/>
                 </div>
                 <div class="Valor" id="namespace"><%=nameSpace%></div>
 
             </div>
 
             <div class="subtitulo">Atributos do padr&atilde;o</div>
-
+            <div id='msgerro' class='textoErro center'></div>
        <!--Tabela que apresenta os atributos-->
             <table class='mapeamentos-table' id="tabela" cellpadding=5%>
 
@@ -137,9 +137,10 @@
                          </td>
                          <td class="<%=yesnocolor%>">
                         <input type="button" class="botaoEditar" size="30" name="editar" id="editar"  onclick="exibeTextAtributo('atributo<%=linha%>', '<%=idAtributo%>', this)"/>
-                        <a title="Excluir" onclick="">
+                        <a title="Excluir" onclick="confirmaExclusao('<%=idAtributo%>', 'msgerro', this.parentNode.parentNode.rowIndex)">
                             <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
                         </a>
+                        
                     </td>
                 </tr>
             <%
@@ -152,7 +153,10 @@
 
                 
             </table>
-<!--Colocar a funcao que seta a linha-->
+<!--funcao que seta a linha-->
+<script type="text/javascript">
+                setLinha(<%=linha%>);
+            </script>
 
  <table class='mapeamentos-table-add' id="tblAdicionar" cellpadding=5%>
                 <tr class='center'>
@@ -166,7 +170,7 @@
 
 
                         &nbsp;&nbsp;
-                        <a onclick="">
+                        <a onclick="adicionaAtributo(<%=idPadrao%>, <%=linha%>)">
                             Adicionar Atributo
                         </a>
 

@@ -175,7 +175,7 @@ function adicionaMap(linhaReal,idPadrao, tipoMap){
     novaCelula.innerHTML = '<a title="Salvar" id="salvar"> \n\
                                 <img src="../imagens/ico24_salvar.gif" border="0" width="24" height="24" alt="Salvar" align="middle">\n\
                             </a>&nbsp;\n\
-                            <a id="removeLinha" title="Remover Linha" onclick="removeLinha(\'tabela\', \''+linhaReal+'\');">\n\
+                            <a id="removeLinha" title="Remover Linha" onclick="removeLinha(\'tabela\', this.parentNode.parentNode.rowIndex);">\n\
                                 <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">\n\
                             </a>';
 
@@ -244,6 +244,7 @@ function removeLinha(nomeTabela, linha)
 {
     var tbl = document.getElementById(nomeTabela);
     tbl.deleteRow(linha);
+    totals--;
 }
 
 /**
