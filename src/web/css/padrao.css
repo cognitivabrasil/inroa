@@ -51,8 +51,6 @@ img{
 
 #page
 {
-    vertical-align: middle;
-    text-align: center;
     padding: 10px;
     border: 2px solid #AEC9E3;
     background-color:white;
@@ -468,6 +466,12 @@ td{vertical-align:top;}
 .price-no
 {
     text-align: center;
+}
+
+.nova-linha
+{
+    text-align: center;
+    background-color: #006699;
 }
 
 #infoIcones
