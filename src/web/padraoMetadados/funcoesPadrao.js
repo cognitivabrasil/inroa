@@ -117,10 +117,9 @@ function setLinha(linha){
 /**
  * Função que adiciona nova linha na tabela sem recarregar a p&aacute;gina.
  * @param idPadrao id do padr&atilde;o de metadados.
- * @param linha n&uacute;mero da linha na tabela, contando todas as linhas da tabela.
  */
-function adicionaAtributo(idPadrao, linha){
-    
+function adicionaAtributo(idPadrao){
+
    var tbl = document.getElementById("tabela");
    
    linhaJS++;

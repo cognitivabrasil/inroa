@@ -170,7 +170,7 @@
 
 
                         &nbsp;&nbsp;
-                        <a onclick="adicionaAtributo(<%=idPadrao%>, <%=linha%>)">
+                        <a onclick="adicionaAtributo(<%=idPadrao%>, this)">
                             Adicionar Atributo
                         </a>
 
