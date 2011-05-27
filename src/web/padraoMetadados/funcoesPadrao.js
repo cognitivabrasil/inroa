@@ -95,6 +95,10 @@ function processoAjax(idDivResultado, id, novoValor, valorAnterior, acao, atribu
                 exibeResultado.innerHTML = resultado;
                 if(acao == "deletaAtributo"){
                     removeLinha("tabela", linhaApagar);
+                }else if(acao == "novoAtributo"){
+                    alert("entrou");
+                    document.getElementById(idDivResultado+"D").innerHTML = "";
+                    //document.getElementById(idDivResultado+"D").innerHTML = "<input type=\"button\" class=\"botaoEditar\" size=\"30\" name=\"editar\" id=\"editar\"  onclick=\"exibeTextAtributo('atributo<%=linha%>', '<%=idAtributo%>', this)\"/>  <a title=\"Excluir\" onclick=\"confirmaExclusao('<%=idAtributo%>', 'msgerro', this.parentNode.parentNode.rowIndex)\"> <img src=\"../imagens/ico24_deletar.gif\" border=\"0\" width=\"24\" height=\"24\" alt=\"Excluir\" align=\"middle\"> </a>";
                 }
             }
             else
@@ -137,8 +141,9 @@ function adicionaAtributo(idPadrao){
         novaCelula = novaLinha.insertCell(1);
         novaCelula.align = "left";
         novaCelula.style.backgroundColor = cl;
-        novaCelula.innerHTML = "<a title='Salvar' id='salvar'> <img src='../imagens/ico24_salvar.gif' border='0' width='24' height='24' alt='Salvar' align='middle'> </a>\n\
-                            &nbsp;<a id='removeLinha' title='Remover Linha' onclick='removeLinha(\"tabela\", this.parentNode.parentNode.rowIndex);'> <img src='../imagens/ico24_deletar.gif' border='0' width='24' height='24' alt='Excluir' align='middle'> </a>    ";
+        novaCelula.innerHTML = "<div class='center' id='"+idDivAtributo+"D'><a title='Salvar' id='salvar'> <img src='../imagens/ico24_salvar.gif' border='0' width='24' height='24' alt='Salvar' align='middle'> </a>\n\
+                            &nbsp;<a id='removeLinha' title='Remover Linha' onclick='removeLinha(\"tabela\", this.parentNode.parentNode.parentNode.rowIndex);'> <img src='../imagens/ico24_deletar.gif' border='0' width='24' height='24' alt='Excluir' align='middle'> </a>\n\
+                            </div>";
 
         //setando variaveis globais que serao utilizadas pelo salvarNovoAtributo
         inputNovoAtributo = 'inputNovo'+linhaJS;

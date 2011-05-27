@@ -14,7 +14,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
 </script>
 
 
-<table class='repositorios-table' cellpadding=3>
+<table class='repositorios-table' id='padroes' cellpadding=3>
     <tr>
         <th colspan=4>
             <font size="3%" color=black>Lista de Padr&atilde;o de metadados</font>
@@ -52,7 +52,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
 
     <tr  class='center'>
         <td class="<%=yesnocolor%>">
-            <input type="button" class="botaoExcluir" name="excluir" id="excluirPadrao" onclick="confirmaExclusao(<%=idPadrao%>,'padraometadados','msgerro');"/>
+            <input type="button" class="botaoExcluir" name="excluir" id="excluirPadrao" onclick="confirmaExclusao(<%=idPadrao%>,'padraometadados','msgerro','padroes',this.parentNode.parentNode.rowIndex);"/>
             &nbsp;
             <a title="Editar / Visualizar" onclick="NewWindow('./padraoMetadados/editaPadrao.jsp?id=<%=idPadrao%>','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                 <img src="./imagens/Lapiz-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">

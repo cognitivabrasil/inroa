@@ -88,7 +88,7 @@ function exibeSelect(idDivResult, idMap, bot)
     var valorAnterior = document.getElementById(idDivResult).innerHTML
     
  
-    processo(idDivResult, idMap, "comboBox", "", valorAnterior,"")
+    processo(idDivResult, idMap, "comboBox", "", valorAnterior,"");
 }
 
 function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
@@ -119,7 +119,7 @@ function exibeText(idDivResult, idTipoMapeamento, bot){
 function apagarMapeamentoBranco(){
     processo("msgerro", "", "apagarBranco", "", "", "");
     // fechando a janela atual ( popup )
-    window.close();
+    //window.close();
 
 }
 
@@ -341,12 +341,14 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
 /**
  * Confirma se realmente deseja excluir, se sim exclui por ajax.
  * @param id id do objeto a ser excluido
- * @param tabela tabela de onde ser&aacute; exclu&iacute;do.
+ * @param tabelaBase tabela de onde ser&aacute; exclu&iacute;do.
  * @param idResultado id de onde ser&aacute; exibido o resultado.
+ * @param idTabela id da tabela html que a linha sera excluida
+ * @param linha numero da linha que sera excluida
  */
-function confirmaExclusao(id, tabela, idResultado) {
+function confirmaExclusao(id, tabelaBase, idResultado, idTabela, linha) {
   if( confirm( 'Deseja realmente exluir?' ) ) {
-    excluirAjax(id, tabela, idResultado);
+    excluirAjax(id, tabelaBase, idResultado, idTabela, linha);
   } else {
     
   }
@@ -357,8 +359,10 @@ function confirmaExclusao(id, tabela, idResultado) {
  * @param idMapeamento id do mapeamento a ser excluido
  * @param tabela tabela de onde ser&aacute; exclu&iacute;do.
  * @param idResultado id de onde ser&aacute; exibido o resultado.
+ * @param idTabela id da tabela html que a linha sera excluida
+ * @param linha numero da linha que sera excluida
  */
-function excluirAjax(idMapeamento, tabela, idResultado)
+function excluirAjax(idMapeamento, tabela, idResultado, idTabela, linha)
 {
     
     //div onde sera adicionado o resultado
@@ -390,7 +394,7 @@ function excluirAjax(idMapeamento, tabela, idResultado)
                     }else{
                         if(parseInt(resultado)>0){
                             exibeResultado.innerHTML = "Exclu&iacute;do com sucesso.";
-                            document.reload();
+                            removeLinha(idTabela, linha);
                         }
                         else{
                             exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";

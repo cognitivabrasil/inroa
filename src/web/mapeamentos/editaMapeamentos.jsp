@@ -179,7 +179,7 @@
                     <td class="<%=yesnocolor%>">
                         <input type="button" class="botaoEditar" size="30" name="editar" id="editar"  onclick="exibeSelect('<%="result" + linha%>', '<%=idMapeamento%>', this)"/>
 
-                        <a title="Excluir" onclick="confirmaExclusao(<%=idMapeamento%>,'mapeamentos','msgerro')">
+                        <a title="Excluir" onclick="confirmaExclusao(<%=idMapeamento%>,'mapeamentos','msgerro', 'tabela', this.parentNode.parentNode.rowIndex)">
 
                             <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
                         </a>
