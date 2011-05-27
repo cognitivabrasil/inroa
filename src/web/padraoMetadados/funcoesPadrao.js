@@ -96,7 +96,7 @@ function processoAjax(idDivResultado, id, novoValor, valorAnterior, acao, atribu
                 if(acao == "deletaAtributo"){
                     removeLinha("tabela", linhaApagar);
                 }else if(acao == "novoAtributo"){
-                    alert("entrou");
+                    
                     document.getElementById(idDivResultado+"D").innerHTML = "";
                     //document.getElementById(idDivResultado+"D").innerHTML = "<input type=\"button\" class=\"botaoEditar\" size=\"30\" name=\"editar\" id=\"editar\"  onclick=\"exibeTextAtributo('atributo<%=linha%>', '<%=idAtributo%>', this)\"/>  <a title=\"Excluir\" onclick=\"confirmaExclusao('<%=idAtributo%>', 'msgerro', this.parentNode.parentNode.rowIndex)\"> <img src=\"../imagens/ico24_deletar.gif\" border=\"0\" width=\"24\" height=\"24\" alt=\"Excluir\" align=\"middle\"> </a>";
                 }
