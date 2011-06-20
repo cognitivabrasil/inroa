@@ -29,7 +29,7 @@ public class ImportaSubFederacao {
         try {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-            
+
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String base = rs.getString("base");
@@ -173,28 +173,29 @@ public class ImportaSubFederacao {
 
 
     }
+
     /**
      * Verifica se na subfedera&ccedil;&atilde;o existem objetos deletados, e deleta na federa&ccedil;&atilde;o local
-     * @param con conex&atilde;o com a base de dados local
+     * @param conLocal conex&atilde;o com a base de dados local
      * @param conSub conex&atilde;o com a base de dados da subfedera&ccedil;&atilde;o
      * @throws SQLException
      */
-    public void verificaObjetosDeletados(Connection conLocal, Connection conSub){
+    public void verificaObjetosDeletados(Connection conLocal, Connection conSub) {
         String sql = "SELECT obaa_entry, id_repositorio FROM excluidos WHERE data >= (now() - ('30 HOUR')::INTERVAL);";
-        try{
-        Statement stmSub = conSub.createStatement();
-        ResultSet rsSub = stmSub.executeQuery(sql);
-        while(rsSub.next()){
-            String obaaEntry = rsSub.getString("id_repositorio")+";FEB;"+rsSub.getString("obaa_entry");
+        try {
+            Statement stmSub = conSub.createStatement();
+            ResultSet rsSub = stmSub.executeQuery(sql);
+            while (rsSub.next()) {
+                String obaaEntry = rsSub.getString("id_repositorio") + ";FEB;" + rsSub.getString("obaa_entry");
 
-            System.out.println("FEB: Deletando objeto com obaaEntry: '"+obaaEntry +"'");
+                System.out.println("FEB: Deletando objeto com obaaEntry: '" + obaaEntry + "'");
 
-            String sqlDelete = "DELETE FROM documentos WHERE obaa_entry='"+obaaEntry+"'";
-            System.out.println(sqlDelete);
-            Statement stmLocal = conLocal.createStatement();
-            stmLocal.executeUpdate(sqlDelete);//executa o sql que tem na variavel sqlDelete
-        }
-        }catch (SQLException s){
+                String sqlDelete = "DELETE FROM documentos WHERE obaa_entry='" + obaaEntry + "'";
+                System.out.println(sqlDelete);
+                Statement stmLocal = conLocal.createStatement();
+                stmLocal.executeUpdate(sqlDelete);//executa o sql que tem na variavel sqlDelete
+            }
+        } catch (SQLException s) {
             System.err.println("FEB: Exluindo objetos... ");
             s.printStackTrace();
         }
@@ -211,5 +212,65 @@ public class ImportaSubFederacao {
         String sql = "UPDATE dados_subfederacoes set data_ultima_atualizacao = now() WHERE id=" + idSubFed;
         Statement stm = con.createStatement();
         stm.executeUpdate(sql);
+    }
+
+    /**
+     * M&eacute;todo que atualiza os reposit&oacute;rios da subfedera&ccedil;&atilde;o
+     * @param conLocal conex&atilde;o com a base de dados local
+     * @param conSub conex&atilde;o com a base de dados da subfedera&ccedil;&atilde;o
+     * @throws SQLException
+     */
+    public void atualizaRepSubfed(int idSubFed, Connection conLocal, Connection conSub) throws SQLException {
+        String selectSub = "SELECT nome FROM repositorios";
+        String selectLocal = "SELECT nome FROM repositorios_subfed";
+
+        Statement stmSub = conSub.createStatement();
+        ResultSet rsSub = stmSub.executeQuery(selectSub);
+
+        Statement stmLocal = conLocal.createStatement();
+        ResultSet rsLocal = stmLocal.executeQuery(selectLocal);
+
+        ArrayList<String> listaSub = new ArrayList<String>();
+        ArrayList<String> listaLocal = new ArrayList<String>();
+        while (rsLocal.next()) {
+            listaLocal.add(rsLocal.getString(1));
+        }
+        rsLocal.close();
+
+        while (rsSub.next()) {
+            String nomeSub = rsSub.getString(1);
+            listaSub.add(nomeSub);
+            if(!listaLocal.contains(nomeSub)){
+                String insert = "INSERT INTO repositorios_subfed (id_subfed, nome) VALUES ("+idSubFed+", '"+nomeSub+"')";
+                stmLocal.executeUpdate(insert);
+            }
+        }
+        rsSub.close();
+
+        for(int i =0; i < listaLocal.size(); i++){
+            if (!listaSub.contains(listaLocal.get(i))){
+                String delete = "DELETE FROM repositorios_subfed WHERE nome='" + listaLocal.get(i) + "'";
+                stmLocal.executeUpdate(delete);
+            }
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Configuracao conf = new Configuracao("federacao", "feb", "feb@RNP", "143.54.95.20", 5432);
+         Conectar conecta = new Conectar(conf);
+         Connection conSub = conecta.conectaBD(); //chama o metodo conectaBD da classe conectar
+
+
+         Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
+         Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+
+         ImportaSubFederacao run = new ImportaSubFederacao();
+         try{
+         run.atualizaRepSubfed(2, con, conSub);
+         }catch(SQLException s){
+             System.out.println(s);
+         }
+
     }
 }
