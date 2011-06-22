@@ -58,6 +58,7 @@ public class ImportaSubFederacao {
 
                 Conectar conecta = new Conectar(conf);
                 Connection conSub = conecta.conectaBD(); //chama o metodo conectaBD da classe conectar
+                atualizaRepSubfed(id, con, conSub); //atualiza os repositorios da subfederacao
                 verificaObjetosDeletados(con, conSub); //verifica na subfederacao se tem objetos a serem deletados
                 documentos(id, dataAtualizacao, con, conSub);
                 conSub.close();//fecha conexao com a subfederacao
@@ -77,44 +78,43 @@ public class ImportaSubFederacao {
 
     public void documentos(int idSubFed, Timestamp ultimaAtualizacao, Connection con, Connection conSub) throws SQLException {
         System.out.println("FEB: Atualizando Subfederacao");
-        String sqlSub = "SELECT id_repositorio||';FEB;'||obaa_entry as entry from  documentos d where timestamp >= '" + ultimaAtualizacao + "'";
+        String sqlSub = "SELECT d.id_repositorio||';FEB;'||d.obaa_entry as entry, r.nome from  documentos d, repositorios r where d.id_repositorio=r.id AND d.timestamp >= '" + ultimaAtualizacao + "'";
 
-        Statement stm = conSub.createStatement();
-        ResultSet rs = stm.executeQuery(sqlSub);
+        Statement stmSub = conSub.createStatement();
+        ResultSet rs = stmSub.executeQuery(sqlSub);
 
         while (rs.next()) {
+
+            String nomeRep = rs.getString("nome");
+
             String obaaEntry = rs.getString("entry");
-            String insert = "INSERT INTO documentos (obaa_entry, id_subfed) VALUES (?,?);";
+            String insertSelect = "INSERT INTO documentos (obaa_entry, id_rep_subfed) "
+                    + "SELECT '" + obaaEntry + "', id FROM repositorios_subfed WHERE id_subfed=" + idSubFed + " AND nome='" + nomeRep + "'";
 
             try {
-                PreparedStatement stmt1 = con.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-                stmt1.setString(1, obaaEntry);
-                stmt1.setInt(2, idSubFed);
-                stmt1.execute();
-
-                ResultSet rsInsert = stmt1.getGeneratedKeys();
+                Statement stmLocal = con.createStatement();
+                stmLocal.execute(insertSelect, Statement.RETURN_GENERATED_KEYS);
+                ResultSet rsInsert = stmLocal.getGeneratedKeys();
                 rsInsert.next();
 
                 objetos(rsInsert.getInt(1), obaaEntry, con, conSub);
-                stmt1.close();
+                stmLocal.close();
+
             } catch (SQLException s) {
                 if (s.getMessage().contains("unicidade")) {
                     //se ja existir entao deleta o documento e depois insere o novo
-                    String sqlDelete = "DELETE FROM documentos WHERE obaa_entry='" + obaaEntry + "' AND id_subfed=" + idSubFed;
+                    String sqlDelete = "DELETE FROM documentos WHERE obaa_entry='" + obaaEntry;
                     Statement stmException = con.createStatement();
                     int result = stmException.executeUpdate(sqlDelete);
                     if (result > 0) {
-                        String sqlInsert = "INSERT INTO documentos (obaa_entry, id_subfed) VALUES (?,?);";
-                        PreparedStatement stmt1 = con.prepareStatement(sqlInsert, Statement.RETURN_GENERATED_KEYS);
-                        stmt1.setString(1, obaaEntry);
-                        stmt1.setInt(2, idSubFed);
-                        stmt1.execute();
+                        Statement stmLocal = con.createStatement();
+                        stmLocal.execute(insertSelect, Statement.RETURN_GENERATED_KEYS);
 
-                        ResultSet rsInsert = stmt1.getGeneratedKeys();
+                        ResultSet rsInsert = stmLocal.getGeneratedKeys();
                         rsInsert.next();
 
                         objetos(rsInsert.getInt(1), obaaEntry, con, conSub);
-                        stmt1.close();
+                        stmLocal.close();
                     }
 
                 }
@@ -240,15 +240,15 @@ public class ImportaSubFederacao {
         while (rsSub.next()) {
             String nomeSub = rsSub.getString(1);
             listaSub.add(nomeSub);
-            if(!listaLocal.contains(nomeSub)){
-                String insert = "INSERT INTO repositorios_subfed (id_subfed, nome) VALUES ("+idSubFed+", '"+nomeSub+"')";
+            if (!listaLocal.contains(nomeSub)) {
+                String insert = "INSERT INTO repositorios_subfed (id_subfed, nome) VALUES (" + idSubFed + ", '" + nomeSub + "')";
                 stmLocal.executeUpdate(insert);
             }
         }
         rsSub.close();
 
-        for(int i =0; i < listaLocal.size(); i++){
-            if (!listaSub.contains(listaLocal.get(i))){
+        for (int i = 0; i < listaLocal.size(); i++) {
+            if (!listaSub.contains(listaLocal.get(i))) {
                 String delete = "DELETE FROM repositorios_subfed WHERE nome='" + listaLocal.get(i) + "'";
                 stmLocal.executeUpdate(delete);
             }
@@ -258,19 +258,17 @@ public class ImportaSubFederacao {
 
     public static void main(String[] args) {
         Configuracao conf = new Configuracao("federacao", "feb", "feb@RNP", "143.54.95.20", 5432);
-         Conectar conecta = new Conectar(conf);
-         Connection conSub = conecta.conectaBD(); //chama o metodo conectaBD da classe conectar
+        Conectar conecta = new Conectar(conf);
+        Connection conSub = conecta.conectaBD(); //chama o metodo conectaBD da classe conectar
 
 
-         Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
-         Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
+        Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
 
-         ImportaSubFederacao run = new ImportaSubFederacao();
-         try{
-         run.atualizaRepSubfed(2, con, conSub);
-         }catch(SQLException s){
-             System.out.println(s);
-         }
+        ImportaSubFederacao run = new ImportaSubFederacao();
+        
+            run.atualiza_subFederacao(con);
+        
 
     }
 }

@@ -122,7 +122,7 @@ public class Consultar {
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         System.out.println("conectou");
         //Consultar run = new Consultar("objetodementira171", arg, con);
-        Consultar run = new Consultar("obaa004", 4, "null", con);
+        Consultar run = new Consultar("562;FEB;oai:cesta2.cinted.ufrgs.br:123456789/222", 1, "null", con);
         System.out.println(run.getResultado());
     }
 }

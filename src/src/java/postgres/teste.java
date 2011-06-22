@@ -21,33 +21,20 @@ import ptstemmer.support.PTStemmerUtilities;
  */
 public class teste {
 
-    public void testandoPreparedStatement() {
+    public void testeGeneratedKeys() {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
-        String sql = "INSERT INTO repositorios (nome, descricao) VALUES "
-                + "(?, ?)";
+        String obaaEntry = "teste";
+        int idSubFed = 2;
+        String nomeRep = "LUME";
         try {
-            PreparedStatement addAuthor = con.prepareStatement(sql,
-                    Statement.RETURN_GENERATED_KEYS);
-            addAuthor.setString(1, "teste");
-            addAuthor.setString(2, "testando");
-
-
-            int rows = addAuthor.executeUpdate();
-            System.out.println("rows= " + rows);
-            ResultSet rs = addAuthor.getGeneratedKeys();
-            if (rs.next()) {
-                ResultSetMetaData rsmd = rs.getMetaData();
-                int colCount = rsmd.getColumnCount();
-                do {
-                    for (int i = 1; i <= colCount; i++) {
-                        String key = rs.getString(i);
-                        System.out.println("key " + i + "is " + key);
-                    }
-                } while (rs.next());
-            } else {
-                System.out.println("There are no generated keys.");
-            }
+             String insertSelect = "INSERT INTO documentos (obaa_entry, id_rep_subfed) "
+                    + "SELECT '"+obaaEntry+"', id FROM repositorios_subfed WHERE id_subfed="+idSubFed+" AND nome='"+nomeRep+"'";
+            Statement stmLocal = con.createStatement();
+            stmLocal.execute(insertSelect,Statement.RETURN_GENERATED_KEYS);
+            ResultSet rsInsert = stmLocal.getGeneratedKeys();
+                rsInsert.next();
+                System.out.println(rsInsert.getInt(1));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -185,6 +172,6 @@ public class teste {
 //            e.printStackTrace();
 //        }
 //        System.out.println(result);
-        run.testeStemmer();
+        run.testeGeneratedKeys();
     }
 }
