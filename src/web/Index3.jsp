@@ -50,7 +50,7 @@
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
             <div class="linkCantoDireito"><a href="./adm.jsp">Ferramenta Administrativa</a></div>
             <div class="Espaco">&nbsp;</div>
-            <form name="consulta" action="consulta.jsp" method="post">
+            <form name="consulta" action="consulta.jsp" method="POST">
 
                 <div class="LinhaEntrada">
                     <div class="EspacoAntes">&nbsp;</div>
@@ -59,42 +59,48 @@
                     </div>
 
                     <%
-                            //Carrega do banco de dados os repositorios cadastrados
-                            ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
-                            //int i = 0;
-                            while (res.next()) {
-                                if (!res.getString("nome").equalsIgnoreCase("todos")) {
-                                    if (res.isFirst()) {
-                                        out.println("<div class='ValueIndex'>- Reposit&oacute;rios</div>");
+                    Statement stm2 = con.createStatement();
+                                //Carrega do banco de dados os repositorios cadastrados
+                                ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
+                                //int i = 0;
+                                while (res.next()) {
+                                    if (!res.getString("nome").equalsIgnoreCase("todos")) {
+                                        if (res.isFirst()) {
+                                            out.println("<div class='ValueIndex'>- Reposit&oacute;rios</div>");
+                                        }
+
+                                        out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
+                                                + "<input value='rep;" + res.getString("id") + "' type=checkbox id=\"" + res.getString("id") + "\""
+                                                + " name=\"repositorios\""
+                                                + ">" + res.getString("nome").toUpperCase()
+                                                + "</div>");
+                                    }
+                                    // i++;
+
                                 }
+                                
+                                ResultSet rsSub = stm.executeQuery("SELECT nome, id FROM dados_subfederacoes ORDER BY nome ASC");
+                                while (rsSub.next()) {
+                                    if (rsSub.isFirst()) {
+                                            out.println("<div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div>");
+                                        }
+                                    if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
 
-                                out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
-                                        + "<input value='rep;" + res.getString("id") + "' type=checkbox id=\"" + res.getString("id") + "\""
-                                        + " name=\"repositorios\""
-                                        + ">" + res.getString("nome").toUpperCase()
-                                        + "</div>");
-                            }
-                            // i++;
+                                        out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;<input value='subFed;" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
+                                                + " name=\"repositorios\""
+                                                + ">" + rsSub.getString("nome").toUpperCase());
 
-                        }
-                        ResultSet rsSub = stm.executeQuery("SELECT nome, id FROM dados_subfederacoes ORDER BY nome ASC");
-                        while
-
-                         (
-                             rsSub.next()) {
-                                if (rsSub.isFirst()) {
-                                    out.println("<div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div>");
-                            }
-
-                            if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
-                                out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;<input value='subFed;" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
-                                        + " name=\"repositorios\""
-                                        + ">" + rsSub.getString("nome").toUpperCase()
-                                        + "</div>");
-                            }
-
-
-                        }
+                                        String buscaRepSubfed = "SELECT rsf.nome, rsf.id FROM repositorios_subfed rsf WHERE id_subfed=" + rsSub.getString("id");
+                                        ResultSet rsRepSub = stm2.executeQuery(buscaRepSubfed);
+                                        while (rsRepSub.next()) {
+                                            out.println("<div class='Interno'>&nbsp;&nbsp;&nbsp;<input value='repSubFed;" + rsRepSub.getString("id") + "' type=checkbox id=\"" + rsRepSub.getString("id") + "\""
+                                                    + " name=\"repositorios\""
+                                                    + ">" + rsRepSub.getString("nome").toUpperCase()
+                                                    + "</div>");
+                                        }
+                                        out.println("</div>");
+                                    }
+                                }
                     %>
 
                 </div>
@@ -127,5 +133,5 @@
         <%@include file="googleAnalytics"%>
     </body>
 </html>
-<%    con.close (); //fechar conexao com a base de dados
+<%    con.close(); //fechar conexao com a base de dados
 %>

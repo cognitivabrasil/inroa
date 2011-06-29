@@ -101,7 +101,7 @@ public class Rss {
                     
                     Statement stm = con.createStatement();
 //                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, r.nome as repositorio, ds.id as id_base FROM documentos d, dados_subfederacoes ds, repositorios r, objetos o, info_repositorios i WHERE d.id=o.documento AND d.id_repositorio=r.id AND r.id = i.id_repositorio AND i.id_federacao=ds.id AND d.id=" + idArray.get(i);
-                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_subfed, d.id_repositorio as repositorio FROM documentos d, objetos o WHERE (o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$') AND d.id=o.documento AND d.id=" + idArray.get(i);
+                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, dsf.id as id_subfed, d.id_repositorio as repositorio FROM documentos d, objetos o, repositorios_subfed rsf, dados_subfederacoes dsf WHERE d.id=o.documento AND d.id_rep_subfed=rsf.id AND rsf.id_subfed=dsf.id AND (o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$') AND d.id=" + idArray.get(i);
                     try {
                         ResultSet rs = stm.executeQuery(resultadoSQL);
                         //pega o proximo resultado retornado pela consulta sql

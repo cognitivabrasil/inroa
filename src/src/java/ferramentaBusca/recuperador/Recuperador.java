@@ -33,7 +33,25 @@ public class Recuperador {
      */
     public ArrayList<Integer> search2(String query, Connection con, String idRep)
             throws SQLException {
-        return search2(query, con, idRep, "relevancia");
+        return search2(query, con, 0, "relevancia");
+    }
+
+    public ArrayList<Integer> search2(String query, Connection con, String[] ids)
+            throws SQLException {
+        
+            ArrayList<Integer> repId = new ArrayList<Integer>();
+            ArrayList<Integer> subfedId = new ArrayList<Integer>();
+            for (int i = 0; i < ids.length; i++) {
+                if (ids[i].contains("rep;")) {
+                    repId.add(Integer.parseInt(ids[i].replace("rep;", "")));
+                } else if (ids[i].contains("subFed;")) {
+                    subfedId.add(Integer.parseInt(ids[i].replace("subFed;", "")));
+                }
+                //COLOCAR AQUI PARA INSERIR OS REPOSITORIOS DAS SUBFEDERACOES
+            }
+
+            return search2(query, con, repId, subfedId, "relevancia");
+        
     }
 
     public ArrayList<Integer> search2(String query, Connection con, String idRep, String ordenar)
@@ -85,7 +103,6 @@ public class Recuperador {
      **/
     public ArrayList<Integer> search2(String query, Connection con, ArrayList<Integer> idRep, ArrayList<Integer> idSubfed, String ordenar)
             throws SQLException {
-
         Documento ret = new Documento(query);
         int nElementos = ret.getDescricao().size();
         ArrayList<String> tokens = ret.getTokens();
@@ -94,7 +111,7 @@ public class Recuperador {
 
         consult = "SELECT tid FROM r1weights r1w, documentos d "
                 + " WHERE r1w.tid=d.id "
-                + " AND ( ";
+                + " AND (";
 
         for (int i = 0; i < idRep.size(); i++) {
             if (i == 0) {
@@ -135,6 +152,7 @@ public class Recuperador {
         int id;
         
         PreparedStatement stmt = con.prepareStatement(consult);
+        System.out.println("consulta: "+consult);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             id = rs.getInt("tid");
@@ -142,21 +160,6 @@ public class Recuperador {
 
         }
         return idDoc;
-    }
-
-    /**
-     * Realiza a consulta na base de dados do termo 'query' na base tranferida no 'con'
-     * @param query
-     *            a string a ser consultada
-     * @param con
-     *            a conex&atilde;o com o banco de dados
-     * @param idRep identificador do reposit&oacute;rio onde ser&aacute; feita a busca. Usar 0 caso se queira buscar todos em todos os reposit&oacute;rios
-     * @return uma lista de integer com o id de cada documento
-     * @throws SQLException
-     */
-    public ArrayList<Integer> search2(String query, Connection con, int idRep)
-            throws SQLException {
-        return search2(query, con, idRep);
     }
 
 
@@ -178,9 +181,7 @@ public class Recuperador {
         Documento ret = new Documento(query);
         int nElementos = ret.getDescricao().size();
         ArrayList<String> tokens = ret.getTokens();
-//        ArrayList<String> Entry = new ArrayList<String>();
         ArrayList<Integer> idDoc = new ArrayList<Integer>();
-
 
         String consult = "";
         if (idRep > 0) {
@@ -260,19 +261,19 @@ public class Recuperador {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
         Recuperador run = new Recuperador();
-//        ArrayList<Integer> idRep = new ArrayList<Integer>();
-//        ArrayList<Integer> idSubfed = new ArrayList<Integer>();
+
         ArrayList<Integer> resultado = new ArrayList<Integer>();
-//        idRep.add(7);
-//        idRep.add(4);
-//        idSubfed.add(7);
-//        idSubfed.add(4);
+        ArrayList<Integer> rep = new ArrayList<Integer>();
+        ArrayList<Integer> subFed = new ArrayList<Integer>();
+        rep.add(36);
+        subFed.add(2);
+
         try {
 //            resultado = run.search2("educa", con, idRep, idSubfed);
-            resultado = run.search2("educa", con, "rep;7,rep;4,subFed;7");
+            //paralelepipedo idRep: [36] idSubfed: [2]odernar: relevancia
+            resultado = run.search2("paralelepipedo",con,rep,subFed,"relevancia");
             System.out.println(resultado.size());
-            resultado = run.search2("educa", con, "0");
-            System.out.println(resultado.size());
+            
         } catch (SQLException s) {
             System.out.println(s);
         }

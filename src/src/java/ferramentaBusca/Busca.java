@@ -35,7 +35,8 @@ public class Busca {
 
         Recuperador rep = new Recuperador();
 
-        resultadoBusca = rep.search2(termoBusca, con, idRep);
+        resultadoBusca = rep.search2(termoBusca, con, idRep, "relevancia");
+
         for (int i=0; i<resultadoBusca.size(); i++){
 
         String entryQ = "SELECT obaa_entry, timestamp FROM documentos WHERE id=" + resultadoBusca.get(i);

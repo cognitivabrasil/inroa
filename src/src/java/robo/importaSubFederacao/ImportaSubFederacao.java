@@ -127,23 +127,18 @@ public class ImportaSubFederacao {
     public void objetos(int idDoc, String obaaEntry, Connection con, Connection conSub) throws SQLException {
 
         String idEntry[] = obaaEntry.split(";FEB;");
-        String consultaSub = "SELECT atributo, valor, r.nome FROM documentos d, objetos o, repositorios r"
+        String consultaSub = "SELECT o.atributo, o.valor FROM documentos d, objetos o"
                 + " WHERE o.documento=d.id"
-                + " AND d.id_repositorio=r.id"
                 + " AND d.obaa_entry='" + idEntry[1] + "'"
                 + " AND d.id_repositorio=" + idEntry[0]
                 + " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaDescription$' OR atributo ~* '^obaaKeyword$' OR atributo ~* '^obaaDate$' OR atributo ~* '^obaaLocation$')";
-//        " AND (atributo ~* '^obaaTitle$' OR atributo ~* '^obaaKeyword$')";
+
         Statement stmSub = conSub.createStatement();
         ResultSet rsSub = stmSub.executeQuery(consultaSub);
         ArrayList<String> atributos = new ArrayList<String>();
         ArrayList<String> valores = new ArrayList<String>();
         while (rsSub.next()) {
-            //necessario para aparecer o nome do repositorio na busca da confederacao
-            if (rsSub.isFirst()) {
-                atributos.add("nomeRepositorio");
-                valores.add(rsSub.getString("nome"));
-            }
+
             atributos.add(rsSub.getString("atributo"));
             valores.add(rsSub.getString("valor"));
         }

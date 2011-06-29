@@ -343,6 +343,9 @@ a:hover{
 .LinhaEntrada .ValueIndex{
     margin:0 0 5px 41%;
 }
+.LinhaEntrada .ValueIndex .Interno{
+    margin:0 0 3px 4%;
+}
 .LinhaEntrada .ValueErro{
     margin:0 0 20px 41%;
     color:red;

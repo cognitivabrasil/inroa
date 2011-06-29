@@ -108,7 +108,7 @@ public class IndexadorBusca {
                 if (idRepositorio > 0) {
                     sqlDoc = "SELECT id, obaa_entry FROM documentos WHERE id_repositorio=" + idRepositorio;
                 } else {
-                    sqlDoc = "SELECT id, obaa_entry FROM documentos WHERE id_subfed=" + idSubFed;
+                    sqlDoc = "SELECT d.id, d.obaa_entry FROM documentos d, repositorios_subfed repsf, dados_subfederacoes dsf WHERE d.id_rep_subfed=repsf.id AND repsf.id_subfed=dsf.id AND dsf.id=" + idSubFed;
                 }
                 Statement stmtDoc = con.createStatement();
                 ResultSet resDoc = stmtDoc.executeQuery(sqlDoc);
