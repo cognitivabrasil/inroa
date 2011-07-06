@@ -10,7 +10,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@include file="conexaoBD.jsp"%>
-<%@page import="ferramentaBusca.recuperador.Recuperador"%>
+<%@page import="ferramentaBusca.Recuperador"%>
 
 <%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
 
@@ -34,25 +34,26 @@
 
 
 
-            String idRepositorios[] = request.getParameterValues("repositorios");
-            String idRepositorio = "";
-            String palavraChave = "";
-            
-
-            if (request.getParameter("repositorio") != null) {
-                idRepositorio = request.getParameter("repositorio");
-            } 
+            String idRepLocal[] = {""};
+            String idSubfed[] = {""};
+            String idSubRep[] = {""};
 
 
-            palavraChave = request.getParameter("key"); //recebe a consulta informada no formulario
+            String textoBusca = "";
+
 
 
             boolean testaConsulta = false;
             try {
-                if ((idRepositorio.isEmpty() && idRepositorios==null) || palavraChave.isEmpty()) {
+                textoBusca = request.getParameter("key"); //recebe a consulta informada no formulario
+                idRepLocal = request.getParameterValues("replocal");
+                idSubfed = request.getParameterValues("subfed");
+                idSubRep = request.getParameterValues("subrep");
+
+
+                if (textoBusca.isEmpty()) {
                     out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
                             + "<script type='text/javascript'>history.back(-1);</script>");
-                    //   response.sendRedirect("/feb/index.jsp");
                 } else {
                     testaConsulta = true;
                 }
@@ -70,13 +71,9 @@
                 //chama o metodo de busca inteligente
                 Recuperador rep = new Recuperador();
 
-
                 try {
-                    if (idRepositorio.isEmpty()) {
-                        resultadoBusca = rep.search2(palavraChave, con, idRepositorios);//efetua a busca com o metodo de recuperacao de informacoes
-                    } else {
-                        resultadoBusca = rep.search2(palavraChave, con, idRepositorio);//efetua a busca com o metodo de recuperacao de informacoes
-                    }
+                    resultadoBusca = rep.busca(textoBusca, con, idRepLocal, idSubfed, idSubRep);
+
                     numObjetosEncontrados = resultadoBusca.size(); //armazena o numero de objetos
 
                 } catch (SQLException e) {
@@ -110,7 +107,7 @@
         </div>
         <div class="cabecalhoConsulta">
             <div class="esquerda">
-                &nbsp;Consulta efetuada: <i>"<strong><%=palavraChave%></strong>"</i>
+                &nbsp;Consulta efetuada: <i>"<strong><%=textoBusca%></strong>"</i>
             </div>
             <div class="direita">
                 Total de <strong><%=numObjetosEncontrados%></strong> objeto(s) encontrado(s)&nbsp;
@@ -123,7 +120,7 @@
 
             <%
                             if (numObjetosEncontrados == 0) { //se nao retorno nenhum objeto
-            %>
+%>
             <p align="center">
                 <strong>
                     <font size="3" face="Verdana, Arial, Helvetica, sans-serif">
@@ -136,7 +133,27 @@
             <%//se retornou objetos
                                         } else {
 
-                                            String url = "&repositorio=" + idRepositorio + "&key=" + palavraChave;
+                                            String url = "";
+
+                                            if(idRepLocal != null)
+                                            for (int i = 0; i < idRepLocal.length; i++) {
+                                                if (!idRepLocal[i].isEmpty()) {
+                                                    url += "&replocal=" + idRepLocal[i];
+                                                }
+                                            }
+                                            if(idSubfed != null)
+                                            for (int i = 0; i < idSubfed.length; i++) {
+                                                if (!idSubfed[i].isEmpty()) {
+                                                    url += "&subfed=" + idSubfed[i];
+                                                }
+                                            }
+                                            if(idSubRep != null)
+                                            for (int i = 0; i < idSubRep.length; i++) {
+                                                if (!idSubRep[i].isEmpty()) {
+                                                    url += "&subrep=" + idSubRep[i];
+                                                }
+                                            }
+                                            url += "&key=" + textoBusca;
 
             %>
 
@@ -191,7 +208,7 @@
                                                                 int repositorio = 0;
                                                                 String nomeRepositorio = "";
                                                                 String idRepSubfed = "";
-                                                                int idSubfed = 0;
+                                                                int idSubfederacao = 0;
 
 
                                                                 String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as repsubfed, d.id_repositorio as repositorio"
@@ -236,10 +253,10 @@
                                                                         nomeRepositorio = rs.getString("nomeRep");
                                                                     }
                                                                 } else {
-                                                                    String sql = "SELECT ds.id as idSubFed, ds.nome as nomeSubfed, rsf.nome as nomeRepSF from documentos d, dados_subfederacoes ds, repositorios_subfed rsf WHERE d.id_rep_subfed=rsf.id AND rsf.id_subfed=ds.id AND d.id=" + resultadoBusca.get(result);
+                                                                    String sql = "SELECT ds.id as idSubfed, ds.nome as nomeSubfed, rsf.nome as nomeRepSF from documentos d, dados_subfederacoes ds, repositorios_subfed rsf WHERE d.id_rep_subfed=rsf.id AND rsf.id_subfed=ds.id AND d.id=" + resultadoBusca.get(result);
                                                                     ResultSet rs = stm.executeQuery(sql);
                                                                     if (rs.next()) {
-                                                                        idSubfed = rs.getInt("idSubFed");
+                                                                        idSubfederacao = rs.getInt("idSubFed");
                                                                         nomeRepositorio = "Subfedera&ccedil;&atilde;o " + rs.getString("nomeSubfed") + " / " + rs.getString("nomeRepSF");
                                                                     }
                                                                 }
@@ -250,87 +267,87 @@
 
                                 <%
 ///inicio tratamento titulo
-                                                                                    if (!titulo.isEmpty()) {
+                                                                                                if (!titulo.isEmpty()) {
                                 %>
                                 <div class="titulo">
-                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&idBase=<%=idSubfed%>&repositorio=<%=repositorio%>'>
+                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&idBase=<%=idSubfederacao%>&repositorio=<%=repositorio%>'>
                                         <%
-                                                                                                for (int j = 0; j < titulo.size(); j++) { //percorrer todos os resultados separados por ;;
-                                                                                                    if (j > 0) { //apos o primeiro elemento colocar um "<BR>"
-                                                                                                        out.print("<br>");
-                                                                                                    }
-                                                                                                    out.print("- " + titulo.get(j).trim());
-                                                                                                }
+                                                                                                                                for (int j = 0; j < titulo.size(); j++) { //percorrer todos os resultados separados por ;;
+                                                                                                                                    if (j > 0) { //apos o primeiro elemento colocar um "<BR>"
+                                                                                                                                        out.print("<br>");
+                                                                                                                                    }
+                                                                                                                                    out.print("- " + titulo.get(j).trim());
+                                                                                                                                }
                                         %>
                                     </a>
                                 </div>
                                 <%
-                                                                                    } else {//se nao existir titulo informa que nao tem titulo mas cria o link para o objeto
-                                                                                        out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idSubfed + "&repositorio=" + repositorio + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
-                                                                                    }
+                                                                                                } else {//se nao existir titulo informa que nao tem titulo mas cria o link para o objeto
+                                                                                                    out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idSubfederacao + "&repositorio=" + repositorio + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
+                                                                                                }
 //fim tratamento titulo
 
 //inicio tratamento resumo
-                                                                                    if (!resumo.isEmpty()) {
-                                                                                        out.println("<div class=\"atributo\">");
+                                                                                                if (!resumo.isEmpty()) {
+                                                                                                    out.println("<div class=\"atributo\">");
 
-                                                                                        for (int j = 0; j < resumo.size(); j++) {
-                                                                                            //apos o primeiro elemento colocar um "<BR>"
-                                                                                            if (j > 0) {
-                                                                                                out.print("<br>");
-                                                                                            }
-                                                                                            String resumoLimitado = resumo.get(j).trim();
-                                                                                            if (resumoLimitado.length() >= 500) {
-                                                                                                resumoLimitado = resumoLimitado.substring(0, 500);
-                                                                                                resumoLimitado += " <a style='text-decoration: none;' href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idSubfed + "&repositorio=" + repositorio + "'>(...)</a>";
-                                                                                            }
-                                                                                            out.print(resumoLimitado);
-                                                                                        }
-                                                                                        out.println("</div>");
-                                                                                    }
+                                                                                                    for (int j = 0; j < resumo.size(); j++) {
+                                                                                                        //apos o primeiro elemento colocar um "<BR>"
+                                                                                                        if (j > 0) {
+                                                                                                            out.print("<br>");
+                                                                                                        }
+                                                                                                        String resumoLimitado = resumo.get(j).trim();
+                                                                                                        if (resumoLimitado.length() >= 500) {
+                                                                                                            resumoLimitado = resumoLimitado.substring(0, 500);
+                                                                                                            resumoLimitado += " <a style='text-decoration: none;' href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idSubfederacao + "&repositorio=" + repositorio + "'>(...)</a>";
+                                                                                                        }
+                                                                                                        out.print(resumoLimitado);
+                                                                                                    }
+                                                                                                    out.println("</div>");
+                                                                                                }
 //fim tratamento resumo
 
 //inicio tratamento localizacao
-                                                                                    if (!localizacao.isEmpty()) {
-                                                                                        out.println("<div class=\"atributo\">");
-                                                                                        out.println("Localiza&ccedil;&atilde;o:");
+                                                                                                if (!localizacao.isEmpty()) {
+                                                                                                    out.println("<div class=\"atributo\">");
+                                                                                                    out.println("Localiza&ccedil;&atilde;o:");
 
 
-                                                                                        for (int j = 0; j < localizacao.size(); j++) {
+                                                                                                    for (int j = 0; j < localizacao.size(); j++) {
 
-                                                                                            out.println("<div class=\"valor\">"
-                                                                                                    + "<a href=\"" + localizacao.get(j).trim() + "\" target=\"_new\">" + localizacao.get(j).trim() + "</a>"
-                                                                                                    + "</div>");
-                                                                                        }
-                                                                                        out.println("</div>");
-                                                                                    }
+                                                                                                        out.println("<div class=\"valor\">"
+                                                                                                                + "<a href=\"" + localizacao.get(j).trim() + "\" target=\"_new\">" + localizacao.get(j).trim() + "</a>"
+                                                                                                                + "</div>");
+                                                                                                    }
+                                                                                                    out.println("</div>");
+                                                                                                }
 //fim tratamento localizacao
 //inicio tratamento data
-                                                                                    out.println("<div class=\"atributo\">");
-                                                                                    out.println("Data:");
+                                                                                                out.println("<div class=\"atributo\">");
+                                                                                                out.println("Data:");
 
-                                                                                    if (!data.isEmpty()) {
+                                                                                                if (!data.isEmpty()) {
 
-                                                                                        for (int j = 0; j < data.size(); j++) {
-                                                                                            if (!data.get(j).equalsIgnoreCase("Ano-Mês-Dia")) {
-                                                                                                out.print("<div class=\"valor\">" + data.get(j).trim().replaceAll("[A-Z,a-z,ê,Ê]", " ").replaceAll(" -", "")
-                                                                                                        + "</div>");
-                                                                                            }
-                                                                                        } //fim for
+                                                                                                    for (int j = 0; j < data.size(); j++) {
+                                                                                                        if (!data.get(j).equalsIgnoreCase("Ano-Mês-Dia")) {
+                                                                                                            out.print("<div class=\"valor\">" + data.get(j).trim().replaceAll("[A-Z,a-z,ê,Ê]", " ").replaceAll(" -", "")
+                                                                                                                    + "</div>");
+                                                                                                        }
+                                                                                                    } //fim for
 
-                                                                                    } else {
-                                                                                        out.print("N&atilde;o documentado");
-                                                                                    }
-                                                                                    out.println("</div>");
+                                                                                                } else {
+                                                                                                    out.print("N&atilde;o documentado");
+                                                                                                }
+                                                                                                out.println("</div>");
 //fim tratamento data
 
 //inicio tratamento repositorio
-                                                                                    if (!nomeRepositorio.isEmpty()) {
+                                                                                                if (!nomeRepositorio.isEmpty()) {
 
-                                                                                        out.println("<div class=\"atributo\">"
-                                                                                                + "Reposit&oacute;rio: " + nomeRepositorio
-                                                                                                + "</div>");
-                                                                                    }
+                                                                                                    out.println("<div class=\"atributo\">"
+                                                                                                            + "Reposit&oacute;rio: " + nomeRepositorio
+                                                                                                            + "</div>");
+                                                                                                }
 
                                 %></div><%
 

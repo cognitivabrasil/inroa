@@ -46,7 +46,7 @@
 <div class="linkCantoDireito"><a href="./adm.jsp">Ferramenta Administrativa</a></div>
             <div class="Espaco">&nbsp;</div>
             <form name="consulta" action="consulta.jsp" method="POST">
-
+<!--
                 <div class="LinhaEntrada">
                     <div class="EspacoAntes">&nbsp;</div>
                     <div class="Label">
@@ -81,10 +81,11 @@
 
                         </select>
                     </div>
-                </div>
+                </div> -->
 <div class="clear"> </div>
                 <div id="modificavel">
                     <div class="LinhaEntrada">
+                        <div class="EspacoAntes">&nbsp;</div>
                         <div class="Label">
                             Texto para a busca:
                         </div>

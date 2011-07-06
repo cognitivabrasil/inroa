@@ -41,13 +41,17 @@ public class Recuperador {
         
             ArrayList<Integer> repId = new ArrayList<Integer>();
             ArrayList<Integer> subfedId = new ArrayList<Integer>();
+            ArrayList<Integer> repSubfedId = new ArrayList<Integer>();
             for (int i = 0; i < ids.length; i++) {
                 if (ids[i].contains("rep;")) {
                     repId.add(Integer.parseInt(ids[i].replace("rep;", "")));
                 } else if (ids[i].contains("subFed;")) {
                     subfedId.add(Integer.parseInt(ids[i].replace("subFed;", "")));
+                } else if (ids[i].contains("repSubFed;")) {
+                    repSubfedId.add(Integer.parseInt(ids[i].replace("subFed;", "")));
                 }
-                //COLOCAR AQUI PARA INSERIR OS REPOSITORIOS DAS SUBFEDERACOES
+                //
+                //***********************************************************
             }
 
             return search2(query, con, repId, subfedId, "relevancia");
@@ -232,30 +236,6 @@ public class Recuperador {
         return idDoc;
     }
 
-    /**
-     * M&eacute;todo para exluir os relacionamentos auxiliares de R2
-     * @param con
-     * @throws SQLException
-     */
-    private static void deleteR2(Connection con) throws SQLException {
-
-        String submit = "DELETE FROM R2TOKENS;";
-        PreparedStatement stmt = con.prepareStatement(submit);
-        stmt.execute();
-        stmt.close();
-
-        String submit2 = "DELETE FROM R2WEIGHTS;";
-
-        PreparedStatement delweights = con.prepareStatement(submit2);
-        delweights.execute();
-        delweights.close();
-
-        String submit3 = "DELETE FROM R2SUM;";
-
-        PreparedStatement delsum = con.prepareStatement(submit3);
-        delsum.execute();
-        delsum.close();
-    }
 
     public static void main(String[] args) {
         Conectar conecta = new Conectar();

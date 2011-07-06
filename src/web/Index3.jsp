@@ -50,7 +50,7 @@
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
             <div class="linkCantoDireito"><a href="./adm.jsp">Ferramenta Administrativa</a></div>
             <div class="Espaco">&nbsp;</div>
-            <form name="consulta" action="consulta.jsp" method="POST">
+            <form name="consulta" action="consulta.jsp" method="GET">
 
                 <div class="LinhaEntrada">
                     <div class="EspacoAntes">&nbsp;</div>
@@ -70,8 +70,8 @@
                                         }
 
                                         out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
-                                                + "<input value='rep;" + res.getString("id") + "' type=checkbox id=\"" + res.getString("id") + "\""
-                                                + " name=\"repositorios\""
+                                                + "<input value='" + res.getString("id") + "' type=checkbox id=\"" + res.getString("id") + "\""
+                                                + " name=\"replocal\""
                                                 + ">" + res.getString("nome").toUpperCase()
                                                 + "</div>");
                                     }
@@ -86,15 +86,15 @@
                                         }
                                     if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
 
-                                        out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;<input value='subFed;" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
-                                                + " name=\"repositorios\""
+                                        out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;<input value='" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
+                                                + " name=\"subfed\""
                                                 + ">" + rsSub.getString("nome").toUpperCase());
 
                                         String buscaRepSubfed = "SELECT rsf.nome, rsf.id FROM repositorios_subfed rsf WHERE id_subfed=" + rsSub.getString("id");
                                         ResultSet rsRepSub = stm2.executeQuery(buscaRepSubfed);
                                         while (rsRepSub.next()) {
-                                            out.println("<div class='Interno'>&nbsp;&nbsp;&nbsp;<input value='repSubFed;" + rsRepSub.getString("id") + "' type=checkbox id=\"" + rsRepSub.getString("id") + "\""
-                                                    + " name=\"repositorios\""
+                                            out.println("<div class='Interno'>&nbsp;&nbsp;&nbsp;<input value='" + rsRepSub.getString("id") + "' type=checkbox id=\"" + rsRepSub.getString("id") + "\""
+                                                    + " name=\"subrep\""
                                                     + ">" + rsRepSub.getString("nome").toUpperCase()
                                                     + "</div>");
                                         }

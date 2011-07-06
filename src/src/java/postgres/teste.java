@@ -7,9 +7,9 @@ package postgres;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import ptstemmer.*;
 import ptstemmer.Stemmer.StemmerType;
 import ptstemmer.exceptions.PTStemmerException;
@@ -28,13 +28,13 @@ public class teste {
         int idSubFed = 2;
         String nomeRep = "LUME";
         try {
-             String insertSelect = "INSERT INTO documentos (obaa_entry, id_rep_subfed) "
-                    + "SELECT '"+obaaEntry+"', id FROM repositorios_subfed WHERE id_subfed="+idSubFed+" AND nome='"+nomeRep+"'";
+            String insertSelect = "INSERT INTO documentos (obaa_entry, id_rep_subfed) "
+                    + "SELECT '" + obaaEntry + "', id FROM repositorios_subfed WHERE id_subfed=" + idSubFed + " AND nome='" + nomeRep + "'";
             Statement stmLocal = con.createStatement();
-            stmLocal.execute(insertSelect,Statement.RETURN_GENERATED_KEYS);
+            stmLocal.execute(insertSelect, Statement.RETURN_GENERATED_KEYS);
             ResultSet rsInsert = stmLocal.getGeneratedKeys();
-                rsInsert.next();
-                System.out.println(rsInsert.getInt(1));
+            rsInsert.next();
+            System.out.println(rsInsert.getInt(1));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,16 +146,16 @@ public class teste {
     }
 
     public void testeStemmer() {
-        try{
-        Stemmer stemmer = Stemmer.StemmerFactory(StemmerType.ORENGO);
-        stemmer.enableCaching(1000);
-        stemmer.remove(PTStemmerUtilities.fileToSet("data/stopwords.txt"));
+        try {
+            Stemmer stemmer = Stemmer.StemmerFactory(StemmerType.ORENGO);
+            stemmer.enableCaching(1000);
+            stemmer.remove(PTStemmerUtilities.fileToSet("data/stopwords.txt"));
 //        stemmer.ignore(PTStemmerUtilities.fileToSet("data/namedEntities.txt"));
-        String[] stem = stemmer.getPhraseStems("ciências a para bacana");
-        for(int i=0;i<stem.length; i++)
-        System.out.println(PTStemmerUtilities.removeDiacritics(stem[i]));
-        }
-        catch(PTStemmerException e){
+            String[] stem = stemmer.getPhraseStems("ciências a para bacana");
+            for (int i = 0; i < stem.length; i++) {
+                System.out.println(PTStemmerUtilities.removeDiacritics(stem[i]));
+            }
+        } catch (PTStemmerException e) {
             e.printStackTrace();
         }
     }
@@ -163,15 +163,33 @@ public class teste {
     public static void main(String[] args) {
 //
         teste run = new teste();
-//        //run.testando2();
-//        int result = 0;
-//        try {
-////            run.inserePadrao("nome", "metadata", "namespace", "titulo;marcos;freitas;nunes;abvx");
-//            run.teste();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(result);
-        run.testeGeneratedKeys();
+        String a = "a;b";
+        String b = "sub1;sub2";
+        String c = "a1;a2;a3";
+        String[] idRepLocal = a.split(";");
+        String idSubfed[] = b.split(";");
+        String idSubRep[] = null;
+        String textoBusca = "indi";
+        String url = "";
+
+        for (int i = 0; i < idRepLocal.length; i++) {
+            if (!idRepLocal[i].isEmpty()) {
+                url += "&replocal=" + idRepLocal[i];
+            }
+        }
+        for (int i = 0; i < idSubfed.length; i++) {
+            if (!idSubfed[i].isEmpty()) {
+                url += "&subfed=" + idSubfed[i];
+            }
+        }
+        if(idSubRep != null)
+        for (int i = 0; i < idSubRep.length; i++) {
+            if (!idSubRep[i].isEmpty()) {
+                url += "&subrep=" + idSubRep[i];
+            }
+        }
+
+        url += "&key=" + textoBusca;
+        System.out.println(url);
     }
 }

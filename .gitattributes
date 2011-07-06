@@ -194,8 +194,8 @@ src/lib/postgresql-8.4-702.jdbc4.jar -text
 src/lib/xalan.jar -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/RSS/Rss.java -text
-src/src/java/ferramentaBusca/Busca.java -text
 src/src/java/ferramentaBusca/IndexadorBusca.java -text
+src/src/java/ferramentaBusca/Recuperador.java -text
 src/src/java/ferramentaBusca/indexador/Documento.java -text
 src/src/java/ferramentaBusca/indexador/Indexador.java -text
 src/src/java/ferramentaBusca/indexador/StopWordTAD.java -text
