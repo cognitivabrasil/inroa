@@ -344,7 +344,7 @@ a:hover{
     margin:0 0 5px 41%;
 }
 .LinhaEntrada .ValueIndex .Interno{
-    margin:0 0 3px 4%;
+    margin:0 0 3px 6%;
 }
 .LinhaEntrada .ValueErro{
     margin:0 0 20px 41%;
@@ -643,4 +643,8 @@ td{vertical-align:top;}
 }
 .linkRSS:visited{
     color:black;
+}
+
+.hidden {
+    display: none;
 }

@@ -33,6 +33,14 @@
                 }
                 window.location='rss.jsp?search='+consulta+'&idRep='+repChecked;
             }
+            function ocultar(id){
+                var obj = document.getElementById(id);
+                obj.className='hidden';
+            }
+            function tornarVisivel(id, css){
+                var obj = document.getElementById(id);
+                obj.className=css;
+            }
         </script>
 
     </head>
@@ -59,7 +67,7 @@
                     </div>
 
                     <%
-                    Statement stm2 = con.createStatement();
+                                Statement stm2 = con.createStatement();
                                 //Carrega do banco de dados os repositorios cadastrados
                                 ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
                                 //int i = 0;
@@ -78,27 +86,29 @@
                                     // i++;
 
                                 }
-                                
+
                                 ResultSet rsSub = stm.executeQuery("SELECT nome, id FROM dados_subfederacoes ORDER BY nome ASC");
                                 while (rsSub.next()) {
                                     if (rsSub.isFirst()) {
+                                        if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
                                             out.println("<div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div>");
                                         }
+                                    }
                                     if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
 
-                                        out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;<input value='" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
+                                        out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;<a onclick='ocultar(\"testeh\");'>-</a><a onclick='tornarVisivel(\"testeh\", \"Interno\");'>+</a><input value='" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
                                                 + " name=\"subfed\""
                                                 + ">" + rsSub.getString("nome").toUpperCase());
-
+                                        out.print("<div id='testeh' class='Interno'>");
                                         String buscaRepSubfed = "SELECT rsf.nome, rsf.id FROM repositorios_subfed rsf WHERE id_subfed=" + rsSub.getString("id");
                                         ResultSet rsRepSub = stm2.executeQuery(buscaRepSubfed);
                                         while (rsRepSub.next()) {
-                                            out.println("<div class='Interno'>&nbsp;&nbsp;&nbsp;<input value='" + rsRepSub.getString("id") + "' type=checkbox id=\"" + rsRepSub.getString("id") + "\""
+                                            out.println("<div class='Int'>&nbsp;&nbsp;&nbsp;<input value='" + rsRepSub.getString("id") + "' type=checkbox id=\"" + rsRepSub.getString("id") + "\""
                                                     + " name=\"subrep\""
                                                     + ">" + rsRepSub.getString("nome").toUpperCase()
                                                     + "</div>");
                                         }
-                                        out.println("</div>");
+                                        out.println("</div></div>");
                                     }
                                 }
                     %>
