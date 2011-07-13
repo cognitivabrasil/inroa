@@ -137,6 +137,7 @@ public class Robo {
 
                     //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
                     if (testarDataAnteriorMil(data_ultima_atualizacao)) {
+                        ultimaAtualizacao = null; //se passar null para o metodo de harvester ele busca desde o inicio do rep
                         Remover deleta = new Remover();
                         System.out.println("Deletando toda a base de dados do repositório: " + nome.toUpperCase());
                         deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro

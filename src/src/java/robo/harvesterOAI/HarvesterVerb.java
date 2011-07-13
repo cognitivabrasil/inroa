@@ -187,6 +187,7 @@ public abstract class HarvesterVerb {
      */
     public HarvesterVerb(String requestURL) throws IOException,
     ParserConfigurationException, SAXException, TransformerException {
+        System.out.println("url: "+requestURL);
         harvest(requestURL);
     }
     

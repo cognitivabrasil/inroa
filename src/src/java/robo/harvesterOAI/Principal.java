@@ -28,7 +28,7 @@ public class Principal {
 		
 try{
         //efetua o ver lisRecord com a url, a data inicial e datafinal recebida como parametro
-        System.out.println("end: "+endereco+" dataInic: "+dataInicial);
+        
         ListRecords listRecords = new ListRecords(endereco,dataInicial,null,null,metadataPrefix);
         //cria uma variavel do tipo ListRecords para efetuar o ResumptionToken se necessario
         ListRecords listRecordsResume;
