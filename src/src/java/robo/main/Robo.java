@@ -70,7 +70,7 @@ public class Robo {
                 indexar.populateR1(con);
                 System.out.println("indice recalculado! " + new Date());
             } else {
-                System.err.println("NAO foi possivel atulizar o repositorio!");
+                System.err.println("NAO foi possivel atualizar o repositorio!");
             }
 
         } catch (SQLException e) {
