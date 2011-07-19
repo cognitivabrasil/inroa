@@ -37,9 +37,9 @@ public class InicioLeituraXML {
             ArrayList<String> caminhoXML,
             int id,
             Indexador indexar,
-            Connection con) {
+            Connection con) throws ParserConfigurationException, SAXException, IOException {
 
-        try {
+        
             //SAXReader reader = new SAXReader();
             XmlSaxReader reader = new XmlSaxReader();
             for (int i = 0; i < caminhoXML.size(); i++) {
@@ -58,18 +58,7 @@ public class InicioLeituraXML {
                 } else {
                     System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
                 }
-            }
-
-        } catch (ParserConfigurationException e) {
-            System.err.println("O parser nao foi configurado corretamente. " + e);
-            e.printStackTrace();
-        } catch (SAXException e) {
-            System.err.println("Problema ao fazer o parse do arquivo. " + e);
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("O arquivo nao pode ser lido. " + e);
-            e.printStackTrace();
-        }
+            }        
     }
 
      /**
@@ -86,9 +75,9 @@ public class InicioLeituraXML {
            String caminhoXML,
             int id,
             Indexador indexar,
-            Connection con) {
+            Connection con) throws ParserConfigurationException, SAXException, IOException {
 
-        try {
+        
             XmlSaxReader reader = new XmlSaxReader();
                 File arquivoXML = new File(caminhoXML);
                 if (arquivoXML.isFile() || arquivoXML.canRead()) {
@@ -106,17 +95,6 @@ public class InicioLeituraXML {
                     System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML);
                 }
 
-
-        } catch (ParserConfigurationException e) {
-            System.err.println("O parser nao foi configurado corretamente. " + e);
-            e.printStackTrace();
-        } catch (SAXException e) {
-            System.err.println("Problema ao fazer o parse do arquivo. " + e);
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("O arquivo nao pode ser lido. " + e);
-            e.printStackTrace();
-        }
     }
 
 

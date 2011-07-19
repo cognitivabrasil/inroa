@@ -15,7 +15,8 @@ public class Informacoes {
 
     private String barra = System.getProperty("file.separator");
     private String so = System.getProperty("os.name").toUpperCase();
-    private String caminhoWin = "C:" + barra + "marcos" + barra + "temp";
+    private String caminhoWin = "C:" + barra + "temp";  
+    
     private String CaminhoLinux = barra + "tmp";
 
 

@@ -18,7 +18,7 @@ public class Principal {
      * @param dirXML Diretório onde serão salvos os arquivos XML's. Ex.: "c:/pasta" ou "/home/fulano/pasta"
      * @return Retorna um ArrayList de Strings contendo o(s) caminho(s) para o(s) xml(s) salvo(s).
      */
-    public ArrayList<String> buscaXmlRepositorio(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix){
+    public ArrayList<String> buscaXmlRepositorio(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix) throws Exception{
 
         String barra = System.getProperty("file.separator");
         int numeroXML =1;
@@ -26,7 +26,6 @@ public class Principal {
         ArrayList<String> caminhosXML = new ArrayList<String>();
         caminhosXML.add(caminhoAbsoluto);
 		
-try{
         //efetua o ver lisRecord com a url, a data inicial e datafinal recebida como parametro
         
         ListRecords listRecords = new ListRecords(endereco,dataInicial,null,null,metadataPrefix);
@@ -89,10 +88,7 @@ try{
         
             System.out.println(" Arquivo XML com dados do repositorio foi gravado");
 
-        } catch (Exception e) {
-            System.err.println("Erro efetuar o Harvester"+e.toString());
-        }
-       
+              
 
 
         /* while (listRecords != null)

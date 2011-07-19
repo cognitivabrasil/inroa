@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import robo.util.Informacoes;
 import ferramentaBusca.indexador.Indexador;
 import java.io.File;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.Date;
+import javax.xml.parsers.ParserConfigurationException;
 import operacoesPostgre.Remover;
+import org.xml.sax.SAXException;
 import postgres.Conectar;
 import robo.importaSubFederacao.ImportaSubFederacao;
 
@@ -37,31 +41,36 @@ public class Robo {
 //TESTA/ATUALIZA SUBFEDERACAO
         ImportaSubFederacao subFed = new ImportaSubFederacao();
         repAtualizado = subFed.atualiza_subFederacao(con);
-        
+
 //TESTA REPOSITORIO
         Robo robo = new Robo();
 
-        String sql = "SELECT r.nome, r.id as idrep" + " FROM repositorios r, info_repositorios i " +
-                " WHERE r.id=i.id_repositorio" +
-                " AND r.nome!='todos'" +
-                " AND r.nome!='OBAA'" +
-                " AND i.data_ultima_atualizacao < (now() - i.periodicidade_horas*('1 HOUR')::INTERVAL);";
-        
+        String sql = "SELECT r.nome, r.id as idrep" + " FROM repositorios r, info_repositorios i "
+                + " WHERE r.id=i.id_repositorio"
+                + " AND r.nome!='todos'"
+                + " AND r.nome!='OBAA'"
+                + " AND i.data_ultima_atualizacao < (now() - i.periodicidade_horas*('1 HOUR')::INTERVAL);";
+
 
         try {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
-            
+
             while (rs.next()) {
                 int idRep = rs.getInt("idrep");
-                robo.atualizaRepositorio(idRep, indexar); //chama o metodo que atualiza o repositorio
-                repAtualizado = true;
+                boolean atualizadoTemp = false;
+                atualizadoTemp = robo.atualizaRepositorio(idRep, indexar); //chama o metodo que atualiza o repositorio
+                if(atualizadoTemp){ //se algum repositorio foi atualizado entao recalcula o indice
+                    repAtualizado = true;
+                }
             }
 
             if (repAtualizado) {
                 System.out.println("recalculando o indice " + new Date());
                 indexar.populateR1(con);
                 System.out.println("indice recalculado! " + new Date());
+            } else {
+                System.err.println("NAO foi possivel atulizar o repositorio!");
             }
 
         } catch (SQLException e) {
@@ -90,10 +99,10 @@ public class Robo {
 
 
 
-        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, i.metadata_prefix, to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form" +
-                " FROM repositorios r, info_repositorios i" +
-                " WHERE r.id = i.id_repositorio" +
-                " AND r.id = " + idRepositorio + ";";
+        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, i.metadata_prefix, to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form"
+                + " FROM repositorios r, info_repositorios i"
+                + " WHERE r.id = i.id_repositorio"
+                + " AND r.id = " + idRepositorio + ";";
 
         con = conectar.conectaBD(); //chama o metodo conectaBD da classe Conectar
 
@@ -171,14 +180,27 @@ public class Robo {
 
 
                     } else {
-                        System.out.println("O caminho informado não é um diretório. E não pode ser criado. " + caminhoDiretorioTemporario);
+                        System.out.println("O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
                     }
 
                 }
             }
+        } catch (UnknownHostException u){
+            System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: "+u);
         } catch (SQLException e) {
             System.err.println("SQL Exception... Erro na consulta:");
             e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            System.err.println("O parser nao foi configurado corretamente. " + e);
+            e.printStackTrace();
+        } catch (SAXException e) {
+            System.err.println("Problema ao fazer o parse do arquivo. " + e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("O arquivo nao pode ser lido: " + e);
+            e.printStackTrace();
+        }catch (Exception e) {
+            System.err.println("Erro efetuar o Harvester " + e);
         } finally {
             try {
                 con.close(); //fechar conexao
@@ -228,7 +250,7 @@ public class Robo {
         boolean recalcularIndice = false;
         try {
             con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-            
+
             if (idRep > 0) {
                 recalcularIndice = robo.atualizaRepositorio(idRep, indexar);
             } else {
