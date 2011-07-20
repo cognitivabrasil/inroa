@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robo.importaSubFederacao;
+package robo.atualiza;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,14 +14,19 @@ import java.util.ArrayList;
 import operacoesPostgre.Remover;
 import postgres.Conectar;
 import postgres.Configuracao;
-import robo.main.Robo;
+import robo.util.Operacoes;
 
 /**
  *
  * @author Marcos
  */
-public class ImportaSubFederacao {
+public class SubFederacao {
 
+    /**
+     * Testa se alguma subfedera&ccedil;&atilde;o precisa ser atualizada, se sim chama o m&etodo respons&aacute;vel por isso.
+     * @param con Conex&atilde;o com a base de dados local.
+     * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;
+     */
     public boolean atualiza_subFederacao(Connection con) {
         boolean atualizou = false;
         String sql = "SELECT id, login, senha, porta, ip, base, nome, data_ultima_atualizacao FROM dados_subfederacoes where data_ultima_atualizacao <= (now() - ('24 HOUR')::INTERVAL);";
@@ -42,7 +47,7 @@ public class ImportaSubFederacao {
 
 
                 //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
-                if (Robo.testarDataAnteriorMil(rs.getDate("data_ultima_atualizacao"))) {
+                if (Operacoes.testarDataAnteriorMil(rs.getDate("data_ultima_atualizacao"))) {
                     Remover deleta = new Remover();
                     System.out.println("FEB: Deletando toda a base de dados da Subfederação: " + nome.toUpperCase());
                     deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro
@@ -76,7 +81,15 @@ public class ImportaSubFederacao {
         return atualizou;
     }
 
-    public void documentos(int idSubFed, Timestamp ultimaAtualizacao, Connection con, Connection conSub) throws SQLException {
+    /**
+     * Sincroniza os objetos da tabela documento da subfedera&ccedil;&atilde;o com a base local
+     * @param idSubFed id da subfedera&ccedil;&atilde;o
+     * @param ultimaAtualizacao data da &uacute;ltima vez que a subfedera&ccedil;&atilde;o foi atualizada
+     * @param con Conex&atilde;o com a base de dados local.
+     * @param conSub con Conex&atilde;o com a base de dados da subfedera&ccedil;&atilde;o.
+     * @throws SQLException
+     */
+    private void documentos(int idSubFed, Timestamp ultimaAtualizacao, Connection con, Connection conSub) throws SQLException {
         System.out.println("FEB: Atualizando Subfederacao");
         String sqlSub = "SELECT d.id_repositorio||';FEB;'||d.obaa_entry as entry, r.nome from  documentos d, repositorios r where d.id_repositorio=r.id AND d.timestamp >= '" + ultimaAtualizacao + "'";
 
@@ -124,7 +137,15 @@ public class ImportaSubFederacao {
 
     }
 
-    public void objetos(int idDoc, String obaaEntry, Connection con, Connection conSub) throws SQLException {
+    /**
+     * Insere coleta os metadados dos objetos atualizados no metodo "documentos" da subfedera&ccedil;&atilde;o e insere na base local
+     * @param idDoc id do documento (da tabela documento)
+     * @param obaaEntry obaaEntry do documento
+     * @param con Conex&atilde;o com a base de dados local.
+     * @param conSub con Conex&atilde;o com a base de dados da subfedera&ccedil;&atilde;o.
+     * @throws SQLException
+     */
+    private void objetos(int idDoc, String obaaEntry, Connection con, Connection conSub) throws SQLException {
 
         String idEntry[] = obaaEntry.split(";FEB;");
         String consultaSub = "SELECT o.atributo, o.valor FROM documentos d, objetos o"
@@ -175,7 +196,7 @@ public class ImportaSubFederacao {
      * @param conSub conex&atilde;o com a base de dados da subfedera&ccedil;&atilde;o
      * @throws SQLException
      */
-    public void verificaObjetosDeletados(Connection conLocal, Connection conSub) {
+    private void verificaObjetosDeletados(Connection conLocal, Connection conSub) {
         String sql = "SELECT obaa_entry, id_repositorio FROM excluidos WHERE data >= (now() - ('30 HOUR')::INTERVAL);";
         try {
             Statement stmSub = conSub.createStatement();
@@ -203,7 +224,7 @@ public class ImportaSubFederacao {
      * @param idSubFed id da subfedera&ccedil;&atilde;o que foi atualizada
      * @throws SQLException
      */
-    public void atualizaTimestampSubFed(Connection con, int idSubFed) throws SQLException {
+    private void atualizaTimestampSubFed(Connection con, int idSubFed) throws SQLException {
         String sql = "UPDATE dados_subfederacoes set data_ultima_atualizacao = now() WHERE id=" + idSubFed;
         Statement stm = con.createStatement();
         stm.executeUpdate(sql);
@@ -215,7 +236,7 @@ public class ImportaSubFederacao {
      * @param conSub conex&atilde;o com a base de dados da subfedera&ccedil;&atilde;o
      * @throws SQLException
      */
-    public void atualizaRepSubfed(int idSubFed, Connection conLocal, Connection conSub) throws SQLException {
+    private void atualizaRepSubfed(int idSubFed, Connection conLocal, Connection conSub) throws SQLException {
         String selectSub = "SELECT nome FROM repositorios";
         String selectLocal = "SELECT nome FROM repositorios_subfed";
 
@@ -251,19 +272,4 @@ public class ImportaSubFederacao {
 
     }
 
-    public static void main(String[] args) {
-        Configuracao conf = new Configuracao("federacao", "feb", "feb@RNP", "143.54.95.20", 5432);
-        Conectar conecta = new Conectar(conf);
-        Connection conSub = conecta.conectaBD(); //chama o metodo conectaBD da classe conectar
-
-
-        Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
-        Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-
-        ImportaSubFederacao run = new ImportaSubFederacao();
-        
-            run.atualiza_subFederacao(con);
-        
-
-    }
 }

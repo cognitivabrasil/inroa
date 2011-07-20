@@ -4,12 +4,14 @@
     Author     : Marcos
 --%>
 
+<%@page import="robo.atualiza.Repositorios"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="robo.main.Robo"%>
 
 <%
 String id = request.getParameter("id");
 int idRep = Integer.parseInt(id);
-Robo robo = new Robo();
-robo.atualizaFerramentaAdm(idRep);
+
+Repositorios repositorio = new Repositorios();
+repositorio.atualizaFerramentaAdm(idRep);
 %>

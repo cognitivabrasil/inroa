@@ -1,4 +1,4 @@
-package robo.importa_OAI;
+package robo.atualiza.importa_OAI;
 
 import ferramentaBusca.indexador.Indexador;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package robo.harvesterOAI;
+package robo.atualiza.harvesterOAI;
 
 
 /**
@@ -16,38 +16,37 @@ package robo.harvesterOAI;
  limitations under the License.
  */
 
-//package ORG.oclc.oai.harvester2.verb;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 /**
- * This class represents an ListIdentifiers response on either the server or
+ * This class represents an ListRecords response on either the server or
  * on the client
  *
  * @author Jeffrey A. Young, OCLC Online Computer Library Center
  */
-public class ListIdentifiers extends HarvesterVerb {
+public class ListRecords extends HarvesterVerb {
     /**
      * Mock object constructor (for unit testing purposes)
      */
-    public ListIdentifiers() {
+    public ListRecords() {
         super();
     }
     
     /**
-     * Client-side ListIdentifiers verb constructor
+     * Client-side ListRecords verb constructor
      *
      * @param baseURL the baseURL of the server to be queried
      * @exception MalformedURLException the baseURL is bad
      * @exception SAXException the xml response is bad
      * @exception IOException an I/O error occurred
      */
-    public ListIdentifiers(String baseURL, String from, String until,
+    public ListRecords(String baseURL, String from, String until,
             String set, String metadataPrefix)
     throws IOException, ParserConfigurationException, SAXException,
     TransformerException {
@@ -55,7 +54,7 @@ public class ListIdentifiers extends HarvesterVerb {
     }
     
     /**
-     * Client-side ListIdentifiers verb constructor (resumptionToken version)
+     * Client-side ListRecords verb constructor (resumptionToken version)
      * @param baseURL
      * @param resumptionToken
      * @throws IOException
@@ -63,7 +62,7 @@ public class ListIdentifiers extends HarvesterVerb {
      * @throws SAXException
      * @throws TransformerException
      */
-    public ListIdentifiers(String baseURL, String resumptionToken)
+    public ListRecords(String baseURL, String resumptionToken)
     throws IOException, ParserConfigurationException, SAXException,
     TransformerException {
         super(getRequestURL(baseURL, resumptionToken));
@@ -78,12 +77,13 @@ public class ListIdentifiers extends HarvesterVerb {
      */
     public String getResumptionToken()
     throws TransformerException, NoSuchFieldException {
-        if (SCHEMA_LOCATION_V2_0.equals(getSchemaLocation())) {
-            return getSingleString("/oai20:OAI-PMH/oai20:ListIdentifiers/oai20:resumptionToken");
-        } else if (SCHEMA_LOCATION_V1_1_LIST_IDENTIFIERS.equals(getSchemaLocation())) {
-            return getSingleString("/oai11_ListIdentifiers:ListIdentifiers/oai11_ListIdentifiers:resumptionToken");
+        String schemaLocation = getSchemaLocation();
+        if (schemaLocation.indexOf(SCHEMA_LOCATION_V2_0) != -1) {
+            return getSingleString("/oai20:OAI-PMH/oai20:ListRecords/oai20:resumptionToken");
+        } else if (schemaLocation.indexOf(SCHEMA_LOCATION_V1_1_LIST_RECORDS) != -1) {
+            return getSingleString("/oai11_ListRecords:ListRecords/oai11_ListRecords:resumptionToken");
         } else {
-            throw new NoSuchFieldException(getSchemaLocation());
+            throw new NoSuchFieldException(schemaLocation);
         }
     }
     
@@ -96,7 +96,7 @@ public class ListIdentifiers extends HarvesterVerb {
             String until, String set,
             String metadataPrefix) {
         StringBuffer requestURL =  new StringBuffer(baseURL);
-        requestURL.append("?verb=ListIdentifiers");
+        requestURL.append("?verb=ListRecords");
         if (from != null) requestURL.append("&from=").append(from);
         if (until != null) requestURL.append("&until=").append(until);
         if (set != null) requestURL.append("&set=").append(set);
@@ -105,17 +105,16 @@ public class ListIdentifiers extends HarvesterVerb {
     }
     
     /**
-     * Construct the query portion of the http request (resumptionToken version).
+     * Construct the query portion of the http request (resumptionToken version)
      * @param baseURL
      * @param resumptionToken
      * @return
      */
     private static String getRequestURL(String baseURL,
             String resumptionToken) {
-        
         StringBuffer requestURL =  new StringBuffer(baseURL);
         try{
-        requestURL.append("?verb=ListIdentifiers");
+        requestURL.append("?verb=ListRecords");
         requestURL.append("&resumptionToken=").append(URLEncoder.encode(resumptionToken, "UTF-8"));
         }catch(UnsupportedEncodingException u){
             System.out.println("Enconding não suportado: "+u);}

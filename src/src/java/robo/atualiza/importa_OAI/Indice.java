@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robo.importa_OAI;
+package robo.atualiza.importa_OAI;
 
 import ferramentaBusca.indexador.Documento;
 

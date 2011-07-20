@@ -6,7 +6,7 @@ Author     : Marcos Nunes
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="conexaoBD.jsp"%>
 <%@include file="testaSessao.jsp"%>
-<%@page import="robo.main.Robo"%>
+<%@page import="robo.util.Operacoes"%>
 <%@page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -104,7 +104,7 @@ Author     : Marcos Nunes
                         <%
                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-                        if (!Robo.testarDataAnteriorMil(res.getDate("data_ultima_atualizacao"))) {
+                        if (!Operacoes.testarDataAnteriorMil(res.getDate("data_ultima_atualizacao"))) {
                             out.println("Dia " + format.format(res.getDate("data_ultima_atualizacao")) + " &agrave;s " + res.getTime("data_ultima_atualizacao"));
 
                         } else {
