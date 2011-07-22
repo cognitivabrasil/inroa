@@ -5,7 +5,7 @@
 
 Primeira etapa do cadastro de um repositorio
 --%>
-<%@include file="testaSessaoNovaJanela.jsp"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,10 +18,11 @@ Primeira etapa do cadastro de um repositorio
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
+        <%@include file="testaSessaoNovaJanela.jsp"%>
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="./css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="./scripts/validatejs.js"></script>
-        <script type="text/javascript" src="./scripts/funcoes.js"></script>
+        
         <script language="JavaScript" type="text/javascript" src="./mapeamentos/funcoesMapeamento.js">
             //funcoes javascript que chamam o ajax
         </script>
@@ -69,22 +70,24 @@ Primeira etapa do cadastro de um repositorio
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
-                        <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
-                            <option value="" selected onclick="selecionaMapeamento('resultado', 'padraoMet', 'cadastra')">Selecione
+                        <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 'cadastra');">
+                            <option value="" selected>Selecione
                                 <%
                                             //Carrega do banco de dados os padroes de metadados cadastrados
                                             //postgres ok
                                             ResultSet res = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
                                             while (res.next()) {
                                                 if (!res.getString("nome").equalsIgnoreCase("todos")) {
-                                                    out.println("<option value='" + res.getString("id") + "' onclick=\"selecionaMapeamento('resultado', 'padraoMet', 'cadastra')\">" + res.getString("nome").toUpperCase());
+                                                    out.println("<option value='" + res.getString("id") + "'>" + res.getString("nome").toUpperCase());
                                                 }
 
                                             }
+                                           
 
                                 %>
 
                         </select>
+                                
                     </div>
                     </div>
                     <div class="LinhaEntrada">

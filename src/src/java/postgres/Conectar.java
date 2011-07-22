@@ -50,8 +50,8 @@ public class Conectar {
             e.printStackTrace();
  //           return null;
         } catch (SQLException e) {
-            System.err.println("FEB: SQL Exception... Erro ao efetuar a conexão na base de dados: ");
-            e.printStackTrace(); //vejamos que erro foi gerado e quem o gerou
+            System.err.println("FEB: SQL Exception... Erro ao efetuar a conexão na base de dados no ip " + ipBase + ". Mensagem: "+e.getMessage());
+            //e.printStackTrace(); //vejamos que erro foi gerado e quem o gerou
 //            return null;
         } catch (NullPointerException n){
             System.err.println("FEB: NullPointer ao efetuar conexao na base de dados. Classe Conectar: " + n);

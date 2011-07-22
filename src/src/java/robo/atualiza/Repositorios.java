@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package robo.atualiza;
 
 import ferramentaBusca.indexador.Indexador;
@@ -18,6 +17,7 @@ import java.util.Date;
 import javax.xml.parsers.ParserConfigurationException;
 import operacoesPostgre.Remover;
 import org.xml.sax.SAXException;
+import postgres.AtualizaBase;
 import postgres.Conectar;
 import robo.atualiza.harvesterOAI.Principal;
 import robo.util.Informacoes;
@@ -37,7 +37,7 @@ public class Repositorios {
      * @return true ou false indicando se algum reposit&aacute;rio foi atualizado ou n&atilde;
      */
     public boolean testa_atualizar_repositorio(Connection con, Indexador indexar) {
-        boolean atualizou = false;        
+        boolean atualizou = false;
 
         String sql = "SELECT r.nome, r.id as idrep" + " FROM repositorios r, info_repositorios i "
                 + " WHERE r.id=i.id_repositorio"
@@ -53,6 +53,7 @@ public class Repositorios {
             while (rs.next()) {
                 int idRep = rs.getInt("idrep");
                 boolean atualizadoTemp = false;
+                //ATUALIZA REP
                 atualizadoTemp = atualizaRepositorio(idRep, indexar, con); //chama o metodo que atualiza o repositorio
 
                 if (atualizadoTemp) { //se algum repositorio foi atualizado entao recalcula o indice
@@ -67,7 +68,6 @@ public class Repositorios {
 
         return atualizou;
     }
-
 
     /**
      * Atualiza o reposit&oacute;rio solicitado.
@@ -137,12 +137,12 @@ public class Repositorios {
                     if (!caminhoTeste.isDirectory()) {//se o caminho informado nao for um diretorio
                         caminhoTeste.mkdirs();//cria o diretorio
                     } else { //APAGA TODOS ARQUIVOS XML DA PASTA
-                            File[] arquivos = caminhoTeste.listFiles();
-                            for (File toDelete : arquivos) {
-                                if (toDelete.getName().endsWith(".xml")) {
-                                    toDelete.delete();
-                                }
+                        File[] arquivos = caminhoTeste.listFiles();
+                        for (File toDelete : arquivos) {
+                            if (toDelete.getName().startsWith("FEB-") && toDelete.getName().endsWith(".xml")) {
+                                toDelete.delete();
                             }
+                        }
                     }
 
                     if (caminhoTeste.isDirectory()) {
@@ -175,13 +175,15 @@ public class Repositorios {
             e.printStackTrace();
         } catch (Exception e) {
             System.err.println("Erro efetuar o Harvester " + e);
-        } finally {            
+        } finally {
+//ATUALIZA DATA ultima atualizacao
+            AtualizaBase atualiza = new AtualizaBase();
+            //chama metodo que atualiza a hora da ultima atualizacao
+            atualiza.atualizaHora(idRepositorio);
             return atualizou;
         }
 
     }
-
-     
 
     /**
      * M&eacute;todo utilizado pela ferramenta administrativa para atualizar o reposit&oacute;rio em tempo real. Este m&eacute;todo recebe um id, se esse if for zero ele atualiza todos os reposit&aacute;rios existentes. Se for um valor maior que zero ele atualiza apenas o escolhido.

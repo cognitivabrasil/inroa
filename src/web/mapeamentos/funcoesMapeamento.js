@@ -417,9 +417,8 @@ function excluirAjax(idMapeamento, tabela, idResultado, idTabela, linha)
  * Esta fun&ccedil;&atilde;o deve ser chamamada da pasta raiz.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodar&aacute; sem que a pagina principal seja recarregada.
 */
-function selecionaMapeamento(idResultado, idInput, acao)
+function selecionaMapeamento(idResultado, idPadrao, acao)
 {
- var idPadrao = document.getElementById(idInput).value;
     //div onde sera adicionado o resultado
     var exibeResultado = document.getElementById(idResultado);
     

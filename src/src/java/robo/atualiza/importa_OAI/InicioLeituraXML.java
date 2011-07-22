@@ -51,10 +51,6 @@ public class InicioLeituraXML {
                     //apaga arquivo XML
                     arquivoXML.delete();
 
-                    //atualizar hora da ultima atualização
-                    AtualizaBase atualiza = new AtualizaBase();
-                    //chama metodo que atualiza a hora da ultima atualizacao
-                    atualiza.atualizaHora(id);
                 } else {
                     System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
                 }
@@ -87,10 +83,6 @@ public class InicioLeituraXML {
                     //apaga arquivo XML
                     arquivoXML.delete();
 
-                    //atualizar hora da ultima atualização
-                    AtualizaBase atualiza = new AtualizaBase();
-                    //chama metodo que atualiza a hora da ultima atualizacao
-                    atualiza.atualizaHora(id);
                 } else {
                     System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML);
                 }
@@ -102,21 +94,21 @@ public class InicioLeituraXML {
 
 
 
-    public static void main(String[] args) {
-        XmlSaxReader reader = new XmlSaxReader();
-        Indexador indexar = new Indexador();
-            //efetua a leitura do xml e insere os objetos na base de dados
-        try {
-
-                        Conectar conectar = new Conectar(); //instancia uma variavel da classe portgres.conectar
-                        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe portgres.conectar
-
-                        reader.parser("C:/engeo.xml", indexar, con, 8);
-                        con.close();
-                    } catch (UnsupportedEncodingException e) {
-                        System.out.println("Error: " + e.toString());
-                    } catch (Exception e){
-                        e.printStackTrace();
-                    }
-    }
+//    public static void main(String[] args) {
+//        XmlSaxReader reader = new XmlSaxReader();
+//        Indexador indexar = new Indexador();
+//            //efetua a leitura do xml e insere os objetos na base de dados
+//        try {
+//
+//                        Conectar conectar = new Conectar(); //instancia uma variavel da classe portgres.conectar
+//                        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe portgres.conectar
+//
+//                        reader.parser("C:/engeo.xml", indexar, con, 8);
+//                        con.close();
+//                    } catch (UnsupportedEncodingException e) {
+//                        System.out.println("Error: " + e.toString());
+//                    } catch (Exception e){
+//                        e.printStackTrace();
+//                    }
+//    }
 }

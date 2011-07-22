@@ -19,10 +19,15 @@ public class Principal {
      * @return Retorna um ArrayList de Strings contendo o(s) caminho(s) para o(s) xml(s) salvo(s).
      */
     public ArrayList<String> buscaXmlRepositorio(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix) throws Exception{
-
+        //substitui os espacos por underline
+        nomeRepositorio = nomeRepositorio.replaceAll(" ", "_");
+        //barra do sistema operacional muda de win pra linux
         String barra = System.getProperty("file.separator");
         int numeroXML =1;
-        String caminhoAbsoluto = dirXML+barra+"temp"+nomeRepositorio+numeroXML+".xml";
+        //endereco + nome do arquivo. Utilizado em mais de um local no codigo.
+        String nomeArquivo = dirXML+barra+"FEB-"+nomeRepositorio;
+        
+        String caminhoAbsoluto = nomeArquivo+numeroXML+".xml";
         ArrayList<String> caminhosXML = new ArrayList<String>();
         caminhosXML.add(caminhoAbsoluto);
 		
@@ -53,18 +58,14 @@ public class Principal {
 //                out.write(registros);
                 //System.out.println(registros.replaceAll("", resumption));
 //            }
-//            else{
-//
-//            }
-
-            
-        //imprime na tela uma mensagem com o ResumptionToken
+//            else{//
+//            }            
         
         //enquanto existir resumptionToken segue efetuando harvester
         while(!resumption.isEmpty()){
             numeroXML++;
             //cria um novo caminho com o numeroXML incrementado
-            caminhoAbsoluto = dirXML+barra+"temp"+nomeRepositorio+numeroXML+".xml";
+            caminhoAbsoluto = nomeArquivo+numeroXML+".xml";
             caminhosXML.add(caminhoAbsoluto);
             Writer outResume = new BufferedWriter(new OutputStreamWriter(
             new FileOutputStream(caminhoAbsoluto), "UTF8"));

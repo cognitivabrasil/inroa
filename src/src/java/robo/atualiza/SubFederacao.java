@@ -63,22 +63,27 @@ public class SubFederacao {
 
                 Conectar conecta = new Conectar(conf);
                 Connection conSub = conecta.conectaBD(); //chama o metodo conectaBD da classe conectar
-                atualizaRepSubfed(id, con, conSub); //atualiza os repositorios da subfederacao
-                verificaObjetosDeletados(con, conSub); //verifica na subfederacao se tem objetos a serem deletados
-                documentos(id, dataAtualizacao, con, conSub);
-                conSub.close();//fecha conexao com a subfederacao
+                if (!conSub.isClosed()) {
+                    atualizaRepSubfed(id, con, conSub); //atualiza os repositorios da subfederacao
+                    verificaObjetosDeletados(con, conSub); //verifica na subfederacao se tem objetos a serem deletados
+                    documentos(id, dataAtualizacao, con, conSub);
+                    conSub.close();//fecha conexao com a subfederacao
 
-                atualizaTimestampSubFed(con, id); //atualiza a hora da ultima atualizacao
-                atualizou = true;
+                    atualizaTimestampSubFed(con, id); //atualiza a hora da ultima atualizacao
+                    atualizou = true;
+                } else {
+                    System.err.println("FEB: ERRO. Nao foi possivel conectar na base da Subfederacao!!");
+                }
             }
 
 
 
         } catch (SQLException e) {
             System.err.println("FEB: SQL Exception... Erro na classe importaSubFederacao:" + e.getMessage());
-            e.printStackTrace();
+
+        } finally {
+            return atualizou;
         }
-        return atualizou;
     }
 
     /**
@@ -130,6 +135,8 @@ public class SubFederacao {
                         stmLocal.close();
                     }
 
+                } else {
+                    System.err.println("Erro no sql metodo documentos da classe SubFederacao: " + s.getMessage());
                 }
             }
         }
@@ -271,5 +278,4 @@ public class SubFederacao {
         }
 
     }
-
 }

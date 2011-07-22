@@ -259,6 +259,7 @@ src/web/consulta.jsp -text
 src/web/css/padrao.css -text
 src/web/editarFederacao.jsp -text
 src/web/editarRepositorio.jsp -text
+src/web/erroBase.html -text
 src/web/exibeFederacao.jsp -text
 src/web/exibeRepositorios.jsp -text
 src/web/googleAnalytics -text
@@ -293,7 +294,6 @@ src/web/mapeamentos/removerMapeamento.jsp -text
 src/web/mapeamentos/respostaAjax.jsp -text
 src/web/mapeamentos/salvarBaseAjax.jsp -text
 src/web/mapeamentos/selecionaPadraoAddMap.jsp -text
-src/web/mapeamentos/testeaddmap.jsp -text
 src/web/padraoMetadados/addPadrao.jsp -text
 src/web/padraoMetadados/editaPadrao.jsp -text
 src/web/padraoMetadados/funcoesPadrao.js -text
@@ -310,4 +310,3 @@ src/web/scripts/validatejs.js -text
 src/web/testaSessao.jsp -text
 src/web/testaSessaoNovaJanela.jsp -text
 src/web/testePaginacao.jsp -text
-src/web/testeaddmap.jsp -text

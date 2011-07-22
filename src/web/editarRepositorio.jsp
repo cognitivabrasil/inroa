@@ -115,7 +115,7 @@
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
-                        <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                        <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 'edita');">
                             <%
                                                                 //Carrega do banco de dados os padroes de metadados cadastrados
                                                                 ResultSet resPadrao = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
@@ -123,9 +123,9 @@
                                                                     String nomePadraoTemp = resPadrao.getString("nome");
 
                                                                     if (nomePadraoTemp.equalsIgnoreCase(nomePadrao)) {
-                                                                        out.println("<option value=" + resPadrao.getString("id") + " selected onclick=\"selecionaMapeamento('resultado', 'padraoMet', 'edita')\">" + resPadrao.getString("nome").toUpperCase());
+                                                                        out.println("<option value=" + resPadrao.getString("id") + " selected>" + resPadrao.getString("nome").toUpperCase());
                                                                     } else {
-                                                                        out.println("<option value=" + resPadrao.getString("id") + " onclick=\"selecionaMapeamento('resultado', 'padraoMet', 'edita')\">" + resPadrao.getString("nome").toUpperCase());
+                                                                        out.println("<option value=" + resPadrao.getString("id") + ">" + resPadrao.getString("nome").toUpperCase());
                                                                     }
 
 

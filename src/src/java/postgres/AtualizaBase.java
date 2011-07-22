@@ -38,7 +38,7 @@ public class AtualizaBase {
 
 
         } catch (SQLException e) {
-            System.out.println("SQL Exception... Erro no SQL:");
+            System.out.println("Erro ao atualizar data de ultima atualizaçao... Erro no SQL:");
             e.printStackTrace();
             return false;
         }finally {

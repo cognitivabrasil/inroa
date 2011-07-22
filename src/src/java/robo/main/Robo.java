@@ -12,8 +12,6 @@ import robo.atualiza.Repositorios;
  * @author Marcos
  */
 public class Robo {
-       
-    
 
     /**
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma consulta na base de dados, procurando por reposit&oacute;rios que est&atilde;o desatualizados, quando encontra algum, chama o m&eacute;todo que atualiza o repositório.
@@ -26,6 +24,8 @@ public class Robo {
         Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         boolean repAtualizado = false;
         boolean subFedAtualizada = false;
+//CONTA O NUMERO DE DOCUMENTOS
+        int nDocumentos = selectNumeroDocumentos(con);
 
 //TESTA/ATUALIZA SUBFEDERACAO
         SubFederacao subFed = new SubFederacao();
@@ -37,7 +37,7 @@ public class Robo {
 
 //SE PRECISAR RECALCULA O INDICE
         try {
-            if (subFedAtualizada || repAtualizado) {
+            if ((subFedAtualizada || repAtualizado) && nDocumentos!=selectNumeroDocumentos(con)) {
                 System.out.println("recalculando o indice " + new Date());
                 indexar.populateR1(con);
                 System.out.println("indice recalculado! " + new Date());
@@ -51,4 +51,21 @@ public class Robo {
         }
     }
 
+    private static int selectNumeroDocumentos(Connection con) {
+        int nDocumentos = 0;
+        String sql = "SELECT count(*) from documentos;";
+        try {
+            Statement stm = con.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+
+            rs.next();
+            nDocumentos = rs.getInt(1);
+
+        } catch (SQLException e) {
+            System.err.println("Erro no SQL ao contar o numero de documentos. Classe Robo metodo selectNumeroDocumentos: " + e.getMessage());
+        } finally{
+            return nDocumentos;
+        }
+        
+    }
 }
