@@ -54,17 +54,15 @@
                         Nome do mapeamento:
                     </div>
                     <div class="Valor" id="tipoMap">
-                        <select name='tipoMap' id='tipoMap' onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
-                            <option value="" selected onclick="insereValorDiv('divDesc','Selecione o nome do mapeamento acima')">Selecione
+                        <select name='tipoMap' id='tipoMap' onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onchange="preencheDescricaoTM(this.value, 'divDesc')">
+                            <option value="" selected >Selecione
                                 <%
                             String sqlTipMap = "SELECT t.id, t.nome, t.descricao FROM tipomapeamento t;";
                             ResultSet rsTipo = stm.executeQuery(sqlTipMap);
 
-                            out.println("");
-
                             //pega o proximo resultado retornado pela consulta sql
                             while (rsTipo.next()) {
-                                out.println("<option value=" + rsTipo.getInt("id") + " onclick=\"insereValorDiv('divDesc','" + rsTipo.getString("descricao") + "')\">" + rsTipo.getString("nome"));
+                                out.println("<option value=" + rsTipo.getInt("id") + ">" + rsTipo.getString("nome"));
                             }
                                 %>
                             

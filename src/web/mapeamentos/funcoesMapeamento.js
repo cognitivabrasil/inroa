@@ -419,6 +419,7 @@ function excluirAjax(idMapeamento, tabela, idResultado, idTabela, linha)
 */
 function selecionaMapeamento(idResultado, idPadrao, acao)
 {
+    
     //div onde sera adicionado o resultado
     var exibeResultado = document.getElementById(idResultado);
     
@@ -446,4 +447,41 @@ function selecionaMapeamento(idResultado, idPadrao, acao)
         }
     }
     ajax.send(null); // submete
+}
+
+
+/**
+ * Função que preenche a descricao do mapeamento utilizando ajax para consultar na base de dados.
+ * @param id id do t do mapeamento
+ * @param idDiv div onde o status e o resultado ser&atilde;o apresentado.
+*/
+function preencheDescricaoTM(id, idDiv)
+{
+
+    var exibeResultado = document.getElementById(idDiv);
+    var ajax = openAjax(); // Inicia o Ajax.
+
+    ajax.open("POST", "consultadescricao.jsp?id="+id, true); // Envia o termo da busca como uma querystring
+
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        {
+            exibeResultado.innerHTML = "Aguarde...";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
+            {
+                var resultado = ajax.responseText;
+                exibeResultado.innerHTML = resultado;
+            }
+            else
+            {
+                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+            }
+        }
+    }
+    ajax.send(null); // submete
+
 }

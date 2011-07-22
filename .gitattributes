@@ -285,6 +285,7 @@ src/web/login.html -text
 src/web/mapeamentos/APAGAR-addMapeamento.jsp -text
 src/web/mapeamentos/addTipoMap.jsp -text
 src/web/mapeamentos/adicionaMapBranco.jsp -text
+src/web/mapeamentos/consultadescricao.jsp -text
 src/web/mapeamentos/deletaBaseAjax.jsp -text
 src/web/mapeamentos/editaMapeamentos.jsp -text
 src/web/mapeamentos/funcoesMapeamento.js -text

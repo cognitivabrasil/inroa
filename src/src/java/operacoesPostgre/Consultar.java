@@ -10,7 +10,6 @@ import postgres.Configuracao;
  * Disponibiliza método para efetuar consultas
  * @author Marcos Nunes
  */
-
 public class Consultar {
 
     ArrayList<HashMap> resultado = new ArrayList<HashMap>();
@@ -91,12 +90,13 @@ public class Consultar {
             HashMap<String, String> resultInterno = new HashMap<String, String>();
             while (rs.next()) {
                 //System.out.println("atrbuto: " + rs.getString("atributo") + "valor: " + rs.getString("valor"));
-                
+
                 String atributo = rs.getString("atributo");
-                if(resultInterno.containsKey(atributo)){
-                    resultInterno.put(atributo, resultInterno.get(atributo)+";; "+rs.getString("valor"));
-                }else
+                if (resultInterno.containsKey(atributo)) {
+                    resultInterno.put(atributo, resultInterno.get(atributo) + ";; " + rs.getString("valor"));
+                } else {
                     resultInterno.put(rs.getString("atributo"), rs.getString("valor"));
+                }
             }
             resultado.add(resultInterno);
             conSub.close();
@@ -116,6 +116,29 @@ public class Consultar {
         return resultado;
     }
 
+    /**
+     * Consulta na base de dados a descri&ccedil;&atilde;o do tipo de mapeamento
+     * @param id id do tipo de mapeamento que deseja saber a descri&ccedil;&atilde;o
+     * @return String contendo a descri&ccedil;&atilde;o
+     */
+    public static String consultaDescricaoMapeamento(int id) {
+        String descricao = "";
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
+        try {
+            Statement stm = con.createStatement();
+
+            String sql = "SELECT t.descricao FROM tipomapeamento t WHERE t.id="+id+";";
+            ResultSet rsTipo = stm.executeQuery(sql);
+            while(rsTipo.next())
+            descricao = rsTipo.getString(1);
+        } catch (SQLException s) {
+            System.err.println("FEB: Erro ao consultar a descricao do mapeamento. Classe Consultar metodo consultaDescricaoMapeamento. Mensagem: " + s.getMessage());
+        } finally {
+            return descricao;
+        }
+    }
+
     public static void main(String[] args) {
 
         Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
@@ -124,5 +147,6 @@ public class Consultar {
         //Consultar run = new Consultar("objetodementira171", arg, con);
         Consultar run = new Consultar("562;FEB;oai:cesta2.cinted.ufrgs.br:123456789/222", 1, "null", con);
         System.out.println(run.getResultado());
+         
     }
 }
