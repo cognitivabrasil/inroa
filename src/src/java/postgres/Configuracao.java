@@ -13,21 +13,21 @@ public class Configuracao {
     String ip;
     int porta;
 
-   /**
+    /**
      * conexão com a base local
      */
-    public Configuracao(){
+    public Configuracao() {
 
-    base = "federacao";
-    usuario = "feb";
-//    ip = "143.54.95.74";
-    senha = "feb@RNP";
+        base = "federacao";
+        usuario = "feb";
+//        ip = "143.54.95.74";
+        senha = "feb@RNP";
     ip = "127.0.0.1";
 //    senha = "12345";
-        porta = 5000;
-
-//    porta = 5432;
+//        porta = 5000;
+        porta = 5432;
     }
+
     /**
      * Configuração
      * @param base nome da base de dados na subfederacao padrao do feb: 'federacao'
@@ -36,14 +36,15 @@ public class Configuracao {
      * @param ip ip do servidor da subfederacao
      * @param porta porta que responde o sql da subfederacao, padrao do postgres 2345
      */
-     public Configuracao(String base, String usuario, String senha, String ip, int porta){
+    public Configuracao(String base, String usuario, String senha, String ip, int porta) {
 
-    this.base = base;
-    this.usuario = usuario;
-    this.senha = senha;
-    this.ip = ip;
-    this.porta = porta;
+        this.base = base;
+        this.usuario = usuario;
+        this.senha = senha;
+        this.ip = ip;
+        this.porta = porta;
     }
+
     /**
      * Informa o nome da base que está sendo utilizada no projeto.
      * @return Nome da base utilizada.

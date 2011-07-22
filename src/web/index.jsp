@@ -103,7 +103,7 @@
                 </div>
             </form>
             <div ALIGN="CENTER">
-                <a href="./Index3.jsp">Selecionar Repositórios</a>
+                <a href="./index2.jsp">Selecionar Repositórios</a>
             </div>
                     <div  ALIGN="RIGHT">
                         <a class="linkRSS" onclick= "geraRss()"><img src="imagens/rss_300x300.png" width="3%" height="3%" alt="rsslogo" onclick= "geraRss()"/> <b>Gerar RSS</b></a>

@@ -38,16 +38,22 @@ public class Robo {
 //SE PRECISAR RECALCULA O INDICE
         try {
             if ((subFedAtualizada || repAtualizado) && nDocumentos!=selectNumeroDocumentos(con)) {
-                System.out.println("recalculando o indice " + new Date());
+                System.out.println("FEB: recalculando o indice " + new Date());
                 indexar.populateR1(con);
-                System.out.println("indice recalculado! " + new Date());
+                System.out.println("FEB: indice recalculado! " + new Date());
             } else {
-                System.err.println("NAO existe atualizaçoes para os repositorios!");
+                System.err.println("FEB: NAO existe atualizaçoes para os repositorios! " + new Date());
             }
 
-            con.close(); //fechar conexao
+            
         } catch (SQLException e) {
-            System.out.println("Erro com sql no robo: " + e.getMessage());
+            System.err.println("FEB: Erro com sql no robo: " + e.getMessage());
+        } finally{
+            try {
+                con.close(); //fechar conexao
+                } catch (SQLException e) {
+                System.out.println("Erro ao fechar a conexão no robo: " + e.getMessage());
+            }
         }
     }
 
@@ -62,7 +68,7 @@ public class Robo {
             nDocumentos = rs.getInt(1);
 
         } catch (SQLException e) {
-            System.err.println("Erro no SQL ao contar o numero de documentos. Classe Robo metodo selectNumeroDocumentos: " + e.getMessage());
+            System.err.println("FEB: Erro no SQL ao contar o numero de documentos. Classe Robo metodo selectNumeroDocumentos: " + e.getMessage());
         } finally{
             return nDocumentos;
         }

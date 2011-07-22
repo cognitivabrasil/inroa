@@ -135,8 +135,31 @@ public class Consultar {
         } catch (SQLException s) {
             System.err.println("FEB: Erro ao consultar a descricao do mapeamento. Classe Consultar metodo consultaDescricaoMapeamento. Mensagem: " + s.getMessage());
         } finally {
+            try {
+                con.close(); //fechar conexao
+                } catch (SQLException e) {
+                System.out.println("Erro ao fechar a conexão: " + e.getMessage());
+            }
             return descricao;
         }
+    }
+
+    public static int selectNumeroDocumentosRep(Connection con, int idRep) {
+        int nDocumentos = 0;
+        String sql = "SELECT count(*) from documentos WHERE id_repositorio="+idRep;
+        try {
+            Statement stm = con.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+
+            rs.next();
+            nDocumentos = rs.getInt(1);
+
+        } catch (SQLException e) {
+            System.err.println("FEB: Erro no SQL ao contar o numero de documentos. Classe Consultar metodo selectNumeroDocumentosRep: " + e.getMessage());
+        } finally{
+            return nDocumentos;
+        }
+
     }
 
     public static void main(String[] args) {

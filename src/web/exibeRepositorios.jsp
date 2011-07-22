@@ -10,6 +10,7 @@
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
 <%@page import="postgres.AtualizacaoRepositorio"%>
+<%@page import="operacoesPostgre.Consultar"%>
 <%@page import="java.util.Date" %>
 <html>
     <head>
@@ -131,6 +132,12 @@
                                 out.println("<div class=\"Value\">&nbsp;" + AtualizacaoRepositorio.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip")) + "</div>");
                             }
                 %>
+            </div>
+            <div class="LinhaEntrada">
+                <div class="Label">
+                    N&uacute;umero de objetos:
+                </div>
+                <div class="Value">&nbsp;<%=Consultar.selectNumeroDocumentosRep(con,Integer.parseInt(id))%></div>
             </div>
 
         </div>

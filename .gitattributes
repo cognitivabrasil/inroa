@@ -244,7 +244,6 @@ src/src/java/robo/main/package.html -text
 src/src/java/robo/util/Informacoes.java -text
 src/src/java/robo/util/Operacoes.java -text
 src/src/java/robo/util/package.html -text
-src/web/Index3.jsp -text
 src/web/META-INF/context.xml -text
 src/web/WEB-INF/jsp/pager-taglib.tld -text
 src/web/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
@@ -278,6 +277,7 @@ src/web/imagens/ico24_salvar.gif -text
 src/web/imagens/rss_300x300.png -text
 src/web/imagens/sincronizar.png -text
 src/web/index.jsp -text
+src/web/index2.jsp -text
 src/web/infoDetalhada.jsp -text
 src/web/listaStowords.jsp -text
 src/web/logando.jsp -text

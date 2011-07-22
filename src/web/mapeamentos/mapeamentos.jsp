@@ -81,7 +81,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
                     </a>
 
                 </td>
-                <td colspan="2"class="left bold" style="font-size:110%">
+                <td colspan="3"class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
                     <a onclick="NewWindow('./mapeamentos/selecionaPadraoAddMap.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         Adicionar novo mapeamento

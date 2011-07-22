@@ -53,7 +53,7 @@ Author     : Marcos Nunes
 %>
         <table class='repositorios-table' cellpadding=3>
             <tr>
-                <th colspan=3>
+                <th colspan=4>
                     <font size="3%" color=black>Lista de Reposit&oacute;rios Cadastrados na Federa&ccedil;&atilde;o</font>
                 </th>
             </tr>
@@ -160,7 +160,7 @@ Author     : Marcos Nunes
 
         <table class='repositorios-table' cellpadding=3>
             <tr>
-                <th colspan=3>
+                <th colspan=4>
                     <font size="3%" color=black>Lista de Subfedera&ccedil;&atilde;o cadastradas</font>
                 </th>
             </tr>
@@ -169,8 +169,8 @@ Author     : Marcos Nunes
                 <th width="10%">Opera&ccedil;&otilde;es</th>
 
                 <th width="20%">Nome</th>
-                <th width="70%">Descri&ccedil;&atilde;o</th>
-
+                <th width="50%">Descri&ccedil;&atilde;o</th>
+                <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
             </tr>
 
 
@@ -180,7 +180,7 @@ Author     : Marcos Nunes
 
             //Carrega do banco de dados os repositorios cadastrados
 
-            ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao FROM dados_subfederacoes l ORDER BY nome ASC;");
+            ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao, l.data_ultima_atualizacao FROM dados_subfederacoes l where l.nome != 'Local' ORDER BY nome ASC;");
             while (resultFederacao.next()) {
 
                 if (linha2 % 2 == 0) {
@@ -203,7 +203,21 @@ Author     : Marcos Nunes
                 </td>
                 <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("nome")%></td>
                 <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("descricao")%></td>
+                <td class="<%=yesnocolor%>">&nbsp;
+                    <div id="textResultSF<%=resultFederacao.getString("id")%>">
+                        <%
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
+                        if (!Operacoes.testarDataAnteriorMil(resultFederacao.getDate("data_ultima_atualizacao"))) {
+                            out.println("Dia " + format.format(resultFederacao.getDate("data_ultima_atualizacao")) + " &agrave;s " + resultFederacao.getTime("data_ultima_atualizacao"));
+
+                        } else {
+                            out.println("Ainda n&atilde;o foi atualizado!");
+                        }
+                        %>
+
+                    </div>
+                </td>
                 <% linha2++;%>
 
             </tr>
@@ -220,7 +234,7 @@ Author     : Marcos Nunes
                     </a>
 
                 </td>
-                <td colspan="2"class="left bold" style="font-size:110%">
+                <td colspan="3"class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
                     <a onclick="NewWindow('cadastraFederacao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         Adicionar nova subfedera&ccedil;&atilde;o

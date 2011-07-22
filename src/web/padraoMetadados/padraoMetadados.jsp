@@ -79,7 +79,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
             </a>
 
         </td>
-        <td colspan="2"class="left bold" style="font-size:110%">
+        <td colspan="3"class="left bold" style="font-size:110%">
             &nbsp;&nbsp;
             <a onclick="NewWindow('./padraoMetadados/addPadrao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                 Adicionar novo padr&atilde;o
