@@ -20,21 +20,21 @@ public class Configuracao {
 
         base = "federacao";
         usuario = "feb";
-//        ip = "143.54.95.74";
         senha = "feb@RNP";
-    ip = "127.0.0.1";
-//    senha = "12345";
+
+//        ip = "143.54.95.74";
+        ip = "127.0.0.1";
 //        porta = 5000;
         porta = 5432;
     }
 
     /**
      * Configuração
-     * @param base nome da base de dados na subfederacao padrao do feb: 'federacao'
-     * @param usuario usuario do banco de dados da subfederacao
-     * @param senha senha do usuario da base de dados da subfederacao
-     * @param ip ip do servidor da subfederacao
-     * @param porta porta que responde o sql da subfederacao, padrao do postgres 2345
+     * @param base nome da base de dados na subfedera&ccedil;&atilde;o padr&atilde;o do feb: 'federacao'
+     * @param usuario usu&aacute;rio do banco de dados da subfedera&ccedil;&atilde;o
+     * @param senha senha do usu&aacute;rio da base de dados da subfedera&ccedil;&atilde;o
+     * @param ip ip do servidor da subfedera&ccedil;&atilde;o
+     * @param porta porta que responde o sql da subfedera&ccedil;&atilde;o, padr&atilde;o do postgres 5432
      */
     public Configuracao(String base, String usuario, String senha, String ip, int porta) {
 
