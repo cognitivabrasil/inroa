@@ -24,10 +24,11 @@ public class Principal {
         //barra do sistema operacional muda de win pra linux
         String barra = System.getProperty("file.separator");
         int numeroXML =1;
-        //endereco + nome do arquivo. Utilizado em mais de um local no codigo.
-        String nomeArquivo = dirXML+barra+"FEB-"+nomeRepositorio;
+        
+        String nomeArquivo = dirXML+barra+"FEB-"+nomeRepositorio; //endereco + nome do arquivo. Utilizado em mais de um local no codigo.
         
         String caminhoAbsoluto = nomeArquivo+numeroXML+".xml";
+
         ArrayList<String> caminhosXML = new ArrayList<String>();
         caminhosXML.add(caminhoAbsoluto);
 		

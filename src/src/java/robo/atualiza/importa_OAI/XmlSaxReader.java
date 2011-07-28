@@ -105,14 +105,16 @@ public class XmlSaxReader extends DefaultHandler {
      * deste elemento, e também pode fornecer as informações sobre o namespace.
      */
     @Override
-    public void startElement(String uri, String localName, String tag, Attributes atributos) {
-
-
-        if (tag.equalsIgnoreCase("OAI-PMH")) { //se achar a tag OAI-PMH efetua a consulta na base
-
-////            Conectar conectar = new Conectar();
-////            Conexao = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-
+    public void startElement(String uri, String localName, String tag, Attributes atributos) throws SAXException {
+    
+        if (tag.equalsIgnoreCase("error")) {
+            
+            String erro = "";
+            for (int i = 0; i < atributos.getLength(); i++) {
+                erro = atributos.getValue(i);
+            }
+            throw new SAXException(erro);
+        }else if (tag.equalsIgnoreCase("ListRecords")) { //se achar a tag ListRecords efetua a consulta na base
             try {
                 Statement stm1 = Conexao.createStatement();
                 //idTipoMapeamento;namespace;metadataPrefix;
@@ -132,14 +134,19 @@ public class XmlSaxReader extends DefaultHandler {
                 System.err.println("SQL Exception... Erro ao carregar as informações iniciais do banco de dados");
                 e.printStackTrace();
             }
-        }
-        if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
+        }else if (tag.equalsIgnoreCase("header")) {
+            //se o elemento possui atributos, imprime
+            for (int i = 0; i < atributos.getLength(); i++) {
 
+                if (atributos.getQName(i).equalsIgnoreCase("status")) {
+                    headerAux.setStatus(atributos.getValue(i));
+                    statusDel = true;
+                }
+            }
+        }else if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
             try {
                 Statement stm = Conexao.createStatement();
-
                 String[] indiceVet = {"Title", "Description", "Keyword", "Date", "Entity", "Location"};
-
 
                 //recupera o atributo referente ao indiceVet[i] do padrao que esta sendo utilizado
                 //ex. padrao dublin core indiveVet[i]=Keyword mapeamento referente = Subject
@@ -164,7 +171,6 @@ public class XmlSaxReader extends DefaultHandler {
                     //armazena o mapeamento dos atributos que sera inseridos no indice
                     this.atributosIndice.put(res.getString("mapeado").toLowerCase(), res.getString("origem")); //adiciona ao HashMap os atributos correspondentes que devem ser adiocionados ao indice
                     }
-
 
                 String sql = "SELECT a1.atributo as origem, a2.atributo as destino, m.mapeamento_composto_id" +
                         " FROM atributos a1, mapeamentos m, atributos a2" +
@@ -195,16 +201,6 @@ public class XmlSaxReader extends DefaultHandler {
                 e.printStackTrace();
             }
 
-        }
-        if (tag.equalsIgnoreCase("header")) {
-            //se o elemento possui atributos, imprime
-            for (int i = 0; i < atributos.getLength(); i++) {
-
-                if (atributos.getQName(i).equalsIgnoreCase("status")) {
-                    headerAux.setStatus(atributos.getValue(i));
-                    statusDel = true;
-                }
-            }
         }
 
     }

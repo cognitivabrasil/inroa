@@ -1,16 +1,15 @@
 package robo.atualiza.importa_OAI;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import postgres.AtualizaBase;
 import ferramentaBusca.indexador.Indexador;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import postgres.Conectar;
+import robo.atualiza.Repositorios;
 
 /*
  * To change this template, choose Tools | Templates
@@ -22,7 +21,6 @@ import postgres.Conectar;
  */
 public class InicioLeituraXML {
 
-   
     /**
      * Método que chama o parser xml o qual insere na base de dados os registros contidos nos arquivos xml recebidos como parâmetro.
      * Recebe um ou mais arquivos xml para realizar o parser e inserir objetos.
@@ -33,31 +31,32 @@ public class InicioLeituraXML {
      * @param con Conexão com a base de dados relacional.
      *
      */
-    public void leXMLgravaBase(
+    public boolean leXMLgravaBase(
             ArrayList<String> caminhoXML,
             int id,
             Indexador indexar,
             Connection con) throws ParserConfigurationException, SAXException, IOException {
+        boolean atualizou = false;
 
-        
-            //SAXReader reader = new SAXReader();
-            XmlSaxReader reader = new XmlSaxReader();
-            for (int i = 0; i < caminhoXML.size(); i++) {
-                File arquivoXML = new File(caminhoXML.get(i));
-                if (arquivoXML.isFile() || arquivoXML.canRead()) {
-                    //efetua a leitura do xml e insere os objetos na base de dados
-                    reader.parser(caminhoXML.get(i), indexar, con, id);
+        XmlSaxReader reader = new XmlSaxReader();
+        for (int i = 0; i < caminhoXML.size(); i++) {
+            File arquivoXML = new File(caminhoXML.get(i));
+            if (arquivoXML.isFile() || arquivoXML.canRead()) {
 
-                    //apaga arquivo XML
-                    arquivoXML.delete();
+                reader.parser(caminhoXML.get(i), indexar, con, id);//efetua a leitura do xml e insere os objetos na base de dados
+                atualizou = true;
 
-                } else {
-                    System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
-                }
-            }        
+                //apaga arquivo XML
+                arquivoXML.delete();
+
+            } else {
+                System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
+            }
+        }
+        return atualizou;
     }
 
-     /**
+    /**
      * Método que chama o parser xml o qual insere na base de dados os registros contidos nos arquivos xml recebidos como parâmetro.
      * Recebe um ou mais arquivos xml para realizar o parser e inserir objetos.
      *
@@ -68,47 +67,49 @@ public class InicioLeituraXML {
      *
      */
     public void leXMLgravaBase(
-           String caminhoXML,
+            String caminhoXML,
             int id,
             Indexador indexar,
             Connection con) throws ParserConfigurationException, SAXException, IOException {
 
-        
-            XmlSaxReader reader = new XmlSaxReader();
-                File arquivoXML = new File(caminhoXML);
-                if (arquivoXML.isFile() || arquivoXML.canRead()) {
-                    //efetua a leitura do xml e insere os objetos na base de dados
-                    reader.parser(caminhoXML, indexar, con, id);
 
-                    //apaga arquivo XML
-                    arquivoXML.delete();
+        XmlSaxReader reader = new XmlSaxReader();
+        File arquivoXML = new File(caminhoXML);
+        if (arquivoXML.isFile() || arquivoXML.canRead()) {
 
-                } else {
-                    System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML);
-                }
+            reader.parser(caminhoXML, indexar, con, id);//efetua a leitura do xml e insere os objetos na base de dados
+
+            //apaga arquivo XML
+            arquivoXML.delete();
+
+        } else {
+            System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML);
+        }
 
     }
-
-
-   
-
-
 
 //    public static void main(String[] args) {
 //        XmlSaxReader reader = new XmlSaxReader();
 //        Indexador indexar = new Indexador();
-//            //efetua a leitura do xml e insere os objetos na base de dados
+//        //efetua a leitura do xml e insere os objetos na base de dados
 //        try {
 //
-//                        Conectar conectar = new Conectar(); //instancia uma variavel da classe portgres.conectar
-//                        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe portgres.conectar
+//            Conectar conectar = new Conectar(); //instancia uma variavel da classe portgres.conectar
+//            Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe portgres.conectar
 //
-//                        reader.parser("C:/engeo.xml", indexar, con, 8);
-//                        con.close();
-//                    } catch (UnsupportedEncodingException e) {
-//                        System.out.println("Error: " + e.toString());
-//                    } catch (Exception e){
-//                        e.printStackTrace();
-//                    }
+//            reader.parser("C:/request.xml", indexar, con, 14);
+//            con.close();
+//        } catch (UnsupportedEncodingException e) {
+//            System.out.println("Error: " + e.toString());
+//        } catch (SAXException e) {
+//           String erro = Repositorios.trataErroOAIPMH(e.getMessage());
+//            if (erro.isEmpty()) {
+//                System.err.println("Problema ao fazer o parse do arquivo. " + e);
+//            } else {
+//                System.err.println("FEB: Erro no parser do OAI-PMH, mensagem: "+erro);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 //    }
 }
