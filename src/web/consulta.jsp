@@ -120,7 +120,7 @@
 
             <%
                             if (numObjetosEncontrados == 0) { //se nao retorno nenhum objeto
-%>
+            %>
             <p align="center">
                 <strong>
                     <font size="3" face="Verdana, Arial, Helvetica, sans-serif">
@@ -135,22 +135,25 @@
 
                                             String url = "";
 
-                                            if(idRepLocal != null)
-                                            for (int i = 0; i < idRepLocal.length; i++) {
-                                                if (!idRepLocal[i].isEmpty()) {
-                                                    url += "&replocal=" + idRepLocal[i];
+                                            if (idRepLocal != null) {
+                                                for (int i = 0; i < idRepLocal.length; i++) {
+                                                    if (!idRepLocal[i].isEmpty()) {
+                                                        url += "&replocal=" + idRepLocal[i];
+                                                    }
                                                 }
                                             }
-                                            if(idSubfed != null)
-                                            for (int i = 0; i < idSubfed.length; i++) {
-                                                if (!idSubfed[i].isEmpty()) {
-                                                    url += "&subfed=" + idSubfed[i];
+                                            if (idSubfed != null) {
+                                                for (int i = 0; i < idSubfed.length; i++) {
+                                                    if (!idSubfed[i].isEmpty()) {
+                                                        url += "&subfed=" + idSubfed[i];
+                                                    }
                                                 }
                                             }
-                                            if(idSubRep != null)
-                                            for (int i = 0; i < idSubRep.length; i++) {
-                                                if (!idSubRep[i].isEmpty()) {
-                                                    url += "&subrep=" + idSubRep[i];
+                                            if (idSubRep != null) {
+                                                for (int i = 0; i < idSubRep.length; i++) {
+                                                    if (!idSubRep[i].isEmpty()) {
+                                                        url += "&subrep=" + idSubRep[i];
+                                                    }
                                                 }
                                             }
                                             url += "&key=" + textoBusca;
@@ -272,12 +275,12 @@
                                 <div class="titulo">
                                     <a href='infoDetalhada.jsp?id=<%=identificador%>&idBase=<%=idSubfederacao%>&repositorio=<%=repositorio%>'>
                                         <%
-                                                                                                                                for (int j = 0; j < titulo.size(); j++) { //percorrer todos os resultados separados por ;;
-                                                                                                                                    if (j > 0) { //apos o primeiro elemento colocar um "<BR>"
-                                                                                                                                        out.print("<br>");
-                                                                                                                                    }
-                                                                                                                                    out.print("- " + titulo.get(j).trim());
-                                                                                                                                }
+                                                                                                                                            for (int j = 0; j < titulo.size(); j++) { //percorrer todos os resultados separados por ;;
+                                                                                                                                                if (j > 0) { //apos o primeiro elemento colocar um "<BR>"
+                                                                                                                                                    out.print("<br>");
+                                                                                                                                                }
+                                                                                                                                                out.print("- " + titulo.get(j).trim());
+                                                                                                                                            }
                                         %>
                                     </a>
                                 </div>

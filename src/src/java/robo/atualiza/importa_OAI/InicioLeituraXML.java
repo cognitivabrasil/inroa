@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ferramentaBusca.indexador.Indexador;
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
-import postgres.Conectar;
-import robo.atualiza.Repositorios;
 
 /*
  * To change this template, choose Tools | Templates
