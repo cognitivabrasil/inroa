@@ -162,34 +162,10 @@ public class teste {
 
     public static void main(String[] args) {
 //
-        teste run = new teste();
-        String a = "a;b";
-        String b = "sub1;sub2";
-        String c = "a1;a2;a3";
-        String[] idRepLocal = a.split(";");
-        String idSubfed[] = b.split(";");
-        String idSubRep[] = null;
-        String textoBusca = "indi";
-        String url = "";
-
-        for (int i = 0; i < idRepLocal.length; i++) {
-            if (!idRepLocal[i].isEmpty()) {
-                url += "&replocal=" + idRepLocal[i];
-            }
-        }
-        for (int i = 0; i < idSubfed.length; i++) {
-            if (!idSubfed[i].isEmpty()) {
-                url += "&subfed=" + idSubfed[i];
-            }
-        }
-        if(idSubRep != null)
-        for (int i = 0; i < idSubRep.length; i++) {
-            if (!idSubRep[i].isEmpty()) {
-                url += "&subrep=" + idSubRep[i];
-            }
+        String S = "“invar;”";
+        System.out.println(S);
+        S = S.replaceAll("\\W", " ");
+        System.out.println(S);
         }
 
-        url += "&key=" + textoBusca;
-        System.out.println(url);
-    }
 }
