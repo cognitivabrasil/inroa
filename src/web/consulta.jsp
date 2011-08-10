@@ -94,7 +94,7 @@
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
     </head>
     <body id="body">
-        <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="7%" height="7%" alt="Logo FEB_reduzido"/></div>
+        <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="7%" alt="Logo FEB_reduzido"/></div>
 
 
         <div class="clear"> </div>

@@ -7,8 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="java.sql.*"%>
-<%@include file="conexaoBD.jsp"%>
+
 <%
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
@@ -33,21 +32,24 @@
     </head>      
 
     <body id="bodyMenor">
-        <!-- incluir um arquivo %@ include file="top.html" %> -->
+        
         <div id="page">
 
-                <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="11%" height="11%" alt="Logo FEB_reduzido"/></div>
+            <div class="logoBusca"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></div>
 
 
             <div class="clear"> </div>
 
             <div class="EspacoPequeno">&nbsp;</div>
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
-<div class="linkCantoDireito"><a href="./adm.jsp">Ferramenta Administrativa</a></div>
+            <div>
+                <div class="linkCantoEsquerdo"><a href="http://feb.ufrgs.br/feb"><img src="imagens/Logo FEB_reduzido_45x32.png" alt="Logo FEB_reduzido" title="Buscar na Confederação"/>  Confederação</a></div>
+                <div class="linkCantoDireito"><a href="./adm.jsp" title="Ferramenta Administrativa"><img src="imagens/ferramenta_32x32.png" width="90%"></a></div>
+            </div>
             <div class="Espaco">&nbsp;</div>
             <form name="consulta" action="consulta.jsp" method="POST">
 
-<div class="clear"> </div>
+                <div class="clear"> </div>
                 <div id="modificavel">
                     <div class="LinhaEntrada">
                         <div class="EspacoAntes">&nbsp;</div>
@@ -59,25 +61,25 @@
                         </div>
                     </div>
                 </div>
-<div class="clear"> </div>
+                <div class="clear"> </div>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input class="BOTAO" type="submit" value="Consultar"/>
-                                                
+
                     </div>
                 </div>
             </form>
             <div ALIGN="CENTER">
                 <a href="./index2.jsp">Selecionar Repositórios</a>
             </div>
-                    <div  ALIGN="RIGHT">
-                        <a class="linkRSS" onclick= "geraRss()"><img src="imagens/rss_300x300.png" width="3%" height="3%" alt="rsslogo" onclick= "geraRss()"/> <b>Gerar RSS</b></a>
-                        <!--<img src="imagens/gerarRss.png" width="17%" height="17%" alt="rsslogo" onclick= "geraRss()"/>-->
-                    </div>
+                
+        </div>
+        <div>
+        <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
+        <div  class="rss">
+            <a class="linkRSS" onclick= "geraRss()" title="RSS da busca"><img src="imagens/rss_300x300.png" width="3%" alt="rsslogo" onclick= "geraRss()"/> </a>
+                </div>
         </div>
         <%@include file="googleAnalytics"%>
     </body>
 </html>
-<%
-            con.close(); //fechar conexao
-%>

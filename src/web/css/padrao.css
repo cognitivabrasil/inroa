@@ -1,4 +1,4 @@
-/* 
+/*
 Document   : padrao
 Created on : 08/07/2009, 13:38:18
 Author     : Marcos
@@ -6,12 +6,12 @@ Description:
 Purpose of the stylesheet follows.
 */
 
-/* 
+/*
 TODO customize this sample style
 Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-root { 
+root {
     display: block;
 }
 
@@ -21,7 +21,7 @@ body
     font-size: 83%;
     text-decoration: none;
     color: #000000;
-    
+
 }
 
 #bodyMenor{
@@ -47,6 +47,7 @@ a:hover{
 }
 img{
     vertical-align:middle;
+    border: none;
 }
 
 #page
@@ -79,7 +80,7 @@ img{
 
 }
 #page-sub-header
-{	
+{
     font-weight: bold;
     text-align: left;
     padding:0.8%;
@@ -125,7 +126,7 @@ img{
     padding-top:0.2%;
 }
 .resultadoConsulta .atributo .valor{
-    padding-left:2%;    
+    padding-left:2%;
 }
 
 #page-footer
@@ -158,7 +159,7 @@ img{
     opacity: 0.8;
 }
 #body-resultado
-{	
+{
     vertical-align: middle;
 
     border: 2px solid #AEC9E3;
@@ -383,7 +384,7 @@ a:hover{
 }
 .Espaco{
     padding-top:5px;
-    
+
 }
 
 .LinhaEntrada .EspacoEntre{
@@ -447,7 +448,7 @@ td{vertical-align:top;}
     color: white;
     font-weight:bold;
     font-size:105%;
-    
+
 
 }
 .mapeamentos-table td{
@@ -510,7 +511,7 @@ td{vertical-align:top;}
     font-size:80%;
 }
 
-.botaoEditar { 
+.botaoEditar {
     background-color: transparent;
     background-image:url(/feb/imagens/Lapiz-24x24.png);
     height: 24px;
@@ -535,7 +536,7 @@ td{vertical-align:top;}
     cursor:pointer;
 }
 .BotaoFechar{
-    text-align:center;    
+    text-align:center;
     margin-top:2%;
 }
 .BotaoFechar .color{
@@ -555,11 +556,31 @@ td{vertical-align:top;}
 .logoBusca{
     text-align:center;
     background-color:#0a94d6;
-
+    border-color: white;
+}
+.logoBusca .logo{
+    width: 11%;
 }
 .logoBusca a{
   text-decoration:none;
   color:white;
+}
+
+.linkCantoEsquerdo{
+    float:left;
+    text-align:left;
+    padding-left:2%;
+    font-size:100%;
+    font-weight:bold;
+    vertical-align:middle;
+}
+
+.linkCantoEsquerdo a{
+    text-decoration:none;
+}
+.linkCantoEsquerdo a:hover{
+    font-size:102%;
+    text-decoration:none;
 }
 
 .linkCantoDireito{
@@ -655,11 +676,25 @@ td{vertical-align:top;}
 .linkRepSubfeb:hover{
     text-decoration: none;
     font-size:100%;
-    
+
 }
 .linkRepSubfeb:visited{
     text-decoration: none;
-    
+
+}
+
+.copyRight{
+    font-size: 70%;
+    padding-left:2%;
+    text-align: left;
+    color: #585858;
+    vertical-align: middle;
+    float:left;
+}
+.rss{
+    margin-top: 2px;
+    margin-right: 2px;
+    text-align: right;
 }
 
 .socialBookmarks {
