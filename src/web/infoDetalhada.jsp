@@ -28,6 +28,10 @@ modelo de tópico:
         <title>GT-FEB – Federação de Repositórios Educa Brasil</title>
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+  {lang: 'pt-BR'}
+</script>
+
     </head>
     <body id="bodyLetraMaior">
 
@@ -87,7 +91,18 @@ modelo de tópico:
             %>
 
             <div class="tituloPrincipal">
-                <div class="tituloObj"><%=dados.get("obaaTitle")%></div>
+                <div class="tituloObj"><%=dados.get("obaaTitle")%>
+                    <div class="socialBookmarks">
+
+                    <div class="socialBookmark"><g:plusone size="medium"></g:plusone></div>
+
+
+
+                    <div class="socialBookmark"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div>
+                    <div class="socialBookmark"><div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=244386402261345&amp;xfbml=1"></script><fb:like send="true" layout="button_count" width="130" show_faces="true" action="like" font=""></fb:like></div>
+
+                </div>
+                </div>
                 <div class="identificadorObj"> Objeto 
                     <%
                                     if (dados.containsKey("obaaIdentifier")) {
@@ -98,6 +113,7 @@ modelo de tópico:
                                     }
                     %>
                 </div>
+
             </div>
 
             <%

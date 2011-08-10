@@ -3,6 +3,7 @@ src/build
 src/build.xml
 src/dist
 src/nbproject
+src/target
 src/test
 src/web/META-INF
 src/web/WEB-INF
