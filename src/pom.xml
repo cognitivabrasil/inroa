@@ -1,0 +1,154 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>feb</groupId>
+  <artifactId>feb</artifactId>
+  <packaging>war</packaging>
+  <version>0.9-SNAPSHOT</version>
+  <name>Projeto Maven do FEB</name>
+  <url>http://feb.ufrgs.br</url>
+  <dependencies>
+    <dependency>
+	<groupId>junit</groupId>
+	<artifactId>junit</artifactId>
+	<version>4.8.1</version>
+        <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+        <groupId>htmlunit</groupId>
+	<artifactId>htmlunit</artifactId>
+	<version>1.14</version>
+        <scope>test</scope>
+   </dependency>
+  <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.6</version>
+</dependency>
+
+ <dependency>
+	<groupId>local_jars</groupId>
+	<artifactId>ptstemmer</artifactId>
+	<version>3</version>
+	<scope>system</scope>
+	<systemPath>${basedir}/lib/PTStemmer_v3.jar</systemPath>
+</dependency>
+ <dependency>
+	<groupId>local_jars</groupId>
+	<artifactId>pager-taglib</artifactId>
+	<version>1</version>
+	<scope>system</scope>
+	<systemPath>${basedir}/lib/pager-taglib.jar</systemPath>
+</dependency>
+ <dependency>
+	<groupId>local_jars</groupId>
+	<artifactId>pager-src</artifactId>
+	<version>1</version>
+	<scope>system</scope>
+	<systemPath>${basedir}/lib/pager-src.jar</systemPath>
+</dependency>
+
+ <dependency>
+	<groupId>local_jars</groupId>
+	<artifactId>pager-taglib</artifactId>
+	<version>1</version>
+	<scope>system</scope>
+	<systemPath>${basedir}/lib/pager-taglib.jar</systemPath>
+</dependency>
+
+
+
+         <dependency>
+            <groupId>xalan</groupId>
+            <artifactId>xalan</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+         <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+         <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.0-801.jdbc3</version>
+        </dependency>
+  </dependencies>
+  <build>
+
+    <sourceDirectory>src/java</sourceDirectory>
+    <scriptSourceDirectory>src/scripts</scriptSourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    <finalName>feb</finalName>
+<plugins>
+<plugin>
+  <groupId>org.mortbay.jetty</groupId>
+  <artifactId>jetty-maven-plugin</artifactId>
+  <configuration>
+   <webAppSourceDirectory>${basedir}/web/</webAppSourceDirectory>
+    <scanIntervalSeconds>10</scanIntervalSeconds>
+    <stopKey>foo</stopKey>
+    <stopPort>9999</stopPort>
+  </configuration>
+  <executions>
+    <execution>
+      <id>start-jetty</id>
+      <phase>pre-integration-test</phase>
+      <goals>
+        <goal>run</goal>
+      </goals>
+      <configuration>
+       <scanIntervalSeconds>0</scanIntervalSeconds>
+       <daemon>true</daemon>
+      </configuration>
+    </execution>
+    <execution>
+      <id>stop-jetty</id>
+      <phase>post-integration-test</phase>
+      <goals>
+        <goal>stop</goal>
+      </goals>
+    </execution>
+  </executions>
+   </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>hibernate3-maven-plugin</artifactId>
+        <version>2.0</version>
+      </plugin>
+      
+      <plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+					<optimize>true</optimize>
+					<debug>true</debug>
+				</configuration>
+			</plugin>
+                        
+                        <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+</plugins>
+  </build>
+</project>
