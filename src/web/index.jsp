@@ -21,9 +21,9 @@
 
         <script language="JavaScript" type="text/javascript">
             function geraRss() {
-                var consulta = document.getElementById("key").value;
-                var repositorio = document.getElementById("repositorio").value;
 
+                var consulta = document.getElementById("key").value;
+                var repositorio = "0";
                 window.location='rss.jsp?search='+consulta+'&idRep='+repositorio;
 
             }
