@@ -99,8 +99,9 @@ modelo de tópico:
 
 
                     <div class="socialBookmark"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div>
-                    <div class="socialBookmark"><div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=244386402261345&amp;xfbml=1"></script><fb:like send="true" layout="button_count" width="130" show_faces="true" action="like" font=""></fb:like></div>
+    <div id="fb-root" class="socialBookmark"><script src="http://connect.facebook.net/pt_BR/all.js#appId=109445635823915&amp;xfbml=1"></script><fb:like href="" send="false" width="50" show_faces="false" action="like" font=""></fb:like>
 
+                </div>
                 </div>
                 </div>
                 <div class="identificadorObj"> Objeto 
