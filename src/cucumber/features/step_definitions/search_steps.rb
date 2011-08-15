@@ -13,7 +13,9 @@ When /^eu pesquisar por "([^"]*)"$/ do |query|
 end
 
 Then /^deve aparecer um link para "([^"]*)" contendo o texto "([^"]*)"$/ do |url, text|
-	has_link? text, :href => url
+	unless(has_link? text, :href => url)
+		raise "Página:\n\n #{html}\n===============================\n\n"
+	end
 end
 
 Quando /^eu clicar no link "([^"]*)"$/ do |texto|
@@ -22,6 +24,8 @@ Quando /^eu clicar no link "([^"]*)"$/ do |texto|
 end
 
 Then /^a página deve conter "([^"]*)"$/ do |arg1|
-  has_content? arg1
+  unless(has_content? arg1)
+		raise "Página:\n\n #{html}\n===============================\n\n"
+	end
 end
 
