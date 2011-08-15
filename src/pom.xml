@@ -96,6 +96,9 @@
     <scanIntervalSeconds>10</scanIntervalSeconds>
     <stopKey>foo</stopKey>
     <stopPort>9999</stopPort>
+   <webAppConfig>
+    <contextPath>/feb</contextPath> 
+   </webAppConfig>
   </configuration>
   <executions>
     <execution>

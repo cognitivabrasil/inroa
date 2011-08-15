@@ -3,7 +3,7 @@ require "capybara/dsl"
 require "capybara-webkit"
 require "test/unit"
 
-$feb_url = "http://localhost:8080"
+$feb_url = "http://localhost:8080/feb"
 #$feb_url = "http://143.54.95.20:8080/feb/"
 
 Capybara.run_server = false
