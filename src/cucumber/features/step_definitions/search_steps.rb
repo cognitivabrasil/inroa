@@ -29,3 +29,16 @@ Then /^a página deve conter "([^"]*)"$/ do |arg1|
 	end
 end
 
+Dado /^que eu estou na tela de login$/ do
+	steps %Q{
+		Given que eu abri a página do FEB
+		When eu clicar no link "Admin"
+		Then a página deve conter "Digite seu usuário e sua senha"
+	}
+end
+
+Quando /^eu tento me logar com usuário "([^"]*)" e senha "([^"]*)"$/ do |usuario, senha|
+	fill_in "user", :with => usuario
+	fill_in "passwd", :with => senha
+	click_button "Entrar"
+end
