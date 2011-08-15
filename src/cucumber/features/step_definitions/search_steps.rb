@@ -26,15 +26,28 @@ Then /^a página deve conter "([^"]*)"$/ do |arg1|
 end
 
 Dado /^que eu estou na tela de login$/ do
-	steps %Q{
-		Given que eu abri a página do FEB
-		When eu clicar no link "Admin"
-		Then a página deve conter "Digite seu usuário e sua senha"
-	}
+  visit $feb_url
+	click_link "Admin"
 end
 
 Quando /^eu tento me logar com usuário "([^"]*)" e senha "([^"]*)"$/ do |usuario, senha|
 	fill_in "user", :with => usuario
 	fill_in "passwd", :with => senha
-	click_button "Entrar"
+	click_button "Entrar no sistema"
 end
+
+Quando /^eu confirmo o OK$/ do
+		a = page.driver.browser.switch_to.alert
+		if a.text == 'OK'
+		  a.dismiss
+		else
+		  a.accept
+		end
+    #page.evaluate_script('window.alert = function() { return true; }')
+end
+
+Then /^a página deve conter link para "([^"]*)"$/ do |arg1|
+	assert(has_link? arg1)
+end
+
+

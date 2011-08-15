@@ -6,7 +6,7 @@ $feb_url = "http://localhost:8080/feb"
 #$feb_url = "http://143.54.95.20:8080/feb/"
 
 Capybara.run_server = false
-Capybara.current_driver = :webkit
+Capybara.current_driver = :selenium
 Capybara.app_host = $feb_url
 
 
