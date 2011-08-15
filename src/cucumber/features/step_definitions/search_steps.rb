@@ -1,3 +1,14 @@
+def ir_para_login
+  visit $feb_url
+	click_link "Admin"
+end
+
+def tentar_login(usuario, senha)
+	fill_in "user", :with => usuario
+	fill_in "passwd", :with => senha
+	click_button "Entrar no sistema"
+end
+
 Given /^que eu abri a página "([^\"]*)"$/ do |url|
   visit url
 end
@@ -26,14 +37,11 @@ Then /^a página deve conter "([^"]*)"$/ do |arg1|
 end
 
 Dado /^que eu estou na tela de login$/ do
-  visit $feb_url
-	click_link "Admin"
+	ir_para_login()
 end
 
 Quando /^eu tento me logar com usuário "([^"]*)" e senha "([^"]*)"$/ do |usuario, senha|
-	fill_in "user", :with => usuario
-	fill_in "passwd", :with => senha
-	click_button "Entrar no sistema"
+	tentar_login(usuario, senha)
 end
 
 Quando /^eu confirmo o OK$/ do
