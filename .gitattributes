@@ -150,9 +150,14 @@ docs/javadoc/serialized-form.html -text
 docs/javadoc/stylesheet.css -text
 docs/release_notes.txt -text
 src/build.xml -text
-src/cucumber/features/search.feature -text
+src/cucumber/README -text
+src/cucumber/features/admin.feature -text
+src/cucumber/features/hooks.rb -text
+src/cucumber/features/repositorios.feature -text
 src/cucumber/features/step_definitions/search_steps.rb -text
 src/cucumber/features/support/env.rb -text
+src/cucumber/vazio.c -text
+src/cucumber/vazio.sh -text
 src/lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar -text
 src/lib/PTStemmer_v3.jar -text
 src/lib/com/jsptags/navigation/pager/COPYRIGHT -text
