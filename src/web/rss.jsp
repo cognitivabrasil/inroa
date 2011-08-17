@@ -12,12 +12,24 @@
 
             request.setCharacterEncoding("UTF-8");
             
-            search = request.getParameter("search");
-            String id = request.getParameter("idRep");
-            
+            String idRepLocal[] = {""};
+            String idSubfed[] = {""};
+            String idSubRep[] = {""};
+
+
+            String textoBusca = "";
+
+
+
             boolean testaConsulta = false;
             try {
-                if (id.isEmpty() || search.isEmpty()) {
+                textoBusca = request.getParameter("key"); //recebe a consulta informada no formulario
+                idRepLocal = request.getParameterValues("replocal");
+                idSubfed = request.getParameterValues("subfed");
+                idSubRep = request.getParameterValues("subrep");
+
+
+                if (textoBusca.isEmpty()) {
                     out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
                             + "<script type='text/javascript'>history.back(-1);</script>");
                 } else {
@@ -29,11 +41,12 @@
                 e.printStackTrace();
 
             }
+
             if (testaConsulta) { //se nao foi informada a consulta nao entra no if
                 out.clear();    //limpa a página. Sem isso, ele geraria o rss com algumas quebras de linha antes do inicio, que o navegador não reconhece como um rss
-                Rss rss = new Rss(search, id, request.getRequestURL().toString());
+                Rss rss = new Rss(textoBusca, idRepLocal, idSubfed, idSubRep, request.getRequestURL().toString());
                 out.print(rss.generateFeed() + "\n");
-                //out.print(search + " " + id);
+                
             }
 %>
 

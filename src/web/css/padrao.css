@@ -359,6 +359,10 @@ a:hover{
     margin:0 0 10px 41%;
 }
 
+.LinhaEntrada .btConsultar{
+    margin:0 0 5% 0;
+    text-align:center;
+}
 
 .LinhaEntrada .Buttons{
     margin:0 0 10px 0%;

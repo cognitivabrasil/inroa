@@ -72,7 +72,7 @@
                 Recuperador rep = new Recuperador();
 
                 try {
-                    resultadoBusca = rep.busca(textoBusca, con, idRepLocal, idSubfed, idSubRep);
+                    resultadoBusca = rep.busca(textoBusca, con, idRepLocal, idSubfed, idSubRep, "relevancia");
 
                     numObjetosEncontrados = resultadoBusca.size(); //armazena o numero de objetos
 

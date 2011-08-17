@@ -4,7 +4,7 @@
  */
 package RSS;
 
-import ferramentaBusca.recuperador.Recuperador;
+import ferramentaBusca.Recuperador;
 import java.util.ArrayList;
 import java.sql.*;
 import postgres.Conectar;
@@ -23,9 +23,12 @@ public class Rss {
 
     private String link;
     static final String feedDescription = "Alimentador de objetos de aprendizagem. ";
-    private String search;
-    private String idBusca;
+    private String textoBusca;
+    
     private int rssTamMax = 30;
+    private String[] idRepLocal;
+    private String[] idSubfed;
+    private String[] idSubRep;
 
 
     /**
@@ -34,13 +37,15 @@ public class Rss {
      * @param idBusca String com os id dos reposit&oacute;rios (inteiros) separados por v&iacute;rgulas
      * @param link String com a atual url. Como será
      **/
-    public Rss(String search, String idBusca, String link) {
+    public Rss(String search, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String link) {
         if (search == null) {
-            this.search = "";
+            this.textoBusca = "";
         } else {
-            this.search = search;
+            this.textoBusca = search;
         }
-        this.idBusca = idBusca;
+        this.idRepLocal = idRepLocal;
+        this.idSubfed = idSubfed;
+        this.idSubRep = idSubRep;
         this.link = link.substring(0, link.indexOf("rss.jsp"));
     }
 
@@ -53,7 +58,8 @@ public class Rss {
         ArrayList<Integer> idArray = new ArrayList<Integer>();
         Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-        Recuperador rec = new Recuperador();
+
+        Recuperador rep = new Recuperador();
         String xml = "";
 
         try {
@@ -71,7 +77,7 @@ public class Rss {
 
             //titulo, descrição e link do rss
             Element rssTitle = doc.createElement("title");
-            Text text = doc.createTextNode("FEB - " + this.search);
+            Text text = doc.createTextNode("FEB - " + this.textoBusca);
             rssTitle.appendChild(text);
             channel.appendChild(rssTitle);
             Element rssDescription = doc.createElement("description");
@@ -87,8 +93,7 @@ public class Rss {
             //faz a busca da string search, com o id do repositorio escolhido na base de dados
             //idDoc é um array com os identificadores correspondentes à pesquisa
             try {
-
-                idArray = rec.search2(this.search, con, this.idBusca, "data");
+                idArray = rep.busca(this.textoBusca, con, this.idRepLocal, this.idSubfed, this.idSubRep, "data");
             } catch (SQLException e) {
                 System.out.println("FEB: RSS - Problemas com a busca\n" + e);
             }

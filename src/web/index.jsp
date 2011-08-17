@@ -23,16 +23,14 @@
             function geraRss() {
 
                 var consulta = document.getElementById("key").value;
-                var repositorio = "0";
-                window.location='rss.jsp?search='+consulta+'&idRep='+repositorio;
-
+                window.location='rss.jsp?key='+consulta;
             }
         </script>
 
     </head>      
 
     <body id="bodyMenor">
-        
+
         <div id="page">
 
             <div class="logoBusca"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></div>
@@ -50,35 +48,34 @@
             <form name="consulta" action="consulta.jsp" method="POST">
 
                 <div class="clear"> </div>
-                <div id="modificavel">
-                    <div class="LinhaEntrada">
-                        <div class="EspacoAntes">&nbsp;</div>
-                        <div class="Label">
-                            Texto para a busca:
-                        </div>
-                        <div class="Value">
-                            <input type="text" name="key" id="key" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="clear"> </div>
-                <div class="LinhaEntrada">
-                    <div class="Buttons">
-                        <input class="BOTAO" type="submit" value="Consultar"/>
 
+                <div class="LinhaEntrada">
+                    <div class="EspacoAntes">&nbsp;</div>
+                    <div class="Label">
+                        Texto para a busca:
+                    </div>
+                    <div class="Value">
+                        <input type="text" name="key" id="key" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                    </div>
+
+                    <div class="clear"> </div>
+                </div>
+                <div class="LinhaEntrada">
+                    <div class="btConsultar">
+                        <input class="BOTAO" type="submit" value="Consultar"/>
                     </div>
                 </div>
             </form>
             <div ALIGN="CENTER">
                 <a href="./index2.jsp">Selecionar Repositórios</a>
             </div>
-                
+
         </div>
         <div>
-        <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
-        <div  class="rss">
-            <a class="linkRSS" onclick= "geraRss()" title="RSS da busca"><img src="imagens/rss_300x300.png" width="3%" alt="rsslogo" onclick= "geraRss()"/> </a>
-                </div>
+            <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
+            <div  class="rss">
+                <a class="linkRSS" onclick= "geraRss()" title="RSS da busca"><img src="imagens/rss_300x300.png" width="3%" alt="rsslogo" onclick= "geraRss()"/> </a>
+            </div>
         </div>
         <%@include file="googleAnalytics"%>
     </body>

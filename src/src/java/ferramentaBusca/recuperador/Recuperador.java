@@ -58,6 +58,7 @@ public class Recuperador {
         
     }
 
+    //BUSCA PARA O RSS
     public ArrayList<Integer> search2(String query, Connection con, String idRep, String ordenar)
             throws SQLException {
         if (idRep.equals("0")) {
@@ -108,8 +109,8 @@ public class Recuperador {
     public ArrayList<Integer> search2(String query, Connection con, ArrayList<Integer> idRep, ArrayList<Integer> idSubfed, String ordenar)
             throws SQLException {
         Documento ret = new Documento(query);
-        int nElementos = ret.getDescricao().size();
-        ArrayList<String> tokens = ret.getTokens();
+        int nElementos = ret.getDescricao().size(); //numero de tokens da consulta
+        ArrayList<String> tokens = ret.getTokens(); //tokens da consulta
         ArrayList<Integer> idDoc = new ArrayList<Integer>();
         String consult = "";
 

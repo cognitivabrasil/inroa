@@ -6,6 +6,7 @@ package robo.atualiza;
 
 import ferramentaBusca.indexador.Indexador;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -62,8 +63,7 @@ public class Repositorios {
             }
 
         } catch (SQLException e) {
-            System.err.println("SQL Exception... Erro na consulta:");
-            e.printStackTrace();
+            System.err.println("Erro na consulta SQL no metodo testa_atualizar_repositorio. Mensagem:"+e);
         }
 
         return atualizou;
@@ -166,8 +166,7 @@ public class Repositorios {
         } catch (UnknownHostException u) {
             System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
         } catch (SQLException e) {
-            System.err.println("SQL Exception... Erro na consulta:");
-            e.printStackTrace();
+            System.err.println("SQL Exception... Erro na consulta sql na classe Repositorios:"+ e.getMessage());
         } catch (ParserConfigurationException e) {
             System.err.println("O parser nao foi configurado corretamente. " + e);
             e.printStackTrace();
@@ -191,13 +190,14 @@ public class Repositorios {
         } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
             System.err.println(msgOAI+ msg + " - The repository does not support sets.\n");
         } else{
-                System.err.println("Problema ao fazer o parse do arquivo. " + e);
+                System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e);
             }
+        } catch (FileNotFoundException e) {
+            System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: " + e +"\n");
         } catch (IOException e) {
-            System.err.println("O arquivo nao pode ser escrito ou lido: " + e);
-            e.printStackTrace();
+            System.err.println("\nFEB ERRO: O arquivo nao pode ser escrito ou lido: " + e +"\n");
         } catch (Exception e) {
-            System.err.println("Erro efetuar o Harvester " + e);
+            System.err.println("\nFEB ERRO ao efetuar o Harvester " + e +"\n");
         } finally {
 
             return atualizou;
@@ -239,8 +239,7 @@ public class Repositorios {
             }
 
         } catch (SQLException e) {
-            System.err.println("SQL Exception... Erro na consulta:");
-            e.printStackTrace();
+            System.err.println("SQL Exception... Erro na consulta SQL no metodo atualizaFerramentaAdm: "+e);
         } finally {
             try {
                 con.close(); //fechar conexao
@@ -252,25 +251,4 @@ public class Repositorios {
 
     }
 
-    public static String trataErroOAIPMH(String msg) {
-        String resultado = "";
-        if (msg.equalsIgnoreCase("badArgument")) {
-            resultado ="FEB: ERRO no parser+ do OAI-PMH, mensagem: "+ msg + " - The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.";
-        } else if (msg.equalsIgnoreCase("badResumptionToken")) {
-            resultado ="FEB: ERRO no parser+ do OAI-PMH, mensagem: "+ msg + " - The value of the resumptionToken argument is invalid or expired.";
-        } else if (msg.equalsIgnoreCase("badVerb")) {
-            resultado ="FEB: ERRO no parser+ do OAI-PMH, mensagem: "+ msg + " - Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated. ";
-        } else if (msg.equalsIgnoreCase("cannotDisseminateFormat")) {
-            resultado ="FEB: ERRO no parser+ do OAI-PMH, mensagem: "+ msg + " -  The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.";
-        } else if (msg.equalsIgnoreCase("idDoesNotExist")) {
-            resultado ="FEB: ERRO no parser+ do OAI-PMH, mensagem: "+ msg + " - The value of the identifier argument is unknown or illegal in this repository.";
-        } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
-            resultado ="FEB: ERRO no parser+ do OAI-PMH, mensagem: "+ msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.";
-        } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
-            resultado ="FEB: ERRO no parser+ do OAI-PMH, mensagem: "+ msg + " - There are no metadata formats available for the specified item.";
-        } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
-            resultado ="FEB: ERRO no parser+ do OAI-PMH, mensagem: "+ msg + " - The repository does not support sets.";
-        }
-        return resultado;
-    }
 }

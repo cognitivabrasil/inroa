@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import postgres.Conectar;
 
 /**
  * Disponibiliza realizar Recuperador por similaridade
@@ -28,10 +27,11 @@ public class Recuperador {
      * @param idRepLocal id(s) do(s) reposit&oacute;rio(s) da confedera&ccedil;&atilde;o.
      * @param idSubfed id(s) da(s) subfedera&ccedil;&atilde;o
      * @param idSubRep id(s) do(s) reposit&otirio(s) da(s) subfedera&ccedil;&atilde;o
+     * @param ordenacao pelo que ser&aacute; ordenado o resultado, pela data ou por relev&atilde;ncia
      * @return ArrayList de inteiros contendo os ids dos documentos retornados na busca. Em ordem de relev&acirc;ncia.
      * @exception SQLException
      */
-    public ArrayList<Integer> busca(String consulta, Connection con, String[] idRepLocal, String[] idSubfed, String[] idSubRep) throws SQLException {
+    public ArrayList<Integer> busca(String consulta, Connection con, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String ordenacao) throws SQLException {
 
 
         if (idRepLocal == null) {  //tratamento de consistencia, para variaveis nulas
@@ -50,35 +50,42 @@ public class Recuperador {
         ArrayList<String> tokensConsulta = docConsulta.getTokens(); //tokeniza as palavras da consulta e adiciona no ArrayList
         ArrayList<Integer> idsResultados = new ArrayList<Integer>(); //lista dos ids dos documentos retornados da consulta
 
-        String consultaSql = ""; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados
+        String consultaSql = ""; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
+        String sqlOrdenacao = ""; //eh preenchido pelo if que testa qual o tipo de ordenacao
+
+        if (ordenacao.equals("data")) {
+            sqlOrdenacao = "') GROUP BY r1w.tid, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
+        } else {
+            sqlOrdenacao = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+        }
 
         if (idRepLocal.length == 1 && idRepLocal[0].isEmpty()) {
             if (idSubfed.length == 1 && idSubfed[0].isEmpty()) {
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
                     //busca na confederacao
-                    consultaSql = buscaConfederacao(tokensConsulta);
+                    consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao);
                 } else {
-                    consultaSql = busca_subRep(tokensConsulta, idSubRep); //busca no subrepositorio
+                    consultaSql = busca_subRep(tokensConsulta, idSubRep, sqlOrdenacao); //busca no subrepositorio
                 }
             } else { //subfed != vazio e repLocal = vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_subfed(tokensConsulta, idSubfed);//busca na subfederacao
+                    consultaSql = busca_subfed(tokensConsulta, idSubfed, sqlOrdenacao);//busca na subfederacao
                 } else {
-                    consultaSql = busca_subfed_subrep(tokensConsulta, idSubfed, idSubRep); //busca na subfederacao e no subrepositorio
+                    consultaSql = busca_subfed_subrep(tokensConsulta, idSubfed, idSubRep, sqlOrdenacao); //busca na subfederacao e no subrepositorio
                 }
             }
         } else { //replocal != vazio
             if (idSubfed.length == 1 && idSubfed[0].isEmpty()) { //replocal != vazio e subfed = vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_repLocal(tokensConsulta, idRepLocal); //busca no repositorio local
+                    consultaSql = busca_repLocal(tokensConsulta, idRepLocal, sqlOrdenacao); //busca no repositorio local
                 } else {
-                    consultaSql = busca_repLocal_subrep(tokensConsulta, idRepLocal, idSubRep); //busca no reposiotio local e no subrepositorio
+                    consultaSql = busca_repLocal_subrep(tokensConsulta, idRepLocal, idSubRep, sqlOrdenacao); //busca no reposiotio local e no subrepositorio
                 }
             } else { //replocal != vazio e subfed != vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_repLocal_subfed(tokensConsulta, idRepLocal, idSubfed);//busca na subfederacao
+                    consultaSql = busca_repLocal_subfed(tokensConsulta, idRepLocal, idSubfed, sqlOrdenacao);//busca na subfederacao
                 } else {
-                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, idRepLocal, idSubfed, idSubRep); //busca na subfederacao e no subrepositorio
+                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, idRepLocal, idSubfed, idSubRep, sqlOrdenacao); //busca na subfederacao e no subrepositorio
                 }
             }
         }
@@ -94,7 +101,7 @@ public class Recuperador {
     }
 
     //confederacao
-    private String buscaConfederacao(ArrayList<String> tokensConsulta) {
+    private String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
                 + " WHERE r1w.tid=d.id "
                 + " AND (r1w.token=";
@@ -102,7 +109,7 @@ public class Recuperador {
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                consultaSql += "'" + token + finalSQL;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
@@ -112,7 +119,7 @@ public class Recuperador {
     }
 
     //replocal
-    private String busca_repLocal(ArrayList<String> tokensConsulta, String[] idRepLocal) {
+    private String busca_repLocal(ArrayList<String> tokensConsulta, String[] idRepLocal, String finalSQL) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
                 + " WHERE r1w.tid=d.id "
                 + " AND (";
@@ -130,7 +137,7 @@ public class Recuperador {
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                consultaSql += "'" + token + finalSQL;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
@@ -139,7 +146,7 @@ public class Recuperador {
     }
 
     //subfed
-    private String busca_subfed(ArrayList<String> tokensConsulta, String[] idSubfed) {
+    private String busca_subfed(ArrayList<String> tokensConsulta, String[] idSubfed, String finalSQL) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id "
                 + " AND (";
@@ -157,17 +164,17 @@ public class Recuperador {
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                consultaSql += "'" + token + finalSQL;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
-        
+
         return consultaSql;
     }
 
     //repsubfed
-    private String busca_subRep(ArrayList<String> tokensConsulta, String[] idSubRep) {
+    private String busca_subRep(ArrayList<String> tokensConsulta, String[] idSubRep, String finalSQL) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
                 + " WHERE r1w.tid=d.id "
                 + " AND (";
@@ -185,7 +192,7 @@ public class Recuperador {
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                consultaSql += "'" + token + finalSQL;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
@@ -195,7 +202,7 @@ public class Recuperador {
     }
 
     //replocal + subfed
-    private String busca_repLocal_subfed(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed) {
+    private String busca_repLocal_subfed(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String finalSQL) {
 
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND ("
@@ -224,18 +231,18 @@ public class Recuperador {
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                consultaSql += "'" + token + finalSQL;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
-        
+
 
         return consultaSql;
     }
 
     //replocal + repsubfed
-    private String busca_repLocal_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubRep) {
+    private String busca_repLocal_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubRep, String finalSQL) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
                 + " WHERE r1w.tid=d.id"
                 + " AND (";
@@ -257,18 +264,18 @@ public class Recuperador {
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                consultaSql += "'" + token + finalSQL;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
-        
+
 
         return consultaSql;
     }
 
     //subfed + repsubfed
-    private String busca_subfed_subrep(ArrayList<String> tokensConsulta, String[] idSubfed, String[] idSubRep) {
+    private String busca_subfed_subrep(ArrayList<String> tokensConsulta, String[] idSubfed, String[] idSubRep, String finalSQL) {
 
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
@@ -285,23 +292,23 @@ public class Recuperador {
         for (int i = 0; i < idSubRep.length; i++) {
             consultaSql += " OR rsf.id=" + idSubRep[i];
         }
-        
+
         consultaSql += ") AND (r1w.token=";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                consultaSql += "'" + token + finalSQL;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
-         
-       return consultaSql;
+
+        return consultaSql;
     }
 
     //replocal + subfed + repsubfed
-    private String busca_repLocal_subfed_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String[] idSubRep) {
+    private String busca_repLocal_subfed_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String finalSQL) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
@@ -332,7 +339,7 @@ public class Recuperador {
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                consultaSql += "'" + token + finalSQL;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
@@ -340,5 +347,4 @@ public class Recuperador {
 
         return consultaSql;
     }
-
 }
