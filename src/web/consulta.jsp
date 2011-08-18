@@ -217,7 +217,7 @@
                                                                 String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as repsubfed, d.id_repositorio as repositorio"
                                                                         + " FROM documentos d, objetos o"
                                                                         + " WHERE d.id=o.documento AND d.id=" + resultadoBusca.get(result)
-                                                                        + "AND (o.atributo ~* '^obaadate$' OR o.atributo ~* '^obaaLocation$' OR o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$' OR o.atributo ~* '^nomeRepositorio')";
+                                                                        + "AND (o.atributo ~* '^obaadate$' OR o.atributo ~* '^obaaLocation$' OR o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$')";
                                                                 try {
                                                                     ResultSet rs = stm.executeQuery(resultadoSQL);
                                                                     //pega o proximo resultado retornado pela consulta sql
@@ -226,7 +226,6 @@
                                                                         if (rs.isFirst()) {
                                                                             identificador = rs.getString("obaa_entry");
                                                                             repositorio = rs.getInt("repositorio");
-                                                                            //nomeRepositorio = rs.getString("nomeRep");
                                                                             idRepSubfed = rs.getString("repsubfed");
                                                                         }
                                                                         String valor = rs.getString("valor");
@@ -245,9 +244,6 @@
                                                                     out.print("<script type='text/javascript'>alert('Nao foi possivel recuperar as informacoes da base de dados');</script>"
                                                                             + "<script type='text/javascript'>history.back(-1);</script>");
                                                                 }
-
-////                                                    if(titulo.size()>0 ||data.size()>0|| localizacao.size()>0 || resumo.size()>0){
-///                                                    }
 
                                                                 if (idRepSubfed == null) {
                                                                     String sql = "SELECT r.nome as nomeRep from documentos d, repositorios r WHERE d.id_repositorio=r.id AND d.id=" + resultadoBusca.get(result);
