@@ -8,18 +8,12 @@
 
 <%
 
-            String search = "";
-
             request.setCharacterEncoding("UTF-8");
             
             String idRepLocal[] = {""};
             String idSubfed[] = {""};
             String idSubRep[] = {""};
-
-
             String textoBusca = "";
-
-
 
             boolean testaConsulta = false;
             try {
@@ -27,7 +21,6 @@
                 idRepLocal = request.getParameterValues("replocal");
                 idSubfed = request.getParameterValues("subfed");
                 idSubRep = request.getParameterValues("subrep");
-
 
                 if (textoBusca.isEmpty()) {
                     out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
@@ -48,29 +41,4 @@
                 out.print(rss.generateFeed() + "\n");
                 
             }
-%>
-
-<%/*
-            //rss.jsp antigo, quando recebia apenas um identificador de repositorio para fazer a busca
-            out.clear();
-
-            String search = "";
-            int idRep = 0;
-
-
-            search = request.getParameter("search");
-            String id = request.getParameter("idRep");
-
-            try
-            {
-            idRep = Integer.parseInt(id);
-            }
-            catch (NumberFormatException e)
-            {
-            System.out.println("Id de repositorio invalido " + e);
-            idRep = 0;
-            }
-
-            Rss rss = new Rss (search, idRep);
-            out.print(rss.generateFeed() + "\n"); */
 %>

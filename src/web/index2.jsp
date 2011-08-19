@@ -23,15 +23,34 @@
         <script language="JavaScript" type="text/javascript">
             function geraRss() {
                 var consulta = document.getElementById("key").value;
-                var repositorios = document.getElementsByName("repositorios");
-                var repChecked = "";
+                var repositorios = document.getElementsByName("replocal");
+                var idSubfed1 = document.getElementsByName("subfed");
+                var idSubRep1 = document.getElementsByName("subrep");
 
+                var idRepLocal = "";
+                var idSubfed = "";
+                var idSubRep = "";                
+
+                //Contatenar resultados dos repositorios locais
                 for (var i=0;i<repositorios.length;i = i+1){
                     if (repositorios[i].checked == true){
-                        repChecked +=repositorios[i].value + ",";
+                        idRepLocal +="&replocal="+repositorios[i].value;
                     }
                 }
-                window.location='rss.jsp?search='+consulta+'&idRep='+repChecked;
+                //concatenar resultados das subfederacoes
+                for (var i=0;i<idSubfed1.length;i = i+1){
+                    if (idSubfed1[i].checked == true){
+                        idSubfed +="&subfed="+idSubfed1[i].value;
+                    }
+                }
+                //concatenar resultados dos repositorios das subfederacoes
+                for (var i=0;i<idSubRep1.length;i = i+1){
+                    if (idSubRep1[i].checked == true){
+                        idSubRep +="&subrep="+idSubRep1[i].value;
+                    }
+                }
+                
+                window.location='rss.jsp?key='+consulta+idRepLocal+idSubfed+idSubRep;
             }
             function ocultar(id, idLink){
                 var valor = document.getElementById(idLink);
@@ -63,7 +82,7 @@
 
             <div class="EspacoPequeno">&nbsp;</div>
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
-            <div class="linkCantoDireito"><a href="./adm.jsp">Ferramenta Administrativa</a></div>
+            <div class="linkCantoDireito"><a href="./adm.jsp"><img src="imagens/ferramenta_32x32.png" width="90%" alt="Ferramenta Administrativa"></a></div>
             <div class="Espaco">&nbsp;</div>
             <form name="consulta" action="consulta.jsp" method="GET">
 
@@ -100,7 +119,7 @@
                                     if (testeSubfederacao) {
                                         if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
                                             out.println("<div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div>");
-                                            testeSubfederacao=false;
+                                            testeSubfederacao = false;
                                         }
                                     }
                                     if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
@@ -145,8 +164,11 @@
             <div ALIGN="CENTER">
                 <a href="./index.jsp">Ocultar Repositórios</a>
             </div>
-            <div  ALIGN="RIGHT">
-                <a class="linkRSS" onclick= "geraRss()"><img src="imagens/rss_300x300.png" width="3%" height="3%" alt="rsslogo" onclick= "geraRss()"/> <b>Gerar RSS</b></a>
+        </div>
+        <div>
+            <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
+            <div  class="rss">
+                <a class="linkRSS" onclick= "geraRss()" title="RSS da busca"><img src="imagens/rss_300x300.png" width="3%" alt="rsslogo" onclick= "geraRss()"/> </a>
             </div>
         </div>
         <%@include file="googleAnalytics"%>
