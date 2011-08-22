@@ -150,6 +150,7 @@ docs/javadoc/serialized-form.html -text
 docs/javadoc/stylesheet.css -text
 docs/release_notes.txt -text
 src/build.xml -text
+src/config/sun-checks.xml -text
 src/cucumber/README -text
 src/cucumber/features/admin.feature -text
 src/cucumber/features/hooks.rb -text
