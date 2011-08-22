@@ -168,8 +168,8 @@
 
   </build>
 <reporting>
-<plugins>
-<plugin>
+	<plugins>
+	<plugin>
 <groupId>org.apache.maven.plugins</groupId>
 <artifactId>maven-checkstyle-plugin</artifactId>
 <version>2.4</version>
@@ -179,6 +179,18 @@
 </configLocation>
 </configuration>
 </plugin>
+
+<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.5.1</version>
+</plugin>
+
+ <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+      </plugin>
+
 </plugins>
 </reporting>
 </project>
