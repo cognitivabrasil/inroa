@@ -31,6 +31,7 @@
 -->
 
 <module name="Checker">
+<property name="severity" value="info"/>
     <!--
         If you set the basedir property below, then all reported file
         names will be relative to the specified directory. See
@@ -71,8 +72,61 @@
     <module name="TreeWalker">
 <property name="cacheFile" value="target/cachefile"/>
 <module name="ExecutableStatementCount">
-    <property name="max" value="15"/>
+    <property name="max" value="20"/>
     <property name="tokens" value="CTOR_DEF,METHOD_DEF"/>
+    <property name="severity" value="warning"/>
+
+</module>
+
+<module name="ModifiedControlVariable">
+    <property name="severity" value="error"/>
+</module>
+
+<module name="StringLiteralEquality">
+    <property name="severity" value="error"/>
+</module>
+
+<module name="NestedForDepth">
+    <property name="max" value="2"/>
+    <property name="severity" value="error"/>
+</module>
+
+<module name="NestedForDepth">
+    <property name="max" value="2"/>
+    <property name="severity" value="warning"/>
+</module>
+
+<module name="ReturnCount">
+    <property name="max" value="2"/>
+    <property name="severity" value="warning"/>
+</module>
+
+<module name="DeclarationOrder">
+    <property name="severity" value="warning"/>
+</module>
+
+<module name="MultipleStringLiterals">
+    <property name="allowedDuplicates" value="2"/>
+    <property name="ignoreStringsRegexp" value='^(("")|(", "))$'/>
+    <property name="severity" value="warning"/>
+</module>
+
+<module name="CyclomaticComplexity">
+    <property name="max" value="7"/>
+    <property name="severity" value="warning"/>
+</module>
+<module name="CyclomaticComplexity">
+    <property name="max" value="11"/>
+    <property name="severity" value="error"/>
+</module>
+
+<module name="ParameterAssignment"/>
+
+<module name="ExecutableStatementCount">
+    <property name="max" value="40"/>
+    <property name="tokens" value="CTOR_DEF,METHOD_DEF"/>
+    <property name="severity" value="error"/>
+
 </module>
 
         <!-- Checks for Javadoc comments.                     -->
@@ -154,7 +208,9 @@
         <module name="AvoidNestedBlocks"/>
         <module name="EmptyBlock"/>
         <module name="LeftCurly"/>
-        <module name="NeedBraces"/>
+        <module name="NeedBraces">
+    		<property name="severity" value="warning"/>
+	</module>
         <module name="RightCurly"/>
 
 
@@ -167,7 +223,9 @@
         <module name="HiddenField"/>
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
-        <module name="MagicNumber"/>
+        <module name="MagicNumber">
+    		<property name="severity" value="warning"/>
+	</module>
         <module name="MissingSwitchDefault"/>
         <module name="RedundantThrows"/>
         <module name="SimplifyBooleanExpression"/>
