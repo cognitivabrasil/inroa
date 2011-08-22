@@ -4,6 +4,9 @@
  */
 package metadata.conversor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Paulo Schreiner
@@ -13,11 +16,25 @@ package metadata.conversor;
  */
 public class MockOne {
 	private String title;
+	private List<String> creators;
 	MockOne() {
 		super();
+		creators = new ArrayList<String>();
+	}
+
+	public void addCreator(String c) {
+		creators.add(c);
+	}
+
+	public void setCreators(List<String> c) {
+		creators = c;
+	}
+
+	public List<String> getCreators() {
+		return creators;
 	}
 	
-	public void addTitle(String t) {
+	public void setTitle(String t) {
 		title = t;
 	}
 	public String getTitle() {

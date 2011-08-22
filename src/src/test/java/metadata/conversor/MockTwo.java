@@ -4,6 +4,9 @@
  */
 package metadata.conversor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author paulo
@@ -14,11 +17,25 @@ package metadata.conversor;
  */
 public class MockTwo {			
 	private String titulo;
+	private List<String> authors;
 	MockTwo() {
 		super();
+		authors = new ArrayList<String>();
+	}
+
+	public void addAuthor(String c) {
+		authors.add(c);
+	}
+
+	public void setAuthors(List<String> c) {
+		authors = c;
+	}
+
+	public List<String> getAuthors() {
+		return authors;
 	}
 	
-	public void addTitulo(String t) {
+	public void setTitulo(String t) {
 		titulo = t;
 	}
 	public String getTitulo() {

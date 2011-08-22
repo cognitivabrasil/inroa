@@ -10,16 +10,30 @@ import java.lang.IllegalArgumentException;
 /**
  *
  * @author paulo
+ * 
+ * Classe para criar regras de conversão.
  */
 public class Rule {
 	private String from;
 	private String to;
+
+	/**
+	 * 
+	 * @param from 
+	 * @param to
+	 */
 	Rule(String f, String t)	{
 		from = f;
 		to = t;
 		
 	}
-
+/**
+	 * 
+	 * @param objeto1 Objeto origem da transformacao. Neste objeto será chamada a função "get" + from
+	 * @param objeto2 Objeto destino. Neste objeto será chamado o método "set" + from, com o resultado
+	 * do get do objeto 1
+	 * @throws IllegalArgumentException Caso um dos métodos não exista.
+	 */
 	public void apply(Object ob1, Object ob2) throws IllegalArgumentException {
 		Class c1 = ob1.getClass();
 		Class c2 = ob2.getClass();
@@ -33,9 +47,9 @@ public class Rule {
 		}
 
 		try {
-			m2 = c2.getMethod("add" + to, String.class);
+			m2 = c2.getMethod("set" + to, m1.getReturnType());
 		} catch(NoSuchMethodException e) {
-			throw new IllegalArgumentException("Cannot find method " + "add" + from 
+			throw new IllegalArgumentException("Cannot find method " + "set" + from 
 				+ " in class" + c2.getName());
 		}
 		

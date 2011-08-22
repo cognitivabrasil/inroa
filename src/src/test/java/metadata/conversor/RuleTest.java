@@ -46,7 +46,7 @@ public class RuleTest {
 	public void testConvertTitle() {
 		Rule r = new Rule("Title", "Titulo");
 		
-		m1.addTitle("Teste");
+		m1.setTitle("Teste");
 
 		r.apply(m1, m2);
 
@@ -58,7 +58,7 @@ public class RuleTest {
 	public void badArgumentThrowsException1() {
 		Rule r = new Rule("Title", "Title");
 		
-		m1.addTitle("Teste");
+		m1.setTitle("Teste");
 
 		r.apply(m1, m2);
 	}
@@ -67,7 +67,7 @@ public class RuleTest {
 	public void badArgumentThrowsException2() {
 		Rule r = new Rule("Title", "Title");
 		
-		m2.addTitulo("Teste");
+		m2.setTitulo("Teste");
 
 		r.apply(m1, m2);
 	}
