@@ -82,4 +82,22 @@ public class RuleTest {
 		assertEquals(m1.getTitle(), m2.getTitulo());
 		
 	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void badArgumentThrowsException1() {
+		Rule r = new Rule("Title", "Title");
+		
+		m1.addTitle("Teste");
+
+		r.apply(m1, m2);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void badArgumentThrowsException2() {
+		Rule r = new Rule("Title", "Title");
+		
+		m2.addTitulo("Teste");
+
+		r.apply(m1, m2);
+	}
 }
