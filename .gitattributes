@@ -216,6 +216,7 @@ src/src/java/ferramentaBusca/recuperador/package.html -text
 src/src/java/login/Usuario.java -text
 src/src/java/login/package.html -text
 src/src/java/metadata/DublinCore.java -text
+src/src/java/metadata/conversor/Rule.java -text
 src/src/java/operacoesPostgre/Consultar.java -text
 src/src/java/operacoesPostgre/Editar.java -text
 src/src/java/operacoesPostgre/Remover.java -text
@@ -256,6 +257,7 @@ src/src/java/robo/util/Informacoes.java -text
 src/src/java/robo/util/Operacoes.java -text
 src/src/java/robo/util/package.html -text
 src/src/test/java/metadata/DublinCoreTest.java -text
+src/src/test/java/metadata/conversor/RuleTest.java -text
 src/src/test/java/metadata/teste1.xml -text
 src/web/META-INF/context.xml -text
 src/web/WEB-INF/jsp/pager-taglib.tld -text
