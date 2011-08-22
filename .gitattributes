@@ -257,6 +257,8 @@ src/src/java/robo/util/Informacoes.java -text
 src/src/java/robo/util/Operacoes.java -text
 src/src/java/robo/util/package.html -text
 src/src/test/java/metadata/DublinCoreTest.java -text
+src/src/test/java/metadata/conversor/MockOne.java -text
+src/src/test/java/metadata/conversor/MockTwo.java -text
 src/src/test/java/metadata/conversor/RuleTest.java -text
 src/src/test/java/metadata/teste1.xml -text
 src/web/META-INF/context.xml -text

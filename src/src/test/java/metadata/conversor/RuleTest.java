@@ -17,35 +17,6 @@ import static org.junit.Assert.*;
  */
 public class RuleTest {
 
-	class MockOne {
-		private String title;
-		MockOne() {
-			super();
-		}
-		
-		public void addTitle(String t) {
-			title = t;
-		}
-		public String getTitle() {
-			return title;
-		}
-		
-	}
-
-	class MockTwo {
-		private String titulo;
-		MockTwo() {
-			super();
-		}
-		
-		public void addTitulo(String t) {
-			titulo = t;
-		}
-		public String getTitulo() {
-			return titulo;
-		}
-		
-	}
 
 	MockOne m1;
 	MockTwo m2;
