@@ -47,11 +47,17 @@ public class DublinCoreTest {
 	@Test
 	public void testTitle() {
 		// TODO review the generated test code and remove the default call to fail.
-		System.out.println(dc.getTitle());
+		String dc_xml = "";
 		assertEquals(dc.getTitle(),  "Taquaraço: 9 anos de glórias");
+		try {
+			dc_xml = dc.toXml();
+		}
+		catch(Exception e) {
+			//fail("Exception");
+		}
 	}
 	
-	//@Test TODO: Make it pass
+	@Test 
 	public void testXml() {
 		// TODO review the generated test code and remove the default call to fail.
 		Canonicalizer canon;
@@ -62,16 +68,17 @@ public class DublinCoreTest {
 		dc.addTitle("Title 2");
 		try {
 			dc_xml = dc.toXml();
-		System.out.println(dc_xml);
 		}
 		catch(Exception e) {
 			fail("Exception");
 		}
 			
-		assertEquals(dc_xml,"<oai_dc:dc xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\">\n" +
- "   <dc:title>Taquaraço: 9 anos de glórias</dc:title>\n" +
-"   <dc:title>Taquaraço: 9 years of glory</dc:title>\n" +
-"</oai_dc:dc>");
+		assertEquals("<oai_dc:dc " +
+			 "xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\"" + 
+			" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"+
+ "   <dc:title>Title 1</dc:title>\n" +
+"   <dc:title>Title 2</dc:title>\n" +
+"</oai_dc:dc>", dc_xml);
 
 
 	}
