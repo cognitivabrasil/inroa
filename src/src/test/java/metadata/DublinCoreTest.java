@@ -4,10 +4,7 @@
  */
 package metadata;
 
-import com.sun.org.apache.xml.internal.security.c14n.Canonicalizer;
 import java.io.File;
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,7 +18,6 @@ import static org.junit.Assert.*;
  */
 public class DublinCoreTest {
 	DublinCore dc;
-	Serializer serializer;
 	File file;
 	
 	public DublinCoreTest() {
@@ -60,7 +56,6 @@ public class DublinCoreTest {
 	@Test 
 	public void testXml() {
 		// TODO review the generated test code and remove the default call to fail.
-		Canonicalizer canon;
 		String dc_xml = "";
 
 		dc = new DublinCore();
