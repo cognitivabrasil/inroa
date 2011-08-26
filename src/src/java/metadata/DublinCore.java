@@ -58,6 +58,13 @@ class Description extends TextElement {
 	Description(String s) { super(s); }
 }
 
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Contributor extends TextElement {
+	Contributor() {}
+	Contributor(String s) { super(s); }
+}
+
 
 @Root(name="oai_dc:dc", strict=false)
 @NamespaceList({
@@ -71,12 +78,6 @@ public class DublinCore {
 	private String xsi_schema; //não é muito elegante, mas funciona.
 	
 
-	@ElementList(inline=true)
-	private List<Title> title = new ArrayList<Title>();
-	
-	@ElementList(inline=true)
-	private List<Description> description = new ArrayList<Description>();
-	
 	DublinCore() {
 		super();
 	}
@@ -104,28 +105,47 @@ public class DublinCore {
 		return dc;
 	}
 
-	public List<String> getTitles() {
-		return toStringList(title);
-	}
+	/* Title */
+	@ElementList(inline=true)
+	private List<Title> title = new ArrayList<Title>();
 	
-	public List<String> getDescriptions() {
-		return toStringList(description);
-	}
-		
 
 	public String getTitle() {
 		return title.get(0).getText();
 	}
 
-
+	public List<String> getTitles() {
+		return toStringList(title);
+	}
 	
 	public void addTitle(String title) {
 		this.title.add(new Title(title));
+	}
+
+	/* Description */
+	@ElementList(inline=true)
+	private List<Description> description = new ArrayList<Description>();
+
+	public List<String> getDescriptions() {
+		return toStringList(description);
 	}
 	
 	public void addDescription(String s) {
 		this.description.add(new Description(s));
 	}
+
+	/* Contributor */
+	@ElementList(inline=true)
+	private List<Contributor> contributor = new ArrayList<Contributor>();
+
+	public void addContributor(String s) {
+		this.contributor.add(new Contributor(s));
+	}
+	
+	public List<String> getContributors() {
+		return toStringList(contributor);
+	}
+		
 
 	public String toXml() throws Exception {
 		OutputStream o = new ByteArrayOutputStream();

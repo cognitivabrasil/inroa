@@ -55,6 +55,12 @@ public class DublinCoreTest {
 		// TODO review the generated test code and remove the default call to fail.
 		assertThat(dc.getDescriptions(), hasItems("Descrição 1", "Descrição 2"));
 	}
+	
+	@Test
+	public void testContributors() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getContributors(), hasItems("Sílton");
+	}
 
 	
 	@Test 
@@ -67,6 +73,7 @@ public class DublinCoreTest {
 		dc.addTitle("Title 2");
 		dc.addDescription("D1");
 		dc.addDescription("D2");
+		dc.addContributor("Sílton");
 		try {
 			dc_xml = dc.toXml();
 			System.out.println(dc_xml);
@@ -82,6 +89,7 @@ public class DublinCoreTest {
 "   <dc:title>Title 2</dc:title>\n" +
  "   <dc:description>D1</dc:description>\n" +
 "   <dc:description>D2</dc:description>\n" +
+"   <dc:contributor>Sílton</dc:contributor>\n" +
 "</oai_dc:dc>", dc_xml);
 
 
