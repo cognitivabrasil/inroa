@@ -26,24 +26,38 @@ import org.simpleframework.xml.Order;
  * @author paulo
  */
 
-@Root
-@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
-class Title
+class TextElement
 {
-	Title(String t) {
+	TextElement(String t) {
 		text = t;
 	}
 
-	Title() {
+	TextElement() {
 	}
 	
 	@Text
 	private String text;
 
 	public String getText() {
-		return text;
+		return text.trim();
 	}
 }
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Title extends TextElement {
+	Title() {}
+	Title(String t) {super(t);}
+	
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Description extends TextElement {
+	Description() {}
+	Description(String s) { super(s); }
+}
+
 
 @Root(name="oai_dc:dc", strict=false)
 @NamespaceList({
@@ -60,10 +74,21 @@ public class DublinCore {
 	@ElementList(inline=true)
 	private List<Title> title = new ArrayList<Title>();
 	
+	@ElementList(inline=true)
+	private List<Description> description = new ArrayList<Description>();
+	
 	DublinCore() {
 		super();
 	}
 
+	private List<String> toStringList(List<? extends TextElement> elements) {
+		List<String> s = new ArrayList<String>();
+		for(TextElement e : elements) {
+			s.add(e.getText());
+		}
+		return s;
+	}
+	
 	public static DublinCore fromFilename(String filename) {
 		DublinCore dc = new DublinCore();
 		File xml = new File(filename);
@@ -78,6 +103,14 @@ public class DublinCore {
 		
 		return dc;
 	}
+
+	public List<String> getTitles() {
+		return toStringList(title);
+	}
+	
+	public List<String> getDescriptions() {
+		return toStringList(description);
+	}
 		
 
 	public String getTitle() {
@@ -88,6 +121,10 @@ public class DublinCore {
 	
 	public void addTitle(String title) {
 		this.title.add(new Title(title));
+	}
+	
+	public void addDescription(String s) {
+		this.description.add(new Description(s));
 	}
 
 	public String toXml() throws Exception {
