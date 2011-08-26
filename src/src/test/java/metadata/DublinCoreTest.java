@@ -59,7 +59,7 @@ public class DublinCoreTest {
 	@Test
 	public void testContributors() {
 		// TODO review the generated test code and remove the default call to fail.
-		assertThat(dc.getContributors(), hasItems("Sílton");
+		assertThat(dc.getContributors(), hasItems("Sílton"));
 	}
 
 	
