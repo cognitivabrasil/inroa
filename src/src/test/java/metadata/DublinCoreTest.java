@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 /**
  *
@@ -45,13 +47,9 @@ public class DublinCoreTest {
 		// TODO review the generated test code and remove the default call to fail.
 		String dc_xml = "";
 		assertEquals(dc.getTitle(),  "Taquaraço: 9 anos de glórias");
-		try {
-			dc_xml = dc.toXml();
-		}
-		catch(Exception e) {
-			//fail("Exception");
-		}
+		assertThat(dc.getTitles(), hasItems("Taquaraço: 9 anos de glórias", "Taquaraço: 9 years of glory"));
 	}
+
 	
 	@Test 
 	public void testXml() {
