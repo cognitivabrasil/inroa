@@ -193,9 +193,6 @@ src/lib/com/jsptags/navigation/pager/parser/Token.class -text
 src/lib/com/jsptags/navigation/pager/parser/TokenMgrError.class -text
 src/lib/junit/junit-3.8.2-api.zip -text
 src/lib/junit/junit-3.8.2.jar -text
-src/lib/junit_4/junit-4.5-api.zip -text
-src/lib/junit_4/junit-4.5-src.jar -text
-src/lib/junit_4/junit-4.5.jar -text
 src/lib/nblibraries.properties -text
 src/lib/pager-src.jar -text
 src/lib/pager-taglib.jar -text
