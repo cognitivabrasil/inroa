@@ -131,12 +131,6 @@ class Right extends TextElement {
 	Right(String s) { super(s); }
 }
 
-@Root(name="oai_dc:dc", strict=false)
-@NamespaceList({
-@Namespace(reference="http://www.openarchives.org/OAI/2.0/oai_dc/", prefix="oai_dc"),
-@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc"),
-@Namespace(reference="http://www.w3.org/2001/XMLSchema-instance", prefix="xsi")})
-
 /**
  * <div class="en">
  * A simple implementation of the Dublin Core metadata
@@ -149,6 +143,12 @@ class Right extends TextElement {
  * 
  * @author Paulo Schreiner
  */
+@Root(name="oai_dc:dc", strict=false)
+@NamespaceList({
+@Namespace(reference="http://www.openarchives.org/OAI/2.0/oai_dc/", prefix="oai_dc"),
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc"),
+@Namespace(reference="http://www.w3.org/2001/XMLSchema-instance", prefix="xsi")})
+
 public class DublinCore {
 	
 @Attribute(name="xsi:schemaLocation", empty="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd", required=false)
