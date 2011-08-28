@@ -342,6 +342,7 @@ src/src/test/java/metadata/conversor/ConversorTest.java -text
 src/src/test/java/metadata/conversor/MockOne.java -text
 src/src/test/java/metadata/conversor/MockTwo.java -text
 src/src/test/java/metadata/conversor/RuleTest.java -text
+src/src/test/java/metadata/missing.xml -text
 src/src/test/java/metadata/teste1.xml -text
 src/web/META-INF/context.xml -text
 src/web/WEB-INF/jsp/pager-taglib.tld -text

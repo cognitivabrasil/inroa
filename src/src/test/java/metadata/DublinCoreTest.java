@@ -4,6 +4,7 @@
  */
 package metadata;
 
+import java.util.ArrayList;
 import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -116,6 +117,12 @@ public class DublinCoreTest {
 		assertThat(dc.getRelations(), hasItems("Rel 1", "Rel 2"));
 	}
 	
+	@Test
+	public void testMissing() {
+		DublinCore dc2 = DublinCore.fromFilename("./src/test/java/metadata/missing.xml");
+		assertEquals(new ArrayList<String>(), dc2.getRights());
+	}
+		
 	
 	@Test 
 	public void testXml() {
