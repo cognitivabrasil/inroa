@@ -57,11 +57,65 @@ public class DublinCoreTest {
 	}
 	
 	@Test
+	public void testPublishers() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getPublishers(), hasItems("Pub 1", "Pub 2"));
+	}
+	
+	@Test
 	public void testContributors() {
 		// TODO review the generated test code and remove the default call to fail.
 		assertThat(dc.getContributors(), hasItems("Sílton"));
 	}
+	
+	@Test
+	public void testDates() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getDates(), hasItems("2006", "2007-06-04T11:33:20Z"));
+	}
+	
+	@Test
+	public void testIdentifiers() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getIdentifiers(), hasItems("http://hdl.handle.net/10183/394", "000578214"));
+	}
+	
+	@Test
+	public void testFormats() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getFormats(), hasItems("506857 bytes", "application/pdf"));
+	}
 
+	@Test
+	public void testSubjects() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getSubjects(), hasItems("Futebol", "Taquaraço", "Campeonato do Dacomp"));
+	}
+
+	@Test
+	public void testTypes() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getTypes(), hasItems("Artigo"));
+	}
+	
+	@Test
+	public void testCoverages() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getCoverages(), hasItems("Coverage 1", "Coverage 2"));
+	}
+
+	@Test
+	public void testRights() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getRights(), hasItems("Right 1", "Right 2"));
+	}
+
+	@Test
+	public void testRelations() {
+		// TODO review the generated test code and remove the default call to fail.
+		assertThat(dc.getRelations(), hasItems("Rel 1", "Rel 2"));
+	}
+	
 	
 	@Test 
 	public void testXml() {

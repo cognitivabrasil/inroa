@@ -24,6 +24,7 @@ import org.simpleframework.xml.Order;
 /**
  *
  * @author paulo
+ * 
  */
 
 class TextElement
@@ -42,6 +43,8 @@ class TextElement
 		return text.trim();
 	}
 }
+
+/* TODO: Usar um gerador de código */
 
 @Root
 @Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
@@ -65,6 +68,68 @@ class Contributor extends TextElement {
 	Contributor(String s) { super(s); }
 }
 
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Date extends TextElement {
+	Date() {}
+	Date(String s) { super(s); }
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Identifier extends TextElement {
+	Identifier() {}
+	Identifier(String s) { super(s); }
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Publisher extends TextElement {
+	Publisher() {}
+	Publisher(String s) { super(s); }
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Format extends TextElement {
+	Format() {}
+	Format(String s) { super(s); }
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Subject extends TextElement {
+	Subject() {}
+	Subject(String s) { super(s); }
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Type extends TextElement {
+	Type() {}
+	Type(String s) { super(s); }
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Relation extends TextElement {
+	Relation() {}
+	Relation(String s) { super(s); }
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Coverage extends TextElement {
+	Coverage() {}
+	Coverage(String s) { super(s); }
+}
+
+@Root
+@Namespace(reference="http://purl.org/dc/elements/1.1/", prefix="dc")
+class Right extends TextElement {
+	Right() {}
+	Right(String s) { super(s); }
+}
 
 @Root(name="oai_dc:dc", strict=false)
 @NamespaceList({
@@ -144,6 +209,115 @@ public class DublinCore {
 	
 	public List<String> getContributors() {
 		return toStringList(contributor);
+	}
+	
+	/* Subject */
+	@ElementList(inline=true)
+	private List<Subject> subject = new ArrayList<Subject>();
+
+	public void addSubject(String s) {
+		this.subject.add(new Subject(s));
+	}
+	
+	public List<String> getSubjects() {
+		return toStringList(subject);
+	}
+	
+	/* Publisher */
+	@ElementList(inline=true)
+	private List<Publisher> publisher = new ArrayList<Publisher>();
+
+	public void addPublisher(String s) {
+		this.publisher.add(new Publisher(s));
+	}
+	
+	public List<String> getPublishers() {
+		return toStringList(publisher);
+	}
+	
+	/* Format */
+	@ElementList(inline=true)
+	private List<Format> format = new ArrayList<Format>();
+
+	public void addFormat(String s) {
+		this.format.add(new Format(s));
+	}
+	
+	public List<String> getFormats() {
+		return toStringList(format);
+	}
+
+
+	/* Type */
+	@ElementList(inline=true)
+	private List<Type> type = new ArrayList<Type>();
+
+	public void addType(String s) {
+		this.type.add(new Type(s));
+	}
+	
+	public List<String> getTypes() {
+		return toStringList(type);
+	}
+	
+	/* Identifier */
+	@ElementList(inline=true)
+	private List<Identifier> identifier = new ArrayList<Identifier>();
+
+	public void addIdentifier(String s) {
+		this.identifier.add(new Identifier(s));
+	}
+	
+	public List<String> getIdentifiers() {
+		return toStringList(identifier);
+	}
+
+	/* Relation */
+	@ElementList(inline=true)
+	private List<Relation> relation = new ArrayList<Relation>();
+
+	public void addRelation(String s) {
+		this.relation.add(new Relation(s));
+	}
+	
+	public List<String> getRelations() {
+		return toStringList(relation);
+	}
+
+	/* Date */
+	@ElementList(inline=true)
+	private List<Date> date = new ArrayList<Date>();
+
+	public void addDate(String s) {
+		this.date.add(new Date(s));
+	}
+	
+	public List<String> getDates() {
+		return toStringList(date);
+	}
+	
+	/* Coverage */
+	@ElementList(inline=true)
+	private List<Coverage> coverage = new ArrayList<Coverage>();
+
+	public void addCoverage(String s) {
+		this.coverage.add(new Coverage(s));
+	}
+	
+	public List<String> getCoverages() {
+		return toStringList(coverage);
+	}
+
+	/* Right */
+	@ElementList(inline=true)
+	private List<Right> right = new ArrayList<Right>();
+
+	public void addRight(String s) {
+		this.right.add(new Right(s));
+	}
+	
+	public List<String> getRights() {
+		return toStringList(right);
 	}
 		
 

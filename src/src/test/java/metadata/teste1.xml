@@ -10,6 +10,8 @@
 	<dc:description>
 		Descrição 2
 	</dc:description>
+	<dc:publisher>Pub 1</dc:publisher>
+	<dc:publisher>Pub 2</dc:publisher>
 	<dc:format>506857 bytes</dc:format>
 	<dc:format>application/pdf</dc:format>
 	<dc:subject>Futebol</dc:subject>
@@ -19,4 +21,10 @@
 	<dc:title>Taquaraço: 9 years of glory</dc:title>
 	<dc:type>Artigo</dc:type>
 	<dc:identifier>000578214</dc:identifier>
+	<dc:relation>Rel 1</dc:relation>
+	<dc:relation>Rel 2</dc:relation>
+	<dc:coverage>Coverage 1</dc:coverage>
+	<dc:coverage>Coverage 2</dc:coverage>
+	<dc:right>Right 1</dc:right>
+	<dc:right>Right 2</dc:right>
 </oai_dc:dc>
