@@ -58,7 +58,8 @@ Quando /^eu tento me logar com usuário "([^"]*)" e senha "([^"]*)"$/ do |usuari
 end
 
 Quando /^eu confirmo o OK( na nova janela)?$/ do | n |
-	if n == "na nova janela "	
+begin
+	if n == " na nova janela"	
 		within_window(page.driver.browser.window_handles.last) do 
 			a = page.driver.browser.switch_to.alert
 			if a.text == 'OK'
@@ -75,6 +76,10 @@ Quando /^eu confirmo o OK( na nova janela)?$/ do | n |
 		  a.accept
 		end
 	end
+
+rescue Selenium::WebDriver::Error::NoAlertOpenError 
+
+end
 	
     #page.evaluate_script('window.alert = function() { return true; }')
 end
@@ -126,3 +131,6 @@ Quando /^eu clicar (na nova janela )?no botão "([^"]*)"$/ do |n, nome|
 end
 
 	
+Then /^o repositório está "([^"]*)"$/ do |estado|
+	$db_state = estado
+end

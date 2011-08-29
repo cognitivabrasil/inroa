@@ -144,7 +144,7 @@ Author     : Marcos Nunes
                 </td>
                 <td>
                     <div id="textResultTodos">
-                    <a style="text-decoration:none" onclick="javaScript:ataualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
+                    <a style="text-decoration:none" title="Atualizar todos" onclick="javaScript:ataualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
                     </div>
                 </td>
                 <% linha++;%>

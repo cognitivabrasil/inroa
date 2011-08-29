@@ -30,9 +30,19 @@ Funcionalidade: Repositórios
 		E eu preencher na nova janela "descricao" com "Repositório de teste"
 		E eu selecionar na nova janela "OBAA" de "padraoMet"
 		E eu preencher na nova janela "periodicidade" com "1"
-		E eu preencher na nova janela "url" com "http://localhost:8080/feb/rep1.xml"
+		E eu preencher na nova janela "url" com "http://localhost:8080/feb/teste/rep1.xml"
 		E eu clicar na nova janela no botão "Avançar >"
 		E eu confirmo o OK na nova janela
 		Então a página deve conter "Repositório de teste"
-		
+		E o repositório está "teste1"
+
+	Cenário: Recarregar os dados do repositório e buscar por Jorjão
+
+		Dado que o repositorio está teste1
+		E que eu abri a página do FEB
+		E que eu estou na tela de login
+		Quando eu tento me logar com usuário "admin" e senha "teste"
+		E eu clicar no link "Atualizar todos"
+		Então a página deve conter "Atualizado!"
+		E o repositório está "teste1-atualizado"
 
