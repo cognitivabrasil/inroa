@@ -15,34 +15,15 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.Text;
 import org.simpleframework.xml.core.Persister;
 import org.simpleframework.xml.Namespace;
 import org.simpleframework.xml.NamespaceList;
-import org.simpleframework.xml.Order;
 
 /**
  *
  * @author paulo
  * 
  */
-
-class TextElement
-{
-	TextElement(String t) {
-		text = t;
-	}
-
-	TextElement() {
-	}
-	
-	@Text
-	private String text;
-
-	public String getText() {
-		return text.trim();
-	}
-}
 
 /* TODO: Usar um gerador de código */
 

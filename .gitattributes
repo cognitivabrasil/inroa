@@ -295,6 +295,8 @@ src/src/java/ferramentaBusca/recuperador/package.html -text
 src/src/java/login/Usuario.java -text
 src/src/java/login/package.html -text
 src/src/java/metadata/DublinCore.java -text
+src/src/java/metadata/LOM/General.java -text
+src/src/java/metadata/LOM/LOM.java -text
 src/src/java/metadata/conversor/Conversor.java -text
 src/src/java/metadata/conversor/Rule.java -text
 src/src/java/metadata/conversor/package-info.java -text
@@ -342,6 +344,7 @@ src/src/test/java/metadata/conversor/ConversorTest.java -text
 src/src/test/java/metadata/conversor/MockOne.java -text
 src/src/test/java/metadata/conversor/MockTwo.java -text
 src/src/test/java/metadata/conversor/RuleTest.java -text
+src/src/test/java/metadata/lom1.xml -text
 src/src/test/java/metadata/missing.xml -text
 src/src/test/java/metadata/teste1.xml -text
 src/web/META-INF/context.xml -text

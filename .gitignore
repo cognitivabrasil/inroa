@@ -4,6 +4,7 @@ src/build
 src/build.xml
 src/dist
 src/nbproject
+src/src/test/java/metadata/.lom1.xml.swp
 src/src/test/java/metadata/.missing.xml.swp
 src/src/test/java/metadata/.teste1.xml.swp
 src/target
