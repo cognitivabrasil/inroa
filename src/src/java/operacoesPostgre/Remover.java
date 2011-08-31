@@ -44,7 +44,7 @@ public class Remover {
     public boolean apagaObjetosSubfederacao(int idSubfed, Connection con) {
 
         try {
-            String sql = "DELETE FROM documentos WHERE id_subfed = "+idSubfed;
+            String sql = "DELETE FROM documentos WHERE id IN (SELECT d.id WHERE documentos d, repositorios_subfed r WHERE d.id_rep_subfed=r.id AND r.id_subfed="+idSubfed+")";
             Statement stm = con.createStatement();
             int res = stm.executeUpdate(sql);
 

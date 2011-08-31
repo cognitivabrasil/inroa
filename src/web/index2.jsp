@@ -55,14 +55,14 @@
             function ocultar(id, idLink){
                 var valor = document.getElementById(idLink);
                 valor.innerHTML="+";
-                valor.onclick=function(){tornarVisivel(idLink,"listaRep", "Interno")};
+                valor.onclick=function(){tornarVisivel(idLink,id, "Interno")};
                 var obj = document.getElementById(id);
                 obj.className='hidden';
             }
             function tornarVisivel(idLink, id, css){
                 var valor = document.getElementById(idLink);
                 valor.innerHTML="-";
-                valor.onclick=function(){ocultar("listaRep", idLink)};
+                valor.onclick=function(){ocultar(id, idLink)};
                 var obj = document.getElementById(id);
                 obj.className=css;
             }
@@ -115,6 +115,7 @@
 
                                 ResultSet rsSub = stm.executeQuery("SELECT nome, id FROM dados_subfederacoes ORDER BY nome ASC");
                                 boolean testeSubfederacao = true;
+                                int idSf = 0;
                                 while (rsSub.next()) {
                                     if (testeSubfederacao) {
                                         if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
@@ -123,11 +124,14 @@
                                         }
                                     }
                                     if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
-
-                                        out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;<a id='link' class='linkRepSubfeb' onclick='tornarVisivel(\"link\",\"listaRep\", \"Interno\");'>+</a><input value='" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
+                                        idSf = rsSub.getInt("id");
+                                        out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
+                                                     + "<a id='link"+idSf+"' class='linkRepSubfeb' onclick='tornarVisivel(\"link"+idSf+"\",\"listaRep" + idSf+"\", \"Interno\");'>+</a><input value='" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
                                                 + " name=\"subfed\""
                                                 + ">" + rsSub.getString("nome").toUpperCase());
-                                        out.print("<div id='listaRep' class='hidden'>");
+
+                                        out.print("<div id='listaRep" + idSf+"' class='hidden'>");
+
                                         String buscaRepSubfed = "SELECT rsf.nome, rsf.id FROM repositorios_subfed rsf WHERE id_subfed=" + rsSub.getString("id");
                                         ResultSet rsRepSub = stm2.executeQuery(buscaRepSubfed);
                                         while (rsRepSub.next()) {

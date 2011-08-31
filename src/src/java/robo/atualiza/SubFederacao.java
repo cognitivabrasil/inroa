@@ -45,7 +45,7 @@ public class SubFederacao {
                 int porta = rs.getInt("porta");
                 Timestamp dataAtualizacao = rs.getTimestamp("data_ultima_atualizacao");
 
-
+                System.out.println("FEB: Atualizando Federacao "+nome);
                 //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
                 if (Operacoes.testarDataAnteriorMil(rs.getDate("data_ultima_atualizacao"))) {
                     Remover deleta = new Remover();
@@ -71,6 +71,7 @@ public class SubFederacao {
 
                     atualizaTimestampSubFed(con, id); //atualiza a hora da ultima atualizacao
                     atualizou = true;
+                    System.out.println("FEB: Federacao "+nome+" atualizada.");
                 } else {
                     System.err.println("FEB: ERRO. Nao foi possivel conectar na base da Subfederacao!!");
                 }
@@ -95,7 +96,7 @@ public class SubFederacao {
      * @throws SQLException
      */
     private void documentos(int idSubFed, Timestamp ultimaAtualizacao, Connection con, Connection conSub) throws SQLException {
-        System.out.println("FEB: Atualizando Subfederacao");
+        
         String sqlSub = "SELECT d.id_repositorio||';FEB;'||d.obaa_entry as entry, r.nome from  documentos d, repositorios r where d.id_repositorio=r.id AND d.timestamp >= '" + ultimaAtualizacao + "'";
 
         Statement stmSub = conSub.createStatement();
@@ -139,8 +140,7 @@ public class SubFederacao {
                     System.err.println("Erro no sql metodo documentos da classe SubFederacao: " + s.getMessage());
                 }
             }
-        }
-        System.out.println("FEB: Subfederacao atualizada.");
+        }       
 
     }
 

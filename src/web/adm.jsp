@@ -61,8 +61,8 @@ Author     : Marcos Nunes
             <tr style="background-color: #AEC9E3">
                 <th width="10%">Opera&ccedil;&otilde;es</th>
 
-                <th width="20%">Nome</th>
-                <th width="50%">Descri&ccedil;&atilde;o</th>
+                <th width="30%">Nome</th>
+                <th width="40%">Descri&ccedil;&atilde;o</th>
                 <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
 
             </tr>
