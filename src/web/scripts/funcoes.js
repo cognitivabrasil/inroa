@@ -136,7 +136,7 @@ function insereValorDiv(id, texto)
     document.getElementById(id).innerHTML =texto;
 }
 
-            /**
+/**
  * Função que inicia o Ajax
 */
 function openAjax() {
@@ -194,9 +194,9 @@ function ataualizaRepAjax(id, exibeResultado)
         {
             if(ajax.status == 200)
             {
-//                var resultado = ajax.responseText;
-//                exibeResultado.innerHTML = resultado;
-                    exibeResultado.innerHTML = "Atualizado!";
+                //                var resultado = ajax.responseText;
+                //                exibeResultado.innerHTML = resultado;
+                exibeResultado.innerHTML = "Atualizado!";
             }
             else
             {
@@ -208,4 +208,48 @@ function ataualizaRepAjax(id, exibeResultado)
 //document.getElementById("nome").value= "";//limpa os campos
 //document.getElementById("nome").setFocus=true;
 
+}
+
+/**
+ * Função que atualiza a subfedera&ccedil;&atilde;o solicitada utilizando ajax.
+ * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
+ * @param id id da subfedera&ccedil;&atilde;o a ser atualizada
+ * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
+*/
+function ataualizaSubfedAjax(id, exibeResultado)
+{
+
+
+    var ajax = openAjax(); // Inicia o Ajax.
+
+    ajax.open("POST", "atualizaSubfedAjax.jsp?id="+id, true); // Envia o termo da busca como uma querystring
+
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        {
+            exibeResultado.innerHTML = "Aguarde, atualizando...";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
+            {
+                var resultado = ajax.responseText;
+                
+                if(resultado == 1)
+                {
+                    exibeResultado.innerHTML = "Atualizado!";
+                }
+                else{
+                    exibeResultado.innerHTML = "N&atilde;o foi poss&iacute;vel atualizar!";
+                }
+
+            }
+            else
+            {
+                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+            }
+        }
+    }
+    ajax.send(null); // submete
 }

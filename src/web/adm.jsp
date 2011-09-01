@@ -214,8 +214,10 @@ Author     : Marcos Nunes
                         } else {
                             out.println("Ainda n&atilde;o foi atualizado!");
                         }
-                        %>
-
+                        %>                     
+                        <a title="Atualizar agora" onclick="javaScript:ataualizaSubfedAjax(<%=resultFederacao.getString("id")%>, document.getElementById('textResultSF<%=resultFederacao.getString("id")%>'));">
+                            <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        </a>                       
                     </div>
                 </td>
                 <% linha2++;%>
@@ -234,12 +236,17 @@ Author     : Marcos Nunes
                     </a>
 
                 </td>
-                <td colspan="3"class="left bold" style="font-size:110%">
+                <td colspan="2"class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
                     <a onclick="NewWindow('cadastraFederacao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         Adicionar nova subfedera&ccedil;&atilde;o
                     </a>
 
+                </td>
+                <td>
+                    <div id="textResultSF">
+                    <a style="text-decoration:none" title="Atualizar todas" onclick="javaScript:ataualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todas agora</a>
+                    </div>
                 </td>
 
                 <%
@@ -281,8 +288,6 @@ Author     : Marcos Nunes
                         <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </td>
                     <td>&nbsp;Adicionar</td>
-
-
 
                 </tr>
             </table>
