@@ -135,9 +135,15 @@
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
-                    N&uacute;umero de objetos:
+                    N&uacute;mero de objetos:
                 </div>
-                <div class="Value">&nbsp;<%=Consultar.selectNumeroDocumentosRep(con,Integer.parseInt(id))%></div>
+                <div class="Value">
+                    <div>&nbsp;<%=Consultar.selectNumeroDocumentosRep(con,Integer.parseInt(id))%></div>
+<!-- Fazendo um botão que remova todos os objetos e colete novamente
+                    <div class="ApagaObjetos">&nbsp;<input type="button" value="Remover e atualizar"></div>
+-->
+                </div>
+               
             </div>
 
         </div>

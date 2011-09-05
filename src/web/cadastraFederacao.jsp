@@ -89,7 +89,7 @@
                         Porta:
                     </div>
                     <div class="Value">
-                        <input name="porta" id="portaDes" type="text" maxlength="4" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="porta" id="portaDes" value="5432" type="text" maxlength="4" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -97,7 +97,7 @@
                         Login:
                     </div>
                     <div class="Value">
-                        <input name="loginDestino" id="loginDes" type="text" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="loginDestino" id="loginDes" type="text" maxlength="100" value="feb" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">

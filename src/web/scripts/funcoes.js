@@ -169,7 +169,6 @@ function trim(str){
 
 
 
-
 /**
  * Função que atualiza o repositorio solicitado utilizando ajax.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.

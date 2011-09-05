@@ -341,6 +341,17 @@ a:hover{
 .LinhaEntrada .Value{
     margin:0 0 20px 41%;
 }
+.LinhaEntrada .Value .ApagaObjetos{
+    margin-top: 2%;
+}
+.LinhaEntrada .Value .ApagaObjetos input{
+    background-color: #EE2037;
+    border-color: red;
+    color: white;
+    font-weight: bold;
+    width:30%;
+}
+
 .LinhaEntrada .ValueIndex{
     margin:0 0 5px 41%;
 }
@@ -352,6 +363,7 @@ a:hover{
     color:red;
     font-weight:bold;
 }
+
 
 .LinhaEntrada .alerta {
     border:0px solid gray;

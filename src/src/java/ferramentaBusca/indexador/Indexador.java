@@ -180,7 +180,7 @@ public class Indexador {
         //apaga as tabelas antes de inserir
         apagarCalculosIndice(con);
 
-        preencheR1Tokens(con);
+        preencheR1Tokens(con); //procura por documentos que nao foram tokenizados e tokeniza.
         
         PreparedStatement R1Size = con.prepareStatement("INSERT INTO r1size(size) SELECT COUNT(id) FROM documentos;");
 

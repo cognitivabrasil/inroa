@@ -4,6 +4,7 @@
  */
 package robo.atualiza;
 
+import ferramentaBusca.indexador.Indexador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import operacoesPostgre.Remover;
 import postgres.Conectar;
 import postgres.Configuracao;
@@ -31,27 +33,13 @@ public class SubFederacao {
         return atualiza(con, -1);
     }
 
-    public boolean atualizaSubfedAdm(int idSub) {
-        boolean resultado = false;
-        Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
-        Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-        resultado = atualiza(con, idSub);
-
-        try {
-            con.close(); //fechar conexao
-        } catch (SQLException e) {
-            System.out.println("Erro ao fechar a conexão no metodo atualizaSubfedAdm: " + e.getMessage());
-        }
-        return resultado;
-    }
-
     private boolean atualiza(Connection con, int idSub) {
         boolean atualizou = false;
         String sql = "";
 
         if (idSub < 0) { //atualiza por data, se for maior que 24h
             sql = "SELECT id, login, senha, porta, ip, base, nome, data_ultima_atualizacao FROM dados_subfederacoes WHERE data_ultima_atualizacao <= (now() - ('24 HOUR')::INTERVAL) AND nome != 'Local';";
-        } else if(idSub > 0){ //atualiza federacao especifica
+        } else if (idSub > 0) { //atualiza federacao especifica
             sql = "SELECT id, login, senha, porta, ip, base, nome, data_ultima_atualizacao FROM dados_subfederacoes WHERE nome != 'Local' AND id=" + idSub;
         } else { //atualiza todas federacoes idependente da data da ultima atualizacao
             sql = "SELECT id, login, senha, porta, ip, base, nome, data_ultima_atualizacao FROM dados_subfederacoes WHERE nome != 'Local';";
@@ -271,7 +259,7 @@ public class SubFederacao {
      */
     private void atualizaRepSubfed(int idSubFed, Connection conLocal, Connection conSub) throws SQLException {
         String selectSub = "SELECT nome FROM repositorios";
-        String selectLocal = "SELECT nome FROM repositorios_subfed";
+        String selectLocal = "SELECT nome FROM repositorios_subfed WHERE id_subfed=" + idSubFed;
 
         Statement stmSub = conSub.createStatement();
         ResultSet rsSub = stmSub.executeQuery(selectSub);
@@ -303,5 +291,29 @@ public class SubFederacao {
             }
         }
 
+    }
+
+    public boolean atualizaSubfedAdm(int idSub) {
+        boolean resultado = false;
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
+        Connection con = con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+        resultado = atualiza(con, idSub);
+        try {
+            if (resultado) {
+                Indexador indexar = new Indexador();
+                System.out.println("FEB: recalculando o indice " + new Date());
+                indexar.populateR1(con);
+                System.out.println("FEB: indice recalculado! " + new Date());
+            }
+        } catch (SQLException e) {
+            System.err.println("FEB ERRO: SQLException no metodo atualizaSubfedAdm: " + e.getMessage());
+        } finally {
+            try {
+                con.close(); //fechar conexao
+            } catch (SQLException e) {
+                System.out.println("FEB ERRO: Erro ao fechar a conexão no metodo atualizaSubfedAdm: " + e.getMessage());
+            }
+        }
+        return resultado;
     }
 }
