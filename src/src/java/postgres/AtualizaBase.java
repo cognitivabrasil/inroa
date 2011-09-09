@@ -19,7 +19,7 @@ public class AtualizaBase {
      * @param id Identificador do repositorio que deseja atualizar a data_ultima_atualizacao.
      * @return Retorna true se a alteração foi realizada ou false se ocorreu algum erro ao atualizar a data.
      */
-    public boolean atualizaHora(int id){
+    public static boolean atualizaHora(int id){
         //Connection con = null;
         Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
@@ -38,14 +38,13 @@ public class AtualizaBase {
 
 
         } catch (SQLException e) {
-            System.out.println("Erro ao atualizar data de ultima atualizaçao... Erro no SQL:");
-            e.printStackTrace();
+            System.err.println("FEB ERRO: Erro no sql ao atualizar data de ultima atualizaçao... Mensagem:" +e.getMessage());
             return false;
         }finally {
             try {
                 con.close(); //fechar conexao
                 } catch (SQLException e) {
-                System.out.println("Erro ao fechar a conexão: " + e.getMessage());
+                System.out.println("FEB ERRO: Erro ao fechar a conexão: " + e.getMessage());
             }
         }
 

@@ -63,7 +63,7 @@ public class Repositorios {
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro na consulta SQL no metodo testa_atualizar_repositorio. Mensagem:"+e);
+            System.err.println("FEB ERRO: Erro na consulta SQL no metodo testa_atualizar_repositorio. Mensagem:"+e);
         }
 
         return atualizou;
@@ -98,8 +98,8 @@ public class Repositorios {
 
                 String nome = rs.getString("nome"); //atribiu a variavel nome o nome do repositorio retornado pela consulta sql
 
-                System.out.println("-> " + new Date());
-                System.out.println("Atualizando repositorio: " + nome);//imprime o nome do repositorio
+                System.out.println("FEB -> " + new Date());
+                System.out.println("FEB: Atualizando repositorio: " + nome);//imprime o nome do repositorio
 
                 String url = rs.getString("url"); //pega a url retornada pela consulta sql
                 String metadataPrefix = rs.getString("metadata_prefix"); // para o OAI-PMH
@@ -114,7 +114,7 @@ public class Repositorios {
                     Date data_ultima_atualizacao = rs.getDate("data_ultima_atualizacao");
                     ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
 
-                    System.out.println("\t Ultima Atualização: " + ultimaAtualizacao + " nome do rep: " + nome);
+                    System.out.println("\t FEB: Ultima Atualização: " + ultimaAtualizacao + " nome do rep: " + nome);
 
 
                     //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
@@ -158,10 +158,9 @@ public class Repositorios {
                 }
             }
 
-            //ATUALIZA DATA ultima atualizacao
-            AtualizaBase atualiza = new AtualizaBase();
+            
             //chama metodo que atualiza a hora da ultima atualizacao
-            atualiza.atualizaHora(idRepositorio);
+            AtualizaBase.atualizaHora(idRepositorio);
 
         } catch (UnknownHostException u) {
             System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
@@ -185,6 +184,7 @@ public class Repositorios {
             System.err.println(msgOAI+ msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
         } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
             System.out.println("FEB: "+ msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
+            AtualizaBase.atualizaHora(idRepositorio);
         } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
             System.err.println(msgOAI+ msg + " - There are no metadata formats available for the specified item.\n");
         } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
@@ -204,6 +204,7 @@ public class Repositorios {
         }
 
     }
+
 
     /**
      * M&eacute;todo utilizado pela ferramenta administrativa para atualizar o reposit&oacute;rio em tempo real. Este m&eacute;todo recebe um id, se esse if for zero ele atualiza todos os reposit&aacute;rios existentes. Se for um valor maior que zero ele atualiza apenas o escolhido.

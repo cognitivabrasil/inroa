@@ -622,7 +622,7 @@ td{vertical-align:top;}
     background-color:#AEC9E3;
 }
 .tituloPrincipal .tituloObj{
-    font-size:155%;
+    font-size:135%;
     margin-left:5%;
     font-weight:bold;
 }
@@ -633,6 +633,7 @@ td{vertical-align:top;}
     font-family:Verdana, Arial, Helvetica, sans-serif;
     font-style:italic;
     font-weight:bold;
+    font-size: 80%;
 }
 
 
@@ -648,7 +649,7 @@ td{vertical-align:top;}
 }
 .topicosObj .titulo{
     margin:1% 0% 1% 7%;
-    font-size:140%;
+    font-size:120%;
     text-decoration:underline;
 }
 .subTopicosObj .nome{
@@ -662,7 +663,7 @@ td{vertical-align:top;}
 }
 .subTopicosObj .titulo{
     margin:1% 0% 1% 9%;
-    font-size:110%;
+    font-size:108%;
     text-decoration:underline;
 }
 

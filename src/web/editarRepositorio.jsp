@@ -175,8 +175,8 @@
                 <input type="hidden" name="apagar" value="sim"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
-                        <input type="button" value="< Voltar" onclick="javascript:history.go(-1);"/>
-                        <input type="submit" value="Gravar >" name="submit" />
+                        <input type="button" value="&lArr; Voltar" onclick="javascript:history.go(-1);"/>
+                        <input type="submit" value="Gravar &rArr;" name="submit" />
 
                     </div>
                 </div>
@@ -222,8 +222,8 @@
                 <input type="hidden" name="apagar" value="sim"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
-                        <input type="button" value="< Voltar" onclick="javascript:history.go(-1);"/>
-                        <input type="submit" value="Gravar >" name="submit" />
+                        <input type="button" value="&lArr; Voltar" onclick="javascript:history.go(-1);"/>
+                        <input type="submit" value="Gravar &rArr;" name="submit" />
                     </div>
                 </div>
             </form>
