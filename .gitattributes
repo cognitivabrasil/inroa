@@ -248,6 +248,7 @@ src/src/java/robo/main/package.html -text
 src/src/java/robo/util/Informacoes.java -text
 src/src/java/robo/util/Operacoes.java -text
 src/src/java/robo/util/package.html -text
+src/src/java/webservice/adriano.java -text
 src/src/test/java/metadata/DublinCoreTest.java -text
 src/src/test/java/metadata/LOM/LOMTest.java -text
 src/src/test/java/metadata/conversor/ConversorTest.java -text
@@ -279,7 +280,6 @@ src/web/googleAnalytics -text
 src/web/gravaRepositorioBase.jsp -text
 src/web/imagens/Lapiz-24x24.png -text
 src/web/imagens/Lapiz-32x32.png -text
-src/web/imagens/Logo[!!-~]FEB_reduzido.jpg -text
 src/web/imagens/Logo[!!-~]FEB_reduzido.png -text
 src/web/imagens/Logo[!!-~]FEB_reduzido_45x32.png -text
 src/web/imagens/Logo_UFRGS.jpg -text
@@ -287,7 +287,6 @@ src/web/imagens/Thumbs.db -text
 src/web/imagens/add-24x24.png -text
 src/web/imagens/erro_sincronizar.png -text
 src/web/imagens/favicon.ico -text
-src/web/imagens/ferramenta_128x128.png -text
 src/web/imagens/ferramenta_32x32.png -text
 src/web/imagens/gerarRss.png -text
 src/web/imagens/ico24_deletar.gif -text

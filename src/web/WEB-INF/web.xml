@@ -5,9 +5,17 @@
         <servlet-class>robo.main.Start</servlet-class>
         <load-on-startup>10</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>adriano</servlet-name>
+        <servlet-class>webservice.adriano</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Start</servlet-name>
         <url-pattern>/Start</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>adriano</servlet-name>
+        <url-pattern>/adriano</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
