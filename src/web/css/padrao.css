@@ -346,10 +346,11 @@ a:hover{
 }
 .LinhaEntrada .Value .ApagaObjetos input{
     background-color: #EE2037;
-    border-color: red;
+    border-color: white;
     color: white;
     font-weight: bold;
     width:30%;
+    font-size: 80%;
 }
 
 .LinhaEntrada .ValueIndex{

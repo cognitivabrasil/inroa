@@ -18,6 +18,7 @@
         <title>FEB - Ferramenta Administrativa</title>
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <script language="JavaScript" type="text/javascript" src="scripts/funcoes.js"></script>
     </head>
 
     <body>
@@ -28,9 +29,6 @@
             <%
                         String id = request.getParameter("id");
 
-//        String sql = "SELECT r.*, i.*, p.nome as nome_padrao, l.nome as nome_federacao, l.descricao as descricao_federacao, l.porta, l.login, l.senha, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao"
-//+" FROM repositorios r, info_repositorios i, dados_subfederacoes l, padraometadados p"
-//+" WHERE r.id="+id+" AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.id_federacao=l.id ORDER BY r.nome ASC";
                         String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao, i.url_or_ip, i.periodicidade_horas, i.name_space, i.metadata_prefix, t.nome as nometipomap, t.descricao as descricaotm, i.data_ultima_atualizacao, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao "
                                 + " FROM repositorios r, info_repositorios i, padraometadados p, tipomapeamento t "
                                 + " WHERE r.id=" + id + " AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.tipo_mapeamento_id=t.id "
@@ -113,7 +111,7 @@
                             out.println("<p class='textoErro'>Ocorreu um erro ao consultar a base de dados.</p>");
             %>
             <div class="subtitulo">Atualiza&ccedil;&atilde;o</div>
-            <div class="editar"><a href="">Atualizar agora</a></div>
+            <div class="EspacoAntes">&nbsp;</div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
@@ -139,17 +137,11 @@
                 </div>
                 <div class="Value">
                     <div>&nbsp;<%=Consultar.selectNumeroDocumentosRep(con,Integer.parseInt(id))%></div>
-<!-- Fazendo um botão que remova todos os objetos e colete novamente
-                    <div class="ApagaObjetos">&nbsp;<input type="button" value="Remover e atualizar"></div>
--->
-                </div>
-               
+                    
+                    <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Remover e atualizar" onclick="javascript:apagaAtaualizaRepAjax(<%=id%>, this.parentNode)"></div>
+                    
+                </div>               
             </div>
-
-        </div>
-
-        <div class="BotaoFechar">
-            <input class="color" id="cancelar" onclick="javascript:window.close();" value="&nbsp;&nbsp;Fechar janela&nbsp;&nbsp;" type="button" class="CancelButton"/>
         </div>
 
         <%@include file="googleAnalytics"%>

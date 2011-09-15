@@ -252,3 +252,42 @@ function ataualizaSubfedAjax(id, exibeResultado)
     }
     ajax.send(null); // submete
 }
+
+
+
+/**
+ * Função que remove todos os objetos de um reposiorio e atualiza novamente utilizando ajax.
+ * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
+ * @param id id do repositorio a ser atualizado
+ * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
+*/
+function apagaAtaualizaRepAjax(id, exibeResultado)
+{
+    if (confirm("Deseja excluir todos os objetos e coletar novamente? \n\n Isso pode levar bastante tempo.")) {
+        var ajax = openAjax(); // Inicia o Ajax.
+
+        ajax.open("POST", "atualizaApagandoRepAjax.jsp?id="+id, true); // Envia o termo da busca como uma querystring
+
+        ajax.onreadystatechange = function()
+        {
+            if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+            {
+                exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando... <BR> Mensagem estão sendo escritas no log";
+            }
+            if(ajax.readyState == 4) // Quando estiver tudo pronto.
+            {
+                if(ajax.status == 200)
+                {
+                    //                var resultado = ajax.responseText;
+                    //                exibeResultado.innerHTML = resultado;
+                    exibeResultado.innerHTML = "Atualizado!";
+                }
+                else
+                {
+                    exibeResultado.innerHTML = "Erro nas funções do Ajax";
+                }
+            }
+        }
+        ajax.send(null); // submete
+    }
+}

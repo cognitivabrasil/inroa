@@ -15,7 +15,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>adriano</servlet-name>
-        <url-pattern>/adriano</url-pattern>
+        <url-pattern>/webservice</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

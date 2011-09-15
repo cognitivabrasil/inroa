@@ -63,7 +63,7 @@ public class Repositorios {
             }
 
         } catch (SQLException e) {
-            System.err.println("FEB ERRO: Erro na consulta SQL no metodo testa_atualizar_repositorio. Mensagem:"+e);
+            System.err.println("FEB ERRO: Erro na consulta SQL no metodo testa_atualizar_repositorio. Mensagem:" + e);
         }
 
         return atualizou;
@@ -158,14 +158,14 @@ public class Repositorios {
                 }
             }
 
-            
+
             //chama metodo que atualiza a hora da ultima atualizacao
             AtualizaBase.atualizaHora(idRepositorio);
 
         } catch (UnknownHostException u) {
             System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
         } catch (SQLException e) {
-            System.err.println("SQL Exception... Erro na consulta sql na classe Repositorios:"+ e.getMessage());
+            System.err.println("SQL Exception... Erro na consulta sql na classe Repositorios:" + e.getMessage());
         } catch (ParserConfigurationException e) {
             System.err.println("O parser nao foi configurado corretamente. " + e);
             e.printStackTrace();
@@ -173,31 +173,31 @@ public class Repositorios {
             String msg = e.getMessage();
             String msgOAI = "\nFEB: ERRO no parser do OAI-PMH, mensagem: ";
             if (msg.equalsIgnoreCase("badArgument")) {
-            System.err.println(msgOAI+ msg + " - The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.\n");
-        } else if (msg.equalsIgnoreCase("badResumptionToken")) {
-            System.err.println(msgOAI+ msg + " - The value of the resumptionToken argument is invalid or expired.\n");
-        } else if (msg.equalsIgnoreCase("badVerb")) {
-            System.err.println(msgOAI+ msg + " - Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated. \n");
-        } else if (msg.equalsIgnoreCase("cannotDisseminateFormat")) {
-            System.err.println(msgOAI+ msg + " -  The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.\n");
-        } else if (msg.equalsIgnoreCase("idDoesNotExist")) {
-            System.err.println(msgOAI+ msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
-        } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
-            System.out.println("FEB: "+ msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
-            AtualizaBase.atualizaHora(idRepositorio);
-        } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
-            System.err.println(msgOAI+ msg + " - There are no metadata formats available for the specified item.\n");
-        } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
-            System.err.println(msgOAI+ msg + " - The repository does not support sets.\n");
-        } else{
+                System.err.println(msgOAI + msg + " - The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.\n");
+            } else if (msg.equalsIgnoreCase("badResumptionToken")) {
+                System.err.println(msgOAI + msg + " - The value of the resumptionToken argument is invalid or expired.\n");
+            } else if (msg.equalsIgnoreCase("badVerb")) {
+                System.err.println(msgOAI + msg + " - Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated. \n");
+            } else if (msg.equalsIgnoreCase("cannotDisseminateFormat")) {
+                System.err.println(msgOAI + msg + " -  The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.\n");
+            } else if (msg.equalsIgnoreCase("idDoesNotExist")) {
+                System.err.println(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
+            } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
+                System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
+                AtualizaBase.atualizaHora(idRepositorio);
+            } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
+                System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
+            } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
+                System.err.println(msgOAI + msg + " - The repository does not support sets.\n");
+            } else {
                 System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e);
             }
         } catch (FileNotFoundException e) {
-            System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: " + e +"\n");
+            System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: " + e + "\n");
         } catch (IOException e) {
-            System.err.println("\nFEB ERRO: O arquivo nao pode ser escrito ou lido: " + e +"\n");
+            System.err.println("\nFEB ERRO: O arquivo nao pode ser escrito ou lido: " + e + "\n");
         } catch (Exception e) {
-            System.err.println("\nFEB ERRO ao efetuar o Harvester " + e +"\n");
+            System.err.println("\nFEB ERRO ao efetuar o Harvester " + e + "\n");
         } finally {
 
             return atualizou;
@@ -209,23 +209,30 @@ public class Repositorios {
     /**
      * M&eacute;todo utilizado pela ferramenta administrativa para atualizar o reposit&oacute;rio em tempo real. Este m&eacute;todo recebe um id, se esse if for zero ele atualiza todos os reposit&aacute;rios existentes. Se for um valor maior que zero ele atualiza apenas o escolhido.
      * @param idRep id do reposit&oacute;rio a ser atualizado. Se informar zero atualizar&aacute; todos
+     * @param apagar informar se deseja apagar toda a base. true apaga e false apenas atualiza.
      * @author Marcos Nunes
      */
-    public void atualizaFerramentaAdm(int idRep) {
+    public void atualizaFerramentaAdm(int idRep, boolean apagar) {
 
         Indexador indexar = new Indexador();
         Connection con = null;
         boolean recalcularIndice = false;
-        try {
-            Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
+
+        try {            
             con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+            Statement stm = con.createStatement();
+            
+            if(apagar){
+                zeraDataRepositorio(idRep, con, stm); //se informado true seta a data da ultima atualizacao para zero
+            }
 
             if (idRep > 0) {
                 recalcularIndice = atualizaRepositorio(idRep, indexar, con);
             } else {
                 String sql = "SELECT r.id as idrep" + " FROM repositorios r" + " WHERE r.nome!='todos';";
 
-                Statement stm = con.createStatement();
+                
                 ResultSet rs = stm.executeQuery(sql);
 
                 while (rs.next()) {
@@ -240,7 +247,7 @@ public class Repositorios {
             }
 
         } catch (SQLException e) {
-            System.err.println("SQL Exception... Erro na consulta SQL no metodo atualizaFerramentaAdm: "+e);
+            System.err.println("SQL Exception... Erro na consulta SQL no metodo atualizaFerramentaAdm: " + e);
         } finally {
             try {
                 con.close(); //fechar conexao
@@ -251,5 +258,9 @@ public class Repositorios {
 
 
     }
+    private void zeraDataRepositorio(int idRep, Connection con, Statement stm) throws SQLException {
+        String sql = "UPDATE info_repositorios set data_ultima_atualizacao='0001-01-01 00:00:00' WHERE id_repositorio=" + idRep;
+        stm.executeUpdate(sql);
 
+    }
 }

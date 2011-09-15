@@ -198,10 +198,6 @@
                                                                 ArrayList resultHash = new ArrayList(); //ArrayList que recebera o resultado da busca
 
 
-                                                                //fazer consulta na base de dados para pegar as informações necessárias
-                                                                //postgres ok
-                                                                //String resultadoSQL = "SELECT l.id as id_base, d.obaa_entry, d.titulo, d.resumo, d.data, d.localizacao, r.nome as repositorio FROM documentos d, repositorios r, dados_subfederacoes l, info_repositorios i where d.id=" + resultadoBusca.get(result) + " and d.id_repositorio=r.id and r.id=i.id_repositorio and i.id_federacao=l.id;";
-
                                                                 ArrayList<String> titulo = new ArrayList<String>();
                                                                 ArrayList<String> resumo = new ArrayList<String>();
                                                                 ArrayList<String> data = new ArrayList<String>();

@@ -180,7 +180,7 @@ Author     : Marcos Nunes
 
             //Carrega do banco de dados os repositorios cadastrados
 
-            ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao, l.data_ultima_atualizacao FROM dados_subfederacoes l where l.nome != 'Local' ORDER BY nome ASC;");
+            ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao, l.data_ultima_atualizacao FROM dados_subfederacoes l ORDER BY nome ASC;");
             while (resultFederacao.next()) {
 
                 if (linha2 % 2 == 0) {

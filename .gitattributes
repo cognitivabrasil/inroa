@@ -211,7 +211,6 @@ src/src/java/ferramentaBusca/package.html -text
 src/src/java/login/Usuario.java -text
 src/src/java/login/package.html -text
 src/src/java/operacoesPostgre/Consultar.java -text
-src/src/java/operacoesPostgre/Editar.java -text
 src/src/java/operacoesPostgre/Remover.java -text
 src/src/java/operacoesPostgre/package.html -text
 src/src/java/postgres/AtualizaBase.java -text
@@ -264,6 +263,7 @@ src/web/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
 src/web/WEB-INF/web.xml -text
 src/web/adm.jsp -text
 src/web/alterarSenha.jsp -text
+src/web/atualizaApagandoRepAjax.jsp -text
 src/web/atualizaRepAjax.jsp -text
 src/web/atualizaSubfedAjax.jsp -text
 src/web/cadastraFederacao.jsp -text
@@ -285,6 +285,7 @@ src/web/imagens/Logo[!!-~]FEB_reduzido_45x32.png -text
 src/web/imagens/Logo_UFRGS.jpg -text
 src/web/imagens/Thumbs.db -text
 src/web/imagens/add-24x24.png -text
+src/web/imagens/ajax-loader.gif -text
 src/web/imagens/erro_sincronizar.png -text
 src/web/imagens/favicon.ico -text
 src/web/imagens/ferramenta_32x32.png -text

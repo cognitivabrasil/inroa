@@ -25,7 +25,7 @@ public class Robo {
         boolean repAtualizado = false;
         boolean subFedAtualizada = false;
 //CONTA O NUMERO DE DOCUMENTOS
-        int nDocumentos = selectNumeroDocumentos(con);
+//        int nDocumentos = selectNumeroDocumentos(con);
 
 //TESTA/ATUALIZA SUBFEDERACAO
         SubFederacao subFed = new SubFederacao();
@@ -35,9 +35,10 @@ public class Robo {
         Repositorios repositorio = new Repositorios();
         repAtualizado = repositorio.testa_atualizar_repositorio(con, indexar);
 
-//SE PRECISAR RECALCULA O INDICE
+//TESTA SE PRECISA RECALCULA O INDICE
         try {
-            if ((subFedAtualizada || repAtualizado) && nDocumentos!=selectNumeroDocumentos(con)) {
+//           if ((subFedAtualizada || repAtualizado) && nDocumentos!=selectNumeroDocumentos(con)) {
+              if (subFedAtualizada || repAtualizado) {
                 System.out.println("FEB: recalculando o indice " + new Date());
                 indexar.populateR1(con);
                 System.out.println("FEB: indice recalculado! " + new Date());

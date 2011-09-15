@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +19,7 @@ import postgres.Conectar;
  *
  * @author Adriano
  */
-@WebServlet(name = "adriano", urlPatterns =
-{
-    "/adriano"
-})
+
 public class adriano extends HttpServlet
 {
 
@@ -50,8 +46,7 @@ public class adriano extends HttpServlet
             String xml = geraXML(id, conn);
             out.println(xml);
             
-            conn.close();    
-               
+            conn.close();                   
         } 
         
         catch(SQLException ex)

@@ -19,20 +19,15 @@ public class Remover {
      * @param con Conex&atilde;o com a base a ser apagada.
      * @return Retorna true se não ocorreu nenhum erro ao apagar os objetos ou false se ocorreu algum erro.
      */
-    public boolean apagaObjetosRepositorio(int idRepositorio, Connection con) {
+    public void apagaObjetosRepositorio(int idRepositorio, Connection con) {
 
         try {
             String sql = "DELETE FROM documentos WHERE id_repositorio = "+idRepositorio;
             Statement stm = con.createStatement();
             int res = stm.executeUpdate(sql);
 
-            if (res>0)
-                return true;
-             else
-                return false;
-
         } catch (SQLException e){
-            return false;
+            System.err.println("FEB ERRO: metodo apagaObjetosRepositorio. Nao foi possivel deletar a base de dados: "+e.getMessage());
         }       
     }
     /**

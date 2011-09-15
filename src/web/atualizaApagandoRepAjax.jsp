@@ -1,6 +1,6 @@
 <%-- 
-    Document   : atualizaRepAjax
-    Created on : 13/10/2010, 11:47:40
+    Document   : atualizaApagandoRepAjax
+    Created on : 14/09/2011, 17:50:31
     Author     : Marcos
 --%>
 
@@ -13,5 +13,5 @@ String id = request.getParameter("id");
 int idRep = Integer.parseInt(id);
 
 Repositorios repositorio = new Repositorios();
-repositorio.atualizaFerramentaAdm(idRep, false);
+repositorio.atualizaFerramentaAdm(idRep, true);
 %>

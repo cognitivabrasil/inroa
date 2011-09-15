@@ -73,7 +73,7 @@ public class InsereObjetoBase {
                 return idDoc;
             }
         } catch (SQLException e) {
-            System.out.println("ERRO Inserindo dados na tabela documentos. ->" + e);
+            System.out.println("FEB ERRO Inserindo dados na tabela documentos. ->" + e);
             return idDoc;
         }
     }

@@ -28,7 +28,12 @@
                 } else {
                     testaConsulta = true;
                 }
-            } catch (Exception e) {
+            }catch (NullPointerException n){
+                out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
+                        + "<script type='text/javascript'>window.location=\"index.jsp\";</script>");
+                out.print("Nenhuma consulta foi informada");
+            }
+            catch (Exception e) {
                 out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
                         + "<script type='text/javascript'>window.location=\"index.jsp\";</script>");
                 e.printStackTrace();
