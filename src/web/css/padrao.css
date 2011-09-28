@@ -331,11 +331,16 @@ a:hover{
 .LinhaEntrada .Label{
     float:left;
     text-align:right;
-    width:40%
+    width:40%;
 }
 
 .LinhaEntrada .Tab{
     padding-left:5%;
+}
+.LinhaEntrada .Comentario{
+    margin:0 0 5px 42%;
+    font-size: 80%;
+    color: #585858;
 }
 
 .LinhaEntrada .Value{

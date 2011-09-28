@@ -127,6 +127,21 @@ Primeira etapa do cadastro de um repositorio
                 </div>
 
                 <div class="LinhaEntrada">
+                    <div class="Label">
+                        Cole&ccedil;&otilde;es ou Comunidades:
+                    </div>
+                    <div class="Comentario">
+                        Se for mais de uma separar por ponto e v&iacute;rgula.
+                    </div>
+                    <div class="Comentario">
+                        Ex: com1;com2;com3
+                    </div>
+                    <div class="Value">
+                        <input name="set" value="" id="set" type="text" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                    </div>
+                </div>
+
+                <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="reset" value="Limpar" class="CancelButton" onclick="javascript:window.location.reload();"/>
                         <input id="cancelar" onclick="javascript:window.close();" value="Cancelar" type="button" class="CancelButton"/>

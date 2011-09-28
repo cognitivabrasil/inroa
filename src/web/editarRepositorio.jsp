@@ -75,7 +75,7 @@
                                     int idPadrao = res.getInt("id_padrao");
                                     int idTipoMap = res.getInt("tipo_mapeamento_id");
                                     String nameSpace = res.getString("name_space");
-                                    String metadataPrefix=res.getString("metadata_prefix");
+                                    String metadataPrefix = res.getString("metadata_prefix");
 
             %>
             <script type="text/javascript">
@@ -183,7 +183,7 @@
             </form>
             <%
                                             } else if (tipo.equalsIgnoreCase("OAI-PMH")) {
-                                                String sql = "SELECT i.url_or_ip, r.nome, i.periodicidade_horas FROM info_repositorios i, repositorios r WHERE r.id=i.id_repositorio AND i.id_repositorio=" + id;
+                                                String sql = "SELECT i.url_or_ip, r.nome, i.periodicidade_horas, i.set FROM info_repositorios i, repositorios r WHERE r.id=i.id_repositorio AND i.id_repositorio=" + id;
                                                 ResultSet res = stm.executeQuery(sql);
                                                 res.next();
 
@@ -206,6 +206,17 @@
                     </div>
                     <div class="Value">
                         <input name="url" value="<%=res.getString("url_or_ip")%>" id="url" type="text" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                    </div>
+                </div>
+                <div class="LinhaEntrada">
+                    <div class="Label">
+                        Cole&ccedil;&otilde;es ou Comunidades:
+                    </div>
+                    <div class="Comentario">
+                        Se for mais de uma separar por ponto e v&iacute;rgula.
+                    </div>
+                    <div class="Value">
+                        <input name="set" value="<%=res.getString("set")%>" id="set" type="text" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -290,6 +301,8 @@
 
                                 String url = request.getParameter("url").trim();
                                 String periodicidade = request.getParameter("periodicidade").trim();
+                                String set = request.getParameter("set").trim();
+
                                 if (url.isEmpty() || periodicidade.isEmpty()) {
                                     out.print("<script type='text/javascript'>alert('Os campos url e periodicidade devem estar devidamente preenchidos!');</script>"
                                             + "<script type='text/javascript'>history.back(-1);</script>");
@@ -297,7 +310,7 @@
                                 } else {
                                     //trocar de dias para horas
                                     int periodicidadeHoras = Integer.parseInt(periodicidade) * 24;
-                                    String sql = "UPDATE info_repositorios SET url_or_ip='" + url + "', periodicidade_horas=" + periodicidadeHoras + " WHERE id_repositorio=" + id;
+                                    String sql = "UPDATE info_repositorios SET url_or_ip='" + url + "', periodicidade_horas=" + periodicidadeHoras + ", set='"+set+"' WHERE id_repositorio=" + id;
                                     result = stm.executeUpdate(sql);
                                     if (result > 0) {
                                         out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); "

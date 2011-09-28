@@ -1,9 +1,9 @@
 package ferramentaBusca.indexador;
 
 import java.util.ArrayList;
-import java.util.regex.*;
 import ptstemmer.*;
 import ptstemmer.exceptions.PTStemmerException;
+import robo.util.Operacoes;
 
 
 
@@ -206,17 +206,20 @@ public class Documento {
             S = S.toLowerCase();
 
 //REMOVIDO PARA TESTE COM EXPRESSAO REGULAR ABAIXO
-
             //S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
-            S = S.replaceAll("á|à|â|ã|ä", "a");
-            S = S.replaceAll("é|è|ê|ë", "e");
-            S = S.replaceAll("í|ì|î|ï", "i");
-            S = S.replaceAll("ó|ò|ô|õ|ö", "o");
-            S = S.replaceAll("ú|ù|û|ü", "u");
-            S = S.replaceAll("ç", "c");
-            S = S.replaceAll("ñ", "n");
-            S = S.replaceAll("\\W", " ");
-            S = S.trim();
+
+            S = Operacoes.removeAcentuacao(S); //chama o metodo que substitui as letras acentuadas e todo tipo de caracter alem de [a-zA-Z_0-9]
+
+
+//            S = S.replaceAll("á|à|â|ã|ä", "a");
+//            S = S.replaceAll("é|è|ê|ë", "e");
+//            S = S.replaceAll("í|ì|î|ï", "i");
+//            S = S.replaceAll("ó|ò|ô|õ|ö", "o");
+//            S = S.replaceAll("ú|ù|û|ü", "u");
+//            S = S.replaceAll("ç", "c");
+//            S = S.replaceAll("ñ", "n");
+//            S = S.replaceAll("\\W", " ");
+//            S = S.trim();
 
             String tokens[];
             tokens = st.getPhraseStems(S);

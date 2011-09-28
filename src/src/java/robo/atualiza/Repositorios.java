@@ -84,7 +84,7 @@ public class Repositorios {
 
         String caminhoDiretorioTemporario = conf.getCaminho();
 
-        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, i.metadata_prefix, to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form"
+        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, i.metadata_prefix, i.set, to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form"
                 + " FROM repositorios r, info_repositorios i"
                 + " WHERE r.id = i.id_repositorio"
                 + " AND r.id = " + idRepositorio + ";";
@@ -103,7 +103,10 @@ public class Repositorios {
 
                 String url = rs.getString("url"); //pega a url retornada pela consulta sql
                 String metadataPrefix = rs.getString("metadata_prefix"); // para o OAI-PMH
-
+                String set = rs.getString("set");
+                if (set==null || set.isEmpty()) {
+                    set = null;
+                }
                 if (url.isEmpty()) { //testa se a string url esta vazia.
                     System.out.println("Não existe uma url associada ao repositório " + nome);
                     atualizou = false;
@@ -146,7 +149,7 @@ public class Repositorios {
 
                     if (caminhoTeste.isDirectory()) {
                         //efetua o Harvester e grava os xmls na pasta temporaria
-                        caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, nome, caminhoDiretorioTemporario, metadataPrefix); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
+                        caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, nome, caminhoDiretorioTemporario, metadataPrefix, set); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
 
                         //leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados
                         gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con);
@@ -205,7 +208,6 @@ public class Repositorios {
 
     }
 
-
     /**
      * M&eacute;todo utilizado pela ferramenta administrativa para atualizar o reposit&oacute;rio em tempo real. Este m&eacute;todo recebe um id, se esse if for zero ele atualiza todos os reposit&aacute;rios existentes. Se for um valor maior que zero ele atualiza apenas o escolhido.
      * @param idRep id do reposit&oacute;rio a ser atualizado. Se informar zero atualizar&aacute; todos
@@ -219,11 +221,11 @@ public class Repositorios {
         boolean recalcularIndice = false;
         Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
 
-        try {            
+        try {
             con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
             Statement stm = con.createStatement();
-            
-            if(apagar){
+
+            if (apagar) {
                 zeraDataRepositorio(idRep, con, stm); //se informado true seta a data da ultima atualizacao para zero
             }
 
@@ -232,7 +234,7 @@ public class Repositorios {
             } else {
                 String sql = "SELECT r.id as idrep" + " FROM repositorios r" + " WHERE r.nome!='todos';";
 
-                
+
                 ResultSet rs = stm.executeQuery(sql);
 
                 while (rs.next()) {
@@ -258,9 +260,11 @@ public class Repositorios {
 
 
     }
+
     private void zeraDataRepositorio(int idRep, Connection con, Statement stm) throws SQLException {
         String sql = "UPDATE info_repositorios set data_ultima_atualizacao='0001-01-01 00:00:00' WHERE id_repositorio=" + idRep;
         stm.executeUpdate(sql);
 
     }
+
 }

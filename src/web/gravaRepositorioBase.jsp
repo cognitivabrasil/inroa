@@ -35,6 +35,7 @@
         String tipo_mapeamento = "";
         String metadataPrefix = "";
         String nameSpace = "";
+        String set = "";
 
         try {
             //armazena em variaveis os dados preenchidos no formulario
@@ -46,6 +47,7 @@
             tipo_mapeamento = request.getParameter("tipo_map").trim();
             metadataPrefix = request.getParameter("metPrefix").trim();
             nameSpace = request.getParameter("namespace").trim();
+            set = request.getParameter("set");
 
             if (url.isEmpty() || nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || periodicidadeDias.isEmpty() || tipo_mapeamento.isEmpty() || metadataPrefix.isEmpty() || nameSpace.isEmpty()) {
                 out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
@@ -97,8 +99,8 @@
                         rs.next();
                         key = rs.getLong(1);
                         int periodicidadeHoras = Integer.parseInt(periodicidadeDias)*24; //mudar dias para horas
-                        String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, padrao_metadados, tipo_mapeamento_id, metadata_prefix, name_space) " +
-                                "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidadeHoras + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', "+tipo_mapeamento+", '"+metadataPrefix+"','"+nameSpace+"');";
+                        String sql2 = "INSERT INTO info_repositorios (id_repositorio, data_ultima_atualizacao, periodicidade_horas, nome_na_federacao, url_or_ip, padrao_metadados, tipo_mapeamento_id, metadata_prefix, name_space, set) " +
+                                "VALUES (" + key + ", '0001-01-01 00:00:00', " + periodicidadeHoras + ", '" + nomeNaFederacao + "', '" + url + "', '" + padrao_metadados + "', "+tipo_mapeamento+", '"+metadataPrefix+"','"+nameSpace+"','"+set+"');";
 
 
                         result2 = stm.executeUpdate(sql2); //executa o que tem na variavel slq2

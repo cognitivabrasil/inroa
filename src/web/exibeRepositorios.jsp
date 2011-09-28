@@ -29,14 +29,17 @@
             <%
                         String id = request.getParameter("id");
 
-                        String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao, i.url_or_ip, i.periodicidade_horas, i.name_space, i.metadata_prefix, t.nome as nometipomap, t.descricao as descricaotm, i.data_ultima_atualizacao, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao "
+                        String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao, i.url_or_ip, i.periodicidade_horas, i.name_space, i.metadata_prefix, i.set, t.nome as nometipomap, t.descricao as descricaotm, i.data_ultima_atualizacao, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao "
                                 + " FROM repositorios r, info_repositorios i, padraometadados p, tipomapeamento t "
                                 + " WHERE r.id=" + id + " AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.tipo_mapeamento_id=t.id "
                                 + " ORDER BY r.nome ASC";
                         
                         ResultSet res = stm.executeQuery(sql);
                         if (res.next()) {
-
+                            String set = res.getString("set");
+                            if(set==null || set.isEmpty()){
+                                set = "Todas";
+                            }
             %>
 
             <!--Informações Gerais-->
@@ -95,6 +98,13 @@
                     URL que responde OAI-PMH:
                 </div>
                 <div class="Value">&nbsp;<%=res.getString("url_or_ip")%></div>
+            </div>
+
+            <div class="LinhaEntrada">
+                <div class="Label">
+                    Cole&ccedil;&otilde;es ou Comunidades:
+                </div>
+                <div class="Value">&nbsp;<%=set%></div>
             </div>
 
             <div class="LinhaEntrada">

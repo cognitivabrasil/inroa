@@ -21,7 +21,11 @@ public class Conectar {
         conf = subfed;
     }
 
-    
+
+    /**
+     * Conecta na base de dados e retorna uma Connection.
+     * @return Connection com a conex&atilde;o com o postgres
+     */
     public Connection conectaBD() {
 
         Connection con = null;

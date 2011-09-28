@@ -145,27 +145,23 @@ public class teste {
         return result;
     }
 
-    public void testeStemmer() {
-        try {
-            Stemmer stemmer = Stemmer.StemmerFactory(StemmerType.ORENGO);
-            stemmer.enableCaching(1000);
-            stemmer.remove(PTStemmerUtilities.fileToSet("data/stopwords.txt"));
-//        stemmer.ignore(PTStemmerUtilities.fileToSet("data/namedEntities.txt"));
-            String[] stem = stemmer.getPhraseStems("ciências a para bacana");
-            for (int i = 0; i < stem.length; i++) {
-                System.out.println(PTStemmerUtilities.removeDiacritics(stem[i]));
-            }
-        } catch (PTStemmerException e) {
-            e.printStackTrace();
-        }
-    }
+   public static void testeObj(ArrayList<String> array, String i){
+       i+="b";
+       array.add("segundo");
+   }
 
     public static void main(String[] args) {
 //
-        String S = "“invar;”";
-        System.out.println(S);
-        S = S.replaceAll("\\W", " ");
-        System.out.println(S);
-        }
+        ArrayList<String> array = new ArrayList<String>();
 
+        String count = "a";
+        
+        array.add("primeiro");
+        
+        
+        testeObj(array,count);
+        count+="c";
+        System.out.println(array +" "+count);
+
+        }
 }
