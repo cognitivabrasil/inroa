@@ -5,6 +5,7 @@
 package ferramentaBusca;
 
 import ferramentaBusca.indexador.Documento;
+import ferramentaBusca.indexador.StopWordTAD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +47,8 @@ public class Recuperador {
             idSubRep = new String[1];
             idSubRep[0] = "";
         }
-        Documento docConsulta = new Documento(consulta); //Cria tad Documento informando a consulta
+        StopWordTAD stWd = new StopWordTAD();
+        Documento docConsulta = new Documento(consulta, stWd); //Cria tad Documento informando a consulta
         ArrayList<String> tokensConsulta = docConsulta.getTokens(); //tokeniza as palavras da consulta e adiciona no ArrayList
         ArrayList<Integer> idsResultados = new ArrayList<Integer>(); //lista dos ids dos documentos retornados da consulta
 

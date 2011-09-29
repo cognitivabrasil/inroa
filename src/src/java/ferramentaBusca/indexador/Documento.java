@@ -24,24 +24,6 @@ public class Documento {
 
 
 
-//    public Documento() {
-//        titulo = new ArrayList<String>();
-//        palCh = new ArrayList<String>();
-//        ent = new ArrayList<String>();
-//        desc = new ArrayList<String>();
-//        id = 1;
-//        obaa_entry="";
-//        resumo = "";
-//        data = "";
-//        localizacao = "";
-//        servidor = 0;
-//        obaa_entry = "";
-//        tituloOriginal = "";
-//
-//
-//
-//    }
-
         public Documento(StopWordTAD StopWd) {
         titulo = new ArrayList<String>();
         palCh = new ArrayList<String>();
@@ -60,11 +42,11 @@ public class Documento {
 
     }
 
-    public Documento(String query) {
+    public Documento(String query, StopWordTAD StopWd) {
         titulo = new ArrayList<String>();
         palCh = new ArrayList<String>();
         ent = new ArrayList<String>();
-        desc = tokeniza(query);
+        desc = tokeniza(query, StopWd);
         id = 0;
         obaa_entry="";
         resumo = "";
@@ -205,21 +187,7 @@ public class Documento {
 
             S = S.toLowerCase();
 
-//REMOVIDO PARA TESTE COM EXPRESSAO REGULAR ABAIXO
-            //S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
-
             S = Operacoes.removeAcentuacao(S); //chama o metodo que substitui as letras acentuadas e todo tipo de caracter alem de [a-zA-Z_0-9]
-
-
-//            S = S.replaceAll("á|à|â|ã|ä", "a");
-//            S = S.replaceAll("é|è|ê|ë", "e");
-//            S = S.replaceAll("í|ì|î|ï", "i");
-//            S = S.replaceAll("ó|ò|ô|õ|ö", "o");
-//            S = S.replaceAll("ú|ù|û|ü", "u");
-//            S = S.replaceAll("ç", "c");
-//            S = S.replaceAll("ñ", "n");
-//            S = S.replaceAll("\\W", " ");
-//            S = S.trim();
 
             String tokens[];
             tokens = st.getPhraseStems(S);
@@ -269,15 +237,7 @@ public class Documento {
         
         st.remove(StopWords.getRes());
 
-        S = S.replaceAll(":|!|'|\"|\\.|,|;|\\?|\\||\\(|\\)|\\{|\\}|\\[|\\]| - |\\+|\\=|\\#|\\&|_|\\\\|/|-", " ");
-        S = S.replaceAll("á|à|â|ã|ä", "a");
-        S = S.replaceAll("é|è|ê|ë", "e");
-        S = S.replaceAll("í|ì|î|ï", "i");
-        S = S.replaceAll("ó|ò|ô|õ|ö", "o");
-        S = S.replaceAll("ú|ù|û|ü", "u");
-        S = S.replaceAll("ç", "c");
-
-        S = S.trim();
+       S = Operacoes.removeAcentuacao(S); //chama o metodo que substitui as letras acentuadas e todo tipo de caracter alem de [a-zA-Z_0-9]
         
 
             String tokens[];

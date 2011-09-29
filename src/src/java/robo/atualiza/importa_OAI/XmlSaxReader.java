@@ -87,7 +87,7 @@ public class XmlSaxReader extends DefaultHandler {
      */
     @Override
     public void startDocument() {
-        System.out.println(" Iniciando a leitura do XML");
+        System.out.println(" FEB: Iniciando a leitura do XML");
     }
 
     /**
@@ -96,7 +96,7 @@ public class XmlSaxReader extends DefaultHandler {
     @Override
     public void endDocument() {
 
-        System.out.println(" Acabou a leitura/importação do XML");
+        System.out.println(" FEB: Fim da leitura/importação do XML");
     }
 
     /**

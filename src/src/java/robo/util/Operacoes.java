@@ -20,6 +20,7 @@ public class Operacoes {
      */
     public static boolean testarDataAnteriorMil(Date horaBase) {
 
+        try{
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         Date dataTeste = null;
@@ -34,7 +35,9 @@ public class Operacoes {
         } else {
             return false;
         }
-
+        }catch(NullPointerException n){
+            return false;
+        }
     }
 
     /**

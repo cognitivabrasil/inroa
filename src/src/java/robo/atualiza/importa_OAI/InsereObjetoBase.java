@@ -69,7 +69,7 @@ public class InsereObjetoBase {
                 /*************************************************************
                  * ATUALIZAR OS ATRIBUTOS DOS DOCUMENTOS QUE JA ESTAO NA BASE
                  *************************************************************/
-                System.out.println("Ja existe um documento com o entry informado. Entry: " + header.getIdentifier()+"\n");
+                System.out.println("FEB: Ja existe um documento com o entry informado. Entry: " + header.getIdentifier()+"\n");
                 return idDoc;
             }
         } catch (SQLException e) {

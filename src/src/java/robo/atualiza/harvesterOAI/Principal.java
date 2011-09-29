@@ -31,6 +31,7 @@ public class Principal {
         this.metadataPrefix = metadataPrefix;
         int numeroXML = 0;
 
+
         ArrayList<String> caminhosXML = new ArrayList<String>();
         //substitui os espacos por underline
         nomeRepositorio = Operacoes.removeAcentuacao(nomeRepositorio);
@@ -39,10 +40,14 @@ public class Principal {
         String barra = System.getProperty("file.separator");
         String nomeArquivo = dirXML + barra + "FEB-" + nomeRepositorio; //endereco + nome do arquivo. Utilizado em mais de um local no codigo.
 
-        String[] setVet = set.split(";");
-        for (int i = 0; i < setVet.length; i++) { //percorre todos os sets que tem que atualizar.
+        if (set == null) {
+            coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, null);
+        } else {
+            String[] setVet = set.split(";");
+            for (int i = 0; i < setVet.length; i++) { //percorre todos os sets que tem que atualizar.
 
-            numeroXML = coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, setVet[i]); //coleta todos os dados do set especificado
+                numeroXML = coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, setVet[i]); //coleta todos os dados do set especificado
+            }
         }
 
         System.out.println("FEB: Arquivos XML com dados do repositorio foi gravado");
@@ -95,7 +100,6 @@ public class Principal {
 
         return numeroXML;
     }
-
 }
 
 /*

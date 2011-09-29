@@ -149,6 +149,7 @@ public class Repositorios {
 
                     if (caminhoTeste.isDirectory()) {
                         //efetua o Harvester e grava os xmls na pasta temporaria
+
                         caminhoXML = importar.buscaXmlRepositorio(url, ultimaAtualizacao, nome, caminhoDiretorioTemporario, metadataPrefix, set); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
 
                         //leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados

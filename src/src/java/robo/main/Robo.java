@@ -31,17 +31,25 @@ public class Robo {
         SubFederacao subFed = new SubFederacao();
         subFedAtualizada = subFed.atualiza_subFederacao(con);
 
+///////
+        Long inicio = System.currentTimeMillis();
+
 //TESTA REPOSITORIO
         Repositorios repositorio = new Repositorios();
         repAtualizado = repositorio.testa_atualizar_repositorio(con, indexar);
+
+        Long fimAtualizacao = System.currentTimeMillis();
+        System.out.println("#TIMER: tempo da coleta e insercao: " + (fimAtualizacao - inicio) + " milisegundos.");
 
 //TESTA SE PRECISA RECALCULA O INDICE
         try {
 //           if ((subFedAtualizada || repAtualizado) && nDocumentos!=selectNumeroDocumentos(con)) {
               if (subFedAtualizada || repAtualizado) {
                 System.out.println("FEB: recalculando o indice " + new Date());
+                Long inicioIndice = System.currentTimeMillis();
                 indexar.populateR1(con);
-                System.out.println("FEB: indice recalculado! " + new Date());
+                Long fimIndice = System.currentTimeMillis();
+                System.out.println("FEB: indice recalculado em: "+ (fimIndice - inicioIndice) + " milisegundos! ");
             } else {
                 System.err.println("FEB: NAO existe atualizaçoes para os repositorios! " + new Date());
             }
@@ -50,6 +58,8 @@ public class Robo {
         } catch (SQLException e) {
             System.err.println("FEB: Erro com sql no robo: " + e.getMessage());
         } finally{
+            Long fim = System.currentTimeMillis();
+            System.out.println("#TIMER: Tempo total: " + (fim - inicio) + " milisegundos! " );
             try {
                 con.close(); //fechar conexao
                 } catch (SQLException e) {

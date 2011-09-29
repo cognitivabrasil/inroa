@@ -150,18 +150,26 @@ public class teste {
        array.add("segundo");
    }
 
-    public static void main(String[] args) {
-//
-        ArrayList<String> array = new ArrayList<String>();
+   public static void testeObjMain(){
+       ArrayList<String> array = new ArrayList<String>();
 
         String count = "a";
-        
+
         array.add("primeiro");
-        
-        
+
+
         testeObj(array,count);
         count+="c";
         System.out.println(array +" "+count);
+   }
+
+    public static void main(String[] args) {
+        String set = null;
+        if (set == null) {
+            set = "";
+        }
+        String[] setVet = set.split(";");
+        System.out.println(setVet.length);
 
         }
 }

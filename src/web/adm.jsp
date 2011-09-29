@@ -44,13 +44,13 @@ Author     : Marcos Nunes
 
         <%
 
-            //efetua a consulta listando os repositorios
+                    //efetua a consulta listando os repositorios
 
 
-            //se retornar algum resultado{
-            // Cria uma tabela HTML onde ficarao os repositorios cadastrados
-            //        <table valign="center" width=100% aling="center" cellspacing=5 cellpadding=5 border=3 >
-%>
+                    //se retornar algum resultado{
+                    // Cria uma tabela HTML onde ficarao os repositorios cadastrados
+                    //        <table valign="center" width=100% aling="center" cellspacing=5 cellpadding=5 border=3 >
+        %>
         <table class='repositorios-table' cellpadding=3>
             <tr>
                 <th colspan=4>
@@ -68,20 +68,22 @@ Author     : Marcos Nunes
             </tr>
 
             <%
-            int linha = 1;
-            String yesnocolor = "";
+                        int linha = 1;
+                        String yesnocolor = "";
 
-            //Carrega do banco de dados os repositorios cadastrados
-            //postgres ok
-            ResultSet res = stm.executeQuery("SELECT r.nome, r.id, r.descricao, i.data_ultima_atualizacao FROM repositorios r, info_repositorios i where r.id=i.id_repositorio ORDER BY nome ASC;");
-            while (res.next()) {
-                if (!res.getString("nome").equalsIgnoreCase("todos")) {
+                        //Carrega do banco de dados os repositorios cadastrados
+                        //postgres ok
+                        ResultSet res = stm.executeQuery("SELECT r.nome, r.id, r.descricao, i.data_ultima_atualizacao FROM repositorios r, info_repositorios i where r.id=i.id_repositorio ORDER BY nome ASC;");
+                        while (res.next()) {
 
-                    if (linha % 2 == 0) {
-                        yesnocolor = "price-yes";
-                    } else {
-                        yesnocolor = "price-no";
-                    }
+                            if (res.getInt("id") > 0) {
+                                if (!res.getString("nome").equalsIgnoreCase("todos")) {
+
+                                    if (linha % 2 == 0) {
+                                        yesnocolor = "price-yes";
+                                    } else {
+                                        yesnocolor = "price-no";
+                                    }
             %>
 
 
@@ -102,14 +104,14 @@ Author     : Marcos Nunes
                 <td class="<%=yesnocolor%>">&nbsp;
                     <div id="textResult<%=res.getString("id")%>">
                         <%
-                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-                        if (!Operacoes.testarDataAnteriorMil(res.getDate("data_ultima_atualizacao"))) {
-                            out.println("Dia " + format.format(res.getDate("data_ultima_atualizacao")) + " &agrave;s " + res.getTime("data_ultima_atualizacao"));
+                                            if (!Operacoes.testarDataAnteriorMil(res.getDate("data_ultima_atualizacao"))) {
+                                                out.println("Dia " + format.format(res.getDate("data_ultima_atualizacao")) + " &agrave;s " + res.getTime("data_ultima_atualizacao"));
 
-                        } else {
-                            out.println("Ainda n&atilde;o foi atualizado!");
-                        }
+                                            } else {
+                                                out.println("Ainda n&atilde;o foi atualizado!");
+                                            }
                         %>
 
                         <a title="Atualizar agora" onclick="javaScript:ataualizaRepAjax(<%=res.getString("id")%>, document.getElementById('textResult'+<%=res.getString("id")%>));">
@@ -123,8 +125,9 @@ Author     : Marcos Nunes
 
             </tr>
             <%
-                }
-            } //fim while%>
+                                }
+                            }
+                        } //fim while%>
 
 
             <tr class='center'>
@@ -144,7 +147,7 @@ Author     : Marcos Nunes
                 </td>
                 <td>
                     <div id="textResultTodos">
-                    <a style="text-decoration:none" title="Atualizar todos" onclick="javaScript:ataualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
+                        <a style="text-decoration:none" title="Atualizar todos" onclick="javaScript:ataualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
                     </div>
                 </td>
                 <% linha++;%>
@@ -175,19 +178,19 @@ Author     : Marcos Nunes
 
 
             <%
-            int linha2 = 1;
-            yesnocolor = "";
+                        int linha2 = 1;
+                        yesnocolor = "";
 
-            //Carrega do banco de dados os repositorios cadastrados
+                        //Carrega do banco de dados os repositorios cadastrados
 
-            ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao, l.data_ultima_atualizacao FROM dados_subfederacoes l ORDER BY nome ASC;");
-            while (resultFederacao.next()) {
+                        ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao, l.data_ultima_atualizacao FROM dados_subfederacoes l ORDER BY nome ASC;");
+                        while (resultFederacao.next()) {
 
-                if (linha2 % 2 == 0) {
-                    yesnocolor = "price-yes";
-                } else {
-                    yesnocolor = "price-no";
-                }
+                            if (linha2 % 2 == 0) {
+                                yesnocolor = "price-yes";
+                            } else {
+                                yesnocolor = "price-no";
+                            }
             %>
 
             <tr  class='center'>
@@ -206,14 +209,14 @@ Author     : Marcos Nunes
                 <td class="<%=yesnocolor%>">&nbsp;
                     <div id="textResultSF<%=resultFederacao.getString("id")%>">
                         <%
-                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-                        if (!Operacoes.testarDataAnteriorMil(resultFederacao.getDate("data_ultima_atualizacao"))) {
-                            out.println("Dia " + format.format(resultFederacao.getDate("data_ultima_atualizacao")) + " &agrave;s " + resultFederacao.getTime("data_ultima_atualizacao"));
+                                        if (!Operacoes.testarDataAnteriorMil(resultFederacao.getDate("data_ultima_atualizacao"))) {
+                                            out.println("Dia " + format.format(resultFederacao.getDate("data_ultima_atualizacao")) + " &agrave;s " + resultFederacao.getTime("data_ultima_atualizacao"));
 
-                        } else {
-                            out.println("Ainda n&atilde;o foi atualizado!");
-                        }
+                                        } else {
+                                            out.println("Ainda n&atilde;o foi atualizado!");
+                                        }
                         %>                     
                         <a title="Atualizar agora" onclick="javaScript:ataualizaSubfedAjax(<%=resultFederacao.getString("id")%>, document.getElementById('textResultSF<%=resultFederacao.getString("id")%>'));">
                             <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
@@ -225,7 +228,7 @@ Author     : Marcos Nunes
             </tr>
             <%
 
-            } //fim while%>
+                        } //fim while%>
 
 
             <tr class='center'>
@@ -245,12 +248,12 @@ Author     : Marcos Nunes
                 </td>
                 <td>
                     <div id="textResultSF">
-                    <a style="text-decoration:none" title="Atualizar todas" onclick="javaScript:ataualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todas agora</a>
+                        <a style="text-decoration:none" title="Atualizar todas" onclick="javaScript:ataualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todas agora</a>
                     </div>
                 </td>
 
                 <%
-            linha2++;
+                            linha2++;
                 %>
 
             </tr>
