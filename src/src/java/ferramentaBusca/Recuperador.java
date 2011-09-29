@@ -47,7 +47,7 @@ public class Recuperador {
             idSubRep = new String[1];
             idSubRep[0] = "";
         }
-        StopWordTAD stWd = new StopWordTAD();
+        StopWordTAD stWd = new StopWordTAD(con);
         Documento docConsulta = new Documento(consulta, stWd); //Cria tad Documento informando a consulta
         ArrayList<String> tokensConsulta = docConsulta.getTokens(); //tokeniza as palavras da consulta e adiciona no ArrayList
         ArrayList<Integer> idsResultados = new ArrayList<Integer>(); //lista dos ids dos documentos retornados da consulta

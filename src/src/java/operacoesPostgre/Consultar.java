@@ -117,11 +117,11 @@ public class Consultar {
     }
 
     /**
-     * Consulta na base de dados a descri&ccedil;&atilde;o do tipo de mapeamento
+     * Consulta na base de dados a descri&ccedil;&atilde;o do tipo de mapeamento.
      * @param id id do tipo de mapeamento que deseja saber a descri&ccedil;&atilde;o
      * @return String contendo a descri&ccedil;&atilde;o
      */
-    public static String consultaDescricaoMapeamento(int id) {
+    public static String consultaDescricaoMapeamento(int id) {//utilizado pelo ajax que apresenta na tela a descricao do repositorio selecionado
         String descricao = "";
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
@@ -162,14 +162,4 @@ public class Consultar {
 
     }
 
-    public static void main(String[] args) {
-
-        Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
-        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-        System.out.println("conectou");
-        //Consultar run = new Consultar("objetodementira171", arg, con);
-        Consultar run = new Consultar("562;FEB;oai:cesta2.cinted.ufrgs.br:123456789/222", 1, "null", con);
-        System.out.println(run.getResultado());
-         
-    }
 }

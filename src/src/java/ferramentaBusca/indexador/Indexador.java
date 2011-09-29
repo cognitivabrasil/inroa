@@ -243,7 +243,7 @@ public class Indexador {
     public void preencheR1Tokens(Connection con) throws SQLException {
         //retorna todos documentos que nao possuem r1tokens preenchido
         String sql = "select d.id, d.obaa_entry, d.id_repositorio from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL";
-        StopWordTAD stWd = new StopWordTAD();
+        StopWordTAD stWd = new StopWordTAD(con);
 
         
         Statement stm = con.createStatement();
@@ -313,14 +313,4 @@ public class Indexador {
 
     }
 
-    public static void main(String[] args) {
-        Indexador run = new Indexador();
-        Conectar conecta = new Conectar();
-        Connection con = conecta.conectaBD();
-        try {
-            run.preencheR1Tokens(con);
-        } catch (SQLException s) {
-            s.printStackTrace();
-        }
-    }
 }

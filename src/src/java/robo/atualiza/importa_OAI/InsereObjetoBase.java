@@ -22,9 +22,9 @@ public class InsereObjetoBase {
     public static int insereObaa(DadosObjetos dadosObjetos, Header header, Connection con, int idRep) {
         
         int idDoc = -1;
-        System.out.println(" =============================");
-        System.out.println("  Inserindo objeto: " + header.getIdentifier());
-        System.out.println(" =============================");
+//        System.out.println(" =============================");
+//        System.out.println("  Inserindo objeto: " + header.getIdentifier());
+//        System.out.println(" =============================");
 
 ////        if(header.getIdentifier().equalsIgnoreCase("oai:localhost:123456789/693")){
 ////            int i=0;
@@ -48,20 +48,9 @@ public class InsereObjetoBase {
                 stmt1.close();
 
 
-                addBaseDados(dadosObjetos, con, idDoc);
-                //adiciona os valores lidos do xml na base
+                addBaseDados(dadosObjetos, con, idDoc); //adiciona os valores lidos do xml na base
+               
 
-//                Set<String> chaves = dadosObjetos.getAtributos().keySet();
-//                //percorre todo o HashMap
-//                for (String chave : chaves) //enquanto tiver chaves chave recebe o conteudo de chaves
-//                {
-//                    if (chave != null) { // testa se a string chave é diferente de nulo
-//                        ArrayList<String> lista = dadosObjetos.getAtributos().get(chave); //adiciona no ArrayList todos os valores para a chave atual(do for)
-//                        String[] valores = (String[]) lista.toArray(new String[lista.size()]); //transforma o arraylist em um vetor de string pq é só o que o LDAPAttribute aceita para multiplos valores
-//
-//                        addBaseDados(chave, valores, con, idDoc);
-//                    }
-//                }
 
                 return idDoc;
             } else {
@@ -212,10 +201,4 @@ public class InsereObjetoBase {
 //
 //    }
 
-    public static void main(String[] args) {
-        Conectar conecta = new Conectar();
-        Connection con = conecta.conectaBD();
-        String[] kk = {"a", "b"};
-//        addBaseDados("obaaMarcos", kk, con, 69743);
-    }
 }

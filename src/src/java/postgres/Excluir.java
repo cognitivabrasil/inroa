@@ -114,16 +114,4 @@ public class Excluir {
         }
     }
 
-    public static void main(String[] args) {
-        Excluir run = new Excluir();
-        //run.removeStopWords();
-        try {
-            Conectar conn = new Conectar();
-            Connection con = conn.conectaBD();
-            System.out.println(run.removerDocumentoIndice("apagar", 8,con));
-            con.close();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
 }

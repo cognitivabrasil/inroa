@@ -85,28 +85,4 @@ public class InicioLeituraXML {
 
     }
 
-//    public static void main(String[] args) {
-//        XmlSaxReader reader = new XmlSaxReader();
-//        Indexador indexar = new Indexador();
-//        //efetua a leitura do xml e insere os objetos na base de dados
-//        try {
-//
-//            Conectar conectar = new Conectar(); //instancia uma variavel da classe portgres.conectar
-//            Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe portgres.conectar
-//
-//            reader.parser("C:/request.xml", indexar, con, 14);
-//            con.close();
-//        } catch (UnsupportedEncodingException e) {
-//            System.out.println("Error: " + e.toString());
-//        } catch (SAXException e) {
-//           String erro = Repositorios.trataErroOAIPMH(e.getMessage());
-//            if (erro.isEmpty()) {
-//                System.err.println("Problema ao fazer o parse do arquivo. " + e);
-//            } else {
-//                System.err.println("FEB: Erro no parser do OAI-PMH, mensagem: "+erro);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

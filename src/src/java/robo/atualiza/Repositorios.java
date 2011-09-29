@@ -164,7 +164,7 @@ public class Repositorios {
 
 
             //chama metodo que atualiza a hora da ultima atualizacao
-            AtualizaBase.atualizaHora(idRepositorio);
+            AtualizaBase.atualizaHora(idRepositorio, con);
 
         } catch (UnknownHostException u) {
             System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
@@ -188,7 +188,7 @@ public class Repositorios {
                 System.err.println(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
             } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
                 System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
-                AtualizaBase.atualizaHora(idRepositorio);
+                AtualizaBase.atualizaHora(idRepositorio, con);
             } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                 System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
             } else if (msg.equalsIgnoreCase("noSetHierarchy")) {

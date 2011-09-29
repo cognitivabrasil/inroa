@@ -100,7 +100,7 @@ public class IndexadorBusca {
     public void indexaDocumentos(int idSubFed, int idRepositorio, Connection con) {
         if (idSubFed > 0 || idRepositorio > 0) {
             Long inicio = System.currentTimeMillis();
-            StopWordTAD stWd = new StopWordTAD();
+            StopWordTAD stWd = new StopWordTAD(con);
             Indice indice = new Indice();
             System.out.println("FEB: Inicio da indexacao...");
             try {

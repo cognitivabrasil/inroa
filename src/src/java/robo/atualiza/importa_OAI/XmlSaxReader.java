@@ -28,7 +28,7 @@ public class XmlSaxReader extends DefaultHandler {
     /** Buffer que guarda as informacoes quando um texto e encontrado */
     private StringBuffer valorAtual = new StringBuffer(50);
 
-    private StopWordTAD stWd = new StopWordTAD();
+    private StopWordTAD stWd;
     //OAI_Interface que ira receber os dados do xml
     private Header headerAux = new Header();
     //contantes que representam as tags do arquivo XML
@@ -75,7 +75,7 @@ public class XmlSaxReader extends DefaultHandler {
         this.indexa = indexar;
         this.idRepositorio = idRep;
         this.Conexao = con;
-
+        stWd = new StopWordTAD(con);
         parser.parse(caminhoXML, this);
 
     }

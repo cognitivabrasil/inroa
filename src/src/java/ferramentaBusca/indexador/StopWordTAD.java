@@ -2,7 +2,6 @@ package ferramentaBusca.indexador;
 
 import java.util.HashSet;
 import java.sql.*;
-import postgres.Conectar;
 
 /**
  *
@@ -13,18 +12,10 @@ public class StopWordTAD {
     private HashSet<String> res;
     private String idioma;
 
-    public StopWordTAD(){
+    public StopWordTAD(Connection con){
         res = new HashSet<String>();
         idioma="portugues";
-
-        Conectar conecta = new Conectar();
-        Connection con = conecta.conectaBD();
         load(con);
-        try{
-        con.close();
-        }catch(SQLException e){
-            System.err.println("ERRO ao fechar a conexao");
-        }
     }
     public StopWordTAD(HashSet<String> lista){
         res = lista;
