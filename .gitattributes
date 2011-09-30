@@ -228,6 +228,7 @@ src/src/java/ORG/oclc/oai/server/verb/OAIInternalServerError.java -text
 src/src/java/ORG/oclc/oai/server/verb/ServerVerb.java -text
 src/src/java/ORG/oclc/oai/util/OAIUtil.java -text
 src/src/java/RSS/Rss.java -text
+src/src/java/com/acme/oai/HibernateOAICatalog.java -text
 src/src/java/feb/Documento.java -text
 src/src/java/feb/Objeto.java -text
 src/src/java/ferramentaBusca/IndexadorBusca.java -text
