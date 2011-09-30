@@ -11,7 +11,7 @@
       <generator class="native"/>
     </id>
     <property column="obaa_entry" name="obaaEntry" not-null="true" type="string"/>
-    <property name="timestamp" type="date">
+    <property name="timestamp" type="timestamp">
       <meta attribute="field-description">When the track was created</meta>
     </property>
     <set name="objetos" table="objetos">

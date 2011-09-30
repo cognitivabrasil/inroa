@@ -11,6 +11,8 @@
 package ORG.oclc.oai.server.catalog;
 
 import feb.Documento;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
@@ -73,8 +75,11 @@ public class XMLRecordFactoryObaa extends RecordFactory {
      */
     public String getDatestamp(Object nativeItem)
 	throws IllegalArgumentException  {
+	    Format formatter;
+	    formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+	    
            Documento m = (Documento)nativeItem;
-           return m.getTimestamp().toString();
+           return formatter.format(m.getTimestamp());
     }
 
     /**
