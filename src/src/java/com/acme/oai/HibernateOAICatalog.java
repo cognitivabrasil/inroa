@@ -37,6 +37,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * DummyOAICatalog is an example of how to implement the AbstractCatalog interface.
@@ -400,24 +401,39 @@ public class HibernateOAICatalog extends AbstractCatalog {
         
         Date date_from = null;
         Date date_until = null;
-        boolean use_date = true;
+        boolean use_from = true;
         try {
             date_from = formatter.parse(from);
-            date_until = formatter.parse(until);
         }
         catch(ParseException e) {
             try {
                   SimpleDateFormat just_date = OAIUtil.dateFormatter();
                   date_from = just_date.parse(from);
-                  date_until = just_date.parse(until);
             }
             catch(ParseException e2) {
                 System.err.println("Erro nas datas\n");
                 System.err.println(from);
+                System.err.println(e.getMessage());
+                System.err.println(e2.getMessage());
+                use_from = false;
+            }
+        }
+	
+        boolean use_until = true;
+        try {
+            date_until = formatter.parse(until);
+        }
+        catch(ParseException e) {
+            try {
+                  SimpleDateFormat just_date = OAIUtil.dateFormatter();
+                  date_until = just_date.parse(until);
+            }
+            catch(ParseException e2) {
+                System.err.println("Erro nas datas\n");
                 System.err.println(until);
                 System.err.println(e.getMessage());
                 System.err.println(e2.getMessage());
-                use_date = false;
+                use_until = false;
             }
         }
 
@@ -425,11 +441,25 @@ public class HibernateOAICatalog extends AbstractCatalog {
         // mudança na base durante o processo de coleta?
         // TODO: Usar datas
         Criteria criteria = session.createCriteria(Documento.class);
+	if(use_from) {
+		criteria.add(Restrictions.gt("timestamp", date_from));
+	}
+	if(use_until) {
+		criteria.add(Restrictions.lt("timestamp", date_until));
+	}
+	
+	
         criteria.setProjection(Projections.rowCount());
         List list = criteria.list();
         int totalRecords = Integer.parseInt(list.get(0).toString());
         
         Criteria criteria2 = session.createCriteria(Documento.class);
+	if(use_from) {
+		criteria2.add(Restrictions.gt("timestamp", date_from));
+	}
+	if(use_until) {
+		criteria2.add(Restrictions.lt("timestamp", date_until));
+	}
         criteria2.setFirstResult(0);
         criteria2.setMaxResults(maxListSize);
         List books = criteria2.list();
