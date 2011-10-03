@@ -23,6 +23,14 @@ import feb.Objeto;
  * involves pulling out the one that is requested.
  */
 public class XML2oai_obaa extends Crosswalk {
+	private String escapeXML(String s) {
+		String r;
+		r = s.replaceAll("&", "&amp;");
+		r = r.replaceAll("<", "&lt;");
+		r = r.replaceAll(">", "&gt;");
+
+		return r;
+	}
 	
     /**
      * The constructor assigns the schemaLocation associated with this crosswalk. Since
@@ -91,7 +99,7 @@ public class XML2oai_obaa extends Crosswalk {
                         s.append("<obaa:entry>"  + m.getObaaEntry() + "</obaa:entry>");
                     s.append("</obaa:identifier>");
 		    for(Objeto o : m.getObjetos()) {
-			    s.append("<obaa:" + o.getAtributo() + ">" + o.getValor() + "</obaa:" + o.getAtributo() + ">");
+			    s.append("<obaa:" + o.getAtributo() + ">" + escapeXML(o.getValor()) + "</obaa:" + o.getAtributo() + ">");
 		    }
 //                    s.append(ifNotNull("title", m.getTitle()));
 //                    s.append(ifNotNull("language", m.getLanguage()));
