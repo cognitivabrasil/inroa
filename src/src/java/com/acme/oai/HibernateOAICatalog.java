@@ -29,6 +29,7 @@ import ORG.oclc.oai.server.verb.IdDoesNotExistException;
 import ORG.oclc.oai.server.verb.NoMetadataFormatsException;
 import ORG.oclc.oai.util.OAIUtil;
 import feb.Documento;
+import feb.Excluido;
 import feb.Repositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -453,7 +454,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         criteria.setProjection(Projections.rowCount());
         List list = criteria.list();
         int totalRecords = Integer.parseInt(list.get(0).toString());
-        
+	
         Criteria criteria2 = session.createCriteria(Documento.class);
 	if(use_from) {
 		criteria2.add(Restrictions.gt("timestamp", date_from));
@@ -464,8 +465,10 @@ public class HibernateOAICatalog extends AbstractCatalog {
         criteria2.setFirstResult(0);
         criteria2.setMaxResults(maxListSize);
         List books = criteria2.list();
-
+	
         Iterator it = books.iterator();
+
+	System.out.printf("maxListSize: %d, totalRecords: %d\n", maxListSize, totalRecords);
         
 
         
@@ -633,7 +636,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         criteria.setProjection(Projections.rowCount());
         List list = criteria.list();
         int totalRecords = Integer.parseInt(list.get(0).toString());
-        
+
         Criteria criteria2 = session.createCriteria(Documento.class);
 	if(use_from) {
 		criteria2.add(Restrictions.gt("timestamp", date_from));
@@ -643,6 +646,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
 	}
         criteria2.setFirstResult(oldCount);
         criteria2.setMaxResults(maxListSize);
+
         List books = criteria2.list();
 
         Iterator it = books.iterator();
@@ -671,7 +675,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         }
 
         /* decide if you're done */
-        if (count < totalRecords) {
+        if (count + oldCount < totalRecords) {
             String resumptionId = new Integer(count).toString();
             
             /*****************************************************************
@@ -690,7 +694,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
              * Construct the resumptionToken String however you see fit.
              *****************************************************************/
             StringBuffer resumptionTokenSb = new StringBuffer();
-            resumptionTokenSb.append(Integer.toString(count+oldCount));
+            resumptionTokenSb.append(Integer.toString(maxListSize+oldCount));
             resumptionTokenSb.append("|");
             resumptionTokenSb.append(metadataPrefix);
             resumptionTokenSb.append("|");

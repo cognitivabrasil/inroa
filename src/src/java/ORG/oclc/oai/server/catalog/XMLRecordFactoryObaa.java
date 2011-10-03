@@ -11,6 +11,7 @@
 package ORG.oclc.oai.server.catalog;
 
 import feb.Documento;
+import feb.Excluido;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -134,8 +135,9 @@ public class XMLRecordFactoryObaa extends RecordFactory {
      */
     public boolean isDeleted(Object nativeItem)
 	throws IllegalArgumentException {
-	//String xmlRec = (String)nativeItem;
-	//return xmlRec.indexOf("<header status=\"deleted\"") != -1;
+	    if(nativeItem.getClass() == Excluido.class) {
+		    return true;
+	    }
         return false;
     }
 

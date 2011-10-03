@@ -12,5 +12,6 @@
      <mapping resource="MetadataRecord.hbm.xml"/>
      <mapping resource="Objeto.hbm.xml"/>
      <mapping resource="Repositorio.hbm.xml"/>
+     <mapping resource="Excluido.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
