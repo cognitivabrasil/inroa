@@ -21,6 +21,7 @@ public class Documento  implements java.io.Serializable {
      private String obaa_entry;
      private Date datetime;
      private Set<Objeto> objetos = new HashSet<Objeto>(0);
+     private Repositorio repositorio;
 
     public Documento() {
     }
@@ -62,6 +63,20 @@ public class Documento  implements java.io.Serializable {
 	 */
 	public void setObjetos(Set<Objeto> objeto) {
 		this.objetos = objeto;
+	}
+
+	/**
+	 * @return the repositorio
+	 */
+	public Repositorio getRepositorio() {
+		return repositorio;
+	}
+
+	/**
+	 * @param repositorio the repositorio to set
+	 */
+	public void setRepositorio(Repositorio repositorio) {
+		this.repositorio = repositorio;
 	}
 
 

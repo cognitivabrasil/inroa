@@ -5,11 +5,12 @@
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.connection.username">feb</property>
     <property name="hibernate.connection.password">feb@RNP</property>
-    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/federacao</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://143.54.95.20:5432/federacao</property>
     <property name="hibernate.default_schema">public</property>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     
      <mapping resource="MetadataRecord.hbm.xml"/>
      <mapping resource="Objeto.hbm.xml"/>
+     <mapping resource="Repositorio.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -231,6 +231,7 @@ src/src/java/RSS/Rss.java -text
 src/src/java/com/acme/oai/HibernateOAICatalog.java -text
 src/src/java/feb/Documento.java -text
 src/src/java/feb/Objeto.java -text
+src/src/java/feb/Repositorio.java -text
 src/src/java/ferramentaBusca/IndexadorBusca.java -text
 src/src/java/ferramentaBusca/Recuperador.java -text
 src/src/java/ferramentaBusca/indexador/Documento.java -text
@@ -280,6 +281,7 @@ src/src/java/robo/util/package.html -text
 src/src/java/webservice/adriano.java -text
 src/src/main/resources/MetadataRecord.hbm.xml -text
 src/src/main/resources/Objeto.hbm.xml -text
+src/src/main/resources/Repositorio.hbm.xml -text
 src/src/main/resources/hibernate.cfg.xml -text
 src/web/META-INF/context.xml -text
 src/web/WEB-INF/dummy.properties -text

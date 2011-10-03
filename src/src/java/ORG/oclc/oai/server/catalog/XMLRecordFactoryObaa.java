@@ -91,6 +91,7 @@ public class XMLRecordFactoryObaa extends RecordFactory {
      */
     public Iterator getSetSpecs(Object nativeItem)
 	throws IllegalArgumentException  {
+	    Documento d = (Documento)nativeItem;
 	ArrayList list = new ArrayList();
         // TODO: Criar getSpecs 
         /*String xmlRec = (String)nativeItem;
@@ -100,6 +101,7 @@ public class XMLRecordFactoryObaa extends RecordFactory {
 	    int endOffset = xmlRec.indexOf(setSpecEnd, startOffset + 1);
 	    list.add(xmlRec.substring(startOffset + setSpecStart.length(), endOffset));
 	}*/
+	list.add(d.getRepositorio().getNome());
 	return list.iterator();
     }
 
