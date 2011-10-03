@@ -221,9 +221,9 @@ public class HibernateOAICatalog extends AbstractCatalog {
              *****************************************************************/
             StringBuffer resumptionTokenSb = new StringBuffer();
             resumptionTokenSb.append(resumptionId);
-            resumptionTokenSb.append(":");
+            resumptionTokenSb.append("|");
             resumptionTokenSb.append(Integer.toString(count));
-            resumptionTokenSb.append(":");
+            resumptionTokenSb.append("|");
             resumptionTokenSb.append(metadataPrefix);
             
             /*****************************************************************
@@ -269,7 +269,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
          * parse your resumptionToken and look it up in the resumptionResults,
          * if necessary
          **********************************************************************/
-        StringTokenizer tokenizer = new StringTokenizer(resumptionToken, ":");
+        StringTokenizer tokenizer = new StringTokenizer(resumptionToken, "|");
         String resumptionId;
         int oldCount;
         String metadataPrefix;
@@ -317,9 +317,9 @@ public class HibernateOAICatalog extends AbstractCatalog {
              *****************************************************************/
             StringBuffer resumptionTokenSb = new StringBuffer();
             resumptionTokenSb.append(resumptionId);
-            resumptionTokenSb.append(":");
+            resumptionTokenSb.append("|");
             resumptionTokenSb.append(Integer.toString(oldCount + count));
-            resumptionTokenSb.append(":");
+            resumptionTokenSb.append("|");
             resumptionTokenSb.append(metadataPrefix);
             
             /*****************************************************************
@@ -505,8 +505,12 @@ public class HibernateOAICatalog extends AbstractCatalog {
              *****************************************************************/
             StringBuffer resumptionTokenSb = new StringBuffer();
             resumptionTokenSb.append(Integer.toString(count));
-            resumptionTokenSb.append(":");
+            resumptionTokenSb.append("|");
             resumptionTokenSb.append(metadataPrefix);
+            resumptionTokenSb.append("|");
+            resumptionTokenSb.append(from);
+            resumptionTokenSb.append("|");
+            resumptionTokenSb.append(until);
             
             /*****************************************************************
              * Use the following line if you wish to include the optional
@@ -554,49 +558,121 @@ public class HibernateOAICatalog extends AbstractCatalog {
          * parse your resumptionToken and look it up in the resumptionResults,
          * if necessary
          **********************************************************************/
-        StringTokenizer tokenizer = new StringTokenizer(resumptionToken, ":");
+        StringTokenizer tokenizer = new StringTokenizer(resumptionToken, "|");
         int oldCount;
         String metadataPrefix;
+	String from;
+	String until;
         try {
             oldCount = Integer.parseInt(tokenizer.nextToken());
             metadataPrefix = tokenizer.nextToken();
+	    from = tokenizer.nextToken();
+	    until = tokenizer.nextToken();
         } catch (NoSuchElementException e) {
             throw new BadResumptionTokenException();
         }
         
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+               Documento m;
+    
+      SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         
+            SimpleDateFormat formatter = OAIUtil.dateFormatter();
+        
+        Date date_from = null;
+        Date date_until = null;
+        boolean use_from = true;
+        try {
+            date_from = formatter.parse(from);
+        }
+        catch(ParseException e) {
+            try {
+                  SimpleDateFormat just_date = OAIUtil.dateFormatter();
+                  date_from = just_date.parse(from);
+            }
+            catch(ParseException e2) {
+                System.err.println("Erro nas datas\n");
+                System.err.println(from);
+                System.err.println(e.getMessage());
+                System.err.println(e2.getMessage());
+                use_from = false;
+            }
+        }
+	
+        boolean use_until = true;
+        try {
+            date_until = formatter.parse(until);
+        }
+        catch(ParseException e) {
+            try {
+                  SimpleDateFormat just_date = OAIUtil.dateFormatter();
+                  date_until = just_date.parse(until);
+            }
+            catch(ParseException e2) {
+                System.err.println("Erro nas datas\n");
+                System.err.println(until);
+                System.err.println(e.getMessage());
+                System.err.println(e2.getMessage());
+                use_until = false;
+            }
+        }
+
+        // TODO: Como garantir que os resultados são consistentes mesmo que aja uma
+        // mudança na base durante o processo de coleta?
+        // TODO: Usar datas
         Criteria criteria = session.createCriteria(Documento.class);
+	if(use_from) {
+		criteria.add(Restrictions.gt("timestamp", date_from));
+	}
+	if(use_until) {
+		criteria.add(Restrictions.lt("timestamp", date_until));
+	}
+	
+	
         criteria.setProjection(Projections.rowCount());
         List list = criteria.list();
         int totalRecords = Integer.parseInt(list.get(0).toString());
         
-        /* Get some more records from your database */
         Criteria criteria2 = session.createCriteria(Documento.class);
-
-        int count;
+	if(use_from) {
+		criteria2.add(Restrictions.gt("timestamp", date_from));
+	}
+	if(use_until) {
+		criteria2.add(Restrictions.lt("timestamp", date_until));
+	}
         criteria2.setFirstResult(oldCount);
         criteria2.setMaxResults(maxListSize);
         List books = criteria2.list();
 
         Iterator it = books.iterator();
-	Documento m;
         
-        /* load the headers and identifiers ArrayLists. */
-        for (count = oldCount; it.hasNext(); ++count) {
-            try {
-              m = (Documento) it.next();
-                String record = constructRecord(m, metadataPrefix);
-                  records.add(record);
-            } catch (CannotDisseminateFormatException e) {
-                /* the client hacked the resumptionToken beyond repair */
-                throw new BadResumptionTokenException();
-            }
+
+        
+        
+        /**********************************************************************
+         * YOUR CODE GOES HERE
+         **********************************************************************/
+
+        /* Get some records from your database */
+        int count = 0;
+
+        /* load the records ArrayList */
+        while (it.hasNext()) {
+            count++;
+            m = (Documento) it.next();
+	    try {
+	            String record = constructRecord(m, metadataPrefix);
+            	records.add(record);
+	    }
+	    catch(CannotDisseminateFormatException e) {
+		    throw new BadResumptionTokenException();
+	    }
         }
-        
+
         /* decide if you're done */
-        if (count < totalRecords) {            
+        if (count < totalRecords) {
+            String resumptionId = new Integer(count).toString();
+            
             /*****************************************************************
              * Store an object appropriate for your database API in the
              * resumptionResults Map in place of nativeItems. This object
@@ -607,13 +683,19 @@ public class HibernateOAICatalog extends AbstractCatalog {
              * resumptionResults Map. Here, I've done a silly combination
              * of the two. Stateless resumptionTokens have some advantages.
              *****************************************************************/
+            resumptionResults.put(resumptionId, criteria2);
+
             /*****************************************************************
              * Construct the resumptionToken String however you see fit.
              *****************************************************************/
             StringBuffer resumptionTokenSb = new StringBuffer();
-            resumptionTokenSb.append(Integer.toString(count));
-            resumptionTokenSb.append(":");
+            resumptionTokenSb.append(Integer.toString(count+oldCount));
+            resumptionTokenSb.append("|");
             resumptionTokenSb.append(metadataPrefix);
+            resumptionTokenSb.append("|");
+            resumptionTokenSb.append(from);
+            resumptionTokenSb.append("|");
+            resumptionTokenSb.append(until);
             
             /*****************************************************************
              * Use the following line if you wish to include the optional
@@ -631,11 +713,14 @@ public class HibernateOAICatalog extends AbstractCatalog {
          ***********************************************************************/
         listRecordsMap.put("records", records.iterator());
         
-           session.close();
+        
+        session.close();
         sessionFactory.close();
         
         return listRecordsMap;
     }
+	
+        
 
     /**
      * Utility method to construct a Record object for a specified
@@ -703,7 +788,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
              *****************************************************************/
             StringBuffer resumptionTokenSb = new StringBuffer();
             resumptionTokenSb.append(resumptionId);
-            resumptionTokenSb.append(":");
+            resumptionTokenSb.append("|");
             resumptionTokenSb.append(Integer.toString(count));
             
             /*****************************************************************
@@ -747,7 +832,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
          * parse your resumptionToken and look it up in the resumptionResults,
          * if necessary
          **********************************************************************/
-        StringTokenizer tokenizer = new StringTokenizer(resumptionToken, ":");
+        StringTokenizer tokenizer = new StringTokenizer(resumptionToken, "|");
         String resumptionId;
         int oldCount;
         try {
@@ -790,7 +875,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
              *****************************************************************/
             StringBuffer resumptionTokenSb = new StringBuffer();
             resumptionTokenSb.append(resumptionId);
-            resumptionTokenSb.append(":");
+            resumptionTokenSb.append("|");
             resumptionTokenSb.append(Integer.toString(oldCount + count));
             
             /*****************************************************************
