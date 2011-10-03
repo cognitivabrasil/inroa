@@ -29,6 +29,7 @@ import ORG.oclc.oai.server.verb.IdDoesNotExistException;
 import ORG.oclc.oai.server.verb.NoMetadataFormatsException;
 import ORG.oclc.oai.util.OAIUtil;
 import feb.Documento;
+import feb.Repositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -753,58 +754,30 @@ public class HibernateOAICatalog extends AbstractCatalog {
     public Map listSets() {
         purge(); // clean out old resumptionTokens
         Map listSetsMap = new HashMap();
-        ArrayList sets = new ArrayList();
         /**********************************************************************
          * YOUR CODE GOES HERE
          **********************************************************************/
+      SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+	
+        Criteria criteria2 = session.createCriteria(Repositorio.class);
+        List<Repositorio> fromdb = criteria2.list();
+	List sets = new ArrayList();
 
-        /* decide which sets you're going to support */
-        String[] dbSets = dummySets;
-        int count;
+	for(Repositorio r : fromdb) {
+		StringBuffer s = new StringBuffer(200);
+		s.append("<set>\n");
+		s.append("<setSpec>");
+		s.append(r.getNome());
+		s.append("</setSpec>\n");
+		s.append("<setName>");
+		s.append(r.getNome());
+		s.append("</setName>\n");
+		s.append("</set>\n");
+		sets.add(s.toString());
+	}
 
-        /* load the sets ArrayList */
-        for (count=0; count < maxListSize && count < dbSets.length; ++count) {
-            sets.add(dbSets[count]);
-        }
 
-        /* decide if you're done */
-        if (count < dbSets.length) {
-            String resumptionId = getResumptionId();
-            
-            /*****************************************************************
-             * Store an object appropriate for your database API in the
-             * resumptionResults Map in place of nativeItems. This object
-             * should probably encapsulate the information necessary to
-             * perform the next resumption of ListIdentifiers. It might even
-             * be possible to encode everything you need in the
-             * resumptionToken, in which case you won't need the
-             * resumptionResults Map. Here, I've done a silly combination
-             * of the two. Stateless resumptionTokens have some advantages.
-             *****************************************************************/
-            resumptionResults.put(resumptionId, dbSets);
-
-            /*****************************************************************
-             * Construct the resumptionToken String however you see fit.
-             *****************************************************************/
-            StringBuffer resumptionTokenSb = new StringBuffer();
-            resumptionTokenSb.append(resumptionId);
-            resumptionTokenSb.append("|");
-            resumptionTokenSb.append(Integer.toString(count));
-            
-            /*****************************************************************
-             * Use the following line if you wish to include the optional
-             * resumptionToken attributes in the response. Otherwise, use the
-             * line after it that I've commented out.
-             *****************************************************************/
-            listSetsMap.put("resumptionMap", getResumptionMap(resumptionTokenSb.toString(),
-                                                              dbSets.length,
-                                                              0));
-            //          listSetsMap.put("resumptionMap",
-            //                                 getResumptionMap(resumptionTokenSbSb.toString()));
-        }
-        /***********************************************************************
-         * END OF CUSTOM CODE SECTION
-         ***********************************************************************/
         listSetsMap.put("sets", sets.iterator());
         return listSetsMap;
     }

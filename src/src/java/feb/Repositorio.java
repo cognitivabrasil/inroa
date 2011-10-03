@@ -75,6 +75,9 @@ public class Repositorio  implements java.io.Serializable {
 		this.documentos = documentos;
 	}
 
+	public String toString() {
+		return getNome();
+	}
 
 
 }
