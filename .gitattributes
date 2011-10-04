@@ -256,6 +256,7 @@ src/src/java/postgres/package.html -text
 src/src/java/postgres/teste.java -text
 src/src/java/robo/atualiza/Repositorios.java -text
 src/src/java/robo/atualiza/SubFederacao.java -text
+src/src/java/robo/atualiza/SubFederacaoOAI.java -text
 src/src/java/robo/atualiza/harvesterOAI/GetRecord.java -text
 src/src/java/robo/atualiza/harvesterOAI/HarvesterVerb.java -text
 src/src/java/robo/atualiza/harvesterOAI/Identify.java -text
@@ -265,6 +266,13 @@ src/src/java/robo/atualiza/harvesterOAI/ListRecords.java -text
 src/src/java/robo/atualiza/harvesterOAI/ListSets.java -text
 src/src/java/robo/atualiza/harvesterOAI/Principal.java -text
 src/src/java/robo/atualiza/harvesterOAI/package.html -text
+src/src/java/robo/atualiza/importaOAI/DadosObjetos.java -text
+src/src/java/robo/atualiza/importaOAI/Header.java -text
+src/src/java/robo/atualiza/importaOAI/Indice.java -text
+src/src/java/robo/atualiza/importaOAI/InicioLeituraXML.java -text
+src/src/java/robo/atualiza/importaOAI/InsereObjetoBase.java -text
+src/src/java/robo/atualiza/importaOAI/OAI_Interface.java -text
+src/src/java/robo/atualiza/importaOAI/XmlSaxReader.java -text
 src/src/java/robo/atualiza/importa_OAI/DadosObjetos.java -text
 src/src/java/robo/atualiza/importa_OAI/Header.java -text
 src/src/java/robo/atualiza/importa_OAI/Indice.java -text
@@ -272,6 +280,8 @@ src/src/java/robo/atualiza/importa_OAI/InicioLeituraXML.java -text
 src/src/java/robo/atualiza/importa_OAI/InsereObjetoBase.java -text
 src/src/java/robo/atualiza/importa_OAI/OAI_Interface.java -text
 src/src/java/robo/atualiza/importa_OAI/XmlSaxReader.java -text
+src/src/java/robo/atualiza/subfedOAI/ParserListSets.java -text
+src/src/java/robo/atualiza/subfedOAI/SubRepositorios.java -text
 src/src/java/robo/main/Robo.java -text
 src/src/java/robo/main/Start.java -text
 src/src/java/robo/main/Temporizador.java -text

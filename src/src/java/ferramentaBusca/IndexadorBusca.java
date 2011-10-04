@@ -3,7 +3,7 @@ package ferramentaBusca;
 import ferramentaBusca.indexador.*;
 import postgres.Conectar;
 import java.sql.*;
-import robo.atualiza.importa_OAI.Indice;
+import robo.atualiza.importaOAI.Indice;
 
 /**
  * Disponibiliza metodos para indexar a base de busca

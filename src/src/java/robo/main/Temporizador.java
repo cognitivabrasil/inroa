@@ -21,7 +21,8 @@ public class Temporizador {
      */
     public void start() {
         System.out.println(">>>>");
-        System.out.println(">>>>Inicio do processo temporizador");
+        System.out.println(">>>>Inicio do FEB");
+        System.out.println(">>>>");
 
         Timer timer = null;
         if (timer == null) {

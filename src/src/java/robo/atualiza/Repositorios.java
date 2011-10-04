@@ -22,7 +22,7 @@ import postgres.AtualizaBase;
 import postgres.Conectar;
 import robo.atualiza.harvesterOAI.Principal;
 import robo.util.Informacoes;
-import robo.atualiza.importa_OAI.InicioLeituraXML;
+import robo.atualiza.importaOAI.InicioLeituraXML;
 import robo.util.Operacoes;
 
 /**
@@ -138,7 +138,7 @@ public class Repositorios {
                     File caminhoTeste = new File(caminhoDiretorioTemporario);
                     if (!caminhoTeste.isDirectory()) {//se o caminho informado nao for um diretorio
                         caminhoTeste.mkdirs();//cria o diretorio
-                    } else { //APAGA TODOS ARQUIVOS XML DA PASTA
+                    } else { //APAGA TODOS ARQUIVOS XML do FEB DA PASTA
                         File[] arquivos = caminhoTeste.listFiles();
                         for (File toDelete : arquivos) {
                             if (toDelete.getName().startsWith("FEB-") && toDelete.getName().endsWith(".xml")) {

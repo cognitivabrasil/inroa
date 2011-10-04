@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
 
@@ -24,18 +24,18 @@
             <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de federa&ccedil;&otilde;es cadastradas</div>
 
             <%
-        String id = request.getParameter("id");
+                        String id = request.getParameter("id");
 
-        String sql = "SELECT * " +
-                    " FROM dados_subfederacoes l" +
-                    " WHERE l.id=" + id + " " +
-                    "ORDER BY l.nome ASC;";
+                        String sql = "SELECT nome, descricao, url "
+                                + " FROM dados_subfederacoes l"
+                                + " WHERE l.id=" + id
+                                + " ORDER BY l.nome ASC;";
 
-        ResultSet res = stm.executeQuery(sql);
-        res.next();
+                        ResultSet res = stm.executeQuery(sql);
+                        res.next();
             %>
 
-<!--Informações Gerais-->
+            <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es sobre as subfedera&ccedil;&otilde;es <%=res.getString("nome")%></div>
             <div class="editar"><a href="./editarFederacao.jsp?id=<%=id%>">Editar</a></div>
 
@@ -53,37 +53,19 @@
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
-                    Endere&ccedil;o ip:
+                    URL da federa&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("ip")%></div>
-            </div>
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Porta:
-                </div>
-                <div class="Value">&nbsp;<%=res.getInt("porta")%></div>
-            </div>
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Login:
-                </div>
-                <div class="Value">&nbsp;<%=res.getString("login")%></div>
-            </div>
-            <div class="LinhaEntrada">
-                <div class="Label">
-                    Senha:
-                </div>
-                <div class="Value">&nbsp;<font size="+1"><%=res.getString("senha").replaceAll(".", "*")%></font></div>
+                <div class="Value">&nbsp;<%=res.getString("url")%></div>
             </div>
 
-</div>
-                    <div class="BotaoFechar">
-                        <input class="color" id="cancelar" onclick="javascript:window.close();" value="&nbsp;&nbsp;Fechar janela&nbsp;&nbsp;" type="button" class="CancelButton"/>
-                    </div>
+        </div>
+        <div class="BotaoFechar">
+            <input class="color" id="cancelar" onclick="javascript:window.close();" value="&nbsp;&nbsp;Fechar janela&nbsp;&nbsp;" type="button" class="CancelButton"/>
+        </div>
 
-    <%@include file="googleAnalytics"%>
+        <%@include file="googleAnalytics"%>
     </body>
 </html>
 <%
-con.close(); //fechar conexao
+            con.close(); //fechar conexao
 %>

@@ -205,7 +205,7 @@
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <input name="url" value="<%=res.getString("url_or_ip")%>" id="url" type="text" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="url" value="<%=res.getString("url_or_ip")%>" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">

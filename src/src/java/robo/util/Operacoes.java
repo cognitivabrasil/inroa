@@ -6,6 +6,7 @@ package robo.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.io.File;
 
 /**
  * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como testes e remo&ccedil;&otilde;es de acentua&ccedil;&atilde;o
@@ -20,22 +21,22 @@ public class Operacoes {
      */
     public static boolean testarDataAnteriorMil(Date horaBase) {
 
-        try{
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-
-        Date dataTeste = null;
         try {
-            dataTeste = format.parse("01/01/1000");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-        if (dataTeste.after(horaBase)) {
-            return true;
-        } else {
-            return false;
-        }
-        }catch(NullPointerException n){
+            Date dataTeste = null;
+            try {
+                dataTeste = format.parse("01/01/1000");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (dataTeste.after(horaBase)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (NullPointerException n) {
             return false;
         }
     }
@@ -56,5 +57,24 @@ public class Operacoes {
         texto = texto.replaceAll("\\W", " ");
         texto = texto.trim();
         return texto;
+    }
+
+    /**
+     * Testa se o diret&oacute;rio informado existe e apaga todos os XMLs criados pelo FEB. Se n&atilde;o existir cria o diret&oacute;rio.
+     * @return File contendo o diret&oacute;rio informado.
+     */
+    public static File testaDiretorioTemp(String diretorio) {
+        File caminhoTeste = new File(diretorio);
+        if (!caminhoTeste.isDirectory()) {//se o caminho informado nao for um diretorio
+            caminhoTeste.mkdirs();//cria o diretorio
+        } else { //APAGA TODOS ARQUIVOS XML do FEB DA PASTA
+            File[] arquivos = caminhoTeste.listFiles();
+            for (File toDelete : arquivos) {
+                if (toDelete.getName().startsWith("FEB-") && toDelete.getName().endsWith(".xml")) {
+                    toDelete.delete();
+                }
+            }
+        }
+        return caminhoTeste;
     }
 }

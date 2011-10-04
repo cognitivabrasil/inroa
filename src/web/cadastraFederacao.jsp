@@ -26,13 +26,7 @@
             var myForm = new Validate();
             myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
             myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
-            myForm.addRules({id:'ipDes',option:'isIP',error:'* O ip informado para a federa&ccedil;&atilde;o local n&atilde;o est&aacute; correto!'});
-            myForm.addRules({id:'portaDes',option:'required',error:'* Deve ser informada a porta da base de dados (Padr&atilde;o PostgreSQL 2345)!'});
-            myForm.addRules({id:'loginDes',option:'required',error:'* Deve ser informado o login do da base de dados da subfedera&ccedil;&atilde;o!'});
-            myForm.addRules({id:'senhaDes',option:'required',error:'* Deve ser informada a senha do da base de dados da subfedera&ccedil;&atilde;o!'});
-            myForm.addRules({id:'confSenhaDes',option:'required',error:'* A senha da base de dados da da subfedera&ccedil;&atilde;o deve ser repetida no campo indicado!'});
-            myForm.addRules({id:'senhaDes', to:'confSenhaDes', option:'isEqual',error:'* As senhas digitadas n&atilde;o est&atilde;o iguais!'});
-
+            myForm.addRules({id:'urlSF',option:'urlcomip',error:'* Deve ser informada a url da federa&ccedil;&atilde;o que est&aacute; sendo adicionada. Come&ccedil;ando por http://'});
         </script>
     </head>
     <body>
@@ -77,45 +71,16 @@
                 </div>
 
                 <div class="LinhaEntrada">
+                    <div class="Comentario">Ex: http://feb.ufrgs.br/feb</div>
                     <div class="Label">
-                        Endere&ccedil;o ip:
+                        URL da federa&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <input name="ip" id="ipDes" type="text" value="" onkeypress ="return ( maskIP(event,this) );" maxlength="15" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="urlSF" id="urlSF" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Porta:
-                    </div>
-                    <div class="Value">
-                        <input name="porta" id="portaDes" value="5432" type="text" maxlength="4" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Login:
-                    </div>
-                    <div class="Value">
-                        <input name="loginDestino" id="loginDes" type="text" maxlength="100" value="feb" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Senha:
-                    </div>
-                    <div class="Value">
-                        <input name="senhaDestino" id="senhaDes" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="Label">
-                        Repita a senha:
-                    </div>
-                    <div class="Value">
-                        <input name="confSenhaDestino" id="confSenhaDes" type="password" maxlength="100" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
+
+                
                 <div class="LinhaEntrada">
                     <div class="Buttons">
 
@@ -128,40 +93,30 @@
             </form>
             <%            } else {
                 
-                String ip = request.getParameter("ip").trim();
-                String porta = request.getParameter("porta").trim();
-                String login = request.getParameter("loginDestino").trim();
-                String senhaFed = request.getParameter("senhaDestino").trim();
-                String confimaSenha = request.getParameter("confSenhaDestino").trim();
+                String url = request.getParameter("urlSF").trim();
                 String nome = request.getParameter("nome").trim();
                 String descricao = request.getParameter("descricao").trim();
 
                 //testa se os campos em comum dos dois tipos de sincronizacao foram preenchidos
-                if (ip.isEmpty() || porta.isEmpty() || login.isEmpty() || senhaFed.isEmpty() || confimaSenha.isEmpty() || nome.isEmpty() || descricao.isEmpty()) {
+                if (url.isEmpty() || nome.isEmpty() || descricao.isEmpty()) {
                     out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>" +
                             "<script type='text/javascript'>history.back(-1);</script>");
                 }
 
-                //testa se a senha informada e a repeticao estao iguais
-                if (!senhaFed.equals(confimaSenha)) {
-                    out.print("<script type='text/javascript'>alert('As senhas informadas para a base de dados não conferem. Digite novamente!');</script>" +
-                            "<script type='text/javascript'>history.back(-1);</script>");
-                }
 
                 //testar se ja existe uma subfederação cadastrada com o mesmo nome
-                //postgres ok
-                ResultSet testeExiste = stm.executeQuery("SELECT l.nome, l.descricao, l.ip FROM dados_subfederacoes l WHERE l.nome='" + nome + "';");
+                ResultSet testeExiste = stm.executeQuery("SELECT l.nome, l.descricao, l.url FROM dados_subfederacoes l WHERE l.nome='" + nome + "';");
 
                 if (testeExiste.next()) {
-                    out.print("<script type='text/javascript'>alert('Já existe um federa&ccedil;&atilde;o cadastrada com esse nome!\\nO seu ip é: " + testeExiste.getString("ip") + "\\nSeu nome é: " + testeExiste.getString("nome") + "\\nSua descrição é: " + testeExiste.getString("descricao") + "');</script>");
+                    out.print("<script type='text/javascript'>alert('Já existe um federa&ccedil;&atilde;o cadastrada com esse nome!\\nO endere&ccedil;o é: " + testeExiste.getString("url") + "\\nSeu nome é: " + testeExiste.getString("nome") + "\\nSua descrição é: " + testeExiste.getString("descricao") + "');</script>");
                     out.print("<script type='text/javascript'>history.go(-1);</script>");
                     //se o navegador tiver o javascript desativado ira apresentar a mensagem abaixo
-                    out.print("<p class='textoErro'>J&aacute; existe uma federa&ccedil;&atilde;o cadastrada com esse nome ou ip! O seu ip &eacute;: " + testeExiste.getString("ip") + " Seu nome &eacute;: " + testeExiste.getString("nome") + " Sua descrição &eacute;: " + testeExiste.getString("descricao") + "</p>");
+                    out.print("<p class='textoErro'>J&aacute; existe uma federa&ccedil;&atilde;o cadastrada com esse nome ou ip! O endere&ccedil;o é: " + testeExiste.getString("url") + " Seu nome &eacute;: " + testeExiste.getString("nome") + " Sua descrição &eacute;: " + testeExiste.getString("descricao") + "</p>");
 
                 } else {
                     int result = 0;
-                    String sql = "INSERT INTO dados_subfederacoes (login, senha, ip, porta, descricao, nome) " +
-                            "VALUES ('" + login + "', '" + senhaFed + "', '" + ip + "', " + porta + ", '" + descricao + "', '" + nome + "');";
+                    String sql = "INSERT INTO dados_subfederacoes (url, descricao, nome) " +
+                            "VALUES ('" + url + "', '" + descricao + "', '" + nome + "');";
                     try {
                         result = stm.executeUpdate(sql); //realiza na base o insert que esta na variavel sql
                     } catch (SQLFeatureNotSupportedException e) {

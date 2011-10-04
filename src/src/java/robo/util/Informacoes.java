@@ -19,6 +19,7 @@ public class Informacoes {
     
     private String CaminhoLinux = barra + "tmp";
 
+    private String oaiPMH = "OAIHandler";
 
     /**
      * Informa o caminho para armazenar os arquivos xml temporários. Se for linux o sistema operacional responde um caminho, se for windows responde outro.
@@ -43,5 +44,15 @@ public class Informacoes {
             this.caminhoWin = caminho;
         }
     }
+
+    public void setOaiPMH(String oaiPMH) {
+        this.oaiPMH = oaiPMH;
+    }
+
+    public String getOaiPMH() {
+        return oaiPMH;
+    }
+
+    
 
 }

@@ -122,7 +122,7 @@ Primeira etapa do cadastro de um repositorio
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <input name="url" id="url" type="text" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="url" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
