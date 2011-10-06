@@ -4,6 +4,7 @@
  */
 package robo.atualiza;
 
+import ferramentaBusca.indexador.Indexador;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class SubFederacaoOAI {
      * @param con Conex&atilde;o com a base de dados local.
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;
      */
-    public boolean testaAtualizaSubFedOAI(Connection con) {
+    public boolean testaAtualizaSubFedOAI(Connection con, Indexador indexar) {
         boolean atualizou = false;
 
         String sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as data_formatada FROM dados_subfederacoes WHERE data_ultima_atualizacao <= (now() - ('24 HOUR')::INTERVAL);";
@@ -62,7 +63,7 @@ public class SubFederacaoOAI {
                         url += "/" + info.getOaiPMH();
                     }
 
-                    atualizadoTemp = atualizaSubFedOAI(id, url, rs.getString("data_formatada"), nome, con);
+                    atualizadoTemp = atualizaSubFedOAI(id, url, rs.getString("data_formatada"), nome, con, indexar);
                 }
 
                 if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
@@ -77,7 +78,7 @@ public class SubFederacaoOAI {
     }
 
 
-    private boolean atualizaSubFedOAI(int idSubfed, String url, String ultimaAtualizacao, String nome, Connection con) {
+    private boolean atualizaSubFedOAI(int idSubfed, String url, String ultimaAtualizacao, String nome, Connection con, Indexador indexar) {
         boolean atualizou = false;
 
         System.out.println("FEB: Atualizando subfederacao: " + nome);//imprime o nome do repositorio
@@ -90,8 +91,9 @@ public class SubFederacaoOAI {
             //atualizar objetos da subfederacao
             ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
             Objetos obj = new Objetos();
+            obj.atualizaObjetosSubFed(url, ultimaAtualizacao, nome, "obaa", null, con, indexar);
 
-
+            atualizou = true;
             atualizaTimestampSubFed(con, idSubfed); //atualiza a hora da ultima atualizacao
         } catch (UnknownHostException u) {
             System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
@@ -163,6 +165,7 @@ public class SubFederacaoOAI {
         SubFederacaoOAI run = new SubFederacaoOAI();
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
-        run.testaAtualizaSubFedOAI(con);
+        Indexador indexar = new Indexador();
+        run.testaAtualizaSubFedOAI(con, indexar);
     }
 }

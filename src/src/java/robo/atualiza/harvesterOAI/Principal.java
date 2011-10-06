@@ -2,7 +2,6 @@ package robo.atualiza.harvesterOAI;
 
 import java.io.*;
 import java.util.ArrayList;
-import robo.util.Informacoes;
 import robo.util.Operacoes;
 //import util.*;
 
@@ -25,7 +24,7 @@ public class Principal {
      * @param set nome do conjunto que restringir&aacute; a consulta. Nome da coleção ou da comunidade.
      * @return Retorna um ArrayList de Strings contendo o(s) caminho(s) para o(s) xml(s) salvo(s).
      */
-    public ArrayList<String> buscaXmlRepositorio(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix, String set) throws Exception {
+    public ArrayList<String> coletaXML_ListRecords(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix, String set) throws Exception {
         this.endereco = endereco;
         this.dataInicial = dataInicial;
         this.metadataPrefix = metadataPrefix;

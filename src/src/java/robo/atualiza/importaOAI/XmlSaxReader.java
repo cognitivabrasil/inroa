@@ -220,7 +220,7 @@ public class XmlSaxReader extends DefaultHandler {
 
             try {
 
-                int key = InsereObjetoBase.insereObaa(this.dadosObjetos, headerAux, this.Conexao, idRepositorio); //chama classe que insere os dados na base de dados
+                int key = InsereObjetoBase.insereObaa(this.dadosObjetos, headerAux, this.Conexao, idRepositorio, "rep"); //chama classe que insere os dados na base de dados
 
                 if (key > 0) { //se o documento foi inserido corretamente entra no if
                     doc.setId(key);
@@ -247,7 +247,7 @@ public class XmlSaxReader extends DefaultHandler {
                 headerAux.setidDeletado(valorAtual.toString().trim());
                 System.out.println("deletar o objeto: " + valorAtual.toString().trim());
                 try {
-                    Excluir.removerDocumentoIndice(valorAtual.toString(), idRepositorio, Conexao);
+                    Excluir.removerDocumentoIndice(valorAtual.toString(), idRepositorio, Conexao, "rep");
 
                 } catch (SQLException e) {
                     System.err.println("Erro no SQL ao apagar: " + e);

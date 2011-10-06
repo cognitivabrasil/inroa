@@ -74,7 +74,6 @@ public class SubRepositorios {
         String barra = System.getProperty("file.separator"); //barra do sistema operacional muda de win pra linux
         String caminhoAbsoluto = dirXML + barra + "FEB-" + nomeSubfed + ".xml"; //endereco + nome do arquivo. Utilizado em mais de um local no codigo.
 
-
         //efetua por OAI-PMH o verbo lisRecord com a url, a data inicial, o set e o metadataPrefix recebidos como parametro
         ListSets listSets = new ListSets(endereco);
 

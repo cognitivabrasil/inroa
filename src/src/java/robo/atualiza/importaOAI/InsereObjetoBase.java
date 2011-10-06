@@ -3,7 +3,6 @@ package robo.atualiza.importaOAI;
 import java.util.ArrayList;
 import java.util.Set;
 import java.sql.*;
-import postgres.Conectar;
 
 /**
  *
@@ -19,21 +18,24 @@ public class InsereObjetoBase {
      * @param con Conexão com a base de dados
      *  @param idDoc identificador do documento para aquele atributo na base de dados
      */
-    public static int insereObaa(DadosObjetos dadosObjetos, Header header, Connection con, int idRep) {
-        
+    public static int insereObaa(DadosObjetos dadosObjetos, Header header, Connection con, int idRep, String ondeInserir) {
+
         int idDoc = -1;
 //        System.out.println(" =============================");
 //        System.out.println("  Inserindo objeto: " + header.getIdentifier());
 //        System.out.println(" =============================");
 
-////        if(header.getIdentifier().equalsIgnoreCase("oai:localhost:123456789/693")){
-////            int i=0;
-////        }
+
         try {
-            if (!testaEntry(header.getIdentifier(), idRep, con)) {
+            if (!testaEntry(header.getIdentifier(), idRep, con, ondeInserir)) {
 
-                String sql2 = "INSERT INTO documentos (obaa_entry, id_repositorio) VALUES (?,?);";
-
+//if aqui para inserir no rep ou no subrep
+                String sql2 = "";
+                if (ondeInserir.equalsIgnoreCase("subRep")) {
+                    sql2 = "INSERT INTO documentos (obaa_entry, id_rep_subfed)  VALUES (?,?);";
+                } else {
+                    sql2 = "INSERT INTO documentos (obaa_entry, id_repositorio) VALUES (?,?);";
+                }
 
 
                 PreparedStatement stmt1 = con.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
@@ -49,7 +51,7 @@ public class InsereObjetoBase {
 
 
                 addBaseDados(dadosObjetos, con, idDoc); //adiciona os valores lidos do xml na base
-               
+
 
 
                 return idDoc;
@@ -58,7 +60,7 @@ public class InsereObjetoBase {
                 /*************************************************************
                  * ATUALIZAR OS ATRIBUTOS DOS DOCUMENTOS QUE JA ESTAO NA BASE
                  *************************************************************/
-                System.out.println("FEB: Ja existe um documento com o entry informado. Entry: " + header.getIdentifier()+"\n");
+                System.out.println("FEB: Ja existe um documento com o entry informado. Entry: " + header.getIdentifier() + "\n");
                 return idDoc;
             }
         } catch (SQLException e) {
@@ -162,17 +164,21 @@ public class InsereObjetoBase {
 //
 //        return true;
 //    }
-
     /**
      * Testa se o obaa_entry já existe na base de dados
      * @param obaa_entry String contendo o obaa_entry
      * @return true se o objeto existe e false se não existir
      */
-    public static boolean testaEntry(String obaa_entry, int idRep, Connection con) throws SQLException {
+    public static boolean testaEntry(String obaa_entry, int idRep, Connection con, String ondeTestar) throws SQLException {
 
         Statement stm = con.createStatement();
+        String sql = "";
         //fazer consulta sql
-        String sql = "SELECT id FROM documentos WHERE obaa_entry='" + obaa_entry + "' AND id_repositorio=" + idRep;
+        if (ondeTestar.equalsIgnoreCase("subRep")) {
+            sql = "SELECT id FROM documentos WHERE obaa_entry='" + obaa_entry + "' AND id_rep_subfed=" + idRep;
+        } else {
+            sql = "SELECT id FROM documentos WHERE obaa_entry='" + obaa_entry + "' AND id_repositorio=" + idRep;
+        }
         ResultSet rs = stm.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
         if (rs.next()) //testa se tem o proximo resultado
         {
@@ -200,5 +206,4 @@ public class InsereObjetoBase {
 //
 //
 //    }
-
 }

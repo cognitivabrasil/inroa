@@ -53,6 +53,11 @@ public class Informacoes {
         return oaiPMH;
     }
 
+    public String getBarra() {
+        return barra;
+    }
+    
+
     
 
 }

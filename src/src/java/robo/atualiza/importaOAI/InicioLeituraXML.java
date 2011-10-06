@@ -25,7 +25,7 @@ public class InicioLeituraXML {
      * @param caminhoXML ArrayList de Strings contendo caminhos para os arquivos xml
      * @param id id do repositório na base de dados
      * @param indexar variavel do tipo Indexador
-     * @param con Conexão com a base de dados relacional.
+     * @param con Conex&atilde;o com a base de dados relacional.
      *
      */
     public boolean leXMLgravaBase(
