@@ -22,6 +22,7 @@ public class Documento  implements java.io.Serializable {
      private Date datetime;
      private Set<Objeto> objetos = new HashSet<Objeto>(0);
      private Repositorio repositorio;
+     private boolean excluido;
 
     public Documento() {
     }
@@ -77,6 +78,20 @@ public class Documento  implements java.io.Serializable {
 	 */
 	public void setRepositorio(Repositorio repositorio) {
 		this.repositorio = repositorio;
+	}
+
+	/**
+	 * @return the excluido
+	 */
+	public boolean isExcluido() {
+		return excluido;
+	}
+
+	/**
+	 * @param excluido the excluido to set
+	 */
+	public void setExcluido(boolean excluido) {
+		this.excluido = excluido;
 	}
 
 

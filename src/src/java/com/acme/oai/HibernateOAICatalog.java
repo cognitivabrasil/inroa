@@ -29,7 +29,6 @@ import ORG.oclc.oai.server.verb.IdDoesNotExistException;
 import ORG.oclc.oai.server.verb.NoMetadataFormatsException;
 import ORG.oclc.oai.util.OAIUtil;
 import feb.Documento;
-import feb.Excluido;
 import feb.Repositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -69,39 +68,6 @@ public class HibernateOAICatalog extends AbstractCatalog {
      **************************************************************/
     
     
-    /**
-     * Dummy database. Note that the two items each contain two metadataFormats;
-     * oai_dc and oai_etdms
-     */
-    private String[] dummyDb = {
-        "<record><header><identifier>oai:oaicat.oclc.org:OCLCNo/ocm00000012</identifier><datestamp>2001-02-02</datestamp><setSpec>music</setSpec><setSpec>music:(muzak)</setSpec></header><metadata><oai_dc:dc xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\"><dc:language>eng</dc:language><dc:date>1964</dc:date><dc:type>Text data</dc:type><dc:identifier>ocm00000012</dc:identifier><dc:identifier>64063999 //r83</dc:identifier><dc:coverage>n-us---</dc:coverage><dc:subject>KF6369.3--.G3</dc:subject><dc:subject>340</dc:subject><dc:creator>Galles, George Raymond,--1918-</dc:creator><dc:title>Involuntary conversions under the Federal income tax laws.</dc:title><dc:publisher>[University of Idaho, Bureau of Business and Economic Research]</dc:publisher><dc:publisher>Moscow</dc:publisher><dc:format>v, 46 l.</dc:format><dc:format>28 cm.</dc:format><dc:relation>Idaho BBER--monograph no. 2</dc:relation><dc:subject>Income tax--Law and legislation--United States.</dc:subject><dc:relation>University of Idaho.--Bureau of Business and Economic Research.--Idaho BBER monograph ;--no. 2.</dc:relation></oai_dc:dc><oai_etdms:thesis xmlns:oai_etdms=\"http://www.ndltd.org/standards/metadata/etdms/1.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.ndltd.org/standards/metadata/etdms/1.0/ http://www.ndltd.org/standards/metadata/etdms/1.0/etdms.xsd\"><oai_etdms:title>Involuntary conversions under the Federal income tax laws.</oai_etdms:title><oai_etdms:creator>Galles, George Raymond,--1918-</oai_etdms:creator><oai_etdms:subject>KF6369.3--.G3</oai_etdms:subject><oai_etdms:subject>340</oai_etdms:subject><oai_etdms:subject>Income tax--Law and legislation--United States.</oai_etdms:subject><oai_etdms:publisher>[University of Idaho, Bureau of Business and Economic Research]</oai_etdms:publisher><oai_etdms:publisher>Moscow</oai_etdms:publisher><oai_etdms:date>1964</oai_etdms:date><oai_etdms:type>Text data</oai_etdms:type><oai_etdms:format>v, 46 l.--28 cm.</oai_etdms:format><oai_etdms:identifier>ocm00000012</oai_etdms:identifier><oai_etdms:identifier>64063999 //r83</oai_etdms:identifier><oai_etdms:language>eng</oai_etdms:language><oai_etdms:coverage>n-us---</oai_etdms:coverage></oai_etdms:thesis></metadata></record>",
-        "<rec><header><identifier>oai:oaicat.oclc.org:OCLCNo/ocm00003601</identifier><datestamp>2001-02-02</datestamp><setSpec>music</setSpec></header><metadata><oai_dc:dc xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd\"><dc:language>eng</dc:language><dc:date>1967</dc:date><dc:type>Text data</dc:type><dc:identifier>ocm00003600</dc:identifier><dc:identifier>68066972 //r915</dc:identifier><dc:subject>E78.W3--W3 no. 25</dc:subject><dc:subject>970.4/96/37</dc:subject><dc:creator>Barnes, Paul L.</dc:creator><dc:title>Archaeology of the Dean Site, Twin Falls County, Idaho,</dc:title><dc:publisher>[Pullman,</dc:publisher><dc:format>vii, 89 p.--illus., maps.</dc:format><dc:format>28 cm.</dc:format><dc:relation>Laboratory of Anthropology, Washington State University. Report of investigations,--no. 25</dc:relation><dc:subject>Dean site.</dc:subject><dc:subject>Idaho--Antiquities.</dc:subject><dc:relation>Reports of investigations (Washington State University. Laboratory of Anthropology) ;--no. 25.</dc:relation></oai_dc:dc><oai_etdms:thesis xmlns:oai_etdms=\"http://www.ndltd.org/standards/metadata/etdms/1.0/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.ndltd.org/standards/metadata/etdms/1.0/ http://www.ndltd.org/standards/metadata/etdms/1.0/etdms.xsd\"><oai_etdms:title>Archaeology of the Dean Site, Twin Falls County, Idaho,</oai_etdms:title><oai_etdms:creator>Barnes, Paul L.</oai_etdms:creator><oai_etdms:subject>E78.W3--W3 no. 25</oai_etdms:subject><oai_etdms:subject>970.4/96/37</oai_etdms:subject><oai_etdms:subject>Dean site.</oai_etdms:subject><oai_etdms:subject>Idaho--Antiquities.</oai_etdms:subject><oai_etdms:publisher>[Pullman,</oai_etdms:publisher><oai_etdms:date>1967</oai_etdms:date><oai_etdms:type>Text data</oai_etdms:type><oai_etdms:format>vii, 89 p.--illus., maps.--28 cm.</oai_etdms:format><oai_etdms:identifier>ocm00003600</oai_etdms:identifier><oai_etdms:identifier>68066972 //r915</oai_etdms:identifier><oai_etdms:language>eng</oai_etdms:language></oai_etdms:thesis></metadata></rec>"
-    };
-    
-    /**************************************************************
-     * YOUR CODE GOES HERE
-     * delete dummySets and then figure out an alternative way
-     * to identify the sets to be returned to ListSets requests.
-     * One way might be to include them in the oaicat.properties
-     * file and then have the constructor grab them. The ideal
-     * solution, though,  is probably to query your database
-     * somehow for any sets that exist there.
-     **************************************************************/
-    
-    /**
-     * Dummy sets.
-     */
-    private String[] dummySets = {
-        "<set><setSpec>music</setSpec><setName>Music collection</setName></set>",
-        "<set><setSpec>music:(muzak)</setSpec><setName>Muzak collection</setName></set>",
-        "<set><setSpec>music:(elec)</setSpec><setName>Electronic Music Collection</setName><setDescription><oai_dc:dc xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.epenarchives.org/OAI/2.0/oai_dc.xsd\"><dc:description>This set contains metadata describing electronic music recordings made during the 1950ies</dc:description></oai_dc:dc></setDescription></set>"
-    };
-    
-    /**
-     * Construct a DummyOAICatalog object
-     *
-     * @param properties a properties object containing initialization parameters
-     */
     public HibernateOAICatalog(Properties properties) {
         String maxListSize = properties.getProperty("DummyOAICatalog.maxListSize");
         if (maxListSize == null) {
@@ -144,7 +110,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
          * YOUR CODE GOES HERE
          * Retrieve the specified native item from your database.
          **********************************************************************/
-        Object nativeItem = dummyDb[0];
+        Object nativeItem = null;
         /***********************************************************************
          * END OF CUSTOM CODE SECTION
          ***********************************************************************/
@@ -192,7 +158,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
          **********************************************************************/
         
         /* Get some records from your database */
-        Object[] nativeItems = dummyDb;
+        Object[] nativeItems = null; // dummyDb;
         int count;
         
         /* load the headers and identifiers ArrayLists. */
@@ -360,7 +326,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
          * YOUR CODE GOES HERE
          * Replace this nativeItem assignment with your database API code.
          **********************************************************************/
-        Object nativeItem = dummyDb[0];
+        Object nativeItem = null;//dummyDb[0];
         if (nativeItem == null)
             throw new IdDoesNotExistException(identifier);
         /***********************************************************************
