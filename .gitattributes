@@ -280,6 +280,7 @@ src/src/java/robo/atualiza/importa_OAI/InicioLeituraXML.java -text
 src/src/java/robo/atualiza/importa_OAI/InsereObjetoBase.java -text
 src/src/java/robo/atualiza/importa_OAI/OAI_Interface.java -text
 src/src/java/robo/atualiza/importa_OAI/XmlSaxReader.java -text
+src/src/java/robo/atualiza/subfedOAI/Objetos.java -text
 src/src/java/robo/atualiza/subfedOAI/ParserListSets.java -text
 src/src/java/robo/atualiza/subfedOAI/SubRepositorios.java -text
 src/src/java/robo/main/Robo.java -text

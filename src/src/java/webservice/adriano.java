@@ -111,6 +111,10 @@ public class adriano extends HttpServlet
             
             while(rs.next())
             {
+                if(rs.first()){
+                    entry = rs.getString(1);
+                    cEntry++;
+                }
                 if("obaaDescription".equals(rs.getString(2)))
                 {
                     if(description.isEmpty())
@@ -180,26 +184,7 @@ public class adriano extends HttpServlet
                     cIdentifier++;
                 }
             }
-
-////pra que ir pro inicio?
-            rs.first();
-            entry = rs.getString(1);
-            cEntry++;
-            
-            if(location.isEmpty())
-            {
-///o que faz isso?
-                if("1".equals(rs.getString(4)))
-                {
-                    //// -29 ??
-                    location.add("http://hdl.handle.net/" + entry.substring(28, entry.length()-29 ));
-                }
-                else
-                {
-                    location.add("http://hdl.handle.net/" + entry.substring(33, entry.length()-34 ));
-                }
-            }
-            
+           
             
             
             

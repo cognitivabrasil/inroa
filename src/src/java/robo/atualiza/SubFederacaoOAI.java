@@ -18,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import operacoesPostgre.Remover;
 import org.xml.sax.SAXException;
 import postgres.Conectar;
+import robo.atualiza.subfedOAI.Objetos;
 import robo.atualiza.subfedOAI.SubRepositorios;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
@@ -47,14 +48,20 @@ public class SubFederacaoOAI {
                 boolean atualizadoTemp = false;
                 String nome = rs.getString("nome");
                 String url = rs.getString("url");
+
                 testaSubfedAnterioraMil(rs.getDate("data_ultima_atualizacao"), id, con, nome);//deleta toda a base se o ano da ultima atualizacao for menor que 1000
 
                 if (url.isEmpty()) { //testa se a string url esta vazia.
                     System.err.println("FEB ERRO:Nao existe uma url associada ao repositorio " + nome);
                 } else {
                     Informacoes info = new Informacoes();
-////TESTAR SE TEM A BARRA NO FINAL. SE TIVER NAO COLOCAR
-                    url += "/" + info.getOaiPMH();
+
+                    if (url.endsWith("/")) { //se a url terminar com / concatena o endereço do oai-pmh sem a barra
+                        url += info.getOaiPMH();
+                    } else {
+                        url += "/" + info.getOaiPMH();
+                    }
+
                     atualizadoTemp = atualizaSubFedOAI(id, url, rs.getString("data_formatada"), nome, con);
                 }
 
@@ -69,19 +76,23 @@ public class SubFederacaoOAI {
         return atualizou;
     }
 
+
     private boolean atualizaSubFedOAI(int idSubfed, String url, String ultimaAtualizacao, String nome, Connection con) {
         boolean atualizou = false;
 
         System.out.println("FEB: Atualizando subfederacao: " + nome);//imprime o nome do repositorio
 
         try {
-            atualizaRepSubfed(url, nome, idSubfed, con);//atualiza os repositorios da subfederacao
+            //atualizar repositorios da subfederacao
+            SubRepositorios subRep = new SubRepositorios();
+            subRep.atualizaSubRepositorios(url, nome, idSubfed, con);
 
+            //atualizar objetos da subfederacao
             ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
-            //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
+            Objetos obj = new Objetos();
 
 
-
+            atualizaTimestampSubFed(con, idSubfed); //atualiza a hora da ultima atualizacao
         } catch (UnknownHostException u) {
             System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
         } catch (SQLException e) {
@@ -134,28 +145,6 @@ public class SubFederacaoOAI {
                 System.out.println("FEB: Erro: " + e.toString());
             }
         }
-    }
-
-    /**
-     * M&eacute;todo que atualiza os reposit&oacute;rios da subfedera&ccedil;&atilde;o
-     *
-     */
-    private void atualizaRepSubfed(String enderecoOAI, String nomeSubfed, int idSubFed, Connection con) throws Exception {
-
-        Informacoes conf = new Informacoes();
-        String caminhoDiretorioTemporario = conf.getCaminho();
-        File caminhoTeste = Operacoes.testaDiretorioTemp(caminhoDiretorioTemporario);
-        if (caminhoTeste.isDirectory()) {//efetua o Harvester e grava os xmls na pasta temporaria
-            SubRepositorios subRep = new SubRepositorios();
-
-            String arquivoXML = subRep.coletaXML_ListSets(enderecoOAI, nomeSubfed, caminhoDiretorioTemporario); //coleta o xml por OAI-PMH
-
-            subRep.AtualizaSubRepositorios(arquivoXML, idSubFed, con); //efetua o parser e insere os subrepositorios na base
-
-        } else {
-            System.out.println("O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
-        }
-
     }
 
     /**
