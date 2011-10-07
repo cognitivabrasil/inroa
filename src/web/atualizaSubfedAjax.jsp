@@ -4,7 +4,7 @@
     Author     : Marcos
 --%>
 
-<%@page import="robo.atualiza.SubFederacao"%>
+<%@page import="robo.atualiza.SubFederacaoOAI"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
@@ -13,7 +13,7 @@ System.out.println("FEB: Solicitacao de atualizacao pela Ferramenta Administrati
 String id = request.getParameter("id");
 int idSub = Integer.parseInt(id);
 boolean resultado = false;
-SubFederacao Sf = new SubFederacao();
+SubFederacaoOAI Sf = new SubFederacaoOAI();
 resultado = Sf.atualizaSubfedAdm(idSub);
 if (resultado)
     out.print("1");

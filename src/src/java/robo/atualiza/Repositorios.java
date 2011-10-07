@@ -169,11 +169,11 @@ public class Repositorios {
             AtualizaBase.atualizaHora(idRepositorio, con);
 
         } catch (UnknownHostException u) {
-            System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
+            System.err.println("FEB ERRO: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
         } catch (SQLException e) {
-            System.err.println("SQL Exception... Erro na consulta sql na classe Repositorios:" + e.getMessage());
+            System.err.println("FEB ERRO: SQL Exception... Erro na consulta sql na classe Repositorios:" + e.getMessage());
         } catch (ParserConfigurationException e) {
-            System.err.println("O parser nao foi configurado corretamente. " + e);
+            System.err.println("FEB ERRO: O parser nao foi configurado corretamente. " + e);
             e.printStackTrace();
         } catch (SAXException e) {
             String msg = e.getMessage();

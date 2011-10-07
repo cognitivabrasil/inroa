@@ -6,6 +6,7 @@ import java.util.Date;
 import postgres.Conectar;
 import robo.atualiza.SubFederacao;
 import robo.atualiza.Repositorios;
+import robo.atualiza.SubFederacaoOAI;
 
 /**
  * Ferramenta de Sincronismo (Robô)
@@ -28,18 +29,14 @@ public class Robo {
 //        int nDocumentos = selectNumeroDocumentos(con);
 
 //TESTA/ATUALIZA SUBFEDERACAO
-        SubFederacao subFed = new SubFederacao();
-        subFedAtualizada = subFed.atualiza_subFederacao(con);
+        SubFederacaoOAI subFed = new SubFederacaoOAI();
+        subFedAtualizada = subFed.testaAtualizaSubFedOAI(con, indexar);
 
-///////
-        Long inicio = System.currentTimeMillis();
 
 //TESTA REPOSITORIO
         Repositorios repositorio = new Repositorios();
         repAtualizado = repositorio.testa_atualizar_repositorio(con, indexar);
 
-        Long fimAtualizacao = System.currentTimeMillis();
-        System.out.println("#TIMER: tempo da coleta e insercao: " + (fimAtualizacao - inicio) + " milisegundos.");
 
 //TESTA SE PRECISA RECALCULA O INDICE
         try {
@@ -49,7 +46,7 @@ public class Robo {
                 Long inicioIndice = System.currentTimeMillis();
                 indexar.populateR1(con);
                 Long fimIndice = System.currentTimeMillis();
-                System.out.println("FEB: indice recalculado em: "+ (fimIndice - inicioIndice) + " milisegundos! ");
+                System.out.println("FEB: indice recalculado em: "+ (fimIndice - inicioIndice)/1000 + " segundos! ");
             } else {
                 System.err.println("FEB: NAO existe atualizaçoes para os repositorios! " + new Date());
             }
@@ -58,8 +55,8 @@ public class Robo {
         } catch (SQLException e) {
             System.err.println("FEB: Erro com sql no robo: " + e.getMessage());
         } finally{
-            Long fim = System.currentTimeMillis();
-            System.out.println("#TIMER: Tempo total: " + (fim - inicio) + " milisegundos! " );
+//            Long fim = System.currentTimeMillis();
+//            System.out.println("#TIMER: Tempo total: " + (fim - inicio) + " milisegundos! " );
             try {
                 con.close(); //fechar conexao
                 } catch (SQLException e) {

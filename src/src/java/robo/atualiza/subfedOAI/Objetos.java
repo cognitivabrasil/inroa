@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import postgres.Conectar;
 import robo.atualiza.harvesterOAI.Principal;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
@@ -26,6 +25,17 @@ import robo.util.Operacoes;
  */
 public class Objetos {
 
+    /**
+     * Chama o m&eacute;todo responsável por efetuar o harverter na subfederação e o m&eacute;todo responsavel por efetuar o parser nos xmls e inserir na base de dados.
+     * @param endereco endere&ccedil;o http da subfedera&ccedil;&atilde;o que responde por OAI-PMH. Ex: http://feb.ufrgs.br/feb/OAIHander
+     * @param dataInicial data em que a subfedera&ccedil;&atilde;o sofreu a &uacute;ltima atualiza&ccedil;&atilde;o
+     * @param nomeSubfed nome da subfedera&ccedil;&atilde;o
+     * @param metadataPrefix metadataPrefix da subfedera&ccedil;&atilde;o
+     * @param set nome do conjunto que restringir&aacute; a consulta. Nome de um reposit&oacute;rios da subfedera&ccedil;&atilde;o.
+     * @param con Conex&atilde;o com a base de dados local
+     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a atualiza&ccidil;&atilde;o dos metadados
+     * @throws Exception
+     */
     public void atualizaObjetosSubFed(String endereco, String dataInicial, String nomeSubfed, String metadataPrefix, String set, Connection con, Indexador indexar) throws Exception {
         ArrayList<String> caminhosXML; //ArrayList que armazenara os caminhos para os xmls
         Informacoes conf = new Informacoes();
