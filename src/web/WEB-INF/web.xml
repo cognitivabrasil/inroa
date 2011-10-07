@@ -45,7 +45,7 @@
 
      <context-param>
       <param-name>properties</param-name>
-      <param-value>/home/paulo/feb/trunk/src/web/WEB-INF/dummy.properties</param-value>
+      <param-value>dummy.properties</param-value>
       <description>
         The location of the oaicat.properties file containing
         datapairs used to initialize the OAI repository software.

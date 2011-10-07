@@ -288,9 +288,9 @@ src/src/java/webservice/adriano.java -text
 src/src/main/resources/MetadataRecord.hbm.xml -text
 src/src/main/resources/Objeto.hbm.xml -text
 src/src/main/resources/Repositorio.hbm.xml -text
+src/src/main/resources/dummy.properties -text
 src/src/main/resources/hibernate.cfg.xml -text
 src/web/META-INF/context.xml -text
-src/web/WEB-INF/dummy.properties -text
 src/web/WEB-INF/jsp/pager-taglib.tld -text
 src/web/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
 src/web/WEB-INF/web.xml -text
