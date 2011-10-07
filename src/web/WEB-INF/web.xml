@@ -45,23 +45,11 @@
 
      <context-param>
       <param-name>properties</param-name>
-      <param-value>dummy.properties</param-value>
-      <description>
-        The location of the oaicat.properties file containing
-        datapairs used to initialize the OAI repository software.
-      </description>
+      <param-value>dummy.properties</param-value>      
     </context-param>
     <servlet>
 
       <servlet-name>OAIHandler</servlet-name>
-      <description>
-        This servlet processes OAI verbs. 
-
-        The initialization parameter names for this servlet are the
-        "servlet path" that will be received by this servlet (after the
-        filename extension is removed).  The corresponding value is the
-        name of the action class that will be used to process this request.
-      </description>
       <servlet-class>ORG.oclc.oai.server.OAIHandler</servlet-class>
       <!-- Load this servlet at server startup time -->
       <load-on-startup>5</load-on-startup>
@@ -119,6 +107,6 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>_
+    </welcome-file-list>
     
 </web-app>
