@@ -49,7 +49,7 @@ public class Principal {
             }
         }
 
-        System.out.println("FEB: Arquivos XML com dados do repositorio foi gravado");
+        System.out.println("FEB: Arquivos XML foram gravados");
 
 
         return caminhosXML;
@@ -86,7 +86,6 @@ public class Principal {
                     new FileOutputStream(caminhoAbsoluto), "UTF8")); //cria o arquivo xml
             outResume.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //escreve a primeira linha do xml
 
-            System.out.println("FEB: ResumptionToken: " + resumption);
             listRecordsResume = new ListRecords(this.endereco, resumption);
 
             resumption = listRecordsResume.getResumptionToken(); //armazena na variavel resumption o proximo ResumptionToken

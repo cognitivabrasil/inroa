@@ -27,7 +27,7 @@ import robo.util.Operacoes;
 public class Objetos {
 
     public void atualizaObjetosSubFed(String endereco, String dataInicial, String nomeSubfed, String metadataPrefix, String set, Connection con, Indexador indexar) throws Exception {
-        ArrayList<String> caminhosXML;
+        ArrayList<String> caminhosXML; //ArrayList que armazenara os caminhos para os xmls
         Informacoes conf = new Informacoes();
         String caminhoDiretorioTemporario = conf.getCaminho();
 
@@ -41,6 +41,7 @@ public class Objetos {
             
             //efetua o parser do xml e insere os documentos na base
             parserObjetos(caminhosXML, indexar, con);
+            System.out.println("FEB: objetos da subfederacao "+nomeSubfed+" atualizados!");
         }
 
     }
@@ -79,6 +80,9 @@ public class Objetos {
          HashMap<String, Integer> dadosSubRep = recuperaDadosSubRep(con);
 
         for (int i = 0; i < caminhoXML.size(); i++) {
+            if(i==0){
+                System.out.println("FEB: Lendo os XMLs e inserindo os objetos na base");
+            }
             File arquivoXML = new File(caminhoXML.get(i));
             if (arquivoXML.isFile() || arquivoXML.canRead()) {
                 parserObj.parser(caminhoXML.get(i), indexar, con, dadosSubRep);//efetua a leitura do xml e insere os objetos na base de dados
@@ -88,28 +92,10 @@ public class Objetos {
                 arquivoXML.delete();
 
             } else {
-                System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
+                System.out.println("FEB: O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
             }
         }
         return atualizou;
     }
 
-    public static void main(String[] args) {
-        
-        Conectar conecta = new Conectar();
-        Connection con = conecta.conectaBD();
-        Indexador indexar = new Indexador();
-        Informacoes info = new Informacoes();
-        String arquivo = info.getCaminho()+info.getBarra()+"oi.xml";
-        ArrayList<String> arq = new ArrayList<String>();
-        arq.add(arquivo);
-        Objetos obj = new Objetos();
-        try {
-            obj.parserObjetos(arq, indexar, con);
-            con.close();
-        } catch (Exception s) {
-            System.out.println(s);
-        }
-
-    }
 }

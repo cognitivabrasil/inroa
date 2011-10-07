@@ -89,12 +89,12 @@ public class SubFederacaoOAI {
             subRep.atualizaSubRepositorios(url, nome, idSubfed, con);
 
             //atualizar objetos da subfederacao
-            ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
             Objetos obj = new Objetos();
             obj.atualizaObjetosSubFed(url, ultimaAtualizacao, nome, "obaa", null, con, indexar);
 
             atualizou = true;
             atualizaTimestampSubFed(con, idSubfed); //atualiza a hora da ultima atualizacao
+            
         } catch (UnknownHostException u) {
             System.err.println("Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
         } catch (SQLException e) {
@@ -166,6 +166,9 @@ public class SubFederacaoOAI {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
         Indexador indexar = new Indexador();
+        Long inicio = System.currentTimeMillis();
         run.testaAtualizaSubFedOAI(con, indexar);
+        Long fim = System.currentTimeMillis();
+        System.out.println("#TIMER: tempo da coleta e insercao: " + (fim - inicio) + " milisegundos.");
     }
 }

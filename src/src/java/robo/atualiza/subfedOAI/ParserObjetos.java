@@ -88,7 +88,6 @@ public class ParserObjetos extends DefaultHandler {
      */
     @Override
     public void startDocument() {
-        System.out.println(" FEB: Iniciando a leitura do XML");
     }
 
     /**
@@ -96,8 +95,6 @@ public class ParserObjetos extends DefaultHandler {
      */
     @Override
     public void endDocument() {
-
-        System.out.println(" FEB: Fim da leitura/importação do XML");
     }
 
     /**
@@ -171,7 +168,7 @@ public class ParserObjetos extends DefaultHandler {
         }else if (tag.equalsIgnoreCase("header")) {
             if (statusDel == true) {
                 headerAux.setidDeletado(valorAtual.toString().trim());
-                System.out.println("deletar o objeto: " + valorAtual.toString().trim());
+                System.out.println("deletar o objeto: " + headerAux.getIdentifier());
                 try {
                     Excluir.removerDocumentoIndice(valorAtual.toString(), idSubrep, Conexao, "subRep");
 
