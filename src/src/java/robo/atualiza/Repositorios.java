@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.xml.parsers.ParserConfigurationException;
@@ -30,7 +31,7 @@ import robo.util.Operacoes;
  * @author Marcos
  */
 public class Repositorios {
-
+    private SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
     /**
      * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o m&etodo respons&aacute;vel por isso.
      * @param con Conex&atilde;o com a base de dados.
@@ -81,6 +82,7 @@ public class Repositorios {
         Principal importar = new Principal();
         Informacoes conf = new Informacoes();
         InicioLeituraXML gravacao = new InicioLeituraXML();
+        
 
         String caminhoDiretorioTemporario = conf.getCaminho();
 
@@ -98,7 +100,7 @@ public class Repositorios {
 
                 String nome = rs.getString("nome"); //atribiu a variavel nome o nome do repositorio retornado pela consulta sql
 
-                System.out.println("FEB -> " + new Date());
+                System.out.println("FEB -> " + dataFormat.format(new Date()));
                 System.out.println("FEB: Atualizando repositorio: " + nome);//imprime o nome do repositorio
 
                 String url = rs.getString("url"); //pega a url retornada pela consulta sql
@@ -246,9 +248,9 @@ public class Repositorios {
                 }
             }
             if (recalcularIndice) {
-                System.out.println("recalculando o indice " + new Date());
+                System.out.println("recalculando o indice " + dataFormat.format(new Date()));
                 indexar.populateR1(con);
-                System.out.println("indice recalculado! " + new Date());
+                System.out.println("indice recalculado! " + dataFormat.format(new Date()));
             }
 
         } catch (SQLException e) {

@@ -1,6 +1,10 @@
 package postgres;
 
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Date;
 
 /**
  * Disponibiliza método para conectar na base de dados Postgres.
@@ -58,7 +62,7 @@ public class Conectar {
             //e.printStackTrace(); //vejamos que erro foi gerado e quem o gerou
 //            return null;
         } catch (NullPointerException n){
-            System.err.println("FEB: NullPointer ao efetuar conexao na base de dados. Classe Conectar: " + n);
+            System.err.println("FEB: "+ new Date()+" NullPointer ao efetuar conexao na base de dados. Classe Conectar: " + n);
             if(ipBase==null){
                 System.out.println("FEB: Variavel ipBase é null");
             }

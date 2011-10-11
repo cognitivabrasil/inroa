@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import operacoesPostgre.Remover;
@@ -300,10 +301,11 @@ public class SubFederacao {
         resultado = atualiza(con, idSub);
         try {
             if (resultado) {
+                SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
                 Indexador indexar = new Indexador();
-                System.out.println("FEB: recalculando o indice " + new Date());
+                System.out.println("FEB: recalculando o indice " + dataFormat.format(new Date()));
                 indexar.populateR1(con);
-                System.out.println("FEB: indice recalculado! " + new Date());
+                System.out.println("FEB: indice recalculado! " + dataFormat.format(new Date()));
             }
         } catch (SQLException e) {
             System.err.println("FEB ERRO: SQLException no metodo atualizaSubfedAdm: " + e.getMessage());
