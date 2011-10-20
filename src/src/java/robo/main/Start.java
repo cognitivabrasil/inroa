@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServlet;
  * @author Marcos Nunes
  */
 public class Start extends HttpServlet {
-   
-
 
     /**
      * Responsável por chamar o metodo start da classe robo.main que inicializa o robô.
@@ -24,10 +22,9 @@ public class Start extends HttpServlet {
      public void init() throws ServletException {
          // TODO Auto-generated method stub
          super.init();
-         Temporizador run = new Temporizador();
+         Temporizador temporizador = new Temporizador();
         
-        run.start();//chama o metodo que inicia o temporizador para chamar o robo
+        temporizador.start();//chama o metodo que inicia o temporizador para chamar o robo
      }
-
 
 }

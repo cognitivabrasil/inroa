@@ -206,8 +206,8 @@
                                                                 String identificador = "";
                                                                 int repositorio = 0;
                                                                 String nomeRepositorio = "";
-                                                                String idRepSubfed = "";
-                                                                int idSubfederacao = 0;
+                                                                int idRepSubfed = 0;
+                                                                
 
 
                                                                 String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as repsubfed, d.id_repositorio as repositorio"
@@ -222,7 +222,7 @@
                                                                         if (rs.isFirst()) {
                                                                             identificador = rs.getString("obaa_entry");
                                                                             repositorio = rs.getInt("repositorio");
-                                                                            idRepSubfed = rs.getString("repsubfed");
+                                                                            idRepSubfed = rs.getInt("repsubfed");
                                                                         }
                                                                         String valor = rs.getString("valor");
                                                                         String atributo = rs.getString("atributo");
@@ -241,7 +241,7 @@
                                                                             + "<script type='text/javascript'>history.back(-1);</script>");
                                                                 }
 
-                                                                if (idRepSubfed == null) {
+                                                                if (idRepSubfed < 1) {
                                                                     String sql = "SELECT r.nome as nomeRep from documentos d, repositorios r WHERE d.id_repositorio=r.id AND d.id=" + resultadoBusca.get(result);
                                                                     ResultSet rs = stm.executeQuery(sql);
                                                                     if (rs.next()) {
@@ -251,7 +251,6 @@
                                                                     String sql = "SELECT ds.id as idSubfed, ds.nome as nomeSubfed, rsf.nome as nomeRepSF from documentos d, dados_subfederacoes ds, repositorios_subfed rsf WHERE d.id_rep_subfed=rsf.id AND rsf.id_subfed=ds.id AND d.id=" + resultadoBusca.get(result);
                                                                     ResultSet rs = stm.executeQuery(sql);
                                                                     if (rs.next()) {
-                                                                        idSubfederacao = rs.getInt("idSubFed");
                                                                         nomeRepositorio = "Subfedera&ccedil;&atilde;o " + rs.getString("nomeSubfed") + " / " + rs.getString("nomeRepSF");
                                                                     }
                                                                 }
@@ -261,11 +260,13 @@
                             <div class="resultadoConsulta">
 
                                 <%
+///gera a url que chama a infoDetalhada.jsp
+                                String infoDetalhada = "infoDetalhada.jsp?id="+identificador+"&idsubrep="+idRepSubfed+"&idrep="+repositorio;
 ///inicio tratamento titulo
                                                                                                 if (!titulo.isEmpty()) {
                                 %>
                                 <div class="titulo">
-                                    <a href='infoDetalhada.jsp?id=<%=identificador%>&idBase=<%=idSubfederacao%>&repositorio=<%=repositorio%>'>
+                                    <a href='<%=infoDetalhada%>'>
                                         <%
                                                                                                                                             for (int j = 0; j < titulo.size(); j++) { //percorrer todos os resultados separados por ;;
                                                                                                                                                 if (j > 0) { //apos o primeiro elemento colocar um "<BR>"
@@ -278,7 +279,7 @@
                                 </div>
                                 <%
                                                                                                 } else {//se nao existir titulo informa que nao tem titulo mas cria o link para o objeto
-                                                                                                    out.println("<div class=\"titulo\"><a href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idSubfederacao + "&repositorio=" + repositorio + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
+                                                                                                    out.println("<div class=\"titulo\"><a href='" + infoDetalhada + "'>T&iacute;tulo n&atilde;o informado.</a></div>");
                                                                                                 }
 //fim tratamento titulo
 
@@ -294,7 +295,7 @@
                                                                                                         String resumoLimitado = resumo.get(j).trim();
                                                                                                         if (resumoLimitado.length() >= 500) {
                                                                                                             resumoLimitado = resumoLimitado.substring(0, 500);
-                                                                                                            resumoLimitado += " <a style='text-decoration: none;' href='infoDetalhada.jsp?id=" + identificador + "&idBase=" + idSubfederacao + "&repositorio=" + repositorio + "'>(...)</a>";
+                                                                                                            resumoLimitado += " <a style='text-decoration: none;' href='" + infoDetalhada + "'>(...)</a>";
                                                                                                         }
                                                                                                         out.print(resumoLimitado);
                                                                                                     }

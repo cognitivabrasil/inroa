@@ -27,7 +27,7 @@ public class Robo {
         boolean subFedAtualizada = false;
         if (con != null) {
 
-            SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+            SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 //TESTA/ATUALIZA SUBFEDERACAO
             SubFederacaoOAI subFed = new SubFederacaoOAI();

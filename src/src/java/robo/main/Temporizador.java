@@ -13,10 +13,10 @@ import java.util.Date;
 public class Temporizador {
 
 //    public static final long TEMPO = (1000 * 7200); // chama o robo a cada 2 hora
-    public static final long TEMPO = (1000 * 86400); // informa que eh p/ chamar o robo a cada 24 horas
-    public static final long PRIMEIROTEMPO = (1000 * 30); //informa que a primeira vez vai rodar em 30 segundos
+//    public static final long TEMPO = (1000 * 86400); // informa que eh p/ chamar o robo a cada 24 horas
+//    public static final long PRIMEIROTEMPO = (1000 * 30); //informa que a primeira vez vai rodar em 30 segundos
 //    public static final long TEMPO = (1000 * 60); // informa que eh p/ chamar o robo a cada 1min
-    private SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    private SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     /**
      * Temporizador que executa o robô de hora em hora.
      */
@@ -40,6 +40,7 @@ public class Temporizador {
                         //chamar metodo que testa na base se precisa atualizar o repositório
                         iniciaRobo.testaUltimaImportacao();
                     } catch (Exception e) {
+                        System.err.println("FEB ERRO: Erro no Temporizador.java: "+e);
                         e.printStackTrace();
                     }
                 }

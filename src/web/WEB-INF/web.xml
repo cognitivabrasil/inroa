@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-    <servlet>
-        <servlet-name>Start</servlet-name>
-        <servlet-class>robo.main.Start</servlet-class>
-        <load-on-startup>10</load-on-startup>
-    </servlet>
+    <listener>
+   <listener-class>robo.main.inicializador</listener-class>
+</listener>
+    
     <servlet>
         <servlet-name>adriano</servlet-name>
         <servlet-class>webservice.adriano</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Start</servlet-name>
-        <url-pattern>/Start</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>adriano</servlet-name>
         <url-pattern>/webservice</url-pattern>
     </servlet-mapping>
+    
 
     <!-- Servlet definitions for the servlets that make up
          your web application, including initialization
@@ -52,7 +48,7 @@
       <servlet-name>OAIHandler</servlet-name>
       <servlet-class>ORG.oclc.oai.server.OAIHandler</servlet-class>
       <!-- Load this servlet at server startup time -->
-      <load-on-startup>5</load-on-startup>
+      <load-on-startup>11</load-on-startup>
     </servlet>
 
     <!-- Define mappings that are used by the servlet container to

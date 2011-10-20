@@ -46,50 +46,29 @@ public class Consultar {
     /**
      * Metodo para consultar na base de dados todos os atributos para um determinado objeto, essa conexao &eacute; feita em seguida com a subfederacao a qual o objeto pertence
      * @param obaa_entry Identificador único do objeto a ser detalhado
-     * @param repositorio id do reposit&oacute;rio o qual o objeto pertence
+     * @param idRep id do reposit&oacute;rio o qual o objeto pertence
      * @param con Conexão com a base de dados local
      */
-    public Consultar(String obaa_entry, int repositorio, String idBase, Connection con) throws NullPointerException {
+    public Consultar(String obaa_entry, int idRep, int idSubrep, Connection con) throws NullPointerException {
         try {
-            Configuracao configuracaoSubFed;
 
-            if (obaa_entry.contains(";FEB;")) { //se for subfederacao
-                String idEntry[] = obaa_entry.split(";FEB;");
-                repositorio = Integer.parseInt(idEntry[0]);
-                obaa_entry = idEntry[1];
 
-                //vai na base para descobrir a subfederacao do objeto
-                String sql = "SELECT ip, login, senha, porta, base FROM dados_subfederacoes WHERE id=" + idBase;
-
-                PreparedStatement stm = con.prepareStatement(sql);
-                ResultSet rs1 = stm.executeQuery();
-
-                if (rs1.next()) { // testa se retornou alguma sufederacao
-                    configuracaoSubFed = new Configuracao(rs1.getString("base"), rs1.getString("login"), rs1.getString("senha"), rs1.getString("ip"), rs1.getInt("porta"));
-
-                } else { //se não poe a conexão com a base local soh para tratar essa excecao
-                    configuracaoSubFed = new Configuracao();
-                    System.out.println("FEB: Base de dados não encontrada!");
-                }
-            } else { //se nao for subfederacao
-                configuracaoSubFed = new Configuracao();
-            }
-            //conecta na base de dados (federacao ou nao)
-            Conectar conexao = new Conectar(configuracaoSubFed);
-            Connection conSub = conexao.conectaBD(); //chama o metodo conectaBD da classe conectar
-            //faz a consulta na subfederacao
+            //consulta sql
             String consulta = "SELECT o.atributo, o.valor "
-                    + "FROM objetos o, documentos d, repositorios r "
+                    + "FROM objetos o, documentos d "
                     + "WHERE d.obaa_entry = '" + obaa_entry.trim() + "' "
-                    + "AND o.documento = d.id "
-                    + "AND d.id_repositorio=r.id "
-                    + "AND r.id=" + repositorio;
+                    + "AND o.documento = d.id ";
+            if (idRep > 0) { //se for informado id do repositorio consulta no repositorio
+                consulta += "AND d.id_repositorio=" + idRep;
+            } else if (idSubrep > 0) { //se não consulta no repositorio da subfederacao
+                consulta += "AND d.id_rep_subfed=" + idSubrep;
+            }
 
-            PreparedStatement stmt = conSub.prepareStatement(consulta);
+
+            PreparedStatement stmt = con.prepareStatement(consulta);
             ResultSet rs = stmt.executeQuery();
             HashMap<String, String> resultInterno = new HashMap<String, String>();
             while (rs.next()) {
-                //System.out.println("atrbuto: " + rs.getString("atributo") + "valor: " + rs.getString("valor"));
 
                 String atributo = rs.getString("atributo");
                 if (resultInterno.containsKey(atributo)) {
@@ -99,7 +78,6 @@ public class Consultar {
                 }
             }
             resultado.add(resultInterno);
-            conSub.close();
 
         } catch (SQLException e) {
             System.out.println("ERRO AO CARREGAR ATRIBUTOS DO OBJETO OU CONECTANDO COM A SUBFEDERAÇÃO! " + e);
@@ -128,16 +106,17 @@ public class Consultar {
         try {
             Statement stm = con.createStatement();
 
-            String sql = "SELECT t.descricao FROM tipomapeamento t WHERE t.id="+id+";";
+            String sql = "SELECT t.descricao FROM tipomapeamento t WHERE t.id=" + id + ";";
             ResultSet rsTipo = stm.executeQuery(sql);
-            while(rsTipo.next())
-            descricao = rsTipo.getString(1);
+            while (rsTipo.next()) {
+                descricao = rsTipo.getString(1);
+            }
         } catch (SQLException s) {
             System.err.println("FEB: Erro ao consultar a descricao do mapeamento. Classe Consultar metodo consultaDescricaoMapeamento. Mensagem: " + s.getMessage());
         } finally {
             try {
                 con.close(); //fechar conexao
-                } catch (SQLException e) {
+            } catch (SQLException e) {
                 System.out.println("Erro ao fechar a conexão: " + e.getMessage());
             }
             return descricao;
@@ -146,7 +125,7 @@ public class Consultar {
 
     public static int selectNumeroDocumentosRep(Connection con, int idRep) {
         int nDocumentos = 0;
-        String sql = "SELECT count(*) from documentos WHERE id_repositorio="+idRep;
+        String sql = "SELECT count(*) from documentos WHERE id_repositorio=" + idRep;
         try {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
@@ -156,10 +135,9 @@ public class Consultar {
 
         } catch (SQLException e) {
             System.err.println("FEB: Erro no SQL ao contar o numero de documentos. Classe Consultar metodo selectNumeroDocumentosRep: " + e.getMessage());
-        } finally{
+        } finally {
             return nDocumentos;
         }
 
     }
-
 }

@@ -40,14 +40,16 @@ modelo de tópico:
             <%
 
                         String obaaEntry = "";
-                        String idBase = "";
-                        int repositorio = 0;
+                        int idRep = 0;
+                        int idSubrep = 0;
                         boolean variaveisParametro = false;
                         try {
+///coletando valores por parametro
                             obaaEntry = request.getParameter("id"); //coleta o obaaEntry
-                            idBase = request.getParameter("idBase");
-                            repositorio = Integer.parseInt(request.getParameter("repositorio"));
-                            if (obaaEntry.isEmpty() || idBase.isEmpty() || (repositorio <= 0 && idBase == null)) {
+                            idRep = Integer.parseInt(request.getParameter("idrep"));
+                            idSubrep = Integer.parseInt(request.getParameter("idsubrep"));
+
+                            if (obaaEntry.isEmpty() || (idRep <= 0 && idSubrep <= 0)) {
                                 out.print("<p class='textoErro'>Erro! Parametros sem valor</p>");
                                 out.print("<script type='text/javascript'>alert(Erro! Parametros sem valor'); "
                                         + "history.go(-1);</script>");
@@ -59,6 +61,9 @@ modelo de tópico:
                             out.print("<script type='text/javascript'>alert(Erro! Parametros incorretos');</script>"
                                     + "<script type='text/javascript'>history.go(-1);</script>");
 
+                        }catch (NumberFormatException n){
+                             out.print("<p class='textoErro'>Erro! Um dos ids informados n&atilde;o &eacute; um n&uacute;mero v&aacute;lido!</p>");
+                             System.out.println("");
                         }
 
                         if (variaveisParametro) {
@@ -69,20 +74,22 @@ modelo de tópico:
                             Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
 
                             try {
-                                Consultar busca = new Consultar(obaaEntry, repositorio, idBase, con); //faz a con
+                                Consultar busca = new Consultar(obaaEntry, idRep, idSubrep, con); //faz a con
                                 con.close();
                                 resultHash = busca.getResultado(); //adicona no ArreyList o resultado da busca
                             } catch (NullPointerException err) {
-                                out.print("Nenhum atributo encontrado na consulta!\n");
+                                out.print("<p> Nenhum atributo encontrado na consulta!</p>\n");
                             }
 
 
                             if (resultHash.isEmpty()) {
-                                out.print("Nenhum atributo encontrado na consulta!\n");
+                                out.print("<p>Nenhum atributo encontrado na consulta!</p>\n");
                             } else {
 
                                 dados = (HashMap) resultHash.get(0); //coloca no HashMap dados do primeiro resultado recebido
-
+                                if(dados.isEmpty()){
+                                    out.print("<p>Nenhum atributo encontrado na consulta!</p>\n");
+                                }else{
 
                                 if (resultHash.size() > 1) { //se retornar mais de um objeto com o mesmo identificador imprime um erro na tela
                                     out.println("<div class='TextoDivAlerta'>ERRO no repositorio: Retornou mais de um resultado com o mesmo identificador</div>");
@@ -1015,7 +1022,7 @@ modelo de tópico:
             </div>
             <%
                                 }
-                            }
+                            }}
                         } //fim if parametro
             %>
             <input class="BOTAO" type="button" value="&lArr; Voltar" onclick="javascript:history.back(-1);"/>

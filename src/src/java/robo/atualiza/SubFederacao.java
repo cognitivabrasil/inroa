@@ -301,7 +301,7 @@ public class SubFederacao {
         resultado = atualiza(con, idSub);
         try {
             if (resultado) {
-                SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+                SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 Indexador indexar = new Indexador();
                 System.out.println("FEB: recalculando o indice " + dataFormat.format(new Date()));
                 indexar.populateR1(con);

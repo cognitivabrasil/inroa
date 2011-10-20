@@ -31,7 +31,7 @@ import robo.util.Operacoes;
  * @author Marcos
  */
 public class Repositorios {
-    private SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+    private SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     /**
      * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o m&etodo respons&aacute;vel por isso.
      * @param con Conex&atilde;o com a base de dados.
