@@ -5,6 +5,7 @@ import java.net.URLClassLoader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -73,7 +74,8 @@ public class Conectar {
             //e.printStackTrace(); //vejamos que erro foi gerado e quem o gerou
 //            return null;
         } catch (NullPointerException n) {
-            System.err.println("FEB: " + new Date() + " NullPointer ao efetuar conexao na base de dados. Classe Conectar: " + n);
+            SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            System.err.println("FEB: " + dataFormat.format(new Date()) + " NullPointer ao efetuar conexao na base de dados. Classe Conectar: " + n);
             if (ipBase == null) {
                 System.out.println("FEB: Variavel ipBase é null");
             }

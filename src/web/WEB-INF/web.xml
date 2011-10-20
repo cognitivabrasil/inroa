@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <listener>
-   <listener-class>robo.main.inicializador</listener-class>
-</listener>
-    
+        <listener-class>robo.main.Inicializador</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>adriano</servlet-name>
         <servlet-class>webservice.adriano</servlet-class>
@@ -12,7 +12,7 @@
         <servlet-name>adriano</servlet-name>
         <url-pattern>/webservice</url-pattern>
     </servlet-mapping>
-    
+
 
     <!-- Servlet definitions for the servlets that make up
          your web application, including initialization
@@ -39,16 +39,15 @@
          You can define any number of servlets, including zero.
     -->
 
-     <context-param>
-      <param-name>properties</param-name>
-      <param-value>dummy.properties</param-value>      
+    <context-param>
+        <param-name>properties</param-name>
+        <param-value>dummy.properties</param-value>
     </context-param>
     <servlet>
-
-      <servlet-name>OAIHandler</servlet-name>
-      <servlet-class>ORG.oclc.oai.server.OAIHandler</servlet-class>
-      <!-- Load this servlet at server startup time -->
-      <load-on-startup>11</load-on-startup>
+        <servlet-name>OAIHandler</servlet-name>
+        <servlet-class>ORG.oclc.oai.server.OAIHandler</servlet-class>
+        <!-- Load this servlet at server startup time -->
+        <load-on-startup>11</load-on-startup>
     </servlet>
 
     <!-- Define mappings that are used by the servlet container to
@@ -82,8 +81,8 @@
     -->
 
     <servlet-mapping>
-      <servlet-name>OAIHandler</servlet-name>
-      <url-pattern>/OAIHandler</url-pattern>
+        <servlet-name>OAIHandler</servlet-name>
+        <url-pattern>/OAIHandler</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -104,5 +103,5 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    
+
 </web-app>

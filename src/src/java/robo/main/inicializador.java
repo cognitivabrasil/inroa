@@ -12,7 +12,7 @@ package robo.main;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletContextEvent;
 
-public class inicializador implements ServletContextListener
+public class Inicializador implements ServletContextListener
 {
    public void contextInitialized(ServletContextEvent e)
    {
