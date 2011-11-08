@@ -16,12 +16,13 @@ public class Inicializador implements ServletContextListener
 {
    public void contextInitialized(ServletContextEvent e)
    {
+       Temporizador temporizador = new Temporizador();
+
+        temporizador.start();//chama o metodo que inicia o temporizador para chamar o robo
    }
 
     public void contextDestroyed(ServletContextEvent sce) {
-        Temporizador temporizador = new Temporizador();
-
-        temporizador.start();//chama o metodo que inicia o temporizador para chamar o robo
+        
     }
 
 }
