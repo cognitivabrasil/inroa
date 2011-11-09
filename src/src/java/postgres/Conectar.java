@@ -57,36 +57,35 @@ public class Conectar {
             //         return con;
 
         } catch (ClassNotFoundException e) {
-            System.err.println("FEB: excessão Classe não encontrada ao conectar na base de dados");
-            e.printStackTrace();
-            //           return null;
+            System.err.println("FEB ERRO: Classe não encontrada ao conectar na base de dados. Mensagem: "+e.getMessage());
+
         } catch (SQLException e) {
-            System.err.println("FEB: SQL Exception... Erro ao efetuar a conexão na base de dados no ip " + ipBase + ". Mensagem: " + e.getMessage());
+            SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            System.err.println("FEB ERRO: "+dataFormat.format(new Date())+" SQL Exception... Erro ao efetuar a conexão na base de dados no ip " + ipBase + ". Mensagem: " + e.getMessage());
+
             //Get the System Classloader
             ClassLoader sysClassLoader = ClassLoader.getSystemClassLoader();
-
             //Get the URLs
             URL[] urls = ((URLClassLoader) sysClassLoader).getURLs();
-            System.err.println("ClassPath: ");
+            System.err.println("FEB ERRO: ClassPath: ");
             for (int i = 0; i < urls.length; i++) {
                 System.err.println(urls[i].getFile());
             }
-            //e.printStackTrace(); //vejamos que erro foi gerado e quem o gerou
-//            return null;
+
         } catch (NullPointerException n) {
             SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            System.err.println("FEB: " + dataFormat.format(new Date()) + " NullPointer ao efetuar conexao na base de dados. Classe Conectar: " + n);
+            System.err.println("FEB ERRO: " + dataFormat.format(new Date()) + " NullPointer ao efetuar conexao na base de dados. Classe Conectar: " + n);
             if (ipBase == null) {
-                System.out.println("FEB: Variavel ipBase é null");
+                System.out.println("FEB ERRO: Variavel ipBase é null");
             }
             if (baseDeDados == null) {
-                System.out.println("FEB: Variavel baseDeDados é null");
+                System.out.println("FEB ERRO: Variavel baseDeDados é null");
             }
             if (usuario == null) {
-                System.out.println("FEB: Variavel usuario é null");
+                System.out.println("FEB ERRO: Variavel usuario é null");
             }
             if (senha == null) {
-                System.out.println("FEB: Variavel senha é null");
+                System.out.println("FEB ERRO: Variavel senha é null");
             }
         }
 

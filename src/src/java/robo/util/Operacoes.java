@@ -7,6 +7,7 @@ package robo.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.File;
+import java.text.ParseException;
 
 /**
  * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como testes e remo&ccedil;&otilde;es de acentua&ccedil;&atilde;o
@@ -27,8 +28,8 @@ public class Operacoes {
             Date dataTeste = null;
             try {
                 dataTeste = format.parse("01/01/1000");
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (ParseException p) {
+                System.err.println("FEB: ERRO ao efetuar o parse da hora. Mensagem: "+p.getMessage());
             }
 
             if (dataTeste.after(horaBase)) {

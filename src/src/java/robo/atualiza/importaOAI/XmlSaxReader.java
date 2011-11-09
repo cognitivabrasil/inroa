@@ -131,8 +131,7 @@ public class XmlSaxReader extends DefaultHandler {
                 stm1.close();
 
             } catch (SQLException e) {
-                System.err.println("SQL Exception... Erro ao carregar as informações iniciais do banco de dados");
-                e.printStackTrace();
+                System.err.println("FEB ERRO: XmlSaxReader.java SQL Exception... Erro ao carregar as informações iniciais do banco de dados. Mensagem: "+e.getMessage());
             }
         }else if (tag.equalsIgnoreCase("header")) {
             //se o elemento possui atributos, imprime
@@ -197,8 +196,7 @@ public class XmlSaxReader extends DefaultHandler {
                 }
 
             } catch (SQLException e) {
-                System.err.println("SQL Exception... Erro na consulta:");
-                e.printStackTrace();
+                System.err.println("FEB ERRO: XmlSaxReader.java SQL Exception... Erro na consulta: "+e.getMessage());
             }
 
         }
@@ -230,7 +228,7 @@ public class XmlSaxReader extends DefaultHandler {
                 }
 
             } catch (SQLException e) {
-                System.err.println("Erro ao inserir o documento no indice: " + e.getMessage());
+                System.err.println("FEB ERRO: XmlSaxReader.java Erro ao inserir o documento no indice: " + e.getMessage());
             }
 
         } //senao, seta os atributos
@@ -250,7 +248,7 @@ public class XmlSaxReader extends DefaultHandler {
                     Excluir.removerDocumentoIndice(valorAtual.toString(), idRepositorio, Conexao, "rep");
 
                 } catch (SQLException e) {
-                    System.err.println("Erro no SQL ao apagar: " + e);
+                    System.err.println("FEB ERRO: XmlSaxReader.java Erro no SQL ao apagar: " + e);
                 }
                 statusDel = false;
             }
@@ -280,8 +278,7 @@ public class XmlSaxReader extends DefaultHandler {
                         this.dadosObjetos.setAtributos("obaa" + rs.getString("destino"), rs.getString("valor")); //adiciona o mapeamento complementar
                         }
                 } catch (SQLException e) {
-                    System.err.println("Erro ao fazer a consulta do mapeamento composto");
-                    e.printStackTrace();
+                    System.err.println("FEB ERRO: XmlSaxReader.java Erro ao fazer a consulta do mapeamento composto. Mensagem: "+e.getMessage());
                 }
             }
         }

@@ -1,5 +1,5 @@
 <%-- 
-    Document   : processoAjax
+    Document   : respostaAjaxPadrao
     Created on : 01/10/2010, 13:51:16
     Author     : Marcos
 --%>
@@ -90,7 +90,7 @@
 
                 } catch (Exception e) {
                     out.print("<p class='textoErro'>Faltou informar o id do mapeamento a ser excluido</p>");
-                    e.printStackTrace();
+                    System.err.println("FEB: ERRO no respostaAjaxPadrao chamado pelo ajax. Mensagem: "+ e.getMessage());
                 }
 
             }

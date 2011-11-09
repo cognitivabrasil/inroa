@@ -146,8 +146,7 @@ public class IndexadorBusca {
 
 
             } catch (SQLException e) {
-                System.out.println("FEB: SQL Exception... Erro no SQL: ");
-                e.printStackTrace();
+                System.out.println("FEB: SQL Exception... Erro no SQL: "+ e.getMessage());
             }
         }else
             System.err.println("FEB - ERRO: Deve ser informado o id da subFedera&ccedil;&atilde;o ou do reposit&oacute;rio.");
@@ -185,8 +184,7 @@ public class IndexadorBusca {
         try {
             con.close(); //fechar conexao com o banco de dados
         } catch (SQLException e) {
-            System.out.println("Erro ao fechar conexao com o Postgres: ");
-            e.printStackTrace();
+            System.out.println("Erro ao fechar conexao com o Postgres: "+e.getMessage());
         }
 
     }

@@ -175,8 +175,7 @@ public class Repositorios {
         } catch (SQLException e) {
             System.err.println("FEB ERRO: SQL Exception... Erro na consulta sql na classe Repositorios:" + e.getMessage());
         } catch (ParserConfigurationException e) {
-            System.err.println("FEB ERRO: O parser nao foi configurado corretamente. " + e);
-            e.printStackTrace();
+            System.err.println("FEB ERRO: O parser nao foi configurado corretamente. Mensagem: " + e.getMessage());
         } catch (SAXException e) {
             String msg = e.getMessage();
             String msgOAI = "\nFEB: ERRO no parser do OAI-PMH, mensagem: ";

@@ -59,8 +59,7 @@
                 }
             } catch (Exception e) {
                 out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
-                        + "<script type='text/javascript'>window.location=\"index.jsp\";</script>");
-                e.printStackTrace();
+                        + "<script type='text/javascript'>window.location=\"index.jsp\";</script>");               
 
             }
             if (testaConsulta) { //se nao foi informada a consulta nao entra no if

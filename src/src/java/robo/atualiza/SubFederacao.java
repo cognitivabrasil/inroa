@@ -220,11 +220,12 @@ public class SubFederacao {
      */
     private void verificaObjetosDeletados(Connection conLocal, Connection conSub) {
         String sql = "SELECT obaa_entry, id_repositorio FROM excluidos WHERE data >= (now() - ('30 HOUR')::INTERVAL);";
+        String obaaEntry = "";
         try {
             Statement stmSub = conSub.createStatement();
             ResultSet rsSub = stmSub.executeQuery(sql);
             while (rsSub.next()) {
-                String obaaEntry = rsSub.getString("id_repositorio") + ";FEB;" + rsSub.getString("obaa_entry");
+                obaaEntry = rsSub.getString("id_repositorio") + ";FEB;" + rsSub.getString("obaa_entry");
 
                 System.out.println("FEB: Deletando objeto com obaaEntry: '" + obaaEntry + "'");
 
@@ -234,8 +235,7 @@ public class SubFederacao {
                 stmLocal.executeUpdate(sqlDelete);//executa o sql que tem na variavel sqlDelete
             }
         } catch (SQLException s) {
-            System.err.println("FEB: Exluindo objetos... ");
-            s.printStackTrace();
+            System.err.println("FEB: ERRO ao exluir o objeto: "+obaaEntry+ "Mensagem: "+s.getMessage());
         }
 
     }
