@@ -43,6 +43,12 @@
         <param-name>properties</param-name>
         <param-value>dummy.properties</param-value>
     </context-param>
+    
+    <context-param>
+        <param-name>febproperties</param-name>
+        <param-value>feb.properties</param-value>
+    </context-param>
+    
     <servlet>
         <servlet-name>OAIHandler</servlet-name>
         <servlet-class>ORG.oclc.oai.server.OAIHandler</servlet-class>

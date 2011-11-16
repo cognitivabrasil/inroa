@@ -5,6 +5,14 @@
 
 package robo.main;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Properties;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
@@ -19,9 +27,11 @@ public class Start extends HttpServlet {
      * @throws ServletException se ocorrer um erro sobre servlet.
      */
     @Override
-     public void init() throws ServletException {
+     public void init(ServletConfig config) throws ServletException {
          // TODO Auto-generated method stub
          super.init();
+         
+         
          Temporizador temporizador = new Temporizador();
         
         temporizador.start();//chama o metodo que inicia o temporizador para chamar o robo

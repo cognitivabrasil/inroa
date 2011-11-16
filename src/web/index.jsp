@@ -10,6 +10,11 @@
 
 <%
             request.setCharacterEncoding("UTF-8");
+
+            feb.SingletonConfig.initConfig(request.getServletContext());
+            feb.SingletonConfig.getConfig();
+
+            
             response.setCharacterEncoding("UTF-8");
 %>
 <html>
