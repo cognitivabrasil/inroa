@@ -233,6 +233,7 @@ src/src/java/com/acme/oai/HibernateOAICatalog.java -text
 src/src/java/feb/Documento.java -text
 src/src/java/feb/Objeto.java -text
 src/src/java/feb/Repositorio.java -text
+src/src/java/feb/SingletonConfig.java -text
 src/src/java/ferramentaBusca/IndexadorBusca.java -text
 src/src/java/ferramentaBusca/Recuperador.java -text
 src/src/java/ferramentaBusca/indexador/Documento.java -text
