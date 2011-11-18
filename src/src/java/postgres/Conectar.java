@@ -15,12 +15,12 @@ import java.util.Date;
 public class Conectar {
 
     Configuracao conf;
-
+    
     public Conectar() {
-        conf = new Configuracao();
+    conf = new Configuracao();
     }
 
-    /**
+   /**
      * Conexão com uma subfederacao
      * @param subfed arquivo da configuracao da base federada
      * @return

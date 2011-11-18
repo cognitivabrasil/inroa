@@ -250,6 +250,7 @@ src/src/java/postgres/AtualizaBase.java -text
 src/src/java/postgres/AtualizacaoRepositorio.java -text
 src/src/java/postgres/Conectar.java -text
 src/src/java/postgres/Configuracao.java -text
+src/src/java/postgres/DadosBase.java -text
 src/src/java/postgres/DadosBaseLocal.java -text
 src/src/java/postgres/DadosTeste.java -text
 src/src/java/postgres/Excluir.java -text
