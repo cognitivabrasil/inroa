@@ -19,6 +19,7 @@ public class Robo {
      * @author Marcos Nunes
      */
     public void testaUltimaImportacao() {
+        Long inicioRobo = System.currentTimeMillis();
         Indexador indexar = new Indexador();
         Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
 
@@ -51,8 +52,9 @@ public class Robo {
                 } else {
                     System.err.println("FEB: NAO existe atualizaçoes para os repositorios! " + dataFormat.format(new Date()));
                 }
-
-
+                Long finalRobo = System.currentTimeMillis();
+                Long tempoTotal = ((finalRobo-inicioRobo)/1000)/24;
+                
             } catch (SQLException e) {
                 System.err.println("FEB: Erro com sql no robo: " + e.getMessage());
             } finally {

@@ -45,7 +45,7 @@ public class Repositorios {
                 + " WHERE r.id=i.id_repositorio"
                 + " AND r.nome!='todos'"
                 + " AND r.nome!='OBAA'"
-                + " AND i.data_ultima_atualizacao < (now() - i.periodicidade_horas*('1 HOUR')::INTERVAL);";
+                + " AND i.data_ultima_atualizacao < (now() - (i.periodicidade_horas-4)*('1 HOUR')::INTERVAL);";
 
 
         try {

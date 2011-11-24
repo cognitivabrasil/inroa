@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
@@ -48,8 +49,15 @@ public class Temporizador {
 
 ////            timer.scheduleAtFixedRate(tarefa, PRIMEIROTEMPO, TEMPO);
 
-            //Get the Date corresponding to 11:01:00 pm today.
-            Calendar calendar = Calendar.getInstance();
+//            Get the Date corresponding to 11:01:00 pm today.
+//            Calendar calendar = Calendar.getInstance();
+
+
+            Calendar calendar = new GregorianCalendar(); //nao sei pq gregorian :P
+
+            //Seta a data inicial para o dia seguinte, ou seja, a próxima 00hs
+            calendar.add(Calendar.DAY_OF_MONTH, 1);//1 dia após a data corrente
+
             calendar.set(Calendar.HOUR_OF_DAY, 2);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
@@ -57,7 +65,10 @@ public class Temporizador {
             Date time = calendar.getTime();
 
 
-            timer.schedule(tarefa, time, TEMPO);
+            //timer.schedule(tarefa, time, TEMPO);
+            timer.scheduleAtFixedRate(tarefa, time, TEMPO);
+
+
 
 
         }

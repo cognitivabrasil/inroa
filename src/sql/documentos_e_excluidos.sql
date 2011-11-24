@@ -45,3 +45,5 @@ ALTER TABLE dados_subfederacoes DROP COLUMN senha;
 ALTER TABLE dados_subfederacoes DROP COLUMN porta;
 ALTER TABLE dados_subfederacoes DROP COLUMN ip;
 ALTER TABLE dados_subfederacoes DROP COLUMN base;
+
+CREATE TABLE estatistica ( tempo_atualizacao numeric(64) DEFAULT 0 ) WITH (  OIDS = FALSE );

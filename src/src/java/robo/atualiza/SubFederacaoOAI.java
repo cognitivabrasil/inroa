@@ -53,7 +53,7 @@ public class SubFederacaoOAI {
 
         String sql = "";
         if (idSubfed < 0) { //se for menor que zero testa se tem alguma federacao atualizada a mais de 24h
-            sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as data_formatada FROM dados_subfederacoes WHERE data_ultima_atualizacao <= (now() - ('24 HOUR')::INTERVAL);";
+            sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as data_formatada FROM dados_subfederacoes WHERE data_ultima_atualizacao <= (now() - ('20 HOUR')::INTERVAL);";
         } else if (idSubfed > 0) { //se for maior que zero atualiza a federacao que foi informada
             sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as data_formatada FROM dados_subfederacoes WHERE id=" + idSubfed;
         } else {//atualiza todas federacoes idependente da data da ultima atualizacao
