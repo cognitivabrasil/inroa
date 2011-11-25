@@ -73,7 +73,7 @@
             out.print("<p>Gravando dados na base...</p>");
 
 
-            //testar se ja existe um repositorio cadastrado com o mesmo nome
+            //teste se ja existe um repositorio cadastrado com o mesmo nome
             ResultSet testeExiste = stm.executeQuery("SELECT r.nome FROM repositorios r WHERE r.nome='" + nome + "';");
 
             if (testeExiste.next()) {//se existir imprime o alerta
@@ -81,7 +81,7 @@
                 out.print("<script type='text/javascript'>history.go(-1);</script>");
                 //se o navegador tiver o javascrit desativado ira apresentar a mensagem abaixo
                 out.print("<p class='textoErro'>Já existe um repositório cadastrado com esse nome (" + nome + ")!</p>");
-
+            //fim teste
             } else {
 
                 try {

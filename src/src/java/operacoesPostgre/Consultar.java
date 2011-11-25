@@ -122,6 +122,23 @@ public class Consultar {
             return descricao;
         }
     }
+    public static  HashMap<String, Integer> selectNumeroDocumentosSubrep(Connection con, int idSubRep){
+        HashMap<String, Integer> repositorios = new HashMap<String, Integer>();
+        String sql = "SELECT r.nome, count(*) as objetos from documentos d, repositorios_subfed r WHERE d.id_rep_subfed=r.id AND r.id_subfed="+idSubRep+" GROUP BY (r.nome);";
+        try {
+            Statement stm = con.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+
+            while(rs.next()){
+                repositorios.put(rs.getString(1), rs.getInt(2));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("FEB: Erro no SQL ao contar o numero de documentos. Classe Consultar metodo selectNumeroDocumentosSubrep: " + e.getMessage());
+        } finally {
+            return repositorios;
+        }
+    }
 
     public static int selectNumeroDocumentosRep(Connection con, int idRep) {
         int nDocumentos = 0;

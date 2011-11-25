@@ -9,7 +9,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
-<%@page import="postgres.AtualizacaoRepositorio"%>
+<%@page import="robo.util.Operacoes"%>
 <%@page import="operacoesPostgre.Consultar"%>
 <%@page import="java.util.Date" %>
 <html>
@@ -126,7 +126,7 @@
                 <div class="Label">
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;<%=AtualizacaoRepositorio.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))%></div>
+                <div class="Value">&nbsp;<%=Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))%></div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
@@ -135,9 +135,9 @@
                 <%
                             Timestamp dataProxAtualizacao = res.getTimestamp("proxima_atualizacao");
                             if (dataProxAtualizacao.before(new Date())) {//se a data da proxima atualizacao for inferior a data atual imprimir como erro
-                                out.println("<div class=\"ValueErro\"><img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Apagar' align='top'>&nbsp;" + AtualizacaoRepositorio.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip")) + "</div>");
+                                out.println("<div class=\"ValueErro\"><img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Apagar' align='top'>&nbsp;" + Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip")) + "</div>");
                             } else {
-                                out.println("<div class=\"Value\">&nbsp;" + AtualizacaoRepositorio.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip")) + "</div>");
+                                out.println("<div class=\"Value\">&nbsp;" + Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip")) + "</div>");
                             }
                 %>
             </div>

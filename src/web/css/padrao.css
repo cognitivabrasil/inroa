@@ -357,6 +357,18 @@ a:hover{
     width:30%;
     font-size: 80%;
 }
+.LinhaEntrada .Value linha{
+    padding:0;
+            border: 1px solid #000000;
+    clear: both;
+    
+}
+
+.LinhaEntrada .Value .coluna{
+    height:25px;
+        width:120px;
+        float:left;
+}
 
 .LinhaEntrada .ValueIndex{
     margin:0 0 5px 41%;
@@ -369,7 +381,6 @@ a:hover{
     color:red;
     font-weight:bold;
 }
-
 
 .LinhaEntrada .alerta {
     border:0px solid gray;
@@ -727,4 +738,13 @@ td{vertical-align:top;}
 }
 .socialBookmark {
     float: right;
+}
+
+.tableSubfed{
+    background-color: #AEC9E3;
+    
+    
+}
+.tableSubfed .coluna{
+    border: 2px solid #FFFFFF;
 }

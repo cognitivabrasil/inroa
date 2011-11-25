@@ -9,6 +9,9 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="operacoesPostgre.Consultar"%>
+<%@page import="robo.util.Operacoes"%>
 
 <html>
     <head>
@@ -26,13 +29,16 @@
             <%
                         String id = request.getParameter("id");
 
-                        String sql = "SELECT nome, descricao, url "
+                        String sql = "SELECT nome, descricao, url, data_ultima_atualizacao "
                                 + " FROM dados_subfederacoes l"
                                 + " WHERE l.id=" + id
                                 + " ORDER BY l.nome ASC;";
 
                         ResultSet res = stm.executeQuery(sql);
                         res.next();
+
+                        HashMap<String, Integer> repositorios = Consultar.selectNumeroDocumentosSubrep(con, Integer.parseInt(id));
+
             %>
 
             <!--Informações Gerais-->
@@ -57,6 +63,31 @@
                 </div>
                 <div class="Value">&nbsp;<%=res.getString("url")%></div>
             </div>
+
+            <div class="LinhaEntrada">
+                <div class="Label">
+                    &Uacute;ltima Atualiza&ccedil;&atilde;o:
+                </div>
+                <div class="Value">&nbsp;<%=Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))%></div>
+            </div>
+
+            <table  align="center" width=100% class="tableSubfed">
+                <th class='coluna' width="70%">Reposit&oacute;rio</th><th class='coluna' width="30%">N&uacute;mero de objetos</th>
+
+
+                    <%
+                    int total = 0;
+                    for(String nomes : repositorios.keySet()){
+                        total+=repositorios.get(nomes);
+                        out.println("<tr>");
+                        out.println("<td class='coluna'>"+nomes+"</td> <td class='coluna' align='center'>"+repositorios.get(nomes)+"</td>");
+                        out.println("</tr>");
+                    }
+
+                    %>
+                    <tr class="bold"><td align="right" class='coluna'>TOTAL</td><td class='coluna' align='center'><%=total%></td></tr>
+                    </table>
+
 
         </div>
         <div class="BotaoFechar">
