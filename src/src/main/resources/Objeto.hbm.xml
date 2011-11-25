@@ -3,8 +3,6 @@
 <hibernate-mapping>
   <class name="feb.Objeto" table="objetos">
     <meta attribute="class-description"> 
-      Represents a single playable track in the music database.
-      @author Jim Elliott (with help from Hibernate)
     </meta>
     <id column="id" name="id" type="int">
       <meta attribute="scope-set">protected</meta>
