@@ -1,4 +1,5 @@
 * text=auto !eol
+/create-deb.sh -text
 docs/README -text
 docs/env_dev.txt -text
 docs/env_exec.txt -text
