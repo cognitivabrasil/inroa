@@ -19,18 +19,16 @@ public class Configuracao {
      * conexão com a base local
      */
     public Configuracao() {
-        System.out.println("Teste Config");
-                
+        System.out.println("Teste Config");                
             
         base = "federacao";
         usuario = "feb";
         senha = "feb@RNP";
 
-//        ip = "143.54.95.74";
-//          ip = "127.0.0.1";
+//      ip = "143.54.95.74";
+//      ip = "127.0.0.1";
         ip = "143.54.95.20";
-        
-//        porta = 5000;
+//      porta = 5000;
         porta = 5432;
     }
 

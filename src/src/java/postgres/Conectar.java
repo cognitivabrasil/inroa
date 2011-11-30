@@ -1,5 +1,6 @@
 package postgres;
 
+import feb.SingletonConfig;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.sql.Connection;
@@ -14,9 +15,14 @@ import java.util.Date;
  */
 public class Conectar {
 
+    //feb.SingletonConfig conf;
+
     Configuracao conf;
-    
+
+    // para criar uma conexão o JSP que chamar essa função TEM de chamar antes o SigletonConfig.initConfig(c);
     public Conectar() {
+
+    //conf = SingletonConfig.getConfig();
     conf = new Configuracao();
     }
 
@@ -26,6 +32,7 @@ public class Conectar {
      * @return
      */
     public Conectar(Configuracao subfed) {
+
         conf = subfed;
     }
 
@@ -41,6 +48,7 @@ public class Conectar {
         String baseDeDados = conf.getBase();
         String usuario = conf.getUsuario();
         String senha = conf.getSenha();
+        //String ipBase = conf.getIP();
         String ipBase = conf.getIp();
         int portaBase = conf.getPorta();
 
