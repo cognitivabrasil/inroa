@@ -100,10 +100,8 @@ public class SingletonConfig {
                 SingletonConfig c = SingletonConfig.getConfig();
 
                 System.out.println("Store global properties");
-                System.out.println("Usuario: " + properties.getProperty("Postgres.usuario"));
-                c.setUsuario(properties.getProperty("Postgres.usuario"));
-                System.out.println("Senha: " + properties.getProperty("Postgres.senha"));
                 c.setSenha(properties.getProperty("Postgres.senha"));
+                c.setUsuario(properties.getProperty("Postgres.usuario"));
 
             } catch (FileNotFoundException e2) {
                 e2.printStackTrace();
@@ -176,7 +174,7 @@ public class SingletonConfig {
         public void print() {
              System.out.println("Usuario: " + usuario);
          
-            System.out.println("Senha: " + senha);
+            System.out.println("Senha: " + this.getSenha());
         }
     
     /**
@@ -197,25 +195,23 @@ public class SingletonConfig {
      * @return the senha
      */
     public String getSenha() {
-        try{
+       
+        return senha;
+    }
+
+    /**
+     * Gets a cryptographed password as input and updates
+     * the singleton object with the cleartext password.
+     * 
+     * @param senhaCriptografada a senha criptografada
+     */
+    public void setSenha(String senhaCriptografada) {
+       try{
             senha = descriptografa(senhaCriptografada);
         } catch (Exception e){
             System.out.println("Erro ao descriptografar a senha: "+e);
         }
 
-        return senha;
-    }
-
-    /**
-     * @param senha the senha to set
-     */
-    public void setSenha(String senha) {
-        try{
-        senhaCriptografada = criptografa(senha);
-        } catch (Exception e){
-            System.out.println("Erro ao criptografar a senha: "+e);
-        }
-        //this.senha = senha;
     }
         
 /**
