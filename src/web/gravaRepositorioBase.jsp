@@ -40,7 +40,7 @@
         try {
             //armazena em variaveis os dados preenchidos no formulario
             url = request.getParameter("url").trim();
-            nome = request.getParameter("nomeRep").trim().toUpperCase();
+            nome = request.getParameter("nomeRep").trim();
             descricao = request.getParameter("descricao").trim();
             padrao_metadados = request.getParameter("padrao_metadados").trim();
             periodicidadeDias = request.getParameter("periodicidade").trim();

@@ -11,10 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
-import ptstemmer.*;
-import ptstemmer.Stemmer.StemmerType;
-import ptstemmer.exceptions.PTStemmerException;
-import ptstemmer.support.PTStemmerUtilities;
 
 /**
  *

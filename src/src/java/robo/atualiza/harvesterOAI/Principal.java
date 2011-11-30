@@ -100,38 +100,4 @@ public class Principal {
     }
 }
 
-/*
 
-
-while (listSets != null)
-{
-//Verifica se existe erros no retorno	
-NodeList errors = listSets.getErrors();
-if (errors != null && errors.getLength() > 0) 
-{
-System.out.println("Found errors");
-int length = errors.getLength();
-for (int i=0; i<length; ++i) {
-Node item = errors.item(i);
-System.out.println(item);
-}
-System.out.println("Error record: " + listSets.toString());
-break;
-}
-saida.write(listSets.toString().getBytes("UTF-8"));
-saida.write("\n".getBytes("UTF-8"));            
-
-String resumptionToken;
-
-resumptionToken = listSets.getResumptionToken();
-System.out.println("resumptionToken: " + resumptionToken);
-if (resumptionToken == null || resumptionToken.length() == 0) {
-listSets = null;
-} //else {
-//	listSets = new ListSets("http://www.lume.ufrgs.br/dspace-oai/request", resumptionToken);
-//}
-
-}
-
-
- * */

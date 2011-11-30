@@ -52,12 +52,10 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
 
     <tr  class='center'>
         <td class="<%=yesnocolor%>">
-            <input type="button" class="botaoExcluir" name="excluir" id="excluirPadrao" onclick="confirmaExclusao(<%=idPadrao%>,'padraometadados','msgerro','padroes',this.parentNode.parentNode.rowIndex);"/>
+            <input type="button" class="botaoExcluir" title="Excluir padr&atilde;o de metadados" name="excluir" id="excluirPadrao" onclick="confirmaExclusao(<%=idPadrao%>,'padraometadados','msgerro','padroes',this.parentNode.parentNode.rowIndex);"/>
             &nbsp;
-            <a title="Editar / Visualizar" onclick="NewWindow('./padraoMetadados/editaPadrao.jsp?id=<%=idPadrao%>','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                <img src="./imagens/Lapiz-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
-            </a>
-
+            <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarPadrao" onclick="NewWindow('./padraoMetadados/editaPadrao.jsp?id=<%=idPadrao%>','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
+            
         </td>
         <td class="<%=yesnocolor%>">&nbsp;<%=nome%></td>
         <td class="<%=yesnocolor%>">&nbsp;<%=metadataPrefix%></td>
@@ -74,7 +72,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
     <tr class='center'>
         <td>
 
-            <a title="Adicionar novo padr&atilde;o" onclick="NewWindow('./padraoMetadados/addPadrao.jsp','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+            <a title="Adicionar novo padr&atilde;o de metadados" onclick="NewWindow('./padraoMetadados/addPadrao.jsp','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                 <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
             </a>
 

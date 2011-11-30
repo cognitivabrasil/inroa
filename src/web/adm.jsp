@@ -89,13 +89,10 @@ Author     : Marcos Nunes
 
             <tr  class='center'>
                 <td class="<%=yesnocolor%>">
-                    <a title="Excluir" onclick="NewWindow('removerRepositorio.jsp?id=<%=res.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
-                    </a>
+                    <input type="button" class="botaoExcluir" title="Excluir reposit&oacute;rio" name="excluir" id="excluirPadrao" onclick="NewWindow('removerRepositorio.jsp?id=<%=res.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
                     &nbsp;
-                    <a title="Editar / Visualizar" onclick="NewWindow('exibeRepositorios.jsp?id=<%=res.getString("id")%>','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="./imagens/Lapiz-32x32.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                    </a>
+                    <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="excluirPadrao" onclick="NewWindow('exibeRepositorios.jsp?id=<%=res.getString("id")%>','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
+                    
 
 
                 </td>
@@ -124,7 +121,7 @@ Author     : Marcos Nunes
             <tr class='center'>
                 <td>
 
-                    <a title="Adicionar um novo reposit&oacute;rio" onclick="NewWindow('cadastraRepositorio.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Adicionar novo reposit&oacute;rio" onclick="NewWindow('cadastraRepositorio.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
@@ -186,14 +183,10 @@ Author     : Marcos Nunes
 
             <tr  class='center'>
                 <td class="<%=yesnocolor%>">
-                    <a title="Excluir" onclick="NewWindow('removerFederacao.jsp?id=<%=resultFederacao.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
-                    </a>
+                    <input type="button" class="botaoExcluir" title="Excluir Subfedera&ccedil;&atilde;o" name="excluir" id="excluirSubfed" onclick="NewWindow('removerFederacao.jsp?id=<%=resultFederacao.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
                     &nbsp;
-                    <a title="Editar / Visualizar" onclick="NewWindow('exibeFederacao.jsp?id=<%=resultFederacao.getString("id")%>','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="./imagens/Lapiz-32x32.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                    </a>
-
+                    <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="excluirPadrao" onclick="NewWindow('exibeFederacao.jsp?id=<%=resultFederacao.getString("id")%>','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
+                    
                 </td>
                 <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("nome")%></td>
                 <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("descricao")%></td>
@@ -217,7 +210,7 @@ Author     : Marcos Nunes
             <tr class='center'>
                 <td>
 
-                    <a title="Adicionar nova subfedera&ccedil;&atilde;" onclick="NewWindow('cadastraFederacao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Adicionar nova subfedera&ccedil;&atilde;o" onclick="NewWindow('cadastraFederacao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 

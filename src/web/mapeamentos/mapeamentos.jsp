@@ -57,13 +57,9 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
     %>
     <tr  class='center'>
         <td class="<%=yesnocolor%>">
-            <a title="Excluir" onclick="NewWindow('./mapeamentos/removerMapeamento.jsp?idTipoMap=<%=idTipMap%>&idPadrao=<%=idPadrao%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                <img src="./imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">
-            </a>
+            <input type="button" title="Excluir Mapeamento" class="botaoExcluir" name="excluir" id="excluirMapeamento" onclick="NewWindow('./mapeamentos/removerMapeamento.jsp?idTipoMap=<%=idTipMap%>&idPadrao=<%=idPadrao%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
             &nbsp;
-            <a title="Editar / Visualizar" onclick="NewWindow('./mapeamentos/editaMapeamentos.jsp?tipmap=<%=idTipMap%>&padrao=<%=idPadrao%>','','total','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                <img src="./imagens/Lapiz-32x32.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
-            </a>
+            <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="excluirPadrao" onclick="NewWindow('./mapeamentos/editaMapeamentos.jsp?tipmap=<%=idTipMap%>&padrao=<%=idPadrao%>','','total','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
 
         </td>
         <td class="<%=yesnocolor%>">&nbsp;<%=nomePadrao%></td>
@@ -76,7 +72,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
         <tr class='center'>
                 <td>
 
-                    <a title="Adicionar um novo mapeamento" onclick="NewWindow('./mapeamentos/selecionaPadraoAddMap.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Adicionar novo mapeamento" onclick="NewWindow('./mapeamentos/selecionaPadraoAddMap.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 

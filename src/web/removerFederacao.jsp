@@ -36,9 +36,9 @@
             }
             String id = request.getParameter("id");
             //Carrega do banco de dados os padroes de metadados cadastrados
-            ResultSet res = stm.executeQuery("SELECT l.nome, l.ip FROM dados_subfederacoes l WHERE id=" + id + " ORDER BY nome ASC");
+            ResultSet res = stm.executeQuery("SELECT nome FROM dados_subfederacoes WHERE id=" + id + " ORDER BY nome ASC");
             res.next();
-            String ip = res.getString("ip");
+            
 
             if (formNull) {
 
@@ -47,7 +47,7 @@
             <form name="removerFederacao" action="removerFederacao.jsp" method="post">
                 <div class="LinhaEntrada">
                     <div class="Tab">
-                        Deseja realmente remover a rela&ccedil;&atilde;o com a federa&ccedil;&atilde;o <b><%=res.getString("nome")%></b> ?
+                        Deseja realmente remover a Subfedera&ccedil;&atilde;o <b><%=res.getString("nome")%></b> ?
                     </div>
                     <BR>
                 </div>
