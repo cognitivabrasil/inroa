@@ -99,7 +99,7 @@ public class SingletonConfig {
                 System.out.println("Load context properties");
             }
 
-            SingletonConfig c = SingletonConfig.getConfig();
+            SingletonConfig c = singletonObject;
 
             System.out.println("Store global properties");
 
@@ -110,9 +110,9 @@ public class SingletonConfig {
             System.out.println("Porta: " + properties.getProperty("Postgres.port"));
             c.setPorta(properties.getProperty("Postgres.port"));
             System.out.println("Base: " + properties.getProperty("Postgres.base"));
-            c.setPorta(properties.getProperty("Postgres.base"));
+            c.setBase(properties.getProperty("Postgres.base"));
             System.out.println("IP: " + properties.getProperty("Postgres.IP"));
-            c.setPorta(properties.getProperty("Postgres.IP"));
+            c.setIP(properties.getProperty("Postgres.IP"));
 
         } catch (FileNotFoundException e2) {
             e2.printStackTrace();

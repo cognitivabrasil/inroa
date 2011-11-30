@@ -11,7 +11,7 @@
 <%
             request.setCharacterEncoding("UTF-8");
 
-            feb.SingletonConfig.initConfig(request.getServletContext());
+            feb.SingletonConfig.initConfig(application);
             feb.SingletonConfig.getConfig();
 
             
