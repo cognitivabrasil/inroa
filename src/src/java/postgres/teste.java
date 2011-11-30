@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import ptstemmer.*;
 import ptstemmer.Stemmer.StemmerType;
 import ptstemmer.exceptions.PTStemmerException;
@@ -164,12 +165,11 @@ public class teste {
    }
 
     public static void main(String[] args) {
-        String set = null;
-        if (set == null) {
-            set = "";
-        }
-        String[] setVet = set.split(";");
-        System.out.println(setVet.length);
+
+        //Date hoje = new Date();
+
+      Date ontem = new Date(new Date().getTime()-(1000*24*60*60));
+        System.out.println(ontem);
 
         }
 }

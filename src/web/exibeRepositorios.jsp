@@ -135,9 +135,11 @@
                 <%
                             Timestamp dataProxAtualizacao = res.getTimestamp("proxima_atualizacao");
                             if (dataProxAtualizacao.before(new Date())) {//se a data da proxima atualizacao for inferior a data atual imprimir como erro
-                                out.println("<div class=\"ValueErro\"><img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Apagar' align='top'>&nbsp;" + Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip")) + "</div>");
+                                out.println("<div id='textResult"+id+"' class=\"ValueErro\">&nbsp;" + Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip"))
+                                        + "&nbsp;&nbsp;<a title='Atualizar agora' onclick=\"javaScript:atualizaRepAjax("+id+", document.getElementById('textResult"+id+"'));\"><img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> </a> </div>");
                             } else {
-                                out.println("<div class=\"Value\">&nbsp;" + Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip")) + "</div>");
+                                out.println("<div class=\"Value\">&nbsp;" + Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("proxima_atualizacao"), res.getString("url_or_ip"))
+                                        + "&nbsp;&nbsp;<a title='Atualizar agora' onclick=\"javaScript:atualizaRepAjax("+id+", document.getElementById('textResult"+id+"'));\"><img src='./imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> </a> </div>");
                             }
                 %>
             </div>
@@ -148,12 +150,12 @@
                 <div class="Value">
                     <div>&nbsp;<%=Consultar.selectNumeroDocumentosRep(con,Integer.parseInt(id))%></div>
                     
-                    <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Remover e atualizar" onclick="javascript:apagaAtaualizaRepAjax(<%=id%>, this.parentNode)"></div>
+                    <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Formatar e restaurar" onclick="javascript:apagaAtaualizaRepAjax(<%=id%>, this.parentNode)"></div>
                     
                 </div>               
             </div>
         </div>
-
+        
         <%@include file="googleAnalytics"%>
     </body>
 

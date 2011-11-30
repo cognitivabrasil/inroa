@@ -10,6 +10,7 @@
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
 <%@page import="java.util.HashMap"%>
+<%@page import="java.util.Date"%>
 <%@page import="operacoesPostgre.Consultar"%>
 <%@page import="robo.util.Operacoes"%>
 
@@ -29,7 +30,7 @@
             <%
                         String id = request.getParameter("id");
 
-                        String sql = "SELECT nome, descricao, url, data_ultima_atualizacao "
+                        String sql = "SELECT id, nome, descricao, url, data_ultima_atualizacao "
                                 + " FROM dados_subfederacoes l"
                                 + " WHERE l.id=" + id
                                 + " ORDER BY l.nome ASC;";
@@ -38,6 +39,9 @@
                         res.next();
 
                         HashMap<String, Integer> repositorios = Consultar.selectNumeroDocumentosSubrep(con, Integer.parseInt(id));
+                        Timestamp ultimaAtualizacao = res.getTimestamp("data_ultima_atualizacao");
+                        Date ontem = new Date(new Date().getTime()-(1000*24*60*60));
+
 
             %>
 
@@ -68,7 +72,18 @@
                 <div class="Label">
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;<%=Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))%></div>
+                <div id="textResultSF<%=res.getString("id")%>" class="Value">
+                    <%
+                        if(ultimaAtualizacao.before(ontem)){
+                             out.println("<div class='textoErro'>&nbsp;"+Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))+
+                                     "<a title='Atualizar agora' onclick='javaScript:atualizaSubfedAjax("+res.getString("id")+", document.getElementById('textResultSF"+res.getString("id")+"'));'> <img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> </a> </div>");
+                        } else {
+                            out.println("&nbsp;" + Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))+
+                                    "<a title='Atualizar agora' onclick='javaScript:atualizaSubfedAjax("+res.getString("id")+", document.getElementById('textResultSF"+res.getString("id")+"'));'> <img src='./imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> </a>");
+                            }  %>
+                    
+                    
+                </div>
             </div>
 
             <table  align="center" width=100% class="tableSubfed">
@@ -89,9 +104,6 @@
                     </table>
 
 
-        </div>
-        <div class="BotaoFechar">
-            <input class="color" id="cancelar" onclick="javascript:window.close();" value="&nbsp;&nbsp;Fechar janela&nbsp;&nbsp;" type="button" class="CancelButton"/>
         </div>
 
         <%@include file="googleAnalytics"%>

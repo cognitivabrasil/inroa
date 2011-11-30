@@ -175,7 +175,7 @@ function trim(str){
  * @param id id do repositorio a ser atualizado
  * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
 */
-function ataualizaRepAjax(id, exibeResultado)
+function atualizaRepAjax(id, exibeResultado)
 {
 
 
@@ -215,7 +215,7 @@ function ataualizaRepAjax(id, exibeResultado)
  * @param id id da subfedera&ccedil;&atilde;o a ser atualizada
  * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
 */
-function ataualizaSubfedAjax(id, exibeResultado)
+function atualizaSubfedAjax(id, exibeResultado)
 {
 
 
@@ -227,7 +227,7 @@ function ataualizaSubfedAjax(id, exibeResultado)
     {
         if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
-            exibeResultado.innerHTML = "Aguarde, atualizando...";
+            exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
         }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
@@ -272,7 +272,7 @@ function apagaAtaualizaRepAjax(id, exibeResultado)
         {
             if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
             {
-                exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando... <BR> Mensagem estão sendo escritas no log";
+                exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'><img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando... <BR> Mensagem estão sendo escritas no log";
             }
             if(ajax.readyState == 4) // Quando estiver tudo pronto.
             {

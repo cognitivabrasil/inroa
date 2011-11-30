@@ -103,18 +103,9 @@ Author     : Marcos Nunes
                 <td class="<%=yesnocolor%>">&nbsp;<%=res.getString("descricao")%></td>
                 <td class="<%=yesnocolor%>">&nbsp;
                     <div id="textResult<%=res.getString("id")%>">
-                        <%
-                                            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                        <%=Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))%>
 
-                                            if (!Operacoes.testarDataAnteriorMil(res.getDate("data_ultima_atualizacao"))) {
-                                                out.println("Dia " + format.format(res.getDate("data_ultima_atualizacao")) + " &agrave;s " + res.getTime("data_ultima_atualizacao"));
-
-                                            } else {
-                                                out.println("Ainda n&atilde;o foi atualizado!");
-                                            }
-                        %>
-
-                        <a title="Atualizar agora" onclick="javaScript:ataualizaRepAjax(<%=res.getString("id")%>, document.getElementById('textResult'+<%=res.getString("id")%>));">
+                        <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(<%=res.getString("id")%>, document.getElementById('textResult'+<%=res.getString("id")%>));">
                             <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                         </a>
                     </div>
@@ -147,7 +138,7 @@ Author     : Marcos Nunes
                 </td>
                 <td>
                     <div id="textResultTodos">
-                        <a style="text-decoration:none" title="Atualizar todos" onclick="javaScript:ataualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
+                        <a style="text-decoration:none" title="Atualizar todos" onclick="javaScript:atualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
                     </div>
                 </td>
                 <% linha++;%>
@@ -208,17 +199,9 @@ Author     : Marcos Nunes
                 <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("descricao")%></td>
                 <td class="<%=yesnocolor%>">&nbsp;
                     <div id="textResultSF<%=resultFederacao.getString("id")%>">
-                        <%
-                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                        <%=Operacoes.ultimaAtualizacaoFrase(resultFederacao.getTimestamp("data_ultima_atualizacao"))%>
 
-                                        if (!Operacoes.testarDataAnteriorMil(resultFederacao.getDate("data_ultima_atualizacao"))) {
-                                            out.println("Dia " + format.format(resultFederacao.getDate("data_ultima_atualizacao")) + " &agrave;s " + resultFederacao.getTime("data_ultima_atualizacao"));
-
-                                        } else {
-                                            out.println("Ainda n&atilde;o foi atualizado!");
-                                        }
-                        %>                     
-                        <a title="Atualizar agora" onclick="javaScript:ataualizaSubfedAjax(<%=resultFederacao.getString("id")%>, document.getElementById('textResultSF<%=resultFederacao.getString("id")%>'));">
+                        <a title="Atualizar agora" onclick="javaScript:atualizaSubfedAjax(<%=resultFederacao.getString("id")%>, document.getElementById('textResultSF<%=resultFederacao.getString("id")%>'));">
                             <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                         </a>                       
                     </div>
@@ -248,7 +231,7 @@ Author     : Marcos Nunes
                 </td>
                 <td>
                     <div id="textResultSF">
-                        <a style="text-decoration:none" title="Atualizar todas" onclick="javaScript:ataualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todas agora</a>
+                        <a style="text-decoration:none" title="Atualizar todas" onclick="javaScript:atualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todas agora</a>
                     </div>
                 </td>
 

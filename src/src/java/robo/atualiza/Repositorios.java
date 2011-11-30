@@ -40,12 +40,13 @@ public class Repositorios {
      */
     public boolean testa_atualizar_repositorio(Connection con, Indexador indexar) {
         boolean atualizou = false;
+        int tempoSeguranca = 4; //tempo para descontar da periodicidade da ultima atualizacao. Pq se o robo rodou ontem as 02h e atualizou o repositorio as 02:10h hoje quando rodar novamente nao vai atualiza pq nao faz 24h ainda.
 
         String sql = "SELECT r.nome, r.id as idrep" + " FROM repositorios r, info_repositorios i "
                 + " WHERE r.id=i.id_repositorio"
                 + " AND r.nome!='todos'"
                 + " AND r.nome!='OBAA'"
-                + " AND i.data_ultima_atualizacao < (now() - (i.periodicidade_horas-4)*('1 HOUR')::INTERVAL);";
+                + " AND i.data_ultima_atualizacao < (now() - (i.periodicidade_horas-"+tempoSeguranca+")*('1 HOUR')::INTERVAL);";
 
 
         try {
