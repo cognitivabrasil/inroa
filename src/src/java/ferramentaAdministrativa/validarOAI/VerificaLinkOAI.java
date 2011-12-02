@@ -3,15 +3,20 @@
  * and open the template in the editor.
  */
 
-package ferramentaAdministrativa;
-
+package ferramentaAdministrativa.validarOAI;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.HashMap;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import robo.atualiza.harvesterOAI.Identify;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
@@ -20,15 +25,71 @@ import robo.util.Operacoes;
  *
  * @author Marcos
  */
-public class VerificaLinkOAI {
+public class VerificaLinkOAI extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String query = request.getQueryString();
+        try {
+            out.println(verificaLinkOAIPMH(query));
 
+        } finally { 
+            out.close();
+        }
+    } 
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /** 
+     * Handles the HTTP <code>GET</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
+
+    /** 
+     * Handles the HTTP <code>POST</code> method.
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /** 
+     * Returns a short description of the servlet.
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
     /**
-     * Coleta o XML com a identificação do repositório efetua o parser e retorna uma lista de atributos e valores.
+     * Verifica se o link OAI-PMH é v&atilde;lido ou n&atilde;o. Coleta o XML com a identificação do repositório efetua o parser e verifica se tem algum erro.
      * @param enderecoOAI endere&ccedil;o que responde OAI-PMH da subfedera&ccedil;&atilde;o
-     * @throws Exception
+     * @return true se o link oai-pmh for v&atilde;lido ou n&atilde;o.
      */
-    public static void verificaLink(String enderecoOAI) {
+    public static boolean verificaLinkOAIPMH(String enderecoOAI) {
+        boolean resultado = false;
         try{
         Informacoes conf = new Informacoes();
         String caminhoDiretorioTemporario = conf.getCaminho();
@@ -36,16 +97,15 @@ public class VerificaLinkOAI {
         if (caminhoTeste.isDirectory()) {//efetua o Harvester e grava os xmls na pasta temporaria
 
             String caminhoArquivoXML = coletaXML_Identify(enderecoOAI, caminhoDiretorioTemporario); //coleta o xml por OAI-PMH
-            System.out.println(caminhoArquivoXML);
-
+          
             ParserIdentify parserIdentify = new ParserIdentify();
             File arquivoXML = new File(caminhoArquivoXML);
             if (arquivoXML.isFile() || arquivoXML.canRead()) {
 
-                HashMap<String,String> listaSubrep = parserIdentify.parser(arquivoXML);//efetua a leitura do xml e insere os objetos na base de dados
+                parserIdentify.parser(arquivoXML);//efetua a leitura do xml e insere os objetos na base de dados
 
                 arquivoXML.delete(); //apaga arquivo XML
-
+                resultado=true;
             } else {
                 System.err.println("FEB ERRO: O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoArquivoXML);
             }
@@ -53,8 +113,10 @@ public class VerificaLinkOAI {
             System.out.println("FEB ERRO: O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
         }
         }catch (Exception e){
-
+            resultado = false;
             //colocar aqui os tratamentos para o oai-pmh
+        }finally{
+            return resultado;
         }
     }
 
@@ -87,10 +149,5 @@ public class VerificaLinkOAI {
 
         return caminhoAbsoluto;
     }
-
-    public static void main(String[] args) {
-        VerificaLinkOAI.verificaLink("http://objetoseducacionais2.mec.gov.br/oai/request");
-    }
-
 
 }

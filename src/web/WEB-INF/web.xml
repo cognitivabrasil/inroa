@@ -3,17 +3,18 @@
     <listener>
         <listener-class>robo.main.Inicializador</listener-class>
     </listener>
-
     <servlet>
         <servlet-name>adriano</servlet-name>
         <servlet-class>webservice.adriano</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VerificaLinkOAI</servlet-name>
+        <servlet-class>ferramentaAdministrativa.validarOAI.VerificaLinkOAI</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>adriano</servlet-name>
         <url-pattern>/webservice</url-pattern>
     </servlet-mapping>
-
-
     <!-- Servlet definitions for the servlets that make up
          your web application, including initialization
          parameters.  With Tomcat, you can also send requests
@@ -38,24 +39,20 @@
 
          You can define any number of servlets, including zero.
     -->
-
     <context-param>
         <param-name>properties</param-name>
         <param-value>dummy.properties</param-value>
     </context-param>
-    
     <context-param>
         <param-name>febproperties</param-name>
         <param-value>feb.properties</param-value>
     </context-param>
-    
     <servlet>
         <servlet-name>OAIHandler</servlet-name>
         <servlet-class>ORG.oclc.oai.server.OAIHandler</servlet-class>
         <!-- Load this servlet at server startup time -->
         <load-on-startup>11</load-on-startup>
     </servlet>
-
     <!-- Define mappings that are used by the servlet container to
          translate a particular request URI (context-relative) to a
          particular servlet.  The examples below correspond to the
@@ -73,7 +70,6 @@
          It is also legal to define more than one mapping for the same
          servlet, if you wish to.
     -->
-
     <!--
     <servlet-mapping>
       <servlet-name>controller</servlet-name>
@@ -85,22 +81,22 @@
       <url-pattern>/graph</url-pattern>
     </servlet-mapping>
     -->
-
     <servlet-mapping>
         <servlet-name>OAIHandler</servlet-name>
         <url-pattern>/OAIHandler</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>OAIHandler</servlet-name>
         <url-pattern>/servlet/OAIHandler</url-pattern>
     </servlet-mapping>
-
     <!-- Define the default session timeout for your application,
          in minutes.  From a servlet or JSP page, you can modify
          the timeout for a particular session dynamically by using
          HttpSession.getMaxInactiveInterval(). -->
-
+    <servlet-mapping>
+        <servlet-name>VerificaLinkOAI</servlet-name>
+        <url-pattern>/VerificaLinkOAI</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -109,5 +105,4 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
 </web-app>

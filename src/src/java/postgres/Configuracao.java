@@ -1,7 +1,5 @@
 package postgres;
 
-import javax.servlet.ServletConfig;
-
 /**
  * Classe auxiliar que armazena e informa dados sobre o banco de dados a se conctar
  * @author Marcos Nunes
@@ -19,7 +17,6 @@ public class Configuracao {
      * conexão com a base local
      */
     public Configuracao() {
-        System.out.println("Teste Config");                
             
         base = "federacao";
         usuario = "feb";

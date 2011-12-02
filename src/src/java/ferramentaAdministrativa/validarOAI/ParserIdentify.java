@@ -3,12 +3,10 @@
  * and open the template in the editor.
  */
 
-package ferramentaAdministrativa;
+package ferramentaAdministrativa.validarOAI;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -26,9 +24,7 @@ public class ParserIdentify extends DefaultHandler {
 
     /** Buffer que guarda as informacoes quando um texto e encontrado */
     private StringBuffer valorAtual = new StringBuffer(50);
-    private ArrayList<String> subRepositorios;
-    private HashMap<String, String> informacoes;
-
+    private boolean resultado = false;
 
 
     /**
@@ -42,7 +38,7 @@ public class ParserIdentify extends DefaultHandler {
      * @throws SAXException
      * @throws IOException
      */
-    public HashMap<String,String> parser(
+    public void parser(
             File caminhoXML)
             throws ParserConfigurationException,
             SAXException,
@@ -52,8 +48,9 @@ public class ParserIdentify extends DefaultHandler {
         SAXParser parser = spf.newSAXParser();
 
         parser.parse(caminhoXML, this);
-
-        return informacoes;
+        if(!resultado){
+            throw new SAXException("FEB: Is not an OAI-PMH link");
+        }
 
     }
 
@@ -90,7 +87,8 @@ public class ParserIdentify extends DefaultHandler {
             throw new SAXException(erro);
 
         } else if(tag.equalsIgnoreCase("Identify")){
-            informacoes = new HashMap<String, String>();
+//            informacoes = new HashMap<String, String>();
+              resultado = true;
         }
 
 
@@ -103,9 +101,6 @@ public class ParserIdentify extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String tag) {
 
-         if(tag.equalsIgnoreCase("setSpec")){
-             subRepositorios.add(valorAtual.toString().trim());
-         }
 
         //limpa o valor Atual
         valorAtual.delete(0, valorAtual.length());

@@ -39,7 +39,7 @@ Primeira etapa do cadastro de um repositorio
 
         </script>
     </head>
-    <body id="bodyMenor">
+    <body>
 
         <div id="page">
 
@@ -122,13 +122,13 @@ Primeira etapa do cadastro de um repositorio
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <input name="url" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="url" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />&nbsp;aa
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
                     <div class="Label">
-                        Cole&ccedil;&otilde;es ou Comunidades:
+                        Cole&ccedil;&otilde;es ou Comunidades (opcional):
                     </div>
                     <div class="Comentario">
                         Se for mais de uma separar por ponto e v&iacute;rgula.
