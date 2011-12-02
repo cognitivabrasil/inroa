@@ -291,3 +291,46 @@ function apagaAtaualizaRepAjax(id, exibeResultado)
         ajax.send(null); // submete
     }
 }
+
+/**
+ * Verifica a consistencia do link OAI-PMH
+ * @param link link OAI-PMH que ser&aacute; validado
+ * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
+*/
+function verificaLinkOAI(link, exibeResultado)
+{
+        var ajax = openAjax(); // Inicia o Ajax.
+
+        ajax.open("POST", "VerificaLinkOAI?"+link, true); // Envia o termo da busca como uma querystring
+
+        ajax.onreadystatechange = function()
+        {
+            if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+            {
+                //exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
+            }
+            if(ajax.readyState == 4) // Quando estiver tudo pronto.
+            {
+                if(ajax.status == 200)
+            {
+                var resultado = ajax.responseText;
+                resultado = trim(resultado);
+                
+                if(resultado=='true')
+                {
+                    exibeResultado.className='inputVerde';
+                }
+                else{
+                    exibeResultado.innerHTML = "Vermelho";
+                }
+
+            }
+                else
+                {
+                    exibeResultado.innerHTML = "Erro nas funções do Ajax";
+                }
+            }
+        }
+        ajax.send(null); // submete
+
+}

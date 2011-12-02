@@ -40,7 +40,7 @@ public class VerificaLinkOAI extends HttpServlet {
         PrintWriter out = response.getWriter();
         String query = request.getQueryString();
         try {
-            out.println(verificaLinkOAIPMH(query));
+            out.print(verificaLinkOAIPMH(query));
 
         } finally { 
             out.close();
