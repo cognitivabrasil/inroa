@@ -14,7 +14,7 @@
 
 
             feb.SingletonConfig.initConfig(application);
-            feb.SingletonConfig.getConfig();           
+            feb.SingletonConfig.getConfig();
             
 %>
 <html>

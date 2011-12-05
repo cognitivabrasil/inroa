@@ -222,8 +222,11 @@ src/lib/com/jsptags/navigation/pager/parser/TagExportParserConstants.class -text
 src/lib/com/jsptags/navigation/pager/parser/TagExportParserTokenManager.class -text
 src/lib/com/jsptags/navigation/pager/parser/Token.class -text
 src/lib/com/jsptags/navigation/pager/parser/TokenMgrError.class -text
+src/lib/hibernate-core-3.6.6.Final.jar -text
+src/lib/hibernate-entitymanager-3.6.6.Final.jar -text
 src/lib/junit/junit-3.8.2-api.zip -text
 src/lib/junit/junit-3.8.2.jar -text
+src/lib/log4j-1.2.9.jar -text
 src/lib/nblibraries.properties -text
 src/lib/pager-src.jar -text
 src/lib/pager-taglib.jar -text

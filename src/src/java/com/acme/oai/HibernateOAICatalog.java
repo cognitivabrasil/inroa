@@ -33,10 +33,10 @@ import feb.Repositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.Session;
+import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -362,7 +362,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         
                Documento m;
     
-      SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         
             SimpleDateFormat formatter = OAIUtil.dateFormatter();
@@ -833,7 +833,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
             //                                 getResumptionMap(resumptionTokenSb.toString()));
         }
         /***********************************************************************
-         * END OF CUSTOM CODE SECTION
+         * END OF CUSTOM CODE SECTION 
          ***********************************************************************/
         listSetsMap.put("sets", sets.iterator());
         return listSetsMap;
