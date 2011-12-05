@@ -127,7 +127,7 @@ public class SingletonConfig {
     }
 
 
-    singletonObject.print();
+//    singletonObject.print();
     return singletonObject;
 }
 
