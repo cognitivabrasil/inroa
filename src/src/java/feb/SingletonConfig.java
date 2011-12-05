@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.Properties;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -70,10 +69,8 @@ public class SingletonConfig {
             System.out.println("Erro ao criptografar chave: "+e);
         }
 
-
-        System.out.println("Teste 2");
         try {
-        //    HashMap attributes = null;
+
             ServletContext context = servletContext;
             Properties properties = (Properties) context.getAttribute("febproperties");
 
@@ -82,10 +79,10 @@ public class SingletonConfig {
                 String fileName = servletContext.getInitParameter("febproperties");
                 InputStream in;
                 try {
-                    System.out.println("fileName=" + fileName);
+  //                  System.out.println("fileName=" + fileName);
                     in = new FileInputStream(fileName);
                 } catch (FileNotFoundException e2) {
-                    System.out.println("file not found. Try the classpath: " + fileName);
+  //                  System.out.println("file not found. Try the classpath: " + fileName);
                     in = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName);
                 }
                 if (in != null) {
@@ -96,22 +93,22 @@ public class SingletonConfig {
                     System.out.println("OAIHandler.init: fileName=" + fileName);
                 }
             } else {
-                System.out.println("Load context properties");
+  //              System.out.println("Load context properties");
             }
 
             SingletonConfig c = singletonObject;
 
-            System.out.println("Store global properties");
+   //         System.out.println("Store global properties");
 
-            System.out.println("Usuario: " + properties.getProperty("Postgres.user"));
+ //           System.out.println("Usuario: " + properties.getProperty("Postgres.user"));
             c.setUsuario(properties.getProperty("Postgres.user"));
-            System.out.println("Senha: " + properties.getProperty("Postgres.password"));
+  //          System.out.println("Senha: " + properties.getProperty("Postgres.password"));
             c.setSenha(properties.getProperty("Postgres.password"));
-            System.out.println("Porta: " + properties.getProperty("Postgres.port"));
+ //           System.out.println("Porta: " + properties.getProperty("Postgres.port"));
             c.setPorta(properties.getProperty("Postgres.port"));
-            System.out.println("Base: " + properties.getProperty("Postgres.base"));
+//            System.out.println("Base: " + properties.getProperty("Postgres.base"));
             c.setBase(properties.getProperty("Postgres.base"));
-            System.out.println("IP: " + properties.getProperty("Postgres.IP"));
+ //           System.out.println("IP: " + properties.getProperty("Postgres.IP"));
             c.setIP(properties.getProperty("Postgres.IP"));
 
         } catch (FileNotFoundException e2) {

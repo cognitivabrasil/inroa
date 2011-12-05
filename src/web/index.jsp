@@ -12,10 +12,6 @@
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
 
-
-            feb.SingletonConfig.initConfig(application);
-            feb.SingletonConfig.getConfig();
-            
 %>
 <html>
     <head>
