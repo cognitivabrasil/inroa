@@ -36,7 +36,7 @@ Primeira etapa do cadastro de um repositorio
             myForm.addRules({id:'rdMap',option:'required',error:'* Deve ser selecionado o tipo de mapeamento!'});
             myForm.addRules({id:'metPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
             myForm.addRules({id:'namespace',option:'required',error:'* Deve ser informado o NameSpace!'});
-
+            myForm.addRules({id:'confereLinkOAI',option:'required',error:'* A url informada n&atilde;o responde ao protocolo OAI-PMH!'});
         </script>
     </head>
     <body>
@@ -122,8 +122,9 @@ Primeira etapa do cadastro de um repositorio
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <input name="url" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className='';verificaLinkOAI(this.value, this)"/>&nbsp;<div class="linkCantoDireito">aab</div>
+                        <input name="url" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className='';verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))"/>&nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
+                    <input type="hidden" id="confereLinkOAI" value="">
                 </div>
 
                 <div class="LinhaEntrada">

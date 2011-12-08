@@ -360,15 +360,21 @@ a:hover{
 }
 .LinhaEntrada .Value linha{
     padding:0;
-            border: 1px solid #000000;
+    border: 1px solid #000000;
     clear: both;
-    
+
 }
 
 .LinhaEntrada .Value .coluna{
     height:25px;
-        width:120px;
-        float:left;
+    width:120px;
+    float:left;
+}
+.LinhaEntrada .Value .bordaVerde{
+   border: 2px solid #09c812;
+}
+.LinhaEntrada .Value .bordaVermelha{
+   border: 2px solid red;
 }
 
 .LinhaEntrada .ValueIndex{
@@ -599,8 +605,8 @@ td{vertical-align:top;}
     width: 11%;
 }
 .logoBusca a{
-  text-decoration:none;
-  color:white;
+    text-decoration:none;
+    color:white;
 }
 
 .linkCantoEsquerdo{
@@ -746,8 +752,8 @@ td{vertical-align:top;}
 
 .tableSubfed{
     background-color: #AEC9E3;
-    
-    
+
+
 }
 .tableSubfed .coluna{
     border: 2px solid #FFFFFF;

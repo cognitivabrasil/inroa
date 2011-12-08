@@ -295,9 +295,11 @@ function apagaAtaualizaRepAjax(id, exibeResultado)
 /**
  * Verifica a consistencia do link OAI-PMH
  * @param link link OAI-PMH que ser&aacute; validado
- * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
+ * @param inputTexto input text onde o link foi escrito
+ * @param divErro div onde o status e o resultado ser&atilde;o apresentado.
+ * @param inputHidden input que receber&aacute; um valor se o link for v&aacute;lido.
 */
-function verificaLinkOAI(link, exibeResultado)
+function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
 {
         var ajax = openAjax(); // Inicia o Ajax.
 
@@ -307,7 +309,7 @@ function verificaLinkOAI(link, exibeResultado)
         {
             if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
             {
-                //exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
+                divErro.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
             }
             if(ajax.readyState == 4) // Quando estiver tudo pronto.
             {
@@ -318,10 +320,16 @@ function verificaLinkOAI(link, exibeResultado)
                 
                 if(resultado=='true')
                 {
-                    exibeResultado.className='inputVerde';
+                    inputTexto.className='bordaVerde';
+                    divErro.className='linkCantoDireito';
+                    divErro.innerHTML='';
+                    inputHidden.value='ok';
                 }
                 else{
-                    exibeResultado.innerHTML = "Vermelho";
+                    inputTexto.className='bordaVermelha';
+                    divErro.innerHTML = "Link inv&aacute;lido!";
+                    divErro.className='linkCantoDireito textoErro';
+                    inputHidden.value='';
                 }
 
             }
