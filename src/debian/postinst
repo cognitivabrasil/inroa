@@ -1,40 +1,6 @@
 #!/bin/bash
 
 #testa se a pasta webapps do 
-if [ -d /var/lib/tomcat6/webapps ]; then
-	CATALINA_HOME="/var/lib/tomcat6";
-	echo "Catalina Home encontrado!";
-	cancelar='0';
-else
-	#testa se o zenity está instalado no computador	
-	STATUS=$(dpkg-query -W -f='${Status}\n' zenity)	
-	if [ "$STATUS" = "install ok installed" ]; then 
-		#Se ta instalado, utiliza caixas de diálogo pro usuario indicar o catalina home
-		zenity --error --text "Catalina Home não encontrado. Selecione a pasta na janela que abrirá a seguir...";
-		CATALINA_HOME=$(zenity --file-selection --directory);
-		cancelar=$?;
-		while [ ! -d ${CATALINA_HOME}/webapps ] && [ $cancelar != 1 ]; do
-			zenity --error --text "Catalina Home inválido. Selecione a pasta na janela que abrirá a seguir...";
-			CATALINA_HOME=$(zenity --file-selection --directory);
-			cancelar=$?;
-		done
-	else
-		#se o zenity não ta instalado, usa o terminal pro usuario indicar o catalina home
-		while [ ! -d ${CATALINA_HOME}/webapps ]; do
-			echo "Catalina Home não encontrado. Digite o caminho";
-			read CATALINA_HOME;
-		done
-		cancelar='0';
-	fi
-fi
-
-if [ $cancelar != 1 ]; then
-	#sudo /etc/init.d/tomcat6 stop;
-	sudo mv /usr/share/FEB/feb.war $CATALINA_HOME/webapps/feb.war;
-	export CATALINA_HOME;
-	#sudo /etc/init.d/tomcat6 force-reload;
-fi
-
 #####configuração postgres
 sudo service postgresql restart > instalacao_feb.log;
 
@@ -44,7 +10,7 @@ user=$(sudo -u postgres psql -c "SELECT * FROM pg_catalog.pg_user WHERE usename 
 #testa se existe o banco de dados 'federacao'
 if [ "$db" = "" ]; then
 	if [ "$user" != "" ]; then	#testa se existe o usuario feb
-		sudo -u postgres psql -c "ALTER USER feb WITH ENCRYPTED PASSWORD 'feb@RNP'" >> instalacao_feb.log;
+		echo "User already exists" 
 	else
 		sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'" >> instalacao_feb.log;
 	fi
@@ -52,15 +18,6 @@ if [ "$db" = "" ]; then
 	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_estrutura.sql >> instalacao_feb.log;
 	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_dados.sql >> instalacao_feb.log;
 else
-		sudo -u postgres pg_dump -F p -C --data-only federacao -t atributos -t info_repositorios -t mapeamentocomposto -t mapeamentos -t padraometadados -t repositorios -t tipomapeamento -t usuarios > /tmp/FEB_bkp_insert.sql		#cria um backup da base de dados
-	sudo -u postgres dropdb federacao >> instalacao_feb.log;
-	if [ "$user" != "" ]; then	#testa se existe o usuario feb
-		sudo -u postgres psql -c "ALTER USER feb WITH ENCRYPTED PASSWORD 'feb@RNP'" >> instalacao_feb.log;
-	else
-		sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'" >> instalacao_feb.log;
-	fi
-	sudo -u postgres createdb -O feb federacao >> instalacao_feb.log;
-	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_estrutura.sql >> instalacao_feb.log;
-	sudo -u postgres psql federacao -f /tmp/FEB_bkp_insert.sql >> instalacao_feb.log;
+	echo "Base já existe"
 fi
 
