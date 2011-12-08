@@ -17,7 +17,7 @@ import org.xml.sax.*;
 import postgres.Conectar;
 
 
-public class adriano extends HttpServlet
+public class Webservice extends HttpServlet
 {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {

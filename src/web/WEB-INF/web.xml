@@ -4,15 +4,15 @@
         <listener-class>robo.main.Inicializador</listener-class>
     </listener>
     <servlet>
-        <servlet-name>adriano</servlet-name>
-        <servlet-class>webservice.adriano</servlet-class>
+        <servlet-name>Webservice</servlet-name>
+        <servlet-class>webservice.Webservice</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VerificaLinkOAI</servlet-name>
         <servlet-class>ferramentaAdministrativa.validarOAI.VerificaLinkOAI</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>adriano</servlet-name>
+        <servlet-name>Webservice</servlet-name>
         <url-pattern>/webservice</url-pattern>
     </servlet-mapping>
     <!-- Servlet definitions for the servlets that make up
