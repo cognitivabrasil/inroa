@@ -92,7 +92,7 @@
 
             </form>
             <%            } else {
-                
+                Statement stm = con.createStatement();
                 String url = request.getParameter("urlSF").trim();
                 String nome = request.getParameter("nome").trim();
                 String descricao = request.getParameter("descricao").trim();

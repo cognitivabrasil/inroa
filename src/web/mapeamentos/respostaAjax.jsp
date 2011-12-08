@@ -13,17 +13,11 @@ OBS: O que tiver de saida (impressão na tela) aqui, será o retorno para o Ajax
 <%@include file="../conexaoBD.jsp"%>
 
 
-<% // Variáveis da conexão com o banco de dados %>
-
-
 <%
-
-
-
 
 //Parâmetros recuperados do Ajax
 
-
+            Statement stm = con.createStatement();
             String tipo = request.getParameter("tipo");
             String valorAnterior = request.getParameter("valorAnterior");
             String idDivResultado = request.getParameter("idResultado");

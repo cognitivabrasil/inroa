@@ -41,6 +41,7 @@
             <%
             String idPadrao = "";
             boolean confereVariavelParametro = false;
+            Statement stm = con.createStatement();
             try {
                 idPadrao = request.getParameter("id");
                 if (idPadrao.isEmpty()) {

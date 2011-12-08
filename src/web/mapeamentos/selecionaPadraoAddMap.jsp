@@ -39,6 +39,7 @@
                 <div class="Valor" id="padroes">
                     <%
                 String sql = "SELECT id, nome FROM padraometadados ORDER BY nome;";
+                Statement stm = con.createStatement();
                 ResultSet rs = stm.executeQuery(sql);
                 out.println("<select name='padrao' id='padrao' onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\">");
                 while (rs.next()) {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.sql.*;
 import postgres.Conectar;
-import postgres.Configuracao;
 
 /**
  * Disponibiliza método para efetuar consultas

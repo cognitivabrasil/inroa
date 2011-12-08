@@ -10,7 +10,7 @@
 <%@include file="../testaSessaoNovaJanela.jsp"%>
 <%@include file="../conexaoBD.jsp"%>
 <%
-
+            Statement stm = con.createStatement();
             int idTipoMap = 0;
             int idPadrao = 0;
             String mapExistente = "";

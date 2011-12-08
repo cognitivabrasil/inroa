@@ -45,7 +45,7 @@
 
                         String id = request.getParameter("id");
                         String sql = "SELECT nome, descricao, url FROM dados_subfederacoes l WHERE l.id=" + id;
-
+                        Statement stm = con.createStatement();
                         ResultSet res = stm.executeQuery(sql);
                         res.next();
 

@@ -34,6 +34,7 @@
                                 + " WHERE r.id=" + id + " AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.tipo_mapeamento_id=t.id "
                                 + " ORDER BY r.nome ASC";
                         
+                        Statement stm = con.createStatement();
                         ResultSet res = stm.executeQuery(sql);
                         if (res.next()) {
                             String set = res.getString("set");

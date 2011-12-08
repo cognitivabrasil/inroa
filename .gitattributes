@@ -353,7 +353,6 @@ src/lib/nblibraries.properties -text
 src/lib/pager-src.jar -text
 src/lib/pager-taglib.jar -text
 src/lib/postgresql-8.4-702.jdbc4.jar -text
-src/lib/servlet-api.jar -text
 src/lib/xalan.jar -text
 src/pom.xml -text
 src/sql/FEB_1.9.sql -text
@@ -393,7 +392,6 @@ src/src/java/com/acme/oai/HibernateOAICatalog.java -text
 src/src/java/feb/Documento.java -text
 src/src/java/feb/Objeto.java -text
 src/src/java/feb/Repositorio.java -text
-src/src/java/feb/SingletonConfig.java -text
 src/src/java/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text
 src/src/java/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
 src/src/java/ferramentaBusca/IndexadorBusca.java -text
@@ -410,12 +408,11 @@ src/src/java/operacoesPostgre/Remover.java -text
 src/src/java/operacoesPostgre/package.html -text
 src/src/java/postgres/AtualizaBase.java -text
 src/src/java/postgres/Conectar.java -text
-src/src/java/postgres/Configuracao.java -text
 src/src/java/postgres/Excluir.java -text
+src/src/java/postgres/SingletonConfig.java -text
 src/src/java/postgres/package.html -text
 src/src/java/postgres/teste.java -text
 src/src/java/robo/atualiza/Repositorios.java -text
-src/src/java/robo/atualiza/SubFederacao.java -text
 src/src/java/robo/atualiza/SubFederacaoOAI.java -text
 src/src/java/robo/atualiza/harvesterOAI/GetRecord.java -text
 src/src/java/robo/atualiza/harvesterOAI/HarvesterVerb.java -text
@@ -457,7 +454,8 @@ src/web/WEB-INF/jsp/pager-taglib.tld -text
 src/web/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
 src/web/WEB-INF/web.xml -text
 src/web/adm.jsp -text
-src/web/alterarSenha.jsp -text
+src/web/alterarSenhaAdm.jsp -text
+src/web/alterarSenhaBD.jsp -text
 src/web/atualizaApagandoRepAjax.jsp -text
 src/web/atualizaRepAjax.jsp -text
 src/web/atualizaSubfedAjax.jsp -text
@@ -515,7 +513,6 @@ src/web/padraoMetadados/editaPadrao.jsp -text
 src/web/padraoMetadados/funcoesPadrao.js -text
 src/web/padraoMetadados/padraoMetadados.jsp -text
 src/web/padraoMetadados/respostaAjaxPadrao.jsp -text
-src/web/paginacao.jsp -text
 src/web/recalcularIndice.jsp -text
 src/web/removerFederacao.jsp -text
 src/web/removerRepositorio.jsp -text

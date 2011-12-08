@@ -33,7 +33,10 @@ Author     : Marcos Nunes
                     <a href="" onclick="javascript:NewWindow('recalcularIndice.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">Recalcular o Indice</a>
                 </td>
                 <td width ="10%" class="center middle">
-                    <a href="" onclick="javascript:NewWindow('alterarSenha.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Senha</a>
+                    <a href="" onclick="javascript:NewWindow('alterarSenhaAdm.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Senha</a>
+                </td>
+                <td width ="10%" class="center middle">
+                    <a href="" onclick="javascript:NewWindow('alterarSenhaBD.jsp','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Base de Dados</a>
                 </td>
                 <th class="center middle" width =10%>
                     <a href="sair.jsp">Sair</a>
@@ -42,15 +45,6 @@ Author     : Marcos Nunes
         </table>
 
 
-        <%
-
-                    //efetua a consulta listando os repositorios
-
-
-                    //se retornar algum resultado{
-                    // Cria uma tabela HTML onde ficarao os repositorios cadastrados
-                    //        <table valign="center" width=100% aling="center" cellspacing=5 cellpadding=5 border=3 >
-        %>
         <table class='repositorios-table' cellpadding=3>
             <tr>
                 <th colspan=4>
@@ -71,8 +65,8 @@ Author     : Marcos Nunes
                         int linha = 1;
                         String yesnocolor = "";
 
+                        Statement stm = con.createStatement();
                         //Carrega do banco de dados os repositorios cadastrados
-                        //postgres ok
                         ResultSet res = stm.executeQuery("SELECT r.nome, r.id, r.descricao, i.data_ultima_atualizacao FROM repositorios r, info_repositorios i where r.id=i.id_repositorio ORDER BY nome ASC;");
                         while (res.next()) {
 

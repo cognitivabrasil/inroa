@@ -35,6 +35,7 @@
                                 + " WHERE l.id=" + id
                                 + " ORDER BY l.nome ASC;";
 
+                        Statement stm = con.createStatement();
                         ResultSet res = stm.executeQuery(sql);
                         res.next();
 

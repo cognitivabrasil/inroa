@@ -1,6 +1,5 @@
 package postgres;
 
-import feb.SingletonConfig;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.sql.Connection;
@@ -15,7 +14,7 @@ import java.util.Date;
  */
 public class Conectar {
 
-    feb.SingletonConfig conf;
+    postgres.SingletonConfig conf;
 
     //Configuracao conf;
 
@@ -26,16 +25,6 @@ public class Conectar {
     //conf = new Configuracao();
     }
 
-   /**
-     * Conexão com uma subfederacao
-     * @param subfed arquivo da configuracao da base federada
-     * @return
-     * @deprecated
-     */
-    public Conectar(Configuracao subfed) {
-
-     //   conf = subfed;
-    }
 
     /**
      * Conecta na base de dados e retorna uma Connection.

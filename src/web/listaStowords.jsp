@@ -42,7 +42,7 @@
             </form>
             <%
             String sql = "SELECT id, stopword FROM stopwords";
-
+        Statement stm = con.createStatement();
         ResultSet res = stm.executeQuery(sql);
         while(res.next()){
 

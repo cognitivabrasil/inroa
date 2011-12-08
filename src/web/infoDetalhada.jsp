@@ -20,7 +20,7 @@ modelo de tópico:
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="postgres.Conectar"%>
-<%@page import="java.sql.*"%>
+<%@include file="conexaoBD.jsp"%>
 
 <html>
     <head>
@@ -69,9 +69,6 @@ modelo de tópico:
                         if (variaveisParametro) {
                             ArrayList<HashMap> resultHash = new ArrayList<HashMap>(); //instancia um ArrayList de HashMaps
                             HashMap dados = new HashMap(); //instancia um HashMap
-
-                            Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
-                            Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
 
                             try {
                                 Consultar busca = new Consultar(obaaEntry, idRep, idSubrep, con); //faz a con

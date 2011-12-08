@@ -27,6 +27,7 @@
     <body>
         <div id="page">
             <%
+                        Statement stm = con.createStatement();
                         boolean formNull = true;
                         try {
                             String apagar = request.getParameter("apagar");

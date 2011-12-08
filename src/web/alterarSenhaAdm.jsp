@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>GT-FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" media="screen" href="css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="./scripts/validatejs.js"></script>
@@ -26,6 +26,7 @@
     </head>
     <body>
         <%
+            Statement stm = con.createStatement();
             String login = (String) session.getAttribute("usuario");
             boolean formNull = true;
             try {
@@ -42,7 +43,7 @@
                 String sql = "";
                 sql += "SELECT * FROM usuarios ";
                 sql += "WHERE login='" + login + "';";
-
+                
                 ResultSet res = stm.executeQuery(sql);
                 if (res.next()) {
 

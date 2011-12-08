@@ -35,6 +35,7 @@
 
             }
             String id = request.getParameter("id");
+            Statement stm = con.createStatement();
             //Carrega do banco de dados os padroes de metadados cadastrados
             ResultSet res = stm.executeQuery("SELECT nome FROM dados_subfederacoes WHERE id=" + id + " ORDER BY nome ASC");
             res.next();

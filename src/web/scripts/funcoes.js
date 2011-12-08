@@ -301,19 +301,19 @@ function apagaAtaualizaRepAjax(id, exibeResultado)
 */
 function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
 {
-        var ajax = openAjax(); // Inicia o Ajax.
+    var ajax = openAjax(); // Inicia o Ajax.
 
-        ajax.open("POST", "VerificaLinkOAI?"+link, true); // Envia o termo da busca como uma querystring
+    ajax.open("POST", "VerificaLinkOAI?"+link, true); // Envia o termo da busca como uma querystring
 
-        ajax.onreadystatechange = function()
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
-            if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-            {
-                divErro.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
-            }
-            if(ajax.readyState == 4) // Quando estiver tudo pronto.
-            {
-                if(ajax.status == 200)
+            divErro.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
             {
                 var resultado = ajax.responseText;
                 resultado = trim(resultado);
@@ -333,12 +333,18 @@ function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
                 }
 
             }
-                else
-                {
-                    exibeResultado.innerHTML = "Erro nas funções do Ajax";
-                }
+            else
+            {
+                exibeResultado.innerHTML = "Erro nas funções do Ajax";
             }
         }
-        ajax.send(null); // submete
+    }
+    ajax.send(null); // submete
 
+}
+
+function exibeDivSenha(idSenha, idRepSenha)
+{
+    idSenha.innerHTML='<input name="SenhaBD" type="password" id="senhabd">';
+    idRepSenha.className='LinhaEntrada';
 }

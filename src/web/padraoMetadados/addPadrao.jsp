@@ -12,6 +12,7 @@
 <%
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
+            Statement stm = con.createStatement();
 %>
 <html>
     <head>

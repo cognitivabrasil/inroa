@@ -16,7 +16,18 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="StyleSheet" href="css/padrao.css" type="text/css">
+        <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
+    </head>
+    <body id="body">
 <%
+    if (con == null) {
+        out.print("<p class='textoErro'>ERRO ao conectar na base de dados! <BR><BR>Consulte o administrador do Sistema</p>");
+    } else {
 
             int numeroMaximoDeObjetosPorPagina = 5;
 
@@ -85,14 +96,7 @@
                 }
 %>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="StyleSheet" href="css/padrao.css" type="text/css">
-        <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
-    </head>
-    <body id="body">
+
         <div class="logoBusca"><img src="imagens/Logo FEB_reduzido.png" width="7%" alt="Logo FEB_reduzido"/></div>
 
 
@@ -133,7 +137,8 @@
                                         } else {
 
                                             String url = "";
-
+                                            Statement stm = con.createStatement();
+                                            
                                             if (idRepLocal != null) {
                                                 for (int i = 0; i < idRepLocal.length; i++) {
                                                     if (!idRepLocal[i].isEmpty()) {
@@ -366,10 +371,11 @@
 
         <div class="rodapeConsulta">&nbsp;</div>
         <%@include file="googleAnalytics"%>
-    </body>
-</html>
+
 <%
                 con.close(); //fechar conexao
             }
-
+    }
 %>
+    </body>
+</html>

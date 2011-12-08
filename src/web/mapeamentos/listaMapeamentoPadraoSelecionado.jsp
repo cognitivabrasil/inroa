@@ -9,6 +9,7 @@
 
 
 <%
+            Statement stm = con.createStatement();
             int idPadrao;
             String acao = "";
 

@@ -24,7 +24,7 @@
     <body>
 
         <%
-   
+        Statement stm = con.createStatement();
         Long key = new Long(0);
         boolean testaParametros = false;
         String url = "";

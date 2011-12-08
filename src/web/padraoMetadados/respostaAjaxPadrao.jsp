@@ -13,7 +13,7 @@
 
             String tipo = request.getParameter("tipo");
             String idDivResultado = request.getParameter("idResultado");
-
+            Statement stm = con.createStatement();
 
 
             if (tipo.equalsIgnoreCase("exibeText")) {

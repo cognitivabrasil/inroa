@@ -46,6 +46,7 @@
             String yesnocolor = "";
             String atributoComplementar = "";
             String valorComplementar = "";
+            Statement stm = con.createStatement();
             try {
                 String tipoMap = request.getParameter("tipmap");
 
