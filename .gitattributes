@@ -354,7 +354,10 @@ src/lib/postgresql-8.4-702.jdbc4.jar -text
 src/lib/servlet-api.jar -text
 src/lib/xalan.jar -text
 src/pom.xml -text
-src/sql/documentos_e_excluidos.sql -text
+src/sql/FEB_1.9.sql -text
+src/sql/FEB_dados.sql -text
+src/sql/FEB_estrutura.sql -text
+src/sql/README.txt -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/ORG/oclc/oai/server/OAIHandler.java -text
 src/src/java/ORG/oclc/oai/server/catalog/AbstractCatalog.java -text
