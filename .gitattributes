@@ -303,6 +303,7 @@ src/debian/manpage.1.ex -text
 src/debian/manpage.sgml.ex -text
 src/debian/manpage.xml.ex -text
 src/debian/menu.ex -text
+src/debian/postinst -text
 src/debian/postinst.ex -text
 src/debian/postrm.ex -text
 src/debian/preinst.ex -text
