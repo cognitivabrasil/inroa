@@ -8,7 +8,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
-<%@include file="conexaoBD.jsp"%>
 <%@page import="postgres.SingletonConfig"%>
 <html>
     <head>
@@ -41,8 +40,10 @@
                         formNull = true;
 
                     }
+                    // we should NOT connect to the DB here, just load the config
+                       SingletonConfig.initConfig(application);
                     SingletonConfig conf = SingletonConfig.getConfig();
-                    //postgres ok
+                    
                     if (formNull) {
 
         %>
@@ -160,6 +161,3 @@
         <%@include file="googleAnalytics"%>
     </body>
 </html>
-<%
-            con.close(); //fechar conexao com o banco de dados
-%>
