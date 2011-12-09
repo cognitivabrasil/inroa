@@ -334,6 +334,7 @@ public class SingletonConfig {
                                          resultado = true;
                         System.out.println("OAIHandler.init: fileName=" + fileName);
                     }
+                    in.close();
             
             
         } catch (FileNotFoundException e) {
@@ -341,12 +342,6 @@ public class SingletonConfig {
         } catch (IOException e) {
             System.out.println("FEB ERRO: Probemas ao escrever no arquivo de senha, verifique se o arquivo 'pass' foi criado, apague e tente novamente " + e);
         } finally {
-            try {
-                writer.close();
-
-            } catch (IOException e) {
-                System.out.println("FEB ERRO: Erro ao fechar arquivo:" + e);
-            }
             return resultado;
         }
     }
