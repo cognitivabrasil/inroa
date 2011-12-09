@@ -1,5 +1,13 @@
-feb (1.9-1) unstable; urgency=low
+feb (2.0-1) unstable; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Gravando senha da base criptografada
+  * Comando feb-config
+  * Sincronização via OAI-PMH
+  * Base de dados pode ser em outra máquina
+  * Melhorias na interface administrativa
+  * Melhoria na ferramenta de busca (balanço dos pesos)
+  * Temporizador para rodar o robô
+  * Verificação de consistência do link OAI-PMH
+  * Bug fixes
 
  -- Paulo Schreiner  <paulo@jorjao81.com>  Mon, 28 Nov 2011 16:30:24 -0200
