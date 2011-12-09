@@ -160,6 +160,5 @@ public class FebChangeDatabaseInfo {
            System.out.println("IO/Error");
        }
         
-        System.out.println("teste");
     }
 }
