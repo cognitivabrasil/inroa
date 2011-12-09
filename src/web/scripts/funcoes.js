@@ -348,3 +348,7 @@ function exibeDivSenha(idSenha, idRepSenha)
     idSenha.innerHTML='<input name="SenhaBD" type="password" id="senhabd">';
     idRepSenha.className='LinhaEntrada';
 }
+
+function paranaodarerro(){
+    //alguns navegadores excluem a ultima funcao.
+}
