@@ -4,14 +4,15 @@
  */
 package postgres;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Writer;
+import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
@@ -43,6 +44,7 @@ public class SingletonConfig {
     File file;
     byte[] encrypted;
     private static final String hexDigits = "0123456789abcdef";
+    private String filename;
 
     // Note that the constructor is private
     private SingletonConfig() throws NoSuchAlgorithmException, NoSuchPaddingException {
@@ -303,17 +305,37 @@ public class SingletonConfig {
         boolean resultado = false;
         try {
             Properties properties = new Properties();
-            String fileName = servletContext.getInitParameter("febproperties");
-            writer = new BufferedWriter(new FileWriter(fileName));
             
+ 
+            
+                
             properties.setProperty("Postgres.user", usuario);
             properties.setProperty("Postgres.password", senhaCriptografada);
             properties.setProperty("Postgres.IP", IP);
             properties.setProperty("Postgres.base", base);
             properties.setProperty("Postgres.port", String.valueOf(porta));
 
-            properties.store(writer, "Dados para a conexão no banco PostgreSQL do FEB");
-            resultado = true;
+            
+                         String fileName = servletContext.getInitParameter("febproperties");
+              OutputStream in;
+                    try {
+                        //                  System.out.println("fileName=" + fileName);
+                 
+                        in = new FileOutputStream(fileName);
+                    } catch (FileNotFoundException e2) {
+                        //                  System.out.println("file not found. Try the classpath: " + fileName);
+                           URL res = Thread.currentThread().getContextClassLoader().getResource(fileName);
+                        in = new FileOutputStream(res.getPath());
+                    }
+                    if (in != null) {
+                        System.out.println("file was found: Save the properties");
+                             properties.store(in, "Dados para a conexão no banco PostgreSQL do FEB");
+                        //attributes = getAttributes(properties);
+                                         resultado = true;
+                        System.out.println("OAIHandler.init: fileName=" + fileName);
+                    }
+            
+            
         } catch (FileNotFoundException e) {
             System.out.println("FEB ERRO: Probemas ao criar o arquivo de senha " + e);
         } catch (IOException e) {
