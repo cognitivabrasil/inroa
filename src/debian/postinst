@@ -18,6 +18,7 @@ if [ "$db" = "" ]; then
 	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_estrutura.sql >> instalacao_feb.log;
 	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_dados.sql >> instalacao_feb.log;
 else
-	echo "Base já existe"
+	echo "Base já existe, atualizando estrutura."
+	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_1.9.sql >> instalacao_feb.log;
 fi
 
