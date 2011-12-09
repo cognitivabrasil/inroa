@@ -355,7 +355,7 @@ a:hover{
     border-color: white;
     color: white;
     font-weight: bold;
-    width:30%;
+    width:auto;
     font-size: 80%;
 }
 .LinhaEntrada .Value linha{

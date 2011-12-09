@@ -23,7 +23,14 @@ Author     : Marcos Nunes
     </head>
     <body style="cursor:wait">
 
+<%
+                if (con == null) {
+                    out.print("<p class='textoErro'>ERRO ao conectar na base de dados! "
+                            + "<BR><BR>Verifique as informa&ccedil&otilde;es da base de dados no arquivo feb.properties"
+                            + "<BR>Verifique o log para ver o erro gerado.</p>");
+                } else {
 
+    %>
         <table valign="center" width=100% border=1 bgcolor="#AEC9E3">
             <tr>
                 <td width =50% class="adm-title">
@@ -269,8 +276,9 @@ Author     : Marcos Nunes
             document.body.style.cursor="default";
         </script>
         <%@include file="googleAnalytics"%>
-    </BODY>
-</html>
 <%
             con.close(); //fechar conexao o banco de dados
+            }
 %>
+    </BODY>
+</html>

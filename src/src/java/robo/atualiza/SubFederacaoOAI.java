@@ -126,9 +126,8 @@ public class SubFederacaoOAI {
             //atualizar objetos da subfederacao
             Objetos obj = new Objetos();
             obj.atualizaObjetosSubFed(url, ultimaAtualizacao, nome, "obaa", null, con, indexar);
-
-            atualizou = true;
             atualizaTimestampSubFed(con, idSubfed); //atualiza a hora da ultima atualizacao
+            atualizou = true;
 
         } catch (UnknownHostException u) {
             System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
@@ -160,11 +159,11 @@ public class SubFederacaoOAI {
                 System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e);
             }
         } catch (FileNotFoundException e) {
-            System.err.println("\nFEB ERRO - Metodo atualizaSubFedOAI: nao foi possivel coletar os dados de: " + e + "\n");
+            System.err.println("\nFEB ERRO - "+this.getClass()+": nao foi possivel coletar os dados de: " + e + "\n");
         } catch (IOException e) {
-            System.err.println("\nFEB ERRO - Metodo atualizaSubFedOAI: O arquivo nao pode ser escrito ou lido: " + e + "\n");
+            System.err.println("\nFEB ERRO - Nao foi possivel coletar ou ler o XML em "+this.getClass()+": " + e + "\n");
         } catch (Exception e) {
-            System.err.println("\nFEB ERRO - Metodo atualizaSubFedOAI: erro ao efetuar o Harvester " + e + "\n");
+            System.err.println("\nFEB ERRO - "+this.getClass()+": erro ao efetuar o Harvester " + e + "\n");
         } finally {
             return atualizou;
         }

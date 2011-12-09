@@ -187,14 +187,12 @@ function atualizaRepAjax(id, exibeResultado)
     {
         if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
-            exibeResultado.innerHTML = "Aguarde, atualizando...";
+            exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
         }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
             if(ajax.status == 200)
             {
-                //                var resultado = ajax.responseText;
-                //                exibeResultado.innerHTML = resultado;
                 exibeResultado.innerHTML = "Atualizado!";
             }
             else
@@ -261,7 +259,7 @@ function atualizaSubfedAjax(id, exibeResultado)
  * @param id id do repositorio a ser atualizado
  * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
 */
-function apagaAtaualizaRepAjax(id, exibeResultado)
+function apagaAtualizaRepAjax(id, exibeResultado)
 {
     if (confirm("Deseja excluir todos os objetos e coletar novamente? \n\n Isso pode levar bastante tempo.")) {
         var ajax = openAjax(); // Inicia o Ajax.
@@ -272,7 +270,7 @@ function apagaAtaualizaRepAjax(id, exibeResultado)
         {
             if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
             {
-                exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'><img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando... <BR> Mensagem estão sendo escritas no log";
+                exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando... <BR> Mensagem estão sendo escritas no log";
             }
             if(ajax.readyState == 4) // Quando estiver tudo pronto.
             {
@@ -350,5 +348,5 @@ function exibeDivSenha(idSenha, idRepSenha)
 }
 
 function paranaodarerro(){
-    //alguns navegadores excluem a ultima funcao.
+//alguns navegadores excluem a ultima funcao.
 }

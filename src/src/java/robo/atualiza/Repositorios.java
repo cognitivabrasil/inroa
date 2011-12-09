@@ -203,7 +203,7 @@ public class Repositorios {
         } catch (FileNotFoundException e) {
             System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: " + e + "\n");
         } catch (IOException e) {
-            System.err.println("\nFEB ERRO: O arquivo nao pode ser escrito ou lido: " + e + "\n");
+            System.err.println("\nFEB ERRO: Nao foi possivel coletar ou ler o XML em: "+this.getClass()+": " + e + "\n");
         } catch (Exception e) {
             System.err.println("\nFEB ERRO ao efetuar o Harvester " + e + "\n");
         } finally {
