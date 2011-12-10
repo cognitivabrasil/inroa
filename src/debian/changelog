@@ -1,3 +1,9 @@
+feb (2.0-2) unstable; urgency=high
+
+  * Adicionei dependências que estavam causando erros.
+
+ -- Paulo Schreiner <paulo@jorjao81.com>  Sat, 10 Dec 2011 10:47:37 -0200
+
 feb (2.0-1) unstable; urgency=low
 
   * Gravando senha da base criptografada
@@ -11,3 +17,4 @@ feb (2.0-1) unstable; urgency=low
   * Bug fixes
 
  -- Paulo Schreiner  <paulo@jorjao81.com>  Mon, 28 Nov 2011 16:30:24 -0200
+

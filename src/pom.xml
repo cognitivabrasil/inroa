@@ -26,6 +26,12 @@
             <artifactId>postgresql</artifactId>
             <version>9.0-801.jdbc3</version>
         </dependency>
+        <dependency>
+	<groupId>jsptags</groupId>
+	<artifactId>pager-taglib</artifactId>
+	<version>2.0</version>
+</dependency>
+            
          <dependency>  
         <groupId>org.hibernate</groupId>  
         <artifactId>hibernate-core</artifactId>  
@@ -64,37 +70,11 @@
     <version>5.1.6</version>
 </dependency>
 
- <dependency>
-	<groupId>local_jars</groupId>
+<dependency>
+	<groupId>stemmer</groupId>
 	<artifactId>ptstemmer</artifactId>
-	<version>3</version>
-	<scope>system</scope>
-	<systemPath>${basedir}/lib/PTStemmer_v3.jar</systemPath>
+        <version>3.0</version>
 </dependency>
- <dependency>
-	<groupId>local_jars</groupId>
-	<artifactId>pager-taglib</artifactId>
-	<version>1</version>
-	<scope>system</scope>
-	<systemPath>${basedir}/lib/pager-taglib.jar</systemPath>
-</dependency>
- <dependency>
-	<groupId>local_jars</groupId>
-	<artifactId>pager-src</artifactId>
-	<version>1</version>
-	<scope>system</scope>
-	<systemPath>${basedir}/lib/pager-src.jar</systemPath>
-</dependency>
-
- <dependency>
-	<groupId>local_jars</groupId>
-	<artifactId>pager-taglib</artifactId>
-	<version>1</version>
-	<scope>system</scope>
-	<systemPath>${basedir}/lib/pager-taglib.jar</systemPath>
-</dependency>
-
-
 
          <dependency>
             <groupId>xalan</groupId>

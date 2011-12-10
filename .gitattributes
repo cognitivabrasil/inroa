@@ -271,6 +271,7 @@ src/Obaa/src/Technical/SupportedPlatform.java -text
 src/Obaa/src/Technical/Technical.java -text
 src/Obaa/src/Technical/Type.java -text
 src/Obaa/src/Technical/Version.java -text
+src/bin/feb_config -text
 src/build.xml -text
 src/config/sun-checks.xml -text
 src/configure -text
