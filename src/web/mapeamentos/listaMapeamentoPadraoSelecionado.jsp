@@ -33,15 +33,18 @@
 
                 ResultSet res = stm.executeQuery(sqlMap);
                 //out.println("<div class=\"Value\">Tipo de mapeamento - Descri&ccedil;&atilde;o</div>");
+                boolean nenhumResultado = true;
                 while (res.next()) {
+                    nenhumResultado=false;
                     String tipoMap = res.getString("tipo_map");
                     if ((tipoMap.equalsIgnoreCase("padrão") || tipoMap.equalsIgnoreCase("padrao")) && acao.equalsIgnoreCase("cadastra")) {
                         out.println("<div class=\"ValueIndex\"><input type=\"radio\" id='rdMap' name=\"tipo_map\" checked=true value=" + res.getString("id_map") + ">" + res.getString("tipo_map") + " (" + res.getString("descricao") + ")</div>");
                     } else {
                         out.println("<div class=\"ValueIndex\"><input type=\"radio\" id='rdMap' name=\"tipo_map\" value=" + res.getString("id_map") + ">" + res.getString("tipo_map") + " (" + res.getString("descricao") + ")</div>");
                     }
-
-
+                }
+                if(nenhumResultado){
+                    out.println("<div class=\"ValueIndex textoErro\">Nenhum mapeamento encontrado na base de dados!</div>");
                 }
                 if (acao.equalsIgnoreCase("cadastra")) {
 
