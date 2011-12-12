@@ -927,7 +927,7 @@ INSERT INTO tipomapeamento VALUES (1, 'Padrão', 'Mapeamento Padrão');
 -- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: feb
 --
 
-INSERT INTO usuarios VALUES (1, 'admin', '42ff02c355ea20305f90a3af9441a641', 'Administrador da federação');
+INSERT INTO usuarios VALUES (1, 'admin', '698dc19d489c4e4db73e28a713eab07b', 'Administrador da federação');
 
 
 --
