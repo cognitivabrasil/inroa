@@ -37,7 +37,7 @@
 
                         Statement stm = con.createStatement();
                         ResultSet res = stm.executeQuery(sql);
-                        res.next();
+                        if(res.next()){
 
                         HashMap<String, Integer> repositorios = Consultar.selectNumeroDocumentosSubrep(con, Integer.parseInt(id));
                         Timestamp ultimaAtualizacao = res.getTimestamp("data_ultima_atualizacao");
@@ -77,10 +77,10 @@
                     <%
                         if(ultimaAtualizacao.before(ontem)){
                              out.println("<div class='textoErro'>&nbsp;"+Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))+
-                                     "<a title='Atualizar agora' onclick='javaScript:atualizaSubfedAjax("+res.getString("id")+", document.getElementById('textResultSF"+res.getString("id")+"'));'> <img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> </a> </div>");
+                                     " <a title='Atualizar agora' onclick=\"javaScript:atualizaSubfedAjax("+res.getString("id")+", document.getElementById('textResultSF"+res.getString("id")+"'));\"><img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> </a> </div>");
                         } else {
                             out.println("&nbsp;" + Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))+
-                                    "<a title='Atualizar agora' onclick='javaScript:atualizaSubfedAjax("+res.getString("id")+", document.getElementById('textResultSF"+res.getString("id")+"'));'> <img src='./imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> </a>");
+                                    " <a title='Atualizar agora' onclick=\"javaScript:atualizaSubfedAjax("+res.getString("id")+", document.getElementById('textResultSF"+res.getString("id")+"'));\"><img src='./imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> </a>");
                             }  %>
                     
                     
@@ -104,7 +104,7 @@
                     <tr class="bold"><td align="right" class='coluna'>TOTAL</td><td class='coluna' align='center'><%=total%></td></tr>
                     </table>
 
-
+                    <%}%>
         </div>
 
         <%@include file="googleAnalytics"%>

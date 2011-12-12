@@ -40,7 +40,7 @@ ALTER TABLE info_repositorios DROP COLUMN id_federacao;
 ALTER TABLE info_repositorios ADD COLUMN "set" character varying(45);
 
 DELETE FROM dados_subfederacoes WHERE nome='Local';
-ALTER TABLE dados_subfederacoes ADD COLUMN url character varying(200) NOT NULL;
+ALTER TABLE dados_subfederacoes ADD COLUMN url character varying(200);
 ALTER TABLE dados_subfederacoes DROP COLUMN "login";
 ALTER TABLE dados_subfederacoes DROP COLUMN senha;
 ALTER TABLE dados_subfederacoes DROP COLUMN porta;

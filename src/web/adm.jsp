@@ -42,16 +42,15 @@ Author     : Marcos Nunes
                 <td width ="10%" class="center middle">
                     <a href="" onclick="javascript:NewWindow('alterarSenhaAdm.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Senha</a>
                 </td>
-                <td width ="10%" class="center middle">
+                <td width ="13%" class="center middle">
                     <a href="" onclick="javascript:NewWindow('alterarSenhaBD.jsp','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Base de Dados</a>
                 </td>
-                <th class="center middle" width =10%>
+                <th class="center middle" width =7%>
                     <a href="sair.jsp">Sair</a>
                 </th>
             </tr>
         </table>
-
-
+        <div align="right">Vers&atilde;o 2.0.1</div>
         <table class='repositorios-table' cellpadding=3>
             <tr>
                 <th colspan=4>
