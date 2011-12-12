@@ -30,6 +30,7 @@ import ORG.oclc.oai.server.verb.NoMetadataFormatsException;
 import ORG.oclc.oai.util.OAIUtil;
 import feb.Documento;
 import feb.Repositorio;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -39,6 +40,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import postgres.Conectar;
 
 /**
  * DummyOAICatalog is an example of how to implement the AbstractCatalog interface.
@@ -361,9 +363,13 @@ public class HibernateOAICatalog extends AbstractCatalog {
         ArrayList records = new ArrayList();
         
                Documento m;
+               
+               Conectar c = new Conectar();
+               
+               Connection conn = c.conectaBD();
     
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession(conn);
         
             SimpleDateFormat formatter = OAIUtil.dateFormatter();
         
@@ -544,8 +550,12 @@ public class HibernateOAICatalog extends AbstractCatalog {
         
                Documento m;
     
-      SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+               Conectar c = new Conectar();
+               
+               Connection conn = c.conectaBD();
+    
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession(conn);
         
             SimpleDateFormat formatter = OAIUtil.dateFormatter();
         
@@ -727,8 +737,12 @@ public class HibernateOAICatalog extends AbstractCatalog {
         /**********************************************************************
          * YOUR CODE GOES HERE
          **********************************************************************/
-      SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+              Conectar c = new Conectar();
+               
+               Connection conn = c.conectaBD();
+    
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession(conn);
 	
         Criteria criteria2 = session.createCriteria(Repositorio.class);
         List<Repositorio> fromdb = criteria2.list();

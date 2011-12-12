@@ -45,6 +45,7 @@ import ORG.oclc.oai.server.verb.OAIInternalServerError;
 import ORG.oclc.oai.server.verb.ServerVerb;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
+import postgres.SingletonConfig;
 
 /**
  * OAIHandler is the primary Servlet for OAICat.
@@ -123,6 +124,8 @@ public class OAIHandler extends HttpServlet {
                 log.debug("Load context properties");
                 attributes = getAttributes(properties);
             }
+            
+            SingletonConfig.initConfig(context);
 
             log.debug("Store global properties");
             attributesMap.put("global", attributes);
