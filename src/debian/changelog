@@ -1,4 +1,22 @@
-feb (2.0.1-ubuntu1) oneiric; urgency=low
+feb (2.0.1-ubuntu4) oneiric; urgency=low
+
+  * Corrigi dono.
+
+ -- Paulo Schreiner <paulo@paulo-Samsung>  Mon, 12 Dec 2011 19:37:05 -0200
+
+feb (2.0.1-ubuntu3) oneiric; urgency=low
+
+  * Corrigi permissões. 
+
+ -- Paulo Schreiner <paulo@jorjao81.com>  Mon, 12 Dec 2011 19:14:31 -0200
+
+feb (2.0.1-ubuntu2) oneiric; urgency=low
+
+  * Baixei mudanças do marcos.
+
+ -- Paulo Schreiner <paulo@jorjao81.com>  Mon, 12 Dec 2011 17:25:04 -0200
+
+feb (2.0.1-ubuntu1) oneiric; urgency=high
 
   * OAICat pegando informações do arquivo feb.properties
   * Pequenas correções

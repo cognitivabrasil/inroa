@@ -5,6 +5,7 @@ SELECT id + (SELECT max(id) from documentos) as id,obaa_entry,id_repositorio,dat
 UNION
 SELECT id as id,obaa_entry,id_repositorio,timestamp, FALSE as excluido FROM documentos
 ;
+ALTER VIEW documentos_e_excluidos OWNER TO feb;
 
 ALTER TABLE excluidos ADD COLUMN id_rep_subfed integer;
 
@@ -46,4 +47,3 @@ ALTER TABLE dados_subfederacoes DROP COLUMN porta;
 ALTER TABLE dados_subfederacoes DROP COLUMN ip;
 ALTER TABLE dados_subfederacoes DROP COLUMN base;
 
-CREATE TABLE estatistica ( tempo_atualizacao numeric(64) DEFAULT 0 ) WITH (  OIDS = FALSE );
