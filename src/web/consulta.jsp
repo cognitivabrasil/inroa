@@ -217,7 +217,7 @@
                                                                 String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as repsubfed, d.id_repositorio as repositorio"
                                                                         + " FROM documentos d, objetos o"
                                                                         + " WHERE d.id=o.documento AND d.id=" + resultadoBusca.get(result)
-                                                                        + "AND (o.atributo ~* '^obaadate$' OR o.atributo ~* '^obaaLocation$' OR o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$')";
+                                                                        + "AND (o.atributo ~* '^obaadate$' OR o.atributo ~* '^obaaLocation$' OR o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$' OR o.atributo ~* '^obaaIdentifier')";
                                                                 try {
                                                                     ResultSet rs = stm.executeQuery(resultadoSQL);
                                                                     //pega o proximo resultado retornado pela consulta sql
@@ -234,11 +234,15 @@
                                                                             titulo.add(valor);
                                                                         } else if (atributo.equalsIgnoreCase("obaaDate")) {
                                                                             data.add(valor);
+                                                                        }else if (atributo.equalsIgnoreCase("obaaIdentifier")) {
+                                                                            if(valor.contains("http://")){
+                                                                                localizacao.add(valor);
+                                                                            }
                                                                         } else if (atributo.equalsIgnoreCase("obaaLocation")) {
                                                                             localizacao.add(valor);
                                                                         } else if (atributo.equalsIgnoreCase("obaaDescription")) {
                                                                             resumo.add(valor);
-                                                                        }
+                                                                        } 
                                                                     }
                                                                 } catch (SQLException e) {
                                                                     out.print("<script type='text/javascript'>alert('Nao foi possivel recuperar as informacoes da base de dados');</script>"
