@@ -21,7 +21,7 @@ public class Webservice extends HttpServlet
 {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        response.setContentType("text/html");
+        response.setContentType("text/xml");
         PrintWriter out = response.getWriter();
         String url = "http://www.inf.ufrgs.br/~agsoares/report.php?";
         String encodedQuery = request.getParameter("query");
@@ -69,7 +69,7 @@ public class Webservice extends HttpServlet
                         updateIds = updateIds + "," + id.get(i).toString();
                     }
                 }
-                readURL(url+"method=update&query="+encodedQuery+"ids="+updateIds);
+                readURL(url+"method=update&query="+encodedQuery+"&ids="+updateIds);
             }
             String xml = geraXML(id, conn, url, Integer.parseInt(start), Integer.parseInt(limit));
             out.println(xml);
@@ -91,14 +91,14 @@ public class Webservice extends HttpServlet
     public String geraXML(ArrayList id, Connection conn, String url, int start, int limit) throws SQLException, Exception
     {
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-
+        xml = xml + "<OBJS>";
         HashMap<String, Integer> relatorio = new HashMap<String, Integer>();
 
         Statement stmt = conn.createStatement();
 
         if(start < id.size())
         {
-            for(int i = start; i < id.size() && i <= start + limit; i++)
+            for(int i = start; i < id.size() && i < start + limit; i++)
             {
                 ResultSet rs = stmt.executeQuery("SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as repsubfed, d.id_repositorio as repositorio FROM documentos d, objetos o WHERE d.id=o.documento AND d.id="+id.get(i));
 
@@ -137,6 +137,7 @@ public class Webservice extends HttpServlet
             updateReport = updateReport + "&" + Key + "=" + relatorio.get(Key);
         }
         readURL(url+"method=report"+updateReport);
+        xml = xml + "</OBJS>";
         return xml;
     }
 

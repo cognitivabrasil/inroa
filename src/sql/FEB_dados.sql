@@ -11,83 +11,11 @@ SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
 
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
--- Name: atributos; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE atributos (
-    id integer NOT NULL,
-    id_padrao integer NOT NULL,
-    atributo character varying(45) NOT NULL
-);
-
-
-ALTER TABLE public.atributos OWNER TO feb;
-
---
--- Name: atributos_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
---
-
-CREATE SEQUENCE atributos_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.atributos_id_seq OWNER TO feb;
-
---
--- Name: atributos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
---
-
-ALTER SEQUENCE atributos_id_seq OWNED BY atributos.id;
-
-
 --
 -- Name: atributos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: feb
 --
 
 SELECT pg_catalog.setval('atributos_id_seq', 237, true);
-
-
---
--- Name: mapeamentocomposto; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE mapeamentocomposto (
-    id integer NOT NULL,
-    valor character varying(45) NOT NULL,
-    id_origem integer NOT NULL
-);
-
-
-ALTER TABLE public.mapeamentocomposto OWNER TO feb;
-
---
--- Name: mapeamentocomposto_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
---
-
-CREATE SEQUENCE mapeamentocomposto_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.mapeamentocomposto_id_seq OWNER TO feb;
-
---
--- Name: mapeamentocomposto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
---
-
-ALTER SEQUENCE mapeamentocomposto_id_seq OWNED BY mapeamentocomposto.id;
 
 
 --
@@ -98,94 +26,10 @@ SELECT pg_catalog.setval('mapeamentocomposto_id_seq', 9, true);
 
 
 --
--- Name: mapeamentos; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE mapeamentos (
-    id integer DEFAULT nextval('repositorios_id_seq'::regclass) NOT NULL,
-    padraometadados_id integer NOT NULL,
-    origem_id integer NOT NULL,
-    destino_id integer NOT NULL,
-    tipo_mapeamento_id integer NOT NULL,
-    mapeamento_composto_id integer
-);
-
-
-ALTER TABLE public.mapeamentos OWNER TO feb;
-
---
--- Name: padraometadados; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE padraometadados (
-    id integer NOT NULL,
-    nome character varying(45) NOT NULL,
-    metadata_prefix character varying(45),
-    name_space character varying(45)
-);
-
-
-ALTER TABLE public.padraometadados OWNER TO feb;
-
---
--- Name: padraometadados_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
---
-
-CREATE SEQUENCE padraometadados_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.padraometadados_id_seq OWNER TO feb;
-
---
--- Name: padraometadados_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
---
-
-ALTER SEQUENCE padraometadados_id_seq OWNED BY padraometadados.id;
-
-
---
 -- Name: padraometadados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: feb
 --
 
 SELECT pg_catalog.setval('padraometadados_id_seq', 17, true);
-
-
---
--- Name: stopwords; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE stopwords (
-    id integer NOT NULL,
-    stopword character varying(45) NOT NULL
-);
-
-
-ALTER TABLE public.stopwords OWNER TO feb;
-
---
--- Name: stopwords_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
---
-
-CREATE SEQUENCE stopwords_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.stopwords_id_seq OWNER TO feb;
-
---
--- Name: stopwords_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
---
-
-ALTER SEQUENCE stopwords_id_seq OWNED BY stopwords.id;
 
 
 --
@@ -196,79 +40,10 @@ SELECT pg_catalog.setval('stopwords_id_seq', 179, true);
 
 
 --
--- Name: tipomapeamento; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE tipomapeamento (
-    id integer NOT NULL,
-    nome character varying(45) NOT NULL,
-    descricao character varying(200) DEFAULT NULL::character varying
-);
-
-
-ALTER TABLE public.tipomapeamento OWNER TO feb;
-
---
--- Name: tipomapeamento_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
---
-
-CREATE SEQUENCE tipomapeamento_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.tipomapeamento_id_seq OWNER TO feb;
-
---
--- Name: tipomapeamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
---
-
-ALTER SEQUENCE tipomapeamento_id_seq OWNED BY tipomapeamento.id;
-
-
---
 -- Name: tipomapeamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: feb
 --
 
 SELECT pg_catalog.setval('tipomapeamento_id_seq', 12, true);
-
-
---
--- Name: usuarios; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE usuarios (
-    id integer NOT NULL,
-    login character varying(45) NOT NULL,
-    senha character varying(45) NOT NULL,
-    nome character varying(45) NOT NULL
-);
-
-
-ALTER TABLE public.usuarios OWNER TO feb;
-
---
--- Name: usuarios_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
---
-
-CREATE SEQUENCE usuarios_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.usuarios_id_seq OWNER TO feb;
-
---
--- Name: usuarios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
---
-
-ALTER SEQUENCE usuarios_id_seq OWNED BY usuarios.id;
 
 
 --
@@ -279,45 +54,12 @@ SELECT pg_catalog.setval('usuarios_id_seq', 2, true);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: feb
+-- Data for Name: padraometadados; Type: TABLE DATA; Schema: public; Owner: feb
 --
 
-ALTER TABLE atributos ALTER COLUMN id SET DEFAULT nextval('atributos_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: feb
---
-
-ALTER TABLE mapeamentocomposto ALTER COLUMN id SET DEFAULT nextval('mapeamentocomposto_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: feb
---
-
-ALTER TABLE padraometadados ALTER COLUMN id SET DEFAULT nextval('padraometadados_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: feb
---
-
-ALTER TABLE stopwords ALTER COLUMN id SET DEFAULT nextval('stopwords_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: feb
---
-
-ALTER TABLE tipomapeamento ALTER COLUMN id SET DEFAULT nextval('tipomapeamento_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: feb
---
-
-ALTER TABLE usuarios ALTER COLUMN id SET DEFAULT nextval('usuarios_id_seq'::regclass);
+INSERT INTO padraometadados VALUES (2, 'lom', 'oai_lom', 'lom');
+INSERT INTO padraometadados VALUES (3, 'obaa', 'oai_obaa', 'obaa');
+INSERT INTO padraometadados VALUES (1, 'Dublin Core', 'oai_dc', 'dc');
 
 
 --
@@ -527,6 +269,13 @@ INSERT INTO mapeamentocomposto VALUES (3, 'Publisher', 13);
 
 
 --
+-- Data for Name: tipomapeamento; Type: TABLE DATA; Schema: public; Owner: feb
+--
+
+INSERT INTO tipomapeamento VALUES (1, 'Padrão', 'Mapeamento Padrão');
+
+
+--
 -- Data for Name: mapeamentos; Type: TABLE DATA; Schema: public; Owner: feb
 --
 
@@ -723,15 +472,6 @@ INSERT INTO mapeamentos VALUES (296, 2, 190, 85, 1, NULL);
 
 
 --
--- Data for Name: padraometadados; Type: TABLE DATA; Schema: public; Owner: feb
---
-
-INSERT INTO padraometadados VALUES (2, 'lom', 'oai_lom', 'lom');
-INSERT INTO padraometadados VALUES (3, 'obaa', 'oai_obaa', 'obaa');
-INSERT INTO padraometadados VALUES (1, 'Dublin Core', 'oai_dc', 'dc');
-
-
---
 -- Data for Name: stopwords; Type: TABLE DATA; Schema: public; Owner: feb
 --
 
@@ -917,196 +657,10 @@ INSERT INTO stopwords VALUES (179, 'você');
 
 
 --
--- Data for Name: tipomapeamento; Type: TABLE DATA; Schema: public; Owner: feb
---
-
-INSERT INTO tipomapeamento VALUES (1, 'Padrão', 'Mapeamento Padrão');
-
-
---
 -- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: feb
 --
 
 INSERT INTO usuarios VALUES (1, 'admin', '698dc19d489c4e4db73e28a713eab07b', 'Administrador da federação');
-
-
---
--- Name: mapeamentos_padraometadados_id_key; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY mapeamentos
-    ADD CONSTRAINT mapeamentos_padraometadados_id_key UNIQUE (padraometadados_id, origem_id, destino_id, tipo_mapeamento_id);
-
-
---
--- Name: mapeamentos_pkey; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY mapeamentos
-    ADD CONSTRAINT mapeamentos_pkey PRIMARY KEY (tipo_mapeamento_id, padraometadados_id, origem_id, destino_id, id);
-
-
---
--- Name: pki_id_atrbuto; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY atributos
-    ADD CONSTRAINT pki_id_atrbuto PRIMARY KEY (id);
-
-
---
--- Name: pki_mapeamentocomp; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY mapeamentocomposto
-    ADD CONSTRAINT pki_mapeamentocomp PRIMARY KEY (id);
-
-
---
--- Name: pki_tipomap; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY padraometadados
-    ADD CONSTRAINT pki_tipomap PRIMARY KEY (id);
-
-
---
--- Name: pki_tipomapeamento; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY tipomapeamento
-    ADD CONSTRAINT pki_tipomapeamento PRIMARY KEY (id);
-
-
---
--- Name: stopwords_pkey; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY stopwords
-    ADD CONSTRAINT stopwords_pkey PRIMARY KEY (id);
-
-
---
--- Name: usuarios_pkey; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY usuarios
-    ADD CONSTRAINT usuarios_pkey PRIMARY KEY (id);
-
-
---
--- Name: fki_atributosOrigem; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE INDEX "fki_atributosOrigem" ON mapeamentos USING btree (origem_id);
-
-
---
--- Name: fki_atributos_padraometadados; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE INDEX fki_atributos_padraometadados ON atributos USING btree (id_padrao);
-
-
---
--- Name: fki_destino; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE INDEX fki_destino ON mapeamentos USING btree (destino_id);
-
-
---
--- Name: fki_mapeamentocomp; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE INDEX fki_mapeamentocomp ON mapeamentos USING btree (mapeamento_composto_id);
-
-
---
--- Name: fki_mapemanetoscomposto; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE INDEX fki_mapemanetoscomposto ON mapeamentocomposto USING btree (id_origem);
-
-
---
--- Name: fki_padraometadadosmap; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE INDEX fki_padraometadadosmap ON mapeamentos USING btree (padraometadados_id);
-
-
---
--- Name: fki_tipomapeamento; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE INDEX fki_tipomapeamento ON mapeamentos USING btree (tipo_mapeamento_id);
-
-
---
--- Name: tg_remove_tipomapeamento; Type: TRIGGER; Schema: public; Owner: feb
---
-
-CREATE TRIGGER tg_remove_tipomapeamento
-    AFTER DELETE ON mapeamentos
-    FOR EACH ROW
-    EXECUTE PROCEDURE fn_remove_tipomapeamento();
-
-
---
--- Name: atr; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY mapeamentocomposto
-    ADD CONSTRAINT atr FOREIGN KEY (id_origem) REFERENCES atributos(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: atr_padrao; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY atributos
-    ADD CONSTRAINT atr_padrao FOREIGN KEY (id_padrao) REFERENCES padraometadados(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: destino; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY mapeamentos
-    ADD CONSTRAINT destino FOREIGN KEY (destino_id) REFERENCES atributos(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: mapeamentocomp; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY mapeamentos
-    ADD CONSTRAINT mapeamentocomp FOREIGN KEY (mapeamento_composto_id) REFERENCES mapeamentocomposto(id) ON UPDATE CASCADE ON DELETE SET NULL;
-
-
---
--- Name: origem; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY mapeamentos
-    ADD CONSTRAINT origem FOREIGN KEY (origem_id) REFERENCES atributos(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: padraometa; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY mapeamentos
-    ADD CONSTRAINT padraometa FOREIGN KEY (padraometadados_id) REFERENCES padraometadados(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: tipomapeamento; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY mapeamentos
-    ADD CONSTRAINT tipomapeamento FOREIGN KEY (tipo_mapeamento_id) REFERENCES tipomapeamento(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
