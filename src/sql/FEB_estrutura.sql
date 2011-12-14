@@ -29,7 +29,7 @@ SET escape_string_warning = off;
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
 --
 
-CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
+CREATE PROCEDURAL LANGUAGE plpgsql;
 
 
 ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
@@ -44,8 +44,8 @@ CREATE FUNCTION fn_insert_excluidos() RETURNS trigger
     LANGUAGE plpgsql
     AS $$begin 
 
-	INSERT INTO excluidos(obaa_entry)
-	values (old.obaa_entry);
+	INSERT INTO excluidos(obaa_entry, id_repositorio, id_rep_subfed)
+	values (old.obaa_entry, old.id_repositorio, old.id_rep_subfed);
 	return old;
 end; $$;
 
@@ -90,8 +90,8 @@ ALTER TABLE public.atributos OWNER TO feb;
 CREATE SEQUENCE atributos_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -126,8 +126,8 @@ ALTER TABLE public.dados_subfederacoes OWNER TO feb;
 CREATE SEQUENCE dados_subfederacoes_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -167,8 +167,8 @@ ALTER TABLE public.documentos OWNER TO feb;
 CREATE SEQUENCE documentos_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1
     CYCLE;
 
@@ -183,14 +183,25 @@ ALTER SEQUENCE documentos_id_seq OWNED BY documentos.id;
 
 
 --
+-- Name: estatistica; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
+--
+
+CREATE TABLE estatistica (
+    tempo_atualizacao numeric(64,0) DEFAULT 0
+);
+
+
+ALTER TABLE public.estatistica OWNER TO feb;
+
+--
 -- Name: excluidos_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
 --
 
 CREATE SEQUENCE excluidos_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -204,6 +215,7 @@ CREATE TABLE excluidos (
     obaa_entry character varying NOT NULL,
     data timestamp with time zone DEFAULT now() NOT NULL,
     id integer DEFAULT nextval('excluidos_id_seq'::regclass) NOT NULL,
+    id_repositorio integer,
     id_rep_subfed integer
 );
 
@@ -251,8 +263,8 @@ ALTER TABLE public.mapeamentocomposto OWNER TO feb;
 CREATE SEQUENCE mapeamentocomposto_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -272,8 +284,8 @@ ALTER SEQUENCE mapeamentocomposto_id_seq OWNED BY mapeamentocomposto.id;
 CREATE SEQUENCE repositorios_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -316,8 +328,8 @@ ALTER TABLE public.objetos OWNER TO feb;
 CREATE SEQUENCE objetos_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -351,8 +363,8 @@ ALTER TABLE public.padraometadados OWNER TO feb;
 CREATE SEQUENCE padraometadados_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -457,7 +469,7 @@ ALTER TABLE public.r1weights OWNER TO feb;
 
 CREATE TABLE repositorios (
     id integer DEFAULT nextval('repositorios_id_seq'::regclass) NOT NULL,
-    nome character varying(50) NOT NULL,
+    nome character varying(45) NOT NULL,
     descricao character varying(455) DEFAULT NULL::character varying
 );
 
@@ -471,8 +483,8 @@ ALTER TABLE public.repositorios OWNER TO feb;
 CREATE SEQUENCE repositorios_subfed_id_seq
     START WITH 1
     INCREMENT BY 1
-    MINVALUE 0
     NO MAXVALUE
+    MINVALUE 0
     CACHE 1;
 
 
@@ -510,8 +522,8 @@ ALTER TABLE public.stopwords OWNER TO feb;
 CREATE SEQUENCE stopwords_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -544,8 +556,8 @@ ALTER TABLE public.tipomapeamento OWNER TO feb;
 CREATE SEQUENCE tipomapeamento_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -579,8 +591,8 @@ ALTER TABLE public.usuarios OWNER TO feb;
 CREATE SEQUENCE usuarios_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MINVALUE
     NO MAXVALUE
+    NO MINVALUE
     CACHE 1;
 
 
@@ -879,14 +891,20 @@ CREATE INDEX fki_tipomapeamento ON mapeamentos USING btree (tipo_mapeamento_id);
 -- Name: tg_insert_exluidos; Type: TRIGGER; Schema: public; Owner: feb
 --
 
-CREATE TRIGGER tg_insert_exluidos BEFORE DELETE ON documentos FOR EACH ROW EXECUTE PROCEDURE fn_insert_excluidos();
+CREATE TRIGGER tg_insert_exluidos
+    AFTER DELETE ON documentos
+    FOR EACH ROW
+    EXECUTE PROCEDURE fn_insert_excluidos();
 
 
 --
 -- Name: tg_remove_tipomapeamento; Type: TRIGGER; Schema: public; Owner: feb
 --
 
-CREATE TRIGGER tg_remove_tipomapeamento AFTER DELETE ON mapeamentos FOR EACH ROW EXECUTE PROCEDURE fn_remove_tipomapeamento();
+CREATE TRIGGER tg_remove_tipomapeamento
+    AFTER DELETE ON mapeamentos
+    FOR EACH ROW
+    EXECUTE PROCEDURE fn_remove_tipomapeamento();
 
 
 --

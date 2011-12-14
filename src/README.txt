@@ -7,7 +7,7 @@ Primeiramente, é necessário instalar as dependências
 do FEB:
 
  * Java 6
- * Container de Servlets (p.e. Tomcat)
+ * Tomcat 6 (ou outro Container de preferencia)
  * PostgreSQL
 
 É importante que estes componentes estejam 
