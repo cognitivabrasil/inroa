@@ -15,12 +15,10 @@ if [ "$db" = "" ]; then
 		sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'" >> instalacao_feb.log;
 	fi
 	sudo -u postgres createdb -O feb federacao >> instalacao_feb.log;
-	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_estrutura.sql 2> /dev/null >> instalacao_feb.log;
-	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_dados.sql 2> /dev/null >> instalacao_feb.log;
-	sleep 2s && sudo -u postgres psql federacao -f /usr/share/FEB/FEB_dados.sql 2> /dev/null >> instalacao_feb.log;
-	echo "GRANT ALL ON DATABASE federacao TO feb;" | sudo -u postgres psql 
+	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_estrutura.sql >> instalacao_feb.log;
+	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_dados.sql >> instalacao_feb.log;
 else
 	echo "Base já existe, atualizando estrutura."
-	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_1.9.sql 2> /dev/null >> instalacao_feb.log;
+	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_1.9.sql >> instalacao_feb.log;
 fi
 

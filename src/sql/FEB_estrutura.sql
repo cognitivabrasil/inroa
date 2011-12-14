@@ -1035,6 +1035,12 @@ ALTER TABLE ONLY mapeamentos
     ADD CONSTRAINT tipomapeamento FOREIGN KEY (tipo_mapeamento_id) REFERENCES tipomapeamento(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
+CREATE VIEW documentos_e_excluidos AS
+SELECT id + (SELECT max(id) from documentos) as id,obaa_entry,id_repositorio,data AS timestamp, TRUE as excluido FROM excluidos
+UNION
+SELECT id as id,obaa_entry,id_repositorio,timestamp, FALSE as excluido FROM documentos
+;
+ALTER VIEW documentos_e_excluidos OWNER TO feb;
 --
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
