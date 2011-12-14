@@ -13,8 +13,6 @@ SET escape_string_warning = off;
 -- Name: federacao; Type: DATABASE; Schema: -; Owner: feb
 --
 
-CREATE DATABASE federacao WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'pt_BR.utf8' LC_CTYPE = 'pt_BR.utf8';
-
 
 ALTER DATABASE federacao OWNER TO feb;
 
@@ -31,7 +29,7 @@ SET escape_string_warning = off;
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
 --
 
-CREATE PROCEDURAL LANGUAGE plpgsql;
+CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
 
 
 ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
@@ -39,103 +37,15 @@ ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
 SET search_path = public, pg_catalog;
 
 --
--- Name: block(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION block(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'block';
-
-
-ALTER FUNCTION public.block(text, text) OWNER TO postgres;
-
---
--- Name: block_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION block_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'block_op';
-
-
-ALTER FUNCTION public.block_op(text, text) OWNER TO postgres;
-
---
--- Name: cosine(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION cosine(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'cosine';
-
-
-ALTER FUNCTION public.cosine(text, text) OWNER TO postgres;
-
---
--- Name: cosine_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION cosine_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'cosine_op';
-
-
-ALTER FUNCTION public.cosine_op(text, text) OWNER TO postgres;
-
---
--- Name: dice(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION dice(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'dice';
-
-
-ALTER FUNCTION public.dice(text, text) OWNER TO postgres;
-
---
--- Name: dice_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION dice_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'dice_op';
-
-
-ALTER FUNCTION public.dice_op(text, text) OWNER TO postgres;
-
---
--- Name: euclidean(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION euclidean(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'euclidean';
-
-
-ALTER FUNCTION public.euclidean(text, text) OWNER TO postgres;
-
---
--- Name: euclidean_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION euclidean_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'euclidean_op';
-
-
-ALTER FUNCTION public.euclidean_op(text, text) OWNER TO postgres;
-
---
 -- Name: fn_insert_excluidos(); Type: FUNCTION; Schema: public; Owner: feb
 --
 
 CREATE FUNCTION fn_insert_excluidos() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$begin
+    AS $$begin 
 
-	INSERT INTO excluidos(obaa_entry, id_repositorio, id_rep_subfed)
-	values (old.obaa_entry, old.id_repositorio, old.id_rep_subfed);
+	INSERT INTO excluidos(obaa_entry)
+	values (old.obaa_entry);
 	return old;
 end; $$;
 
@@ -148,440 +58,13 @@ ALTER FUNCTION public.fn_insert_excluidos() OWNER TO feb;
 
 CREATE FUNCTION fn_remove_tipomapeamento() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$begin
+    AS $$begin 
 delete from tipomapeamento where id IN (select t.id from tipomapeamento t left join mapeamentos m on m.tipo_mapeamento_id = t.id where m.tipo_mapeamento_id IS NULL);
 return old;
 end;$$;
 
 
 ALTER FUNCTION public.fn_remove_tipomapeamento() OWNER TO feb;
-
---
--- Name: get_isnormalized(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION get_isnormalized(text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'get_isnormalized';
-
-
-ALTER FUNCTION public.get_isnormalized(text) OWNER TO postgres;
-
---
--- Name: get_threshold(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION get_threshold(text) RETURNS real
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'get_threshold';
-
-
-ALTER FUNCTION public.get_threshold(text) OWNER TO postgres;
-
---
--- Name: get_tokenizer(text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION get_tokenizer(text) RETURNS integer
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'get_tokenizer';
-
-
-ALTER FUNCTION public.get_tokenizer(text) OWNER TO postgres;
-
---
--- Name: hamming(bit varying, bit varying); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION hamming(bit varying, bit varying) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'hamming';
-
-
-ALTER FUNCTION public.hamming(bit varying, bit varying) OWNER TO postgres;
-
---
--- Name: hamming_op(bit varying, bit varying); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION hamming_op(bit varying, bit varying) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'hamming_op';
-
-
-ALTER FUNCTION public.hamming_op(bit varying, bit varying) OWNER TO postgres;
-
---
--- Name: jaccard(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION jaccard(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'jaccard';
-
-
-ALTER FUNCTION public.jaccard(text, text) OWNER TO postgres;
-
---
--- Name: jaccard_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION jaccard_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'jaccard_op';
-
-
-ALTER FUNCTION public.jaccard_op(text, text) OWNER TO postgres;
-
---
--- Name: jaro(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION jaro(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'jaro';
-
-
-ALTER FUNCTION public.jaro(text, text) OWNER TO postgres;
-
---
--- Name: jaro_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION jaro_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'jaro_op';
-
-
-ALTER FUNCTION public.jaro_op(text, text) OWNER TO postgres;
-
---
--- Name: jarowinkler(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION jarowinkler(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'jarowinkler';
-
-
-ALTER FUNCTION public.jarowinkler(text, text) OWNER TO postgres;
-
---
--- Name: jarowinkler_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION jarowinkler_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'jarowinkler_op';
-
-
-ALTER FUNCTION public.jarowinkler_op(text, text) OWNER TO postgres;
-
---
--- Name: lev(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION lev(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'lev';
-
-
-ALTER FUNCTION public.lev(text, text) OWNER TO postgres;
-
---
--- Name: lev_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION lev_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'lev_op';
-
-
-ALTER FUNCTION public.lev_op(text, text) OWNER TO postgres;
-
---
--- Name: levslow(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION levslow(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'levslow';
-
-
-ALTER FUNCTION public.levslow(text, text) OWNER TO postgres;
-
---
--- Name: levslow_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION levslow_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'levslow_op';
-
-
-ALTER FUNCTION public.levslow_op(text, text) OWNER TO postgres;
-
---
--- Name: matchingcoefficient(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION matchingcoefficient(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'matchingcoefficient';
-
-
-ALTER FUNCTION public.matchingcoefficient(text, text) OWNER TO postgres;
-
---
--- Name: matchingcoefficient_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION matchingcoefficient_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'matchingcoefficient_op';
-
-
-ALTER FUNCTION public.matchingcoefficient_op(text, text) OWNER TO postgres;
-
---
--- Name: mongeelkan(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION mongeelkan(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'mongeelkan';
-
-
-ALTER FUNCTION public.mongeelkan(text, text) OWNER TO postgres;
-
---
--- Name: mongeelkan_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION mongeelkan_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'mongeelkan_op';
-
-
-ALTER FUNCTION public.mongeelkan_op(text, text) OWNER TO postgres;
-
---
--- Name: needlemanwunsch(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION needlemanwunsch(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'needlemanwunsch';
-
-
-ALTER FUNCTION public.needlemanwunsch(text, text) OWNER TO postgres;
-
---
--- Name: needlemanwunsch_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION needlemanwunsch_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'needlemanwunsch_op';
-
-
-ALTER FUNCTION public.needlemanwunsch_op(text, text) OWNER TO postgres;
-
---
--- Name: overlapcoefficient(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION overlapcoefficient(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'overlapcoefficient';
-
-
-ALTER FUNCTION public.overlapcoefficient(text, text) OWNER TO postgres;
-
---
--- Name: overlapcoefficient_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION overlapcoefficient_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'overlapcoefficient_op';
-
-
-ALTER FUNCTION public.overlapcoefficient_op(text, text) OWNER TO postgres;
-
---
--- Name: qgram(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION qgram(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'qgram';
-
-
-ALTER FUNCTION public.qgram(text, text) OWNER TO postgres;
-
---
--- Name: qgram_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION qgram_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'qgram_op';
-
-
-ALTER FUNCTION public.qgram_op(text, text) OWNER TO postgres;
-
---
--- Name: set_isnormalized(text, boolean); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION set_isnormalized(text, boolean) RETURNS boolean
-    LANGUAGE c STRICT
-    AS '$libdir/pg_similarity', 'set_isnormalized';
-
-
-ALTER FUNCTION public.set_isnormalized(text, boolean) OWNER TO postgres;
-
---
--- Name: set_threshold(text, real); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION set_threshold(text, real) RETURNS real
-    LANGUAGE c STRICT
-    AS '$libdir/pg_similarity', 'set_threshold';
-
-
-ALTER FUNCTION public.set_threshold(text, real) OWNER TO postgres;
-
---
--- Name: set_tokenizer(text, integer); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION set_tokenizer(text, integer) RETURNS integer
-    LANGUAGE c STRICT
-    AS '$libdir/pg_similarity', 'set_tokenizer';
-
-
-ALTER FUNCTION public.set_tokenizer(text, integer) OWNER TO postgres;
-
---
--- Name: smithwaterman(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION smithwaterman(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'smithwaterman';
-
-
-ALTER FUNCTION public.smithwaterman(text, text) OWNER TO postgres;
-
---
--- Name: smithwaterman_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION smithwaterman_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'smithwaterman_op';
-
-
-ALTER FUNCTION public.smithwaterman_op(text, text) OWNER TO postgres;
-
---
--- Name: smithwatermangotoh(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION smithwatermangotoh(text, text) RETURNS real
-    LANGUAGE c IMMUTABLE STRICT
-    AS '$libdir/pg_similarity', 'smithwatermangotoh';
-
-
-ALTER FUNCTION public.smithwatermangotoh(text, text) OWNER TO postgres;
-
---
--- Name: smithwatermangotoh_op(text, text); Type: FUNCTION; Schema: public; Owner: postgres
---
-
-CREATE FUNCTION smithwatermangotoh_op(text, text) RETURNS boolean
-    LANGUAGE c STABLE STRICT
-    AS '$libdir/pg_similarity', 'smithwatermangotoh_op';
-
-
-ALTER FUNCTION public.smithwatermangotoh_op(text, text) OWNER TO postgres;
-
---
--- Name: ~##; Type: OPERATOR; Schema: public; Owner: postgres
---
-
-CREATE OPERATOR ~## (
-    PROCEDURE = cosine_op,
-    LEFTARG = text,
-    RIGHTARG = text,
-    COMMUTATOR = ~##,
-    JOIN = contjoinsel
-);
-
-
-ALTER OPERATOR public.~## (text, text) OWNER TO postgres;
-
---
--- Name: ~%%; Type: OPERATOR; Schema: public; Owner: postgres
---
-
-CREATE OPERATOR ~%% (
-    PROCEDURE = jaro_op,
-    LEFTARG = text,
-    RIGHTARG = text,
-    COMMUTATOR = ~%%,
-    JOIN = contjoinsel
-);
-
-
-ALTER OPERATOR public.~%% (text, text) OWNER TO postgres;
-
---
--- Name: ~==; Type: OPERATOR; Schema: public; Owner: postgres
---
-
-CREATE OPERATOR ~== (
-    PROCEDURE = lev_op,
-    LEFTARG = text,
-    RIGHTARG = text,
-    COMMUTATOR = ~==,
-    JOIN = contjoinsel
-);
-
-
-ALTER OPERATOR public.~== (text, text) OWNER TO postgres;
-
---
--- Name: ~@@; Type: OPERATOR; Schema: public; Owner: postgres
---
-
-CREATE OPERATOR ~@@ (
-    PROCEDURE = jarowinkler_op,
-    LEFTARG = text,
-    RIGHTARG = text,
-    COMMUTATOR = ~@@,
-    JOIN = contjoinsel
-);
-
-
-ALTER OPERATOR public.~@@ (text, text) OWNER TO postgres;
-
---
--- Name: ~~~; Type: OPERATOR; Schema: public; Owner: postgres
---
-
-CREATE OPERATOR ~~~ (
-    PROCEDURE = qgram_op,
-    LEFTARG = text,
-    RIGHTARG = text,
-    COMMUTATOR = ~~~,
-    JOIN = contjoinsel
-);
-
-
-ALTER OPERATOR public.~~~ (text, text) OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -607,8 +90,8 @@ ALTER TABLE public.atributos OWNER TO feb;
 CREATE SEQUENCE atributos_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -643,8 +126,8 @@ ALTER TABLE public.dados_subfederacoes OWNER TO feb;
 CREATE SEQUENCE dados_subfederacoes_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -678,14 +161,36 @@ CREATE TABLE documentos (
 ALTER TABLE public.documentos OWNER TO feb;
 
 --
+-- Name: documentos_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
+--
+
+CREATE SEQUENCE documentos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    CYCLE;
+
+
+ALTER TABLE public.documentos_id_seq OWNER TO feb;
+
+--
+-- Name: documentos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
+--
+
+ALTER SEQUENCE documentos_id_seq OWNED BY documentos.id;
+
+
+--
 -- Name: excluidos_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
 --
 
 CREATE SEQUENCE excluidos_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -699,44 +204,11 @@ CREATE TABLE excluidos (
     obaa_entry character varying NOT NULL,
     data timestamp with time zone DEFAULT now() NOT NULL,
     id integer DEFAULT nextval('excluidos_id_seq'::regclass) NOT NULL,
-    id_repositorio integer,
     id_rep_subfed integer
 );
 
 
 ALTER TABLE public.excluidos OWNER TO feb;
-
---
--- Name: documentos_e_excluidos; Type: VIEW; Schema: public; Owner: feb
---
-
-CREATE VIEW documentos_e_excluidos AS
-    SELECT (excluidos.id + (SELECT max(documentos.id) AS max FROM documentos)) AS id, excluidos.obaa_entry, excluidos.id_repositorio, excluidos.data AS "timestamp", true AS excluido FROM excluidos UNION SELECT documentos.id, documentos.obaa_entry, documentos.id_repositorio, documentos."timestamp", false AS excluido FROM documentos;
-
-
-ALTER TABLE public.documentos_e_excluidos OWNER TO feb;
-
---
--- Name: documentos_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
---
-
-CREATE SEQUENCE documentos_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MAXVALUE
-    NO MINVALUE
-    CACHE 1
-    CYCLE;
-
-
-ALTER TABLE public.documentos_id_seq OWNER TO feb;
-
---
--- Name: documentos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
---
-
-ALTER SEQUENCE documentos_id_seq OWNED BY documentos.id;
-
 
 --
 -- Name: info_repositorios; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
@@ -779,8 +251,8 @@ ALTER TABLE public.mapeamentocomposto OWNER TO feb;
 CREATE SEQUENCE mapeamentocomposto_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -800,8 +272,8 @@ ALTER SEQUENCE mapeamentocomposto_id_seq OWNED BY mapeamentocomposto.id;
 CREATE SEQUENCE repositorios_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -844,8 +316,8 @@ ALTER TABLE public.objetos OWNER TO feb;
 CREATE SEQUENCE objetos_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -879,8 +351,8 @@ ALTER TABLE public.padraometadados OWNER TO feb;
 CREATE SEQUENCE padraometadados_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -985,7 +457,7 @@ ALTER TABLE public.r1weights OWNER TO feb;
 
 CREATE TABLE repositorios (
     id integer DEFAULT nextval('repositorios_id_seq'::regclass) NOT NULL,
-    nome character varying(45) NOT NULL,
+    nome character varying(50) NOT NULL,
     descricao character varying(455) DEFAULT NULL::character varying
 );
 
@@ -999,8 +471,8 @@ ALTER TABLE public.repositorios OWNER TO feb;
 CREATE SEQUENCE repositorios_subfed_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     MINVALUE 0
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1038,8 +510,8 @@ ALTER TABLE public.stopwords OWNER TO feb;
 CREATE SEQUENCE stopwords_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1072,8 +544,8 @@ ALTER TABLE public.tipomapeamento OWNER TO feb;
 CREATE SEQUENCE tipomapeamento_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1107,8 +579,8 @@ ALTER TABLE public.usuarios OWNER TO feb;
 CREATE SEQUENCE usuarios_id_seq
     START WITH 1
     INCREMENT BY 1
-    NO MAXVALUE
     NO MINVALUE
+    NO MAXVALUE
     CACHE 1;
 
 
@@ -1407,20 +879,14 @@ CREATE INDEX fki_tipomapeamento ON mapeamentos USING btree (tipo_mapeamento_id);
 -- Name: tg_insert_exluidos; Type: TRIGGER; Schema: public; Owner: feb
 --
 
-CREATE TRIGGER tg_insert_exluidos
-    AFTER DELETE ON documentos
-    FOR EACH ROW
-    EXECUTE PROCEDURE fn_insert_excluidos();
+CREATE TRIGGER tg_insert_exluidos BEFORE DELETE ON documentos FOR EACH ROW EXECUTE PROCEDURE fn_insert_excluidos();
 
 
 --
 -- Name: tg_remove_tipomapeamento; Type: TRIGGER; Schema: public; Owner: feb
 --
 
-CREATE TRIGGER tg_remove_tipomapeamento
-    AFTER DELETE ON mapeamentos
-    FOR EACH ROW
-    EXECUTE PROCEDURE fn_remove_tipomapeamento();
+CREATE TRIGGER tg_remove_tipomapeamento AFTER DELETE ON mapeamentos FOR EACH ROW EXECUTE PROCEDURE fn_remove_tipomapeamento();
 
 
 --
