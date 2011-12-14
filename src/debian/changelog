@@ -1,3 +1,16 @@
+feb (2.0.1-ubuntu6) oneiric; urgency=low
+
+  * WAR correto.
+
+ -- Paulo Schreiner <paulo@jorjao81.com>  Mon, 12 Dec 2011 21:28:31 -0200
+
+feb (2.0.1-ubuntu5) oneiric; urgency=low
+
+  * Exibir versao.
+  * Correcao nos scripts SQL.
+
+ -- Marcos Nunes <marcosn@gmail.com>  Mon, 12 Dec 2011 21:15:00 -0200
+
 feb (2.0.1-ubuntu4) oneiric; urgency=low
 
   * Corrigi dono.

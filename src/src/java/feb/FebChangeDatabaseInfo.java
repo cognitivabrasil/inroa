@@ -84,10 +84,13 @@ public class FebChangeDatabaseInfo {
         
         Properties   properties = new Properties();
        
+	String filename = "feb.properties";
        try {
-         FileInputStream in = new FileInputStream("/var/lib/tomcat6/webapps/feb/WEB-INF/classes/feb.properties");
+         FileInputStream in = new FileInputStream(filename);
         properties.load(in);
         in.close();
+
+        FileOutputStream out = new FileOutputStream(filename);
         
         Console cons;
         char[] passwd;
@@ -148,13 +151,12 @@ public class FebChangeDatabaseInfo {
         
         }
         
-        FileOutputStream out = new FileOutputStream("/var/lib/tomcat6/webapps/feb/WEB-INF/classes/feb.properties");
         properties.store(out, "Postgres written from console");
         out.close();
         
        }
        catch(FileNotFoundException f) {
-           System.out.println("File not found. Please verify that you have permission to alter the file.");
+           System.out.println("File " + filename + " not found. Please verify that the file exists and that you have permission to alter the file.");
        }
        catch (IOException e) {
            System.out.println("IO/Error");
