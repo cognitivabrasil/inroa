@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package feb;
+package modelos;
 
 import java.io.Console;
 import java.io.FileInputStream;

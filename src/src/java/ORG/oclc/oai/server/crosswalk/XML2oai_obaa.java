@@ -12,8 +12,8 @@ package ORG.oclc.oai.server.crosswalk;
 
 import java.util.Properties;
 import ORG.oclc.oai.server.verb.CannotDisseminateFormatException;
-import feb.Documento;
-import feb.Objeto;
+import modelos.Documento;
+import modelos.Objeto;
 
 /**
  * Convert native "item" to oai_dc. In this case, the native "item"

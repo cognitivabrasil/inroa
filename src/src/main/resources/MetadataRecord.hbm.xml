@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="feb.Documento" table="documentos_e_excluidos">
+  <class name="modelos.Documento" table="documentos_e_excluidos">
     <id column="id" name="id" type="int">
       <meta attribute="scope-set">protected</meta>
       <generator class="native"/>
     </id>
     <property column="obaa_entry" name="obaaEntry" not-null="true" type="string"/>
-    <many-to-one class="feb.Repositorio" column="id_repositorio" name="repositorio"/>
+    <many-to-one class="modelos.Repositorio" column="id_repositorio" name="repositorio"/>
     <property name="timestamp" type="timestamp"/>
     <set name="objetos" table="objetos">
       <key column="documento"/>
-      <one-to-many class="feb.Objeto"/>
+      <one-to-many class="modelos.Objeto"/>
     </set>
     <property name="excluido" type="boolean"/>
   </class>

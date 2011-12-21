@@ -2,7 +2,7 @@
 
 // Generated 20/07/2011 15:25:15 by Hibernate Tools 3.2.0.b9
 
-package feb;
+package modelos;
 
 import java.util.HashSet;
 import java.util.Set;
