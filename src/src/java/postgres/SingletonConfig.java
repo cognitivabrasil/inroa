@@ -74,7 +74,17 @@ public class SingletonConfig {
             try {
 
                 ServletContext context = servletContext;
-                Properties properties = (Properties) context.getAttribute("febproperties");
+                Properties properties = new Properties();
+                if (servletContext != null) {
+                    properties = (Properties) context.getAttribute("febproperties");
+                } else {
+                    properties.setProperty("Postgres.user", "feb");
+                    properties.setProperty("Postgres.password", "905f48b394fabf8623c75f012be44fa5");
+                    properties.setProperty("Postgres.IP", "127.0.0.1");
+                    properties.setProperty("Postgres.base", "federacao");
+                    properties.setProperty("Postgres.port", "5432");
+                }
+
 
                 if (properties == null) {
 
@@ -126,11 +136,11 @@ public class SingletonConfig {
                 e2.printStackTrace();
                 // throw new ServletException(e2.getMessage());
             }
-           // singletonObject.print(); //imprime o que foi lido do arquivo
+            // singletonObject.print(); //imprime o que foi lido do arquivo
         }
 
 
-    
+
         return singletonObject;
     }
 
@@ -305,38 +315,38 @@ public class SingletonConfig {
         boolean resultado = false;
         try {
             Properties properties = new Properties();
-            
- 
-            
-                
+
+
+
+
             properties.setProperty("Postgres.user", usuario);
             properties.setProperty("Postgres.password", senhaCriptografada);
             properties.setProperty("Postgres.IP", IP);
             properties.setProperty("Postgres.base", base);
             properties.setProperty("Postgres.port", String.valueOf(porta));
 
-            
-                         String fileName = servletContext.getInitParameter("febproperties");
-              OutputStream in;
-                    try {
-                        //                  System.out.println("fileName=" + fileName);
-                 
-                        in = new FileOutputStream(fileName);
-                    } catch (FileNotFoundException e2) {
-                        //                  System.out.println("file not found. Try the classpath: " + fileName);
-                           URL res = Thread.currentThread().getContextClassLoader().getResource(fileName);
-                        in = new FileOutputStream(res.getPath());
-                    }
-                    if (in != null) {
-                        System.out.println("file was found: Save the properties");
-                             properties.store(in, "Dados para a conexão no banco PostgreSQL do FEB");
-                        //attributes = getAttributes(properties);
-                                         resultado = true;
-                        System.out.println("OAIHandler.init: fileName=" + fileName);
-                    }
-                    in.close();
-            
-            
+
+            String fileName = servletContext.getInitParameter("febproperties");
+            OutputStream in;
+            try {
+                //                  System.out.println("fileName=" + fileName);
+
+                in = new FileOutputStream(fileName);
+            } catch (FileNotFoundException e2) {
+                //                  System.out.println("file not found. Try the classpath: " + fileName);
+                URL res = Thread.currentThread().getContextClassLoader().getResource(fileName);
+                in = new FileOutputStream(res.getPath());
+            }
+            if (in != null) {
+                System.out.println("file was found: Save the properties");
+                properties.store(in, "Dados para a conexão no banco PostgreSQL do FEB");
+                //attributes = getAttributes(properties);
+                resultado = true;
+                System.out.println("OAIHandler.init: fileName=" + fileName);
+            }
+            in.close();
+
+
         } catch (FileNotFoundException e) {
             System.out.println("FEB ERRO: Probemas ao criar o arquivo de senha " + e);
         } catch (IOException e) {

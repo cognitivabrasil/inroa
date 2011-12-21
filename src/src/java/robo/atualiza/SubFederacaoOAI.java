@@ -53,14 +53,14 @@ public class SubFederacaoOAI {
 
         String sql = "";
         if (idSubfed < 0) { //se for menor que zero testa se tem alguma federacao atualizada a mais de 24h
-            //sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as data_formatada FROM dados_subfederacoes WHERE data_ultima_atualizacao <= (now() - ('20 HOUR')::INTERVAL);";
+            //sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as data_formatada FROM dados_subfederacoes WHERE data_ultima_atualizacao <= (now() - ('20 HOUR')::INTERVAL);";
 
             //sempre atualizar, independente de quanto tempo faz que atualizou da ultima vez
-            sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as data_formatada FROM dados_subfederacoes;";
+            sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as data_formatada FROM dados_subfederacoes;";
         } else if (idSubfed > 0) { //se for maior que zero atualiza a federacao que foi informada
-            sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as data_formatada FROM dados_subfederacoes WHERE id=" + idSubfed;
+            sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as data_formatada FROM dados_subfederacoes WHERE id=" + idSubfed;
         } else {//atualiza todas federacoes idependente da data da ultima atualizacao
-            sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as data_formatada FROM dados_subfederacoes;";
+            sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as data_formatada FROM dados_subfederacoes;";
         }
 
         try {
@@ -88,7 +88,7 @@ public class SubFederacaoOAI {
                     Long inicio = System.currentTimeMillis();
                     atualizadoTemp = atualizaSubFedOAI(id, url, rs.getString("data_formatada"), nome, con, indexar);
                     Long fim = System.currentTimeMillis();
-                    System.out.println("FEB: Levou: " + (fim - inicio)/1000 + " segundos para atualizar a subfederacao: " + nome);
+                    System.out.println("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + nome);
                 }
 
                 if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
@@ -126,7 +126,7 @@ public class SubFederacaoOAI {
             //atualizar objetos da subfederacao
             Objetos obj = new Objetos();
             obj.atualizaObjetosSubFed(url, ultimaAtualizacao, nome, "obaa", null, con, indexar);
-            atualizaTimestampSubFed(con, idSubfed); //atualiza a hora da ultima atualizacao
+            atualizaTimestampSubFed(con, idSubfed, indexar.getDataXML()); //atualiza a hora da ultima atualizacao
             atualizou = true;
 
         } catch (UnknownHostException u) {
@@ -150,7 +150,7 @@ public class SubFederacaoOAI {
                 System.err.println(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
             } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
                 System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
-                atualizaTimestampSubFed(con, idSubfed); //atualiza a hora da ultima atualizacao
+                atualizaTimestampSubFed(con, idSubfed, indexar.getDataXML()); //atualiza a hora da ultima atualizacao
             } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                 System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
             } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
@@ -159,11 +159,11 @@ public class SubFederacaoOAI {
                 System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e);
             }
         } catch (FileNotFoundException e) {
-            System.err.println("\nFEB ERRO - "+this.getClass()+": nao foi possivel coletar os dados de: " + e + "\n");
+            System.err.println("\nFEB ERRO - " + this.getClass() + ": nao foi possivel coletar os dados de: " + e + "\n");
         } catch (IOException e) {
-            System.err.println("\nFEB ERRO - Nao foi possivel coletar ou ler o XML em "+this.getClass()+": " + e + "\n");
+            System.err.println("\nFEB ERRO - Nao foi possivel coletar ou ler o XML em " + this.getClass() + ": " + e + "\n");
         } catch (Exception e) {
-            System.err.println("\nFEB ERRO - "+this.getClass()+": erro ao efetuar o Harvester " + e + "\n");
+            System.err.println("\nFEB ERRO - " + this.getClass() + ": erro ao efetuar o Harvester " + e + "\n");
         } finally {
             return atualizou;
         }
@@ -196,10 +196,12 @@ public class SubFederacaoOAI {
      * @param idSubFed Id da subfedera&ccedil;&atilde;o que foi atualizada
      * @throws SQLException
      */
-    private void atualizaTimestampSubFed(Connection con, int idSubFed) throws SQLException {
-        String sql = "UPDATE dados_subfederacoes set data_ultima_atualizacao = now() WHERE id=" + idSubFed;
-        Statement stm = con.createStatement();
-        stm.executeUpdate(sql);
+    private void atualizaTimestampSubFed(Connection con, int idSubFed, String dataXML) throws SQLException {
+        if (!dataXML.equals("0")) {
+            String sql = "UPDATE dados_subfederacoes set data_ultima_atualizacao = now(), data_xml='" + dataXML + "' WHERE id=" + idSubFed;
+            Statement stm = con.createStatement();
+            stm.executeUpdate(sql);
+        }
     }
 
     /**
@@ -214,12 +216,12 @@ public class SubFederacaoOAI {
         Indexador indexar = new Indexador();
         resultado = pre_AtualizaSubFedOAI(con, indexar, idSub);
         try {
-            if (resultado) {                
+            if (resultado) {
                 System.out.println("FEB: recalculando o indice.");
                 Long inicio = System.currentTimeMillis();
                 indexar.populateR1(con);
                 Long fim = System.currentTimeMillis();
-                System.out.println("FEB: indice recalculado em " + (fim-inicio)/1000 +" segundos.");
+                System.out.println("FEB: indice recalculado em " + (fim - inicio) / 1000 + " segundos.");
             }
         } catch (SQLException e) {
             System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: SQLException no metodo atualizaSubfedAdm: " + e.getMessage());

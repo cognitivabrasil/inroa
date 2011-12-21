@@ -47,7 +47,7 @@ public class XmlSaxReader extends DefaultHandler {
     private DadosObjetos dadosObjetos;
     private Documento doc;
     private Indice indiceClass = new Indice();
-
+    
 
 
     /**
@@ -77,7 +77,6 @@ public class XmlSaxReader extends DefaultHandler {
         this.Conexao = con;
         stWd = new StopWordTAD(con);
         parser.parse(caminhoXML, this);
-
     }
 
     /**
@@ -211,7 +210,7 @@ public class XmlSaxReader extends DefaultHandler {
     public void endElement(String uri, String localName, String tag) {
 
         if(tag.equalsIgnoreCase("responseDate")){
-            System.out.println(valorAtual.toString().trim());
+            indexa.setDataXML(valorAtual.toString().trim());
         } else if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
 
             //System.out.println("Fim elemento...");

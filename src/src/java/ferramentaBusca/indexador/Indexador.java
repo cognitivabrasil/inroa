@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
-import postgres.Conectar;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
@@ -20,8 +19,10 @@ import postgres.Conectar;
  * @author Luiz Rossi
  */
 public class Indexador {
+    private String dataXML;
 
     public Indexador() {
+        dataXML = "0";
     }
 
     /**
@@ -311,6 +312,14 @@ public class Indexador {
             System.err.println("Estes documentos foram excluidos agora.");
         }
 
+    }
+
+    public void setDataXML(String dataXML) {
+        this.dataXML = dataXML;
+    }
+
+    public String getDataXML() {
+        return dataXML;
     }
 
 }

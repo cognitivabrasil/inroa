@@ -87,7 +87,7 @@ public class Repositorios {
 
         String caminhoDiretorioTemporario = conf.getCaminho();
 
-        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, i.metadata_prefix, i.set, to_char(i.data_ultima_atualizacao, 'YYYY-MM-DD\"T\"HH:MI:SSZ') as ultima_atualizacao_form"
+        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, i.metadata_prefix, i.set, to_char(i.data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as ultima_atualizacao_form"
                 + " FROM repositorios r, info_repositorios i"
                 + " WHERE r.id = i.id_repositorio"
                 + " AND r.id = " + idRepositorio + ";";
@@ -111,7 +111,7 @@ public class Repositorios {
                     set = null;
                 }
                 if (url.isEmpty()) { //testa se a string url esta vazia.
-                    System.out.println("Não existe uma url associada ao repositório " + nome);
+                    System.out.println("FEB: Nao existe uma url associada ao repositorio " + nome);
                     atualizou = false;
 
                 } else {//repositorio possui url para atualizacao
@@ -120,7 +120,7 @@ public class Repositorios {
                     Date data_ultima_atualizacao = rs.getDate("data_ultima_atualizacao");
                     ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
 
-                    System.out.println("\t FEB: Ultima Atualização: " + ultimaAtualizacao + " nome do rep: " + nome);
+                    System.out.println("\t FEB: Ultima Atualizacao: " + ultimaAtualizacao + " nome do rep: " + nome);
 
 
                     //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
@@ -161,7 +161,7 @@ public class Repositorios {
 
                         atualizou = true;
                     } else {
-                        System.out.println("O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
+                        System.err.println("FEB ERRO: O caminho informado nao eh um diretorio. E nao pode ser criado em: '" + caminhoDiretorioTemporario + "'");
                     }
 
                 }
@@ -169,7 +169,7 @@ public class Repositorios {
 
 
             //chama metodo que atualiza a hora da ultima atualizacao
-            AtualizaBase.atualizaHora(idRepositorio, con);
+            AtualizaBase.atualizaHora(idRepositorio, con, indexar.getDataXML());
 
         } catch (UnknownHostException u) {
             System.err.println("FEB ERRO: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
@@ -192,7 +192,7 @@ public class Repositorios {
                 System.err.println(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
             } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
                 System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
-                AtualizaBase.atualizaHora(idRepositorio, con);
+                AtualizaBase.atualizaHora(idRepositorio, con, indexar.getDataXML());
             } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                 System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
             } else if (msg.equalsIgnoreCase("noSetHierarchy")) {

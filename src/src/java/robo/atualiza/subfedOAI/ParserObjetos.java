@@ -133,7 +133,9 @@ public class ParserObjetos extends DefaultHandler {
     public void endElement(String uri, String localName, String tag) {
 
 
-        if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
+        if(tag.equalsIgnoreCase("responseDate")){
+            indexa.setDataXML(valorAtual.toString().trim());
+        } else if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
            
             //doc.setServidor(idSubrep); //adiciona no indice o id do repositorio
 

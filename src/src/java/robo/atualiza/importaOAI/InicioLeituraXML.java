@@ -48,7 +48,7 @@ public class InicioLeituraXML {
                 arquivoXML.delete();
 
             } else {
-                System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
+                System.err.println("FEB ERRO: O arquivo informado nao eh um arquivo ou nao pode ser lido. Caminho: " + caminhoXML.get(i));
             }
         }
         return atualizou;
@@ -81,19 +81,7 @@ public class InicioLeituraXML {
             arquivoXML.delete();
 
         } else {
-            System.out.println("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML);
-        }
-
-    }
-    public static void main(String[] args) {
-         XmlSaxReader reader = new XmlSaxReader();
-         Indexador indexar = new Indexador();
-         Conectar conecta = new Conectar();
-         Connection con = conecta.conectaBD();
-         try{
-        reader.parser("c:/temp/request.xml", indexar, con, 328);//efetua a leitura do xml e insere os objetos na base de dados
-        }catch (Exception e){
-             System.out.println(e);
+            System.err.println("FEB ERRO: O arquivo informado nao eh um arquivo ou nao pode ser lido. Caminho: " + caminhoXML);
         }
 
     }

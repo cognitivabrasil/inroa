@@ -201,6 +201,7 @@ src/sql/FEB_1.9.sql -text
 src/sql/FEB_dados.sql -text
 src/sql/FEB_estrutura.sql -text
 src/sql/README.txt -text
+src/sql/current.sql -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/ORG/oclc/oai/server/OAIHandler.java -text
 src/src/java/ORG/oclc/oai/server/catalog/AbstractCatalog.java -text
