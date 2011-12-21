@@ -10,6 +10,8 @@ src/dist
 src/nbproject
 src/profiles.xml
 src/src/main/resources/.Repositorio.hbm.xml.swp
+src/src/main/webapp/META-INF
+src/src/main/webapp/WEB-INF
 src/target
 src/test
 src/web/META-INF
