@@ -1,0 +1,9 @@
+<settings>
+    <servers>
+        <server>
+            <id>febserver</id>
+            <username>feb</username>
+            <password>feb@RNP</password>
+        </server>
+    </servers>
+</settings>

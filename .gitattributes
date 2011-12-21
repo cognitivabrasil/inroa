@@ -194,7 +194,9 @@ src/debian/prerm.ex -text
 src/debian/rules -text
 src/debian/source/format -text
 src/debian/watch.ex -text
+src/nbactions.xml -text
 src/pom.xml -text
+src/settings.xml -text
 src/sql/FEB_1.9.sql -text
 src/sql/FEB_dados.sql -text
 src/sql/FEB_estrutura.sql -text
