@@ -4,9 +4,6 @@ src/.pc
 src/.pom.xml.swp
 src/.teste.xml.swp
 src/.union.sql.swp
-src/Obaa/build
-src/Obaa/dist
-src/Obaa/nbproject/private
 src/build
 src/build.xml
 src/dist
