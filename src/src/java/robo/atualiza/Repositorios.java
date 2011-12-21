@@ -231,7 +231,7 @@ public class Repositorios {
             Statement stm = con.createStatement();
 
             if (apagar) {
-                zeraDataRepositorio(idRep, con, stm); //se informado true seta a data da ultima atualizacao para zero
+                zeraDataRepositorio(idRep, stm); //se informado true seta a data da ultima atualizacao para zero
             }
 
             if (idRep > 0) {
@@ -266,7 +266,7 @@ public class Repositorios {
 
     }
 
-    private void zeraDataRepositorio(int idRep, Connection con, Statement stm) throws SQLException {
+    private void zeraDataRepositorio(int idRep, Statement stm) throws SQLException {
         String sql = "UPDATE info_repositorios set data_ultima_atualizacao='0001-01-01 00:00:00' WHERE id_repositorio=" + idRep;
         stm.executeUpdate(sql);
 

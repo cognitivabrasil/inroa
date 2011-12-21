@@ -7,6 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ferramentaBusca.indexador.Indexador;
 import java.sql.Connection;
+import postgres.Conectar;
 
 /*
  * To change this template, choose Tools | Templates
@@ -84,5 +85,16 @@ public class InicioLeituraXML {
         }
 
     }
+    public static void main(String[] args) {
+         XmlSaxReader reader = new XmlSaxReader();
+         Indexador indexar = new Indexador();
+         Conectar conecta = new Conectar();
+         Connection con = conecta.conectaBD();
+         try{
+        reader.parser("c:/temp/request.xml", indexar, con, 328);//efetua a leitura do xml e insere os objetos na base de dados
+        }catch (Exception e){
+             System.out.println(e);
+        }
 
+    }
 }

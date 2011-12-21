@@ -210,8 +210,9 @@ public class XmlSaxReader extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String tag) {
 
-
-        if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
+        if(tag.equalsIgnoreCase("responseDate")){
+            System.out.println(valorAtual.toString().trim());
+        } else if (tag.equalsIgnoreCase(metadataPrefix + ":" + namespace)) {
 
             //System.out.println("Fim elemento...");
             doc.setServidor(idRepositorio); //adiciona no indice o id do repositorio
