@@ -19,7 +19,7 @@
         <title>FEB - Ferramenta Administrativa</title>
         <link rel="StyleSheet" href="css/padrao.css" type="text/css"/>
         <script language="JavaScript" type="text/javascript" src="scripts/funcoes.js"></script>
-        <script language="JavaScript" type="text/javascript" src="./mapeamentos/funcoesMapeamento.js"> //funcoes javascript que chamam o ajax</script>
+        <script language="JavaScript" type="text/javascript" src="scripts/funcoesMapeamento.js"> //funcoes javascript que chamam o ajax</script>
         <script type="text/javascript" src="./scripts/validatejs.js"></script>
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     </head>

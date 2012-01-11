@@ -59,16 +59,17 @@ public class Conectar {
 
         } catch (SQLException e) {
             SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            System.err.println("FEB ERRO: "+dataFormat.format(new Date())+" SQL Exception... Erro ao efetuar a conexão na base de dados no ip " + ipBase + ". Mensagem: " + e.getMessage());
+            System.err.println("FEB ERRO: "+dataFormat.format(new Date())+" SQL Exception... Erro ao efetuar a conexão na base de dados no ip: " + ipBase + " na porta: "+portaBase+". Mensagem: " + e.getMessage());
 
-            //Get the System Classloader
-            ClassLoader sysClassLoader = ClassLoader.getSystemClassLoader();
-            //Get the URLs
-            URL[] urls = ((URLClassLoader) sysClassLoader).getURLs();
-            System.err.println("FEB ERRO: ClassPath: ");
-            for (int i = 0; i < urls.length; i++) {
-                System.err.println(urls[i].getFile());
-            }
+//       esse codigo serve para imprimir o ClassPath do postgres
+//            //Get the System Classloader
+//            ClassLoader sysClassLoader = ClassLoader.getSystemClassLoader();
+//            //Get the URLs
+//            URL[] urls = ((URLClassLoader) sysClassLoader).getURLs();
+//            System.err.println("FEB ERRO: ClassPath: ");
+//            for (int i = 0; i < urls.length; i++) {
+//                System.err.println(urls[i].getFile());
+//            }
 
         } catch (NullPointerException n) {
             SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
