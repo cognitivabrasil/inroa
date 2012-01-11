@@ -21,7 +21,7 @@
         <title>FEB - Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <script language="JavaScript" type="text/javascript" src="./funcoesMapeamento.js">
+        <script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js">
             //necessario para usar o funcionamento
         </script>
     </head>

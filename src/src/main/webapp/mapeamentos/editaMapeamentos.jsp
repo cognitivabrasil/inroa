@@ -18,7 +18,7 @@
         <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js">
             //necessario para usar o ajax
         </script>
-        <script language="JavaScript" type="text/javascript" src="./funcoesMapeamento.js">
+        <script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js">
              //funcoes javascript que chamam o ajax
         </script>
 

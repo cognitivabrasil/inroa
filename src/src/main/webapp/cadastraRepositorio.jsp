@@ -23,7 +23,7 @@ Primeira etapa do cadastro de um repositorio
         <link rel="StyleSheet" href="./css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="./scripts/validatejs.js"></script>
         
-        <script language="JavaScript" type="text/javascript" src="./mapeamentos/funcoesMapeamento.js">
+        <script language="JavaScript" type="text/javascript" src="./scripts/funcoesMapeamento.js">
             //funcoes javascript que chamam o ajax
         </script>
         <script type="text/javascript">
