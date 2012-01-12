@@ -1,17 +1,3 @@
-<!--
-* Desenvolvido por Marcos Freitas Nunes
-* 
--->
-
-<script type="text/javascript" src="./scripts/validatejs.js"></script>
-
-<script type="text/javascript">
-    var myForm = new Validate();
-
-    myForm.addRules({id:'user',option:'required',error:'* Voc&ecirc; deve informar o seu nome de usu&aacute;rio!'});
-    myForm.addRules({id:'passwd',option:'required',error:'* Voc&ecirc; deve informar sua senha!'});
-</script>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,6 +6,14 @@
         <title>FEB - Ferramenta Administrativa</title>
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
+<script type="text/javascript" src="./scripts/validatejs.js"></script>
+
+<script type="text/javascript">
+    var myForm = new Validate();
+
+    myForm.addRules({id:'user',option:'required',error:'* Voc&ecirc; deve informar o seu nome de usu&aacute;rio!'});
+    myForm.addRules({id:'passwd',option:'required',error:'* Voc&ecirc; deve informar sua senha!'});
+</script>
 
 
     </HEAD>

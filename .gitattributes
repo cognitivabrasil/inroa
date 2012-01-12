@@ -315,7 +315,7 @@ src/src/main/webapp/consulta.jsp -text
 src/src/main/webapp/css/padrao.css -text
 src/src/main/webapp/editarFederacao.jsp -text
 src/src/main/webapp/editarRepositorio.jsp -text
-src/src/main/webapp/erroBase.html -text
+src/src/main/webapp/erroBase.jsp -text
 src/src/main/webapp/exibeFederacao.jsp -text
 src/src/main/webapp/exibeRepositorios.jsp -text
 src/src/main/webapp/feb/index.jsp -text
@@ -344,7 +344,7 @@ src/src/main/webapp/index2.jsp -text
 src/src/main/webapp/infoDetalhada.jsp -text
 src/src/main/webapp/listaStowords.jsp -text
 src/src/main/webapp/logando.jsp -text
-src/src/main/webapp/login.html -text
+src/src/main/webapp/login.jsp -text
 src/src/main/webapp/mapeamentos/APAGAR-addMapeamento.jsp -text
 src/src/main/webapp/mapeamentos/addTipoMap.jsp -text
 src/src/main/webapp/mapeamentos/adicionaMapBranco.jsp -text
