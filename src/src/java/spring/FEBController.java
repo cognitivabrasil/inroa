@@ -30,6 +30,12 @@ public final class FEBController {
         model.addAttribute(members);
         return "index";
     }
+
+    @RequestMapping("/")
+    public String index(Model model) {
+        model.addAttribute(members);
+        return "index";
+    }
     
     @RequestMapping("{viewName}")
     public String fallback(@PathVariable String viewName) {
