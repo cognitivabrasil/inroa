@@ -231,6 +231,7 @@ public class Indexador {
 //        String sql3 = "DELETE FROM r1sum;";
         String sql4 = "DELETE FROM r1tf;";
         String sql5 = "DELETE FROM r1length;";
+        String sql6 = "DELETE FROM consultas;";
 
 
         Statement stm = con.createStatement();
@@ -239,6 +240,7 @@ public class Indexador {
 //        stm.executeUpdate(sql3);
         stm.executeUpdate(sql4);
         stm.executeUpdate(sql5);
+        stm.executeUpdate(sql6);
     }
 
     public void preencheR1Tokens(Connection con) throws SQLException {

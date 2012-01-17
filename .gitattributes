@@ -198,6 +198,7 @@ src/nbactions.xml -text
 src/pom.xml -text
 src/settings.xml -text
 src/sql/FEB_1.9.sql -text
+src/sql/FEB_2.2.sql -text
 src/sql/FEB_dados.sql -text
 src/sql/FEB_estrutura.sql -text
 src/sql/README.txt -text
@@ -235,6 +236,7 @@ src/src/java/com/acme/oai/HibernateOAICatalog.java -text
 src/src/java/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text
 src/src/java/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
 src/src/java/ferramentaBusca/IndexadorBusca.java -text
+src/src/java/ferramentaBusca/LRU.java -text
 src/src/java/ferramentaBusca/Recuperador.java -text
 src/src/java/ferramentaBusca/indexador/Documento.java -text
 src/src/java/ferramentaBusca/indexador/Indexador.java -text

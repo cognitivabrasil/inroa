@@ -21,7 +21,7 @@ public class Webservice extends HttpServlet
 {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        response.setContentType("text/xml");
+        response.setContentType("text/xml; charset=UTF-8");
         PrintWriter out = response.getWriter();
         String url = "http://www.inf.ufrgs.br/~agsoares/report.php?";
         String encodedQuery = request.getParameter("query");
@@ -56,7 +56,7 @@ public class Webservice extends HttpServlet
             else
             {
                 Recuperador rep = new Recuperador();
-                id = rep.busca(query.substring(6), conn, null, null, null, "Relevancia");
+                id = rep.busca(query, conn, null, null, null, "Relevancia");
                 String updateIds = "";
                 for(int i=0;i<id.size();i++)
                 {
@@ -79,7 +79,7 @@ public class Webservice extends HttpServlet
         }
         catch(Exception e)
         {
-            System.out.println(e);
+            System.out.println("FEB ERRO: Erro no webservice. Mensagem: "+e);
         }
 
         finally

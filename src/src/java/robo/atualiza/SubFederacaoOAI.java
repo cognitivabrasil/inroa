@@ -76,7 +76,7 @@ public class SubFederacaoOAI {
                 testaSubfedAnterioraMil(rs.getDate("data_ultima_atualizacao"), id, con, nome);//deleta toda a base se o ano da ultima atualizacao for menor que 1000
 
                 if (url.isEmpty()) { //testa se a string url esta vazia.
-                    System.err.println("FEB ERRO:Nao existe uma url associada ao repositorio " + nome);
+                    System.err.println("FEB ERRO: Nao existe uma url associada ao repositorio " + nome);
                 } else {
                     Informacoes info = new Informacoes();
 

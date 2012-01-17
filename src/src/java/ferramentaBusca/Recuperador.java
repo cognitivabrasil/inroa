@@ -47,6 +47,11 @@ public class Recuperador {
             idSubRep = new String[1];
             idSubRep[0] = "";
         }
+
+        boolean confederacao = false;
+        boolean LRU = false;
+        LRU cache = new LRU(consulta, con);
+
         StopWordTAD stWd = new StopWordTAD(con);
         Documento docConsulta = new Documento(consulta, stWd); //Cria tad Documento informando a consulta
         ArrayList<String> tokensConsulta = docConsulta.getTokens(); //tokeniza as palavras da consulta e adiciona no ArrayList
@@ -64,8 +69,12 @@ public class Recuperador {
         if (idRepLocal.length == 1 && idRepLocal[0].isEmpty()) {
             if (idSubfed.length == 1 && idSubfed[0].isEmpty()) {
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    //busca na confederacao
-                    consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao);
+                    LRU = cache.verificaConsulta();
+                    if (!LRU) {
+                        confederacao = true;
+                        //busca na confederacao
+                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao);
+                    }
                 } else {
                     consultaSql = busca_subRep(tokensConsulta, idSubRep, sqlOrdenacao); //busca no subrepositorio
                 }
@@ -92,18 +101,33 @@ public class Recuperador {
             }
         }
 
-        PreparedStatement stmt = con.prepareStatement(consultaSql);
-
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            idsResultados.add(rs.getInt("tid"));
+        if (LRU){ //se a consulta ja esta no banco de dados
+            idsResultados = cache.getResultado();
         }
+        else { //se a consulta nao tiver no banco
+            PreparedStatement stmt = con.prepareStatement(consultaSql);
 
+            ResultSet rs = stmt.executeQuery();
+            if (confederacao) { //se for confederacao e nao tiver no banco a consulta
+                while (rs.next()) {
+                    idsResultados.add(rs.getInt("tid"));
+                    cache.setResultado(rs.getString("tid"));
+                }
+                cache.gravaResultado();
+                
+            } else { //se nao for na confederacao
+                while (rs.next()) {
+                    idsResultados.add(rs.getInt("tid"));
+                }
+            }
+
+        }
         return idsResultados;
     }
 
     //confederacao
     private String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL) {
+
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
                 + " WHERE r1w.tid=d.id "
                 + " AND (r1w.token=";
