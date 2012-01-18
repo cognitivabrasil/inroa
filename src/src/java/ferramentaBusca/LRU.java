@@ -33,19 +33,17 @@ public class LRU {
      * @throws SQLException
      */
     public boolean verificaConsulta() throws SQLException {
-        String sql = "SELECT ids FROM consultas where consulta='" + consulta + "'";
+        boolean cache = false;
+        String sql = "SELECT ids, consulta FROM consultas where consulta='" + consulta + "'";
         PreparedStatement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         resultado = "";
         while (rs.next()) {
             resultado = rs.getString(1);
+            cache = true;
         }
 
-        if (resultado.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return cache;
     }
 
     /**
@@ -53,14 +51,17 @@ public class LRU {
      * @return ArrayList<Integer> contendo os ids dos objetos que contemplam a consulta
      */
     public ArrayList<Integer> getResultado() {
+        if (!resultado.isEmpty()) {
+            String resultadoS[] = resultado.split(",");
+            Integer resultadoI[] = new Integer[resultadoS.length];
+            for (int i = 0; i < resultadoS.length; i++) {
+                resultadoI[i] = Integer.parseInt(resultadoS[i]);
+            }
 
-        String resultadoS[] = resultado.split(",");
-        Integer resultadoI[] = new Integer[resultadoS.length];
-        for (int i = 0; i < resultadoS.length; i++) {
-            resultadoI[i] = Integer.parseInt(resultadoS[i]);
+            return new ArrayList<Integer>(Arrays.asList(resultadoI));
+        } else {
+            return new ArrayList<Integer>();
         }
-
-        return new ArrayList<Integer>(Arrays.asList(resultadoI));
     }
 
     /**
@@ -92,5 +93,4 @@ public class LRU {
             return false;
         }
     }
-
 }
