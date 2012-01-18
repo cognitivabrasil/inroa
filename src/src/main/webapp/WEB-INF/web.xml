@@ -3,6 +3,12 @@
     <listener>
         <listener-class>robo.main.Inicializador</listener-class>
     </listener>
+    <listener>
+<listener-class>
+    org.springframework.web.context.ContextLoaderListener
+</listener-class>
+</listener>
+
     <servlet>
         <servlet-name>Webservice</servlet-name>
         <servlet-class>webservice.Webservice</servlet-class>

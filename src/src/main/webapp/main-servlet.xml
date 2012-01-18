@@ -19,7 +19,8 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 
     <mvc:annotation-driven/>
     
-  
+    <!-- TODO: use inversion of control instead of this !-->
+    <bean id="applicationContextProvider" class="spring.ApplicationContextProvider"></bean>
 
 <!--<bean name="/feb/*"
 class="spring.FEBController"/>-->
@@ -34,7 +35,13 @@ p:url="${dataSource.url}"
 p:username="${dataSource.username}"
 p:password="${dataSource.password}" /> -->
 
-
+    <bean id="dataSource"
+class="org.apache.commons.dbcp.BasicDataSource"
+destroy-method="close"
+p:driverClassName="org.postgresql.Driver"
+p:url="jdbc:postgresql://127.0.0.1:5432/federacao"
+p:username="feb"
+p:password="feb@RNP" />
 
 
     

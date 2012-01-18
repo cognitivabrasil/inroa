@@ -301,6 +301,7 @@ src/src/main/resources/feb.properties -text
 src/src/main/resources/hibernate.cfg.xml -text
 src/src/main/resources/manifest.mf -text
 src/src/main/webapp/META-INF/context.xml -text
+src/src/main/webapp/WEB-INF/applicationContext.xml -text
 src/src/main/webapp/WEB-INF/jsp/pager-taglib.tld -text
 src/src/main/webapp/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
 src/src/main/webapp/WEB-INF/main-servlet.xml -text
@@ -348,6 +349,7 @@ src/src/main/webapp/infoDetalhada.jsp -text
 src/src/main/webapp/listaStowords.jsp -text
 src/src/main/webapp/logando.jsp -text
 src/src/main/webapp/login.jsp -text
+src/src/main/webapp/main-servlet.xml -text
 src/src/main/webapp/mapeamentos/APAGAR-addMapeamento.jsp -text
 src/src/main/webapp/mapeamentos/addTipoMap.jsp -text
 src/src/main/webapp/mapeamentos/adicionaMapBranco.jsp -text
