@@ -48,14 +48,15 @@ public class Recuperador {
             idSubRep[0] = "";
         }
 
-        boolean confederacao = false;
-        boolean LRU = false;
-        LRU cache = new LRU(consulta, con);
 
         StopWordTAD stWd = new StopWordTAD(con);
         Documento docConsulta = new Documento(consulta, stWd); //Cria tad Documento informando a consulta
         ArrayList<String> tokensConsulta = docConsulta.getTokens(); //tokeniza as palavras da consulta e adiciona no ArrayList
         ArrayList<Integer> idsResultados = new ArrayList<Integer>(); //lista dos ids dos documentos retornados da consulta
+
+        boolean confederacao = false;
+        boolean LRU = false;
+        LRU cache = new LRU(tokensConsulta, con);
 
         String consultaSql = ""; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
         String sqlOrdenacao = ""; //eh preenchido pelo if que testa qual o tipo de ordenacao
@@ -105,7 +106,6 @@ public class Recuperador {
             idsResultados = cache.getResultado();
         }
         else { //se a consulta nao tiver no banco
-            System.out.println(consultaSql);
             PreparedStatement stmt = con.prepareStatement(consultaSql);
 
             ResultSet rs = stmt.executeQuery();
@@ -114,7 +114,7 @@ public class Recuperador {
                     idsResultados.add(rs.getInt("tid"));
                     cache.setResultado(rs.getString("tid"));
                 }
-                cache.gravaResultado();
+                cache.gravaResultado(); //armazena o resultado na tabela consultas (LRU)
                 
             } else { //se nao for na confederacao
                 while (rs.next()) {

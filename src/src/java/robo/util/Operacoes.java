@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.File;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 /**
  * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como testes e remo&ccedil;&otilde;es de acentua&ccedil;&atilde;o
@@ -59,6 +60,20 @@ public class Operacoes {
         texto = texto.replaceAll("\\W", " ");
         texto = texto.trim();
         return texto;
+    }
+
+    /**
+     * Recebe um ArrayList<String> percorre esse array e armazena em uma string todas as posi&ccedil;%otilde;es do array separados por um espa&ccedil;o.
+     * @param array ArrayList<String> contendo as string que ser&atildeo concatenadas.
+     * @return um String contendo todo o conte&uacute;do do array separados por um espa&ccedil;o.
+     */
+    public static String arrayListToString(ArrayList<String> array){
+        String resultado="";
+        for(int i=0;i<array.size();i++){
+            resultado+=" "+array.get(i);
+        }
+
+        return resultado.trim();
     }
 
     /**

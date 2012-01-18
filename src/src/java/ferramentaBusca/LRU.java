@@ -28,6 +28,13 @@ public class LRU {
         this.resultado = "";
     }
 
+    public LRU(ArrayList<String> consulta, Connection con) {
+
+        this.consulta = Operacoes.arrayListToString(consulta);
+        this.con = con;
+        this.resultado = "";
+    }
+
     /**
      * Verifica se a consulta j&aacute; existe na base de dados. Se existir armazena resultado os ids.
      * @return true caso exista a consulta na base e false caso contr&aacute;rio.
@@ -35,7 +42,7 @@ public class LRU {
      */
     public boolean verificaConsulta() throws SQLException {
         boolean cache = false;
-        String sql = "SELECT ids, consulta FROM consultas where consulta='" + consulta + "'";
+        String sql = "SELECT ids FROM consultas where consulta='" + consulta + "'";
         PreparedStatement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         resultado = "";
@@ -82,16 +89,11 @@ public class LRU {
      * @return true se armazenou e false caso contr&aacute;rio.
      * @throws SQLException
      */
-    public boolean gravaResultado() throws SQLException {
+    public void gravaResultado() throws SQLException {
         String sql = "INSERT INTO consultas (consulta, ids) VALUES (?,?)";
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1, this.consulta);
         stmt.setString(2, this.resultado);
-        int res = stmt.executeUpdate();
-        if (res > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        stmt.executeUpdate();        
     }
 }
