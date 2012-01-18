@@ -185,8 +185,6 @@ public class Documento {
 
             st.enableCaching(1000);
 
-            S = S.toLowerCase();
-
             S = Operacoes.removeAcentuacao(S); //chama o metodo que substitui as letras acentuadas e todo tipo de caracter alem de [a-zA-Z_0-9]
 
             String tokens[];

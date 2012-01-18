@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import robo.util.Operacoes;
 
 /**
  *
@@ -22,7 +23,7 @@ public class LRU {
     private String resultado;
 
     public LRU(String consulta, Connection con) {
-        this.consulta = consulta;
+        this.consulta = Operacoes.removeAcentuacao(consulta);
         this.con = con;
         this.resultado = "";
     }
