@@ -105,6 +105,7 @@ public class Recuperador {
             idsResultados = cache.getResultado();
         }
         else { //se a consulta nao tiver no banco
+            System.out.println(consultaSql);
             PreparedStatement stmt = con.prepareStatement(consultaSql);
 
             ResultSet rs = stmt.executeQuery();

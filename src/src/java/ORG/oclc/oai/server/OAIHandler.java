@@ -102,7 +102,7 @@ public class OAIHandler extends HttpServlet {
             Properties properties = (Properties) context.getAttribute(PROPERTIES_SERVLET_CONTEXT_ATTRIBUTE);
             if (properties == null) {
                 final String PROPERTIES_INIT_PARAMETER = "properties";
-                log.debug("OAIHandler.init(..): No '" + PROPERTIES_SERVLET_CONTEXT_ATTRIBUTE + "' servlet context attribute. Trying to use init parameter '" + PROPERTIES_INIT_PARAMETER + "'");
+   //             log.debug("OAIHandler.init(..): No '" + PROPERTIES_SERVLET_CONTEXT_ATTRIBUTE + "' servlet context attribute. Trying to use init parameter '" + PROPERTIES_INIT_PARAMETER + "'");
                 
                 String fileName = config.getServletContext().getInitParameter(PROPERTIES_INIT_PARAMETER);
                 InputStream in;
@@ -243,7 +243,7 @@ public class OAIHandler extends HttpServlet {
         if (!filterRequest(request, response)) {
             return;
         }
-        log.debug("attributes=" + attributes);
+        //log.debug("attributes=" + attributes);
         Properties properties =
             (Properties) attributes.get("OAIHandler.properties");
         boolean monitor = false;
