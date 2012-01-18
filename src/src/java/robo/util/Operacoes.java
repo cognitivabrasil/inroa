@@ -49,13 +49,13 @@ public class Operacoes {
      */
     public static String removeAcentuacao(String texto) {
         texto = texto.toLowerCase();
-        texto = texto.replaceAll("á|à|â|ã|ä", "a");
-        texto = texto.replaceAll("é|è|ê|ë", "e");
-        texto = texto.replaceAll("í|ì|î|ï", "i");
-        texto = texto.replaceAll("ó|ò|ô|õ|ö", "o");
-        texto = texto.replaceAll("ú|ù|û|ü", "u");
-        texto = texto.replaceAll("ç", "c");
-        texto = texto.replaceAll("ñ", "n");
+        texto = texto.replaceAll("Ã¡|Ã |Ã¢|Ã£|Ã¤", "a");
+        texto = texto.replaceAll("Ã©|Ã¨|Ãª|Ã«", "e");
+        texto = texto.replaceAll("Ã­|Ã¬|Ã®|Ã¯", "i");
+        texto = texto.replaceAll("Ã³|Ã²|Ã´|Ãµ|Ã¶", "o");
+        texto = texto.replaceAll("Ãº|Ã¹|Ã»|Ã¼", "u");
+        texto = texto.replaceAll("Ã§", "c");
+        texto = texto.replaceAll("Ã±", "n");
         texto = texto.replaceAll("\\W", " ");
         texto = texto.trim();
         return texto;
