@@ -31,7 +31,9 @@ import robo.util.Operacoes;
  * @author Marcos
  */
 public class Repositorios {
+
     private SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
     /**
      * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o m&etodo respons&aacute;vel por isso.
      * @param con Conex&atilde;o com a base de dados.
@@ -46,7 +48,7 @@ public class Repositorios {
                 + " WHERE r.id=i.id_repositorio"
                 + " AND r.nome!='todos'"
                 + " AND r.nome!='OBAA'"
-                + " AND i.data_ultima_atualizacao < (now() - (i.periodicidade_horas-"+tempoSeguranca+")*('1 HOUR')::INTERVAL);";
+                + " AND i.data_ultima_atualizacao < (now() - (i.periodicidade_horas-" + tempoSeguranca + ")*('1 HOUR')::INTERVAL);";
 
 
         try {
@@ -83,7 +85,7 @@ public class Repositorios {
         Principal importar = new Principal();
         Informacoes conf = new Informacoes();
         InicioLeituraXML gravacao = new InicioLeituraXML();
-        
+
 
         String caminhoDiretorioTemporario = conf.getCaminho();
 
@@ -107,7 +109,7 @@ public class Repositorios {
                 String url = rs.getString("url"); //pega a url retornada pela consulta sql
                 String metadataPrefix = rs.getString("metadata_prefix"); // para o OAI-PMH
                 String set = rs.getString("set");
-                if (set==null || set.isEmpty()) {
+                if (set == null || set.isEmpty()) {
                     set = null;
                 }
                 if (url.isEmpty()) { //testa se a string url esta vazia.
@@ -203,7 +205,7 @@ public class Repositorios {
         } catch (FileNotFoundException e) {
             System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: " + e + "\n");
         } catch (IOException e) {
-            System.err.println("\nFEB ERRO: Nao foi possivel coletar ou ler o XML em: "+this.getClass()+": " + e + "\n");
+            System.err.println("\nFEB ERRO: Nao foi possivel coletar ou ler o XML em: " + this.getClass() + ": " + e + "\n");
         } catch (Exception e) {
             System.err.println("\nFEB ERRO ao efetuar o Harvester " + e + "\n");
         } finally {
@@ -244,7 +246,11 @@ public class Repositorios {
 
                 while (rs.next()) {
                     int id = rs.getInt("idrep");
-                    recalcularIndice = atualizaRepositorio(id, indexar, con); //chama o metodo que atualiza o repositorio
+                    boolean resultadoAtualiza = false;
+                    resultadoAtualiza = atualizaRepositorio(id, indexar, con); //chama o metodo que atualiza o repositorio
+                    if (resultadoAtualiza) { //se algum dos repositorios foi atualizado vai recalcular o indice
+                        recalcularIndice = resultadoAtualiza;
+                    }
                 }
             }
             if (recalcularIndice) {
@@ -271,5 +277,4 @@ public class Repositorios {
         stm.executeUpdate(sql);
 
     }
-
 }
