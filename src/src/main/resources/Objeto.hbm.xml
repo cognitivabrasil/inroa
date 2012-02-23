@@ -4,13 +4,17 @@
   <class name="modelos.Objeto" table="objetos">
     <meta attribute="class-description"> 
     </meta>
-    <id column="id" name="id" type="int">
-      <meta attribute="scope-set">protected</meta>
-      <generator class="native"/>
-    </id>
+ <id column="id" name="id" type="int">
+        <generator class="sequence">
+                <param name="sequence">objetos_id_seq</param>
+        </generator>    </id>
     <property name="atributo" not-null="true" type="string"/>
     <property name="valor" type="string">
       <meta attribute="field-description">When the track was created</meta>
     </property>
+    
+    <many-to-one name="documento" class="modelos.DocumentoReal" fetch="select">
+            <column name="documento" not-null="true" />
+    </many-to-one>
   </class>
 </hibernate-mapping>

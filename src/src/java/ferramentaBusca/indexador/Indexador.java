@@ -310,7 +310,7 @@ public class Indexador {
                 }
 
             }
-            stm.executeUpdate(sqlDelete);
+           stm.executeUpdate(sqlDelete);
             System.err.println("Estes documentos foram excluidos agora.");
         }
 

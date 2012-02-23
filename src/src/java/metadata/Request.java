@@ -16,13 +16,13 @@ import org.simpleframework.xml.Attribute;
 @Root(name="request", strict=false)
 public class Request {
 	
-	@Text
+	@Text(required=false)
 	private String uri;
 
-	@Attribute
+	@Attribute(required=false)
 	private String metadataPrefix;
 
-	@Attribute
+	@Attribute(required=false)
 	private String verb;
 
 	

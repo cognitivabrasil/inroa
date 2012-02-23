@@ -5,6 +5,7 @@
 package metadata;
 
 import java.io.File;
+import java.io.StringReader;
 import java.io.StringWriter;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -36,6 +37,23 @@ public class XSLTUtil {
 		 // Transform the source XML to System.out.
 		 StringWriter sw = new StringWriter();
  		 transformer.transform(new StreamSource(new File(sourceID)),
+ 		 new StreamResult(sw));
+
+		return sw.toString();
+	}
+        
+        public static String transformString (String sourceID, String xslID)
+		throws TransformerException, TransformerConfigurationException {
+
+	        // Create a transform factory instance.
+       		 TransformerFactory tfactory = TransformerFactory.newInstance();
+
+		 // Create a transformer for the stylesheet.
+		 Transformer transformer = tfactory.newTransformer(new StreamSource(new File(xslID)));
+
+		 // Transform the source XML to System.out.
+		 StringWriter sw = new StringWriter();
+ 		 transformer.transform(new StreamSource(new StringReader(sourceID)),
  		 new StreamResult(sw));
 
 		return sw.toString();

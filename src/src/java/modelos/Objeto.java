@@ -18,6 +18,7 @@ public class Objeto  implements java.io.Serializable {
 
 
      private int id;
+     private DocumentoReal documento;
      private String atributo;
      private String valor;
 
@@ -60,6 +61,20 @@ public class Objeto  implements java.io.Serializable {
 	public void setValor(String valor) {
 		this.valor = valor;
 	}
+
+    /**
+     * @return the documento
+     */
+    public DocumentoReal getDocumento() {
+        return documento;
+    }
+
+    /**
+     * @param documento the documento to set 
+     */
+    public void setDocumento(DocumentoReal documento) {
+        this.documento = documento;
+    }
     
 
 

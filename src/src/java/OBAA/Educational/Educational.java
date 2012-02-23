@@ -255,8 +255,8 @@ public class Educational {
  *</div>
  * @author LuizRossi
  */
-	@Element(required=false)
-	private String typicalAgeRange;
+	//@Element(required=false)
+	//private String typicalAgeRange;
 
 	@ElementList(inline=true,required=false)
 	List<IntendedEndUserRole> intendedEndUserRole;
@@ -374,14 +374,15 @@ public class Educational {
 	 * @return the typicalAgeRange
 	 */
 	public String getTypicalAgeRange() {
-		return typicalAgeRange;
+		//return typicalAgeRange;
+                return null;
 	}
 
 	/**
 	 * @param typicalAgeRange the typicalAgeRange to set
 	 */
 	public void setTypicalAgeRange(String typicalAgeRange) {
-		this.typicalAgeRange = typicalAgeRange;
+		//this.typicalAgeRange = typicalAgeRange;
 	}
 
 	/**

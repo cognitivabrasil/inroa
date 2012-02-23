@@ -2,6 +2,8 @@ package robo.atualiza.harvesterOAI;
 
 import java.io.*;
 import java.util.ArrayList;
+import metadata.MetadataConversorInterface;
+import metadata.XsltConversorDefault;
 import robo.util.Operacoes;
 //import util.*;
 
@@ -72,9 +74,12 @@ public class Principal {
 
         String resumption = listRecords.getResumptionToken(); //solicita a tag ResumptionToken recebida no xml
 
-        out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        //out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         listRecords.getDocument(); //lista o registros retornados
-        out.write(listRecords.toString()); //imprime no arquivo os registros transformados para string
+        
+        MetadataConversorInterface conv = new XsltConversorDefault();
+        
+        out.write(conv.toObaa(listRecords.toString())); //imprime no arquivo os registros transformados para string
         out.close();//fecha o arquivo xml que estava sendo escrito
 
         while (!resumption.isEmpty()) { //enquanto existir resumptionToken segue efetuando harvester
@@ -84,14 +89,14 @@ public class Principal {
             caminhosXML.add(caminhoAbsoluto); //adiciona o endereço do xml no arrayList
             Writer outResume = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(caminhoAbsoluto), "UTF8")); //cria o arquivo xml
-            outResume.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //escreve a primeira linha do xml
+            //outResume.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //escreve a primeira linha do xml
 
             listRecordsResume = new ListRecords(this.endereco, resumption);
 
             resumption = listRecordsResume.getResumptionToken(); //armazena na variavel resumption o proximo ResumptionToken
             listRecordsResume.getDocument();
 
-            outResume.write(listRecordsResume.toString()); //imprime no arquivo o resultado
+            outResume.write(conv.toObaa(listRecordsResume.toString())); //imprime no arquivo o resultado
             outResume.close(); //fecha o arquivo xml
 
         }

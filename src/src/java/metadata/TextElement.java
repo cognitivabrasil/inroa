@@ -23,7 +23,7 @@ public class TextElement
 	public TextElement() {
 	}
 	
-	@Text
+	@Text(required=false)
 	private String text;
 
 	public String getText() {
