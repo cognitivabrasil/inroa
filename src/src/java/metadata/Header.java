@@ -5,6 +5,7 @@
 package metadata;
 
 import java.util.List;
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -15,6 +16,8 @@ import org.simpleframework.xml.Root;
  */
 @Root(name="header", strict=false)
 public class Header {
+        @Attribute(required=false)
+        private String status;
 	
 	@Element
 	private String identifier;
@@ -36,6 +39,13 @@ public class Header {
 	public String getIdentifier() {
 		return identifier;
 	}
+        
+        public boolean isDeleted() {
+            if(status == null) {
+                return false;
+            }
+            return status.equals("deleted");
+        }
 
 	/**
 	 * @param identifier the identifier to set

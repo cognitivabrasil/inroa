@@ -201,6 +201,10 @@ public class OaiOBAA {
 			e.printStackTrace();
 		}
 	}
+        
+        public int getSize() {
+            return ListRecords.size();
+        }
 
 	public OBAA getMetadata(int index) {
 		return ListRecords.get(index).getMetadata().getLom();
