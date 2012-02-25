@@ -4,6 +4,8 @@
  */
 package metadata;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
@@ -67,6 +69,12 @@ public class Header {
 	public void setDatestamp(String datestamp) {
 		this.datestamp = datestamp;
 	}
+        
+        public java.util.Date getTimestamp() {
+            	 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                 return formatter.parse(datestamp, new ParsePosition(0));
+
+        }
 
 	/**
 	 * @return the setSpec
