@@ -331,7 +331,9 @@ src/src/java/metadata/conversor/Conversor.java -text
 src/src/java/metadata/conversor/Rule.java -text
 src/src/java/metadata/conversor/package-info.java -text
 src/src/java/modelos/Documento.java -text
+src/src/java/modelos/DocumentoFebInterface.java -text
 src/src/java/modelos/DocumentoReal.java -text
+src/src/java/modelos/DocumentosService.java -text
 src/src/java/modelos/FebChangeDatabaseInfo.java -text
 src/src/java/modelos/Objeto.java -text
 src/src/java/modelos/Repositorio.java -text
