@@ -6,6 +6,7 @@ package modelos;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Set;
  *       @author Jim Elliott (with help from Hibernate)
  *     
  */
-public class DocumentoReal  implements java.io.Serializable {
+public class DocumentoReal  implements java.io.Serializable, DocumentoFebInterface {
 
 
      private int id;
@@ -22,7 +23,7 @@ public class DocumentoReal  implements java.io.Serializable {
      private Date datetime;
      private Set<Objeto> objetos = new HashSet<Objeto>(0);
      private Repositorio repositorio;
-     private boolean excluido;
+     private boolean deleted;
 
     public DocumentoReal() {
     }
@@ -107,16 +108,28 @@ public class DocumentoReal  implements java.io.Serializable {
 	/**
 	 * @return the excluido
 	 */
-	public boolean isExcluido() {
-		return excluido;
+	public boolean isDeleted() {
+		return deleted;
 	}
 
 	/**
 	 * @param excluido the excluido to set
 	 */
-	public void setExcluido(boolean excluido) {
-		this.excluido = excluido;
+	public void setDeleted(boolean excluido) {
+		this.deleted = excluido;
 	}
+
+    public List<String> getTitles() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<String> getKeywords() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<String> getDescriptions() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
 
 

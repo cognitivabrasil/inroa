@@ -13,5 +13,7 @@
       <key column="documento"/>
       <one-to-many class="modelos.Objeto"/>
     </set>
+        <property name="deleted" type="boolean"/>
+
   </class>
 </hibernate-mapping>

@@ -245,7 +245,7 @@ public class Indexador {
 
     public void preencheR1Tokens(Connection con) throws SQLException {
         //retorna todos documentos que nao possuem r1tokens preenchido
-        String sql = "select d.id, d.obaa_entry, d.id_repositorio from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL";
+        String sql = "select d.id, d.obaa_entry, d.id_repositorio from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL AND d.deleted = FALSE";
         StopWordTAD stWd = new StopWordTAD(con);
 
         

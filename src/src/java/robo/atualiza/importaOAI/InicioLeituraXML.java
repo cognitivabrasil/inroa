@@ -65,14 +65,17 @@ public class InicioLeituraXML {
                     for (int j = 0; j < oai.getSize() - 1; j++) {
                         System.out.println("j: " + new Integer(j) + "/" + new Integer(oai.getSize()));
                         metadata.Header header = oai.getHeader(j);
-                        if(!header.isDeleted()) {
-                        OBAA obaa = oai.getMetadata(j);
-                        System.out.println(obaa.getTitles().get(0));
+                        OBAA obaa = null;
+                        if (!header.isDeleted()) {
+                            obaa = oai.getMetadata(j);
+                            System.out.println(obaa.getTitles().get(0));
+
+                        }
                         service.save(obaa, oai.getHeader(j));
                         System.out.println("Saved");
 
                         atualizou = true;
-                        }
+
                     }
                     System.out.println("Out of for...");
 

@@ -10,3 +10,7 @@ CREATE TABLE consultas(
 ) WITH (OIDS = FALSE);
 
 ALTER TABLE consultas OWNER TO feb;
+
+ALTER TABLE documentos ADD COLUMN deleted BOOLEAN;
+
+ALTER TABLE documentos ADD COLUMN obaaXml VARCHAR;

@@ -47,7 +47,7 @@ public interface DocumentoFebInterface {
      * 
      * @return Unique identifier of this object (obaa_entry)
      */
-    public String getId();
+    public String getObaaEntry();
     
     /**
      * 
