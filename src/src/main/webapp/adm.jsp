@@ -77,7 +77,6 @@ Author     : Marcos Nunes
                         while (res.next()) {
 
                             if (res.getInt("id") > 0) {
-                                if (!res.getString("nome").equalsIgnoreCase("todos")) {
 
                                     if (linha % 2 == 0) {
                                         yesnocolor = "price-yes";
@@ -113,7 +112,7 @@ Author     : Marcos Nunes
 
             </tr>
             <%
-                                }
+                                
                             }
                         } //fim while%>
 
@@ -143,10 +142,10 @@ Author     : Marcos Nunes
             </tr>
         </table>
         <!--Insere codigo que lista os padroes de metadados-->
-        <%@include file="./padraoMetadados/padraoMetadados.jsp"%>
+        <jsp:include page="./padraoMetadados/padraoMetadados.jsp" />
         <!--Fim codigo que lista os padroes-->
         <!--Insere codigo que lista os mapeamentos-->
-        <%@include file="./mapeamentos/mapeamentos.jsp"%>
+        <jsp:include page="./mapeamentos/mapeamentos.jsp"/>
         <!--Fim codigo que lista os mapeamentos-->
 
         <table class='repositorios-table' cellpadding=3>
@@ -274,7 +273,7 @@ Author     : Marcos Nunes
         <script language="JavaScript" type="text/javascript">
             document.body.style.cursor="default";
         </script>
-        <%@include file="googleAnalytics"%>
+        <jsp:include page="googleAnalytics" />
 <%
             con.close(); //fechar conexao o banco de dados
             }
