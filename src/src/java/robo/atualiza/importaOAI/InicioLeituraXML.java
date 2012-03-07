@@ -9,12 +9,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import ferramentaBusca.indexador.Indexador;
 import java.sql.Connection;
-import modelos.DocumentosService;
+import modelos.DocumentosDAO;
 import modelos.Repositorio;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import postgres.Conectar;
+import modelos.RepositoryDAO;
+import org.springframework.context.ApplicationContext;
+import spring.ApplicationContextProvider;
 
 /*
  * To change this template, choose Tools | Templates and open the template in
@@ -47,13 +46,22 @@ public class InicioLeituraXML {
 
         try {
 
-            Conectar c = new Conectar();
+            
 
-            Connection conn = c.conectaBD();
-            SessionFactory sessionFactory = new Configuration().configure().setProperty("hibernate.show_sql", "true").buildSessionFactory();
-            Session session = sessionFactory.openSession(conn);
-            Repositorio r = (Repositorio) session.get(Repositorio.class, id);
-            DocumentosService service = new DocumentosService(r);
+            ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+            if (ctx == null) {
+                System.out.println("Could not get AppContext bean!");
+            } else {
+                System.out.println("AppContext bean retrieved!");
+            }
+
+            DocumentosDAO docDao = ctx.getBean(DocumentosDAO.class);
+            RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
+            
+            Repositorio r = repDao.get(id);
+
+            docDao.setRepository(r);
+
 
             XmlSaxReader reader = new XmlSaxReader();
             for (int i = 0; i < caminhoXML.size(); i++) {
@@ -71,7 +79,7 @@ public class InicioLeituraXML {
                             System.out.println(obaa.getTitles().get(0));
 
                         }
-                        service.save(obaa, oai.getHeader(j));
+                        docDao.save(obaa, oai.getHeader(j));
                         System.out.println("Saved");
 
                         atualizou = true;

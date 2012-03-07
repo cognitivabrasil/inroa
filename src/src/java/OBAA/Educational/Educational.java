@@ -263,6 +263,9 @@ public class Educational {
 	
 	@ElementList(inline=true,required=false)
 	private List<LearningResourceType> learningResourceType;
+        
+        @ElementList(inline=true,required=false)
+	private List<TypicalAgeRange> typicalAgeRange;
 
 	@ElementList(inline=true,required=false)
 	private List<Description> description;
@@ -374,15 +377,14 @@ public class Educational {
 	 * @return the typicalAgeRange
 	 */
 	public String getTypicalAgeRange() {
-		//return typicalAgeRange;
-                return null;
+		return toStringList(typicalAgeRange).get(0);
 	}
 
 	/**
 	 * @param typicalAgeRange the typicalAgeRange to set
 	 */
-	public void setTypicalAgeRange(String typicalAgeRange) {
-		//this.typicalAgeRange = typicalAgeRange;
+	public void setTypicalAgeRange(List<TypicalAgeRange> typicalAgeRange) {
+		this.typicalAgeRange = typicalAgeRange;
 	}
 
 	/**

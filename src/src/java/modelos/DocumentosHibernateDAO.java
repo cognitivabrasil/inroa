@@ -12,48 +12,57 @@ import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import postgres.Conectar;
 
 /**
  *
  * @author paulo
  */
-public class DocumentosService {
+public class DocumentosHibernateDAO implements DocumentosDAO {
 
+    SessionFactory sessionFactory;
     Session session;
-    Repositorio repositorio;
+    private Repositorio repository;
+    
+    public DocumentosHibernateDAO() {
+        Conectar c = new Conectar();
 
-    public DocumentosService(Repositorio r) {
-        repositorio = r;
+            Connection conn = c.conectaBD();
+            sessionFactory = new Configuration().configure().setProperty("hibernate.show_sql", "false").buildSessionFactory();
+            session = sessionFactory.openSession(conn);
     }
     
-    public List<DocumentoReal> getByObaaEntry(String e) {
+    private List<DocumentoReal> getByObaaEntry(String e) {
         return session.createQuery(
                 "from DocumentoReal as doc where doc.obaaEntry = ?")
                 .setString(0, e)
                 .list();
                
     }
+    
+   @Override
+    public DocumentoReal get(String e) {
+        return (DocumentoReal)session.createQuery(
+                "from DocumentoReal as doc where doc.obaaEntry = ?")
+                .setString(0, e)
+                .uniqueResult();
+               
+    }
 
     private void deleteByObaaEntry(String e) {
         for(DocumentoReal d : getByObaaEntry(e)) {
                     System.out.println("DeleteByObaaEntry: " + e);
-                    session.delete(d);
+                    sessionFactory.openSession().delete(d);
         }
     }
 
+    @Override
     public void save(OBAA obaa, Header h) {
-        if (session == null) {
-            Conectar c = new Conectar();
-
-            Connection conn = c.conectaBD();
-            SessionFactory sessionFactory = new Configuration().configure().setProperty("hibernate.show_sql", "false").buildSessionFactory();
-            session = sessionFactory.openSession(conn);
-        }
         DocumentoReal doc = new DocumentoReal();
         System.out.println("Going to create documento...");
 
-        doc.setRepositorio(repositorio);
+        doc.setRepositorio(getRepository());
         doc.setObaaEntry(h.getIdentifier());
         doc.setTimestamp(h.getTimestamp());
 
@@ -96,5 +105,19 @@ public class DocumentosService {
             e.printStackTrace();
 
         }
+    }
+
+    /**
+     * @return the repositorio
+     */
+    public Repositorio getRepository() {
+        return repository;
+    }
+
+    /**
+     * @param repositorio the repositorio to set
+     */
+    public void setRepository(Repositorio repository) {
+        this.repository = repository;
     }
 }

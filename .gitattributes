@@ -248,6 +248,7 @@ src/src/java/OBAA/Educational/LearningResourceType.java -text
 src/src/java/OBAA/Educational/Perception.java -text
 src/src/java/OBAA/Educational/Reciprocity.java -text
 src/src/java/OBAA/Educational/Synchronism.java -text
+src/src/java/OBAA/Educational/TypicalAgeRange.java -text
 src/src/java/OBAA/General/AggregationLevel.java -text
 src/src/java/OBAA/General/Coverage.java -text
 src/src/java/OBAA/General/Description.java -text
@@ -333,10 +334,13 @@ src/src/java/metadata/conversor/package-info.java -text
 src/src/java/modelos/Documento.java -text
 src/src/java/modelos/DocumentoFebInterface.java -text
 src/src/java/modelos/DocumentoReal.java -text
-src/src/java/modelos/DocumentosService.java -text
+src/src/java/modelos/DocumentosDAO.java -text
+src/src/java/modelos/DocumentosHibernateDAO.java -text
 src/src/java/modelos/FebChangeDatabaseInfo.java -text
 src/src/java/modelos/Objeto.java -text
 src/src/java/modelos/Repositorio.java -text
+src/src/java/modelos/RepositoryDAO.java -text
+src/src/java/modelos/RepositoryHibernateDAO.java -text
 src/src/java/operacoesPostgre/Consultar.java -text
 src/src/java/operacoesPostgre/Remover.java -text
 src/src/java/operacoesPostgre/package.html -text
@@ -389,6 +393,7 @@ src/src/main/resources/dummy.properties -text
 src/src/main/resources/feb.properties -text
 src/src/main/resources/hibernate.cfg.xml -text
 src/src/main/resources/manifest.mf -text
+src/src/main/resources/testApplicationContext.xml -text
 src/src/main/webapp/META-INF/context.xml -text
 src/src/main/webapp/WEB-INF/applicationContext.xml -text
 src/src/main/webapp/WEB-INF/jsp/pager-taglib.tld -text
@@ -487,6 +492,7 @@ src/src/test/java/metadata/oai_dc10000.xml -text
 src/src/test/java/metadata/oai_lom.xml -text
 src/src/test/java/metadata/obaa1.xml -text
 src/src/test/java/metadata/teste1.xml -text
+src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text
 src/src/xslt/dc2obaa.xsl -text
 src/src/xslt/dc2obaa_full.xsl -text
 src/src/xslt/do.sh -text

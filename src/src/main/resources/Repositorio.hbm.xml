@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="modelos.Repositorio" table="repositorios">
+  <class name="modelos.Repositorio" table="repositorios_view">
     <meta attribute="class-description"> 
    
     </meta>
@@ -10,9 +10,14 @@
       <generator class="native"/>
     </id>
     <property name="nome" not-null="true" type="string"/>
-    <property name="descricao" type="string">
-      <meta attribute="field-description">When the track was created</meta>
-    </property>
+    <property name="descricao" type="string"/>
+
+
+    
+    <property name="url" column="url_or_ip" not-null="true" type="string"/>
+        <property name="metadataPrefix" column="metadata_prefix" not-null="true" type="string"/>
+
+    
     <set name="documentos" table="documentos">
       <key column="id_repositorio"/>
       <one-to-many class="modelos.Documento"/>

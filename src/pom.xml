@@ -9,10 +9,14 @@
     <name>Projeto Maven do FEB</name>
     <url>http://feb.ufrgs.br</url>
 <!-- Shared version number properties -->
-    <properties>
-        <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+<properties>
+    <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
+        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    
+</properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -316,6 +320,7 @@
             </plugin>
 
             <plugin>
+                
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.6</version>
                 <executions>

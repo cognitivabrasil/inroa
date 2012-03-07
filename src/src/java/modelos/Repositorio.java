@@ -4,7 +4,9 @@
 
 package modelos;
 
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,6 +21,8 @@ public class Repositorio  implements java.io.Serializable {
      private int id;
      private String nome;
      private String descricao;
+     private String url;
+     private String metadataPrefix;
      private Set<Documento> documentos = new HashSet<Documento>(0);
 
     public Repositorio() {
@@ -33,6 +37,28 @@ public class Repositorio  implements java.io.Serializable {
         this.id = id;
     }
 
+    //Mapeamento getMapeamento() {
+    //    return "";
+    //}
+    
+    List<String> getComunidades() {
+        return null;
+    }
+    
+    
+     String getNamespace() {
+        return "";
+    }
+  
+     
+     Date getUltimaAtualizacao() {
+         return null;
+     }
+     
+     Date getProximaAtualizacao() {
+         return null;
+     }
+     
 	/**
 	 * @return the nome
 	 */
@@ -78,6 +104,39 @@ public class Repositorio  implements java.io.Serializable {
 	public String toString() {
 		return getNome();
 	}
+        
+        
+        public int size() {
+            return 0;
+        }
+
+    /**
+     * @param url the url to set
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
+     * @param metadataPrefix the metadataPrefix to set
+     */
+    public void setMetadataPrefix(String metadataPrefix) {
+        this.metadataPrefix = metadataPrefix;
+    }
+
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @return the metadataPrefix
+     */
+    public String getMetadataPrefix() {
+        return metadataPrefix;
+    }
 
 
 }

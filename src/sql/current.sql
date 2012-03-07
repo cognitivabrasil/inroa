@@ -14,3 +14,8 @@ ALTER TABLE consultas OWNER TO feb;
 ALTER TABLE documentos ADD COLUMN deleted BOOLEAN;
 
 ALTER TABLE documentos ADD COLUMN obaaXml VARCHAR;
+
+CREATE VIEW repositorios_view AS select * from repositorios,info_repositorios
+WHERE id = id_repositorio;
+
+ALTER VIEW repositorios_view OWNER TO feb;
