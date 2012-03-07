@@ -42,6 +42,8 @@
                                 set = "Todas";
                             }
             %>
+            -${param.id}-
+            =${repDAO.get(param.id).descricao}=
 
             <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
@@ -51,13 +53,13 @@
                 <div class="Label">
                     Nome do reposit&oacute;rio:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("nome")%></div>
+                <div class="Value">&nbsp;${repDAO.get(param.id).nome}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Descri&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("descricao")%></div>
+                <div class="Value">&nbsp;${repDAO.get(param.id).descricao}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">

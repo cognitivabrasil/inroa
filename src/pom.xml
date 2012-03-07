@@ -11,7 +11,6 @@
 <!-- Shared version number properties -->
 <properties>
     <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
-        <netbeans.hint.deploy.server>Tomcat60</netbeans.hint.deploy.server>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -264,6 +263,20 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>1.0.2.RELEASE</version>
         </dependency> 
+        
+        	<!-- standard.jar --> 
+	<dependency>
+		<groupId>taglibs</groupId>
+		<artifactId>standard</artifactId>
+		<version>1.1.2</version>
+	</dependency>
+ 
+	<!-- JSTL --> 
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jstl</artifactId>
+		<version>1.1.2</version>
+	</dependency>
 
     </dependencies>
     <build>
@@ -357,6 +370,7 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
+
         </plugins>
 
     </build>
