@@ -8,6 +8,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="conexaoBD.jsp"%>
 <%@page import="robo.util.Operacoes"%>
 <%@page import="operacoesPostgre.Consultar"%>
@@ -43,11 +44,13 @@
                             }
             %>
             -${param.id}-
-            =${repDAO.get(param.id).descricao}=
+            ${repDAO.get(param.id).colecoes}
+            
+            
 
             <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
-            <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=geral">Editar</a></div>
+            <div class="editar"><a href="./editarRepositorio.jsp?id=${param.id}&campo=geral">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
@@ -77,44 +80,53 @@
                 <div class="Label">
                     MetadataPrefix:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("metadata_prefix")%></div>
+                <div class="Value">&nbsp;${repDAO.get(param.id).metadataPrefix}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     NameSpace:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("name_space")%></div>
+                <div class="Value">&nbsp;${repDAO.get(param.id).namespace}</div>
             </div>
 
             <!--Informações configuração
                         <div class="subtitulo">Informa&ccedil;&otilde;es sobre a configura&ccedil;&atilde;o da federa&ccedil;&atilde;o</div>
-                        <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=config">Editar</a></div>
+                        <div class="editar"><a href="./editarRepositorio.jsp?id=${param.id}&campo=config">Editar</a></div>
 
 
             -->
 
             <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
-            <div class="editar"><a href="./editarRepositorio.jsp?id=<%=id%>&campo=OAI-PMH">Editar</a></div>
+            <div class="editar"><a href="./editarRepositorio.jsp?id=${param.id}&campo=OAI-PMH">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
                     URL que responde OAI-PMH:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("url_or_ip")%></div>
+                <div class="Value">&nbsp;${repDAO.get(param.id).url}</div>
             </div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
                     Cole&ccedil;&otilde;es ou Comunidades:
                 </div>
-                <div class="Value">&nbsp;<%=set%></div>
+                <div class="Value">&nbsp;
+                    <c:choose>
+                <c:when test="${empty repDAO.get(param.id).colecoes}">
+                    Todas
+                </c:when>
+                <c:otherwise>
+                    ${repDAO.get(param.id).colecoes}
+                </c:otherwise>
+            </c:choose>
+                </div>
             </div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
                     Periodicidade de atualiza&ccedil;&atilde;o :
                 </div>
-                <div class="Value">&nbsp;<%=res.getInt("periodicidade_horas")/24%> dia(s)</div>
+                <div class="Value">&nbsp;${repDAO.get(param.id).periodicidadeAtualizacao} dia(s)</div>
             </div>
 
 
@@ -129,7 +141,7 @@
                 <div class="Label">
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;<%=Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))%></div>
+                <div class="Value">&nbsp;${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
@@ -153,7 +165,7 @@
                 <div class="Value">
                     <div>&nbsp;<%=Consultar.selectNumeroDocumentosRep(con,Integer.parseInt(id))%></div>
                     
-                    <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Formatar e restaurar" onclick="javascript:apagaAtualizaRepAjax(<%=id%>, this.parentNode)"></div>
+                    <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Formatar e restaurar" onclick="javascript:apagaAtualizaRepAjax(${param.id}, this.parentNode)"></div>
                     
                 </div>               
             </div>

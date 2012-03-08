@@ -28,6 +28,7 @@ Author     : Marcos Nunes
 
     </head>
     <body style="cursor:wait">
+                
 
         <%
 
@@ -38,12 +39,13 @@ Author     : Marcos Nunes
             } else {
 
                 org.springframework.context.ApplicationContext ctx = spring.ApplicationContextProvider.getApplicationContext();
-
                 RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
                 
                 session.setAttribute("repDAO", repDao);
-
         %>
+        <jsp:useBean id="operacoesBean"
+                     class="robo.util.Operacoes"
+                     scope="session" />
 
 
         <table width=100% border=1 bgcolor="#AEC9E3">
@@ -94,11 +96,8 @@ Author     : Marcos Nunes
                     <td >&nbsp;${rep.descricao}</td>
                     <td >&nbsp;
                         <div id="textResult${rep.id}">
-                            TEMPORARIAMENTE INDISPONÍVEL
-                            <%
-                            //TODO: QUANDO TIVER O METODO DO JORJAO COLOCAR DE VOLTA
-                            //=Operacoes.ultimaAtualizacaoFrase(res.getTimestamp("data_ultima_atualizacao"))%>
-
+                            ${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
+                            
                             <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${rep.id}, document.getElementById('textResult'+${rep.id}));">
                                 <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </a>

@@ -4,19 +4,20 @@
   <class name="modelos.Repositorio" table="repositorios_view">
     <meta attribute="class-description"> 
    
-    </meta>
+        </meta>
     <id column="id" name="id" type="int">
       <meta attribute="scope-set">protected</meta>
       <generator class="native"/>
     </id>
     <property name="nome" not-null="true" type="string"/>
     <property name="descricao" type="string"/>
-
-
-    
-    <property name="url" column="url_or_ip" not-null="true" type="string"/>
-        <property name="metadataPrefix" column="metadata_prefix" not-null="true" type="string"/>
-
+    <property column="url_or_ip" name="url" not-null="true" type="string"/>
+    <property column="metadata_prefix" name="metadataPrefix" not-null="true" type="string"/>
+    <property column="data_ultima_atualizacao" name="ultimaAtualizacao" type="timestamp"/>
+    <property column="name_space" name="namespace" type="string"/>
+    <property column="periodicidade_horas" name="periodicidadeAtualizacao" type="integer"/>
+    <property column="proxima_atualizacao" name="proximaAtualizacao" type="timestamp"/>
+    <property column="set" name="colecoes" type="string"/>
     
     <set name="documentos" table="documentos">
       <key column="id_repositorio"/>

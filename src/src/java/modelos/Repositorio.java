@@ -24,6 +24,11 @@ public class Repositorio  implements java.io.Serializable {
      private String url;
      private String metadataPrefix;
      private Set<Documento> documentos = new HashSet<Documento>(0);
+     private Date ultimaAtualizacao;
+     private String namespace;
+     private int periodicidadeAtualizacao;
+     private Date proximaAtualizacao;
+     private String colecoes;
 
     public Repositorio() {
     }
@@ -45,19 +50,8 @@ public class Repositorio  implements java.io.Serializable {
         return null;
     }
     
-    
-     String getNamespace() {
-        return "";
-    }
   
      
-     Date getUltimaAtualizacao() {
-         return null;
-     }
-     
-     Date getProximaAtualizacao() {
-         return null;
-     }
      
 	/**
 	 * @return the nome
@@ -138,7 +132,49 @@ public class Repositorio  implements java.io.Serializable {
         return metadataPrefix;
     }
 
+    public void setUltimaAtualizacao(Date ultimaAtualizacao) {
+        this.ultimaAtualizacao = ultimaAtualizacao;
+    }
 
+    public Date getUltimaAtualizacao() {
+        return ultimaAtualizacao;
+    }
+
+    public String getNamespace() {
+        return namespace;
+    }
+
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
+    }
+
+    //TODO ver o que precisa para modificar na base para dias e nao horas.
+    public int getPeriodicidadeAtualizacao() {
+        return periodicidadeAtualizacao/24;
+    }    
+    
+    public void setPeriodicidadeAtualizacao(int periodicidadeAtualizacao) {
+        this.periodicidadeAtualizacao = periodicidadeAtualizacao;
+    }
+
+    public Date getProximaAtualizacao() {
+        return proximaAtualizacao;
+    }
+
+    public void setProximaAtualizacao(Date proximaAtualizacao) {
+        this.proximaAtualizacao = proximaAtualizacao;
+    }
+
+    public String getColecoes() {
+        return colecoes;
+    }
+
+    public void setColecoes(String colecoes) {
+        this.colecoes = colecoes;
+    }
+
+    
+    
 }
 
 
