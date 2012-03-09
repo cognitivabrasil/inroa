@@ -27,7 +27,7 @@ public class Repositorio  implements java.io.Serializable {
      private Date ultimaAtualizacao;
      private String namespace;
      private int periodicidadeAtualizacao;
-     private Date proximaAtualizacao;
+     //private Date proximaAtualizacao;
      private String colecoes;
 
     public Repositorio() {
@@ -158,12 +158,14 @@ public class Repositorio  implements java.io.Serializable {
     }
 
     public Date getProximaAtualizacao() {
-        return proximaAtualizacao;
+        return ultimaAtualizacao /* TODO: + periodicidade */;
     }
 
-    public void setProximaAtualizacao(Date proximaAtualizacao) {
+    /*public void setProximaAtualizacao(Date proximaAtualizacao) {
         this.proximaAtualizacao = proximaAtualizacao;
     }
+    * Não seta, próxima atualização baseada na periodicidade
+    */
 
     public String getColecoes() {
         return colecoes;

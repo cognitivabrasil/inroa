@@ -95,7 +95,12 @@ public class RepositoryHibernateDaoIT {
         assertEquals("Cesta", cesta.getNome());
         assertEquals("dfsd", cesta.getDescricao());
         assertEquals("http://cesta2.cinted.ufrgs.br/oai/request", cesta.getUrl());
-        assertEquals("lom", cesta.getMetadataPrefix());
+        //assertEquals("cesta", cesta.getNomeFederacao());
+        //assertEquals(24, cesta.getPeriodicidate());
+        assertEquals("lom", cesta.getNamespace());
+        assertEquals("lom", cesta.getUltimaAtualizacao());
+ 
+
     }
 
     /**

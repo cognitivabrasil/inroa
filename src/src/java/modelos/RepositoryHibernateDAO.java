@@ -4,8 +4,9 @@
  */
 package modelos;
 
-import java.util.ArrayList;
 import java.util.List;
+import org.springframework.orm.hibernate3.HibernateAccessor;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -23,6 +24,8 @@ public class RepositoryHibernateDAO extends HibernateDaoSupport implements Repos
     }
 
     public List<Repositorio> getAll() {
+        HibernateTemplate t = getHibernateTemplate();
+        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
         return getHibernateTemplate().find("from Repositorio");
     }
 

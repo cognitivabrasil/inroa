@@ -16,7 +16,7 @@
     <property column="data_ultima_atualizacao" name="ultimaAtualizacao" type="timestamp"/>
     <property column="name_space" name="namespace" type="string"/>
     <property column="periodicidade_horas" name="periodicidadeAtualizacao" type="integer"/>
-    <property column="proxima_atualizacao" name="proximaAtualizacao" type="timestamp"/>
+  <!--  <property column="proxima_atualizacao" name="proximaAtualizacao" type="timestamp"/> -->
     <property column="set" name="colecoes" type="string"/>
     
     <set name="documentos" table="documentos">
