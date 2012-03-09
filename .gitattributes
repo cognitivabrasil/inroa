@@ -338,9 +338,14 @@ src/src/java/modelos/DocumentosDAO.java -text
 src/src/java/modelos/DocumentosHibernateDAO.java -text
 src/src/java/modelos/FebChangeDatabaseInfo.java -text
 src/src/java/modelos/Objeto.java -text
+src/src/java/modelos/PadraoMetadados.java -text
 src/src/java/modelos/Repositorio.java -text
+src/src/java/modelos/RepositorioSubFed.java -text
 src/src/java/modelos/RepositoryDAO.java -text
 src/src/java/modelos/RepositoryHibernateDAO.java -text
+src/src/java/modelos/SubFederacao.java -text
+src/src/java/modelos/SubFederacaoDAO.java -text
+src/src/java/modelos/SubFederacaoHibernateDAO.java -text
 src/src/java/operacoesPostgre/Consultar.java -text
 src/src/java/operacoesPostgre/Remover.java -text
 src/src/java/operacoesPostgre/package.html -text
@@ -389,6 +394,8 @@ src/src/main/resources/Documentos.hbm.xml -text
 src/src/main/resources/MetadataRecord.hbm.xml -text
 src/src/main/resources/Objeto.hbm.xml -text
 src/src/main/resources/Repositorio.hbm.xml -text
+src/src/main/resources/RepositorioSubFed.hbm.xml -text
+src/src/main/resources/SubFederacao.hbm.xml -text
 src/src/main/resources/dummy.properties -text
 src/src/main/resources/feb.properties -text
 src/src/main/resources/hibernate.cfg.xml -text

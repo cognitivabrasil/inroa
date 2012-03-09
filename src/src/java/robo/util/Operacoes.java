@@ -11,15 +11,20 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
- * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como testes e remo&ccedil;&otilde;es de acentua&ccedil;&atilde;o
+ * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como
+ * testes e remo&ccedil;&otilde;es de acentua&ccedil;&atilde;o
+ *
  * @author Marcos
  */
 public class Operacoes {
 
     /**
-     *  Testa se a data recebida é anterior a 01/01/1000. Utilizado para testar se a base de dados deve ser sincronizada do zero ou não.
+     * Testa se a data recebida é anterior a 01/01/1000. Utilizado para testar
+     * se a base de dados deve ser sincronizada do zero ou não.
+     *
      * @param horaBase hora que será testada
-     * @return true ou false. Se a data informada como parâmetro for menor retorna true se não false
+     * @return true ou false. Se a data informada como parâmetro for menor
+     * retorna true se não false
      */
     public static boolean testarDataAnteriorMil(Date horaBase) {
 
@@ -30,7 +35,7 @@ public class Operacoes {
             try {
                 dataTeste = format.parse("01/01/1000");
             } catch (ParseException p) {
-                System.err.println("FEB: ERRO ao efetuar o parse da hora. Mensagem: "+p.getMessage());
+                System.err.println("FEB: ERRO ao efetuar o parse da hora. Mensagem: " + p.getMessage());
             }
 
             if (dataTeste.after(horaBase)) {
@@ -44,7 +49,10 @@ public class Operacoes {
     }
 
     /**
-     * Substitui letras acentudas por letras sem acentos (remove acentos das letras), e remove todo tipo de caracter que n&atilde;o seja letra e n&uacute;mero.
+     * Substitui letras acentudas por letras sem acentos (remove acentos das
+     * letras), e remove todo tipo de caracter que n&atilde;o seja letra e
+     * n&uacute;mero.
+     *
      * @param texto texto que deseja remover os acentos.
      * @return texto sem acentos e apenas com letras e n&uacute;meros.
      */
@@ -63,21 +71,27 @@ public class Operacoes {
     }
 
     /**
-     * Recebe um ArrayList<String> percorre esse array e armazena em uma string todas as posi&ccedil;%otilde;es do array separados por um espa&ccedil;o.
-     * @param array ArrayList<String> contendo as string que ser&atildeo concatenadas.
-     * @return um String contendo todo o conte&uacute;do do array separados por um espa&ccedil;o.
+     * Recebe um ArrayList<String> percorre esse array e armazena em uma string
+     * todas as posi&ccedil;%otilde;es do array separados por um espa&ccedil;o.
+     *
+     * @param array ArrayList<String> contendo as string que ser&atildeo
+     * concatenadas.
+     * @return um String contendo todo o conte&uacute;do do array separados por
+     * um espa&ccedil;o.
      */
-    public static String arrayListToString(ArrayList<String> array){
-        String resultado="";
-        for(int i=0;i<array.size();i++){
-            resultado+=" "+array.get(i);
+    public static String arrayListToString(ArrayList<String> array) {
+        String resultado = "";
+        for (int i = 0; i < array.size(); i++) {
+            resultado += " " + array.get(i);
         }
 
         return resultado.trim();
     }
 
     /**
-     * Testa se o diret&oacute;rio informado existe e apaga todos os XMLs criados pelo FEB. Se n&atilde;o existir cria o diret&oacute;rio.
+     * Testa se o diret&oacute;rio informado existe e apaga todos os XMLs
+     * criados pelo FEB. Se n&atilde;o existir cria o diret&oacute;rio.
+     *
      * @return File contendo o diret&oacute;rio informado.
      */
     public static File testaDiretorioTemp(String diretorio) {
@@ -96,8 +110,12 @@ public class Operacoes {
     }
 
     /**
-     * Informa como uma frase a data e hora da &uacute;ltima atualiza&ccdil;&atilde;o, se a data for inferior a 01/01/1000 retorna a mensagem: "Ainda n&atilde;o foi atualizado!"
-     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o, formatada como: "Dia dd/mm/aaa às hh:mm:ss"
+     * Informa como uma frase a data e hora da &uacute;ltima
+     * atualiza&ccdil;&atilde;o, se a data for inferior a 01/01/1000 retorna a
+     * mensagem: "Ainda n&atilde;o foi atualizado!"
+     *
+     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o,
+     * formatada como: "Dia dd/mm/aaa às hh:mm:ss"
      */
     public static String ultimaAtualizacaoFrase(Date data) {
         SimpleDateFormat formatdata = new SimpleDateFormat("dd/MM/yyyy");
@@ -110,24 +128,34 @@ public class Operacoes {
     }
 
     /**
-     * Informa como uma frase a data e hora da &uacute;ltima atualiza&ccdil;&atilde;o, se a data for inferior a 01/01/1000, um teste para verificar se foi informado um endereço para atualização é realizado. Se não existir endereço retorna um aviso, se existir retorna a mensagem: "Ainda n&atilde;o foi atualizado!"
-     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o, formatada como: "Dia dd/mm/aaa às hh:mm:ss"
+     * Informa como uma frase a data e hora da &uacute;ltima
+     * atualiza&ccdil;&atilde;o, se a data for inferior a 01/01/1000, um teste
+     * para verificar se foi informado um endereço para atualização é realizado.
+     * Se não existir endereço retorna um aviso, se existir retorna a mensagem:
+     * "Ainda n&atilde;o foi atualizado!"
+     *
+     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o,
+     * formatada como: "Dia dd/mm/aaa às hh:mm:ss"
      */
     public static String ultimaAtualizacaoFrase(Date data, String caminho) {
         SimpleDateFormat formatdata = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formathora = new SimpleDateFormat("HH:mm:ss");
         if (!Operacoes.testarDataAnteriorMil(data)) {
             return "Dia " + formatdata.format(data) + " &agrave;s " + formathora.format(data);
-        } else if(caminho.isEmpty()){
-            return("N&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o");
-        }else {
+        } else if (caminho.isEmpty()) {
+            return ("N&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o");
+        } else {
             return "Ainda n&atilde;o foi atualizado!";
         }
     }
 
     /**
-     * Informa a data e hora da &uacute;ltima atualiza&ccdil;&atilde;o, se a data for inferior a 01/01/1000 retorna a mensagem: "Ainda n&atilde;o foi atualizado!"
-     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o, formatada como: "dd/mm/aaa hh:mm:ss"
+     * Informa a data e hora da &uacute;ltima atualiza&ccdil;&atilde;o, se a
+     * data for inferior a 01/01/1000 retorna a mensagem: "Ainda n&atilde;o foi
+     * atualizado!"
+     *
+     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o,
+     * formatada como: "dd/mm/aaa hh:mm:ss"
      */
     public static String ultimaAtualizacaoSimples(Date data) {
 
@@ -138,5 +166,18 @@ public class Operacoes {
             return "Ainda n&atilde;o foi atualizado!";
         }
 
+    }
+
+    /**
+     * Testa se a data informada &eacute; anterior a data atual.
+     * @param data Vari&aacute;vel do tipo Date que ser&aacute; testada.
+     * @return true se a data for anterior e falso caso contr&aacute;rio.
+     */
+    public static boolean dataAnteriorAtual(Date data) {
+        if (data.before(new Date())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
