@@ -43,7 +43,7 @@
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
             <div>
                 <div class="linkCantoEsquerdo"> <a href="http://feb.ufrgs.br/feb"><img src="imagens/Logo FEB_reduzido_45x32.png" alt="Logo FEB_reduzido" title="Buscar na Confederação"/>  Confederação</a></div>
-                <div class="linkCantoDireito"><a href="./adm.jsp" title="Ferramenta Administrativa"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
+                <div class="linkCantoDireito"><a href="./adm" title="Ferramenta Administrativa"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             </div>
             <div class="Espaco">&nbsp;</div>
             <form name="consulta" action="consulta.jsp" method="POST">

@@ -4,48 +4,51 @@
  */
 package spring;
 
-
-import java.util.*;
+import modelos.PadraoMetadadosDAO;
+import modelos.RepositoryDAO;
+import modelos.SubFederacaoDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller("feb")
 @RequestMapping("/")
 public final class FEBController {
 
-    private List<Member> members = new ArrayList<Member>();
+    @Autowired
+    private RepositoryDAO repDao;
+    @Autowired
+    private SubFederacaoDAO subDao;
+    @Autowired
+    private PadraoMetadadosDAO padraoDao;
 
     public FEBController() {
-        members.add(new Member("John", "Lennon"));
-        members.add(new Member("Paul", "McCartney"));
-        members.add(new Member("George", "Harrison"));
-        members.add(new Member("Ringo", "Starr"));
-    }
-
-    @RequestMapping("list")
-    public String list(Model model) {
-        model.addAttribute(members);
-        return "index";
     }
 
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute(members);
+
         return "index";
     }
-    
+
     @RequestMapping("{viewName}")
-    public String fallback(@PathVariable String viewName) {
+    public String fallback(@PathVariable String viewName, Model model) {
+        model.addAttribute("repDAO", repDao);
+        model.addAttribute("subDAO", subDao);
+        model.addAttribute("padraoMetadadosDAO", padraoDao);
         System.out.println("Request for " + viewName);
         return viewName;
     }
 
-    @RequestMapping("member")
-    public void member(@RequestParam("id") Integer id, Model model) {
-        model.addAttribute(members.get(id));
+    @RequestMapping("/adm")
+    public String admin(Model model) {
+        System.out.println("ADMIN");
+        model.addAttribute("repDAO", repDao);
+        model.addAttribute("subDAO", subDao);
+        model.addAttribute("padraoMetadadosDAO", padraoDao);
+        return "adm";
     }
 }
-

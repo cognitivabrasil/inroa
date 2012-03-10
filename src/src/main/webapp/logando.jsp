@@ -28,7 +28,7 @@
             if (result) {
                 session.setAttribute("usuario", login); //armazena na sessao o login
                 session.setMaxInactiveInterval(900); //seta o tempo de validade da session
-                out.print("<script type='text/javascript'>window.location=\"adm.jsp\";</script>");
+                out.print("<script type='text/javascript'>window.location=\"adm\";</script>");
             } //gravar na sessao
             else {
                 out.print("<script type='text/javascript'>alert('Usuário e/ou senha incorretos!');" +

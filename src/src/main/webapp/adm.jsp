@@ -40,15 +40,7 @@ Author     : Marcos Nunes
                         + "<BR>Verifique o log para ver o erro gerado.</p>");
             } else {
 
-                org.springframework.context.ApplicationContext ctx = spring.ApplicationContextProvider.getApplicationContext();
-                RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
-                SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
-                PadraoMetadadosDAO padraoDao = ctx.getBean(PadraoMetadadosDAO.class);
-
-                
-                session.setAttribute("repDAO", repDao);
-                session.setAttribute("subDAO", subDao);
-                session.setAttribute("padraoMetadadosDAO", padraoDao);
+              
 
         %>
         <jsp:useBean id="operacoesBean"
@@ -193,6 +185,7 @@ Author     : Marcos Nunes
 
         </td>
 
+ 
 
     </tr>
 </table>
