@@ -58,6 +58,10 @@ p:password="feb@RNP" />
         <property name="hibernateTemplate" ref="hibernateTemplate"/>
  </bean>
 
+ <bean id="subFederationDAO"
+    class="modelos.SubFederacaoHibernateDAO">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+ </bean>
 
  
 </beans>

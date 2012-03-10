@@ -8,5 +8,8 @@
     <mapping resource="Documentos.hbm.xml"/>
     <mapping resource="Objeto.hbm.xml"/>
     <mapping resource="Repositorio.hbm.xml"/>
+    <mapping resource="SubFederacao.hbm.xml"/>
+    <mapping resource="RepositorioSubFed.hbm.xml"/>
+
   </session-factory>
 </hibernate-configuration>

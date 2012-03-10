@@ -3,6 +3,8 @@ Document   : index
 Created on : 29/04/2009, 12:04:58
 Author     : Marcos Nunes
 --%>
+<%@page import="sun.security.krb5.internal.crypto.crc32"%>
+<%@page import="modelos.SubFederacaoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="conexaoBD.jsp"%>
@@ -40,8 +42,10 @@ Author     : Marcos Nunes
 
                 org.springframework.context.ApplicationContext ctx = spring.ApplicationContextProvider.getApplicationContext();
                 RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
+                SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
                 
                 session.setAttribute("repDAO", repDao);
+                session.setAttribute("subDAO", subDao);
         %>
         <jsp:useBean id="operacoesBean"
                      class="robo.util.Operacoes"
@@ -154,49 +158,31 @@ Author     : Marcos Nunes
                 <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
             </tr>
 
+<c:forEach var="rep" items="${subDAO.all}" varStatus="status">  
+                <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}" >              
 
-            <%
-                int linha2 = 1;
-                String yesnocolor = "";
+                    <td>
+                        <input type="button" class="botaoExcluir" title="Excluir reposit&oacute;rio" name="excluir" id="excluirRep" onclick="NewWindow('removerRepositorio.jsp?id=${rep.id}','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
+                        &nbsp;
+                        <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarRep" onclick="NewWindow('exibeRepositorios.jsp?id=${rep.id}','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
 
-                //Carrega do banco de dados os repositorios cadastrados
-                Statement stm = con.createStatement();
-                ResultSet resultFederacao = stm.executeQuery("SELECT l.nome, l.id, l.descricao, l.data_ultima_atualizacao FROM dados_subfederacoes l ORDER BY nome ASC;");
-                while (resultFederacao.next()) {
+                    </td>
+                    <td >&nbsp;${rep.nome}</td>
+                    <td >&nbsp;${rep.descricao}</td>
+                    <td >&nbsp;
+                        <div id="textResult${rep.id}">
+                            ${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
+                            
+                            <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${rep.id}, document.getElementById('textResult'+${rep.id}));">
+                                <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </a>
+                        </div>
+                    </td>
+                </tr>
 
-                    if (linha2 % 2 == 0) {
-                        yesnocolor = "price-yes";
-                    } else {
-                        yesnocolor = "price-no";
-                    }
-            %>
-
-            <tr  class='center'>
-                <td class="<%=yesnocolor%>">
-                    <input type="button" class="botaoExcluir" title="Excluir Subfedera&ccedil;&atilde;o" name="excluir" id="excluirSubfed" onclick="NewWindow('removerFederacao.jsp?id=<%=resultFederacao.getString("id")%>','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
-                    &nbsp;
-                    <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="excluirPadrao" onclick="NewWindow('exibeFederacao.jsp?id=<%=resultFederacao.getString("id")%>','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
-
-                </td>
-                <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("nome")%></td>
-                <td class="<%=yesnocolor%>">&nbsp;<%=resultFederacao.getString("descricao")%></td>
-                <td class="<%=yesnocolor%>">&nbsp;
-                    <div id='textResultSF<%=resultFederacao.getString("id")%>'>
-                        <%=Operacoes.ultimaAtualizacaoFrase(resultFederacao.getTimestamp("data_ultima_atualizacao"))%>
-
-                        <a title="Atualizar agora" onclick="javaScript:atualizaSubfedAjax(<%=resultFederacao.getString("id")%>, document.getElementById('textResultSF<%=resultFederacao.getString("id")%>'));">
-                            <img src="./imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                        </a>                       
-                    </div>
-                </td>
-                <% linha2++;%>
-
-            </tr>
-            <%
-
-                } //fim while%>
-
-
+            </c:forEach>
+            
+            
             <tr class='center'>
                 <td>
 
@@ -218,10 +204,7 @@ Author     : Marcos Nunes
                     </div>
                 </td>
 
-                <%
-                    linha2++;
-                %>
-
+     
             </tr>
         </table>
 

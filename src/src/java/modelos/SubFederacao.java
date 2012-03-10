@@ -6,6 +6,7 @@ package modelos;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -19,7 +20,7 @@ public class SubFederacao implements java.io.Serializable {
     private String url;
     private Date ultimaAtualizacao;
     private Date dataXML;
-    private List<RepositorioSubFed> repositorios;
+    private Set<RepositorioSubFed> repositorios;
 
     public Date getDataXML() {
         return dataXML;
@@ -74,11 +75,11 @@ public class SubFederacao implements java.io.Serializable {
         return getNome();
     }
 
-    public List<RepositorioSubFed> getRepositorios() {
+    public Set<RepositorioSubFed> getRepositorios() {
         return repositorios;
     }
 
-    public void setRepositorios(List<RepositorioSubFed> repositorios) {
+    public void setRepositorios(Set<RepositorioSubFed> repositorios) {
         this.repositorios = repositorios;
     }
     
