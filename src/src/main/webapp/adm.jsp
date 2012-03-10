@@ -9,7 +9,7 @@ Author     : Marcos Nunes
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="conexaoBD.jsp"%>
 <%@include file="testaSessao.jsp"%>
-<%@page import="modelos.RepositoryDAO"%>
+<%@page import="modelos.*"%>
 <%@page import="robo.util.Operacoes" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.*" %>
@@ -43,9 +43,13 @@ Author     : Marcos Nunes
                 org.springframework.context.ApplicationContext ctx = spring.ApplicationContextProvider.getApplicationContext();
                 RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
                 SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
+                PadraoMetadadosDAO padraoDao = ctx.getBean(PadraoMetadadosDAO.class);
+
                 
                 session.setAttribute("repDAO", repDao);
                 session.setAttribute("subDAO", subDao);
+                session.setAttribute("padraoMetadadosDAO", padraoDao);
+
         %>
         <jsp:useBean id="operacoesBean"
                      class="robo.util.Operacoes"
@@ -137,6 +141,61 @@ Author     : Marcos Nunes
             </tr>
         </table>
         <!--Insere codigo que lista os padroes de metadados-->
+        
+
+<table class='repositorios-table' id='padroes' cellpadding=3>
+    <tr>
+        <th colspan=4>
+            <font size="3%" color=black>Lista de Padr&atilde;o de metadados</font>
+        </th>
+    </tr>
+
+    <tr style="background-color: #AEC9E3">
+        <th width="10%">Opera&ccedil;&otilde;es</th>
+
+        <th width="20%">Nome</th>
+        <th width="50%">Metadata Prefix</th>
+        <th width="20%">nameSpace</th>
+
+    </tr>
+<c:forEach var="rep" items="${padraoMetadadosDAO.all}" varStatus="status">  
+                <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}" >              
+
+                    <td>
+            <input type="button" class="botaoExcluir" title="Excluir padr&atilde;o de metadados" name="excluir" id="excluirPadrao" onclick="confirmaExclusao(${rep.id},'padraometadados','msgerro','padroes',this.parentNode.parentNode.rowIndex);"/>
+            &nbsp;
+            <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarPadrao" onclick="NewWindow('./padraoMetadados/editaPadrao.jsp?id=${rep.id}','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
+            
+        </td>
+        <td>${rep.nome}</td>
+        <td>${rep.metadataPrefix}</td>
+        <td>${rep.namespace}</td>
+
+    </tr>
+</c:forEach>
+
+
+
+    <tr class='center'>
+        <td>
+
+            <a title="Adicionar novo padr&atilde;o de metadados" onclick="NewWindow('./padraoMetadados/addPadrao.jsp','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+            </a>
+
+        </td>
+        <td colspan="3" class="left bold" style="font-size:110%">
+            &nbsp;&nbsp;
+            <a onclick="NewWindow('./padraoMetadados/addPadrao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                Adicionar novo padr&atilde;o
+            </a>
+            <div id='msgerro' class='textoErro center'></div>
+
+        </td>
+
+
+    </tr>
+</table>
         <%--@include file="./padraoMetadados/padraoMetadados.jsp"%>
         <!--Fim codigo que lista os padroes-->
         <!--Insere codigo que lista os mapeamentos-->
