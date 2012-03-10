@@ -67,6 +67,11 @@ p:password="feb@RNP" />
     class="modelos.PadraoMetadadosHibernateDAO">
         <property name="hibernateTemplate" ref="hibernateTemplate"/>
  </bean>
+ 
+  <bean id="UsuarioDAO"
+    class="modelos.UsuarioHibernateDAO">
+        <property name="hibernateTemplate" ref="hibernateTemplate"/>
+ </bean>
 
  
 </beans>

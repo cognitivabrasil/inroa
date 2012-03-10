@@ -112,7 +112,6 @@
             <version>1.2.9</version>
         </dependency>
 
-
 <!--
     Core utilities used by other modules.
     Define this if you use Spring Utility APIs (org.springframework.core.*/org.springframework.util.*)
@@ -258,12 +257,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>1.0.2.RELEASE</version>
-        </dependency> 
-        
         	<!-- standard.jar --> 
 	<dependency>
 		<groupId>taglibs</groupId>
@@ -367,7 +360,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests>
                 </configuration>
             </plugin>
 

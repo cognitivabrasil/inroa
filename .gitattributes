@@ -348,6 +348,9 @@ src/src/java/modelos/RepositoryHibernateDAO.java -text
 src/src/java/modelos/SubFederacao.java -text
 src/src/java/modelos/SubFederacaoDAO.java -text
 src/src/java/modelos/SubFederacaoHibernateDAO.java -text
+src/src/java/modelos/Usuario.java -text
+src/src/java/modelos/UsuarioDAO.java -text
+src/src/java/modelos/UsuarioHibernateDAO.java -text
 src/src/java/operacoesPostgre/Consultar.java -text
 src/src/java/operacoesPostgre/Remover.java -text
 src/src/java/operacoesPostgre/package.html -text
@@ -397,6 +400,7 @@ src/src/main/resources/PadraoMetadados.hbm.xml -text
 src/src/main/resources/Repositorio.hbm.xml -text
 src/src/main/resources/RepositorioSubFed.hbm.xml -text
 src/src/main/resources/SubFederacao.hbm.xml -text
+src/src/main/resources/Usuario.hbm.xml -text
 src/src/main/resources/dummy.properties -text
 src/src/main/resources/feb.properties -text
 src/src/main/resources/hibernate.cfg.xml -text
@@ -502,6 +506,8 @@ src/src/test/java/metadata/obaa1.xml -text
 src/src/test/java/metadata/teste1.xml -text
 src/src/test/java/modelos/PadraoMetadadosHibernateDaoIT.java -text
 src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text
+src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text
+src/src/test/java/modelos/UsuarioTest.java -text
 src/src/xslt/dc2obaa.xsl -text
 src/src/xslt/dc2obaa_full.xsl -text
 src/src/xslt/do.sh -text

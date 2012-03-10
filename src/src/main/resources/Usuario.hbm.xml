@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="modelos.Usuario" table="usuarios">
+  
+ <id column="id" name="id" type="int">
+        <generator class="sequence">
+                <param name="sequence">usuarios_id_seq</param>
+        </generator>    </id>
+    <property name="login" not-null="true" type="string"/>
+    <property name="passwordMd5" type="string" column="senha"/>
+    <property name="description" type="string" column="nome"/>
+
+  </class>
+</hibernate-mapping>
