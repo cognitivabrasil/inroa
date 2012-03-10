@@ -13,25 +13,23 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  *
  * @author paulo
  */
-public class RepositoryHibernateDAO extends HibernateDaoSupport implements RepositoryDAO {
+public class PadraoMetadadosHibernateDAO extends HibernateDaoSupport implements PadraoMetadadosDAO {
 
-    public void delete(Repositorio r) {
+    public void delete(PadraoMetadados r) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Repositorio get(int id) {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return t.get(Repositorio.class, id);
+    public PadraoMetadados get(int id) {
+        return getHibernateTemplate().get(PadraoMetadados.class, id);
     }
 
-    public List<Repositorio> getAll() {
+    public List<PadraoMetadados> getAll() {
         HibernateTemplate t = getHibernateTemplate();
         t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return getHibernateTemplate().find("from Repositorio");
+        return getHibernateTemplate().find("from PadraoMetadados");
     }
 
-    public void save(Repositorio r) {
+    public void save(PadraoMetadados r) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

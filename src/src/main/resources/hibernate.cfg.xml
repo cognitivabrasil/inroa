@@ -10,6 +10,7 @@
     <mapping resource="Repositorio.hbm.xml"/>
     <mapping resource="SubFederacao.hbm.xml"/>
     <mapping resource="RepositorioSubFed.hbm.xml"/>
+    <mapping resource="PadraoMetadados.hbm.xml"/>
 
   </session-factory>
 </hibernate-configuration>

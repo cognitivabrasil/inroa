@@ -339,6 +339,8 @@ src/src/java/modelos/DocumentosHibernateDAO.java -text
 src/src/java/modelos/FebChangeDatabaseInfo.java -text
 src/src/java/modelos/Objeto.java -text
 src/src/java/modelos/PadraoMetadados.java -text
+src/src/java/modelos/PadraoMetadadosDAO.java -text
+src/src/java/modelos/PadraoMetadadosHibernateDAO.java -text
 src/src/java/modelos/Repositorio.java -text
 src/src/java/modelos/RepositorioSubFed.java -text
 src/src/java/modelos/RepositoryDAO.java -text
@@ -393,6 +395,7 @@ src/src/java/webservice/Webservice.java -text
 src/src/main/resources/Documentos.hbm.xml -text
 src/src/main/resources/MetadataRecord.hbm.xml -text
 src/src/main/resources/Objeto.hbm.xml -text
+src/src/main/resources/PadraoMetadados.hbm.xml -text
 src/src/main/resources/Repositorio.hbm.xml -text
 src/src/main/resources/RepositorioSubFed.hbm.xml -text
 src/src/main/resources/SubFederacao.hbm.xml -text
@@ -499,6 +502,7 @@ src/src/test/java/metadata/oai_dc10000.xml -text
 src/src/test/java/metadata/oai_lom.xml -text
 src/src/test/java/metadata/obaa1.xml -text
 src/src/test/java/metadata/teste1.xml -text
+src/src/test/java/modelos/PadraoMetadadosHibernateDaoIT.java -text
 src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text
 src/src/xslt/dc2obaa.xsl -text
 src/src/xslt/dc2obaa_full.xsl -text

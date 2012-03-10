@@ -24,12 +24,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="classpath:testApplicationContext.xml")
 //@ContextConfiguration(locations = {"testApplicationContext.xml"})
-public class RepositoryHibernateDaoIT {
+public class PadraoMetadadosHibernateDaoIT {
     
     @Autowired
-    RepositoryHibernateDAO instance;
+    PadraoMetadadosHibernateDAO instance;
     
-    public RepositoryHibernateDaoIT() {
+    public PadraoMetadadosHibernateDaoIT() {
     }
 
     @BeforeClass
@@ -54,11 +54,7 @@ public class RepositoryHibernateDaoIT {
     @Test
     @Ignore
     public void testDelete() {
-        System.out.println("delete");
-        Repositorio r = null;
-        RepositoryHibernateDAO instance = new RepositoryHibernateDAO();
-        instance.delete(r);
-        // TODO review the generated test code and remove the default call to fail.
+       
         fail("The test case is a prototype.");
     }
 
@@ -69,9 +65,11 @@ public class RepositoryHibernateDaoIT {
     public void testGet() {
         System.out.println("get");
         int id = 1;
-        Repositorio cesta = instance.get(id);
+        PadraoMetadados p = instance.get(id);
         
-        assertEquals("Cesta", cesta.getNome());
+        assertEquals("Dublin Core", p.getNome());
+        assertEquals("oai_dc", p.getMetadataPrefix());
+        assertEquals("dc", p.getNamespace());
     }
 
     /**
@@ -82,26 +80,11 @@ public class RepositoryHibernateDaoIT {
         System.out.println("getAll");
         List expResult = null;
         List result = instance.getAll();
-        assertEquals(1, result.size());
+        assertEquals(3, result.size());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
     
-    @Test
-    public void testRepository() {
-        List<Repositorio> l = instance.getAll();
-        Repositorio cesta = l.get(0);
-        
-        assertEquals("Cesta", cesta.getNome());
-        assertEquals("dfsd", cesta.getDescricao());
-        assertEquals("http://cesta2.cinted.ufrgs.br/oai/request", cesta.getUrl());
-        //assertEquals("cesta", cesta.getNomeFederacao());
-        //assertEquals(24, cesta.getPeriodicidate());
-        assertEquals("lom", cesta.getNamespace());
-        //assertEquals("lom", cesta.getUltimaAtualizacao());
- 
-
-    }
 
     /**
      * Test of save method, of class RepositoryHibernateDAO.

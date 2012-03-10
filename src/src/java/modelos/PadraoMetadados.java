@@ -12,16 +12,10 @@ public class PadraoMetadados implements java.io.Serializable {
     
     private int id;
     private String nome;
-    private String descricao;
+    private String metadataPrefix;
+    private String namespace;
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
+ 
     public int getId() {
         return id;
     }
@@ -36,6 +30,34 @@ public class PadraoMetadados implements java.io.Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    /**
+     * @return the metadataPrefix
+     */
+    public String getMetadataPrefix() {
+        return metadataPrefix;
+    }
+
+    /**
+     * @param metadataPrefix the metadataPrefix to set
+     */
+    public void setMetadataPrefix(String metadataPrefix) {
+        this.metadataPrefix = metadataPrefix;
+    }
+
+    /**
+     * @return the namespace
+     */
+    public String getNamespace() {
+        return namespace;
+    }
+
+    /**
+     * @param namespace the namespace to set
+     */
+    public void setNamespace(String namespace) {
+        this.namespace = namespace;
     }
     
     
