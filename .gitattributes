@@ -453,7 +453,6 @@ src/src/main/webapp/index.jsp -text
 src/src/main/webapp/index2.jsp -text
 src/src/main/webapp/infoDetalhada.jsp -text
 src/src/main/webapp/listaStowords.jsp -text
-src/src/main/webapp/logando.jsp -text
 src/src/main/webapp/login.jsp -text
 src/src/main/webapp/main-servlet.xml -text
 src/src/main/webapp/mapeamentos/APAGAR-addMapeamento.jsp -text

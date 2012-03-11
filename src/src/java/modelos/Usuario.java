@@ -86,6 +86,9 @@ public class Usuario {
      * @return true if password matches the user, false otherwise
      */
     public boolean authenticate(String password) {
+        if(password == null) {
+            return false;
+        }
         return getPasswordMd5().equals(DigestUtils.md5DigestAsHex(password.getBytes()));
     }
 }

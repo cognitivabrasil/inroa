@@ -4,15 +4,17 @@
  */
 package spring;
 
+import javax.servlet.http.HttpSession;
 import modelos.PadraoMetadadosDAO;
 import modelos.RepositoryDAO;
 import modelos.SubFederacaoDAO;
+import modelos.UsuarioDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller("feb")
 @RequestMapping("/")
@@ -24,6 +26,8 @@ public final class FEBController {
     private SubFederacaoDAO subDao;
     @Autowired
     private PadraoMetadadosDAO padraoDao;
+    @Autowired
+    private UsuarioDAO userDao;
 
     public FEBController() {
     }
@@ -50,5 +54,25 @@ public final class FEBController {
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "adm";
+    }
+
+    @RequestMapping("/login")
+    public String logando(
+            @RequestParam(value="login", required=false) String login,
+            @RequestParam(value="senha", required=false) String password,
+            HttpSession session, Model model) {
+
+        if (userDao.authenticate(login, password) != null) {
+
+            session.setAttribute("usuario", login); //armazena na sessao o login
+            session.setMaxInactiveInterval(900); //seta o tempo de validade da session
+            return "redirect:adm";
+
+        } else {
+            if(login != null) {
+            model.addAttribute("erro", true);
+            }
+            return "login";
+        }
     }
 }

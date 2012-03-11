@@ -19,6 +19,10 @@ public class UsuarioHibernateDAO extends HibernateDaoSupport implements UsuarioD
       HibernateTemplate t = getHibernateTemplate();
         t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
         
+        if(login == null) {
+            return null;
+        }
+        
         Usuario u = get(login);
         if(u != null && u.authenticate(password)) {
             return u;

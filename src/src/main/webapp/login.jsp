@@ -1,5 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -25,11 +29,12 @@
             <div class="subTitulo-center">&nbsp;Digite seu usu&aacute;rio e sua senha para acessar o sistema</div>
             <div class="linkCantoEsquerdo"><a href="./">Ir para Ferramenta de Busca</a></div>
             <div class="clear"></div>
-            <FORM name="login" action="logando.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
+            <FORM name="login" action="login" method="post" onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="EspacoAntes">&nbsp;</div>
                 <div class="TextoErro" id="MensagemErro">
                     <!--Aqui o script colocara a mensagem de erro, se ocorrer-->
+                    <c:if test="${erro}">Erro ao autenticar.</c:if>
                 </div>
                 <div class="LinhaEntrada">
 
