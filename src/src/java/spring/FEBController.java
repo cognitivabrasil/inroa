@@ -16,6 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller geral para o FEB
+ * 
+ * TODO: Separar em controller para busca e para Admin
+ * 
+ * @author Paulo Schreiner <paulo@jorjao81.com>
+ */
 @Controller("feb")
 @RequestMapping("/")
 public final class FEBController {
@@ -38,6 +45,10 @@ public final class FEBController {
         return "index";
     }
 
+    /**
+     * Fallback: caso a URL não dê match em nenhum metodos, bate nesse
+     * @return Retorna o nove do view que foi passado na URL 
+     */
     @RequestMapping("{viewName}")
     public String fallback(@PathVariable String viewName, Model model) {
         model.addAttribute("repDAO", repDao);
@@ -47,7 +58,7 @@ public final class FEBController {
         return viewName;
     }
 
-    @RequestMapping("/adm")
+   @RequestMapping("/adm")
     public String admin(Model model) {
         System.out.println("ADMIN");
         model.addAttribute("repDAO", repDao);
@@ -56,6 +67,14 @@ public final class FEBController {
         return "adm";
     }
 
+    /**
+     * Método para realizar o login.
+     * 
+     * @param login Passado por HTTP
+     * @param password Passado por HTTP
+     * @return Redirect para adm caso autentique, permanece nesta página com uma mensagem de erro
+     * caso contrário
+     */
     @RequestMapping("/login")
     public String logando(
             @RequestParam(value="login", required=false) String login,
