@@ -10,7 +10,6 @@
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@include file="conexaoBD.jsp"%>
-<%@page import="robo.util.Operacoes"%>
 <%@page import="operacoesPostgre.Consultar"%>
 <%@page import="java.util.Date" %>
 <html>
@@ -23,9 +22,7 @@
     </head>
 
     <body>
-        <jsp:useBean id="postgresBean"
-                     class="operacoesPostgre.Consultar"
-                     scope="page" />
+        <jsp:useBean id="operacoesBean" class="robo.util.Operacoes" scope="page" />
         
         <div id="page">
 
@@ -34,7 +31,7 @@
             <%
                 String id = request.getParameter("id");
 
-                String sql = "SELECT r.nome, r.descricao, p.nome as nome_padrao, i.url_or_ip, i.periodicidade_horas, i.name_space, i.metadata_prefix, i.set, t.nome as nometipomap, t.descricao as descricaotm, i.data_ultima_atualizacao, (i.data_ultima_atualizacao + periodicidade_horas*('1 HOUR')::INTERVAL) as proxima_atualizacao "
+                String sql = "SELECT p.nome as nome_padrao, t.nome as nometipomap, t.descricao as descricaotm "
                         + " FROM repositorios r, info_repositorios i, padraometadados p, tipomapeamento t "
                         + " WHERE r.id=" + id + " AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.tipo_mapeamento_id=t.id "
                         + " ORDER BY r.nome ASC";

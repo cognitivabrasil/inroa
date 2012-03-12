@@ -66,6 +66,12 @@ public final class FEBController {
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "adm";
     }
+   
+   @RequestMapping("/exibeRepositorios")
+    public String exibeRep(Model model) {
+        model.addAttribute("repDAO", repDao);
+        return "exibeRepositorios";
+    }
 
     /**
      * Método para realizar o login.
