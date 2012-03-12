@@ -3,6 +3,7 @@ package operacoesPostgre;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.sql.*;
+import javassist.bytecode.stackmap.BasicBlock;
 import postgres.Conectar;
 
 /**
@@ -121,7 +122,9 @@ public class Consultar {
             return descricao;
         }
     }
-    public static  HashMap<String, Integer> selectNumeroDocumentosSubrep(Connection con, int idSubRep){
+    public static  HashMap<String, Integer> selectNumeroDocumentosSubrep(int idSubRep){
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
         HashMap<String, Integer> repositorios = new HashMap<String, Integer>();
         String sql = "SELECT r.nome, count(*) as objetos from documentos d, repositorios_subfed r WHERE d.id_rep_subfed=r.id AND r.id_subfed="+idSubRep+" GROUP BY (r.nome);";
         try {
@@ -135,6 +138,11 @@ public class Consultar {
         } catch (SQLException e) {
             System.err.println("FEB: Erro no SQL ao contar o numero de documentos. Classe Consultar metodo selectNumeroDocumentosSubrep: " + e.getMessage());
         } finally {
+            try{
+            con.close();
+            }catch(SQLException s){
+                System.err.println("ERRO FEB. Erro ao fechar a conexão. Metodo : " + s.getClass()+" Mensagem: "+ s.getMessage());
+            }
             return repositorios;
         }
     }

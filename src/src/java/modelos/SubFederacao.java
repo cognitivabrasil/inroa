@@ -83,5 +83,9 @@ public class SubFederacao implements java.io.Serializable {
         this.repositorios = repositorios;
     }
     
+    public Date getProximaAtualizacao (){
+         return new Date(this.ultimaAtualizacao.getTime() + 24 * 60 * 60 * 1000); // soma a periodicidade em horas
+    }
+    
     
 }

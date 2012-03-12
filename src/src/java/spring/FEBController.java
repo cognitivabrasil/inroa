@@ -72,7 +72,21 @@ public final class FEBController {
         model.addAttribute("repDAO", repDao);
         return "exibeRepositorios";
     }
+   
+   @RequestMapping("/exibeFederacao")
+    public String exibeFed(Model model) {
+        model.addAttribute("subDAO", subDao);
+        return "exibeFederacao";
+    }
+   @RequestMapping("/editarFederacao")
+    public String editaFed(Model model) {
+        model.addAttribute("subDAO", subDao);
+        return "editarFederacao";
+    }
 
+   //TODO: Como receber valores por parametro? E como pegar objetos da sessao??
+   
+   
     /**
      * Método para realizar o login.
      * 
