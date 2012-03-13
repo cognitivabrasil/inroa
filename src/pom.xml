@@ -9,6 +9,14 @@
     <name>Projeto Maven do FEB</name>
     <url>http://feb.ufrgs.br</url>
 <!-- Shared version number properties -->
+
+<repositories>
+    <repository>
+      <id>excilys</id>
+      <url>http://repository.excilys.com/content/repositories/releases</url>
+    </repository>
+ </repositories>
+
 <properties>
     <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,6 +31,16 @@
             <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>2.4.8</version>
+            <scope>test</scope>
+        </dependency>
+  
+
+        
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -111,6 +129,11 @@
             <artifactId>log4j</artifactId>
             <version>1.2.9</version>
         </dependency>
+        <dependency>
+	<groupId>org.slf4j</groupId>
+	<artifactId>slf4j-log4j12</artifactId>
+	<version>1.5.6</version>
+</dependency>
 
 <!--
     Core utilities used by other modules.

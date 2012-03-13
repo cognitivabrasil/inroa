@@ -31,7 +31,7 @@ p:password="${dataSource.password}" /> -->
 class="org.apache.commons.dbcp.BasicDataSource"
 destroy-method="close"
 p:driverClassName="org.postgresql.Driver"
-p:url="jdbc:postgresql://127.0.0.1:5432/federacao"
+p:url="jdbc:postgresql://127.0.0.1:5432/federacao_teste"
 p:username="feb"
 p:password="feb@RNP" />
 

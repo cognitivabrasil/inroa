@@ -19,3 +19,7 @@ CREATE VIEW repositorios_view AS select * from repositorios,info_repositorios
 WHERE id = id_repositorio;
 
 ALTER VIEW repositorios_view OWNER TO feb;
+
+CREATE TABLE mapeamentos_xslt (id INTEGER, description VARCHAR, xslt VARCHAR);
+
+ALTER TABLE mapeamentos_xslt OWNER TO feb;

@@ -31,7 +31,9 @@ public class UsuarioHibernateDAO extends HibernateDaoSupport implements UsuarioD
     }
 
     public void delete(Usuario r) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HibernateTemplate t = getHibernateTemplate();
+        t.setFlushMode(HibernateAccessor.FLUSH_AUTO);
+        t.delete(r);
     }
 
     public Usuario get(int id) {
@@ -53,7 +55,9 @@ public class UsuarioHibernateDAO extends HibernateDaoSupport implements UsuarioD
     }
 
     public void save(Usuario r) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HibernateTemplate t = getHibernateTemplate();
+        t.setFlushMode(HibernateAccessor.FLUSH_AUTO);
+        t.saveOrUpdate(r);
     }
     
 }
