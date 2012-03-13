@@ -9,9 +9,11 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@include file="conexaoBD.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
 %>
 <html>
     <head>
@@ -27,56 +29,24 @@
     <body>
         <div id="page">
             <%
-                        Statement stm = con.createStatement();
-                        boolean formNull = true;
-                        try {
-                            String apagar = request.getParameter("apagar");
-                            if (apagar.equals("sim")) {
-                                formNull = false;
-                            }
+                Statement stm = con.createStatement();
 
-                        } catch (Exception e) {
-                            formNull = true;
+                    String id = "";
+                    String tipo = request.getParameter("campo");
 
-                        }
+                        if (tipo.equalsIgnoreCase("geral")) {
+                            
 
-                        if (formNull) {
+                            String sql = "SELECT p.id as id_padrao, i.tipo_mapeamento_id "
+                                    + "FROM info_repositorios i, padraometadados p "
+                                    + " WHERE i.id_repositorio=" + id
+                                    + " AND i.padrao_metadados=p.id;";
+                            ResultSet res = stm.executeQuery(sql);
 
+                            res.next();
+                            int idPadrao = res.getInt("id_padrao");
+                            int idTipoMap = res.getInt("tipo_mapeamento_id");
 
-                            String id = "";
-                            String tipo = "";
-                            boolean varParametro = false;
-                            try {
-                                id = request.getParameter("id");
-                                tipo = request.getParameter("campo");
-                                if (id.isEmpty() || tipo.isEmpty()) {
-                                    varParametro = false;
-                                } else {
-                                    varParametro = true;
-                                }
-
-                            } catch (Exception e) {
-                                varParametro = false;
-                            }
-                            if (varParametro) {
-
-
-                                if (tipo.equalsIgnoreCase("geral")) {
-
-                                    String sql = "SELECT r.nome, r.descricao, p.id as id_padrao, p.nome as nome_padrao, i.tipo_mapeamento_id, i.name_space, i.metadata_prefix"
-                                            + " FROM repositorios r, info_repositorios i, padraometadados p"
-                                            + " WHERE r.id=" + id
-                                            + " AND r.id=i.id_repositorio"
-                                            + " AND i.padrao_metadados=p.id;";
-
-                                    ResultSet res = stm.executeQuery(sql);
-
-                                    res.next();
-                                    String nomePadrao = res.getString("nome_padrao");
-                                    int idPadrao = res.getInt("id_padrao");
-                                    int idTipoMap = res.getInt("tipo_mapeamento_id");
-                                    String nameSpace = res.getString("name_space");
-                                    String metadataPrefix = res.getString("metadata_prefix");
 
             %>
             <script type="text/javascript">
@@ -92,14 +62,14 @@
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <div class="EspacoAntes">&nbsp;</div>
-            <form name="editaGeral" action="editarRepositorio.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
+            <form name="editaGeral" action="salvarRepositorioGeral" method="post" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
                 <div class="LinhaEntrada">
                     <div class="Label">
                         Nome:
                     </div>
                     <div class="Value">
-                        <input type="text" id="nameRep" name="nomeRep" value="<%=res.getString("nome")%>" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input type="text" id="nameRep" name="nomeRep" value="${repDAO.get(param.id).nome}" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -107,52 +77,46 @@
                         Descri&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <input name="descricao" id="descricao" type="text" value="<%=res.getString("descricao")%>" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="descricao" id="descricao" type="text" value="${repDAO.get(param.id).descricao}" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
+
                 <div class="LinhaEntrada">
                     <div class="Label">
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
                         <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 'edita');">
-                            <%
-                                                                //Carrega do banco de dados os padroes de metadados cadastrados
-                                                                ResultSet resPadrao = stm.executeQuery("SELECT nome, id FROM padraometadados ORDER BY nome ASC");
-                                                                while (resPadrao.next()) {
-                                                                    String nomePadraoTemp = resPadrao.getString("nome");
+                        <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">  
+                            <!--TESTAR SE PADRAO EH O UTILIZADO
+                            <option value="${padraoMet.id}" selected> ${fn:toUpperCase(padraoMet.nome)}
+                            -->
+                            <option value="${padraoMet.id}"> ${fn:toUpperCase(padraoMet.nome)}
 
-                                                                    if (nomePadraoTemp.equalsIgnoreCase(nomePadrao)) {
-                                                                        out.println("<option value=" + resPadrao.getString("id") + " selected>" + resPadrao.getString("nome").toUpperCase());
-                                                                    } else {
-                                                                        out.println("<option value=" + resPadrao.getString("id") + ">" + resPadrao.getString("nome").toUpperCase());
-                                                                    }
-
-
-                                                                }
-                            %>
-                        </select>
+                        </c:forEach>
+                                </select>
                     </div>
                 </div>
+
                 <div class="LinhaEntrada">
                     <div class="Label">
                         Tipo de mapeamento:
                     </div>
                     <div id="resultado">
                         <%
-                                                            String sqlTM = "SELECT t.nome as tipo_map, t.descricao, t.id as id_map"
-                                                                    + "  FROM mapeamentos m, tipomapeamento t"
-                                                                    + "  WHERE m.tipo_mapeamento_id=t.id AND m.padraometadados_id=" + idPadrao
-                                                                    + "  GROUP BY t.id, t.nome, t.descricao;";
-                                                            ResultSet rsTM = stm.executeQuery(sqlTM);
-                                                            while (rsTM.next()) {
-                                                                int idtMap = rsTM.getInt("id_map");
-                                                                if (idtMap == idTipoMap) {//se for o tipo que esta sendo usado deixa marcado o radio
-                                                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" checked=true id=\"rdMap\" name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
-                                                                } else {
-                                                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" id=\"rdMap\" name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
-                                                                }
-                                                            }
+                            String sqlTM = "SELECT t.nome as tipo_map, t.descricao, t.id as id_map"
+                                    + "  FROM mapeamentos m, tipomapeamento t"
+                                    + "  WHERE m.tipo_mapeamento_id=t.id AND m.padraometadados_id=" + idPadrao
+                                    + "  GROUP BY t.id, t.nome, t.descricao;";
+                            ResultSet rsTM = stm.executeQuery(sqlTM);
+                            while (rsTM.next()) {
+                                int idtMap = rsTM.getInt("id_map");
+                                if (idtMap == idTipoMap) {//se for o tipo que esta sendo usado deixa marcado o radio
+                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" checked=true id=\"rdMap\" name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
+                                } else {
+                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" id=\"rdMap\" name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
+                                }
+                            }
 
                         %>
 
@@ -162,17 +126,16 @@
                     <div> &nbsp;</div>
                     <div class="Label">MetadataPrefix:</div>
                     <div class="Value">
-                        <input type="text" value="<%=metadataPrefix%>" id="metPrefix" name="metPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input type="text" value="${repDAO.get(param.id).metadataPrefix}" id="metPrefix" name="metPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                     <div class="Label">NameSpace:</div>
                     <div class="Value">
-                        <input type="text" value="<%=nameSpace%>" id="namespace" name="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input type="text" value="${repDAO.get(param.id).namespace}" id="namespace" name="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
-                <input type="hidden" name="id" value="<%=id%>"/>
-                <input type="hidden" name="campo" value="<%=tipo%>"/>
-                <input type="hidden" name="apagar" value="sim"/>
+                <input type="hidden" name="id" value="${param.id}"/>
+                <input type="hidden" name="campo" value="${param.campo}"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="button" value="&lArr; Voltar" onclick="javascript:history.go(-1);"/>
@@ -183,10 +146,7 @@
 
             </form>
             <%
-                                            } else if (tipo.equalsIgnoreCase("OAI-PMH")) {
-                                                String sql = "SELECT i.url_or_ip, r.nome, i.periodicidade_horas, i.set FROM info_repositorios i, repositorios r WHERE r.id=i.id_repositorio AND i.id_repositorio=" + id;
-                                                ResultSet res = stm.executeQuery(sql);
-                                                res.next();
+            } else if (tipo.equalsIgnoreCase("OAI-PMH")) {
 
             %>
             <script type="text/javascript">
@@ -195,8 +155,8 @@
                 myForm.addRules({id:'periodicidade',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
             </script>
 
-            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
-            <form name="editaGeral" action="editarRepositorio.jsp" method="post" onsubmit="return myForm.Apply('MensagemErro')">
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repDAO.get(param.id).nome}</div>
+            <form name="editaGeral" action="salvarRepositorioOAI" method="post" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
 
                 <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
@@ -206,7 +166,7 @@
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <input name="url" value="<%=res.getString("url_or_ip")%>" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="url" value="${repDAO.get(param.id).url}" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -217,7 +177,7 @@
                         Se for mais de uma separar por ponto e v&iacute;rgula.
                     </div>
                     <div class="Value">
-                        <input name="set" value="<%=res.getString("set")%>" id="set" type="text" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="set" value="${repDAO.get(param.id).colecoes}" id="set" type="text" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -225,12 +185,11 @@
                         Periodicidade de atualiza&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <input name="periodicidade" value="<%=res.getInt("periodicidade_horas") / 24%>" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="periodicidade" value="${repDAO.get(param.id).periodicidadeAtualizacao}" id="periodicidade" type="text" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
-                <input type="hidden" name="id" value="<%=id%>"/>
-                <input type="hidden" name="campo" value="<%=tipo%>"/>
-                <input type="hidden" name="apagar" value="sim"/>
+                <input type="hidden" name="id" value="${param.id}"/>
+                <input type="hidden" name="campo" value="${param.campo}"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="button" value="&lArr; Voltar" onclick="javascript:history.go(-1);"/>
@@ -238,95 +197,12 @@
                     </div>
                 </div>
             </form>
-            <%
-                                }
-                            }
-                        } //fim do if que testa se eh para aparecer o formulario ou se eh para editar
-                        else { //se o formulario ja foi preenchido entra no else
-///////
-                            out.println("<script language=\"JavaScript\" type=\"text/javascript\">"
-                                    + "document.body.style.cursor=\"default\";"
-                                    + "</script>");
-                            String id = request.getParameter("id"); //armazena o valor do id passado pelo form
-                            String campo = request.getParameter("campo"); //armazena o valor do campo passado pelo form. Geral ou config ou Ldaplocal...
-
-                            if (campo.equalsIgnoreCase("geral")) { //se o campo a ser editador for o geral entra no if
-
-                                String nome = "";
-                                String descricao = "";
-                                String padrao_metadados = "";
-                                String tipo_mapeamento = "";
-                                String name_space = "";
-                                String metadata_prefix = "";
-                                boolean nullpointer = true;
-                                try {
-                                    nome = request.getParameter("nomeRep").trim();
-                                    descricao = request.getParameter("descricao").trim();
-                                    padrao_metadados = request.getParameter("padrao_metadados").trim();
-                                    tipo_mapeamento = request.getParameter("tipo_map").trim();
-                                    name_space = request.getParameter("namespace").trim();
-                                    metadata_prefix = request.getParameter("metPrefix").trim();
-                                    nullpointer = false;
-                                } catch (NullPointerException n) {
-                                    nullpointer = true;
-                                    out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>"
-                                            + "<script type='text/javascript'>history.back(-1);</script>");
-                                }
-
-
-                                if (!nullpointer) {
-                                    if ((nome.isEmpty() || descricao.isEmpty() || padrao_metadados.isEmpty() || tipo_mapeamento.isEmpty() || metadata_prefix.isEmpty() || name_space.isEmpty())) {
-                                        out.print("<script type='text/javascript'>alert('Todos os campos devem ser preenchidos!');</script>"
-                                                + "<script type='text/javascript'>history.back(-1);</script>");
-                                    } else {
-                                        //out.println("<p>ome: " + nome + " descricao " + descricao + " padrao " + padrao_metadados + "</p>");
-                                        int result = 0, result2 = 0;
-
-                                        String sql1 = "UPDATE repositorios set nome='" + nome + "', descricao='" + descricao + "' where id=" + id; //sql que possui o update
-
-                                        result = stm.executeUpdate(sql1); //submete o UPDATE ao banco de dados
-
-                                        if (result > 0) { //se o insert funcionar entra no if
-                                            String sql2 = "UPDATE info_repositorios set padrao_metadados=" + padrao_metadados + ", tipo_mapeamento_id=" + tipo_mapeamento + ", metadata_prefix='" + metadata_prefix + "', name_space='" + name_space + "' where id_repositorio=" + id;
-                                            result2 = stm.executeUpdate(sql2);
-                                            if (result2 > 0) {
-                                                out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); "
-                                                        + "opener.location.href=opener.location.href; "
-                                                        + "window.location=\"exibeRepositorios.jsp?id=" + id + "\";</script>");
-                                            }
-                                        }
-                                    }
-                                }
-                            } else if (campo.equalsIgnoreCase("OAI-PMH")) { //se o campo a ser editador for o OAI-PMH entra no if
-                                int result = 0;
-
-                                String url = request.getParameter("url").trim();
-                                String periodicidade = request.getParameter("periodicidade").trim();
-                                String set = request.getParameter("set").trim();
-
-                                if (url.isEmpty() || periodicidade.isEmpty()) {
-                                    out.print("<script type='text/javascript'>alert('Os campos url e periodicidade devem estar devidamente preenchidos!');</script>"
-                                            + "<script type='text/javascript'>history.back(-1);</script>");
-                                    out.close();
-                                } else {
-                                    //trocar de dias para horas
-                                    int periodicidadeHoras = Integer.parseInt(periodicidade) * 24;
-                                    String sql = "UPDATE info_repositorios SET url_or_ip='" + url + "', periodicidade_horas=" + periodicidadeHoras + ", set='"+set+"' WHERE id_repositorio=" + id;
-                                    result = stm.executeUpdate(sql);
-                                    if (result > 0) {
-                                        out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); "
-                                                + "window.location=\"exibeRepositorios.jsp?id=" + id + "\";</script>");
-                                    }
-                                }
-                            }
-
-
-                        }
-                        con.close(); //fechar conexao com o banco de dados
-%>
-
-
+                
         </div>
+                <%
+                               }
+                    con.close();
+                %>
         <%@include file="googleAnalytics"%>
     </body>
 </html>

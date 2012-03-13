@@ -12,6 +12,7 @@
 <%@include file="conexaoBD.jsp"%>
 <%@page import="operacoesPostgre.Consultar"%>
 <%@page import="java.util.Date" %>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,11 +44,11 @@
 
             <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
-            <div class="editar"><a href="./editarRepositorio.jsp?id=${param.id}&campo=geral">Editar</a></div>
+            <div class="editar"><a href="./editarRepositorio?id=${param.id}&campo=geral">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
-                    Nome do reposit&oacute;rio:
+                    Nome do reposit&oacute;rio: 
                 </div>
                 <div class="Value">&nbsp;${repDAO.get(param.id).nome}</div>
             </div>
@@ -82,15 +83,8 @@
                 <div class="Value">&nbsp;${repDAO.get(param.id).namespace}</div>
             </div>
 
-            <!--Informações configuração
-                        <div class="subtitulo">Informa&ccedil;&otilde;es sobre a configura&ccedil;&atilde;o da federa&ccedil;&atilde;o</div>
-                        <div class="editar"><a href="./editarRepositorio.jsp?id=${param.id}&campo=config">Editar</a></div>
-
-
-            -->
-
             <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
-            <div class="editar"><a href="./editarRepositorio.jsp?id=${param.id}&campo=OAI-PMH">Editar</a></div>
+            <div class="editar"><a href="./editarRepositorio?id=${param.id}&campo=OAI-PMH">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">

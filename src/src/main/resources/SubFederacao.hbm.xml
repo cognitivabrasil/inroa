@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="modelos.SubFederacao" table="dados_subfederacoes">
-    <meta attribute="class-description"> 
+    <class name="modelos.SubFederacao" table="dados_subfederacoes">
+        <meta attribute="class-description"> 
    
         </meta>
-    <id column="id" name="id" type="int">
-      <meta attribute="scope-set">protected</meta>
-      <generator class="native"/>
-    </id>
-    <property name="nome" not-null="true" type="string"/>
-    <property name="descricao" type="string"/>
-    <property column="data_ultima_atualizacao" name="ultimaAtualizacao" type="timestamp"/>
-    <property name="url" not-null="true" type="string"/>
-    <property column="data_xml" name="dataXML" type="timestamp"/>
+        <id column="id" name="id" type="int">
+            <meta attribute="scope-set">protected</meta>
+            <generator class="native"/>
+        </id>
+        <property name="nome" not-null="true" type="string"/>
+        <property name="descricao" type="string"/>
+        <property column="data_ultima_atualizacao" name="ultimaAtualizacao" type="timestamp"/>
+        <property name="url" not-null="true" type="string"/>
+        <property column="data_xml" name="dataXML" type="timestamp"/>
     
 <!--    <set name="repositorios" table="repositorios_subfed">
       <key column="id_subfed"/>
       <one-to-many class="modelos.RepositorioSubFed"/>
     </set>
  -->
- </class>
+    </class>
 </hibernate-mapping>

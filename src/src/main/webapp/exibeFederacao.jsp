@@ -93,7 +93,7 @@
                             out.println("<td class='coluna'>" + nomes + "</td> <td class='coluna' align='center'>" + repositorios.get(nomes) + "</td>");
                             out.println("</tr>");
                         }
-
+                        
                     %>
                     <tr class="bold"><td align="right" class='coluna'>TOTAL</td><td class='coluna' align='center'><%=total%></td></tr>
                 </table>

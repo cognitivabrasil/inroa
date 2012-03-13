@@ -152,11 +152,6 @@ public class Repositorio implements java.io.Serializable {
         return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao * 60 * 60 * 1000); // soma a periodicidade em horas
     }
 
-    /*
-     * public void setProximaAtualizacao(Date proximaAtualizacao) {
-     * this.proximaAtualizacao = proximaAtualizacao; } Não seta, próxima
-     * atualização baseada na periodicidade
-     */
     public String getColecoes() {
         return colecoes;
     }

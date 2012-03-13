@@ -22,6 +22,10 @@ public class SubFederacao implements java.io.Serializable {
     private Date dataXML;
     private Set<RepositorioSubFed> repositorios;
 
+    public SubFederacao() {
+    }
+    
+
     public Date getDataXML() {
         return dataXML;
     }
