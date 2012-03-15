@@ -59,7 +59,7 @@
                 myForm.addRules({id:'namespace',option:'required',error:'* Deve ser informado o NameSpace!'});
             </script>
 
-            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio <%=res.getString("nome")%></div>
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repDAO.get(param.id).nome}</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <div class="EspacoAntes">&nbsp;</div>
             <form name="editaGeral" action="salvarRepositorioGeral" method="post" onsubmit="return myForm.Apply('MensagemErro')">
