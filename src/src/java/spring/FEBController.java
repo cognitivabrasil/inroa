@@ -80,52 +80,48 @@ public final class FEBController {
 
     @RequestMapping("/salvarRepositorioGeral")
     public String salvaRepGeral(
-            @RequestParam(value = "nome", required = true) String nome,
+            @RequestParam(value = "nomeRep", required = true) String nome,
             @RequestParam(value = "descricao", required = true) String descricao,
-            @RequestParam(value = "padrao_metadados", required = true) String padrao,
-            @RequestParam(value = "tipo_map", required = true) String mapeamento,
+            @RequestParam(value = "padrao_metadados", required = true) int padrao,
+            @RequestParam(value = "tipo_map", required = true) int mapeamento,
             @RequestParam(value = "namespace", required = true) String nameSpace,
             @RequestParam(value = "metPrefix", required = true) String metadataPrefix,
             @RequestParam(value = "id", required = true) int id,
             Model model) {
 
+        Repositorio rep = new Repositorio();
+        rep.setId(id);
+        rep.setNome(nome);
+        rep.setDescricao(descricao);
+        rep.setIdPadraoMetadados(padrao);
+        rep.setIdTipoMapeamento(mapeamento);
+        rep.setNamespace(nameSpace);
+        rep.setMetadataPrefix(metadataPrefix);
 
-//        int result = 0, result2 = 0;
-//
-//        String sql1 = "UPDATE repositorios set nome='" + nome + "', descricao='" + descricao + "' where id=" + id; //sql que possui o update
-//
-//        result = stm.executeUpdate(sql1); //submete o UPDATE ao banco de dados
-//
-//        if (result > 0) { //se o insert funcionar entra no if
-//            String sql2 = "UPDATE info_repositorios set padrao_metadados=" + padrao_metadados + ", tipo_mapeamento_id=" + tipo_mapeamento + ", metadata_prefix='" + metadata_prefix + "', name_space='" + name_space + "' where id_repositorio=" + id;
-//            result2 = stm.executeUpdate(sql2);
-//            if (result2 > 0) {
-//                out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); "
-//                        + "opener.location.href=opener.location.href; "
-//                        + "window.location=\"exibeRepositorios?id=" + id + "\";</script>");
-//            }
-//        }
-        return "editarRepositorio";
+        repDao.save(rep);
+
+
+        return "exibeRepositorios";
     }
 
     @RequestMapping("/salvarRepositorioOAI")
     public String salvaRepOAI(
             @RequestParam(value = "url", required = true) String url,
-            @RequestParam(value = "periodicidade", required = true) String periodicidade,
+            @RequestParam(value = "periodicidade", required = true) int periodicidade,
             @RequestParam(value = "set", required = true) String set,
             @RequestParam(value = "id", required = true) int id,
             Model model) {
+//TODO: como testar se todos os campos foram preenchidos? E como avisar se nao foi?
 
-
-//        int periodicidadeHoras = Integer.parseInt(periodicidade) * 24;
-//        String sql = "UPDATE info_repositorios SET url_or_ip='" + url + "', periodicidade_horas=" + periodicidadeHoras + ", set='" + set + "' WHERE id_repositorio=" + id;
-//        result = stm.executeUpdate(sql);
-//        if (result > 0) {
-//            out.print("<script type='text/javascript'>alert('Os dados foram atualizados com sucesso!'); "
-//                    + "window.location=\"exibeRepositorios?id=" + id + "\";</script>");
-//        }
+        Repositorio rep = new Repositorio();
+        rep.setId(id);
+        rep.setUrl(url);
+        rep.setPeriodicidadeAtualizacao(periodicidade);
+        rep.setColecoes(set);
         
-        return "editarRepositorio";
+        repDao.save(rep);
+
+        return "exibeRepositorios";
     }
 
     @RequestMapping("/exibeFederacao")

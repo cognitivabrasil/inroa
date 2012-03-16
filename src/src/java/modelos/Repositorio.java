@@ -25,15 +25,20 @@ public class Repositorio implements java.io.Serializable {
     private String namespace;
     private int periodicidadeAtualizacao;
     private String colecoes;
+    private int idPadraoMetadados;
+    private int idTipoMapeamento;
+    
 
     public Repositorio() {
     }
+
 
     public int getId() {
         return this.id;
     }
 
-    protected void setId(int id) {
+    //TODO: porque esse metodo estava protected?
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -159,4 +164,21 @@ public class Repositorio implements java.io.Serializable {
     public void setColecoes(String colecoes) {
         this.colecoes = colecoes;
     }
+
+    public int getIdPadraoMetadados() {
+        return idPadraoMetadados;
+    }
+
+    public void setIdPadraoMetadados(int idPadraoMetadados) {
+        this.idPadraoMetadados = idPadraoMetadados;
+    }
+    
+    public int getIdTipoMapeamento() {
+        return idTipoMapeamento;
+    }
+
+    public void setIdTipoMapeamento(int idTipoMapeamento) {
+        this.idTipoMapeamento = idTipoMapeamento;
+    }
+    
 }

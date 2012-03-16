@@ -31,21 +31,19 @@
             <%
                 Statement stm = con.createStatement();
 
-                    String id = "";
-                    String tipo = request.getParameter("campo");
+                String id = request.getParameter("id");
+                String tipo = request.getParameter("campo");
 
-                        if (tipo.equalsIgnoreCase("geral")) {
-                            
+                if (tipo.equalsIgnoreCase("geral")) {
 
-                            String sql = "SELECT p.id as id_padrao, i.tipo_mapeamento_id "
-                                    + "FROM info_repositorios i, padraometadados p "
-                                    + " WHERE i.id_repositorio=" + id
-                                    + " AND i.padrao_metadados=p.id;";
-                            ResultSet res = stm.executeQuery(sql);
 
-                            res.next();
-                            int idPadrao = res.getInt("id_padrao");
-                            int idTipoMap = res.getInt("tipo_mapeamento_id");
+                    String sql = "SELECT p.id as id_padrao, i.tipo_mapeamento_id FROM padraometadados p, info_repositorios i WHERE i.padrao_metadados=p.id AND i.id_repositorio=" + id;
+
+                    ResultSet res = stm.executeQuery(sql);
+
+                    res.next();
+                    int idPadrao = res.getInt("id_padrao");
+                    int idTipoMap = res.getInt("tipo_mapeamento_id");
 
 
             %>
@@ -87,14 +85,14 @@
                     </div>
                     <div class="Value">
                         <select name="padrao_metadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 'edita');">
-                        <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">  
-                            <!--TESTAR SE PADRAO EH O UTILIZADO
-                            <option value="${padraoMet.id}" selected> ${fn:toUpperCase(padraoMet.nome)}
-                            -->
-                            <option value="${padraoMet.id}"> ${fn:toUpperCase(padraoMet.nome)}
+                            <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">  
+                                <!--TESTAR SE PADRAO EH O UTILIZADO
+                                <option value="${padraoMet.id}" selected> ${fn:toUpperCase(padraoMet.nome)}
+                                -->
+                                <option value="${padraoMet.id}"> ${fn:toUpperCase(padraoMet.nome)}
 
-                        </c:forEach>
-                                </select>
+                                </c:forEach>
+                        </select>
                     </div>
                 </div>
 
@@ -161,14 +159,18 @@
 
                 <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
                 <div class="EspacoAntes">&nbsp;</div>
+
+
                 <div class="LinhaEntrada">
                     <div class="Label">
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <input name="url" value="${repDAO.get(param.id).url}" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input name="url" id="url" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className='';verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))"/>&nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
+                    <input type="hidden" id="confereLinkOAI" value="">
                 </div>
+
                 <div class="LinhaEntrada">
                     <div class="Label">
                         Cole&ccedil;&otilde;es ou Comunidades:
@@ -197,12 +199,11 @@
                     </div>
                 </div>
             </form>
-                
+
         </div>
-                <%
-                               }
-                    con.close();
-                %>
+        <%                    }
+            con.close();
+        %>
         <%@include file="googleAnalytics"%>
     </body>
 </html>
