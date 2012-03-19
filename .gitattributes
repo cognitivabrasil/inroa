@@ -430,6 +430,7 @@ src/src/main/webapp/erroBase.jsp -text
 src/src/main/webapp/exibeFederacao.jsp -text
 src/src/main/webapp/exibeRepositorios.jsp -text
 src/src/main/webapp/feb/index.jsp -text
+src/src/main/webapp/fechaRecarrega.jsp -text
 src/src/main/webapp/googleAnalytics -text
 src/src/main/webapp/gravaRepositorioBase.jsp -text
 src/src/main/webapp/imagens/Lapiz-24x24.png -text
@@ -453,7 +454,6 @@ src/src/main/webapp/imagens/sincronizar.png -text
 src/src/main/webapp/index.jsp -text
 src/src/main/webapp/index2.jsp -text
 src/src/main/webapp/infoDetalhada.jsp -text
-src/src/main/webapp/listaStowords.jsp -text
 src/src/main/webapp/login.jsp -text
 src/src/main/webapp/main-servlet.xml -text
 src/src/main/webapp/mapeamentos/APAGAR-addMapeamento.jsp -text

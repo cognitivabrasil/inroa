@@ -338,6 +338,13 @@ a:hover{
 .LinhaEntrada .Tab{
     padding-left:5%;
 }
+.LinhaEntrada .Tab .info{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    }
 .LinhaEntrada .Comentario{
     margin:0 0 5px 42%;
     font-size: 80%;

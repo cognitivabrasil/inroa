@@ -71,7 +71,7 @@ Author     : Marcos Nunes
                 <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}" >              
 
                     <td>
-                        <input type="button" class="botaoExcluir" title="Excluir reposit&oacute;rio" name="excluir" id="excluirRep" onclick="NewWindow('removerRepositorio.jsp?id=${rep.id}','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
+                        <input type="button" class="botaoExcluir" title="Excluir reposit&oacute;rio" name="excluir" id="excluirRep" onclick="NewWindow('removerRepositorio?id=${rep.id}','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
                         &nbsp;
                         <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarRep" onclick="NewWindow('exibeRepositorios?id=${rep.id}','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
 
@@ -195,7 +195,7 @@ Author     : Marcos Nunes
             <c:forEach var="subfed" items="${subDAO.all}" varStatus="status">  
                 <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}" >
                 <td>
-                    <input type="button" class="botaoExcluir" title="Excluir Subfedera&ccedil;&atilde;o" name="excluir" id="excluirSubfed" onclick="NewWindow('removerFederacao.jsp?id=${subfed.id}','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
+                    <input type="button" class="botaoExcluir" title="Excluir Subfedera&ccedil;&atilde;o" name="excluir" id="excluirSubfed" onclick="NewWindow('removerFederacao?id=${subfed.id}','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
                     &nbsp;
                     <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarSubfed" onclick="NewWindow('exibeFederacao?id=${subfed.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
 

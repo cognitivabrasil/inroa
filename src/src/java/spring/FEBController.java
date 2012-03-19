@@ -58,7 +58,6 @@ public final class FEBController {
 
     @RequestMapping("/adm")
     public String admin(Model model) {
-        System.out.println("ADMIN");
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
@@ -76,6 +75,23 @@ public final class FEBController {
         model.addAttribute("repDAO", repDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "editarRepositorio";
+    }
+
+    @RequestMapping("/removerRepositorio")
+    public String apagaRep(
+            @RequestParam(value = "submitted", required = false) boolean submitted,
+            @RequestParam(value = "id", required = true) int id,
+            Model model) {
+        if (submitted) {
+            Repositorio rep = new Repositorio();
+            rep.setId(id);
+            repDao.delete(rep);
+            return "fechaRecarrega";
+        } else {
+
+            model.addAttribute("repDAO", repDao);
+            return "removerRepositorio";
+        }
     }
 
     @RequestMapping("/salvarRepositorioGeral")
@@ -118,7 +134,7 @@ public final class FEBController {
         rep.setUrl(url);
         rep.setPeriodicidadeAtualizacao(periodicidade);
         rep.setColecoes(set);
-        
+
         repDao.save(rep);
 
         return "exibeRepositorios";
@@ -162,6 +178,23 @@ public final class FEBController {
 
         model.addAttribute("subDAO", subDao);
         return "exibeFederacao";
+    }
+    
+    @RequestMapping("/removerFederacao")
+    public String apagaFed(
+            @RequestParam(value = "submitted", required = false) boolean submitted,
+            @RequestParam(value = "id", required = true) int id,
+            Model model) {
+        if (submitted) {
+            SubFederacao subFed = new SubFederacao();
+            subFed.setId(id);
+            subDao.delete(subFed);
+            return "fechaRecarrega";
+        } else {
+
+            model.addAttribute("subDAO", subDao);
+            return "removerFederacao";
+        }
     }
 
     /**
