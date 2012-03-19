@@ -86,7 +86,7 @@ public final class FEBController {
             Repositorio rep = new Repositorio();
             rep.setId(id);
             repDao.delete(rep);
-            return "fechaRecarrega";
+            return "redirect:fechaRecarrega";
         } else {
 
             model.addAttribute("repDAO", repDao);
@@ -117,7 +117,7 @@ public final class FEBController {
         repDao.save(rep);
 
 
-        return "exibeRepositorios";
+        return "redirect:exibeRepositorios";
     }
 
     @RequestMapping("/salvarRepositorioOAI")
@@ -137,7 +137,7 @@ public final class FEBController {
 
         repDao.save(rep);
 
-        return "exibeRepositorios";
+        return "redirect:exibeRepositorios";
     }
 
     @RequestMapping("/exibeFederacao")
@@ -177,7 +177,7 @@ public final class FEBController {
         subDao.save(subfed);
 
         model.addAttribute("subDAO", subDao);
-        return "exibeFederacao";
+        return "redirect:exibeFederacao";
     }
     
     @RequestMapping("/removerFederacao")
@@ -189,7 +189,7 @@ public final class FEBController {
             SubFederacao subFed = new SubFederacao();
             subFed.setId(id);
             subDao.delete(subFed);
-            return "fechaRecarrega";
+            return "redirect:fechaRecarrega";
         } else {
 
             model.addAttribute("subDAO", subDao);

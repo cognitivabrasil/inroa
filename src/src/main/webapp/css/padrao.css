@@ -281,15 +281,27 @@ a:hover{
     text-decoration:underline;
     font-size:110%;
 }
-.adm-title{
-    font-size:120%;
+.cabecalhoAdm{
+    width:100%;
+    border: none;
+    background: #AEC9E3;
+}
+.cabecalhoAdm td{
+    border: 2px solid white;
+    vertical-align: middle;
+    text-align: center;
+}
+.cabecalhoAdm .title{
+    font-size:130%;
     font-weight:bold;
     text-align:center;
-    font-family: verdana, arial, sans;
-    font-style:italic;
-    text-decoration:underline;
+    font-style:italic;    
     padding:4px;
 }
+.cabecalhoAdm .sair{
+    font-weight: bold;
+}
+
 .Mapeamento{
     margin-top:1%;
 }
@@ -475,7 +487,7 @@ td{vertical-align:top;}
     width: 100%;
     padding: 2px;
     border: 2px solid #AEC9E3;
-    margin-top:3%;
+    margin-top:2%;
 }
 .repositorios-table th{
     color: white;
@@ -532,7 +544,7 @@ td{vertical-align:top;}
     text-align: center;
     vertical-align: middle;
     border: 2px solid #AEC9E3;
-    margin-top: 3%;
+    margin-top: 2%;
     background: #FFFFFF;
     opacity: 0.8;
     padding: 2px;
@@ -764,4 +776,11 @@ td{vertical-align:top;}
 }
 .tableSubfed .coluna{
     border: 2px solid #FFFFFF;
+}
+
+.versao{
+    text-align: right;
+    padding-top: 0.5%;
+    padding-right: 0.5%;
+    font-style: italic;
 }
