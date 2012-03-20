@@ -9,9 +9,7 @@ import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller geral para o FEB
@@ -179,7 +177,7 @@ public final class FEBController {
         model.addAttribute("subDAO", subDao);
         return "redirect:exibeFederacao";
     }
-    
+
     @RequestMapping("/removerFederacao")
     public String apagaFed(
             @RequestParam(value = "submitted", required = false) boolean submitted,
@@ -223,5 +221,26 @@ public final class FEBController {
             }
             return "login";
         }
+    }
+
+    @RequestMapping("/testeForm")
+    public String teste(
+            @RequestParam(value = "submitted", required = false) boolean submitted,
+            @ModelAttribute("subDAO") SubFederacao subfed,
+            Model model) {
+        if(!submitted){   
+//            SubFederacao fed = new SubFederacao();
+//            fed.setNome("marcos");
+        model.addAttribute("subDAO", subDao.get(9));
+        
+        return "testeForm";
+        
+        }
+        else{
+            Teste teste = new Teste();
+            teste.gravaSubFed(subfed);
+            return "redirect:index";
+        }
+        
     }
 }
