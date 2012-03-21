@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dataset.xsd">
+
+        <documentos id="1" obaa_entry="oai:cesta2.cinted.ufrgs.br:123456789/57" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+        <documentos id="2" obaa_entry="dois" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+        <documentos id="3" obaa_entry="tres" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+        <documentos id="4" obaa_entry="quatro" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="true"/>
+        <documentos id="5" obaa_entry="cinco" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+
+
+
+</dataset>

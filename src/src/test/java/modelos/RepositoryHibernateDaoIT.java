@@ -4,14 +4,25 @@
  */
 package modelos;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.util.List;
+import javax.sql.DataSource;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.operation.DatabaseOperation;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 
 
@@ -22,13 +33,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:testApplicationContext.xml")
-//@ContextConfiguration(locations = {"testApplicationContext.xml"})
+@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class RepositoryHibernateDaoIT {
-    
+
     @Autowired
     RepositoryHibernateDAO instance;
-    
+    @Autowired
+    DataSource dataSource;
+    static IDatabaseConnection connection;
+
     public RepositoryHibernateDaoIT() {
     }
 
@@ -38,16 +52,43 @@ public class RepositoryHibernateDaoIT {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        connection.close();
     }
 
+    @Before
+    public void init() throws Exception {
+        System.out.println("Before");
+        // Insere os dados no banco de dados
+        DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getBeforeDataSet());
+    }
+
+    @After
+    public void after() throws Exception {
+        System.out.println("After");
+        //Limpa a base de dados
+        DatabaseOperation.DELETE_ALL.execute(getConnection(), getBeforeDataSet());
+    }
+
+    private IDatabaseConnection getConnection() throws Exception {
+        System.out.println("Get Connection");
+        // Pega a conexão com o banco de dados
+        if (connection == null) {
+            Connection con = dataSource.getConnection();
+            DatabaseMetaData databaseMetaData = con.getMetaData();
+            connection = new DatabaseConnection(con);
+            System.out.println("New connection");
+        }
+
+        return connection;
+
+    }
+
+    private IDataSet getBeforeDataSet() throws Exception {
+        System.out.println("get DataSet");
+        // Pega o arquivo de para inserir
+        File file = new File("src/test/resources/documentosDataBefore.xml");
+        return new FlatXmlDataSet(file);
+    }
     /**
      * Test of delete method, of class RepositoryHibernateDAO.
      */
@@ -72,6 +113,15 @@ public class RepositoryHibernateDaoIT {
         Repositorio cesta = instance.get(id);
         
         assertEquals("Cesta", cesta.getNome());
+    }
+    
+    @Test
+    public void testSize() {
+        int id = 1;
+        Repositorio cesta = instance.get(id);
+        
+        assertEquals("Cesta", cesta.getNome());
+        assertEquals(4, (int)cesta.size());
     }
 
     /**

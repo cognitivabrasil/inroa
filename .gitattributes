@@ -506,10 +506,13 @@ src/src/test/java/metadata/oai_dc10000.xml -text
 src/src/test/java/metadata/oai_lom.xml -text
 src/src/test/java/metadata/obaa1.xml -text
 src/src/test/java/metadata/teste1.xml -text
+src/src/test/java/modelos/DocumentosHibernateDaoIT.java -text
 src/src/test/java/modelos/PadraoMetadadosHibernateDaoIT.java -text
 src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioTest.java -text
+src/src/test/resources/documentosDataBefore.xml -text
+src/src/test/resources/repositoriosDataBefore.xml -text
 src/src/test/resources/usuarioDataAfter.xml -text
 src/src/test/resources/usuarioDataBefore.xml -text
 src/src/xslt/dc2obaa.xsl -text

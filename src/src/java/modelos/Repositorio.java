@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.springframework.context.ApplicationContext;
+import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import spring.ApplicationContextProvider;
 
 /**
  *
@@ -25,11 +29,15 @@ public class Repositorio implements java.io.Serializable {
     private String namespace;
     private int periodicidadeAtualizacao;
     private String colecoes;
+    
     private int idPadraoMetadados;
     private int idTipoMapeamento;
     
-
+    HibernateTemplate template;
+    
     public Repositorio() {
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+        template = ctx.getBean(HibernateTemplate.class);
     }
 
 
@@ -96,9 +104,10 @@ public class Repositorio implements java.io.Serializable {
         return getNome();
     }
 
-    public int size() {
-        return 0;
-    }
+    public Integer size() {
+        return DataAccessUtils.intResult(
+                template.find("select count(*) from DocumentoReal doc WHERE doc.repositorio = ? AND doc.deleted = ?", this, false)); 
+   }
 
     /**
      * @param url the url to set

@@ -7,9 +7,7 @@ package modelos;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.util.List;
 import javax.sql.DataSource;
-import org.dbunit.Assertion;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
@@ -34,15 +32,15 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-public class UsuarioHibernateDaoIT {
+public class DocumentosHibernateDaoIT {
 
     @Autowired
-    UsuarioHibernateDAO instance;
+    DocumentosHibernateDAO instance;
     @Autowired
     DataSource dataSource;
-    static IDatabaseConnection connection;
+    IDatabaseConnection connection;
 
-    public UsuarioHibernateDaoIT() {
+    public DocumentosHibernateDaoIT() {
     }
 
     @BeforeClass
@@ -51,7 +49,6 @@ public class UsuarioHibernateDaoIT {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
-        connection.close();
     }
 
     @Before
@@ -84,7 +81,7 @@ public class UsuarioHibernateDaoIT {
     private IDataSet getBeforeDataSet() throws Exception {
         System.out.println("get DataSet");
         // Pega o arquivo de para inserir
-        File file = new File("src/test/resources/usuarioDataBefore.xml");
+        File file = new File("src/test/resources/documentosDataBefore.xml");
         return new FlatXmlDataSet(file);
     }
 
@@ -96,82 +93,11 @@ public class UsuarioHibernateDaoIT {
     }
 
     
-    /**
-     * Test of authenticate method, of class UsuarioHibernateDAO.
-     */
-    @Test
-    public void testAuthenticate() {
-
-        Usuario u1 = instance.authenticate("admin", "teste1");
-        assertEquals(null, u1);
-
-        Usuario u2 = instance.authenticate("admin", "teste");
-        assertEquals("admin", u2.getLogin());
-    }
-
-    /**
-     * Test of delete method, of class UsuarioHibernateDAO.
-     */
-    @Test
-    public void testDelete() {
-        System.out.println("delete");
-        Usuario r = instance.get(2);
-        instance.delete(r);
-
-        assertEquals(1, instance.getAll().size());
-    }
-
-    /**
-     * Test of get method, of class UsuarioHibernateDAO.
-     */
     @Test
     public void testGet() {
-        System.out.println("*****************get");
-        int id = 1;
-        Usuario u = instance.get(id);
-        assertEquals("admin", u.getLogin());
-        assertEquals("698dc19d489c4e4db73e28a713eab07b", u.getPasswordMd5());
-        assertEquals("Administrador da federação", u.getDescription());
-    }
-
-    @Test
-    public void testGetByLogin() {
-        Usuario u = instance.get("admin");
-        assertEquals("admin", u.getLogin());
-        assertEquals("698dc19d489c4e4db73e28a713eab07b", u.getPasswordMd5());
-        assertEquals("Administrador da federação", u.getDescription());
-    }
-
-    /**
-     * Test of getAll method, of class UsuarioHibernateDAO.
-     */
-    @Test
-    public void testGetAll() {
-        System.out.println("getAll");
-        List result = instance.getAll();
-        assertEquals(2, result.size());
-    }
-
-    /**
-     * Test of save method, of class UsuarioHibernateDAO.
-     */
-    @Test
-    public void testSaveAndUpdate() throws Exception {
-        System.out.println("save");
-        Usuario r = instance.get(1);
-        r.setLogin("jorjao");
-        instance.save(r);
-
-        Usuario r2 = new Usuario();
-        r2.setLogin("paulo");
-        r2.setPasswordMd5("bla");
-        r2.setDescription("teste");
-
-        instance.save(r2);
-
-        String[] ignore = {"id"};
-
-        Assertion.assertEqualsIgnoreCols(getAfterDataSet().getTable("usuarios"), getConnection().createDataSet().getTable("usuarios"), ignore);
-
+        DocumentoReal d = instance.get(1);
+        
+        assertEquals("oai:cesta2.cinted.ufrgs.br:123456789/57", d.getObaaEntry());
+        assertEquals("Cesta", d.getRepositorio().getNome());
     }
 }

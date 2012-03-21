@@ -49,6 +49,11 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
                 .uniqueResult();
                
     }
+   
+       public DocumentoReal get(int i) {
+        return (DocumentoReal)session.get(DocumentoReal.class, i);
+               
+    }
 
     private void deleteByObaaEntry(String e) {
         for(DocumentoReal d : getByObaaEntry(e)) {
