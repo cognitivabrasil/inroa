@@ -8,37 +8,32 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
     <head>
-        <title>Reservation Form</title>
-        <style>
-            .error {
-                color: #ff0000;
-                font-weight: bold;
-            }
-        </style>
+        <title>Teste</title>
+        <link rel="StyleSheet" href="css/padrao.css" type="text/css">
     </head>
     <body>
     <form:form method="post" modelAttribute="subDAO" acceptCharset="utf-8">
         <form:errors path="*" cssClass="error" />
         <table>
             <tr>
-                <td>Court Name</td>
+                <td>Nome: </td>
                 <td><form:input path="nome" /></td>
             <td><form:errors path="nome" cssClass="error" /></td>
             </tr>
             <tr>
-                <td>Date</td>
+                <td>Descrição: </td>
                 <td><form:input path="descricao" /></td>
             <td><form:errors path="descricao" cssClass="error" /></td>
             </tr>
             <tr>
-                <td>Hour</td>
+                <td>url: </td>
                 <td><form:input path="url" /></td>
             <td><form:errors path="url" cssClass="error" /></td>
             </tr>
             <tr>
                 <td colspan="3">
                     <input type="hidden" name="submitted" value="true"/>
-                    <input type="submit" /></td>
+                    <input type="submit" name="subimit" value="true" /></td>
             </tr>
         </table>            
     </form:form>

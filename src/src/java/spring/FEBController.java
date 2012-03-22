@@ -9,7 +9,9 @@ import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 /**
  * Controller geral para o FEB
@@ -68,11 +70,53 @@ public final class FEBController {
         return "exibeRepositorios";
     }
 
+    @RequestMapping("/cadastraRepositorio")
+    public String cadastraRep(Model model) {
+
+        //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
+        model.addAttribute("repModel", new Repositorio());
+        model.addAttribute("padraoMetadadosDAO", padraoDao);
+        return "cadastraRepositorio";
+    }
+
+    @RequestMapping("/salvarNovoRepositorio")
+    public String salvaNovoRep(
+            @ModelAttribute("repModel") Repositorio rep,
+            Model model) {
+//TODO: testar se os campos foram preenchidos
+
+        if (repDao.get(rep.getNome()) == null) {
+            model.addAttribute("erro", "Já existe um repositório cadastrado com esse nome!");
+            return "cadastraRepositorio";
+        } else {
+            repDao.save(rep); //salva o novo repositorio
+            return "redirect:fechaRecarrega";
+        }
+
+    }
+
     @RequestMapping("/editarRepositorio")
-    public String editaRep(Model model) {
-        model.addAttribute("repDAO", repDao);
+    public String editaRep(
+            @RequestParam(value = "id", required = true) int id,
+            Model model) {
+
+        //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
+        model.addAttribute("repModel", repDao.get(id));
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "editarRepositorio";
+    }
+
+    @RequestMapping("/salvarRepositorio")
+    public String salvaRep(
+            @ModelAttribute("repModel") Repositorio rep,
+            @RequestParam(value = "id", required = true) int id,
+            BindingResult result,
+            SessionStatus status,
+            Model model) {
+//TODO: testar se os campos foram preenchidos
+        repDao.save(rep);
+
+        return "redirect:exibeRepositorios?id=" + id;
     }
 
     @RequestMapping("/removerRepositorio")
@@ -92,50 +136,25 @@ public final class FEBController {
         }
     }
 
-    @RequestMapping("/salvarRepositorioGeral")
-    public String salvaRepGeral(
-            @RequestParam(value = "nomeRep", required = true) String nome,
-            @RequestParam(value = "descricao", required = true) String descricao,
-            @RequestParam(value = "padrao_metadados", required = true) int padrao,
-            @RequestParam(value = "tipo_map", required = true) int mapeamento,
-            @RequestParam(value = "namespace", required = true) String nameSpace,
-            @RequestParam(value = "metPrefix", required = true) String metadataPrefix,
-            @RequestParam(value = "id", required = true) int id,
-            Model model) {
-
-        Repositorio rep = new Repositorio();
-        rep.setId(id);
-        rep.setNome(nome);
-        rep.setDescricao(descricao);
-        rep.setIdPadraoMetadados(padrao);
-        rep.setIdTipoMapeamento(mapeamento);
-        rep.setNamespace(nameSpace);
-        rep.setMetadataPrefix(metadataPrefix);
-
-        repDao.save(rep);
-
-
-        return "redirect:exibeRepositorios";
+    @RequestMapping("/cadastraFederacao")
+    public String cadastraFed(Model model) {
+        SubFederacao subFed = new SubFederacao();
+        model.addAttribute("subDAO", subFed);
+        return "cadastraFederacao";
     }
 
-    @RequestMapping("/salvarRepositorioOAI")
-    public String salvaRepOAI(
-            @RequestParam(value = "url", required = true) String url,
-            @RequestParam(value = "periodicidade", required = true) int periodicidade,
-            @RequestParam(value = "set", required = true) String set,
-            @RequestParam(value = "id", required = true) int id,
+    @RequestMapping("/salvarNovaFederacao")
+    public String salvaFed(
+            @ModelAttribute("subDAO") SubFederacao subfed,
             Model model) {
-//TODO: como testar se todos os campos foram preenchidos? E como avisar se nao foi?
 
-        Repositorio rep = new Repositorio();
-        rep.setId(id);
-        rep.setUrl(url);
-        rep.setPeriodicidadeAtualizacao(periodicidade);
-        rep.setColecoes(set);
-
-        repDao.save(rep);
-
-        return "redirect:exibeRepositorios";
+        if (subDao.get(subfed.getNome()) == null) {
+            model.addAttribute("erro", "Já existe um federação cadastrada com esse nome!");
+            return "cadastraFederacao";
+        } else {
+            subDao.save(subfed); //Grava a subfederacao modificada no formulario
+            return "redirect:fechaRecarrega";
+        }
     }
 
     @RequestMapping("/exibeFederacao")
@@ -145,37 +164,23 @@ public final class FEBController {
     }
 
     @RequestMapping("/editarFederacao")
-    public String editaFed(Model model) {
-        model.addAttribute("subDAO", subDao);
+    public String editaFed(
+            @RequestParam(value = "id", required = true) int id,
+            Model model) {
+        model.addAttribute("subDAO", subDao.get(id));
         return "editarFederacao";
     }
 
     @RequestMapping("/salvarFederacao")
     public String salvaFed(
-            @RequestParam(value = "nome", required = true) String nome,
-            @RequestParam(value = "descricao", required = true) String descricao,
-            @RequestParam(value = "url", required = true) String url,
             @RequestParam(value = "id", required = true) int id,
+            @ModelAttribute("subDAO") SubFederacao subfed,
             Model model) {
-        //TODO: como testar se todos os campos vieram preenchidos e se nao tiver retornar uma alerta? Tipo o codigo abaixo
-        /*
-         * if (nome.isEmpty() || descricao.isEmpty() || url.isEmpty()) {
-         * out.print("<script type='text/javascript'>alert('Todos os campos
-         * devem ser preenchidos!');</script>" + "<script
-         * type='text/javascript'>history.back(-1);</script>"); }
-         */
 
-        SubFederacao subfed = new SubFederacao();
-
-        subfed.setId(id);
-        subfed.setNome(nome);
-        subfed.setDescricao(descricao);
-        subfed.setUrl(url);
-
-        subDao.save(subfed);
+        subDao.save(subfed); //Grava a subfederacao modificada no formulario
 
         model.addAttribute("subDAO", subDao);
-        return "redirect:exibeFederacao";
+        return "redirect:exibeFederacao?id=" + id;
     }
 
     @RequestMapping("/removerFederacao")
@@ -193,6 +198,13 @@ public final class FEBController {
             model.addAttribute("subDAO", subDao);
             return "removerFederacao";
         }
+    }
+
+    @RequestMapping(value = "/addPadrao", method = RequestMethod.GET)
+    public String addPadrao(Model model) {
+        PadraoMetadados padrao = new PadraoMetadados();
+        model.addAttribute("padrao", padrao);
+        return "addPadrao";
     }
 
     /**
@@ -228,19 +240,18 @@ public final class FEBController {
             @RequestParam(value = "submitted", required = false) boolean submitted,
             @ModelAttribute("subDAO") SubFederacao subfed,
             Model model) {
-        if(!submitted){   
+        if (!submitted) {
 //            SubFederacao fed = new SubFederacao();
 //            fed.setNome("marcos");
-        model.addAttribute("subDAO", subDao.get(9));
-        
-        return "testeForm";
-        
-        }
-        else{
+            model.addAttribute("subDAO", subDao.get(9));
+
+            return "testeForm";
+
+        } else {
             Teste teste = new Teste();
             teste.gravaSubFed(subfed);
             return "redirect:index";
         }
-        
+
     }
 }

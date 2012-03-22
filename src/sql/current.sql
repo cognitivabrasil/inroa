@@ -15,11 +15,13 @@ ALTER TABLE documentos ADD COLUMN deleted BOOLEAN;
 
 ALTER TABLE documentos ADD COLUMN obaaXml VARCHAR;
 
-CREATE VIEW repositorios_view AS select * from repositorios,info_repositorios
-WHERE id = id_repositorio;
-
-ALTER VIEW repositorios_view OWNER TO feb;
-
 CREATE TABLE mapeamentos_xslt (id INTEGER, description VARCHAR, xslt VARCHAR);
 
 ALTER TABLE mapeamentos_xslt OWNER TO feb;
+
+CREATE VIEW repositorios_view AS select * from repositorios,info_repositorios
+WHERE id = id_repositorio;
+ALTER VIEW repositorios_view OWNER TO feb;
+
+ALTER TABLE info_repositorios DROP COLUMN nome_na_federacao;
+

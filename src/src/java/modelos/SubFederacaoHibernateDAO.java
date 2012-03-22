@@ -22,11 +22,16 @@ public class SubFederacaoHibernateDAO extends HibernateDaoSupport implements Sub
     public SubFederacao get(int id) {
         return getHibernateTemplate().get(SubFederacao.class, id);
     }
-
+    
     public List<SubFederacao> getAll() {
         HibernateTemplate t = getHibernateTemplate();
         t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
         return getHibernateTemplate().find("from SubFederacao");
+    }
+    
+    public SubFederacao get(String nome) {
+        throw new UnsupportedOperationException("Not supported yet.");
+        //TODO: isso é usado na verdade apenas pra testar se já existe uma federacao com esse nome
     }
 
     public void save(SubFederacao s) {

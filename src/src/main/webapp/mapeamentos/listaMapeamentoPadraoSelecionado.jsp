@@ -22,8 +22,8 @@
 
             if (idPadrao <= 0) {
                 out.println("<div class=\"Value\">Selecione um padr&atilde;o</div> "
-                        + "<input type='hidden' id='rdMap' name=\"tipo_map\" value=''>"
-                        + "<input type=\"hidden\" id=\"metPrefix\"  name=\"metPrefix\" value=''> "
+                        + "<input type='hidden' id='rdMap' name=\"idTipoMapeamento\" value=''>"
+                        + "<input type=\"hidden\" id=\"metadataPrefix\"  name=\"metadataPrefix\" value=''> "
                         + "<input type=\"hidden\" id=\"namespace\" name=\"namespace\" value=''>");
             } else {
                 String sqlMap = "SELECT t.nome as tipo_map, t.descricao, t.id as id_map"
@@ -38,9 +38,9 @@
                     nenhumResultado=false;
                     String tipoMap = res.getString("tipo_map");
                     if ((tipoMap.equalsIgnoreCase("padrão") || tipoMap.equalsIgnoreCase("padrao")) && acao.equalsIgnoreCase("cadastra")) {
-                        out.println("<div class=\"ValueIndex\"><input type=\"radio\" id='rdMap' name=\"tipo_map\" checked=true value=" + res.getString("id_map") + ">" + res.getString("tipo_map") + " (" + res.getString("descricao") + ")</div>");
+                        out.println("<div class=\"ValueIndex\"><input type=\"radio\" id='rdMap' name=\"idTipoMapeamento\" checked=true value=" + res.getString("id_map") + ">" + res.getString("tipo_map") + " (" + res.getString("descricao") + ")</div>");
                     } else {
-                        out.println("<div class=\"ValueIndex\"><input type=\"radio\" id='rdMap' name=\"tipo_map\" value=" + res.getString("id_map") + ">" + res.getString("tipo_map") + " (" + res.getString("descricao") + ")</div>");
+                        out.println("<div class=\"ValueIndex\"><input type=\"radio\" id='rdMap' name=\"idTipoMapeamento\" value=" + res.getString("id_map") + ">" + res.getString("tipo_map") + " (" + res.getString("descricao") + ")</div>");
                     }
                 }
                 if(nenhumResultado){
@@ -55,7 +55,7 @@
                         String metadataPrefix = rsPadrao.getString("metadata_prefix");
                         out.println("<div> &nbsp;</div>"
                                 + "<div class=\"Label\">MetadataPrefix:</div>"
-                                + "<div class=\"Value\">  <input type=\"text\" value=\"" + metadataPrefix + "\" id=\"metPrefix\" name=\"metPrefix\" maxlength=\"45\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" /></div>  "
+                                + "<div class=\"Value\">  <input type=\"text\" value=\"" + metadataPrefix + "\" id=\"metadataPrefix\" name=\"metadataPrefix\" maxlength=\"45\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" /></div>  "
                                 + "<div class=\"Label\">NameSpace:</div> "
                                 + "<div class=\"Value\"> <input type=\"text\" value=\"" + nameSpace + "\" id=\"namespace\" name=\"namespace\" maxlength=\"45\" onFocus=\"this.className='inputSelecionado'\" onBlur=\"this.className=''\" /> </div>");
                     }

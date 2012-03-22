@@ -42,9 +42,13 @@
                 if (res.next()) {
             %>
 
+            
             <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
-            <div class="editar"><a href="./editarRepositorio?id=${param.id}&campo=geral">Editar</a></div>
+            <div class="editar">
+                <input type="button" class="botaoEditar" title="Editar" name="editar" id="editarRep" onclick="location.href='./editarRepositorio?id=${param.id}'" >
+                <a href="./editarRepositorio?id=${param.id}">Editar</a>                
+            </div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
@@ -84,7 +88,7 @@
             </div>
 
             <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
-            <div class="editar"><a href="./editarRepositorio?id=${param.id}&campo=OAI-PMH">Editar</a></div>
+            
 
             <div class="LinhaEntrada">
                 <div class="Label">

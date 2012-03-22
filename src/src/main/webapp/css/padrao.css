@@ -263,6 +263,7 @@ img{
     padding-left:5%;
     padding-bottom:0.6%;
     padding-top:0.6%;
+    margin-bottom: 1%;
 
 }
 .editar{
@@ -270,6 +271,7 @@ img{
     padding-right:5%;
     font-size:105%;
     font-weight:bold;
+    
 }
 
 .editar a{
@@ -454,7 +456,8 @@ a:hover{
 .LinhaEntrada .Value input{width:50%; border-color: #006699}
 .LinhaEntrada .Value select{width:50%; border-color: #006699}
 .textoErro{
-    color:red
+    color:red;
+    font-weight: bold;
 }
 .TextoDivAlerta{
     color:#EE2037;

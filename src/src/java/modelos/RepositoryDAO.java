@@ -39,4 +39,12 @@ public interface RepositoryDAO {
         * @return Repository
         */
        Repositorio get(int id);
+       
+       /**
+        * Gets a specific repository.
+        * 
+        * @param name name of the repository
+        * @return Repository
+        */
+       Repositorio get(String name);
 }

@@ -95,14 +95,14 @@ Author     : Marcos Nunes
             <tr class='center'>
                 <td>
 
-                    <a title="Adicionar novo reposit&oacute;rio" onclick="NewWindow('cadastraRepositorio.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Adicionar novo reposit&oacute;rio" onclick="NewWindow('cadastraRepositorio','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
                 <td colspan="2" class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
-                    <a onclick="NewWindow('cadastraRepositorio.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a onclick="NewWindow('cadastraRepositorio','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         Adicionar novo reposit&oacute;rio
                     </a>
 
@@ -218,14 +218,14 @@ Author     : Marcos Nunes
             <tr class='center'>
                 <td>
 
-                    <a title="Adicionar nova subfedera&ccedil;&atilde;o" onclick="NewWindow('cadastraFederacao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Adicionar nova subfedera&ccedil;&atilde;o" onclick="NewWindow('cadastraFederacao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
                 <td colspan="2" class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
-                    <a onclick="NewWindow('cadastraFederacao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a onclick="NewWindow('cadastraFederacao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         Adicionar nova subfedera&ccedil;&atilde;o
                     </a>
                 </td>

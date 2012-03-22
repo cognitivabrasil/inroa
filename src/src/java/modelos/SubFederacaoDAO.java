@@ -25,6 +25,15 @@ public interface SubFederacaoDAO {
      */
     SubFederacao get(int id);
     
+    /**
+     * Busca Subfedera&ccedil;&atilde;o espec&iacute;fica
+     * @param nome  nome da Subfedera&ccedil;&atilde;o
+     * @return SubFederacao
+     */
+    SubFederacao get(String nome);
+    
+    
+    
         /**
      * Cria ou atualiza uma subfedera&ccedil;&atilde;o.
      * 
@@ -38,5 +47,7 @@ public interface SubFederacaoDAO {
         * @param r repository to be deleted
         */
        void delete(SubFederacao s);
+       
+       //TODO: Tem que ter um metodo que teste se a subfederacao com o nome informado ja existe na base.
     
 }

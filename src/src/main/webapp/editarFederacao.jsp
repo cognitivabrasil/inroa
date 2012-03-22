@@ -10,10 +10,8 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    request.setCharacterEncoding("UTF-8");
-    response.setCharacterEncoding("UTF-8");
-%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -33,46 +31,51 @@
     <body>
         <div id="page">
 
-                    <div class="subTitulo-center">&nbsp;Editanto subfedera&ccedil;&atilde;o ${subDAO.get(param.id).nome}</div>
-                    <div class="subtitulo">Informa&ccedil;&otilde;es sobre a subfedera&ccedil;&atilde;o</div>
-                    <div class="EspacoAntes">&nbsp;</div>
-                    <form name="editaSubfed" action="salvarFederacao" method="get" onsubmit="return myForm.Apply('MensagemErro')">
-                        <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
-                        <div class="LinhaEntrada">
-                            <div class="Label">
-                                Nome:
-                            </div>
-                            <div class="Value">
-                                <input type="text" id="nome" name="nome" value="${subDAO.get(param.id).nome}" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                            </div>
-                        </div>
-                        <div class="LinhaEntrada">
-                            <div class="Label">
-                                Descri&ccedil;&atilde;o:
-                            </div>
-                            <div class="Value">
-                                <input name="descricao" id="descricao" type="text" value="${subDAO.get(param.id).descricao}" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                            </div>
-                        </div>
-                        <div class="LinhaEntrada">
-                            <div class="Comentario">Ex: http://feb.ufrgs.br/feb</div>
-                            <div class="Label">
-                                URL da federa&ccedil;&atilde;o:
-                            </div>
-                            <div class="Value">
-                                <input name="url" id="url" value="${subDAO.get(param.id).url}" type="text" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                            </div>
-                        </div>
+            <div class="subTitulo-center">&nbsp;Editanto subfedera&ccedil;&atilde;o ${subDAO.nome}</div>
+            <div class="subtitulo">Informa&ccedil;&otilde;es sobre a subfedera&ccedil;&atilde;o</div>
+            <div class="EspacoAntes">&nbsp;</div>
 
-                        <input type="hidden" name="id" value="${param.id}"/>
-                        <div class="LinhaEntrada">
-                            <div class="Buttons">
-                                <input type="button" value="&lArr; Voltar" onclick="javascript:history.go(-1);"/>
-                                <input type="submit" value="Gravar &rArr;" name="submit" />
+            <form:form method="post" modelAttribute="subDAO" action="salvarFederacao" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
+                <form:errors path="*" cssClass="error" />
+                <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
+                <div class="LinhaEntrada">
+                    <div class="Label">
+                        Nome:
+                    </div>
+                    <div class="Value">
+                        <form:errors path="nome" cssClass="error" />
+                        <form:input path="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                    </div>
+                </div>
+                <div class="LinhaEntrada">
+                    <div class="Label">
+                        Descri&ccedil;&atilde;o:
+                    </div>
+                    <div class="Value">
+                        <form:errors path="descricao" cssClass="error" />
+                        <form:input path="descricao" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                    </div>
+                </div>
+                <div class="LinhaEntrada">
+                    <div class="Comentario">Ex: http://feb.ufrgs.br/feb</div>
+                    <div class="Label">
+                        URL da federa&ccedil;&atilde;o:
+                    </div>
+                    <div class="Value">
+                        <form:errors path="url" cssClass="error"/>
+                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                                
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="${param.id}"/>
+                <div class="LinhaEntrada">
+                    <div class="Buttons">
+                        <input type="button" value="&lArr; Voltar" onclick="javascript:history.go(-1);"/>
+                        <input type="submit" value="Gravar &rArr;" name="submit" />
 
-                            </div>
-                        </div>
-                    </form>                
+                    </div>
+                </div>
+            </form:form>
+              
         </div>
         <%@include file="googleAnalytics"%>
     </body>

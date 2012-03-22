@@ -58,9 +58,6 @@
                     <div class="Legenda">
                         Nome do Padr&atilde;o:
                     </div>
-                    <!--<div class="Editar">&nbsp;
-                        <input type="button" class="botaoEditar" size="30" name="editar" id="editarMapeamento" onclick=""/>
-                    </div>-->
                     <div class="Valor">
                         <input type="text" id="nome" name="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
@@ -68,9 +65,6 @@
                     <div class="Legenda">
                         MetadataPrefix:
                     </div>
-                    <!--<div class="Editar">&nbsp;
-                        <input type="button" class="botaoEditar" size="30" name="editar" id="editarMapeamento" onclick=""/>
-                    </div>-->
                     <div class="Valor">
                         <input type="text" id="metPrefix" name="metPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
@@ -78,21 +72,18 @@
                     <div class="Legenda">
                         NameSpace:
                     </div>
-                    <!--<div class="Editar">&nbsp;
-                        <input type="button" class="botaoEditar" size="30" name="editar" id="editarMapeamento" onclick=""/>
-                    </div>-->
                     <div class="Valor">
                         <input type="text" id="namespace" name="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
-
-                    <div class="Valor"><font class="textoErro" style="font-weight:bolder">Insira todos os atributos do padr&atilde;o separados por ponto e virgula  ";"</font></div>
-
+                    <div class="Valor">
+                        <font class="textoErro">
+                            Insira todos os atributos do padr&atilde;o separados por ponto e virgula  ";"
+                        </font>
+                    </div>
+                    
                     <div class="Legenda">
                         Atributos:
                     </div>
-                    <!--<div class="Editar">&nbsp;
-                         <input type="button" class="botaoEditar" size="30" name="editar" id="editarDescricao"  onclick=""/>
-                     </div>-->
                     <div class="Valor" id="descricao">
                         <textarea name="atributos" id="atributos" rows="10" cols="50" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"></textarea>
                     </div>

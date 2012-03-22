@@ -26,7 +26,7 @@ function MM_openBrWindow(theURL,winName,features) {
 function NewWindow(mypage,myname,w,h,features){
 
     var larguraDisponivel = screen.availWidth-9;
-    var alturaDisponivel = screen.availHeight-60;
+    var alturaDisponivel = screen.availHeight-65;
 
     if (h=='total'){
         h=alturaDisponivel;
