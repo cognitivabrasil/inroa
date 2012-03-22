@@ -24,7 +24,7 @@ public class Repositorio implements java.io.Serializable {
     private String descricao;
     private String url;
     private String metadataPrefix;
-    private Set<Documento> documentos = new HashSet<Documento>(0);
+    private Set<Documento> documentos;
     private Date ultimaAtualizacao;
     private String namespace;
     private int periodicidadeAtualizacao;
@@ -38,6 +38,18 @@ public class Repositorio implements java.io.Serializable {
     public Repositorio() {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         template = ctx.getBean(HibernateTemplate.class);
+        id=0;
+        nome="";
+        descricao="";
+        url = "";
+        metadataPrefix = "";
+        documentos = new HashSet<Documento>(0);
+        ultimaAtualizacao = null;
+        namespace = "";
+        periodicidadeAtualizacao = 1;
+        colecoes = "";
+        idPadraoMetadados = 0;
+        idTipoMapeamento = 0;
     }
 
 

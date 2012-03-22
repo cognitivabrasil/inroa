@@ -392,6 +392,7 @@ src/src/java/robo/main/package.html -text
 src/src/java/robo/util/Informacoes.java -text
 src/src/java/robo/util/Operacoes.java -text
 src/src/java/robo/util/package.html -text
+src/src/java/spring/AdminController.java -text
 src/src/java/spring/ApplicationContextProvider.java -text
 src/src/java/spring/FEBController.java -text
 src/src/java/webservice/Webservice.java -text
@@ -415,6 +416,7 @@ src/src/main/webapp/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
 src/src/main/webapp/WEB-INF/main-servlet.xml -text
 src/src/main/webapp/WEB-INF/web.xml -text
 src/src/main/webapp/adm.jsp -text
+src/src/main/webapp/admin/adm.jsp -text
 src/src/main/webapp/alterarSenhaAdm.jsp -text
 src/src/main/webapp/alterarSenhaBD.jsp -text
 src/src/main/webapp/atualizaApagandoRepAjax.jsp -text
