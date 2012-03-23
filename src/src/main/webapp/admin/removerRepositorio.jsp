@@ -1,6 +1,6 @@
 <%-- 
-    Document   : removerFederacao
-    Created on : 14/09/2009, 12:01:56
+    Document   : removerRepositorio
+    Created on : 17/08/2009, 17:18:39
     Author     : Marcos
 --%>
 
@@ -13,21 +13,21 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        <link rel="StyleSheet" media="screen" href="css/padrao.css" type="text/css"/>
-        <script type="text/javascript" src="./scripts/funcoes.js"></script>
-        <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="StyleSheet" media="screen" href="../css/padrao.css" type="text/css"/>
+        <script type="text/javascript" src="../scripts/funcoes.js"></script>
+        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     </head>
     <body>
         <div id="page">
-            <div class="subTitulo-center">&nbsp;Ferramenta para remo&ccedil;&atilde;o de subfedera&ccedil;&otilde;es</div>
+            <div class="subTitulo-center">&nbsp;Ferramenta para remo&ccedil;&atilde;o de reposit&oacute;rios</div>
             <div class="EspacoAntes">&nbsp;</div>
 
-            <form name="removerFederacao" action="removerFederacao" method="post">
+            <form name="adicionarRepositorio" action="removerRepositorio" method="get">
                 <div class="LinhaEntrada">
                     <div class="Tab">
-                        Deseja realmente remover a Subfedera&ccedil;&atilde;o <b>${subDAO.get(param.id).nome}</b> ?
+                        Deseja realmente remover o reposit&oacute;rio <b>${repDAO.get(param.id).nome}</b> ?
+                        <div class="info">Atenção: Esta opera&ccedil;&atilde;o pode levar alguns minutos!</div>
                     </div>
-                    <BR>
                 </div>
                 <input type="hidden" name="submitted" value="true"/>
                 <input type="hidden" name="id" value="${param.id}">
@@ -39,6 +39,6 @@
                 </div>
             </form>
         </div>
-        <%@include file="googleAnalytics"%>
+        <%@include file="../googleAnalytics"%>
     </body>
 </html>

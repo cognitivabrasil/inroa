@@ -13,10 +13,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>GT-FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
-        <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link rel="StyleSheet" media="screen" href="css/padrao.css" type="text/css"/>
-        <script type="text/javascript" src="./scripts/validatejs.js"></script>
-        <script type="text/javascript" src="./scripts/funcoes.js"></script>
+        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="StyleSheet" media="screen" href="../css/padrao.css" type="text/css"/>
+        <script type="text/javascript" src="../scripts/validatejs.js"></script>
+        <script type="text/javascript" src="../scripts/funcoes.js"></script>
         <script type="text/javascript">
             var myForm = new Validate();
             myForm.addRules({id:'usuariobd',option:'required',error:'* Voc&ecirc; deve informar o nome do usu&aacute;rio'});
@@ -158,6 +158,6 @@
 
         %>
 
-        <%@include file="googleAnalytics"%>
+        <%@include file="../googleAnalytics"%>
     </body>
 </html>

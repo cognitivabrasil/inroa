@@ -3,8 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>GT-FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
-        <link rel="StyleSheet" href="css/padrao.css" type="text/css">
-        <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
+        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
   </head>
   <body>
     <p class='textoErro'>ERRO ao efetuar conex&atilde;o com a base de dados.</p>

@@ -17,11 +17,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>FEB - Ferramenta Administrativa</title>
-        <link rel="StyleSheet" href="css/padrao.css" type="text/css"/>
-        <script language="JavaScript" type="text/javascript" src="scripts/funcoes.js"></script>
-        <script language="JavaScript" type="text/javascript" src="scripts/funcoesMapeamento.js"> //funcoes javascript que chamam o ajax</script>
-        <script type="text/javascript" src="./scripts/validatejs.js"></script>
-        <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="StyleSheet" href="../css/padrao.css" type="text/css"/>
+        <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js"></script>
+        <script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js"> //funcoes javascript que chamam o ajax</script>
+        <script type="text/javascript" src="../scripts/validatejs.js"></script>
+        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     </head>
 
     <body>
@@ -190,6 +190,6 @@
         <%                    
             con.close();
         %>
-        <%@include file="googleAnalytics"%>
+        <%@include file="../googleAnalytics"%>
     </body>
 </html>

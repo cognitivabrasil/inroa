@@ -17,9 +17,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        <link rel="StyleSheet" href="css/padrao.css" type="text/css">
-        <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <script language="JavaScript" type="text/javascript" src="scripts/funcoes.js"></script>
+        <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
+        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js"></script>
     </head>
 
     <body>
@@ -175,7 +175,7 @@
             </div>
         </div>
 
-        <%@include file="googleAnalytics"%>
+        <%@include file="../googleAnalytics"%>
     </body>
 
 </html>

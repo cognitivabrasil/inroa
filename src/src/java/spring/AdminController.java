@@ -19,7 +19,8 @@ import org.springframework.web.bind.support.SessionStatus;
  * @author Marcos Nunes
  */
 @Controller("admin")
-@RequestMapping("/admin/")
+@SessionAttributes("usuario")
+@RequestMapping("/admin/*")
 public final class AdminController {
 
     @Autowired
@@ -28,17 +29,11 @@ public final class AdminController {
     private SubFederacaoDAO subDao;
     @Autowired
     private PadraoMetadadosDAO padraoDao;
-    @Autowired
-    private UsuarioDAO userDao;
+
 
     public AdminController() {
     }
 
-    @RequestMapping("/admin/")
-    public String index(Model model) {
-
-        return "adm";
-    }
 
     /**
      * Fallback: caso a URL não dê match em nenhum metodos, bate nesse
@@ -50,22 +45,22 @@ public final class AdminController {
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
-        System.out.println("Ctrl Adm request for: " + viewName);
+        System.out.println("request for: " + viewName);
         return viewName;
     }
 
-    @RequestMapping("/adm")
+    @RequestMapping("/")
     public String admin(Model model) {
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
-        return "adm";
+        return "admin/adm";
     }
 
     @RequestMapping("/exibeRepositorios")
     public String exibeRep(Model model) {
         model.addAttribute("repDAO", repDao);
-        return "exibeRepositorios";
+        return "admin/exibeRepositorios";
     }
 
     @RequestMapping("/cadastraRepositorio")
@@ -74,7 +69,7 @@ public final class AdminController {
         //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
         model.addAttribute("repModel", new Repositorio());
         model.addAttribute("padraoMetadadosDAO", padraoDao);
-        return "cadastraRepositorio";
+        return "admin/cadastraRepositorio";
     }
 
     @RequestMapping("/salvarNovoRepositorio")
@@ -85,10 +80,10 @@ public final class AdminController {
 
         if (repDao.get(rep.getNome()) == null) {
             model.addAttribute("erro", "Já existe um repositório cadastrado com esse nome!");
-            return "cadastraRepositorio";
+            return "admin/cadastraRepositorio";
         } else {
             repDao.save(rep); //salva o novo repositorio
-            return "redirect:fechaRecarrega";
+            return "redirect:admin/fechaRecarrega";
         }
 
     }
@@ -101,7 +96,7 @@ public final class AdminController {
         //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
         model.addAttribute("repModel", repDao.get(id));
         model.addAttribute("padraoMetadadosDAO", padraoDao);
-        return "editarRepositorio";
+        return "admin/editarRepositorio";
     }
 
     @RequestMapping("/salvarRepositorio")
@@ -114,7 +109,7 @@ public final class AdminController {
 //TODO: testar se os campos foram preenchidos
         repDao.save(rep);
 
-        return "redirect:exibeRepositorios?id=" + id;
+        return "redirect:admin/exibeRepositorios?id=" + id;
     }
 
     @RequestMapping("/removerRepositorio")
@@ -126,11 +121,11 @@ public final class AdminController {
             Repositorio rep = new Repositorio();
             rep.setId(id);
             repDao.delete(rep);
-            return "redirect:fechaRecarrega";
+            return "redirect:admin/fechaRecarrega";
         } else {
 
             model.addAttribute("repDAO", repDao);
-            return "removerRepositorio";
+            return "admin/removerRepositorio";
         }
     }
 
@@ -138,7 +133,7 @@ public final class AdminController {
     public String cadastraFed(Model model) {
         SubFederacao subFed = new SubFederacao();
         model.addAttribute("subDAO", subFed);
-        return "cadastraFederacao";
+        return "admin/cadastraFederacao";
     }
 
     @RequestMapping("/salvarNovaFederacao")
@@ -148,17 +143,17 @@ public final class AdminController {
 
         if (subDao.get(subfed.getNome()) == null) {
             model.addAttribute("erro", "Já existe um federação cadastrada com esse nome!");
-            return "cadastraFederacao";
+            return "admin/cadastraFederacao";
         } else {
             subDao.save(subfed); //Grava a subfederacao modificada no formulario
-            return "redirect:fechaRecarrega";
+            return "redirect:admin/fechaRecarrega";
         }
     }
 
     @RequestMapping("/exibeFederacao")
     public String exibeFed(Model model) {
         model.addAttribute("subDAO", subDao);
-        return "exibeFederacao";
+        return "admin/exibeFederacao";
     }
 
     @RequestMapping("/editarFederacao")
@@ -166,7 +161,7 @@ public final class AdminController {
             @RequestParam(value = "id", required = true) int id,
             Model model) {
         model.addAttribute("subDAO", subDao.get(id));
-        return "editarFederacao";
+        return "admin/editarFederacao";
     }
 
     @RequestMapping("/salvarFederacao")
@@ -178,7 +173,7 @@ public final class AdminController {
         subDao.save(subfed); //Grava a subfederacao modificada no formulario
 
         model.addAttribute("subDAO", subDao);
-        return "redirect:exibeFederacao?id=" + id;
+        return "redirect:admin/exibeFederacao?id=" + id;
     }
 
     @RequestMapping("/removerFederacao")
@@ -190,11 +185,11 @@ public final class AdminController {
             SubFederacao subFed = new SubFederacao();
             subFed.setId(id);
             subDao.delete(subFed);
-            return "redirect:fechaRecarrega";
+            return "redirect:admin/fechaRecarrega";
         } else {
 
             model.addAttribute("subDAO", subDao);
-            return "removerFederacao";
+            return "admin/removerFederacao";
         }
     }
 
@@ -202,7 +197,7 @@ public final class AdminController {
     public String addPadrao(Model model) {
         PadraoMetadados padrao = new PadraoMetadados();
         model.addAttribute("padrao", padrao);
-        return "addPadrao";
+        return "admin/addPadrao";
     }
 
 
@@ -216,7 +211,7 @@ public final class AdminController {
 //            fed.setNome("marcos");
             model.addAttribute("subDAO", subDao.get(9));
 
-            return "testeForm";
+            return "admin/testeForm";
 
         } else {
             Teste teste = new Teste();
@@ -224,5 +219,10 @@ public final class AdminController {
             return "redirect:index";
         }
 
+    }
+    @RequestMapping("/sair")
+    public String sair(Model model, HttpSession session){
+        session.removeAttribute("usuario");        
+        return "redirect:/";
     }
 }

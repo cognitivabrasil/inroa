@@ -9,7 +9,7 @@
 <html>
     <head>
         <title>Teste</title>
-        <link rel="StyleSheet" href="css/padrao.css" type="text/css">
+        <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
     </head>
     <body>
     <form:form method="post" modelAttribute="subDAO" acceptCharset="utf-8">

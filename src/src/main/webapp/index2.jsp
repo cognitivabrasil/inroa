@@ -89,7 +89,7 @@
 
             <div class="EspacoPequeno">&nbsp;</div>
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
-            <div class="linkCantoDireito"><a href="./adm"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
+            <div class="linkCantoDireito"><a href="./admin/"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             <div class="Espaco">&nbsp;</div>
             <form name="consulta" action="consulta.jsp" method="GET">
 

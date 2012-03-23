@@ -34,7 +34,7 @@
                 <div class="EspacoAntes">&nbsp;</div>
                 <div class="TextoErro" id="MensagemErro">
                     <!--Aqui o script colocara a mensagem de erro, se ocorrer-->
-                    <c:if test="${erro}">Erro ao autenticar.</c:if>
+                    <c:out value="${erro}" />
                 </div>
                 <div class="LinhaEntrada">
 

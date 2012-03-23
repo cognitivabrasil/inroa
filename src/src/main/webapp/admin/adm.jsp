@@ -7,7 +7,7 @@ Author     : Marcos Nunes
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@include file="../testaSessao.jsp"%>
+<%@include file="testaSessao.jsp"%>
 <%@page import="robo.util.Operacoes" %>
 
 
@@ -18,7 +18,7 @@ Author     : Marcos Nunes
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
-        <link href=".../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" >
+        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" >
         <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js"></script>
         <script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js"></script>
 
@@ -46,7 +46,7 @@ Author     : Marcos Nunes
                     <a href="" onclick="javascript:NewWindow('alterarSenhaBD.jsp','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Base de Dados</a>
                 </td>
                 <td class="sair" width =7%>
-                    <a href="sair.jsp">Sair</a>
+                    <a href="sair">Sair</a>
                 </td>
             </tr>
         </table>
