@@ -65,7 +65,7 @@
                         <div id="textResultSF${param.id}" class='Value textoErro'>&nbsp;
                             ${operacoesBean.ultimaAtualizacaoFrase(subDAO.get(param.id).ultimaAtualizacao, repDAO.get(param.id).url)}
                             <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
-                                <img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
+                                <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a> 
                         </div>
                     </c:when>
@@ -73,7 +73,7 @@
                         <div id="textResultSF${param.id}" class="Value">&nbsp;
                             ${operacoesBean.ultimaAtualizacaoFrase(subDAO.get(param.id).ultimaAtualizacao, repDAO.get(param.id).url)}
                             <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
-                                <img src='./imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
+                                <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a>
                         </div>
                     </c:otherwise>

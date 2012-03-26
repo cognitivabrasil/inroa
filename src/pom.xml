@@ -10,19 +10,19 @@
     <url>http://feb.ufrgs.br</url>
 <!-- Shared version number properties -->
 
-<repositories>
-    <repository>
-      <id>excilys</id>
-      <url>http://repository.excilys.com/content/repositories/releases</url>
-    </repository>
- </repositories>
+    <repositories>
+        <repository>
+            <id>excilys</id>
+            <url>http://repository.excilys.com/content/repositories/releases</url>
+        </repository>
+    </repositories>
 
-<properties>
-    <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
-</properties>
+    <properties>
+        <org.springframework.version>3.1.0.RELEASE</org.springframework.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -129,10 +129,10 @@
             <version>1.2.9</version>
         </dependency>
         <dependency>
-	<groupId>org.slf4j</groupId>
-	<artifactId>slf4j-log4j12</artifactId>
-	<version>1.5.6</version>
-</dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.5.6</version>
+        </dependency>
 
 <!--
     Core utilities used by other modules.
@@ -278,20 +278,39 @@
             <version>${org.springframework.version}</version>
             <scope>test</scope>
         </dependency>
+        
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
 
         	<!-- standard.jar --> 
-	<dependency>
-		<groupId>taglibs</groupId>
-		<artifactId>standard</artifactId>
-		<version>1.1.2</version>
-	</dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
  
 	<!-- JSTL --> 
-	<dependency>
-		<groupId>javax.servlet</groupId>
-		<artifactId>jstl</artifactId>
-		<version>1.1.2</version>
-	</dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.1.2</version>
+        </dependency>
 
     </dependencies>
     <build>

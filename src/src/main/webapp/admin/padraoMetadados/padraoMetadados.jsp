@@ -9,7 +9,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
     Author     : Marcos
 --%>
 
-<script language="JavaScript" type="text/javascript" src="../../scripts/funcoesMapeamento.js">
+<script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js">
     //necessario para usar o funcionamento
 </script>
 
@@ -73,7 +73,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
         <td>
 
             <a title="Adicionar novo padr&atilde;o de metadados" onclick="NewWindow('./padraoMetadados/addPadrao.jsp','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
             </a>
 
         </td>

@@ -145,7 +145,7 @@
                                 ${operacoesBean.ultimaAtualizacaoFrase(repDAO.get(param.id).proximaAtualizacao, repDAO.get(param.id).url)}
                                 &nbsp;&nbsp;
                                 <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${param.id}, this.parentNode);">
-                                    <img src='./imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'>
+                                    <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'>
                                 </a>
                             </div>
                         </c:when>
@@ -154,7 +154,7 @@
                                ${operacoesBean.ultimaAtualizacaoFrase(repDAO.get(param.id).proximaAtualizacao, repDAO.get(param.id).url)}
                                &nbsp;&nbsp;
                                <a title='Atualizar agora' onclick="javaScript:atualizaRepAjax(${param.id}, this.parentNode);">
-                                   <img src='./imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
+                                   <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                                </a> 
                            </div>
                         </c:otherwise>

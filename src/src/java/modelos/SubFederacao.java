@@ -5,15 +5,15 @@
 package modelos;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
+import org.springframework.core.style.ToStringCreator;
 
 /**
  *
  * @author Marcos Nunes
  */
 public class SubFederacao implements java.io.Serializable {
-    
+
     private int id;
     private String nome;
     private String descricao;
@@ -24,7 +24,6 @@ public class SubFederacao implements java.io.Serializable {
 
     public SubFederacao() {
     }
-    
 
     public Date getDataXML() {
         return dataXML;
@@ -73,11 +72,6 @@ public class SubFederacao implements java.io.Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
-    
-    @Override
-    public String toString() {
-        return getNome();
-    }
 
     public Set<RepositorioSubFed> getRepositorios() {
         return repositorios;
@@ -86,10 +80,13 @@ public class SubFederacao implements java.io.Serializable {
     public void setRepositorios(Set<RepositorioSubFed> repositorios) {
         this.repositorios = repositorios;
     }
-    
-    public Date getProximaAtualizacao (){
-         return new Date(this.ultimaAtualizacao.getTime() + 24 * 60 * 60 * 1000); // soma a periodicidade em horas
+
+    public Date getProximaAtualizacao() {
+        return new Date(this.ultimaAtualizacao.getTime() + 24 * 60 * 60 * 1000); // soma a periodicidade em horas
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this).append("id", this.getId()).append("nome", this.getNome()).append("descrição", this.getDescricao()).append("url", this.getUrl()).append("última atualização", this.getUltimaAtualizacao()).toString();
+    }
 }

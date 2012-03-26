@@ -68,7 +68,7 @@
                 </div>
             </form>
             <div ALIGN="CENTER">
-                <a href="./index2.jsp">Selecionar Repositórios</a>
+                <a href="./index2">Selecionar Repositórios</a>
             </div>
 
         </div>

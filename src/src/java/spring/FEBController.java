@@ -4,6 +4,8 @@
  */
 package spring;
 
+import java.util.Iterator;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,11 @@ public final class FEBController {
 
     @Autowired
     private UsuarioDAO userDao;
-
+    @Autowired
+    private RepositoryDAO repDao;
+    @Autowired
+    private SubFederacaoDAO subDao;
+    
     public FEBController() {
     }
 
@@ -32,6 +38,22 @@ public final class FEBController {
     public String index(Model model) {
 
         return "index";
+    }
+    
+    @RequestMapping("/index2")
+    public String index2(Model model){
+        
+        List<SubFederacao> lista = subDao.getAll();
+        Iterator i = lista.iterator();
+        while(i.hasNext()){
+            SubFederacao subfed = (SubFederacao) i.next();
+            System.out.println("Nome: "+subfed.getNome());
+            System.out.println("Repositorios: "+subfed.getRepositorios());
+        }
+        
+        model.addAttribute("repDAO", repDao);
+        model.addAttribute("subDAO", subDao);
+        return "index2";
     }
 
 

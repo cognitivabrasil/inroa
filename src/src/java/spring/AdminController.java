@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import spring.validador.SubFederacaoValidador;
 
 /**
  * Controller para ferramenta administrativa
@@ -19,7 +20,6 @@ import org.springframework.web.bind.support.SessionStatus;
  * @author Marcos Nunes
  */
 @Controller("admin")
-@SessionAttributes("usuario")
 @RequestMapping("/admin/*")
 public final class AdminController {
 
@@ -29,11 +29,10 @@ public final class AdminController {
     private SubFederacaoDAO subDao;
     @Autowired
     private PadraoMetadadosDAO padraoDao;
-
+    private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
 
     public AdminController() {
     }
-
 
     /**
      * Fallback: caso a URL não dê match em nenhum metodos, bate nesse
@@ -139,14 +138,20 @@ public final class AdminController {
     @RequestMapping("/salvarNovaFederacao")
     public String salvaFed(
             @ModelAttribute("subDAO") SubFederacao subfed,
-            Model model) {
-
-        if (subDao.get(subfed.getNome()) == null) {
-            model.addAttribute("erro", "Já existe um federação cadastrada com esse nome!");
+            Model model, BindingResult result) {
+        subFedValidador.validate(subfed, result);
+        if (result.hasErrors()) {
+            model.addAttribute("subDAO", subfed);
             return "admin/cadastraFederacao";
         } else {
-            subDao.save(subfed); //Grava a subfederacao modificada no formulario
-            return "redirect:admin/fechaRecarrega";
+
+            if (subDao.get(subfed.getNome()) == null) {
+                model.addAttribute("erro", "Já existe um federação cadastrada com esse nome!");
+                return "admin/cadastraFederacao";
+            } else {
+                subDao.save(subfed); //Grava a subfederacao modificada no formulario
+                return "redirect:admin/fechaRecarrega";
+            }
         }
     }
 
@@ -168,12 +173,20 @@ public final class AdminController {
     public String salvaFed(
             @RequestParam(value = "id", required = true) int id,
             @ModelAttribute("subDAO") SubFederacao subfed,
-            Model model) {
+            Model model,
+            BindingResult result) {
 
-        subDao.save(subfed); //Grava a subfederacao modificada no formulario
+        subFedValidador.validate(subfed, result);
+        if (result.hasErrors()) {
+            model.addAttribute("subDAO", subfed);
+            return "admin/editarFederacao";
+        } else {
 
-        model.addAttribute("subDAO", subDao);
-        return "redirect:admin/exibeFederacao?id=" + id;
+            subDao.save(subfed); //Grava a subfederacao modificada no formulario
+
+            model.addAttribute("subDAO", subDao);
+            return "redirect:admin/exibeFederacao?id=" + id;
+        }
     }
 
     @RequestMapping("/removerFederacao")
@@ -200,7 +213,6 @@ public final class AdminController {
         return "admin/addPadrao";
     }
 
-
     @RequestMapping("/testeForm")
     public String teste(
             @RequestParam(value = "submitted", required = false) boolean submitted,
@@ -214,15 +226,15 @@ public final class AdminController {
             return "admin/testeForm";
 
         } else {
-            Teste teste = new Teste();
-            teste.gravaSubFed(subfed);
+            Teste.gravaSubFed(subfed);
             return "redirect:index";
         }
 
     }
+
     @RequestMapping("/sair")
-    public String sair(Model model, HttpSession session){
-        session.removeAttribute("usuario");        
+    public String sair(Model model, HttpSession session) {
+        session.removeAttribute("usuario");
         return "redirect:/";
     }
 }

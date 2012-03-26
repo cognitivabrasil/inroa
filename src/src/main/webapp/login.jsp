@@ -39,13 +39,13 @@
                 <div class="LinhaEntrada">
 
                     <label class="Label"><B>Usu&aacute;rio:&nbsp;</B></label>
-                    <div class="value">
-                        <input name="login" id="user" class="ImeDisabled" maxlength="20" type="text" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
+                    <div class="Value">
+                        <input name="login" id="user" maxlength="20" type="text" onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                     </div>
                 </div>
                 <div class="LinhaEntrada">
                     <label class="Label"><B>Senha:&nbsp;</B></label>
-                    <div class="value">
+                    <div class="Value">
                         <input name="senha" id="passwd" type=password onFocus="this.className='inputSelecionado'" onBlur="this.className=''">
                     </div>
                

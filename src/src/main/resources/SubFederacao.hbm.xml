@@ -15,10 +15,10 @@
         <property name="url" not-null="true" type="string"/>
         <property column="data_xml" name="dataXML" type="timestamp"/>
     
-<!--    <set name="repositorios" table="repositorios_subfed">
+    <set name="repositorios" table="repositorios_subfed">
       <key column="id_subfed"/>
       <one-to-many class="modelos.RepositorioSubFed"/>
     </set>
- -->
+
     </class>
 </hibernate-mapping>

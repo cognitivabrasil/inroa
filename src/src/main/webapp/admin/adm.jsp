@@ -7,6 +7,7 @@ Author     : Marcos Nunes
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@include file="testaSessao.jsp"%>
 <%@page import="robo.util.Operacoes" %>
 
@@ -17,10 +18,10 @@ Author     : Marcos Nunes
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
-        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" >
-        <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js"></script>
-        <script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js"></script>
+        <link rel="StyleSheet" href="<spring:url value="/css/padrao.css" htmlEscape="true" />" type="text/css">
+        <link rel="shortcut icon" type="image/x-icon" href="<spring:url value="/imagens/favicon.ico" htmlEscape="true" />"  >
+        <script language="JavaScript" type="text/javascript" src="<spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>
+        <script language="JavaScript" type="text/javascript" src="<spring:url value="/scripts/funcoesMapeamento.js" htmlEscape="true" />"></script>
 
     </head>
     <body style="cursor:wait">
@@ -82,7 +83,7 @@ Author     : Marcos Nunes
                             ${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
 
                             <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${rep.id}, document.getElementById('textResult'+${rep.id}));">
-                                <img src="../imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                                <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </a>
                         </div>
                     </td>
@@ -95,7 +96,7 @@ Author     : Marcos Nunes
                 <td>
 
                     <a title="Adicionar novo reposit&oacute;rio" onclick="NewWindow('cadastraRepositorio','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        <img src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
@@ -108,7 +109,7 @@ Author     : Marcos Nunes
                 </td>
                 <td>
                     <div id="textResultTodos">
-                        <a style="text-decoration:none" title="Atualizar todos" onclick="javaScript:atualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="../imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
+                        <a style="text-decoration:none" title="Atualizar todos" onclick="javaScript:atualizaRepAjax(0, document.getElementById('textResultTodos'));"><img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todos agora</a>
                     </div>
                 </td>
 
@@ -152,7 +153,7 @@ Author     : Marcos Nunes
                 <td>
 
                     <a title="Adicionar novo padr&atilde;o de metadados" onclick="NewWindow('./padraoMetadados/addPadrao.jsp','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        <img src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
@@ -206,7 +207,7 @@ Author     : Marcos Nunes
                         ${operacoesBean.ultimaAtualizacaoFrase(subfed.ultimaAtualizacao)}
                         
                         <a title="Atualizar agora" onclick="javaScript:atualizaSubfedAjax(${subfed.id}, document.getElementById('textResultSF${subfed.id}'));">
-                            <img src="../imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                         </a>                       
                     </div>
                 </td>
@@ -218,7 +219,7 @@ Author     : Marcos Nunes
                 <td>
 
                     <a title="Adicionar nova subfedera&ccedil;&atilde;o" onclick="NewWindow('cadastraFederacao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        <img src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
@@ -230,7 +231,7 @@ Author     : Marcos Nunes
                 </td>
                 <td>
                     <div id="textResultSF">
-                        <a style="text-decoration:none" title="Atualizar todas" onclick="javaScript:atualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img src="../imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todas agora</a>
+                        <a style="text-decoration:none" title="Atualizar todas" onclick="javaScript:atualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle"> Atualizar todas agora</a>
                     </div>
                 </td>
             </tr>
@@ -244,28 +245,28 @@ Author     : Marcos Nunes
 
                     <td><h1>&nbsp;&nbsp;</h1></td>
                     <td>
-                        <img src="../imagens/Lapiz-32x32.png" border="0" width="32" height="32" alt="Laudar" align="middle">
+                        <img src="<spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />" border="0" width="32" height="32" alt="Laudar" align="middle">
                     </td>
                     <td>&nbsp;Visualizar / Editar</td>
 
                     <td><h1>&nbsp;&nbsp;</h1></td>
 
                     <td>
-                        <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        <img src="<spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </td>
                     <td>&nbsp;Remover</td>
 
                     <td><h1>&nbsp;&nbsp;</h1></td>
 
                     <td>
-                        <img src="../imagens/sincronizar.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </td>
                     <td>&nbsp;Atualizar reposit&oacute;rio</td>
 
                     <td><h1>&nbsp;&nbsp;</h1></td>
 
                     <td>
-                        <img src="../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        <img src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </td>
                     <td>&nbsp;Adicionar</td>
 

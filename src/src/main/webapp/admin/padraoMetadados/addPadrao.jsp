@@ -7,8 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
-<%@include file="../../testaSessaoNovaJanela.jsp"%>
-<%@include file="../../conexaoBD.jsp"%>
+<%@include file="../testaSessaoNovaJanela.jsp"%>
+<%@include file="../conexaoBD.jsp"%>
 <%
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");

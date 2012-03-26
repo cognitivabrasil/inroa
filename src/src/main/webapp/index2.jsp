@@ -7,11 +7,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
-
-<%@include file="conexaoBD.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@include file="./admin/conexaoBD.jsp"%>
 <%
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
 
 %>
 <html>
@@ -74,13 +75,13 @@
     <body id="bodyMenor">
         <!-- incluir um arquivo %@ include file="top.html" %> -->
         <div id="page">
-    <%
+            <%
                 if (con == null) {
                     out.print("<p class='textoErro'>ERRO ao conectar na base de dados! <BR><BR>Consulte o administrador do Sistema</p>");
                 } else {
 
-    %>
-    
+            %>
+
 
             <div class="logoBusca"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></div>
 
@@ -99,6 +100,47 @@
                         Servidor:
                     </div>
 
+                    <c:forEach var="rep" items="${repDAO.all}" varStatus="i">
+
+                        <c:if test="${i.index==0}"><div class='ValueIndex'>- Reposit&oacute;rios</div></c:if>
+
+                            <div class='ValueIndex'>&nbsp;&nbsp;&nbsp;
+                                <input value='${rep.id}' type=checkbox id="${rep.id}" name="replocal"> ${fn:toUpperCase(rep.nome)}
+                        </div>                           
+
+                    </c:forEach>
+
+                    <c:forEach var="subFed" items="${subDAO.all}" varStatus="i">
+
+                        <c:if test="${i.index==0}"><div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div></c:if>
+                        <div class='ValueIndex'>&nbsp;&nbsp;&nbsp;
+                            <a id='link${subFed.id}' class='linkRepSubfeb' onclick='tornarVisivel("link${subFed.id}","listaRep${subFed.id}", "Interno");'>+</a>
+                            <input value='${subFed.id}' type=checkbox id="${subFed.id}" name="subfed"> ${fn:toUpperCase(subFed.nome)}
+                            <div id='listaRep${subFed.id}' class='hidden'>
+
+                                <c:forEach var="repSubFed" items="${subFed.repositorios}" varStatus="i">
+                                    <div class='Int'>&nbsp;&nbsp;&nbsp;
+                                        <input value='${repSubFed.id}' type=checkbox id="${repSubFed.id}" name="subrep">
+                                        ${fn:toUpperCase(repSubFed.nome)}
+                                    </div>
+                                </c:forEach>                        
+                            </div>
+                        </div>
+
+                    </c:forEach>
+
+
+
+                </div>
+
+
+                <!------------------------->
+                <div class="LinhaEntrada">
+                    <div class="EspacoAntes">&nbsp;</div>
+                    <div class="Label">
+                        Servidor:
+                    </div>
+
                     <%
                         Statement stm = con.createStatement();
                         Statement stm2 = con.createStatement();
@@ -106,17 +148,17 @@
                         ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
                         //int i = 0;
                         while (res.next()) {
-                            if (!res.getString("nome").equalsIgnoreCase("todos")) {
-                                if (res.isFirst()) {
-                                    out.println("<div class='ValueIndex'>- Reposit&oacute;rios</div>");
-                                }
 
-                                out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
-                                        + "<input value='" + res.getString("id") + "' type=checkbox id=\"" + res.getString("id") + "\""
-                                        + " name=\"replocal\""
-                                        + ">" + res.getString("nome").toUpperCase()
-                                        + "</div>");
+                            if (res.isFirst()) {
+                                out.println("<div class='ValueIndex'>- Reposit&oacute;rios</div>");
                             }
+
+                            out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
+                                    + "<input value='" + res.getString("id") + "' type=checkbox id=\"" + res.getString("id") + "\""
+                                    + " name=\"replocal\""
+                                    + ">" + res.getString("nome").toUpperCase()
+                                    + "</div>");
+
                             // i++;
 
                         }
@@ -131,25 +173,25 @@
                                     testeSubfederacao = false;
                                 }
                             }
-                            if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
-                                idSf = rsSub.getInt("id");
-                                out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
-                                        + "<a id='link" + idSf + "' class='linkRepSubfeb' onclick='tornarVisivel(\"link" + idSf + "\",\"listaRep" + idSf + "\", \"Interno\");'>+</a><input value='" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
-                                        + " name=\"subfed\""
-                                        + ">" + rsSub.getString("nome").toUpperCase());
 
-                                out.print("<div id='listaRep" + idSf + "' class='hidden'>");
+                            idSf = rsSub.getInt("id");
+                            out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
+                                    + "<a id='link" + idSf + "' class='linkRepSubfeb' onclick='tornarVisivel(\"link" + idSf + "\",\"listaRep" + idSf + "\", \"Interno\");'>+</a><input value='" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
+                                    + " name=\"subfed\""
+                                    + ">" + rsSub.getString("nome").toUpperCase());
 
-                                String buscaRepSubfed = "SELECT rsf.nome, rsf.id FROM repositorios_subfed rsf WHERE id_subfed=" + rsSub.getString("id");
-                                ResultSet rsRepSub = stm2.executeQuery(buscaRepSubfed);
-                                while (rsRepSub.next()) {
-                                    out.println("<div class='Int'>&nbsp;&nbsp;&nbsp;<input value='" + rsRepSub.getString("id") + "' type=checkbox id=\"" + rsRepSub.getString("id") + "\""
-                                            + " name=\"subrep\""
-                                            + ">" + rsRepSub.getString("nome").toUpperCase()
-                                            + "</div>");
-                                }
-                                out.println("</div></div>");
+                            out.print("<div id='listaRep" + idSf + "' class='hidden'>");
+
+                            String buscaRepSubfed = "SELECT rsf.nome, rsf.id FROM repositorios_subfed rsf WHERE id_subfed=" + rsSub.getString("id");
+                            ResultSet rsRepSub = stm2.executeQuery(buscaRepSubfed);
+                            while (rsRepSub.next()) {
+                                out.println("<div class='Int'>&nbsp;&nbsp;&nbsp;<input value='" + rsRepSub.getString("id") + "' type=checkbox id=\"" + rsRepSub.getString("id") + "\""
+                                        + " name=\"subrep\""
+                                        + ">" + rsRepSub.getString("nome").toUpperCase()
+                                        + "</div>");
                             }
+                            out.println("</div></div>");
+
                         }
                     %>
 
@@ -176,11 +218,11 @@
             <div ALIGN="CENTER">
                 <a href="./index.jsp">Ocultar Repositórios</a>
             </div>
-        
-<%    con.close(); //fechar conexao com a base de dados
-            }
-%>
-</div>
+
+            <%    con.close(); //fechar conexao com a base de dados
+                }
+            %>
+        </div>
         <div>
             <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
             <div  class="rss">

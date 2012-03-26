@@ -16,7 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link rel="StyleSheet" href="./css/padrao.css" type="text/css"/>
+        <link rel="StyleSheet" href="../css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="../scripts/funcoes.js"></script>
         <script type="text/javascript" src="../scripts/validatejs.js"></script>
 
@@ -36,33 +36,33 @@
                 <c:out value="${erro}"/>
             </div>
             <form:form method="post" modelAttribute="subDAO" action="salvarNovaFederacao" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
-                <form:errors path="*" cssClass="error" />
+                
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
                 <div class="LinhaEntrada">
+                    <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Label">
                         Nome:
                     </div>
                     <div class="Value">
-                        <form:errors path="nome" cssClass="error" />
                         <form:input path="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
+                    <form:errors path="descricao" cssClass="ValueErro" />
                     <div class="Label">
                         Descri&ccedil;&atilde;o:
                     </div>
-                    <div class="Value">
-                        <form:errors path="descricao" cssClass="error" />
+                    <div class="Value">                        
                         <form:input path="descricao" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
+                    <form:errors path="url" cssClass="ValueErro"/>
                     <div class="Comentario">Ex: http://feb.ufrgs.br/feb</div>
                     <div class="Label">
                         URL da federa&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <form:errors path="url" cssClass="error"/>
                         <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                                
                     </div>
                 </div>

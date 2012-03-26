@@ -167,7 +167,7 @@
                 </div>
                 <div class="LinhaEntrada">
                     <div class="Label">
-                        Periodicidade de atualiza&ccedil;&atilde;o:
+                        Periodicidade de atualiza&ccedil;&atilde;o (em dias):
                     </div>
                     <div class="Value">
                         <form:errors path="periodicidadeAtualizacao" cssClass="error" />

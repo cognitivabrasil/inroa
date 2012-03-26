@@ -73,7 +73,7 @@ Esse código é inserido no adm.jsp. Não deve ser executado diretamente.
                 <td>
 
                     <a title="Adicionar novo mapeamento" onclick="NewWindow('./mapeamentos/selecionaPadraoAddMap.jsp','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                        <img src="./imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                        <img src="../../imagens/add-24x24.png" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
