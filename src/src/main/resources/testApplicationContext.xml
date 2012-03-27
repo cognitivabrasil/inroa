@@ -67,7 +67,6 @@ p:password="${dataSource.password}" /> -->
     
     <bean id="repositoryDAO"
        class="modelos.RepositoryHibernateDAO">
-        <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
 
     <bean id="subFederationDAO"

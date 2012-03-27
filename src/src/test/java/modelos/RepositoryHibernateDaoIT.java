@@ -21,8 +21,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 
 
@@ -35,7 +37,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-public class RepositoryHibernateDaoIT {
+public class RepositoryHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     RepositoryHibernateDAO instance;
@@ -60,13 +62,6 @@ public class RepositoryHibernateDaoIT {
         System.out.println("Before");
         // Insere os dados no banco de dados
         DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getBeforeDataSet());
-    }
-
-    @After
-    public void after() throws Exception {
-        System.out.println("After");
-        //Limpa a base de dados
-        DatabaseOperation.DELETE_ALL.execute(getConnection(), getBeforeDataSet());
     }
 
     private IDatabaseConnection getConnection() throws Exception {
@@ -151,6 +146,15 @@ public class RepositoryHibernateDaoIT {
         List<Repositorio> l = instance.getAll();
         assertEquals(2, l.size());
         
+    }
+    
+    @Test
+    public void testGetMetadataRecord() {
+        int id = 1;
+        Repositorio cesta = instance.get(id);
+        
+        PadraoMetadados p = cesta.getPadraoMetadados();
+        assertEquals("lom", p.getNome());
     }
 
     /**

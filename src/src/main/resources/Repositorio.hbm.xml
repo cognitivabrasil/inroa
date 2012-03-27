@@ -17,6 +17,8 @@
     <property column="name_space" name="namespace" type="string"/>
     <property column="periodicidade_horas" name="periodicidadeAtualizacao" type="integer"/>
     <property column="set" name="colecoes" type="string"/>
+    <many-to-one class="modelos.PadraoMetadados" column="padrao_metadados" name="padraoMetadados"/>
+
     
     <set name="documentos" table="documentos">
       <key column="id_repositorio"/>

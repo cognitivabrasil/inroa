@@ -67,9 +67,9 @@ public class PadraoMetadadosHibernateDaoIT {
         int id = 1;
         PadraoMetadados p = instance.get(id);
         
-        assertEquals("Dublin Core", p.getNome());
-        assertEquals("oai_dc", p.getMetadataPrefix());
-        assertEquals("dc", p.getNamespace());
+        assertEquals("lom", p.getNome());
+        assertEquals("oai_lom", p.getMetadataPrefix());
+        assertEquals("lom", p.getNamespace());
     }
 
     /**

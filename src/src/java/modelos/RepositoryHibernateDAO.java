@@ -5,6 +5,9 @@
 package modelos;
 
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateAccessor;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -13,24 +16,23 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  *
  * @author paulo
  */
-public class RepositoryHibernateDAO extends HibernateDaoSupport implements RepositoryDAO {
+public class RepositoryHibernateDAO implements RepositoryDAO {
+    @Autowired
+    SessionFactory sessionFactory;
 
     public void delete(Repositorio r) {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_AUTO);
-        t.delete(r);
+        this.sessionFactory.getCurrentSession().delete(r);
+
     }
 
     public Repositorio get(int id) {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return t.get(Repositorio.class, id);
+        return (Repositorio)this.sessionFactory.getCurrentSession().get(Repositorio.class, id);
+
     }
 
     public List<Repositorio> getAll() {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return getHibernateTemplate().find("from Repositorio");
+         Session s = this.sessionFactory.getCurrentSession();
+        return s.createQuery("from Repositorio").list();
     }
 
     public void save(Repositorio r) {

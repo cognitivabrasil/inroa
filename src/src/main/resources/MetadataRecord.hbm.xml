@@ -9,5 +9,12 @@
     <property name="nome" type="string"/>
     <property name="metadataPrefix" type="string" column="metadata_prefix"/>
     <property name="namespace" type="string" column="name_space"/>
+    
+    <!--
+    <set name="repositorios" table="repositorios">
+      <key column="padrao_metadados"/>
+      <one-to-many class="modelos.Repositorio"/>
+    </set>
+    -->
   </class>
 </hibernate-mapping>

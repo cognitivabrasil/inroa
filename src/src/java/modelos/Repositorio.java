@@ -29,6 +29,7 @@ public class Repositorio implements java.io.Serializable {
     private String namespace;
     private Integer periodicidadeAtualizacao;
     private String colecoes;
+    private PadraoMetadados padraoMetadados;
     
     private Integer idPadraoMetadados;
     private Integer idTipoMapeamento;
@@ -200,6 +201,20 @@ public class Repositorio implements java.io.Serializable {
 
     public void setIdTipoMapeamento(Integer idTipoMapeamento) {
         this.idTipoMapeamento = idTipoMapeamento;
+    }
+
+    /**
+     * @return the padraoMetadados
+     */
+    public PadraoMetadados getPadraoMetadados() {
+        return padraoMetadados;
+    }
+
+    /**
+     * @param padraoMetadados the padraoMetadados to set
+     */
+    public void setPadraoMetadados(PadraoMetadados padraoMetadados) {
+        this.padraoMetadados = padraoMetadados;
     }
     
 }
