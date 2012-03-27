@@ -36,26 +36,26 @@
             %>
 
             <!--Informações Gerais-->
-            <div class="subtitulo">Informa&ccedil;&otilde;es sobre as subfedera&ccedil;&otilde;es ${subDAO.get(param.id).nome}</div>
+            <div class="subtitulo">Informa&ccedil;&otilde;es sobre as subfedera&ccedil;&otilde;es ${subFeb.nome}</div>
             <div class="editar"><a href="./editarFederacao?id=<%=id%>">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
                     Nome:
                 </div>
-                <div class="Value">&nbsp;${subDAO.get(param.id).nome}</div>
+                <div class="Value">&nbsp;${subFeb.nome}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Descri&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;${subDAO.get(param.id).descricao}</div>
+                <div class="Value">&nbsp;${subFeb.descricao}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     URL da federa&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;${subDAO.get(param.id).url}</div>
+                <div class="Value">&nbsp;${subFeb.url}</div>
             </div>
 
             <div class="LinhaEntrada">
@@ -63,9 +63,9 @@
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
                 </div>
                  <c:choose>
-                    <c:when test="${operacoesBean.dataAnteriorAtual(subDAO.get(param.id).proximaAtualizacao)}">
+                    <c:when test="${operacoesBean.dataAnteriorAtual(subFeb.proximaAtualizacao)}">
                         <div id="textResultSF${param.id}" class='Value textoErro'>&nbsp;
-                            ${operacoesBean.ultimaAtualizacaoFrase(subDAO.get(param.id).ultimaAtualizacao, repDAO.get(param.id).url)}
+                            ${operacoesBean.ultimaAtualizacaoFrase(subFeb.ultimaAtualizacao, repDAO.get(param.id).url)}
                             <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
                                 <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a> 
@@ -73,7 +73,7 @@
                     </c:when>
                     <c:otherwise>
                         <div id="textResultSF${param.id}" class="Value">&nbsp;
-                            ${operacoesBean.ultimaAtualizacaoFrase(subDAO.get(param.id).ultimaAtualizacao, repDAO.get(param.id).url)}
+                            ${operacoesBean.ultimaAtualizacaoFrase(subFeb.ultimaAtualizacao, repDAO.get(param.id).url)}
                             <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
                                 <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a>

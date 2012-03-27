@@ -26,8 +26,8 @@ public class Teste {
         System.out.println("namespace: " + rep.getNamespace());
         System.out.println("periodicidadeAtualizacao: " + rep.getPeriodicidadeAtualizacao());
         System.out.println("colecoes: " + rep.getColecoes());
-        System.out.println("idPadraoMetadados: " + rep.getIdPadraoMetadados());
-        System.out.println("idTipoMapeamento: " + rep.getIdTipoMapeamento());
+        System.out.println("idPadraoMetadados: " + rep.getPadraoMetadados().getId());
+        //System.out.println("idTipoMapeamento: " + rep.get);
 
     }
 }

@@ -40,12 +40,36 @@ CREATE TABLE repositorios (
     data_ultima_atualizacao timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone,
     periodicidade_horas integer,
     url_or_ip character varying(200) NOT NULL,
-    tipo_sincronizacao character varying(45) DEFAULT 'OAI'::character varying,
     padrao_metadados integer,
     tipo_mapeamento_id integer DEFAULT 1 NOT NULL,
     metadata_prefix character varying(45),
     name_space character varying(45),
-    set character varying(45)
+    set character varying(45),
+    data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone NOT NULL
 );
 
 ALTER TABLE public.repositorios OWNER TO feb;
+
+ALTER TABLE ONLY repositorios
+    ADD CONSTRAINT pki_rep PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY documentos
+    ADD CONSTRAINT excluidos FOREIGN KEY (id_repositorio) REFERENCES repositorios(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+ALTER TABLE ONLY documentos
+    ADD CONSTRAINT repositorio FOREIGN KEY (id_repositorio) REFERENCES repositorios(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+CREATE INDEX fki_padraometadados ON repositorios USING btree (padrao_metadados);
+
+
+CREATE INDEX fki_tipomap ON repositorios USING btree (tipo_mapeamento_id);
+
+
+ALTER TABLE ONLY repositorios
+    ADD CONSTRAINT padraomet FOREIGN KEY (padrao_metadados) REFERENCES padraometadados(id) ON UPDATE CASCADE;
+
+
+ALTER TABLE ONLY repositorios
+    ADD CONSTRAINT tipomap FOREIGN KEY (tipo_mapeamento_id) REFERENCES tipomapeamento(id);
