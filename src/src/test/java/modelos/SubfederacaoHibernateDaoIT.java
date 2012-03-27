@@ -132,6 +132,8 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
         RepositorioSubFed t = r.get(0);
         
         assertEquals("RepUfrgs1", t.getNome());
+        assertEquals("Get from getDocumentos", 2, t.getDocumentos().size());
+        assertEquals("Get from size()", 2 , (int)t.size());
  
 
     }

@@ -23,6 +23,7 @@ public class DocumentoReal  implements java.io.Serializable, DocumentoFebInterfa
      private Date datetime;
      private Set<Objeto> objetos = new HashSet<Objeto>(0);
      private Repositorio repositorio;
+     private RepositorioSubFed repositorioSubFed;
      private boolean deleted;
 
     public DocumentoReal() {
@@ -129,6 +130,20 @@ public class DocumentoReal  implements java.io.Serializable, DocumentoFebInterfa
 
     public List<String> getDescriptions() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * @return the repositorioSubFed
+     */
+    public RepositorioSubFed getRepositorioSubFed() {
+        return repositorioSubFed;
+    }
+
+    /**
+     * @param repositorioSubFed the repositorioSubFed to set
+     */
+    public void setRepositorioSubFed(RepositorioSubFed repositorioSubFed) {
+        this.repositorioSubFed = repositorioSubFed;
     }
 
 

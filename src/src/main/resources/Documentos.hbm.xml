@@ -9,6 +9,8 @@
         </id>
         <property column="obaa_entry" name="obaaEntry" not-null="true" type="string"/>
         <many-to-one class="modelos.Repositorio" column="id_repositorio" name="repositorio"/>
+        <many-to-one class="modelos.RepositorioSubFed" column="id_rep_subfed" name="repositorioSubFed"/>
+
         <property name="timestamp" type="timestamp"/>
         <set name="objetos" cascade="delete" table="objetos">
             <key column="documento"/>

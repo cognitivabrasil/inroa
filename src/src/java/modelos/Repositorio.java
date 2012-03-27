@@ -31,8 +31,6 @@ public class Repositorio implements java.io.Serializable {
     private String colecoes;
     private PadraoMetadados padraoMetadados;
     
-    private Integer idPadraoMetadados;
-    private Integer idTipoMapeamento;
     
     HibernateTemplate template;
     
@@ -49,8 +47,6 @@ public class Repositorio implements java.io.Serializable {
         namespace = "";
         periodicidadeAtualizacao = 1;
         colecoes = "";
-        idPadraoMetadados = 0;
-        idTipoMapeamento = 0;
     }
 
 
@@ -187,21 +183,6 @@ public class Repositorio implements java.io.Serializable {
         this.colecoes = colecoes;
     }
 
-    public Integer getIdPadraoMetadados() {
-        return idPadraoMetadados;
-    }
-
-    public void setIdPadraoMetadados(Integer idPadraoMetadados) {
-        this.idPadraoMetadados = idPadraoMetadados;
-    }
-    
-    public Integer getIdTipoMapeamento() {
-        return idTipoMapeamento;
-    }
-
-    public void setIdTipoMapeamento(Integer idTipoMapeamento) {
-        this.idTipoMapeamento = idTipoMapeamento;
-    }
 
     /**
      * @return the padraoMetadados
