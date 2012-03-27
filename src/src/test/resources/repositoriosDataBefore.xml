@@ -8,6 +8,9 @@ and open the template in the editor.
 	xsi:noNamespaceSchemaLocation="dataset.xsd">
         
         <repositorios id="1" nome="Cesta" descricao="dfsd"/>
+        <repositorios id="2" nome="Teste2" descricao="dfsd"/>
+        <repositorios id="3" nome="Teste3" descricao="dfsd"/>
+
 
 
 

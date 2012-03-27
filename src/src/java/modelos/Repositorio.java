@@ -19,19 +19,19 @@ import spring.ApplicationContextProvider;
  */
 public class Repositorio implements java.io.Serializable {
 
-    private int id;
+    private Integer id;
     private String nome;
     private String descricao;
     private String url;
     private String metadataPrefix;
-    private Set<Documento> documentos;
+    private Set<DocumentoReal> documentos;
     private Date ultimaAtualizacao;
     private String namespace;
-    private int periodicidadeAtualizacao;
+    private Integer periodicidadeAtualizacao;
     private String colecoes;
     
-    private int idPadraoMetadados;
-    private int idTipoMapeamento;
+    private Integer idPadraoMetadados;
+    private Integer idTipoMapeamento;
     
     HibernateTemplate template;
     
@@ -43,7 +43,7 @@ public class Repositorio implements java.io.Serializable {
         descricao="";
         url = "";
         metadataPrefix = "";
-        documentos = new HashSet<Documento>(0);
+        documentos = new HashSet<DocumentoReal>(0);
         ultimaAtualizacao = null;
         namespace = "";
         periodicidadeAtualizacao = 1;
@@ -53,12 +53,12 @@ public class Repositorio implements java.io.Serializable {
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
     //TODO: porque esse metodo estava protected?
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -100,14 +100,14 @@ public class Repositorio implements java.io.Serializable {
     /**
      * @return the documentos
      */
-    public Set<Documento> getDocumentos() {
+    public Set<DocumentoReal> getDocumentos() {
         return documentos;
     }
 
     /**
      * @param documentos the documentos to set
      */
-    public void setDocumentos(Set<Documento> documentos) {
+    public void setDocumentos(Set<DocumentoReal> documentos) {
         this.documentos = documentos;
     }
 
@@ -166,11 +166,11 @@ public class Repositorio implements java.io.Serializable {
     }
 
     //TODO ver o que precisa para modificar na base para dias e nao horas.
-    public int getPeriodicidadeAtualizacao() {
+    public Integer getPeriodicidadeAtualizacao() {
         return periodicidadeAtualizacao / 24;
     }
 
-    public void setPeriodicidadeAtualizacao(int periodicidadeAtualizacao) {
+    public void setPeriodicidadeAtualizacao(Integer periodicidadeAtualizacao) {
         this.periodicidadeAtualizacao = periodicidadeAtualizacao;
     }
 
@@ -186,19 +186,19 @@ public class Repositorio implements java.io.Serializable {
         this.colecoes = colecoes;
     }
 
-    public int getIdPadraoMetadados() {
+    public Integer getIdPadraoMetadados() {
         return idPadraoMetadados;
     }
 
-    public void setIdPadraoMetadados(int idPadraoMetadados) {
+    public void setIdPadraoMetadados(Integer idPadraoMetadados) {
         this.idPadraoMetadados = idPadraoMetadados;
     }
     
-    public int getIdTipoMapeamento() {
+    public Integer getIdTipoMapeamento() {
         return idTipoMapeamento;
     }
 
-    public void setIdTipoMapeamento(int idTipoMapeamento) {
+    public void setIdTipoMapeamento(Integer idTipoMapeamento) {
         this.idTipoMapeamento = idTipoMapeamento;
     }
     

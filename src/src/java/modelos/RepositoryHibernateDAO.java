@@ -16,7 +16,9 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class RepositoryHibernateDAO extends HibernateDaoSupport implements RepositoryDAO {
 
     public void delete(Repositorio r) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HibernateTemplate t = getHibernateTemplate();
+        t.setFlushMode(HibernateAccessor.FLUSH_AUTO);
+        t.delete(r);
     }
 
     public Repositorio get(int id) {
@@ -34,10 +36,9 @@ public class RepositoryHibernateDAO extends HibernateDaoSupport implements Repos
     public void save(Repositorio r) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     public Repositorio get(String name) {
         throw new UnsupportedOperationException("Not supported yet.");
         //TODO: este metodo é utilizado para testar se já existe um repositorios cadastrado com esse nome
     }
-
 }

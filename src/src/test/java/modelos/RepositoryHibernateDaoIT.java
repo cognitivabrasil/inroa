@@ -91,17 +91,6 @@ public class RepositoryHibernateDaoIT {
     }
     /**
      * Test of delete method, of class RepositoryHibernateDAO.
-     */
-    @Test
-    @Ignore
-    public void testDelete() {
-        System.out.println("delete");
-        Repositorio r = null;
-        RepositoryHibernateDAO instance = new RepositoryHibernateDAO();
-        instance.delete(r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of get method, of class RepositoryHibernateDAO.
@@ -132,7 +121,7 @@ public class RepositoryHibernateDaoIT {
         System.out.println("getAll");
         List expResult = null;
         List result = instance.getAll();
-        assertEquals(1, result.size());
+        assertEquals(3, result.size());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -151,6 +140,17 @@ public class RepositoryHibernateDaoIT {
         //assertEquals("lom", cesta.getUltimaAtualizacao());
  
 
+    }
+    
+    @Test
+    public void testDelete() {
+        Repositorio cesta = instance.get(1);
+        
+        instance.delete(cesta);
+        
+        List<Repositorio> l = instance.getAll();
+        assertEquals(2, l.size());
+        
     }
 
     /**
