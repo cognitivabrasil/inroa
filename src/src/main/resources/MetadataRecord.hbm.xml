@@ -10,6 +10,11 @@
     <property name="metadataPrefix" type="string" column="metadata_prefix"/>
     <property name="namespace" type="string" column="name_space"/>
     
+    <!--set name="mapeamentos" table="mapeamentos">
+      <key column="padrao_id"/>
+      <one-to-many class="modelos.Mapeamento"/>
+    </set-->
+    
     <!--
     <set name="repositorios" table="repositorios">
       <key column="padrao_metadados"/>

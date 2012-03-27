@@ -30,6 +30,9 @@ public final class AdminController {
     private SubFederacaoDAO subDao;
     @Autowired
     private PadraoMetadadosDAO padraoDao;
+    @Autowired
+    private MapeamentoDAO mapDao;
+    
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
 
     public AdminController() {
@@ -58,8 +61,9 @@ public final class AdminController {
     }
 
     @RequestMapping("/exibeRepositorios")
-    public String exibeRep(Model model) {
-        model.addAttribute("repDAO", repDao);
+    public String exibeRep(@RequestParam(value = "id", required = true) int id,
+    Model model) {
+        model.addAttribute("rep", repDao.get(id));
         return "admin/exibeRepositorios";
     }
 
@@ -92,10 +96,11 @@ public final class AdminController {
     public String editaRep(
             @RequestParam(value = "id", required = true) int id,
             Model model) {
-
+        
         //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
         model.addAttribute("repModel", repDao.get(id));
         model.addAttribute("padraoMetadadosDAO", padraoDao);
+        model.addAttribute("mapDAO", mapDao);
         return "admin/editarRepositorio";
     }
 
@@ -158,7 +163,6 @@ public final class AdminController {
 
     @RequestMapping("/exibeFederacao")
     public String exibeFed(@RequestParam(value = "id", required = true) int id, Model model) {
-        //String nome = (new ArrayList<RepositorioSubFed>(subDao.get(id).getRepositorios())).get(0).getNome();
         
         //model.addAttribute("nomeRepositorio", nome);
         model.addAttribute("subFeb", subDao.get(id));

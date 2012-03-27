@@ -30,6 +30,7 @@ public class Repositorio implements java.io.Serializable {
     private Integer periodicidadeAtualizacao;
     private String colecoes;
     private PadraoMetadados padraoMetadados;
+    private Mapeamento mapeamento;
     
     
     HibernateTemplate template;
@@ -113,7 +114,7 @@ public class Repositorio implements java.io.Serializable {
         return getNome();
     }
 
-    public Integer size() {
+    public Integer getSize() {
         return DataAccessUtils.intResult(
                 template.find("select count(*) from DocumentoReal doc WHERE doc.repositorio = ? AND doc.deleted = ?", this, false)); 
    }
@@ -197,5 +198,15 @@ public class Repositorio implements java.io.Serializable {
     public void setPadraoMetadados(PadraoMetadados padraoMetadados) {
         this.padraoMetadados = padraoMetadados;
     }
+
+    public Mapeamento getMapeamento() {
+        return mapeamento;
+    }
+
+    public void setMapeamento(Mapeamento mapeamento) {
+        this.mapeamento = mapeamento;
+    }
+    
+    
     
 }

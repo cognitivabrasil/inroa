@@ -9,9 +9,6 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="java.util.HashMap"%>
-<%@page import="operacoesPostgre.Consultar"%>
-<%@page import="modelos.RepositorioSubFed"%>
 
 
 
@@ -30,14 +27,9 @@
 
             <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de federa&ccedil;&otilde;es cadastradas</div>
 
-            <%
-                String id = request.getParameter("id");
-                HashMap<String, Integer> repositorios = Consultar.selectNumeroDocumentosSubrep(Integer.parseInt(id));
-            %>
 
-            <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es sobre as subfedera&ccedil;&otilde;es ${subFeb.nome}</div>
-            <div class="editar"><a href="./editarFederacao?id=<%=id%>">Editar</a></div>
+            <div class="editar"><a href="./editarFederacao?id=${subFeb.id}">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
@@ -62,10 +54,10 @@
                 <div class="Label">
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
                 </div>
-                 <c:choose>
+                <c:choose>
                     <c:when test="${operacoesBean.dataAnteriorAtual(subFeb.proximaAtualizacao)}">
                         <div id="textResultSF${param.id}" class='Value textoErro'>&nbsp;
-                            ${operacoesBean.ultimaAtualizacaoFrase(subFeb.ultimaAtualizacao, repDAO.get(param.id).url)}
+                            ${operacoesBean.ultimaAtualizacaoFrase(subFeb.ultimaAtualizacao, subFeb.url)}
                             <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
                                 <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a> 
@@ -73,7 +65,7 @@
                     </c:when>
                     <c:otherwise>
                         <div id="textResultSF${param.id}" class="Value">&nbsp;
-                            ${operacoesBean.ultimaAtualizacaoFrase(subFeb.ultimaAtualizacao, repDAO.get(param.id).url)}
+                            ${operacoesBean.ultimaAtualizacaoFrase(subFeb.ultimaAtualizacao, subFeb.url)}
                             <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
                                 <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a>
@@ -83,18 +75,21 @@
             </div>
 
 
-                <table  align="center" width=100% class="tableSubfed">
-                    <th class='coluna' width="70%">Reposit&oacute;rio</th><th class='coluna' width="30%">N&uacute;mero de objetos</th>
-
-                    
-                    <tr>
-                        <td class="coluna">${nomeRepositorio}</td><td class='coluna' align='center'>20 </td>
+            <table  width=100% class="tableSubfed">
+                <th width="70%">Reposit&oacute;rio</th><th width="30%">N&uacute;mero de objetos</th>
+                <c:forEach var="rep" items="${subFeb.repositorios}" varStatus="status">
+                    <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
+                        <td>${rep.nome}</td>
+                        <td align='center'>${rep.size} </td>
                     </tr>
-                    <tr class="bold"><td align="right" class='coluna'>TOTAL</td><td class='coluna' align='center'>20</td></tr>
-                </table>
+                </c:forEach>                    
 
-            </div>
+                <tr class="bold">
+                    <th align="right">TOTAL</th> <th align='center'>${subFeb.sizeDoc}</th>
+                </tr>
+            </table>
+        </div>
 
-            <%@include file="../googleAnalytics"%>
+        <%@include file="../googleAnalytics"%>
     </body>
 </html>

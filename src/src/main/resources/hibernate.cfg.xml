@@ -4,6 +4,7 @@
   <session-factory name="Session">
     <!--<property name="hibernate.default_schema">public</property>!-->
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <mapping resource="Mapping.hbm.xml"/>
     <mapping resource="MetadataRecord.hbm.xml"/>
     <mapping resource="Documentos.hbm.xml"/>
     <mapping resource="Objeto.hbm.xml"/>

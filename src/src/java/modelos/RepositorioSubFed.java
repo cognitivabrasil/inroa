@@ -45,7 +45,7 @@ public class RepositorioSubFed {
         this.subFederacao = subFederacao;
     }
 
-    public Integer size() {
+    public Integer getSize() {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         HibernateTemplate template = ctx.getBean(HibernateTemplate.class);
 

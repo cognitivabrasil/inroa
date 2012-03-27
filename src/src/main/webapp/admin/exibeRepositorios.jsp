@@ -4,14 +4,13 @@
     Author     : Marcos
 --%>
 
+<%@page import="OBAA.Educational.Context"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@include file="conexaoBD.jsp"%>
-<%@page import="operacoesPostgre.Consultar"%>
-<%@page import="java.util.Date" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
     <head>
@@ -28,20 +27,6 @@
         <div id="page">
 
             <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de reposit&oacute;rios cadastrados</div>
-
-            <%
-                String id = request.getParameter("id");
-
-                String sql = "SELECT p.nome as nome_padrao, t.nome as nometipomap, t.descricao as descricaotm "
-                        + " FROM repositorios r, info_repositorios i, padraometadados p, tipomapeamento t "
-                        + " WHERE r.id=" + id + " AND r.id=i.id_repositorio AND i.padrao_metadados=p.id AND i.tipo_mapeamento_id=t.id "
-                        + " ORDER BY r.nome ASC";
-
-                Statement stm = con.createStatement();
-                ResultSet res = stm.executeQuery(sql);
-                if (res.next()) {
-            %>
-
             
             <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
@@ -54,37 +39,37 @@
                 <div class="Label">
                     Nome do reposit&oacute;rio: 
                 </div>
-                <div class="Value">&nbsp;${repDAO.get(param.id).nome}</div>
+                <div class="Value">&nbsp;${rep.nome}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Descri&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;${repDAO.get(param.id).descricao}</div>
+                <div class="Value">&nbsp;${rep.descricao}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Padr&atilde;o de metadados utilizado:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("nome_padrao").toUpperCase()%></div>
+                <div class="Value">&nbsp;${fn:toUpperCase(rep.padraoMetadados.nome)}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Nome do mapeamento:
                 </div>
-                <div class="Value">&nbsp;<%=res.getString("nometipomap") + " - " + res.getString("descricaotm")%></div>
+                <div class="Value">&nbsp;${rep.mapeamento.name} - ${rep.mapeamento.description}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     MetadataPrefix:
                 </div>
-                <div class="Value">&nbsp;${repDAO.get(param.id).metadataPrefix}</div>
+                <div class="Value">&nbsp;${rep.metadataPrefix}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     NameSpace:
                 </div>
-                <div class="Value">&nbsp;${repDAO.get(param.id).namespace}</div>
+                <div class="Value">&nbsp;${rep.namespace}</div>
             </div>
 
             <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
@@ -94,7 +79,7 @@
                 <div class="Label">
                     URL que responde OAI-PMH:
                 </div>
-                <div class="Value">&nbsp;${repDAO.get(param.id).url}</div>
+                <div class="Value">&nbsp;${rep.url}</div>
             </div>
 
             <div class="LinhaEntrada">
@@ -103,11 +88,11 @@
                 </div>
                 <div class="Value">&nbsp;
                     <c:choose>
-                        <c:when test="${empty repDAO.get(param.id).colecoes}">
+                        <c:when test="${empty rep.colecoes}">
                             Todas
                         </c:when>
                         <c:otherwise>
-                            ${repDAO.get(param.id).colecoes}
+                            ${rep.colecoes}
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -117,22 +102,16 @@
                 <div class="Label">
                     Periodicidade de atualiza&ccedil;&atilde;o :
                 </div>
-                <div class="Value">&nbsp;${repDAO.get(param.id).periodicidadeAtualizacao} dia(s)</div>
+                <div class="Value">&nbsp;${rep.periodicidadeAtualizacao} dia(s)</div>
             </div>
 
-
-            <%
-
-                } else
-                    out.println("<p class='textoErro'>Ocorreu um erro ao consultar a base de dados.</p>");
-            %>
             <div class="subtitulo">Atualiza&ccedil;&atilde;o</div>
             <div class="EspacoAntes">&nbsp;</div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;${operacoesBean.ultimaAtualizacaoFrase(repDAO.get(param.id).ultimaAtualizacao)}</div>
+                <div class="Value">&nbsp;${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
@@ -140,9 +119,9 @@
                 </div>
                 
                 <c:choose>
-                        <c:when test="${operacoesBean.dataAnteriorAtual(repDAO.get(param.id).proximaAtualizacao)}">
+                        <c:when test="${operacoesBean.dataAnteriorAtual(rep.proximaAtualizacao)}">
                             <div id='textResult${param.id}' class="ValueErro">&nbsp; 
-                                ${operacoesBean.ultimaAtualizacaoFrase(repDAO.get(param.id).proximaAtualizacao, repDAO.get(param.id).url)}
+                                ${operacoesBean.ultimaAtualizacaoFrase(rep.proximaAtualizacao, rep.url)}
                                 &nbsp;&nbsp;
                                 <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${param.id}, this.parentNode);">
                                     <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'>
@@ -151,7 +130,7 @@
                         </c:when>
                         <c:otherwise>
                            <div class="Value" id="textResult${param.id}">&nbsp;
-                               ${operacoesBean.ultimaAtualizacaoFrase(repDAO.get(param.id).proximaAtualizacao, repDAO.get(param.id).url)}
+                               ${operacoesBean.ultimaAtualizacaoFrase(rep.proximaAtualizacao, rep.url)}
                                &nbsp;&nbsp;
                                <a title='Atualizar agora' onclick="javaScript:atualizaRepAjax(${param.id}, this.parentNode);">
                                    <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
@@ -167,7 +146,7 @@
                     N&uacute;mero de objetos:
                 </div>
                 <div class="Value">
-                    <div>&nbsp;<%=Consultar.selectNumeroDocumentosRep(con, Integer.parseInt(id))%></div>
+                    <div>&nbsp; ${rep.size}</div>
 
                     <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Formatar e restaurar" onclick="javascript:apagaAtualizaRepAjax(${param.id}, this.parentNode)"></div>
 
@@ -179,6 +158,3 @@
     </body>
 
 </html>
-<%
-    con.close(); //fechar conexao
-%>

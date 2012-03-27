@@ -773,11 +773,20 @@ td{vertical-align:top;}
 }
 
 .tableSubfed{
-    background-color: #AEC9E3;
-
-
+    border-color: red;
+    
 }
-.tableSubfed .coluna{
+.tableSubfed th{
+    background-color: #AEC9E3;
+    color: #fffffe; 
+    font-size: 105%;
+}
+
+.tableSubfed table{
+    text-align: center;
+}
+
+.tableSubfed td {
     border: 2px solid #FFFFFF;
 }
 

@@ -338,6 +338,8 @@ src/src/java/modelos/DocumentosDAO.java -text
 src/src/java/modelos/DocumentosHibernateDAO.java -text
 src/src/java/modelos/FebChangeDatabaseInfo.java -text
 src/src/java/modelos/Mapeamento.java -text
+src/src/java/modelos/MapeamentoDAO.java -text
+src/src/java/modelos/MapeamentoHibernateDAO.java -text
 src/src/java/modelos/Objeto.java -text
 src/src/java/modelos/PadraoMetadados.java -text
 src/src/java/modelos/PadraoMetadadosDAO.java -text
@@ -398,6 +400,7 @@ src/src/java/spring/FEBController.java -text
 src/src/java/spring/validador/SubFederacaoValidador.java -text
 src/src/java/webservice/Webservice.java -text
 src/src/main/resources/Documentos.hbm.xml -text
+src/src/main/resources/Mapping.hbm.xml -text
 src/src/main/resources/MetadataRecord.hbm.xml -text
 src/src/main/resources/Objeto.hbm.xml -text
 src/src/main/resources/Repositorio.hbm.xml -text

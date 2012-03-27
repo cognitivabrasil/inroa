@@ -9,11 +9,14 @@ import metadata.MetadataConversorInterface;
 /**
  *
  * @author paulo
+ * 
  */
 public class Mapeamento implements MetadataConversorInterface {
     private Integer id;
     private String description;
+    private String name;
     private String xslt;
+    private PadraoMetadados padraoMetadados;
 
     /**
      * @return the id
@@ -27,6 +30,14 @@ public class Mapeamento implements MetadataConversorInterface {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -57,8 +68,18 @@ public class Mapeamento implements MetadataConversorInterface {
         this.xslt = xslt;
     }
 
+    public PadraoMetadados getPadraoMetadados() {
+        return padraoMetadados;
+    }
+
+    public void setPadraoMetadados(PadraoMetadados padraoMetadados) {
+        this.padraoMetadados = padraoMetadados;
+    }   
+    
+
     public String toObaa(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
     
 }

@@ -4,6 +4,7 @@
     Author     : Marcos
 --%>
 
+<%@page import="org.springframework.ui.Model"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -30,16 +31,15 @@
                 Statement stm = con.createStatement();
 
                 String id = request.getParameter("id");
+                
+                String sql = "SELECT p.id as id_padrao, i.mapeamento_id FROM padraometadados p, repositorios i WHERE i.padrao_metadados=p.id AND i.id=" + id;
 
+                ResultSet res = stm.executeQuery(sql);
 
-                    String sql = "SELECT p.id as id_padrao, i.tipo_mapeamento_id FROM padraometadados p, info_repositorios i WHERE i.padrao_metadados=p.id AND i.id_repositorio=" + id;
-                    
-                    ResultSet res = stm.executeQuery(sql);
-
-                    res.next();
-                    int idPadrao = res.getInt("id_padrao");
-                    int idTipoMap = res.getInt("tipo_mapeamento_id");
-
+                res.next();
+                int idPadrao = res.getInt("id_padrao");
+                int idTipoMap = res.getInt("mapeamento_id");
+                
 
             %>
             <script type="text/javascript">
@@ -85,13 +85,16 @@
                     </div>
                     <div class="Value">
                         <select name="idPadraoMetadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 'edita');">
-                            <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">  
-                                <!--TESTAR SE PADRAO EH O UTILIZADO
-                                <option value="${padraoMet.id}" selected> ${fn:toUpperCase(padraoMet.nome)}
-                                -->
-                                <option value="${padraoMet.id}"> ${fn:toUpperCase(padraoMet.nome)}
-                                    
-                                </c:forEach>
+                            <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
+                                <c:choose>
+                                    <c:when test="${padraoMet.id == repModel.padraoMetadados.id}">
+                                        <option value="${padraoMet.id}" selected> ${fn:toUpperCase(padraoMet.nome)}
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${padraoMet.id}"> ${fn:toUpperCase(padraoMet.nome)}
+                                    </c:otherwise>
+                                </c:choose>                            
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -101,25 +104,21 @@
                         Tipo de mapeamento:
                     </div>
                     <div id="resultado">
-                        <%
-                            String sqlTM = "SELECT t.nome as tipo_map, t.descricao, t.id as id_map"
-                                    + "  FROM mapeamentos m, tipomapeamento t"
-                                    + "  WHERE m.tipo_mapeamento_id=t.id AND m.padraometadados_id=" + idPadrao
-                                    + "  GROUP BY t.id, t.nome, t.descricao;";
-                            ResultSet rsTM = stm.executeQuery(sqlTM);
-                            while (rsTM.next()) {
-                                int idtMap = rsTM.getInt("id_map");
-                                if (idtMap == idTipoMap) {//se for o tipo que esta sendo usado deixa marcado o radio
-                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" checked=true id=\"rdMap\" name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
-                                } else {
-                                    out.println("<div class=\"ValueIndex\"><input type=\"radio\" id=\"rdMap\" name=\"tipo_map\" value=" + rsTM.getString("id_map") + ">" + rsTM.getString("tipo_map") + " (" + rsTM.getString("descricao") + ")</div>");
-                                }
-                            }
-
-                        %>
+                        <c:forEach var="map" items="${mapDAO.all}">
+                            
+                            <c:choose>
+                                    <c:when test="${map.id == repModel.mapeamento.id}">
+                                        <div class="ValueIndex"><input type="radio" checked=true id="rdMap" name="tipo_map" value="${map.id}">${map.name} (${map.description})</div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="ValueIndex"><input type="radio" id="rdMap" name="tipo_map" value="${map.id}">${map.name} (${map.description})</div>
+                                    </c:otherwise>
+                                </c:choose> 
+                        </c:forEach>
 
                     </div>
                 </div>
+                    
                 <div class="LinhaEntrada">
                     <div> &nbsp;</div>
                     <div class="Label">MetadataPrefix:</div>
@@ -133,7 +132,7 @@
                         <form:input path="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
-                    
+
                 <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
                 <div class="EspacoAntes">&nbsp;</div>
 
@@ -151,14 +150,15 @@
                 </div>
 
                 <div class="LinhaEntrada">
-                    <div class="Label">
-                        Cole&ccedil;&otilde;es ou Comunidades:
-                    </div>
+                    
                     <div class="Comentario">
                         Se for mais de uma separar por ponto e v&iacute;rgula.
                     </div>
                     <div class="Comentario">
                         Ex: com1;com2;com3
+                    </div>
+                    <div class="Label">
+                        Cole&ccedil;&otilde;es ou Comunidades:
                     </div>
                     <div class="Value">
                         <form:errors path="colecoes" cssClass="error" />
@@ -187,7 +187,7 @@
             </form:form>
 
         </div>
-        <%                    
+        <%
             con.close();
         %>
         <%@include file="../googleAnalytics"%>

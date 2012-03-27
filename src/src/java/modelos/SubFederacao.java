@@ -5,6 +5,7 @@
 package modelos;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
 import org.springframework.core.style.ToStringCreator;
 
@@ -88,5 +89,21 @@ public class SubFederacao implements java.io.Serializable {
     @Override
     public String toString() {
         return new ToStringCreator(this).append("id", this.getId()).append("nome", this.getNome()).append("descrição", this.getDescricao()).append("url", this.getUrl()).append("última atualização", this.getUltimaAtualizacao()).toString();
+    }
+    
+    /**
+     * Retorna o n&uacute;mero de documentos que a subfedera&ccedil;&atilde;o possui.
+     * @return int com o n&uacute;mero de documentos
+     */
+    public int getSizeDoc(){
+        int size = 0;
+
+        Iterator it = getRepositorios().iterator();
+        while(it.hasNext()){
+            RepositorioSubFed repSub = (RepositorioSubFed) it.next();
+            size += repSub.getSize();
+        }
+        
+        return size;
     }
 }
