@@ -11,6 +11,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.HashMap"%>
 <%@page import="operacoesPostgre.Consultar"%>
+<%@page import="modelos.RepositorioSubFed"%>
+
 
 
 <html>
@@ -84,18 +86,11 @@
                 <table  align="center" width=100% class="tableSubfed">
                     <th class='coluna' width="70%">Reposit&oacute;rio</th><th class='coluna' width="30%">N&uacute;mero de objetos</th>
 
-
-                    <%
-                        int total = 0;
-                        for (String nomes : repositorios.keySet()) {
-                            total += repositorios.get(nomes);
-                            out.println("<tr>");
-                            out.println("<td class='coluna'>" + nomes + "</td> <td class='coluna' align='center'>" + repositorios.get(nomes) + "</td>");
-                            out.println("</tr>");
-                        }
-                        
-                    %>
-                    <tr class="bold"><td align="right" class='coluna'>TOTAL</td><td class='coluna' align='center'><%=total%></td></tr>
+                    
+                    <tr>
+                        <td class="coluna">${nomeRepositorio}</td><td class='coluna' align='center'>20 </td>
+                    </tr>
+                    <tr class="bold"><td align="right" class='coluna'>TOTAL</td><td class='coluna' align='center'>20</td></tr>
                 </table>
 
             </div>

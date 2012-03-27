@@ -4,6 +4,7 @@
  */
 package spring;
 
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,7 +157,10 @@ public final class AdminController {
     }
 
     @RequestMapping("/exibeFederacao")
-    public String exibeFed(Model model) {
+    public String exibeFed(@RequestParam(value = "id", required = true) int id, Model model) {
+        String nome = (new ArrayList<RepositorioSubFed>(subDao.get(id).getRepositorios())).get(0).getNome();
+        
+        model.addAttribute("nomeRepositorio", nome);
         model.addAttribute("subDAO", subDao);
         return "admin/exibeFederacao";
     }

@@ -9,7 +9,7 @@
         </id>
         <property name="nome" not-null="true" type="string"/>
         
-        <many-to-one class="modelos.SubFederacao" column="id_subfed" name="subFederacao"/>    
+        <many-to-one class="modelos.SubFederacao" column="id_subfed" name="subFederacao" not-null="true"/>    
 
     </class>
 </hibernate-mapping>
