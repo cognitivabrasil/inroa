@@ -11,13 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import postgres.Conectar;
 
 /**
  * Disponibiliza realizar Recuperador por similaridade
  * @author Marcos
  */
-public class Recuperador {
 
+public class Recuperador {
+    
     public Recuperador() {
     }
 
@@ -32,7 +34,12 @@ public class Recuperador {
      * @return ArrayList de inteiros contendo os ids dos documentos retornados na busca. Em ordem de relev&acirc;ncia.
      * @exception SQLException
      */
-    public ArrayList<Integer> busca(String consulta, Connection con, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String ordenacao) throws SQLException {
+    public ArrayList<Integer> busca(String consulta,Connection con, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String ordenacao) throws SQLException {
+        
+        return (busca(consulta, null, con, idRepLocal, idSubfed, idSubRep, ordenacao));
+    }
+    
+    public ArrayList<Integer> busca(String consulta, String autor, Connection con, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String ordenacao) throws SQLException {
 
 
         if (idRepLocal == null) {  //tratamento de consistencia, para variaveis nulas
@@ -64,7 +71,19 @@ public class Recuperador {
         if (ordenacao.equals("data")) {
             sqlOrdenacao = "') GROUP BY r1w.tid, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
         } else {
-            sqlOrdenacao = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+            
+            if (autor!=null){
+                if (consulta.isEmpty()){
+                    //COM autor, SEM termo de busca
+                    sqlOrdenacao = " a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, '"+autor+"')) DESC;";
+                } else {
+                    //COM autor, COM termo de busca
+                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+                }
+            } else {
+                
+                sqlOrdenacao = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+            }
         }
 
         if (idRepLocal.length == 1 && idRepLocal[0].isEmpty()) {
@@ -74,7 +93,7 @@ public class Recuperador {
                     if (!LRU) {
                         confederacao = true;
                         //busca na confederacao
-                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao);
+                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, false);
                     }
                 } else {
                     consultaSql = busca_subRep(tokensConsulta, idSubRep, sqlOrdenacao); //busca no subrepositorio
@@ -127,22 +146,46 @@ public class Recuperador {
     }
 
     //confederacao
-    private String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL) {
-
-        String consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
-                + " WHERE r1w.tid=d.id "
-                + " AND (r1w.token=";
-
-        for (int i = 0; i < tokensConsulta.size(); i++) {
-            String token = tokensConsulta.get(i);
-            if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
+    public String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL, boolean autor) {
+        
+        if (autor) {                        // if is a author request
+            if (tokensConsulta.isEmpty()) {   // see if have a query                
+                String consultaSql = "SELECT d.id FROM documentos d, autor a WHERE "+finalSQL;
+                return consultaSql;
+                
             } else {
-                consultaSql += "'" + token + "' OR r1w.token=";
-            }
+                String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
+                        + " WHERE r1w.tid=d.id "
+                        + " AND (r1w.token=";
 
+                for (int i = 0; i < tokensConsulta.size(); i++) {
+                    String token = tokensConsulta.get(i);
+                    if (i == tokensConsulta.size() - 1) {
+                        consultaSql += "'" + token;
+                    } else {
+                        consultaSql += "'" + token + "' OR r1w.token=";
+                    }
+
+                }
+                consultaSql += finalSQL;
+                return consultaSql;
+            }
+        } else {
+            String consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
+                    + " WHERE r1w.tid=d.id "
+                    + " AND (r1w.token=";
+
+            for (int i = 0; i < tokensConsulta.size(); i++) {
+                String token = tokensConsulta.get(i);
+                if (i == tokensConsulta.size() - 1) {
+                    consultaSql += "'" + token + finalSQL;
+                } else {
+                    consultaSql += "'" + token + "' OR r1w.token=";
+                }
+
+            }
+            return consultaSql;
         }
-        return consultaSql;
     }
 
     //replocal
@@ -374,4 +417,31 @@ public class Recuperador {
 
         return consultaSql;
     }
+    
+    public static void main(String[] args) {
+        
+        System.out.println("EEEE");
+        Recuperador r = new Recuperador();
+
+        //Conectar conecta = new Conectar();
+        //Connection conn = conecta.conectaBD();
+      
+        
+        try{
+        //r.busca("matematica", conn, null, null, null, "Relevância");
+                   
+        String sqlAutorSemQuery = " a.documento=d.id AND a.nome~@@'Carlos Heitor' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Carlos Heitor')) DESC;";
+        String sqlAutorComQuery = "') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+        String sqlQuery = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+        
+        ArrayList<String> tokensConsulta = new ArrayList<String>();
+        tokensConsulta.add("educa");
+        
+            System.out.println("TESTE: "+r.buscaConfederacao(tokensConsulta, sqlQuery, false));
+        } catch (Exception e){
+            System.out.println("ERRO: "+e);
+        }
+        
+    }
+            
 }

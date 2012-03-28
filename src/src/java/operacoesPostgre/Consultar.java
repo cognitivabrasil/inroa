@@ -30,7 +30,7 @@ public class Consultar {
                     consulta += "(objetos.atributo= '" + atributos[i] + "' OR ";
                 }
             }
-            //System.out.println("CONSULTA: "+consulta);
+           // System.out.println("CONSULTA: "+consulta);
             PreparedStatement stmt = con.prepareStatement(consulta);
             ResultSet rs = stmt.executeQuery();
             HashMap resultInterno = new HashMap();
