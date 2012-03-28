@@ -3,6 +3,7 @@
 * email: marcosn@gmail.com
 */
 
+
 /**
 * Abre uma nova janela conforme par&acirc;metros recebidos
 *
@@ -299,46 +300,68 @@ function apagaAtualizaRepAjax(id, exibeResultado)
 */
 function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
 {
-    var ajax = openAjax(); // Inicia o Ajax.
+    link=link.trim();
+    if(link==""){
+        inputTexto.className='bordaVermelha';
+        divErro.innerHTML = "Link inv&aacute;lido!";
+        divErro.className='linkCantoDireito textoErro';
+        inputHidden.value='';   
+    }else{
+        var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "VerificaLinkOAI?"+link, true); // Envia o termo da busca como uma querystring
+        ajax.open("POST", "VerificaLinkOAI?"+link, true); // Envia o termo da busca como uma querystring
 
-    ajax.onreadystatechange = function()
-    {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        ajax.onreadystatechange = function()
         {
-            divErro.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
-        }
-        if(ajax.readyState == 4) // Quando estiver tudo pronto.
-        {
-            if(ajax.status == 200)
+        
+            if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
             {
-                var resultado = ajax.responseText;
-                resultado = trim(resultado);
-                
-                if(resultado=='true')
+                divErro.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
+            }
+            if(ajax.readyState == 4) // Quando estiver tudo pronto.
+            {
+                if(ajax.status == 200)
                 {
-                    inputTexto.className='bordaVerde';
-                    divErro.className='linkCantoDireito';
-                    divErro.innerHTML='';
-                    inputHidden.value='ok';
-                }
-                else{
-                    inputTexto.className='bordaVermelha';
-                    divErro.innerHTML = "Link inv&aacute;lido!";
-                    divErro.className='linkCantoDireito textoErro';
-                    inputHidden.value='';
-                }
+                    var resultado = ajax.responseText;
+                    resultado = trim(resultado);
+                
+                    if(resultado=='true')
+                    {
+                        inputTexto.className='bordaVerde';
+                        divErro.className='linkCantoDireito';
+                        divErro.innerHTML='';
+                        inputHidden.value='ok';
+                    }
+                    else{
+                        inputTexto.className='bordaVermelha';
+                        divErro.innerHTML = "Link inv&aacute;lido!";
+                        divErro.className='linkCantoDireito textoErro';
+                        inputHidden.value='';
+                    }
 
-            }
-            else
-            {
-                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+                }
+                else
+                {
+                    exibeResultado.innerHTML = "Erro nas funções do Ajax";
+                }
             }
         }
+        ajax.send(null); // submete
     }
-    ajax.send(null); // submete
+}
 
+function verificaLinkOnLoad (inputTexto, divErro, inputHidden){    
+    link = inputTexto.value;
+    if(link!=""){
+        verificaLinkOAI(link, inputTexto, divErro, inputHidden);
+    }
+    
+
+}
+function verificaMapOnLoad (idPadraoSelecionado, idResultado, idPadrao, idRep){
+    if(idPadraoSelecionado!=""){
+        selecionaMapeamento(idResultado, idPadrao, idRep);
+    }    
 }
 
 function exibeDivSenha(idSenha, idRepSenha)

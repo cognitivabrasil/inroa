@@ -4,7 +4,10 @@
  */
 package spring;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import spring.validador.RepositorioValidator;
 import spring.validador.SubFederacaoValidador;
 
 /**
@@ -33,6 +37,7 @@ public final class AdminController {
     @Autowired
     private MapeamentoDAO mapDao;
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
+    private RepositorioValidator repValidator = new RepositorioValidator();
 
     public AdminController() {
     }
@@ -47,8 +52,8 @@ public final class AdminController {
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
-        System.out.println("request for: " + viewName);
-        return viewName;
+        System.out.println("request for in AdminController: " + viewName);
+        return "admin/" + viewName;
     }
 
     @RequestMapping("/")
@@ -78,17 +83,34 @@ public final class AdminController {
     @RequestMapping("/salvarNovoRepositorio")
     public String salvaNovoRep(
             @ModelAttribute("repModel") Repositorio rep,
+            BindingResult result,
             Model model) {
-//TODO: testar se os campos foram preenchidos
-
-        if (repDao.get(rep.getNome()) == null) {
-            model.addAttribute("erro", "Já existe um repositório cadastrado com esse nome!");
+        repValidator.validate(rep, result);
+        if (result.hasErrors()) {
+            model.addAttribute("repModel", rep);
+            model.addAttribute("padraoMetadadosDAO", padraoDao);
+            model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
             return "admin/cadastraRepositorio";
         } else {
-            repDao.save(rep); //salva o novo repositorio
-            return "redirect:admin/fechaRecarrega";
-        }
+            if (repDao.get(rep.getNome()) != null) { //se retornar algo é porque já existe um repositorio com esse nome
+                result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); //nao esta dentro da classe validator pq só executa isso quando for um repositorio novo, quando editar não.
+                model.addAttribute("repModel", rep);
+                model.addAttribute("padraoMetadadosDAO", padraoDao);
+                model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
+                return "admin/cadastraRepositorio";
+            } else { //se retornar null é porque nao tem nenhum repositorio com esse nome
+                Teste.imprimeRep(rep);
+                return "redirect:fechaRecarrega";
+            }
 
+            /*
+             * if (repDao.get(rep.getNome()) == null) {
+             * model.addAttribute("erro", "Já existe um repositório cadastrado
+             * com esse nome!"); return "admin/cadastraRepositorio"; } else {
+             * repDao.save(rep); //salva o novo repositorio return
+             * "redirect:/fechaRecarrega"; }
+             */
+        }
     }
 
     @RequestMapping("/editarRepositorio")
@@ -98,7 +120,6 @@ public final class AdminController {
 
         model.addAttribute("repModel", repDao.get(id));
         model.addAttribute("padraoMetadadosDAO", padraoDao);
-        model.addAttribute("mapDAO", mapDao);
         return "admin/editarRepositorio";
     }
 
@@ -109,10 +130,15 @@ public final class AdminController {
             BindingResult result,
             SessionStatus status,
             Model model) {
-//TODO: testar se os campos foram preenchidos
-        repDao.save(rep);
-
-        return "redirect:admin/exibeRepositorios?id=" + id;
+        repValidator.validate(rep, result);
+        if (result.hasErrors()) {
+            model.addAttribute("repModel", repDao.get(id));
+            model.addAttribute("padraoMetadadosDAO", padraoDao);
+            return "admin/editarRepositorio";
+        } else {
+            repDao.save(rep);
+            return "redirect:admin/exibeRepositorios?id=" + id;
+        }
     }
 
     @RequestMapping("/removerRepositorio")
@@ -124,7 +150,7 @@ public final class AdminController {
             Repositorio rep = new Repositorio();
             rep.setId(id);
             repDao.delete(rep);
-            return "redirect:admin/fechaRecarrega";
+            return "redirect:/fechaRecarrega";
         } else {
 
             model.addAttribute("repDAO", repDao);
@@ -149,12 +175,12 @@ public final class AdminController {
             return "admin/cadastraFederacao";
         } else {
 
-            if (subDao.get(subfed.getNome()) == null) {
+            if (subDao.get(subfed.getNome()) != null) {
                 model.addAttribute("erro", "Já existe um federação cadastrada com esse nome!");
                 return "admin/cadastraFederacao";
             } else {
                 subDao.save(subfed); //Grava a subfederacao modificada no formulario
-                return "redirect:admin/fechaRecarrega";
+                return "redirect:/fechaRecarrega";
             }
         }
     }
@@ -204,7 +230,7 @@ public final class AdminController {
             SubFederacao subFed = new SubFederacao();
             subFed.setId(id);
             subDao.delete(subFed);
-            return "redirect:admin/fechaRecarrega";
+            return "redirect:/fechaRecarrega";
         } else {
 
             model.addAttribute("subDAO", subDao);
@@ -263,5 +289,11 @@ public final class AdminController {
         }
 
         return "admin/mapeamentos/listaMapeamentoPadraoSelecionado";
+    }
+
+    @RequestMapping("/testeMarcos")
+    public void verificaOAI() {
+        System.out.println("entrou");
+
     }
 }

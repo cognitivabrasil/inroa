@@ -165,7 +165,7 @@ public class Repositorio implements java.io.Serializable {
 
     //TODO ver o que precisa para modificar na base para dias e nao horas.
     public Integer getPeriodicidadeAtualizacao() {
-        return periodicidadeAtualizacao / 24;
+        return periodicidadeAtualizacao;
     }
 
     public void setPeriodicidadeAtualizacao(Integer periodicidadeAtualizacao) {

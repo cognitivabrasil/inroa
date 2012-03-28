@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    
+
+    <servlet>
+        <servlet-name>Webservice</servlet-name>
+        <servlet-class>webservice.Webservice</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>VerificaLinkOAI</servlet-name>
+        <servlet-class>ferramentaAdministrativa.validarOAI.VerificaLinkOAI</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VerificaLinkOAI</servlet-name>
+        <url-pattern>/admin/VerificaLinkOAI</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>Webservice</servlet-name>
+        <url-pattern>/webservice</url-pattern>
+    </servlet-mapping>
+    
     <listener>
         <listener-class>robo.main.Inicializador</listener-class>
     </listener>
@@ -8,19 +29,7 @@
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
-
-    <servlet>
-        <servlet-name>Webservice</servlet-name>
-        <servlet-class>webservice.Webservice</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VerificaLinkOAI</servlet-name>
-        <servlet-class>ferramentaAdministrativa.validarOAI.VerificaLinkOAI</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Webservice</servlet-name>
-        <url-pattern>/webservice</url-pattern>
-    </servlet-mapping>
+    
     <!-- Servlet definitions for the servlets that make up
          your web application, including initialization
          parameters.  With Tomcat, you can also send requests
@@ -110,10 +119,7 @@
          in minutes.  From a servlet or JSP page, you can modify
          the timeout for a particular session dynamically by using
          HttpSession.getMaxInactiveInterval(). -->
-    <servlet-mapping>
-        <servlet-name>VerificaLinkOAI</servlet-name>
-        <url-pattern>/VerificaLinkOAI</url-pattern>
-    </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30

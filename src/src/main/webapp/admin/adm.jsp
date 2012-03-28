@@ -130,7 +130,7 @@ Author     : Marcos Nunes
 
                 <th width="20%">Nome</th>
                 <th width="50%">Metadata Prefix</th>
-                <th width="20%">nameSpace</th>
+                <th width="20%">Namespace</th>
 
             </tr>
             <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}" varStatus="status">  
@@ -261,7 +261,7 @@ Author     : Marcos Nunes
                     <td>
                         <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </td>
-                    <td>&nbsp;Atualizar reposit&oacute;rio</td>
+                    <td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
 
                     <td><h1>&nbsp;&nbsp;</h1></td>
 

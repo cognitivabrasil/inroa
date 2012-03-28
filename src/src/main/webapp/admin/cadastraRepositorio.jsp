@@ -9,7 +9,7 @@ Primeira etapa do cadastro de um repositorio
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
-<%@include file="conexaoBD.jsp"%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -30,7 +30,7 @@ Primeira etapa do cadastro de um repositorio
             var myForm = new Validate();
             myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
             myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
-            myForm.addRules({id:'idPadraoMetadados',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
+            myForm.addRules({id:'padraoMetadados',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
             myForm.addRules({id:'periodicidadeAtualizacao',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
             myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
             myForm.addRules({id:'rdMap',option:'required',error:'* Deve ser selecionado o tipo de mapeamento!'});
@@ -40,57 +40,63 @@ Primeira etapa do cadastro de um repositorio
         </script>
 
     </head>
-    <body>
+    <body onload="verificaLinkOnLoad(document.getElementById('url'), document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'));verificaMapOnLoad(${padraoSelecionado}, 'resultado', document.getElementById('padraoMetadados').value, 0)">
 
         <div id="page">
 
             <div class="subTitulo-center">&nbsp;Entre com as informa&ccedil;&otilde;es para cadastrar um novo reposit&oacute;rio</div>
             <div class="EspacoAntes">&nbsp;</div>
-            <form:form method="post" modelAttribute="repModel" action="salvarNovoRepositorio" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
-                <form:errors path="*" cssClass="error" />
+            <form:form method="post" modelAttribute="repModel" action="salvarNovoRepositorio" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')" >
 
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
                     <c:out value="${erro}"/>
                 </div>
                 <div class="subtitle">Informa&ccedil;&otilde;es gerais sobre o reposit&oacute;rio</div>
                 <div class="LinhaEntrada">
+                    <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Label">
                         Nome:
                     </div>
                     <div class="Value">
-                        <form:errors path="nome" cssClass="error" />
                         <form:input path="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
                     </div>
                 </div>
                 <div class="LinhaEntrada">
+                    <form:errors path="descricao" cssClass="ValueErro" />
                     <div class="Label">
                         Descri&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <form:errors path="descricao" cssClass="error" />
                         <form:input path="descricao" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
+                    <form:errors path="padraoMetadados.id" cssClass="ValueErro" />
                     <div class="Label">
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
-                        <select name="idPadraoMetadados" id="idPadraoMetadados" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 0);">
-                            <option value="0" selected>Selecione
+                        <select name="padraoMetadados.id" id="padraoMetadados" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 0);">
+
+                            <c:if test="${empty padraoSelecionado}">
+                                <option value="0" selected>Selecione
+                            </c:if>
                                 <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}" >
-                                <option value="${padraoMet.id}"> ${fn:toUpperCase(padraoMet.nome)}
+                                    
+                                <option value="${padraoMet.id}" ${padraoMet.id==padraoSelecionado ? 'selected':''}> ${fn:toUpperCase(padraoMet.nome)}
                                 </c:forEach>
                         </select>
                     </div>
                 </div>
+
                 <div class="LinhaEntrada">
+                    <form:errors path="mapeamento.id" cssClass="ValueErro" />
                     <div class="Label">
                         Mapeamento:
                     </div>
                     <div id='resultado'>
                         <div class="Value">Selecione um padr&atilde;o</div>
-                        <input type="hidden" id="rdMap"  name="tipo_map" value=""> 
+                        <input type="hidden" id="rdMap"  name="mapeamento.id" value=""> 
                         <input type="hidden" id="metadataPrefix"  name="metadataPrefix" value="">
                         <input type="hidden" id="namespace"  name="namespace" value="">
                     </div>
@@ -102,28 +108,29 @@ Primeira etapa do cadastro de um repositorio
 
                 <div class="subtitle">Informa&ccedil;&otilde;es sobre o configura&ccedil;&atilde;o da federa&ccedil;&atilde;o</div>
                 <div class="LinhaEntrada">
+                    <form:errors path="periodicidadeAtualizacao" cssClass="ValueErro" />
                     <div class="Label">
                         Periodicidade de atualiza&ccedil;&atilde;o (em dias):
                     </div>
                     <div class="Value">
-                        <form:errors path="periodicidadeAtualizacao" cssClass="error" />
                         <form:input path="periodicidadeAtualizacao" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
                 <div class="subtitle">Sincroniza&ccedil;&atilde;o dos metadados</div>
                 <div class="LinhaEntrada">
+                    <form:errors path="url" cssClass="ValueErro" />
                     <div class="Label">
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <form:errors path="url" cssClass="error" />
-                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className='';verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))"/>&nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
+                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''; verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))"/>&nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
-                    <input type="hidden" id="confereLinkOAI" value="">
+                    <input type="hidden" id="confereLinkOAI" value="${param.confereLinkOAI}">
                 </div>
 
                 <div class="LinhaEntrada">
+                    <form:errors path="colecoes" cssClass="ValueErro" />
                     <div class="Label">
                         Cole&ccedil;&otilde;es ou Comunidades (opcional):
                     </div>
@@ -134,7 +141,6 @@ Primeira etapa do cadastro de um repositorio
                         Ex: com1;com2;com3
                     </div>
                     <div class="Value">
-                        <form:errors path="colecoes" cssClass="error" />
                         <form:input path="colecoes" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
@@ -153,6 +159,3 @@ Primeira etapa do cadastro de um repositorio
         <%@include file="../googleAnalytics"%>
     </body>
 </html>
-<%
-    con.close(); //fechar conexao
-%>

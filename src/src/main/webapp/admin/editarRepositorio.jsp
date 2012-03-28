@@ -43,14 +43,14 @@
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <div class="EspacoAntes">&nbsp;</div>
             <form:form method="post" modelAttribute="repModel" action="salvarRepositorio" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
-                <form:errors path="*" cssClass="error" />
+                <form:errors path="*" cssClass="ValueErro" />
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
                 <div class="LinhaEntrada">
+                    <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Label">
                         Nome:
                     </div>
                     <div class="Value">
-                        <form:errors path="nome" cssClass="error" />
                         <form:input path="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         Descri&ccedil;&atilde;o:
                     </div>
                     <div class="Value">
-                        <form:errors path="descricao" cssClass="error" />
+                        <form:errors path="descricao" cssClass="ValueErro" />
                         <form:input path="descricao" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
@@ -108,12 +108,12 @@
                     <div> &nbsp;</div>
                     <div class="Label">MetadataPrefix:</div>
                     <div class="Value">
-                        <form:errors path="metadataPrefix" cssClass="error" />
+                        <form:errors path="metadataPrefix" cssClass="ValueErro" />
                         <form:input path="metadataPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                     <div class="Label">NameSpace:</div>
                     <div class="Value">
-                        <form:errors path="namespace" cssClass="error" />
+                        <form:errors path="namespace" cssClass="ValueErro" />
                         <form:input path="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <form:errors path="url" cssClass="error" />
+                        <form:errors path="url" cssClass="ValueErro" />
                         <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className='';verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))" />
                         &nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
@@ -146,7 +146,7 @@
                         Cole&ccedil;&otilde;es ou Comunidades:
                     </div>
                     <div class="Value">
-                        <form:errors path="colecoes" cssClass="error" />
+                        <form:errors path="colecoes" cssClass="ValueErro" />
                         <form:input path="colecoes" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                         Periodicidade de atualiza&ccedil;&atilde;o (em dias):
                     </div>
                     <div class="Value">
-                        <form:errors path="periodicidadeAtualizacao" cssClass="error" />
+                        <form:errors path="periodicidadeAtualizacao" cssClass="ValueErro" />
                         <form:input path="periodicidadeAtualizacao" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>

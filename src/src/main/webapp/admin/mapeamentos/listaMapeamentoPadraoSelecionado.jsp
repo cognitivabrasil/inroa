@@ -24,10 +24,10 @@
         <c:forEach var="map" items="${padraoMet.mapeamentos}">
             <c:choose>
                 <c:when test="${map.id == repModel.mapeamento.id}">
-                    <div class="ValueIndex"><input type="radio" checked=true id="rdMap" name="tipo_map" value="${map.id}">${map.name} (${map.description})</div>
+                    <div class="ValueIndex"><input type="radio" checked=true id="rdMap" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
                 </c:when>
                 <c:otherwise>
-                    <div class="ValueIndex"><input type="radio" id="rdMap" name="tipo_map" value="${map.id}">${map.name} (${map.description})</div>
+                    <div class="ValueIndex"><input type="radio" id="rdMap" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
                 </c:otherwise>
             </c:choose> 
         </c:forEach>
@@ -36,10 +36,12 @@
                     
 <c:if test="${novoRep}">
     <div> &nbsp;</div>
+    <form:errors path="metadataPrefix" cssClass="ValueErro" />
     <div class="Label">MetadataPrefix:</div>
     <div class="Value">  
         <input type="text" value="${padraoMet.metadataPrefix}" id="metadataPrefix" name="metadataPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
     </div>
+    <form:errors path="metadataPrefix" cssClass="namespace" />
     <div class="Label">NameSpace:</div>
     <div class="Value">
         <input type="text" value="${padraoMet.namespace}" id="namespace" name="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" /> 

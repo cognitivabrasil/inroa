@@ -40,7 +40,10 @@ public class RepositoryHibernateDAO implements RepositoryDAO {
     }
 
     public Repositorio get(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-        //TODO: este metodo é utilizado para testar se já existe um repositorios cadastrado com esse nome
+        if(name.equalsIgnoreCase("cesta")){
+            return new Repositorio();
+        }else
+            return null;
+        //TODO: este metodo é utilizado para testar se já existe um repositorios cadastrado com esse nome. Deve retornar null se nao existir.
     }
 }
