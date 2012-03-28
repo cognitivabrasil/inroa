@@ -24,7 +24,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
+@ContextConfiguration(locations = "classpath:pretoTestApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class RecuperadorTest {
     Recuperador r;
