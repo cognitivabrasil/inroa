@@ -32,7 +32,6 @@ public final class AdminController {
     private PadraoMetadadosDAO padraoDao;
     @Autowired
     private MapeamentoDAO mapDao;
-    
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
 
     public AdminController() {
@@ -62,7 +61,7 @@ public final class AdminController {
 
     @RequestMapping("/exibeRepositorios")
     public String exibeRep(@RequestParam(value = "id", required = true) int id,
-    Model model) {
+            Model model) {
         model.addAttribute("rep", repDao.get(id));
         return "admin/exibeRepositorios";
     }
@@ -96,8 +95,7 @@ public final class AdminController {
     public String editaRep(
             @RequestParam(value = "id", required = true) int id,
             Model model) {
-        
-        //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
+
         model.addAttribute("repModel", repDao.get(id));
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         model.addAttribute("mapDAO", mapDao);
@@ -163,7 +161,7 @@ public final class AdminController {
 
     @RequestMapping("/exibeFederacao")
     public String exibeFed(@RequestParam(value = "id", required = true) int id, Model model) {
-        
+
         //model.addAttribute("nomeRepositorio", nome);
         model.addAttribute("subFeb", subDao.get(id));
         return "admin/exibeFederacao";
@@ -244,5 +242,26 @@ public final class AdminController {
     public String sair(Model model, HttpSession session) {
         session.removeAttribute("usuario");
         return "redirect:/";
+    }
+
+    //------FUNCOES PARA AJAX------------
+    @RequestMapping("/mapeamentos/listaMapeamentoPadraoSelecionado")
+    public String listaMapSelecionadoAjax(
+            @RequestParam(value = "idpadrao", required = true) int idPadrao,
+            @RequestParam(value = "idrep", required = true) int idRepositorio,
+            Model model) {
+        if (idPadrao <= 0) {
+            model.addAttribute("idZero", true);
+        } else {
+            model.addAttribute("padraoMet", padraoDao.get(idPadrao));
+            if (idRepositorio > 0) {
+                model.addAttribute("repModel", repDao.get(idRepositorio));
+            } else {
+                model.addAttribute("repModel", new Repositorio());
+                model.addAttribute("novoRep", true);
+            }
+        }
+
+        return "admin/mapeamentos/listaMapeamentoPadraoSelecionado";
     }
 }

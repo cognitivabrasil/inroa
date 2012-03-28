@@ -417,7 +417,7 @@ function excluirAjax(idMapeamento, tabela, idResultado, idTabela, linha)
  * Esta fun&ccedil;&atilde;o deve ser chamamada da pasta raiz.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodar&aacute; sem que a pagina principal seja recarregada.
 */
-function selecionaMapeamento(idResultado, idPadrao, acao)
+function selecionaMapeamento(idResultado, idPadrao, idRep)
 {
     
     //div onde sera adicionado o resultado
@@ -425,7 +425,7 @@ function selecionaMapeamento(idResultado, idPadrao, acao)
     
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "./mapeamentos/listaMapeamentoPadraoSelecionado.jsp?idpadrao="+idPadrao+"&acao="+acao, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    ajax.open("POST", "./mapeamentos/listaMapeamentoPadraoSelecionado?idpadrao="+idPadrao+"&idrep="+idRep, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
     ajax.onreadystatechange = function()
     {

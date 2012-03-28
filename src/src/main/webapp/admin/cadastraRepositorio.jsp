@@ -76,8 +76,8 @@ Primeira etapa do cadastro de um repositorio
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
-                        <select name="idPadraoMetadados" id="idPadraoMetadados" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 'cadastra');">
-                            <option value="" selected>Selecione
+                        <select name="idPadraoMetadados" id="idPadraoMetadados" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 0);">
+                            <option value="0" selected>Selecione
                                 <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}" >
                                 <option value="${padraoMet.id}"> ${fn:toUpperCase(padraoMet.nome)}
                                 </c:forEach>

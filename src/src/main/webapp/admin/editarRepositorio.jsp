@@ -9,7 +9,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
-<%@include file="conexaoBD.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -27,21 +26,7 @@
 
     <body>
         <div id="page">
-            <%
-                Statement stm = con.createStatement();
 
-                String id = request.getParameter("id");
-                
-                String sql = "SELECT p.id as id_padrao, i.mapeamento_id FROM padraometadados p, repositorios i WHERE i.padrao_metadados=p.id AND i.id=" + id;
-
-                ResultSet res = stm.executeQuery(sql);
-
-                res.next();
-                int idPadrao = res.getInt("id_padrao");
-                int idTipoMap = res.getInt("mapeamento_id");
-                
-
-            %>
             <script type="text/javascript">
                 var myForm = new Validate();
                 myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
@@ -84,7 +69,7 @@
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
-                        <select name="idPadraoMetadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 'edita');">
+                        <select name="idPadraoMetadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, ${repModel.id});">
                             <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
                                 <c:choose>
                                     <c:when test="${padraoMet.id == repModel.padraoMetadados.id}">
@@ -104,7 +89,7 @@
                         Tipo de mapeamento:
                     </div>
                     <div id="resultado">
-                        <c:forEach var="map" items="${mapDAO.all}">
+                        <c:forEach var="map" items="${repModel.padraoMetadados.mapeamentos}">
                             
                             <c:choose>
                                     <c:when test="${map.id == repModel.mapeamento.id}">
@@ -187,9 +172,7 @@
             </form:form>
 
         </div>
-        <%
-            con.close();
-        %>
+
         <%@include file="../googleAnalytics"%>
     </body>
 </html>

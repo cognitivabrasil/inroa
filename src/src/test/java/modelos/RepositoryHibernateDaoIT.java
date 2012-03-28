@@ -105,7 +105,7 @@ public class RepositoryHibernateDaoIT extends AbstractTransactionalJUnit4SpringC
         Repositorio cesta = instance.get(id);
         
         assertEquals("Cesta", cesta.getNome());
-        assertEquals(4, (int)cesta.size());
+        assertEquals(4, (int)cesta.getSize());
     }
 
     /**

@@ -5,6 +5,7 @@
 package modelos;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -16,7 +17,7 @@ public class PadraoMetadados implements java.io.Serializable {
     private String nome;
     private String metadataPrefix;
     private String namespace;
-    private List<Mapeamento> mapeamentos;
+    private Set<Mapeamento> mapeamentos;
 
  
     public int getId() {
@@ -63,14 +64,14 @@ public class PadraoMetadados implements java.io.Serializable {
         this.namespace = namespace;
     }
 
-    public List<Mapeamento> getMapeamentos() {
+    public Set<Mapeamento> getMapeamentos() {
         return mapeamentos;
     }
 
-    public void setMapeamentos(List<Mapeamento> mapeamentos) {
+    public void setMapeamentos(Set<Mapeamento> mapeamentos) {
         this.mapeamentos = mapeamentos;
     }
-    
+   
     
     
     
