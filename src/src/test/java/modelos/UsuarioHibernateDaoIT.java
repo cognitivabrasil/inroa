@@ -65,7 +65,7 @@ public class UsuarioHibernateDaoIT {
     public void after() throws Exception {
         System.out.println("After");
         //Limpa a base de dados
-        DatabaseOperation.DELETE_ALL.execute(getConnection(), getBeforeDataSet());
+       // DatabaseOperation.DELETE_ALL.execute(getConnection(), getBeforeDataSet());
     }
 
     private IDatabaseConnection getConnection() throws Exception {

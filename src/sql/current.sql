@@ -97,4 +97,6 @@ WITH (
 ;
 ALTER TABLE mapeamentos OWNER TO feb;
 
+ ALTER TABLE repositorios ADD COLUMN mapeamento_id INT;
+
 --
