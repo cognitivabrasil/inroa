@@ -118,8 +118,8 @@ function exibeText(idDivResult, idTipoMapeamento, bot){
  */
 function apagarMapeamentoBranco(){
     processo("msgerro", "", "apagarBranco", "", "", "");
-    // fechando a janela atual ( popup )
-    //window.close();
+// fechando a janela atual ( popup )
+//window.close();
 
 }
 
@@ -318,14 +318,14 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
             {
                 var resultado = ajax.responseText;
                 //exibeResultado.innerHTML = resultado;
-                    if(isNaN(parseInt(resultado))){
-                        alert("Erro ao salvar o mapeamento na base de dados. Verifique o log.");
-                    }else{
-                        alert("Salvo!");
-                    }
-                    document.location.reload();
+                if(isNaN(parseInt(resultado))){
+                    alert("Erro ao salvar o mapeamento na base de dados. Verifique o log.");
+                }else{
+                    alert("Salvo!");
+                }
+                document.location.reload();
                 
-                //exibeResultado.innerHTML = "<p class='textoErro'>Erro. N&atilde;o foram informados todos os valores. Ou ocorreu erro com a conexao postgre</p>";
+            //exibeResultado.innerHTML = "<p class='textoErro'>Erro. N&atilde;o foram informados todos os valores. Ou ocorreu erro com a conexao postgre</p>";
             }
             else
             {
@@ -347,11 +347,11 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
  * @param linha numero da linha que sera excluida
  */
 function confirmaExclusao(id, tabelaBase, idResultado, idTabela, linha) {
-  if( confirm( 'Deseja realmente exluir?' ) ) {
-    excluirAjax(id, tabelaBase, idResultado, idTabela, linha);
-  } else {
+    if( confirm( 'Deseja realmente exluir?' ) ) {
+        excluirAjax(id, tabelaBase, idResultado, idTabela, linha);
+    } else {
     
-  }
+    }
 }
 
 /**
@@ -389,17 +389,17 @@ function excluirAjax(idMapeamento, tabela, idResultado, idTabela, linha)
             {
                 var resultado = ajax.responseText;
                 //exibeResultado.innerHTML = resultado;
-                    if(isNaN(parseInt(resultado))){
-                        exibeResultado.innerHTML = resultado;
-                    }else{
-                        if(parseInt(resultado)>0){
-                            exibeResultado.innerHTML = "Exclu&iacute;do com sucesso.";
-                            removeLinha(idTabela, linha);
-                        }
-                        else{
-                            exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
-                        }
-                    }                    
+                if(isNaN(parseInt(resultado))){
+                    exibeResultado.innerHTML = resultado;
+                }else{
+                    if(parseInt(resultado)>0){
+                        exibeResultado.innerHTML = "Exclu&iacute;do com sucesso.";
+                        removeLinha(idTabela, linha);
+                    }
+                    else{
+                        exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
+                    }
+                }                    
             }
             else
             {
@@ -412,20 +412,24 @@ function excluirAjax(idMapeamento, tabela, idResultado, idTabela, linha)
 
 }
 
+
 /**
  * Fun&ccedil;&atilde;o utilizada para apresentar os tipos de mapeamentos disponiveis para o padrao selecionado.
  * Esta fun&ccedil;&atilde;o deve ser chamamada da pasta raiz.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodar&aacute; sem que a pagina principal seja recarregada.
 */
-function selecionaMapeamento(idResultado, idPadrao, idRep)
+function selecionaMapeamento(idResultado, idPadrao, mapSelecionado)
 {
-    
+    if(mapSelecionado==undefined){
+        mapSelecionado=0;
+    }
+ 
     //div onde sera adicionado o resultado
     var exibeResultado = document.getElementById(idResultado);
     
     var ajax = openAjax(); // Inicia o Ajax.
-
-    ajax.open("POST", "./mapeamentos/listaMapeamentoPadraoSelecionado?idpadrao="+idPadrao+"&idrep="+idRep, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    
+    ajax.open("POST", "./mapeamentos/listaMapeamentoPadraoSelecionado?idpadrao="+idPadrao+"&mapSelecionado="+mapSelecionado, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
     ajax.onreadystatechange = function()
     {

@@ -33,14 +33,14 @@ Primeira etapa do cadastro de um repositorio
             myForm.addRules({id:'padraoMetadados',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
             myForm.addRules({id:'periodicidadeAtualizacao',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
             myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
-            myForm.addRules({id:'rdMap',option:'required',error:'* Deve ser selecionado o tipo de mapeamento!'});
+            myForm.addRules({id:'mapeamento.id',option:'required',error:'* Deve ser selecionado um mapeamento!'});
             myForm.addRules({id:'metadataPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
             myForm.addRules({id:'namespace',option:'required',error:'* Deve ser informado o NameSpace!'});
             myForm.addRules({id:'confereLinkOAI',option:'required',error:'* A url informada n&atilde;o responde ao protocolo OAI-PMH!'});
         </script>
 
     </head>
-    <body onload="verificaLinkOnLoad(document.getElementById('url'), document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'));verificaMapOnLoad(${padraoSelecionado}, 'resultado', document.getElementById('padraoMetadados').value, 0)">
+    <body onload="verificaLinkOnLoad(document.getElementById('url'), document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI')); verificaMapOnLoad('${padraoSelecionado}', '${mapSelecionado}', 'resultado');">
 
         <div id="page">
 
@@ -96,7 +96,7 @@ Primeira etapa do cadastro de um repositorio
                     </div>
                     <div id='resultado'>
                         <div class="Value">Selecione um padr&atilde;o</div>
-                        <input type="hidden" id="rdMap"  name="mapeamento.id" value=""> 
+                        <input type="hidden" id="mapeamento.id"  name="mapeamento.id" value=""> 
                         <input type="hidden" id="metadataPrefix"  name="metadataPrefix" value="">
                         <input type="hidden" id="namespace"  name="namespace" value="">
                     </div>

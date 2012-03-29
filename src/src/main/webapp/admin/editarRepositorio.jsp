@@ -27,17 +27,17 @@
     <body>
         <div id="page">
 
-            <script type="text/javascript">
+            <!--script type="text/javascript">
                 var myForm = new Validate();
                 myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
                 myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
-                myForm.addRules({id:'padraoMet',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
-                myForm.addRules({id:'rdMap',option:'isNotEmpty',error:'* Deve ser selecionado o tipo de mapeamento!'});
+                myForm.addRules({id:'padraoMetadados.id',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
+                myForm.addRules({id:'mapeamento.id',option:'isNotEmpty',error:'* Deve ser selecionado um mapeamento!'});
                 myForm.addRules({id:'metadataPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
                 myForm.addRules({id:'namespace',option:'required',error:'* Deve ser informado o NameSpace!'});
                 myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
                 myForm.addRules({id:'periodicidadeAtualizacao',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
-            </script>
+            </script-->
 
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.nome}</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
@@ -69,16 +69,9 @@
                         Padr&atilde;o de metadados utilizado:
                     </div>
                     <div class="Value">
-                        <select name="idPadraoMetadados" id="padraoMet" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, ${repModel.id});">
+                        <select name="padraoMetadados.id" id="padraoMetadados.id" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, ${repModel.mapeamento.id});">
                             <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
-                                <c:choose>
-                                    <c:when test="${padraoMet.id == repModel.padraoMetadados.id}">
-                                        <option value="${padraoMet.id}" selected> ${fn:toUpperCase(padraoMet.nome)}
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="${padraoMet.id}"> ${fn:toUpperCase(padraoMet.nome)}
-                                    </c:otherwise>
-                                </c:choose>                            
+                                <option value="${padraoMet.id}" ${padraoMet.id==repModel.padraoMetadados.id ? 'selected':''}> ${fn:toUpperCase(padraoMet.nome)}                           
                             </c:forEach>
                         </select>
                     </div>
@@ -90,15 +83,7 @@
                     </div>
                     <div id="resultado">
                         <c:forEach var="map" items="${repModel.padraoMetadados.mapeamentos}">
-                            
-                            <c:choose>
-                                    <c:when test="${map.id == repModel.mapeamento.id}">
-                                        <div class="ValueIndex"><input type="radio" checked=true id="rdMap" name="tipo_map" value="${map.id}">${map.name} (${map.description})</div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="ValueIndex"><input type="radio" id="rdMap" name="tipo_map" value="${map.id}">${map.name} (${map.description})</div>
-                                    </c:otherwise>
-                                </c:choose> 
+                            <div class="ValueIndex"><input type="radio" ${map.id == repModel.mapeamento.id ? 'checked=true':''} id="mapeamento.id" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
                         </c:forEach>
 
                     </div>

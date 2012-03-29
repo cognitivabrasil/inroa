@@ -16,20 +16,13 @@
 <c:choose>
     <c:when test="${idZero}">
         <div class="Value">Selecione um padr&atilde;o</div>
-        <input type='hidden' id='rdMap' name=\"idTipoMapeamento\" value=''>
+        <input type='hidden' id='mapeamento.id' name=\"idTipoMapeamento\" value=''>
         <input type="hidden" id="metadataPrefix"  name="metadataPrefix" value=''>
         <input type="hidden" id="namespace" name="namespace" value=''>
     </c:when>
     <c:otherwise>
         <c:forEach var="map" items="${padraoMet.mapeamentos}">
-            <c:choose>
-                <c:when test="${map.id == repModel.mapeamento.id}">
-                    <div class="ValueIndex"><input type="radio" checked=true id="rdMap" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
-                </c:when>
-                <c:otherwise>
-                    <div class="ValueIndex"><input type="radio" id="rdMap" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
-                </c:otherwise>
-            </c:choose> 
+            <div class="ValueIndex"><input type="radio" ${map.id == mapSelecionado ? 'checked=true':''} id="mapeamento.id" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
         </c:forEach>
     </c:otherwise>
 </c:choose>

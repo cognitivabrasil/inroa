@@ -38,7 +38,7 @@ public final class AdminController {
     private MapeamentoDAO mapDao;
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
     private RepositorioValidator repValidator = new RepositorioValidator();
-
+    
     public AdminController() {
     }
 
@@ -85,6 +85,7 @@ public final class AdminController {
             @ModelAttribute("repModel") Repositorio rep,
             BindingResult result,
             Model model) {
+        
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
             model.addAttribute("repModel", rep);
@@ -94,22 +95,16 @@ public final class AdminController {
         } else {
             if (repDao.get(rep.getNome()) != null) { //se retornar algo é porque já existe um repositorio com esse nome
                 result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); //nao esta dentro da classe validator pq só executa isso quando for um repositorio novo, quando editar não.
+                
+                model.addAttribute("mapSelecionado", rep.getMapeamento().getId());
                 model.addAttribute("repModel", rep);
                 model.addAttribute("padraoMetadadosDAO", padraoDao);
                 model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
                 return "admin/cadastraRepositorio";
             } else { //se retornar null é porque nao tem nenhum repositorio com esse nome
-                Teste.imprimeRep(rep);
+                repDao.save(rep); //salva o novo repositorio return
                 return "redirect:fechaRecarrega";
             }
-
-            /*
-             * if (repDao.get(rep.getNome()) == null) {
-             * model.addAttribute("erro", "Já existe um repositório cadastrado
-             * com esse nome!"); return "admin/cadastraRepositorio"; } else {
-             * repDao.save(rep); //salva o novo repositorio return
-             * "redirect:/fechaRecarrega"; }
-             */
         }
     }
 
@@ -128,7 +123,6 @@ public final class AdminController {
             @ModelAttribute("repModel") Repositorio rep,
             @RequestParam(value = "id", required = true) int id,
             BindingResult result,
-            SessionStatus status,
             Model model) {
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
@@ -136,8 +130,9 @@ public final class AdminController {
             model.addAttribute("padraoMetadadosDAO", padraoDao);
             return "admin/editarRepositorio";
         } else {
-            repDao.save(rep);
-            return "redirect:admin/exibeRepositorios?id=" + id;
+            //repDao.save(rep);
+            Teste.imprimeRep(rep);
+            return "redirect:/admin/exibeRepositorios?id=" + id;
         }
     }
 
@@ -274,14 +269,14 @@ public final class AdminController {
     @RequestMapping("/mapeamentos/listaMapeamentoPadraoSelecionado")
     public String listaMapSelecionadoAjax(
             @RequestParam(value = "idpadrao", required = true) int idPadrao,
-            @RequestParam(value = "idrep", required = true) int idRepositorio,
+            @RequestParam(value = "mapSelecionado", required = false) int mapSelecionado,
             Model model) {
         if (idPadrao <= 0) {
             model.addAttribute("idZero", true);
         } else {
             model.addAttribute("padraoMet", padraoDao.get(idPadrao));
-            if (idRepositorio > 0) {
-                model.addAttribute("repModel", repDao.get(idRepositorio));
+            if (mapSelecionado > 0) {
+                model.addAttribute("mapSelecionado", mapSelecionado);
             } else {
                 model.addAttribute("repModel", new Repositorio());
                 model.addAttribute("novoRep", true);

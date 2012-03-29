@@ -20,8 +20,8 @@ function MM_openBrWindow(theURL,winName,features) {
 *
 * @param mypage		String contendo url que sera aberta
 * @param myname		String contendo nome da nova janela
-* @param w			width, Largura. Se informar a string 'total' ao inves do numero, abre na largura maxima da tela.
-* @param h			height, Altura. Se informar a string 'total' ao inves do numero, abre na altura maxima da tela.
+* @param w		width, Largura. Se informar a string 'total' ao inves do numero, abre na largura maxima da tela.
+* @param h		height, Altura. Se informar a string 'total' ao inves do numero, abre na altura maxima da tela.
 * @param features	String contendo as features. Nao colocar em features o height, width, top e left. Ex:scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no
 */
 function NewWindow(mypage,myname,w,h,features){
@@ -350,20 +350,38 @@ function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
     }
 }
 
-function verificaLinkOnLoad (inputTexto, divErro, inputHidden){    
+/**
+ * Chama a verificaLinkOAI() caso o link tenha sido preenchido no formum&aacute;rio
+ * @param inputTexto o input de onde o link ser&aacute; coletado
+ * @param divErro div onde o status e o resultado ser&atilde;o apresentado.
+ * @param inputHidden input que receber&aacute; um valor se o link for v&aacute;lido.
+ */
+function verificaLinkOnLoad (inputTexto, divErro, inputHidden){  
     link = inputTexto.value;
     if(link!=""){
         verificaLinkOAI(link, inputTexto, divErro, inputHidden);
     }
-    
-
 }
-function verificaMapOnLoad (idPadraoSelecionado, idResultado, idPadrao, idRep){
+/**
+ * Esta função é utilizada para chamar a função selecionaMapeamento() quando o padrao de metadados recebido como parâmetro tiver algum valor
+ * @param idPadraoSelecionado id do Padrao de metadados selecionado no form
+ * @param mapeamentoSelecionado id do mapeamento selecionado no form
+ * @param idResultado id do div que recebera os resultados do ajax.
+ */
+function verificaMapOnLoad (idPadraoSelecionado, mapeamentoSelecionado, idResultado){
     if(idPadraoSelecionado!=""){
-        selecionaMapeamento(idResultado, idPadrao, idRep);
+        if(mapeamentoSelecionado==""){
+            mapeamentoSelecionado=0;
+        }
+        selecionaMapeamento(idResultado, idPadraoSelecionado, mapeamentoSelecionado);
     }    
 }
 
+/**
+ * Quando chamada adiciona no div informado um input password com o nome "SenhaBD" e o id "senhabd". Muda o css class do div que contem a repetição de senha.
+ * @param idSenha div onde será colocado o input
+ * @param idRepSenha div onde está o input para repetir a senha
+ */
 function exibeDivSenha(idSenha, idRepSenha)
 {
     idSenha.innerHTML='<input name="SenhaBD" type="password" id="senhabd">';

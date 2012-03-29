@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +20,15 @@ public class PadraoMetadados implements java.io.Serializable {
     private String namespace;
     private Set<Mapeamento> mapeamentos;
 
+    public PadraoMetadados() {
+        id=0;
+        nome="";
+        metadataPrefix="";
+        namespace="";
+        mapeamentos = new HashSet<Mapeamento>();
+    }
+    
+    
  
     public int getId() {
         return id;
