@@ -196,7 +196,6 @@ src/debian/source/format -text
 src/debian/watch.ex -text
 src/nb-configuration.xml -text
 src/nbactions.xml -text
-src/out.xml -text
 src/pom.xml -text
 src/settings.xml -text
 src/sql/FEB_1.9.sql -text
