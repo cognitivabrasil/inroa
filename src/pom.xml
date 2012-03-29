@@ -320,7 +320,11 @@
         <testSourceDirectory>src/test/java</testSourceDirectory>
         <finalName>feb</finalName>
         <plugins>
-
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>2.7.1</version>
+      </plugin>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat6-maven-plugin</artifactId>
@@ -404,7 +408,28 @@
                     <skipTests>false</skipTests>
                 </configuration>
             </plugin>
+ <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.5.1</version>
+  <configuration>
+          <formats>
+            <format>html</format>
+            <format>xml</format>
+          </formats>
+        </configuration>
 
+      </plugin>
+<plugin>
+   <groupId>org.codehaus.mojo</groupId>
+   <artifactId>findbugs-maven-plugin</artifactId>
+   <version>1.2</version>
+   <configuration>
+      <findbugsXmlOutput>true</findbugsXmlOutput>
+      <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+      <xmlOutput>true</xmlOutput>
+   </configuration>
+</plugin>
         </plugins>
 
     </build>
@@ -417,6 +442,16 @@
                     <configLocation>config/sun_checks.xml</configLocation>
                 </configuration>
             </plugin>
+<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <configuration>
+          <formats>
+            <format>html</format>
+            <format>xml</format>
+          </formats>
+        </configuration>
+      </plugin>
         </plugins>
     </reporting>
 </project>
