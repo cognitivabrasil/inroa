@@ -96,27 +96,27 @@ public class Recuperador {
                         consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, false);
                     }
                 } else {
-                    consultaSql = busca_subRep(tokensConsulta, idSubRep, sqlOrdenacao); //busca no subrepositorio
+                    consultaSql = busca_subRep(tokensConsulta, idSubRep, sqlOrdenacao, false); //busca no subrepositorio
                 }
             } else { //subfed != vazio e repLocal = vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_subfed(tokensConsulta, idSubfed, sqlOrdenacao);//busca na subfederacao
+                    consultaSql = busca_subfed(tokensConsulta, idSubfed, sqlOrdenacao, false);//busca na subfederacao
                 } else {
-                    consultaSql = busca_subfed_subrep(tokensConsulta, idSubfed, idSubRep, sqlOrdenacao); //busca na subfederacao e no subrepositorio
+                    consultaSql = busca_subfed_subrep(tokensConsulta, idSubfed, idSubRep, sqlOrdenacao, false); //busca na subfederacao e no subrepositorio
                 }
             }
         } else { //replocal != vazio
             if (idSubfed.length == 1 && idSubfed[0].isEmpty()) { //replocal != vazio e subfed = vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_repLocal(tokensConsulta, idRepLocal, sqlOrdenacao); //busca no repositorio local
+                    consultaSql = busca_repLocal(tokensConsulta, idRepLocal, sqlOrdenacao, false); //busca no repositorio local
                 } else {
-                    consultaSql = busca_repLocal_subrep(tokensConsulta, idRepLocal, idSubRep, sqlOrdenacao); //busca no reposiotio local e no subrepositorio
+                    consultaSql = busca_repLocal_subrep(tokensConsulta, idRepLocal, idSubRep, sqlOrdenacao, false); //busca no reposiotio local e no subrepositorio
                 }
             } else { //replocal != vazio e subfed != vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_repLocal_subfed(tokensConsulta, idRepLocal, idSubfed, sqlOrdenacao);//busca na subfederacao
+                    consultaSql = busca_repLocal_subfed(tokensConsulta, idRepLocal, idSubfed, sqlOrdenacao, false);//busca na subfederacao
                 } else {
-                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, idRepLocal, idSubfed, idSubRep, sqlOrdenacao); //busca na subfederacao e no subrepositorio
+                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, idRepLocal, idSubfed, idSubRep, sqlOrdenacao, false); //busca na subfederacao e no subrepositorio
                 }
             }
         }
@@ -146,7 +146,7 @@ public class Recuperador {
     }
 
     //confederacao
-    public String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL, boolean autor) {
+    String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL, boolean autor) {
         
         if (autor) {                        // if is a author request
             if (tokensConsulta.isEmpty()) {   // see if have a query                
@@ -189,7 +189,7 @@ public class Recuperador {
     }
 
     //replocal
-    private String busca_repLocal(ArrayList<String> tokensConsulta, String[] idRepLocal, String finalSQL) {
+    String busca_repLocal(ArrayList<String> tokensConsulta, String[] idRepLocal, String finalSQL, boolean autor) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
                 + " WHERE r1w.tid=d.id "
                 + " AND (";
@@ -216,7 +216,7 @@ public class Recuperador {
     }
 
     //subfed
-    private String busca_subfed(ArrayList<String> tokensConsulta, String[] idSubfed, String finalSQL) {
+    String busca_subfed(ArrayList<String> tokensConsulta, String[] idSubfed, String finalSQL, boolean autor) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id "
                 + " AND (";
@@ -244,7 +244,7 @@ public class Recuperador {
     }
 
     //repsubfed
-    private String busca_subRep(ArrayList<String> tokensConsulta, String[] idSubRep, String finalSQL) {
+    String busca_subRep(ArrayList<String> tokensConsulta, String[] idSubRep, String finalSQL, boolean autor) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
                 + " WHERE r1w.tid=d.id "
                 + " AND (";
@@ -272,7 +272,7 @@ public class Recuperador {
     }
 
     //replocal + subfed
-    private String busca_repLocal_subfed(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String finalSQL) {
+    String busca_repLocal_subfed(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String finalSQL, boolean autor) {
 
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND ("
@@ -312,7 +312,7 @@ public class Recuperador {
     }
 
     //replocal + repsubfed
-    private String busca_repLocal_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubRep, String finalSQL) {
+    String busca_repLocal_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubRep, String finalSQL, boolean autor) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
                 + " WHERE r1w.tid=d.id"
                 + " AND (";
@@ -345,7 +345,7 @@ public class Recuperador {
     }
 
     //subfed + repsubfed
-    private String busca_subfed_subrep(ArrayList<String> tokensConsulta, String[] idSubfed, String[] idSubRep, String finalSQL) {
+    String busca_subfed_subrep(ArrayList<String> tokensConsulta, String[] idSubfed, String[] idSubRep, String finalSQL, boolean autor) {
 
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
@@ -378,7 +378,7 @@ public class Recuperador {
     }
 
     //replocal + subfed + repsubfed
-    private String busca_repLocal_subfed_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String finalSQL) {
+    String busca_repLocal_subfed_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String finalSQL, boolean autor) {
         String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
@@ -416,32 +416,5 @@ public class Recuperador {
         }
 
         return consultaSql;
-    }
-    
-    public static void main(String[] args) {
-        
-        System.out.println("EEEE");
-        Recuperador r = new Recuperador();
-
-        //Conectar conecta = new Conectar();
-        //Connection conn = conecta.conectaBD();
-      
-        
-        try{
-        //r.busca("matematica", conn, null, null, null, "Relevância");
-                   
-        String sqlAutorSemQuery = " a.documento=d.id AND a.nome~@@'Carlos Heitor' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Carlos Heitor')) DESC;";
-        String sqlAutorComQuery = "') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
-        String sqlQuery = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
-        
-        ArrayList<String> tokensConsulta = new ArrayList<String>();
-        tokensConsulta.add("educa");
-        
-            System.out.println("TESTE: "+r.buscaConfederacao(tokensConsulta, sqlQuery, false));
-        } catch (Exception e){
-            System.out.println("ERRO: "+e);
-        }
-        
-    }
-            
+    }            
 }
