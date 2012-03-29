@@ -5,6 +5,7 @@
 package modelos;
 
 import java.io.File;
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.List;
 import javax.sql.DataSource;
@@ -72,7 +73,7 @@ public class UsuarioHibernateDaoIT {
         System.out.println("Get Connection");
         // Pega a conexão com o banco de dados
         if (connection == null) {
-           C onnection con = dataSource.getConnection();
+           Connection con = dataSource.getConnection();
             DatabaseMetaData databaseMetaData = con.getMetaData();
             connection = new DatabaseConnection(con);
         }
@@ -170,8 +171,10 @@ public class UsuarioHibernateDaoIT {
         instance.save(r2);
 
         String[] ignore = {"id"};
+        String[] sort = {"login"};
 
-        Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("usuarios")), new SortedTable(getConnection().createDataSet().getTable("usuarios")), ignore);
+
+        Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("usuarios"), sort), new SortedTable(getConnection().createDataSet().getTable("usuarios"), sort), ignore);
 
     }
 }
