@@ -5,7 +5,6 @@
 package modelos;
 
 import java.io.File;
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.List;
 import javax.sql.DataSource;
@@ -13,6 +12,7 @@ import org.dbunit.Assertion;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.*;
@@ -72,7 +72,7 @@ public class UsuarioHibernateDaoIT {
         System.out.println("Get Connection");
         // Pega a conexão com o banco de dados
         if (connection == null) {
-            Connection con = dataSource.getConnection();
+           C onnection con = dataSource.getConnection();
             DatabaseMetaData databaseMetaData = con.getMetaData();
             connection = new DatabaseConnection(con);
         }
@@ -171,7 +171,7 @@ public class UsuarioHibernateDaoIT {
 
         String[] ignore = {"id"};
 
-        Assertion.assertEqualsIgnoreCols(getAfterDataSet().getTable("usuarios"), getConnection().createDataSet().getTable("usuarios"), ignore);
+        Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("usuarios")), new SortedTable(getConnection().createDataSet().getTable("usuarios")), ignore);
 
     }
 }
