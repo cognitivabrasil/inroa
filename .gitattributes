@@ -490,7 +490,6 @@ src/src/main/webapp/scripts/funcoes.js -text
 src/src/main/webapp/scripts/funcoesMapeamento.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/test/java/OBAA/OBAATest.java -text
-src/src/test/java/Recuperador/RecuperadorTest.java -text
 src/src/test/java/metadata/DublinCoreTest.java -text
 src/src/test/java/metadata/XsltDC2ObaaTest.java -text
 src/src/test/java/metadata/XsltLom2ObaaTest.java -text
