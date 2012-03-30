@@ -63,16 +63,21 @@ public class Recuperador {
 
         boolean confederacao = false;
         boolean LRU = false;
+        boolean autorb = false;
+        
         LRU cache = new LRU(tokensConsulta, con);
 
         String consultaSql = ""; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
         String sqlOrdenacao = ""; //eh preenchido pelo if que testa qual o tipo de ordenacao
 
+        if (autor != null) autorb = true;
+        
         if (ordenacao.equals("data")) {
+            //TODO: Fazer RSS para autor?
             sqlOrdenacao = "') GROUP BY r1w.tid, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
         } else {
             
-            if (autor!=null){
+            if (autorb){
                 if (consulta.isEmpty()){
                     //COM autor, SEM termo de busca
                     sqlOrdenacao = " a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, '"+autor+"')) DESC;";
@@ -93,30 +98,30 @@ public class Recuperador {
                     if (!LRU) {
                         confederacao = true;
                         //busca na confederacao
-                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, false);
+                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, autorb);
                     }
                 } else {
-                    consultaSql = busca_subRep(tokensConsulta, idSubRep, sqlOrdenacao, false); //busca no subrepositorio
+                    consultaSql = busca_subRep(tokensConsulta, idSubRep, sqlOrdenacao, autorb); //busca no subrepositorio
                 }
             } else { //subfed != vazio e repLocal = vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_subfed(tokensConsulta, idSubfed, sqlOrdenacao, false);//busca na subfederacao
+                    consultaSql = busca_subfed(tokensConsulta, idSubfed, sqlOrdenacao, autorb);//busca na subfederacao
                 } else {
-                    consultaSql = busca_subfed_subrep(tokensConsulta, idSubfed, idSubRep, sqlOrdenacao, false); //busca na subfederacao e no subrepositorio
+                    consultaSql = busca_subfed_subrep(tokensConsulta, idSubfed, idSubRep, sqlOrdenacao, autorb); //busca na subfederacao e no subrepositorio
                 }
             }
         } else { //replocal != vazio
             if (idSubfed.length == 1 && idSubfed[0].isEmpty()) { //replocal != vazio e subfed = vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_repLocal(tokensConsulta, idRepLocal, sqlOrdenacao, false); //busca no repositorio local
+                    consultaSql = busca_repLocal(tokensConsulta, idRepLocal, sqlOrdenacao, autorb); //busca no repositorio local
                 } else {
-                    consultaSql = busca_repLocal_subrep(tokensConsulta, idRepLocal, idSubRep, sqlOrdenacao, false); //busca no reposiotio local e no subrepositorio
+                    consultaSql = busca_repLocal_subrep(tokensConsulta, idRepLocal, idSubRep, sqlOrdenacao, autorb); //busca no reposiotio local e no subrepositorio
                 }
             } else { //replocal != vazio e subfed != vazio
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_repLocal_subfed(tokensConsulta, idRepLocal, idSubfed, sqlOrdenacao, false);//busca na subfederacao
+                    consultaSql = busca_repLocal_subfed(tokensConsulta, idRepLocal, idSubfed, sqlOrdenacao, autorb);//busca na subfederacao
                 } else {
-                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, idRepLocal, idSubfed, idSubRep, sqlOrdenacao, false); //busca na subfederacao e no subrepositorio
+                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, idRepLocal, idSubfed, idSubRep, sqlOrdenacao, autorb); //busca na subfederacao e no subrepositorio
                 }
             }
         }
@@ -190,29 +195,60 @@ public class Recuperador {
 
     //replocal
     String busca_repLocal(ArrayList<String> tokensConsulta, String[] idRepLocal, String finalSQL, boolean autor) {
-        String consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
-                + " WHERE r1w.tid=d.id "
-                + " AND (";
-
-        for (int i = 0; i < idRepLocal.length; i++) {
-            if (i == 0) {
-                consultaSql += " d.id_repositorio=" + idRepLocal[i];
+        
+        if (autor) {                     // if is a author request
+            if (tokensConsulta.isEmpty()) {
+                String consultaSql = "SELECT d.id FROM documentos d, autor a WHERE "+finalSQL;
+                return consultaSql;
             } else {
-                consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
+                String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
+                        + " WHERE r1w.tid=d.id "
+                        + " AND (";
+                for (int i = 0; i < idRepLocal.length; i++) {
+                if (i == 0) {
+                    consultaSql += " d.id_repositorio=" + idRepLocal[i];
+                } else {
+                    consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
+                }
             }
-        }
 
-        consultaSql += ") AND (r1w.token=";
+            consultaSql += ") AND (r1w.token=";
 
-        for (int i = 0; i < tokensConsulta.size(); i++) {
-            String token = tokensConsulta.get(i);
-            if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
-            } else {
-                consultaSql += "'" + token + "' OR r1w.token=";
+            for (int i = 0; i < tokensConsulta.size(); i++) {
+                String token = tokensConsulta.get(i);
+                if (i == tokensConsulta.size() - 1) {
+                    consultaSql += "'" + token + finalSQL;
+                } else {
+                    consultaSql += "'" + token + "' OR r1w.token=";
+                }
             }
+            return consultaSql;
+            }
+        } else {
+            String consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
+                    + " WHERE r1w.tid=d.id "
+                    + " AND (";
+
+            for (int i = 0; i < idRepLocal.length; i++) {
+                if (i == 0) {
+                    consultaSql += " d.id_repositorio=" + idRepLocal[i];
+                } else {
+                    consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
+                }
+            }
+
+            consultaSql += ") AND (r1w.token=";
+
+            for (int i = 0; i < tokensConsulta.size(); i++) {
+                String token = tokensConsulta.get(i);
+                if (i == tokensConsulta.size() - 1) {
+                    consultaSql += "'" + token + finalSQL;
+                } else {
+                    consultaSql += "'" + token + "' OR r1w.token=";
+                }
+            }
+            return consultaSql;
         }
-        return consultaSql;
     }
 
     //subfed
