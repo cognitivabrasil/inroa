@@ -118,7 +118,10 @@ public class UsuarioHibernateDaoIT extends AbstractTransactionalJUnit4SpringCont
 
     @Test
     public void testAuthenticateNoSuchUser() {
-        Usuario u1 = instance.authenticate("nonexisting", "random");
+        Usuario u1 = instance.authenticate(null, "random");
+        assertThat(u1, is(nullValue()));
+        
+        u1 = instance.authenticate("nosuchuser", "random");
         assertThat(u1, is(nullValue()));
     }
 
