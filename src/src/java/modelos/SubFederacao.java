@@ -90,20 +90,20 @@ public class SubFederacao implements java.io.Serializable {
     public String toString() {
         return new ToStringCreator(this).append("id", this.getId()).append("nome", this.getNome()).append("descrição", this.getDescricao()).append("url", this.getUrl()).append("última atualização", this.getUltimaAtualizacao()).toString();
     }
-    
+
     /**
-     * Retorna o n&uacute;mero de documentos que a subfedera&ccedil;&atilde;o possui.
+     * Retorna o n&uacute;mero de documentos que a subfedera&ccedil;&atilde;o
+     * possui.
+     *
      * @return int com o n&uacute;mero de documentos
      */
-    public int getSizeDoc(){
+    public int getSizeDoc() {
         int size = 0;
 
-        Iterator it = getRepositorios().iterator();
-        while(it.hasNext()){
-            RepositorioSubFed repSub = (RepositorioSubFed) it.next();
+        for (RepositorioSubFed repSub : getRepositorios()) {
             size += repSub.getSize();
         }
-        
+
         return size;
     }
 }

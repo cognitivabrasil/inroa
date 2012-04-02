@@ -167,4 +167,5 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
         }
     }
+    
 }
