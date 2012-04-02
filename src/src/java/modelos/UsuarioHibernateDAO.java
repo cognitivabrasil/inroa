@@ -5,59 +5,52 @@
 package modelos;
 
 import java.util.List;
-import org.springframework.orm.hibernate3.HibernateAccessor;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author paulo
  */
-public class UsuarioHibernateDAO extends HibernateDaoSupport implements UsuarioDAO {
+public class UsuarioHibernateDAO implements UsuarioDAO {
+
+    @Autowired
+    SessionFactory sessionFactory;
 
     public Usuario authenticate(String login, String password) {
-      HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        
-        if(login == null) {
+
+        if (login == null) {
             return null;
         }
-        
+
         Usuario u = get(login);
-        if(u != null && u.authenticate(password)) {
+        if (u != null && u.authenticate(password)) {
             return u;
         }
         return null;
     }
 
     public void delete(Usuario r) {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_AUTO);
-        t.delete(r);
+        this.sessionFactory.getCurrentSession().delete(r);
     }
 
     public Usuario get(int id) {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return t.get(Usuario.class, id);
+        return (Usuario) this.sessionFactory.getCurrentSession().get(Usuario.class, id);
     }
-    
+
     public Usuario get(String login) {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return (Usuario)t.find("from Usuario where login = ?", login).get(0);
+        return (Usuario) this.sessionFactory.getCurrentSession().createQuery("from Usuario where login = :login").setString("login", login).uniqueResult();
     }
 
     public List<Usuario> getAll() {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return getHibernateTemplate().find("from Usuario");
+        return (List<Usuario>) this.sessionFactory.getCurrentSession().createQuery("from Usuario").list();
     }
 
+   // @Transactional
     public void save(Usuario r) {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_AUTO);
+        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
         t.saveOrUpdate(r);
     }
-    
 }

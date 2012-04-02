@@ -85,7 +85,6 @@ p:password="${dataSource.password}" /> -->
  
     <bean id="UsuarioDAO"
         class="modelos.UsuarioHibernateDAO">
-        <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
      <context:annotation-config/>
 

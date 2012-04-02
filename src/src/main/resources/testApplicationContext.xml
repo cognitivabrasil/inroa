@@ -19,7 +19,7 @@ http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
     <bean id="applicationContextProvider" class="spring.ApplicationContextProvider"></bean>
     
 
-
+<tx:annotation-driven/>
 
 
 <!--<bean name="/feb/*"
@@ -67,7 +67,7 @@ p:password="${dataSource.password}" /> -->
     
     <bean id="repositoryDAO"
        class="modelos.RepositoryHibernateDAO">
-    </bean>
+</bean>
 
     <bean id="subFederationDAO"
        class="modelos.SubFederacaoHibernateDAO">
@@ -80,7 +80,6 @@ p:password="${dataSource.password}" /> -->
  
     <bean id="UsuarioDAO"
         class="modelos.UsuarioHibernateDAO">
-        <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
      <context:annotation-config/>
 
