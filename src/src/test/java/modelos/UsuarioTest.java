@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  * @author paulo
  */
 public class UsuarioTest {
-    
+
     public UsuarioTest() {
     }
 
@@ -23,11 +23,11 @@ public class UsuarioTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -35,7 +35,6 @@ public class UsuarioTest {
     /**
      * Test of getId method, of class Usuario.
      */
-  
     @Test
     public void testSetPassword() {
         System.out.println("setPassword");
@@ -55,5 +54,13 @@ public class UsuarioTest {
         u.setPasswordMd5("698dc19d489c4e4db73e28a713eab07b");
         assertEquals(true, u.authenticate("teste"));
         assertEquals(false, u.authenticate("Teste"));
+    }
+
+    @Test
+    public void testAuthenticateNullPassword() {
+        Usuario u = new Usuario();
+        u.setPasswordMd5("698dc19d489c4e4db73e28a713eab07b");
+
+        assertFalse(u.authenticate(null));
     }
 }
