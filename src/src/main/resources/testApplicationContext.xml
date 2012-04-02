@@ -75,7 +75,6 @@ p:password="${dataSource.password}" /> -->
  
     <bean id="PadraoMetadadosDAO"
         class="modelos.PadraoMetadadosHibernateDAO">
-        <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
  
     <bean id="UsuarioDAO"

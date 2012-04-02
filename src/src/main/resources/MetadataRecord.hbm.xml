@@ -2,10 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
   <class name="modelos.PadraoMetadados" table="padraometadados">
-    <id column="id" name="id" type="int">
-      <meta attribute="scope-set">protected</meta>
-      <generator class="native"/>
-    </id>
+        <id column="id" name="id" type="int">
+            <generator class="sequence">
+                <param name="sequence">padraometadados_id_seq</param>
+            </generator>  
+        </id>
     <property name="nome" type="string"/>
     <property name="metadataPrefix" type="string" column="metadata_prefix"/>
     <property name="namespace" type="string" column="name_space"/>

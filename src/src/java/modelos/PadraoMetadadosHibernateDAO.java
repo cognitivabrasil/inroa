@@ -5,6 +5,9 @@
 package modelos;
 
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateAccessor;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -13,24 +16,26 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  *
  * @author paulo
  */
-public class PadraoMetadadosHibernateDAO extends HibernateDaoSupport implements PadraoMetadadosDAO {
+public class PadraoMetadadosHibernateDAO implements PadraoMetadadosDAO {
+        @Autowired
+    SessionFactory sessionFactory;
 
     public void delete(PadraoMetadados r) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.sessionFactory.getCurrentSession().delete(r);
     }
 
     public PadraoMetadados get(int id) {
-        return getHibernateTemplate().get(PadraoMetadados.class, id);
+        return (PadraoMetadados)this.sessionFactory.getCurrentSession().get(PadraoMetadados.class, id);
     }
 
     public List<PadraoMetadados> getAll() {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return getHibernateTemplate().find("from PadraoMetadados");
+        Session s = this.sessionFactory.getCurrentSession();
+        return s.createQuery("from PadraoMetadados").list();
     }
 
     public void save(PadraoMetadados r) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
+        t.saveOrUpdate(r); 
     }
 
 }

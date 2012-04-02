@@ -134,28 +134,28 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     @Test
     public void testSave() {
         Repositorio r = new Repositorio();
-        
+
         r.setNome("Novo");
         r.setNamespace("obaa");
         r.setUrl("http://url");
-        
+
         instance.save(r);
-        
+
         Repositorio r2 = instance.get(1);
-        
+
         r2.setNome("Jorjao");
-        
+
         instance.save(r2);
 
         updated = true;
     }
-    
-        @AfterTransaction
+
+    @AfterTransaction
     public void testSaveAndUpdate2() throws Exception {
         if (updated) {
             updated = false;
             String[] ignore = {"id", "metadata_prefix", "periodicidade_horas", "padrao_metadados", "mapeamento_id", "descricao", "data_ultima_atualizacao",
-            "set", "tipo_mapeamento_id", "tipo_sincronizacao"};
+                "set", "tipo_mapeamento_id", "tipo_sincronizacaosc"};
             String[] sort = {"nome"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("repositorios"), sort), new SortedTable(getConnection().createDataSet().getTable("repositorios"), sort), ignore);
 
