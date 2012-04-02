@@ -5,45 +5,50 @@ and open the template in the editor.
 -->
 
 <dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="dataset.xsd">
+         xsi:noNamespaceSchemaLocation="dataset.xsd">
             
-            <padraometadados id="1" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
-            <padraometadados id="2" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
-            <padraometadados id="3" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
+    <padraometadados id="1" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
+    <padraometadados id="2" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
+    <padraometadados id="3" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
+    
+    <mapeamentos id="1" nome="Padrao" descricao="Blabla" xslt="" padrao_id="1"/>
 
             
-        <repositorios id="1" nome="Cesta" descricao="dfsd" 
-            url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request" 
-            periodicidade_horas="24"
-            metadata_prefix="lom"
-            padrao_metadados="1"
-            name_space="lom" />
-        <repositorios id="2" nome="Teste2" descricao="dfsd" url_or_ip="http://"        
-            periodicidade_horas="24"
-                        padrao_metadados="1"
-            metadata_prefix="lom"
-            name_space="lom" />
-        <repositorios id="3" nome="Teste3" descricao="dfsd" url_or_ip="http://"        
-            periodicidade_horas="24"
-                        padrao_metadados="1"
-            metadata_prefix="lom"
-            name_space="lom" />
+    <repositorios id="1" nome="Cesta" descricao="dfsd" 
+                      url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request" 
+                      periodicidade_horas="24"
+                      metadata_prefix="lom"
+                      padrao_metadados="1"
+                      mapeamento_id="1"
+                      name_space="lom" />
+    <repositorios id="2" nome="Teste2" descricao="dfsd" url_or_ip="http://"        
+                      periodicidade_horas="24"
+                      padrao_metadados="1"
+                      mapeamento_id="1"
+                      metadata_prefix="lom"
+                      name_space="lom" />
+    <repositorios id="3" nome="Teste3" descricao="dfsd" url_or_ip="http://"        
+                      periodicidade_horas="24"
+                      padrao_metadados="1"
+                      mapeamento_id="1"
+                      metadata_prefix="lom"
+                      name_space="lom" />
             
             
-<dados_subfederacoes id="1" nome="UFRGS" url="http://"/>
-<dados_subfederacoes id="2" nome="Ble" url="http://"/>
-<dados_subfederacoes id="3" nome="Bla" url="http://"/>
+    <dados_subfederacoes id="1" nome="UFRGS" url="http://"/>
+    <dados_subfederacoes id="2" nome="Ble" url="http://"/>
+    <dados_subfederacoes id="3" nome="Bla" url="http://"/>
             
-     <repositorios_subfed id="1" nome="RepUfrgs1" id_subfed="1"/>
+    <repositorios_subfed id="1" nome="RepUfrgs1" id_subfed="1"/>
        
         
 
-        <documentos id="1" obaa_entry="oai:cesta2.cinted.ufrgs.br:123456789/57" id_repositorio="1" id_rep_subfed="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
-        <documentos id="2" obaa_entry="dois" id_repositorio="1"  timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
-        <documentos id="3" obaa_entry="tres" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
-        <documentos id="4" obaa_entry="quatro" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="true"/>
-        <documentos id="5" obaa_entry="cinco" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
-        <documentos id="6" obaa_entry="cinco2" id_rep_subfed="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+    <documentos id="1" obaa_entry="oai:cesta2.cinted.ufrgs.br:123456789/57" id_repositorio="1" id_rep_subfed="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+    <documentos id="2" obaa_entry="dois" id_repositorio="1"  timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+    <documentos id="3" obaa_entry="tres" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+    <documentos id="4" obaa_entry="quatro" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="true"/>
+    <documentos id="5" obaa_entry="cinco" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
+    <documentos id="6" obaa_entry="cinco2" id_rep_subfed="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
         
 
 
