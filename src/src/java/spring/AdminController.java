@@ -131,7 +131,6 @@ public final class AdminController {
             return "admin/editarRepositorio";
         } else {
             //repDao.save(rep);
-            Teste.imprimeRep(rep);
             return "redirect:/admin/exibeRepositorios?id=" + id;
         }
     }
@@ -253,7 +252,6 @@ public final class AdminController {
             return "admin/testeForm";
 
         } else {
-            Teste.gravaSubFed(subfed);
             return "redirect:index";
         }
 
