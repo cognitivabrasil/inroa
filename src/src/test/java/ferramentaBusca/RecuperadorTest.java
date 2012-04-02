@@ -127,7 +127,7 @@ public class RecuperadorTest {
 
         String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id  AND (rsf.id_subfed=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
         //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"+r.busca_subfed(tokensConsulta, id, sqlOrdenacao));
-        assertEquals(sql, r.busca_subfed(tokensConsulta, id, sqlOrdenacao, false));
+        assertEquals(sql, r.busca_subfed(tokensConsulta, id, sqlOrdenacao, true));
     }
 
     @Test

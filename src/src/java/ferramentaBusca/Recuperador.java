@@ -196,66 +196,59 @@ public class Recuperador {
     //replocal
     String busca_repLocal(ArrayList<String> tokensConsulta, String[] idRepLocal, String finalSQL, boolean autor) {
         
+        String consultaSql = "";
         if (autor) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
-                String consultaSql = "SELECT d.id FROM documentos d, autor a WHERE "+finalSQL;
-                return consultaSql;
+                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
             } else {
-                String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
                         + " WHERE r1w.tid=d.id "
                         + " AND (";
-                for (int i = 0; i < idRepLocal.length; i++) {
-                if (i == 0) {
-                    consultaSql += " d.id_repositorio=" + idRepLocal[i];
-                } else {
-                    consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
-                }
-            }
-
-            consultaSql += ") AND (r1w.token=";
-
-            for (int i = 0; i < tokensConsulta.size(); i++) {
-                String token = tokensConsulta.get(i);
-                if (i == tokensConsulta.size() - 1) {
-                    consultaSql += "'" + token + finalSQL;
-                } else {
-                    consultaSql += "'" + token + "' OR r1w.token=";
-                }
-            }
-            return consultaSql;
             }
         } else {
-            String consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
+            consultaSql = "SELECT tid FROM r1weights r1w, documentos d "
                     + " WHERE r1w.tid=d.id "
                     + " AND (";
-
-            for (int i = 0; i < idRepLocal.length; i++) {
-                if (i == 0) {
-                    consultaSql += " d.id_repositorio=" + idRepLocal[i];
-                } else {
-                    consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
-                }
-            }
-
-            consultaSql += ") AND (r1w.token=";
-
-            for (int i = 0; i < tokensConsulta.size(); i++) {
-                String token = tokensConsulta.get(i);
-                if (i == tokensConsulta.size() - 1) {
-                    consultaSql += "'" + token + finalSQL;
-                } else {
-                    consultaSql += "'" + token + "' OR r1w.token=";
-                }
-            }
-            return consultaSql;
         }
+        
+        for (int i = 0; i < idRepLocal.length; i++) {
+            if (i == 0) {
+                consultaSql += " d.id_repositorio=" + idRepLocal[i];
+            } else {
+                consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
+            }
+        }
+
+        consultaSql += ") AND (r1w.token=";
+
+        for (int i = 0; i < tokensConsulta.size(); i++) {
+            String token = tokensConsulta.get(i);
+            if (i == tokensConsulta.size() - 1) {
+                consultaSql += "'" + token + finalSQL;
+            } else {
+                consultaSql += "'" + token + "' OR r1w.token=";
+            }
+        }
+        return consultaSql;
+        
     }
 
     //subfed
     String busca_subfed(ArrayList<String> tokensConsulta, String[] idSubfed, String finalSQL, boolean autor) {
-        String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
+        String consultaSql = "";
+        if (autor) {                    // if is a author request
+            if (tokensConsulta.isEmpty()) {
+                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+            } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a"
+                        + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
+                        + " AND (";
+            }
+        } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id "
                 + " AND (";
+        }
 
         for (int i = 0; i < idSubfed.length; i++) {
             if (i == 0) {
@@ -281,9 +274,21 @@ public class Recuperador {
 
     //repsubfed
     String busca_subRep(ArrayList<String> tokensConsulta, String[] idSubRep, String finalSQL, boolean autor) {
-        String consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
+        
+        String consultaSql = "";
+        if (autor) {                     // if is a author request
+            if (tokensConsulta.isEmpty()) {
+                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+            } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
+                        + " WHERE r1w.tid=d.id "
+                        + " AND (";
+            }
+        } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
                 + " WHERE r1w.tid=d.id "
                 + " AND (";
+        }
 
         for (int i = 0; i < idSubRep.length; i++) {
             if (i == 0) {
@@ -310,9 +315,21 @@ public class Recuperador {
     //replocal + subfed
     String busca_repLocal_subfed(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String finalSQL, boolean autor) {
 
-        String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
+        String consultaSql = "";
+        if (autor) {                     // if is a author request
+            if (tokensConsulta.isEmpty()) {
+                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+            } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a, repositorios_subfed rsf"
+                        + " WHERE r1w.tid=d.id "
+                        + " AND (";
+            }
+        } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
+        }
+        
 
         for (int i = 0; i < idSubfed.length; i++) {
             if (i == 0) {
