@@ -6,6 +6,9 @@ and open the template in the editor.
 
 <dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="dataset.xsd">
+             
+    <usuarios id="1" login="admin" senha="698dc19d489c4e4db73e28a713eab07b" nome="Administrador da federação"/>
+    <usuarios id="2" login="admin2" senha="698dc19d489c4e4db73e28a713eab07b" nome="Administrador da federação"/>
             
     <padraometadados id="1" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
     <padraometadados id="2" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
@@ -15,35 +18,35 @@ and open the template in the editor.
 
             
     <repositorios id="1" nome="Cesta" descricao="dfsd" 
-                      url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request" 
-                      periodicidade_horas="24"
-                      metadata_prefix="lom"
-                      padrao_metadados="1"
-                      mapeamento_id="1"
-                      name_space="lom" />
+                  url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request" 
+                  periodicidade_horas="24"
+                  metadata_prefix="lom"
+                  padrao_metadados="1"
+                  mapeamento_id="1"
+                  name_space="lom" />
     <repositorios id="2" nome="Teste2" descricao="dfsd" url_or_ip="http://"        
-                      periodicidade_horas="24"
-                      padrao_metadados="1"
-                      mapeamento_id="1"
-                      metadata_prefix="lom"
-                      name_space="lom" />
+                  periodicidade_horas="24"
+                  padrao_metadados="1"
+                  mapeamento_id="1"
+                  metadata_prefix="lom"
+                  name_space="lom" />
     <repositorios id="3" nome="Teste3" descricao="dfsd" url_or_ip="http://"        
-                      periodicidade_horas="24"
-                      padrao_metadados="1"
-                      mapeamento_id="1"
-                      metadata_prefix="lom"
-                      name_space="lom" />
+                  periodicidade_horas="24"
+                  padrao_metadados="1"
+                  mapeamento_id="1"
+                  metadata_prefix="lom"
+                  name_space="lom" />
             
             
     <dados_subfederacoes id="1" nome="UFRGS" url="http://" data_xml="2012-03-09 07:51:22.48377"
-        data_ultima_atualizacao="2012-03-09 07:51:22.48377"
-    descricao="Bla"/>
+                         data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+                         descricao="Bla"/>
     <dados_subfederacoes id="2" nome="Ble" url="http://" data_xml="2012-03-09 07:51:22.48377"
-        data_ultima_atualizacao="2012-03-09 07:51:22.48377"
-    descricao="Bla"/>
+                         data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+                         descricao="Bla"/>
     <dados_subfederacoes id="3" nome="Bla" url="http://" data_xml="2012-03-09 07:51:22.48377"
-        data_ultima_atualizacao="2012-03-09 07:51:22.48377"
-    descricao="Bla"/>
+                         data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+                         descricao="Bla"/>
             
     <repositorios_subfed id="1" nome="RepUfrgs1" id_subfed="1"/>
        

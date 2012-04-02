@@ -32,66 +32,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-public class DocumentosHibernateDaoIT {
+public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
     DocumentosHibernateDAO instance;
-    @Autowired
-    DataSource dataSource;
-    IDatabaseConnection connection;
-
-    public DocumentosHibernateDaoIT() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void init() throws Exception {
-        System.out.println("Before");
-        // Insere os dados no banco de dados
-        DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getBeforeDataSet());
-    }
-
-    @After
-    public void after() throws Exception {
-        System.out.println("After");
-        //Limpa a base de dados
-        DatabaseOperation.DELETE_ALL.execute(getConnection(), getBeforeDataSet());
-    }
-
-    private IDatabaseConnection getConnection() throws Exception {
-        System.out.println("Get Connection");
-        // Pega a conexão com o banco de dados
-        if (connection == null) {
-            Connection con = dataSource.getConnection();
-            DatabaseMetaData databaseMetaData = con.getMetaData();
-            connection = new DatabaseConnection(con);
-        }
-
-        return connection;
-
-    }
-
-    private IDataSet getBeforeDataSet() throws Exception {
-        System.out.println("get DataSet");
-        // Pega o arquivo de para inserir
-        File file = new File("src/test/resources/documentosDataBefore.xml");
-        return new FlatXmlDataSet(file);
-    }
-
-    private IDataSet getAfterDataSet() throws Exception {
-        System.out.println("get DataSet");
-        // Pega o arquivo de para inserir
-        File file = new File("src/test/resources/usuarioDataAfter.xml");
-        return new FlatXmlDataSet(file);
-    }
-
     
     @Test
     public void testGet() {

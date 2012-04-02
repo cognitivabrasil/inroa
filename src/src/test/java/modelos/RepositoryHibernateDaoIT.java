@@ -38,53 +38,11 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=false)
-public class RepositoryHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
+public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
     RepositoryHibernateDAO instance;
-    @Autowired
-    DataSource dataSource;
-    static IDatabaseConnection connection;
-
-    public RepositoryHibernateDaoIT() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-        connection.close();
-    }
-
-    @Before
-    public void init() throws Exception {
-        System.out.println("Before");
-        // Insere os dados no banco de dados
-        DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getBeforeDataSet());
-    }
-
-    private IDatabaseConnection getConnection() throws Exception {
-        System.out.println("Get Connection");
-        // Pega a conexão com o banco de dados
-        if (connection == null) {
-            Connection con = dataSource.getConnection();
-            DatabaseMetaData databaseMetaData = con.getMetaData();
-            connection = new DatabaseConnection(con);
-            System.out.println("New connection");
-        }
-
-        return connection;
-
-    }
-
-    private IDataSet getBeforeDataSet() throws Exception {
-        System.out.println("get DataSet");
-        // Pega o arquivo de para inserir
-        File file = new File("src/test/resources/documentosDataBefore.xml");
-        return new FlatXmlDataSet(file);
-    }
+ 
     /**
      * Test of delete method, of class RepositoryHibernateDAO.
 
@@ -130,12 +88,7 @@ public class RepositoryHibernateDaoIT extends AbstractTransactionalJUnit4SpringC
         assertEquals("Cesta", cesta.getNome());
         assertEquals("dfsd", cesta.getDescricao());
         assertEquals("http://cesta2.cinted.ufrgs.br/oai/request", cesta.getUrl());
-        //assertEquals("cesta", cesta.getNomeFederacao());
-        //assertEquals(24, cesta.getPeriodicidate());
         assertEquals("lom", cesta.getNamespace());
-        //assertEquals("lom", cesta.getUltimaAtualizacao());
- 
-
     }
     
     @Test

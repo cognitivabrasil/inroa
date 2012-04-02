@@ -43,67 +43,12 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
+public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
     SubFederacaoHibernateDAO instance;
-    @Autowired
-    DataSource dataSource;
-    static IDatabaseConnection connection;
-    boolean updated = false;
 
     public SubfederacaoHibernateDaoIT() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-        connection.close();
-    }
-
-    @Before
-    public void init() throws Exception {
-        System.out.println("Before");
-        // Insere os dados no banco de dados
-        DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getBeforeDataSet());
-    }
-
-    @After
-    public void after() throws Exception {
-        System.out.println("After");
-        //Limpa a base de dados
-        // DatabaseOperation.DELETE_ALL.execute(getConnection(), getBeforeDataSet());
-    }
-
-    private IDatabaseConnection getConnection() throws Exception {
-        System.out.println("Get Connection");
-        // Pega a conexão com o banco de dados
-        if (connection == null) {
-            Connection con = dataSource.getConnection();
-            DatabaseMetaData databaseMetaData = con.getMetaData();
-            connection = new DatabaseConnection(con);
-            System.out.println("New connection");
-        }
-
-        return connection;
-
-    }
-
-    private IDataSet getAfterDataSet() throws Exception {
-        System.out.println("get DataSet");
-        // Pega o arquivo de para inserir
-        File file = new File("src/test/resources/documentosDataAfter.xml");
-        return new FlatXmlDataSet(file);
-    }
-
-    private IDataSet getBeforeDataSet() throws Exception {
-        System.out.println("get DataSet");
-        // Pega o arquivo de para inserir
-        File file = new File("src/test/resources/documentosDataBefore.xml");
-        return new FlatXmlDataSet(file);
     }
 
     /**
@@ -129,8 +74,6 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
         System.out.println("getAll");;
         List result = instance.getAll();
         assertEquals(3, result.size());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     @Test

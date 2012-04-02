@@ -23,30 +23,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="classpath:testApplicationContext.xml")
-//@ContextConfiguration(locations = {"testApplicationContext.xml"})
-public class PadraoMetadadosHibernateDaoIT {
+public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {
     
     @Autowired
     PadraoMetadadosHibernateDAO instance;
     
-    public PadraoMetadadosHibernateDaoIT() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of delete method, of class RepositoryHibernateDAO.
@@ -63,7 +44,6 @@ public class PadraoMetadadosHibernateDaoIT {
      */
     @Test
     public void testGet() {
-        System.out.println("get");
         int id = 1;
         PadraoMetadados p = instance.get(id);
         
@@ -77,12 +57,9 @@ public class PadraoMetadadosHibernateDaoIT {
      */
     @Test
     public void testGetAll() {
-        System.out.println("getAll");
         List expResult = null;
         List result = instance.getAll();
         assertEquals(3, result.size());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
     
 

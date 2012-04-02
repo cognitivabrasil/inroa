@@ -17,6 +17,8 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.SortedTable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.dbunit.Assertion;
+
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -41,14 +43,11 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class UsuarioHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
+public class UsuarioHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
     UsuarioHibernateDAO instance;
-    @Autowired
-    DataSource dataSource;
-    static IDatabaseConnection connection;
-    boolean updated = false;
+
 
     public UsuarioHibernateDaoIT() {
     }
@@ -57,52 +56,7 @@ public class UsuarioHibernateDaoIT extends AbstractTransactionalJUnit4SpringCont
     public static void setUpClass() throws Exception {
     }
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-        connection.close();
-    }
-
-    @Before
-    public void init() throws Exception {
-        System.out.println("Before");
-        // Insere os dados no banco de dados
-        DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getBeforeDataSet());
-    }
-
-    @After
-    public void after() throws Exception {
-        System.out.println("After");
-        //Limpa a base de dados
-        // DatabaseOperation.DELETE_ALL.execute(getConnection(), getBeforeDataSet());
-    }
-
-    private IDatabaseConnection getConnection() throws Exception {
-        System.out.println("Get Connection");
-        // Pega a conexão com o banco de dados
-        if (connection == null) {
-            Connection con = dataSource.getConnection();
-            DatabaseMetaData databaseMetaData = con.getMetaData();
-            connection = new DatabaseConnection(con);
-        }
-
-        return connection;
-
-    }
-
-    private IDataSet getBeforeDataSet() throws Exception {
-        System.out.println("get DataSet");
-        // Pega o arquivo de para inserir
-        File file = new File("src/test/resources/usuarioDataBefore.xml");
-        return new FlatXmlDataSet(file);
-    }
-
-    private IDataSet getAfterDataSet() throws Exception {
-        System.out.println("get DataSet");
-        // Pega o arquivo de para inserir
-        File file = new File("src/test/resources/usuarioDataAfter.xml");
-        return new FlatXmlDataSet(file);
-    }
-
+ 
     /**
      * Test of authenticate method, of class UsuarioHibernateDAO.
      */
