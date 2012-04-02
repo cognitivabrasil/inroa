@@ -36,14 +36,11 @@ public class RepositoryHibernateDAO implements RepositoryDAO {
     }
 
     public void save(Repositorio r) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
+        t.saveOrUpdate(r);    }
 
     public Repositorio get(String name) {
-        if(name.equalsIgnoreCase("cesta")){
-            return new Repositorio();
-        }else
-            return null;
-        //TODO: este metodo é utilizado para testar se já existe um repositorios cadastrado com esse nome. Deve retornar null se nao existir.
+        Session s = this.sessionFactory.getCurrentSession();
+        return (Repositorio) s.createQuery("from Repositorio WHERE nome = :nome").setString("nome", name).uniqueResult();
     }
 }
