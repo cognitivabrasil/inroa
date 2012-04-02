@@ -516,6 +516,7 @@ src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text
 src/src/test/java/modelos/SubfederacaoHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioTest.java -text
+src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text
 src/src/test/resources/repositoriosDataBefore.xml -text
 src/src/test/resources/usuarioDataAfter.xml -text
