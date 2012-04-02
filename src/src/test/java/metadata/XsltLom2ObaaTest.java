@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import OBAA.OBAA;
 import OBAA.OaiOBAA;
+import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -116,6 +117,10 @@ public class XsltLom2ObaaTest {
       			//XSLTUtil.handleException(ex);
 			fail("Shoudln't throw exception");
  		}
+                finally {
+                        File f = new File("out.xml");
+                        f.delete();
+                }
 	}
 
 
