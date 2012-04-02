@@ -351,7 +351,6 @@ src/src/java/modelos/RepositoryHibernateDAO.java -text
 src/src/java/modelos/SubFederacao.java -text
 src/src/java/modelos/SubFederacaoDAO.java -text
 src/src/java/modelos/SubFederacaoHibernateDAO.java -text
-src/src/java/modelos/Teste.java -text
 src/src/java/modelos/Usuario.java -text
 src/src/java/modelos/UsuarioDAO.java -text
 src/src/java/modelos/UsuarioHibernateDAO.java -text
