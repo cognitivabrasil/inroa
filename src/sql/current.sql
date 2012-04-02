@@ -99,4 +99,6 @@ ALTER TABLE mapeamentos OWNER TO feb;
 
  ALTER TABLE repositorios ADD COLUMN mapeamento_id INT;
 
---
+-- CRIAR A DATABASE DE TESTE
+CREATE DATABASE federacao_teste WITH TEMPLATE federacao ENCODING 'UTF-8';
+ALTER DATABASE federacao OWNER TO feb;

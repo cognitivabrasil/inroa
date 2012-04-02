@@ -19,15 +19,15 @@
         <title>FEB - Ferramenta Administrativa</title>
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css"/>
         <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js"></script>
-        <script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js"> //funcoes javascript que chamam o ajax</script>
+        <script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js"></script>
         <script type="text/javascript" src="../scripts/validatejs.js"></script>
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     </head>
 
-    <body>
+    <body onload="verificaMapOnLoad('${repModel.padraoMetadados.id}', '${repModel.mapeamento.id}', 'resultado');">
         <div id="page">
 
-            <!--script type="text/javascript">
+            <script type="text/javascript">
                 var myForm = new Validate();
                 myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
                 myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
@@ -37,14 +37,16 @@
                 myForm.addRules({id:'namespace',option:'required',error:'* Deve ser informado o NameSpace!'});
                 myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
                 myForm.addRules({id:'periodicidadeAtualizacao',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
-            </script-->
+            </script>
 
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.nome}</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <div class="EspacoAntes">&nbsp;</div>
             <form:form method="post" modelAttribute="repModel" action="salvarRepositorio" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
-                <form:errors path="*" cssClass="ValueErro" />
-                <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
+                
+                <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
+                    <c:out value="${erro}"/>
+                </div>
                 <div class="LinhaEntrada">
                     <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Label">
@@ -55,16 +57,17 @@
                     </div>
                 </div>
                 <div class="LinhaEntrada">
+                    <form:errors path="descricao" cssClass="ValueErro" />
                     <div class="Label">
                         Descri&ccedil;&atilde;o:
                     </div>
-                    <div class="Value">
-                        <form:errors path="descricao" cssClass="ValueErro" />
+                    <div class="Value">                        
                         <form:input path="descricao" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
+                    <form:errors path="padraoMetadados.id" cssClass="ValueErro" />
                     <div class="Label">
                         Padr&atilde;o de metadados utilizado:
                     </div>
@@ -78,6 +81,7 @@
                 </div>
 
                 <div class="LinhaEntrada">
+                    <form:errors path="mapeamento.id" cssClass="ValueErro" />
                     <div class="Label">
                         Tipo de mapeamento:
                     </div>
@@ -91,14 +95,14 @@
                     
                 <div class="LinhaEntrada">
                     <div> &nbsp;</div>
+                    <form:errors path="metadataPrefix" cssClass="ValueErro" />
                     <div class="Label">MetadataPrefix:</div>
                     <div class="Value">
-                        <form:errors path="metadataPrefix" cssClass="ValueErro" />
                         <form:input path="metadataPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
+                    <form:errors path="namespace" cssClass="ValueErro" />
                     <div class="Label">NameSpace:</div>
                     <div class="Value">
-                        <form:errors path="namespace" cssClass="ValueErro" />
                         <form:input path="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
@@ -108,11 +112,11 @@
 
 
                 <div class="LinhaEntrada">
+                    <form:errors path="url" cssClass="ValueErro" />
                     <div class="Label">
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <form:errors path="url" cssClass="ValueErro" />
                         <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className='';verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))" />
                         &nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
@@ -120,7 +124,7 @@
                 </div>
 
                 <div class="LinhaEntrada">
-                    
+                    <form:errors path="colecoes" cssClass="ValueErro" />
                     <div class="Comentario">
                         Se for mais de uma separar por ponto e v&iacute;rgula.
                     </div>
@@ -131,16 +135,15 @@
                         Cole&ccedil;&otilde;es ou Comunidades:
                     </div>
                     <div class="Value">
-                        <form:errors path="colecoes" cssClass="ValueErro" />
                         <form:input path="colecoes" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
                     </div>
                 </div>
                 <div class="LinhaEntrada">
+                    <form:errors path="periodicidadeAtualizacao" cssClass="ValueErro" />
                     <div class="Label">
                         Periodicidade de atualiza&ccedil;&atilde;o (em dias):
                     </div>
                     <div class="Value">
-                        <form:errors path="periodicidadeAtualizacao" cssClass="ValueErro" />
                         <form:input path="periodicidadeAtualizacao" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
@@ -148,7 +151,7 @@
                 <input type="hidden" name="id" value="${param.id}"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
-                        <input type="button" value="&lArr; Voltar" onclick="javascript:history.go(-1);"/>
+                        <input type="button" value="&lArr; Voltar" onclick="location.href='exibeRepositorios?id=${repModel.id}'"/>
                         <input type="submit" value="Gravar &rArr;" name="submit" />
 
                     </div>

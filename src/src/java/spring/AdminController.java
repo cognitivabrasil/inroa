@@ -117,16 +117,17 @@ public final class AdminController {
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "admin/editarRepositorio";
     }
-
+                 
     @RequestMapping("/salvarRepositorio")
     public String salvaRep(
             @ModelAttribute("repModel") Repositorio rep,
             @RequestParam(value = "id", required = true) int id,
             BindingResult result,
             Model model) {
+        
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
-            model.addAttribute("repModel", repDao.get(id));
+            model.addAttribute("repModel", rep);
             model.addAttribute("padraoMetadadosDAO", padraoDao);
             return "admin/editarRepositorio";
         } else {

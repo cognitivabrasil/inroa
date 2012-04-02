@@ -32,11 +32,13 @@ public class RepositorioValidator implements Validator  {
                 "required.descricao", "É necessário informar uma descrição.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mapeamento.id",
                 "required.mapeamento.id", "É necessário informar um mapeamento.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "namespace",
+                "required.namespace", "É necessário informar um namespace.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "metadataPrefix",
+                "required.metadataPrefix", "É necessário informar um metadataPrefix");
         
         Repositorio rep = (Repositorio) target;
         String url = rep.getUrl();
-        int idPadraoMetadados = rep.getPadraoMetadados().getId();
-        int periodicidade = rep.getPeriodicidadeAtualizacao();
 
 
         if (url != null) {
@@ -47,11 +49,11 @@ public class RepositorioValidator implements Validator  {
             }              
         }
         
-        if(idPadraoMetadados <= 0){
+        if(rep.getPadraoMetadados().getId() <= 0){
             errors.rejectValue("padraoMetadados.id","invalid.padraoMetadados.id", "Informe um padrão de metadados.");
         }
         
-        if(periodicidade <= 0){
+        if(rep.getPeriodicidadeAtualizacao() == null || rep.getPeriodicidadeAtualizacao() <= 0){
             errors.rejectValue("periodicidadeAtualizacao","invalid.periodicidadeAtualizacao", "Informe uma periodicidade de atualização.");            
         }
         

@@ -78,7 +78,7 @@ Primeira etapa do cadastro de um repositorio
                     <div class="Value">
                         <select name="padraoMetadados.id" id="padraoMetadados" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, 0);">
 
-                            <c:if test="${empty padraoSelecionado}">
+                            <c:if test="${empty padraoSelecionado || padraoSelecionado==0}">
                                 <option value="0" selected>Selecione
                             </c:if>
                                 <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}" >

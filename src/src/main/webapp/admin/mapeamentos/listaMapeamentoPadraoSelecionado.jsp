@@ -34,7 +34,7 @@
     <div class="Value">  
         <input type="text" value="${padraoMet.metadataPrefix}" id="metadataPrefix" name="metadataPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
     </div>
-    <form:errors path="metadataPrefix" cssClass="namespace" />
+    <form:errors path="namespace" cssClass="ValueErro" />
     <div class="Label">NameSpace:</div>
     <div class="Value">
         <input type="text" value="${padraoMet.namespace}" id="namespace" name="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" /> 
