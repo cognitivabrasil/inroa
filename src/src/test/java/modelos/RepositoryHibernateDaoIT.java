@@ -155,7 +155,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         if (updated) {
             updated = false;
             String[] ignore = {"id", "metadata_prefix", "periodicidade_horas", "padrao_metadados", "mapeamento_id", "descricao", "data_ultima_atualizacao",
-                "set", "tipo_mapeamento_id", "tipo_sincronizacaosc"};
+                "set", "tipo_mapeamento_id", "tipo_sincronizacao"};
             String[] sort = {"nome"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("repositorios"), sort), new SortedTable(getConnection().createDataSet().getTable("repositorios"), sort), ignore);
 
