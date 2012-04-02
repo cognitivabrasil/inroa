@@ -33,8 +33,8 @@ public class SubFederacaoHibernateDAO implements SubFederacaoDAO {
     }
 
     public SubFederacao get(String nome) {
-        throw new UnsupportedOperationException("Not supported yet.");
-        //TODO: isso é usado na verdade apenas pra testar se já existe uma federacao com esse nome
+        Session s = this.sessionFactory.getCurrentSession();
+        return (SubFederacao)s.createQuery("from SubFederacao WHERE nome = :nome").setString("nome", nome).uniqueResult();
     }
 
     public void save(SubFederacao s) {

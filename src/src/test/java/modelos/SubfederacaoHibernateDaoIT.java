@@ -26,6 +26,8 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 
 
@@ -148,6 +150,24 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
         assertEquals(2, l.size());
 
         
+    }
+    
+    @Test
+    public void testGetByName() {
+        SubFederacao ufrgs = instance.get("UFRGS");
+        
+        
+        assertThat(ufrgs, is(notNullValue()));
+        assertEquals("UFRGS", ufrgs.getNome());
+        assertEquals(1, ufrgs.getId());
+    }
+    
+    @Test
+    public void testGetByNameNonExisting() {
+         SubFederacao fake = instance.get("rgterter");
+         
+         assertThat(fake, is(nullValue()));
+
     }
 
     /**
