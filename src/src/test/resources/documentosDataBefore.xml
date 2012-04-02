@@ -35,9 +35,15 @@ and open the template in the editor.
                       name_space="lom" />
             
             
-    <dados_subfederacoes id="1" nome="UFRGS" url="http://"/>
-    <dados_subfederacoes id="2" nome="Ble" url="http://"/>
-    <dados_subfederacoes id="3" nome="Bla" url="http://"/>
+    <dados_subfederacoes id="1" nome="UFRGS" url="http://" data_xml="2012-03-09 07:51:22.48377"
+        data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+    descricao="Bla"/>
+    <dados_subfederacoes id="2" nome="Ble" url="http://" data_xml="2012-03-09 07:51:22.48377"
+        data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+    descricao="Bla"/>
+    <dados_subfederacoes id="3" nome="Bla" url="http://" data_xml="2012-03-09 07:51:22.48377"
+        data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+    descricao="Bla"/>
             
     <repositorios_subfed id="1" nome="RepUfrgs1" id_subfed="1"/>
        
