@@ -513,6 +513,7 @@ src/src/test/java/modelos/AbstractDaoTest.java -text
 src/src/test/java/modelos/DocumentosHibernateDaoIT.java -text
 src/src/test/java/modelos/PadraoMetadadosHibernateDaoIT.java -text
 src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text
+src/src/test/java/modelos/SubFederacaoTest.java -text
 src/src/test/java/modelos/SubfederacaoHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioTest.java -text
