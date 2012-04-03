@@ -320,9 +320,9 @@ public class Recuperador {
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
             } else {
-                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a, repositorios_subfed rsf"
-                        + " WHERE r1w.tid=d.id "
-                        + " AND (";
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a"
+                + " WHERE r1w.tid=d.id AND ("
+                + " (d.id_rep_subfed = rsf.id AND (";
             }
         } else {
                 consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
@@ -366,9 +366,21 @@ public class Recuperador {
 
     //replocal + repsubfed
     String busca_repLocal_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubRep, String finalSQL, boolean autor) {
-        String consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
+        
+        String consultaSql = "";
+        if (autor) {                     // if is a author request
+            if (tokensConsulta.isEmpty()) {
+                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+            } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
                 + " WHERE r1w.tid=d.id"
                 + " AND (";
+            }
+        } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
+                + " WHERE r1w.tid=d.id"
+                + " AND (";
+        }     
 
         for (int i = 0; i < idRepLocal.length; i++) {
             if (i == 0) {
@@ -400,9 +412,21 @@ public class Recuperador {
     //subfed + repsubfed
     String busca_subfed_subrep(ArrayList<String> tokensConsulta, String[] idSubfed, String[] idSubRep, String finalSQL, boolean autor) {
 
-        String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
+        String consultaSql = "";
+        if (autor) {                   // if is a author request
+            if (tokensConsulta.isEmpty()) {
+                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+            } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a"
                 + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
                 + " AND (";
+            }
+        } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
+                + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
+                + " AND (";
+        }         
+        
         //for subfed
         for (int i = 0; i < idSubfed.length; i++) {
             if (i == 0) {
@@ -432,9 +456,21 @@ public class Recuperador {
 
     //replocal + subfed + repsubfed
     String busca_repLocal_subfed_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String finalSQL, boolean autor) {
-        String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
+       
+        String consultaSql = "";
+        if (autor) {                   // if is a author request
+            if (tokensConsulta.isEmpty()) {
+                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+            } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a"
                 + " WHERE r1w.tid=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
+            }
+        } else {
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
+                + " WHERE r1w.tid=d.id AND ("
+                + " (d.id_rep_subfed = rsf.id AND (";
+        } 
 
         for (int i = 0; i < idSubfed.length; i++) {
             if (i == 0) {

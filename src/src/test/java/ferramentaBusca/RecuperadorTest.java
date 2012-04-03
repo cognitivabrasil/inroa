@@ -172,7 +172,6 @@ public class RecuperadorTest {
     }
 
     @Test
-    @Ignore("Nao ta passando")
     public void testQueryRepLocalSubfedAutor() {
         ArrayList<String> tokensConsulta = new ArrayList<String>();
         tokensConsulta.add("educa");
@@ -198,8 +197,7 @@ public class RecuperadorTest {
         assertEquals(sql, r.busca_repLocal_subrep(tokensConsulta, id, id, sqlOrdenacao, false));
     }
 
-    @Test
-    @Ignore("Nao ta passando")
+    @Test    
     public void testQueryRepLocalSubrepAutor() {
         ArrayList<String> tokensConsulta = new ArrayList<String>();
         tokensConsulta.add("educa");
@@ -226,7 +224,6 @@ public class RecuperadorTest {
     }
 
     @Test
-    @Ignore("Nao ta passando")
     public void testQuerySubfedSubrepAutor() {
         ArrayList<String> tokensConsulta = new ArrayList<String>();
         tokensConsulta.add("educa");
@@ -252,8 +249,7 @@ public class RecuperadorTest {
         assertEquals(sql, r.busca_repLocal_subfed_subrep(tokensConsulta, id, id, id, sqlOrdenacao, false));
     }
 
-    @Test
-    @Ignore("Nao ta passando")
+    @Test    
     public void testQuerybusca_repLocal_subfed_subrepAutor() {
         ArrayList<String> tokensConsulta = new ArrayList<String>();
         tokensConsulta.add("educa");
