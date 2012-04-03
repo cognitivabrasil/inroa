@@ -1,10 +1,7 @@
 // Generated 20/07/2011 15:25:15 by Hibernate Tools 3.2.0.b9
 package modelos;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -28,28 +25,40 @@ public class Repositorio implements java.io.Serializable {
     private Date ultimaAtualizacao;
     private String namespace;
     private Integer periodicidadeAtualizacao;
-    private String colecoes;
+    private String colecoesInternal;
     private PadraoMetadados padraoMetadados;
     private Mapeamento mapeamento;
-    
-    
     HibernateTemplate template;
-    
+
     public Repositorio() {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-        template = ctx.getBean(HibernateTemplate.class);
-        id=0;
-        nome="";
-        descricao="";
+        if(ctx != null) {
+            template = ctx.getBean(HibernateTemplate.class);
+        }
+        id = 0;
+        nome = "";
+        descricao = "";
         url = "";
         metadataPrefix = "";
         documentos = new HashSet<DocumentoReal>(0);
         ultimaAtualizacao = null;
         namespace = "";
         periodicidadeAtualizacao = 1;
-        colecoes = "";
+        colecoesInternal = "";
     }
-
+    
+    static String join(Collection<?> s, String delimiter) {
+     StringBuilder builder = new StringBuilder();
+     Iterator iter = s.iterator();
+     while (iter.hasNext()) {
+         builder.append(iter.next());
+         if (!iter.hasNext()) {
+           break;                  
+         }
+         builder.append(delimiter);
+     }
+     return builder.toString();
+ }
 
     public Integer getId() {
         return this.id;
@@ -58,13 +67,6 @@ public class Repositorio implements java.io.Serializable {
     //TODO: porque esse metodo estava protected?
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    //Mapeamento getMapeamento() {
-    //    return "";
-    //}
-    List<String> getComunidades() {
-        return null;
     }
 
     /**
@@ -114,10 +116,14 @@ public class Repositorio implements java.io.Serializable {
         return getNome();
     }
 
+    /**
+     * 
+     * @return Number of documents present in the repository (non-deleted documents only)
+     */
     public Integer getSize() {
         return DataAccessUtils.intResult(
-                template.find("select count(*) from DocumentoReal doc WHERE doc.repositorio = ? AND doc.deleted = ?", this, false)); 
-   }
+                template.find("select count(*) from DocumentoReal doc WHERE doc.repositorio = ? AND doc.deleted = ?", this, false));
+    }
 
     /**
      * @param url the url to set
@@ -176,14 +182,42 @@ public class Repositorio implements java.io.Serializable {
         return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao * 60 * 60 * 1000); // soma a periodicidade em horas
     }
 
-    public String getColecoes() {
-        return colecoes;
+    /**
+     * 
+     * @return The collections associated with this repository
+     */
+    public Set<String> getColecoes() {
+        if(colecoesInternal == "") {
+            return new HashSet<String>();
+        }
+        else {
+            return new HashSet<String>(Arrays.asList(colecoesInternal.split(";")));
+        }
+    }
+    
+    /**
+     * Sets collections associated with this repository
+     * @param c The collections
+     */
+    public void setColecoes(Collection<String> c) {
+        if(c.size() == 0) {
+            this.colecoesInternal = "";
+        }
+        else {
+            this.colecoesInternal = join(c, ";");
+        }
     }
 
-    public void setColecoes(String colecoes) {
-        this.colecoes = colecoes;
+    
+    /**
+     * Adds a collection to the repositoru
+     * @param colecao Collection to add
+     */
+    public void addColecao(String colecao) {
+        Set<String> c = getColecoes();
+        c.add(colecao);
+        setColecoes(c);
     }
-
 
     /**
      * @return the padraoMetadados
@@ -206,7 +240,18 @@ public class Repositorio implements java.io.Serializable {
     public void setMapeamento(Mapeamento mapeamento) {
         this.mapeamento = mapeamento;
     }
-    
-    
-    
+
+    /**
+     * Just for hibernate
+     */
+    protected String getColecoesInternal() {
+        return colecoesInternal;
+    }
+
+    /**
+     * Just for Hibernate
+     */
+    protected void setColecoesInternal(String colecoesInternal) {
+        this.colecoesInternal = colecoesInternal;
+    }
 }

@@ -17,7 +17,7 @@
         <property column="data_ultima_atualizacao" name="ultimaAtualizacao" type="timestamp"/>
         <property column="name_space" name="namespace" type="string"/>
         <property column="periodicidade_horas" name="periodicidadeAtualizacao" type="integer"/>
-        <property column="set" name="colecoes" type="string"/>
+        <property column="set" name="colecoesInternal" type="string"/>
         <many-to-one class="modelos.PadraoMetadados" column="padrao_metadados" name="padraoMetadados"/>
         <many-to-one class="modelos.Mapeamento" column="mapeamento_id" name="mapeamento"/>
 
