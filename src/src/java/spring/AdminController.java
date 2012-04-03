@@ -22,7 +22,7 @@ import spring.validador.SubFederacaoValidador;
 /**
  * Controller para ferramenta administrativa
  *
- * @author Marcos Nunes
+ * @author Marcos Nunes <marcosn@gmail.com>
  */
 @Controller("admin")
 @RequestMapping("/admin/*")
@@ -131,7 +131,7 @@ public final class AdminController {
             model.addAttribute("padraoMetadadosDAO", padraoDao);
             return "admin/editarRepositorio";
         } else {
-            //repDao.save(rep);
+            repDao.save(rep);
             return "redirect:/admin/exibeRepositorios?id=" + id;
         }
     }

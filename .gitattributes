@@ -331,6 +331,7 @@ src/src/java/metadata/XsltConversorDefault.java -text
 src/src/java/metadata/conversor/Conversor.java -text
 src/src/java/metadata/conversor/Rule.java -text
 src/src/java/metadata/conversor/package-info.java -text
+src/src/java/modelos/Busca.java -text
 src/src/java/modelos/Documento.java -text
 src/src/java/modelos/DocumentoFebInterface.java -text
 src/src/java/modelos/DocumentoReal.java -text
@@ -395,6 +396,7 @@ src/src/java/robo/util/package.html -text
 src/src/java/spring/AdminController.java -text
 src/src/java/spring/ApplicationContextProvider.java -text
 src/src/java/spring/FEBController.java -text
+src/src/java/spring/validador/BuscaValidator.java -text
 src/src/java/spring/validador/RepositorioValidator.java -text
 src/src/java/spring/validador/SubFederacaoValidador.java -text
 src/src/java/webservice/Webservice.java -text

@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%
             request.setCharacterEncoding("UTF-8");
@@ -40,17 +41,19 @@
                 <div class="linkCantoDireito"><a href="./admin/" title="Ferramenta Administrativa"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             </div>
             <div class="Espaco">&nbsp;</div>
-            <form name="consulta" action="consulta" method="POST">
-
+            
+            <form:form method="post" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">   
+                
                 <div class="clear"> </div>
 
-                <div class="LinhaEntrada">
+                <div class="LinhaEntrada">                    
                     <div class="EspacoAntes">&nbsp;</div>
+                    <form:errors path="consulta" cssClass="ValueErro" />
                     <div class="Label">
                         Texto para a busca:
                     </div>
                     <div class="Value">
-                        <input type="text" name="key" id="key" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                        <form:input path="consulta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
 
                     <div class="clear"> </div>
@@ -60,7 +63,7 @@
                         <input class="BOTAO" type="submit" value="Consultar"/>
                     </div>
                 </div>
-            </form>
+            </form:form>
             <div ALIGN="CENTER">
                 <a href="./index2">Selecionar Repositórios</a>
             </div>

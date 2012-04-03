@@ -4,8 +4,6 @@
  */
 package spring;
 
-import java.util.Iterator;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import spring.validador.BuscaValidator;
 
 /**
  * Controller geral para o FEB
- *
- * TODO: Separar em controller para busca e para Admin
  *
  * @author Paulo Schreiner <paulo@jorjao81.com>
  */
@@ -30,26 +27,28 @@ public final class FEBController {
     private RepositoryDAO repDao;
     @Autowired
     private SubFederacaoDAO subDao;
+    private BuscaValidator buscaValidator;
+    
+    @Autowired
+    private PadraoMetadadosDAO padraoDao;
 
     public FEBController() {
+        buscaValidator = new BuscaValidator();
     }
 
     @RequestMapping("/")
-    public String index(Model model) {
+    public String inicio(Model model) {
+        return index(model);
+    }
 
+    @RequestMapping("/index")
+    public String index(Model model) {
+        model.addAttribute("buscaModel", new Busca());
         return "index";
     }
 
     @RequestMapping("/index2")
     public String index2(Model model) {
-
-        List<SubFederacao> lista = subDao.getAll();
-        Iterator i = lista.iterator();
-        while (i.hasNext()) {
-            SubFederacao subfed = (SubFederacao) i.next();
-            System.out.println("Nome: " + subfed.getNome());
-            System.out.println("Repositorios: " + subfed.getRepositorios());
-        }
 
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
@@ -58,11 +57,17 @@ public final class FEBController {
 
     @RequestMapping("/consulta")
     public String consulta(
-            @RequestParam(value = "key", required = true) String consulta,
+            @ModelAttribute("buscaModel") Busca consulta,
             BindingResult result,
             Model model) {
-        
-        return "consulta";
+
+        buscaValidator.validate(consulta, result);
+        if (result.hasErrors()) {
+            model.addAttribute("BuscaModel", consulta);
+            return "index";
+        } else {
+            return "consulta";
+        }
     }
 
     /**

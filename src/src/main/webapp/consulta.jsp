@@ -53,7 +53,7 @@
 
             boolean testaConsulta = false;
             try {
-                textoBusca = request.getParameter("key"); //recebe a consulta informada no formulario
+                textoBusca = request.getParameter("consulta"); //recebe a consulta informada no formulario
                 idRepLocal = request.getParameterValues("replocal");
                 idSubfed = request.getParameterValues("subfed");
                 idSubRep = request.getParameterValues("subrep");
@@ -67,7 +67,7 @@
                 }
             } catch (Exception e) {
                 out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
-                        + "<script type='text/javascript'>window.location=\"index.jsp\";</script>");               
+                        + "<script type='text/javascript'>window.location=\"index\";</script>");               
 
             }
             if (testaConsulta) { //se nao foi informada a consulta nao entra no if
@@ -103,7 +103,7 @@
         <div class="subTituloBusca">&nbsp;Resultado da Pesquisa</div>
 
         <div id="page-sub-header">
-            <a href="index.jsp">Efetuar nova consulta</a>
+            <a href="index">Efetuar nova consulta</a>
         </div>
         <div class="cabecalhoConsulta">
             <div class="esquerda">
@@ -157,7 +157,7 @@
                                                     }
                                                 }
                                             }
-                                            url += "&key=" + textoBusca;
+                                            url += "&consulta=" + textoBusca;
 
             %>
 

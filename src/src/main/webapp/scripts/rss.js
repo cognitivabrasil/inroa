@@ -3,6 +3,6 @@
  */
 function geraRss() {
 
-    var consulta = document.getElementById("key").value;
+    var consulta = document.getElementById("consulta").value;
     window.location='rss.jsp?key='+consulta;
 }
