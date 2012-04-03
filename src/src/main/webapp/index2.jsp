@@ -9,7 +9,6 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@include file="./admin/conexaoBD.jsp"%>
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
@@ -75,12 +74,6 @@
     <body id="bodyMenor">
         <!-- incluir um arquivo %@ include file="top.html" %> -->
         <div id="page">
-            <%
-                if (con == null) {
-                    out.print("<p class='textoErro'>ERRO ao conectar na base de dados! <BR><BR>Consulte o administrador do Sistema</p>");
-                } else {
-
-            %>
 
 
             <div class="logoBusca"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></div>
@@ -134,69 +127,6 @@
                 </div>
 
 
-                <!------------------------->
-                <div class="LinhaEntrada">
-                    <div class="EspacoAntes">&nbsp;</div>
-                    <div class="Label">
-                        Servidor:
-                    </div>
-
-                    <%
-                        Statement stm = con.createStatement();
-                        Statement stm2 = con.createStatement();
-                        //Carrega do banco de dados os repositorios cadastrados
-                        ResultSet res = stm.executeQuery("SELECT nome, id FROM repositorios ORDER BY nome ASC");
-                        //int i = 0;
-                        while (res.next()) {
-
-                            if (res.isFirst()) {
-                                out.println("<div class='ValueIndex'>- Reposit&oacute;rios</div>");
-                            }
-
-                            out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
-                                    + "<input value='" + res.getString("id") + "' type=checkbox id=\"" + res.getString("id") + "\""
-                                    + " name=\"replocal\""
-                                    + ">" + res.getString("nome").toUpperCase()
-                                    + "</div>");
-
-                            // i++;
-
-                        }
-
-                        ResultSet rsSub = stm.executeQuery("SELECT nome, id FROM dados_subfederacoes ORDER BY nome ASC");
-                        boolean testeSubfederacao = true;
-                        int idSf = 0;
-                        while (rsSub.next()) {
-                            if (testeSubfederacao) {
-                                if (!rsSub.getString("nome").equalsIgnoreCase("local")) {
-                                    out.println("<div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div>");
-                                    testeSubfederacao = false;
-                                }
-                            }
-
-                            idSf = rsSub.getInt("id");
-                            out.println("<div class='ValueIndex'>&nbsp;&nbsp;&nbsp;"
-                                    + "<a id='link" + idSf + "' class='linkRepSubfeb' onclick='tornarVisivel(\"link" + idSf + "\",\"listaRep" + idSf + "\", \"Interno\");'>+</a><input value='" + rsSub.getString("id") + "' type=checkbox id=\"" + rsSub.getString("id") + "\""
-                                    + " name=\"subfed\""
-                                    + ">" + rsSub.getString("nome").toUpperCase());
-
-                            out.print("<div id='listaRep" + idSf + "' class='hidden'>");
-
-                            String buscaRepSubfed = "SELECT rsf.nome, rsf.id FROM repositorios_subfed rsf WHERE id_subfed=" + rsSub.getString("id");
-                            ResultSet rsRepSub = stm2.executeQuery(buscaRepSubfed);
-                            while (rsRepSub.next()) {
-                                out.println("<div class='Int'>&nbsp;&nbsp;&nbsp;<input value='" + rsRepSub.getString("id") + "' type=checkbox id=\"" + rsRepSub.getString("id") + "\""
-                                        + " name=\"subrep\""
-                                        + ">" + rsRepSub.getString("nome").toUpperCase()
-                                        + "</div>");
-                            }
-                            out.println("</div></div>");
-
-                        }
-                    %>
-
-                </div>
-
                 <div class="clear"> </div>
                 <div id="modificavel">
                     <div class="LinhaEntrada">
@@ -219,9 +149,6 @@
                 <a href="./index.jsp">Ocultar Repositórios</a>
             </div>
 
-            <%    con.close(); //fechar conexao com a base de dados
-                }
-            %>
         </div>
         <div>
             <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>

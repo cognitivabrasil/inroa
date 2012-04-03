@@ -11,6 +11,7 @@ import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
  * @author Paulo Schreiner <paulo@jorjao81.com>
  */
 @Controller("feb")
-
 public final class FEBController {
 
     @Autowired
@@ -30,7 +30,7 @@ public final class FEBController {
     private RepositoryDAO repDao;
     @Autowired
     private SubFederacaoDAO subDao;
-    
+
     public FEBController() {
     }
 
@@ -39,23 +39,31 @@ public final class FEBController {
 
         return "index";
     }
-    
+
     @RequestMapping("/index2")
-    public String index2(Model model){
-        
+    public String index2(Model model) {
+
         List<SubFederacao> lista = subDao.getAll();
         Iterator i = lista.iterator();
-        while(i.hasNext()){
+        while (i.hasNext()) {
             SubFederacao subfed = (SubFederacao) i.next();
-            System.out.println("Nome: "+subfed.getNome());
-            System.out.println("Repositorios: "+subfed.getRepositorios());
+            System.out.println("Nome: " + subfed.getNome());
+            System.out.println("Repositorios: " + subfed.getRepositorios());
         }
-        
+
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
         return "index2";
     }
 
+    @RequestMapping("/consulta")
+    public String consulta(
+            @RequestParam(value = "key", required = true) String consulta,
+            BindingResult result,
+            Model model) {
+        
+        return "consulta";
+    }
 
     /**
      * Método para realizar o login.
@@ -84,5 +92,4 @@ public final class FEBController {
             return "login";
         }
     }
-
 }

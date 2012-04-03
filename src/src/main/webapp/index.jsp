@@ -20,13 +20,7 @@
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="JavaScript" type="text/javascript" src="scripts/rss.js"></script>
-        <script language="JavaScript" type="text/javascript">
-            function geraRss() {
 
-                var consulta = document.getElementById("key").value;
-                window.location='rss.jsp?key='+consulta;
-            }
-        </script>
 
     </head>      
 
@@ -46,7 +40,7 @@
                 <div class="linkCantoDireito"><a href="./admin/" title="Ferramenta Administrativa"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             </div>
             <div class="Espaco">&nbsp;</div>
-            <form name="consulta" action="consulta.jsp" method="POST">
+            <form name="consulta" action="consulta" method="POST">
 
                 <div class="clear"> </div>
 

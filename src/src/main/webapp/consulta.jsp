@@ -9,7 +9,7 @@
 <%@page import="operacoesPostgre.Consultar"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
-<%@include file="conexaoBD.jsp"%>
+<%@include file="admin/conexaoBD.jsp"%>
 <%@page import="ferramentaBusca.Recuperador"%>
 
 <%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
@@ -25,9 +25,6 @@
     </head>
     <body id="body">
 <%
-    if (con == null) {
-        out.print("<p class='textoErro'>ERRO ao conectar na base de dados! <BR><BR>Consulte o administrador do Sistema</p>");
-    } else {
 
             int numeroMaximoDeObjetosPorPagina = 5;
 
@@ -379,7 +376,6 @@
 <%
                 con.close(); //fechar conexao
             }
-    }
 %>
     </body>
 </html>
