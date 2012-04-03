@@ -67,7 +67,7 @@ public class RecuperadorTest {
         ArrayList<String> tokensConsulta = new ArrayList<String>();
         String sqlAutorSemQuery = "a.documento=d.id AND a.nome~@@'Carlos Heitor' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Carlos Heitor')) DESC;";
 
-        assertEquals("SELECT d.id FROM documentos d, autor a WHERE a.documento=d.id AND a.nome~@@'Carlos Heitor' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Carlos Heitor')) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorSemQuery, true));
+        assertEquals("SELECT d.id FROM documentos d, autores a WHERE a.documento=d.id AND a.nome~@@'Carlos Heitor' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Carlos Heitor')) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorSemQuery, true));
     }
 
     /**
@@ -79,7 +79,7 @@ public class RecuperadorTest {
         tokensConsulta.add("educa");
         String sqlAutorComQuery = "') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 
-        assertEquals("SELECT tid FROM r1weights r1w, documentos d, autor a WHERE r1w.tid=d.id  AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorComQuery, true));
+        assertEquals("SELECT tid FROM r1weights r1w, documentos d, autores a WHERE r1w.tid=d.id  AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorComQuery, true));
 
     }
 
@@ -102,7 +102,7 @@ public class RecuperadorTest {
         id[0] = "328";
         String sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
         //  System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"+r.busca_repLocal(tokensConsulta, id, sqlOrdenacao, false));
-        assertEquals("SELECT tid FROM r1weights r1w, documentos d, autor a WHERE r1w.tid=d.id  AND ( d.id_repositorio=328) AND (r1w.token='ataqu') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;", r.busca_repLocal(tokensConsulta, id, sqlOrdenacao, true));
+        assertEquals("SELECT tid FROM r1weights r1w, documentos d, autores a WHERE r1w.tid=d.id  AND ( d.id_repositorio=328) AND (r1w.token='ataqu') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;", r.busca_repLocal(tokensConsulta, id, sqlOrdenacao, true));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class RecuperadorTest {
         id[0] = "1";
         String sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 
-        String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id  AND (rsf.id_subfed=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+        String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id  AND (rsf.id_subfed=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
         //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"+r.busca_subfed(tokensConsulta, id, sqlOrdenacao));
         assertEquals(sql, r.busca_subfed(tokensConsulta, id, sqlOrdenacao, true));
     }
@@ -151,7 +151,7 @@ public class RecuperadorTest {
         id[0] = "1";
         String sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 
-        String sql = "SELECT tid FROM r1weights r1w, documentos d, autor a WHERE r1w.tid=d.id  AND (d.id_rep_subfed=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+        String sql = "SELECT tid FROM r1weights r1w, documentos d, autores a WHERE r1w.tid=d.id  AND (d.id_rep_subfed=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 
         //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"+r.busca_subRep(tokensConsulta, id, sqlOrdenacao));
 
@@ -179,7 +179,7 @@ public class RecuperadorTest {
         id[0] = "1";
         String sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 
-        String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a WHERE r1w.tid=d.id AND ( (d.id_rep_subfed = rsf.id AND (rsf.id_subfed=1)) OR ( d.id_repositorio=1)) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+        String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a WHERE r1w.tid=d.id AND ( (d.id_rep_subfed = rsf.id AND (rsf.id_subfed=1)) OR ( d.id_repositorio=1)) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 //        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"+r.busca_repLocal_subfed(tokensConsulta, id,id,sqlOrdenacao));
         assertEquals(sql, r.busca_repLocal_subfed(tokensConsulta, id, id, sqlOrdenacao, true));
     }
@@ -205,7 +205,7 @@ public class RecuperadorTest {
         id[0] = "1";
         String sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 
-        String sql = "SELECT tid FROM r1weights r1w, documentos d, autor a WHERE r1w.tid=d.id AND ( d.id_repositorio=1 OR d.id_rep_subfed=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+        String sql = "SELECT tid FROM r1weights r1w, documentos d, autores a WHERE r1w.tid=d.id AND ( d.id_repositorio=1 OR d.id_rep_subfed=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 //        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"+r.busca_repLocal_subrep(tokensConsulta, id, id, sqlOrdenacao));
         assertEquals(sql, r.busca_repLocal_subrep(tokensConsulta, id, id, sqlOrdenacao, true));
     }
@@ -231,7 +231,7 @@ public class RecuperadorTest {
         id[0] = "1";
         String sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 
-        String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id AND (rsf.id_subfed=1 OR rsf.id=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+        String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id AND (rsf.id_subfed=1 OR rsf.id=1) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
         //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"+r.busca_subfed_subrep(tokensConsulta, id, id, sqlOrdenacao));
         assertEquals(sql, r.busca_subfed_subrep(tokensConsulta, id, id, sqlOrdenacao, true));
     }
@@ -257,7 +257,7 @@ public class RecuperadorTest {
         id[0] = "1";
         String sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
 
-        String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a WHERE r1w.tid=d.id AND ( (d.id_rep_subfed = rsf.id AND (rsf.id_subfed=1)) OR ( d.id_repositorio=1 OR d.id_rep_subfed=1)) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+        String sql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a WHERE r1w.tid=d.id AND ( (d.id_rep_subfed = rsf.id AND (rsf.id_subfed=1)) OR ( d.id_repositorio=1 OR d.id_rep_subfed=1)) AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Liane Tarouco' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
         //       System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"+r.busca_repLocal_subfed_subrep(tokensConsulta, id, id, id, sqlOrdenacao));
         assertEquals(sql, r.busca_repLocal_subfed_subrep(tokensConsulta, id, id, id, sqlOrdenacao, true));
     }

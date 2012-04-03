@@ -155,11 +155,11 @@ public class Recuperador {
         
         if (autor) {                        // if is a author request
             if (tokensConsulta.isEmpty()) {   // see if have a query                
-                String consultaSql = "SELECT d.id FROM documentos d, autor a WHERE "+finalSQL;
+                String consultaSql = "SELECT d.id FROM documentos d, autores a WHERE "+finalSQL;
                 return consultaSql;
                 
             } else {
-                String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
+                String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autores a"
                         + " WHERE r1w.tid=d.id "
                         + " AND (r1w.token=";
 
@@ -199,9 +199,9 @@ public class Recuperador {
         String consultaSql = "";
         if (autor) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+                consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
-                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autores a"
                         + " WHERE r1w.tid=d.id "
                         + " AND (";
             }
@@ -238,9 +238,9 @@ public class Recuperador {
         String consultaSql = "";
         if (autor) {                    // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+                consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
-                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a"
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
                         + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
                         + " AND (";
             }
@@ -278,9 +278,9 @@ public class Recuperador {
         String consultaSql = "";
         if (autor) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+                consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
-                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autores a"
                         + " WHERE r1w.tid=d.id "
                         + " AND (";
             }
@@ -318,9 +318,9 @@ public class Recuperador {
         String consultaSql = "";
         if (autor) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+                consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
-                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a"
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
                 + " WHERE r1w.tid=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
             }
@@ -370,9 +370,9 @@ public class Recuperador {
         String consultaSql = "";
         if (autor) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+                consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
-                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autor a"
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autores a"
                 + " WHERE r1w.tid=d.id"
                 + " AND (";
             }
@@ -415,9 +415,9 @@ public class Recuperador {
         String consultaSql = "";
         if (autor) {                   // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+                consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
-                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a"
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
                 + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
                 + " AND (";
             }
@@ -460,9 +460,9 @@ public class Recuperador {
         String consultaSql = "";
         if (autor) {                   // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.id FROM documentos d, autor a WHERE ";
+                consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
-                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autor a"
+                consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
                 + " WHERE r1w.tid=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
             }
