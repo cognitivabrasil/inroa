@@ -46,12 +46,20 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
         return (DocumentoReal)getSession().get(DocumentoReal.class, i);
                
     }
+       
+       public List<DocumentoReal> getAll() {
+           return getSession().createQuery("from DocumentoReal").list();
+       }
 
-    private void deleteByObaaEntry(String e) {
+    public void deleteByObaaEntry(String e) {
         for(DocumentoReal d : getByObaaEntry(e)) {
                     System.out.println("DeleteByObaaEntry: " + e);
-                    sessionFactory.openSession().delete(d);
+                    delete(d);
         }
+    }
+    
+    public void delete(DocumentoReal d) {
+        getSession().delete(d);
     }
 
     @Override
@@ -82,7 +90,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
         try {
             System.out.println("Trying to save");
-            Transaction t = getSession().beginTransaction();
+            //Transaction t = getSession().beginTransaction();
 
 
             getSession().save(doc);
@@ -92,14 +100,15 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
                 getSession().save(o);
             }
 
-            getSession().flush();
-            t.commit();
+            //getSession().flush();
+            //t.commit();
 
 
             //session.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+            throw new RuntimeException(e);
 
         }
     }
@@ -121,7 +130,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     /**
      * @return the session
      */
-    public Session getSession() {
+    private Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 

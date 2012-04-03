@@ -63,7 +63,7 @@ public class OBAA {
 	/**
  	* Creates an empty DublinCore objetct.
 	 */
-	OBAA() {
+	public OBAA() {
 		super();
 	}
 
@@ -106,6 +106,10 @@ public class OBAA {
 	public General getGeneral() {
 		return general;
 	}
+        
+        public void setGeneral(General g) {
+            general = g;
+        }
 
 	public LifeCycle getLifeCycle() {
 		return lifeCycle;
@@ -114,6 +118,7 @@ public class OBAA {
 	public List<String> getTitles() {
 		return toStringList(getGeneral().getTitles());
 	}
+        
 	
 	public List<String> getKeywords() {
 		return getGeneral().getKeywords();
