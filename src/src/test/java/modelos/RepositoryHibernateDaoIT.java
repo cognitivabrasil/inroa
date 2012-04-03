@@ -132,6 +132,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
      * Test of save method, of class RepositoryHibernateDAO.
      */
     @Test
+    @Ignore
     public void testSave() {
         Repositorio r = new Repositorio();
 
