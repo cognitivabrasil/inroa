@@ -15,25 +15,25 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  *
  * @author marcos
  */
-public class MapeamentoHibernateDAO extends HibernateDaoSupport implements MapeamentoDAO {
-
+public class MapeamentoHibernateDAO implements MapeamentoDAO {
+    @Autowired
+    SessionFactory sessionFactory;
     
     public void delete(Mapeamento m) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.sessionFactory.getCurrentSession().delete(m);
     }
 
     public Mapeamento get(int id) {
-        return getHibernateTemplate().get(Mapeamento.class, id);
+        return (Mapeamento)this.sessionFactory.getCurrentSession().get(Mapeamento.class, id);
     }
 
     public List<Mapeamento> getAll() {
-        HibernateTemplate t = getHibernateTemplate();
-        t.setFlushMode(HibernateAccessor.FLUSH_NEVER);
-        return getHibernateTemplate().find("from Mapeamento");
+        return this.sessionFactory.getCurrentSession().createQuery("from Mapeamento").list();
     }
 
     public void save(Mapeamento m) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
+        t.saveOrUpdate(m);    
     }
     
 }

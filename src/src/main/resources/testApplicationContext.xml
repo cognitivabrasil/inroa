@@ -76,6 +76,10 @@ p:password="${dataSource.password}" /> -->
     <bean id="PadraoMetadadosDAO"
         class="modelos.PadraoMetadadosHibernateDAO">
     </bean>
+    
+    <bean id="MapeamentoDAO"
+        class="modelos.MapeamentoHibernateDAO">
+    </bean>
  
     <bean id="UsuarioDAO"
         class="modelos.UsuarioHibernateDAO">

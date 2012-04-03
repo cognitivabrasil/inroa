@@ -336,7 +336,6 @@ src/src/java/modelos/DocumentoFebInterface.java -text
 src/src/java/modelos/DocumentoReal.java -text
 src/src/java/modelos/DocumentosDAO.java -text
 src/src/java/modelos/DocumentosHibernateDAO.java -text
-src/src/java/modelos/FebChangeDatabaseInfo.java -text
 src/src/java/modelos/Mapeamento.java -text
 src/src/java/modelos/MapeamentoDAO.java -text
 src/src/java/modelos/MapeamentoHibernateDAO.java -text
@@ -511,6 +510,7 @@ src/src/test/java/metadata/obaa1.xml -text
 src/src/test/java/metadata/teste1.xml -text
 src/src/test/java/modelos/AbstractDaoTest.java -text
 src/src/test/java/modelos/DocumentosHibernateDaoIT.java -text
+src/src/test/java/modelos/MapeamentoHibernateDaoIT.java -text
 src/src/test/java/modelos/PadraoMetadadosHibernateDaoIT.java -text
 src/src/test/java/modelos/RepositorioTest.java -text
 src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text

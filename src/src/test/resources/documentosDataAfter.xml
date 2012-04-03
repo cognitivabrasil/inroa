@@ -16,7 +16,9 @@ and open the template in the editor.
     <padraometadados id="4" nome="Novo" metadata_prefix="obaa" name_space="obaa"/>
 
 
-    <mapeamentos id="1" nome="Padrao" descricao="Blabla" xslt="" padrao_id="1"/>
+    <mapeamentos id="1" nome="Updated" descricao="Blabla" xslt="blabla" padrao_id="1"/>
+    <mapeamentos id="2" nome="Padrao" descricao="Blabla" xslt="xslt" padrao_id="1"/>
+    <mapeamentos id="3" nome="Jorjao" descricao="Blabla" xslt="xslt" padrao_id="1"/>
 
             
     <repositorios id="1" nome="Jorjao" descricao="dfsd" 

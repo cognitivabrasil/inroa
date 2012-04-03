@@ -14,7 +14,9 @@ and open the template in the editor.
     <padraometadados id="2" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
     <padraometadados id="3" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
     
-    <mapeamentos id="1" nome="Padrao" descricao="Blabla" xslt="" padrao_id="1"/>
+    <mapeamentos id="1" nome="Padrao" descricao="Blabla" xslt="xslt" padrao_id="1"/>
+    <mapeamentos id="2" nome="Padrao" descricao="Blabla" xslt="xslt" padrao_id="1"/>
+
 
             
     <repositorios id="1" nome="Cesta" descricao="dfsd" 

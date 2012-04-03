@@ -81,6 +81,11 @@ p:password="${dataSource.password}" /> -->
         class="modelos.MapeamentoHibernateDAO">
         <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
+    
+       
+    <bean id="MapeamentoDAO"
+        class="modelos.MapeamentoHibernateDAO">
+    </bean>
  
     <bean id="UsuarioDAO"
         class="modelos.UsuarioHibernateDAO">
