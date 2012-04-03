@@ -47,27 +47,26 @@ p:password="${dataSource.password}" /> -->
       class="modelos.DocumentosHibernateDAO"
     />
     
+       <bean id="documentosDAO"
+      class="modelos.DocumentosHibernateDAO"
+    />
+    
     <bean id="sessionFactory"
-      class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+      class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
     </bean>
 
-    
-    <bean id="hibernateTemplate"
-      class="org.springframework.orm.hibernate3.HibernateTemplate">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
 
     <bean id="transactionManager"
-      class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+      class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <tx:annotation-driven/>
-    
+
     <bean id="repositoryDAO"
        class="modelos.RepositoryHibernateDAO">
-    </bean>
+</bean>
 
     <bean id="subFederationDAO"
        class="modelos.SubFederacaoHibernateDAO">
@@ -76,8 +75,7 @@ p:password="${dataSource.password}" /> -->
     <bean id="PadraoMetadadosDAO"
         class="modelos.PadraoMetadadosHibernateDAO">
     </bean>
-   
-       
+    
     <bean id="MapeamentoDAO"
         class="modelos.MapeamentoHibernateDAO">
     </bean>

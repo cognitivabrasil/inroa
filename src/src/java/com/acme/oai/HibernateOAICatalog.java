@@ -369,7 +369,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
                Connection conn = c.conectaBD();
     
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession(conn);
+        Session session = sessionFactory.getCurrentSession();
         
             SimpleDateFormat formatter = OAIUtil.dateFormatter();
         
@@ -555,7 +555,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
                Connection conn = c.conectaBD();
     
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession(conn);
+        Session session = sessionFactory.getCurrentSession();
         
             SimpleDateFormat formatter = OAIUtil.dateFormatter();
         
@@ -742,7 +742,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
                Connection conn = c.conectaBD();
     
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession(conn);
+        Session session = sessionFactory.getCurrentSession();
 	
         Criteria criteria2 = session.createCriteria(Repositorio.class);
         List<Repositorio> fromdb = criteria2.list();

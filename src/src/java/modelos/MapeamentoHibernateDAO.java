@@ -7,9 +7,6 @@ package modelos;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateAccessor;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
  *
@@ -32,8 +29,7 @@ public class MapeamentoHibernateDAO implements MapeamentoDAO {
     }
 
     public void save(Mapeamento m) {
-        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
-        t.saveOrUpdate(m);    
+            this.sessionFactory.getCurrentSession().saveOrUpdate(m);    
     }
     
 }

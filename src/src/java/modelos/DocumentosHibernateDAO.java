@@ -5,15 +5,12 @@
 package modelos;
 
 import OBAA.OBAA;
-import java.sql.Connection;
 import java.util.List;
 import metadata.Header;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import postgres.Conectar;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -21,20 +18,15 @@ import postgres.Conectar;
  */
 public class DocumentosHibernateDAO implements DocumentosDAO {
 
+    @Autowired
     SessionFactory sessionFactory;
-    Session session;
     private Repositorio repository;
     
     public DocumentosHibernateDAO() {
-        Conectar c = new Conectar();
-
-            Connection conn = c.conectaBD();
-            sessionFactory = new Configuration().configure().setProperty("hibernate.show_sql", "false").buildSessionFactory();
-            session = sessionFactory.openSession(conn);
     }
     
     private List<DocumentoReal> getByObaaEntry(String e) {
-        return session.createQuery(
+        return getSession().createQuery(
                 "from DocumentoReal as doc where doc.obaaEntry = ?")
                 .setString(0, e)
                 .list();
@@ -43,7 +35,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     
    @Override
     public DocumentoReal get(String e) {
-        return (DocumentoReal)session.createQuery(
+        return (DocumentoReal)getSession().createQuery(
                 "from DocumentoReal as doc where doc.obaaEntry = ?")
                 .setString(0, e)
                 .uniqueResult();
@@ -51,7 +43,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     }
    
        public DocumentoReal get(int i) {
-        return (DocumentoReal)session.get(DocumentoReal.class, i);
+        return (DocumentoReal)getSession().get(DocumentoReal.class, i);
                
     }
 
@@ -90,17 +82,17 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
         try {
             System.out.println("Trying to save");
-            Transaction t = session.beginTransaction();
+            Transaction t = getSession().beginTransaction();
 
 
-            session.save(doc);
+            getSession().save(doc);
             for (Objeto o : doc.getObjetos()) {
                 System.out.println("Saving object");
 
-                session.save(o);
+                getSession().save(o);
             }
 
-            session.flush();
+            getSession().flush();
             t.commit();
 
 
@@ -125,4 +117,16 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     public void setRepository(Repositorio repository) {
         this.repository = repository;
     }
+
+    /**
+     * @return the session
+     */
+    public Session getSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
+    /**
+     * @param session the session to set
+     */
+
 }

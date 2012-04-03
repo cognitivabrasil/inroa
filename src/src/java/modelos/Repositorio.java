@@ -2,9 +2,9 @@
 package modelos;
 
 import java.util.*;
+import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import spring.ApplicationContextProvider;
 
 /**
@@ -28,13 +28,14 @@ public class Repositorio implements java.io.Serializable {
     private String colecoesInternal;
     private PadraoMetadados padraoMetadados;
     private Mapeamento mapeamento;
-    HibernateTemplate template;
+    private SessionFactory sessionFactory;
 
     public Repositorio() {
-        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-        if(ctx != null) {
-            template = ctx.getBean(HibernateTemplate.class);
-        }
+//        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+//        if(ctx != null) {
+//            //TODO:
+//            sessionFactory = ctx.getBean(SessionFactory.class);
+//        }
         id = 0;
         nome = "";
         descricao = "";
@@ -46,19 +47,19 @@ public class Repositorio implements java.io.Serializable {
         periodicidadeAtualizacao = 1;
         colecoesInternal = "";
     }
-    
+
     static String join(Collection<?> s, String delimiter) {
-     StringBuilder builder = new StringBuilder();
-     Iterator iter = s.iterator();
-     while (iter.hasNext()) {
-         builder.append(iter.next());
-         if (!iter.hasNext()) {
-           break;                  
-         }
-         builder.append(delimiter);
-     }
-     return builder.toString();
- }
+        StringBuilder builder = new StringBuilder();
+        Iterator iter = s.iterator();
+        while (iter.hasNext()) {
+            builder.append(iter.next());
+            if (!iter.hasNext()) {
+                break;
+            }
+            builder.append(delimiter);
+        }
+        return builder.toString();
+    }
 
     public Integer getId() {
         return this.id;
@@ -117,12 +118,14 @@ public class Repositorio implements java.io.Serializable {
     }
 
     /**
-     * 
-     * @return Number of documents present in the repository (non-deleted documents only)
+     *
+     * @return Number of documents present in the repository (non-deleted
+     * documents only)
      */
     public Integer getSize() {
         return DataAccessUtils.intResult(
-                template.find("select count(*) from DocumentoReal doc WHERE doc.repositorio = ? AND doc.deleted = ?", this, false));
+                getSessionFactory().getCurrentSession().createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").
+                setParameter("rep", this).setParameter("deleted", false).list());
     }
 
     /**
@@ -183,34 +186,33 @@ public class Repositorio implements java.io.Serializable {
     }
 
     /**
-     * 
+     *
      * @return The collections associated with this repository
      */
     public Set<String> getColecoes() {
-        if(colecoesInternal == "") {
+        if (colecoesInternal == "") {
             return new HashSet<String>();
-        }
-        else {
+        } else {
             return new HashSet<String>(Arrays.asList(colecoesInternal.split(";")));
         }
     }
-    
+
     /**
      * Sets collections associated with this repository
+     *
      * @param c The collections
      */
     public void setColecoes(Collection<String> c) {
-        if(c.size() == 0) {
+        if (c.size() == 0) {
             this.colecoesInternal = "";
-        }
-        else {
+        } else {
             this.colecoesInternal = join(c, ";");
         }
     }
 
-    
     /**
      * Adds a collection to the repositoru
+     *
      * @param colecao Collection to add
      */
     public void addColecao(String colecao) {
@@ -253,5 +255,28 @@ public class Repositorio implements java.io.Serializable {
      */
     protected void setColecoesInternal(String colecoesInternal) {
         this.colecoesInternal = colecoesInternal;
+    }
+
+    /**
+     * @return the sessionFactory
+     */
+    public SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+            if (ctx != null) {
+                //TODO:
+                sessionFactory = ctx.getBean(SessionFactory.class);
+            } else {
+                throw new IllegalStateException("Could not get Application context");
+            }
+        }
+        return sessionFactory;
+    }
+
+    /**
+     * @param sessionFactory the sessionFactory to set
+     */
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 }

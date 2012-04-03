@@ -8,9 +8,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateAccessor;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
  *
@@ -36,8 +33,8 @@ public class RepositoryHibernateDAO implements RepositoryDAO {
     }
 
     public void save(Repositorio r) {
-        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
-        t.saveOrUpdate(r);    }
+        this.sessionFactory.getCurrentSession().saveOrUpdate(r);    
+    }
 
     public Repositorio get(String name) {
         Session s = this.sessionFactory.getCurrentSession();

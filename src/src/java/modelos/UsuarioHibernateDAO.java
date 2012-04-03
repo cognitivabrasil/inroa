@@ -7,8 +7,6 @@ package modelos;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -48,9 +46,8 @@ public class UsuarioHibernateDAO implements UsuarioDAO {
         return (List<Usuario>) this.sessionFactory.getCurrentSession().createQuery("from Usuario").list();
     }
 
-   // @Transactional
+    // @Transactional
     public void save(Usuario r) {
-        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
-        t.saveOrUpdate(r);
+        this.sessionFactory.getCurrentSession().saveOrUpdate(r);
     }
 }

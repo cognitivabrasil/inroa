@@ -5,9 +5,9 @@
 package modelos;
 
 import java.util.Set;
+import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import spring.ApplicationContextProvider;
 
 /**
@@ -20,6 +20,7 @@ public class RepositorioSubFed {
     private String nome;
     private SubFederacao subFederacao;
     private Set<DocumentoReal> documentos;
+    SessionFactory sessionFactory;
 
     public int getId() {
         return id;
@@ -46,12 +47,32 @@ public class RepositorioSubFed {
     }
 
     public Integer getSize() {
-        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-        HibernateTemplate template = ctx.getBean(HibernateTemplate.class);
 
         return DataAccessUtils.intResult(
-                template.find("select count(*) from DocumentoReal doc WHERE doc.repositorioSubFed = ? AND doc.deleted = ?", this, false));
+                getSessionFactory().getCurrentSession().
+                createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorioSubFed = :rep AND doc.deleted = :deleted").
+                setParameter("rep", this).setParameter("deleted", false).list());
   
+    }
+    
+    private SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+            if (ctx != null) {
+                //TODO:
+                sessionFactory = ctx.getBean(SessionFactory.class);
+            } else {
+                throw new IllegalStateException("Could not get Application context");
+            }
+        }
+        return sessionFactory;
+    }
+
+    /**
+     * @param sessionFactory the sessionFactory to set
+     */
+    private void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     /**

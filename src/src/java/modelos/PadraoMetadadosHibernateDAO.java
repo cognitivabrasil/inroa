@@ -34,8 +34,7 @@ public class PadraoMetadadosHibernateDAO implements PadraoMetadadosDAO {
     }
 
     public void save(PadraoMetadados r) {
-        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
-        t.saveOrUpdate(r); 
+        this.sessionFactory.getCurrentSession().saveOrUpdate(r); 
     }
 
 }

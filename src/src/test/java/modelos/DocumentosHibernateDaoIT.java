@@ -22,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
  * Integration tests of the UsuarioHibernateDao 
@@ -32,6 +33,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired

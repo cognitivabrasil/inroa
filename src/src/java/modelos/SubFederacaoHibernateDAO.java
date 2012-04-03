@@ -8,7 +8,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**
  *
@@ -39,7 +38,6 @@ public class SubFederacaoHibernateDAO implements SubFederacaoDAO {
     }
 
     public void save(SubFederacao s) {
-        HibernateTemplate t = new HibernateTemplate(this.sessionFactory);
-        t.saveOrUpdate(s);
+        this.sessionFactory.getCurrentSession().saveOrUpdate(s);
     }
 }
