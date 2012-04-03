@@ -65,7 +65,7 @@
                 </div>
             </form:form>
             <div ALIGN="CENTER">
-                <a href="./index2">Selecionar Repositórios</a>
+                <a href="./index2">Busca Avan&ccedil;ada</a>
             </div>
 
         </div>

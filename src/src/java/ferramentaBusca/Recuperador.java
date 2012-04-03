@@ -63,14 +63,14 @@ public class Recuperador {
 
         boolean confederacao = false;
         boolean LRU = false;
-        boolean autorb = false;
+        boolean autorb = true;
         
         LRU cache = new LRU(tokensConsulta, con);
 
         String consultaSql = ""; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
         String sqlOrdenacao = ""; //eh preenchido pelo if que testa qual o tipo de ordenacao
 
-        if (autor != null) autorb = true;
+        if (autor == null || autor.isEmpty()) autorb = false;
         
         if (ordenacao.equals("data")) {
             //TODO: Fazer RSS para autor?
@@ -83,7 +83,7 @@ public class Recuperador {
                     sqlOrdenacao = " a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, '"+autor+"')) DESC;";
                 } else {
                     //COM autor, COM termo de busca
-                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY r1w.tid ORDER BY SUM (weight) DESC;";
+                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY r1w.tid, a.nome ORDER BY (qgram(a.nome, '"+autor+"')) DESC, SUM (weight) DESC;";
                 }
             } else {
                 
@@ -95,6 +95,8 @@ public class Recuperador {
             if (idSubfed.length == 1 && idSubfed[0].isEmpty()) {
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
                     LRU = cache.verificaConsulta();
+                    LRU = LRU && !autorb;
+                    System.out.println("LRU "+LRU);
                     if (!LRU) {
                         confederacao = true;
                         //busca na confederacao
@@ -125,11 +127,14 @@ public class Recuperador {
                 }
             }
         }
+        
 
-        if (LRU){ //se a consulta ja esta no banco de dados
+        if (LRU){ //se a consulta ja esta no banco de dados e não for por autor
             idsResultados = cache.getResultado();
         }
         else { //se a consulta nao tiver no banco
+            
+            System.out.println("SQL\n"+consultaSql);
             PreparedStatement stmt = con.prepareStatement(consultaSql);
 
             ResultSet rs = stmt.executeQuery();
@@ -155,7 +160,7 @@ public class Recuperador {
         
         if (autor) {                        // if is a author request
             if (tokensConsulta.isEmpty()) {   // see if have a query                
-                String consultaSql = "SELECT d.id FROM documentos d, autores a WHERE "+finalSQL;
+                String consultaSql = "SELECT d.id as tid FROM documentos d, autores a WHERE "+finalSQL;
                 return consultaSql;
                 
             } else {

@@ -20,7 +20,7 @@ modelo de tópico:
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="postgres.Conectar"%>
-<%@include file="conexaoBD.jsp"%>
+<%@include file="admin/conexaoBD.jsp"%>
 
 <html>
     <head>

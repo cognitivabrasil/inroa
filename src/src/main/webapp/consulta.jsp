@@ -48,25 +48,27 @@
 
 
             String textoBusca = "";
+            String autor="";
 
 
 
             boolean testaConsulta = false;
             try {
                 textoBusca = request.getParameter("consulta"); //recebe a consulta informada no formulario
+                autor = request.getParameter("autor");
                 idRepLocal = request.getParameterValues("replocal");
                 idSubfed = request.getParameterValues("subfed");
                 idSubRep = request.getParameterValues("subrep");
 
 
-                if (textoBusca.isEmpty()) {
-                    out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
+                if (textoBusca.isEmpty()&&autor.isEmpty()) {
+                    out.print("<script type='text/javascript'>alert('Nenhum dado foi informado');</script>"
                             + "<script type='text/javascript'>history.back(-1);</script>");
                 } else {
                     testaConsulta = true;
                 }
             } catch (Exception e) {
-                out.print("<script type='text/javascript'>alert('Nenhuma consulta foi informada');</script>"
+                out.print("<script type='text/javascript'>alert('Nenhum dado foi informado');</script>"
                         + "<script type='text/javascript'>window.location=\"index\";</script>");               
 
             }
@@ -79,7 +81,7 @@
                 Recuperador rep = new Recuperador();
 
                 try {
-                    resultadoBusca = rep.busca(textoBusca, con, idRepLocal, idSubfed, idSubRep, "relevancia");
+                    resultadoBusca = rep.busca(textoBusca, autor, con, idRepLocal, idSubfed, idSubRep, "relevancia");
 
                     numObjetosEncontrados = resultadoBusca.size(); //armazena o numero de objetos
 
@@ -157,7 +159,7 @@
                                                     }
                                                 }
                                             }
-                                            url += "&consulta=" + textoBusca;
+                                            url += "&consulta=" + textoBusca +"&autor="+autor;
 
             %>
 

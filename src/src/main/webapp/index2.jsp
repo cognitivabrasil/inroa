@@ -136,6 +136,13 @@
                         <div class="Value">
                             <input type="text" name="key" id="key" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
                         </div>
+                        <br>
+                        <div class="Label">
+                            Autor:
+                        </div>
+                        <div class="Value">
+                            <input type="text" name="autor" id="autor" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                        </div>
                     </div>
                 </div>
                 <div class="clear"> </div>
@@ -146,7 +153,7 @@
                 </div>
             </form>
             <div ALIGN="CENTER">
-                <a href="./index.jsp">Ocultar Repositórios</a>
+                <a href="./index.jsp">Retornar a busca padr&atilde;o</a>
             </div>
 
         </div>

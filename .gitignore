@@ -10,6 +10,7 @@ src/build.xml
 src/catalog.xml
 src/dist
 src/nb-configuration.xml
+src/nbactions-somente[!!-~]execussão.xml
 src/nbproject
 src/profiles.xml
 src/src/main/resources/.Repositorio.hbm.xml.swp
