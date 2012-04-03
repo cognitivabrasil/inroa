@@ -12,24 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author marcos
  */
-public class MapeamentoHibernateDAO implements MapeamentoDAO {
-    @Autowired
-    SessionFactory sessionFactory;
-    
-    public void delete(Mapeamento m) {
-        this.sessionFactory.getCurrentSession().delete(m);
-    }
+public class MapeamentoHibernateDAO extends AbstractHibernateDAO<Mapeamento> implements  MapeamentoDAO {
 
-    public Mapeamento get(int id) {
-        return (Mapeamento)this.sessionFactory.getCurrentSession().get(Mapeamento.class, id);
-    }
-
-    public List<Mapeamento> getAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("from Mapeamento").list();
-    }
-
-    public void save(Mapeamento m) {
-            this.sessionFactory.getCurrentSession().saveOrUpdate(m);    
-    }
-    
 }

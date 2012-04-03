@@ -14,30 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Marcos
  */
 //@Transactional
-public class SubFederacaoHibernateDAO implements SubFederacaoDAO {
+public class SubFederacaoHibernateDAO extends AbstractHibernateDAO<SubFederacao> implements SubFederacaoDAO {
 
-    @Autowired
-    SessionFactory sessionFactory;
-
-    public void delete(SubFederacao s) {
-        this.sessionFactory.getCurrentSession().delete(s);
-    }
-
-    public SubFederacao get(int id) {
-        return (SubFederacao) this.sessionFactory.getCurrentSession().get(SubFederacao.class, id);
-    }
-
-    public List<SubFederacao> getAll() {
-        Session s = this.sessionFactory.getCurrentSession();
-        return s.createQuery("from SubFederacao").list();
-    }
 
     public SubFederacao get(String nome) {
         Session s = this.sessionFactory.getCurrentSession();
         return (SubFederacao) s.createQuery("from SubFederacao WHERE nome = :nome").setString("nome", nome).uniqueResult();
     }
 
-    public void save(SubFederacao s) {
-        this.sessionFactory.getCurrentSession().saveOrUpdate(s);
-    }
 }

@@ -13,29 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author paulo
  */
-public class RepositoryHibernateDAO implements RepositoryDAO {
-    @Autowired
-    SessionFactory sessionFactory;
-
-    public void delete(Repositorio r) {
-        this.sessionFactory.getCurrentSession().delete(r);
-
-    }
-
-    public Repositorio get(int id) {
-        return (Repositorio)this.sessionFactory.getCurrentSession().get(Repositorio.class, id);
-
-    }
-
-    public List<Repositorio> getAll() {
-         Session s = this.sessionFactory.getCurrentSession();
-        return s.createQuery("from Repositorio").list();
-    }
-
-    public void save(Repositorio r) {
-        this.sessionFactory.getCurrentSession().saveOrUpdate(r);    
-    }
-
+public class RepositoryHibernateDAO extends AbstractHibernateDAO<Repositorio> implements RepositoryDAO {
+ 
     public Repositorio get(String name) {
         Session s = this.sessionFactory.getCurrentSession();
         return (Repositorio) s.createQuery("from Repositorio WHERE nome = :nome").setString("nome", name).uniqueResult();

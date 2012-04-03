@@ -331,8 +331,8 @@ src/src/java/metadata/XsltConversorDefault.java -text
 src/src/java/metadata/conversor/Conversor.java -text
 src/src/java/metadata/conversor/Rule.java -text
 src/src/java/metadata/conversor/package-info.java -text
+src/src/java/modelos/AbstractHibernateDAO.java -text
 src/src/java/modelos/Busca.java -text
-src/src/java/modelos/Documento.java -text
 src/src/java/modelos/DocumentoFebInterface.java -text
 src/src/java/modelos/DocumentoReal.java -text
 src/src/java/modelos/DocumentosDAO.java -text
