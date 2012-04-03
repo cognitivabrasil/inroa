@@ -101,4 +101,28 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         assertThat(d.getTitles(), hasItem("teste2"));
         assertThat(d.getDescriptions(), hasItem("Bla bla"));
     }
+    
+        @Test
+    public void testSaveDeleted() {
+        OBAA obaa = new OBAA();
+        obaa.setGeneral(new General());
+
+       
+
+
+        Header h = mock(Header.class);
+
+
+        when(h.getTimestamp()).thenReturn(new Date());
+        when(h.getIdentifier()).thenReturn("dois");
+        when(h.isDeleted()).thenReturn(true);
+
+
+        instance.save(obaa, h);
+
+        DocumentoReal d = instance.get("dois");
+        assertThat(d, notNullValue());
+        assertEquals(d.isDeleted(), true);
+
+    }
 }
