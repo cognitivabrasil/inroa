@@ -9,6 +9,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
@@ -24,9 +25,9 @@
         <script language="JavaScript" type="text/javascript">
             function geraRss() {
                 var consulta = document.getElementById("consulta").value;
-                var repositorios = document.getElementsByName("replocal");
-                var idSubfed1 = document.getElementsByName("subfed");
-                var idSubRep1 = document.getElementsByName("subrep");
+                var repositorios = document.getElementsByName("repositorios");
+                var idSubfed1 = document.getElementsByName("federacoes");
+                var idSubRep1 = document.getElementsByName("repSubfed");
 
                 var idRepLocal = "";
                 var idSubfed = "";
@@ -35,19 +36,19 @@
                 //Contatenar resultados dos repositorios locais
                 for (var i=0;i<repositorios.length;i = i+1){
                     if (repositorios[i].checked == true){
-                        idRepLocal +="&replocal="+repositorios[i].value;
+                        idRepLocal +="&repositorios="+repositorios[i].value;
                     }
                 }
                 //concatenar resultados das subfederacoes
                 for (var i=0;i<idSubfed1.length;i = i+1){
                     if (idSubfed1[i].checked == true){
-                        idSubfed +="&subfed="+idSubfed1[i].value;
+                        idSubfed +="&federacoes="+idSubfed1[i].value;
                     }
                 }
                 //concatenar resultados dos repositorios das subfederacoes
                 for (var i=0;i<idSubRep1.length;i = i+1){
                     if (idSubRep1[i].checked == true){
-                        idSubRep +="&subrep="+idSubRep1[i].value;
+                        idSubRep +="&repSubfed="+idSubRep1[i].value;
                     }
                 }
                 
@@ -85,8 +86,8 @@
             <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
             <div class="linkCantoDireito"><a href="./admin/"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             <div class="Espaco">&nbsp;</div>
-            <form name="consulta" action="consulta.jsp" method="GET">
-
+            
+            <form:form method="post" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">    
                 <div class="LinhaEntrada">
                     <div class="EspacoAntes">&nbsp;</div>
                     <div class="Label">
@@ -98,7 +99,7 @@
                         <c:if test="${i.index==0}"><div class='ValueIndex'>- Reposit&oacute;rios</div></c:if>
 
                             <div class='ValueIndex'>&nbsp;&nbsp;&nbsp;
-                                <input value='${rep.id}' type=checkbox id="${rep.id}" name="replocal"> ${fn:toUpperCase(rep.nome)}
+                                <input value='${rep.id}' type=checkbox id="${rep.id}" name="repositorios"> ${fn:toUpperCase(rep.nome)}                                
                         </div>                           
 
                     </c:forEach>
@@ -108,12 +109,12 @@
                         <c:if test="${i.index==0}"><div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div></c:if>
                         <div class='ValueIndex'>&nbsp;&nbsp;&nbsp;
                             <a id='link${subFed.id}' class='linkRepSubfeb' onclick='tornarVisivel("link${subFed.id}","listaRep${subFed.id}", "Interno");'>+</a>
-                            <input value='${subFed.id}' type=checkbox id="${subFed.id}" name="subfed"> ${fn:toUpperCase(subFed.nome)}
+                            <input value='${subFed.id}' type=checkbox id="${subFed.id}" name="federacoes"> ${fn:toUpperCase(subFed.nome)}
                             <div id='listaRep${subFed.id}' class='hidden'>
 
                                 <c:forEach var="repSubFed" items="${subFed.repositorios}" varStatus="i">
                                     <div class='Int'>&nbsp;&nbsp;&nbsp;
-                                        <input value='${repSubFed.id}' type=checkbox id="${repSubFed.id}" name="subrep">
+                                        <input value='${repSubFed.id}' type=checkbox id="${repSubFed.id}" name="repSubfed">
                                         ${fn:toUpperCase(repSubFed.nome)}
                                     </div>
                                 </c:forEach>                        
@@ -130,6 +131,7 @@
                 <div class="clear"> </div>
                 <div id="modificavel">
                     <div class="LinhaEntrada">
+                        <form:errors path="consulta" cssClass="ValueErro" />
                         <div class="Label">
                             Texto para a busca:
                         </div>
@@ -151,7 +153,7 @@
                         <input class="BOTAO" type="submit" value="Consultar" ALIGN="CENTER"/>
                     </div>
                 </div>
-            </form>
+            </form:form>
             <div ALIGN="CENTER">
                 <a href="./index.jsp">Retornar a busca padr&atilde;o</a>
             </div>

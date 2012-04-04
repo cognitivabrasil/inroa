@@ -25,6 +25,7 @@
     </head>
     <body id="body">
 <%
+System.out.println(pageContext.getAttribute("item", pageContext.REQUEST_SCOPE));
 
             int numeroMaximoDeObjetosPorPagina = 5;
 
@@ -53,26 +54,12 @@
 
 
             boolean testaConsulta = false;
-            try {
+
                 textoBusca = request.getParameter("consulta"); //recebe a consulta informada no formulario
                 autor = request.getParameter("autor");
                 idRepLocal = request.getParameterValues("replocal");
                 idSubfed = request.getParameterValues("subfed");
                 idSubRep = request.getParameterValues("subrep");
-
-
-                if (textoBusca.isEmpty()&&autor.isEmpty()) {
-                    out.print("<script type='text/javascript'>alert('Nenhum dado foi informado');</script>"
-                            + "<script type='text/javascript'>history.back(-1);</script>");
-                } else {
-                    testaConsulta = true;
-                }
-            } catch (Exception e) {
-                out.print("<script type='text/javascript'>alert('Nenhum dado foi informado');</script>"
-                        + "<script type='text/javascript'>window.location=\"index\";</script>");               
-
-            }
-            if (testaConsulta) { //se nao foi informada a consulta nao entra no if
 
                 int numObjetosEncontrados = 0; //inicializa int que tera o numero de resultados retornados
                 ArrayList<Integer> resultadoBusca = new ArrayList<Integer>(); //ArrayList que recebera o resultado da busca
@@ -377,7 +364,7 @@
 
 <%
                 con.close(); //fechar conexao
-            }
+            
 %>
     </body>
 </html>

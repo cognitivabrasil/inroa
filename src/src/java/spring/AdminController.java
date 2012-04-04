@@ -145,7 +145,7 @@ public final class AdminController {
             Repositorio rep = new Repositorio();
             rep.setId(id);
             repDao.delete(rep);
-            return "redirect:/fechaRecarrega";
+            return "redirect:fechaRecarrega";
         } else {
 
             model.addAttribute("repDAO", repDao);
@@ -175,7 +175,7 @@ public final class AdminController {
                 return "admin/cadastraFederacao";
             } else {
                 subDao.save(subfed); //Grava a subfederacao modificada no formulario
-                return "redirect:/fechaRecarrega";
+                return "redirect:fechaRecarrega";
             }
         }
     }
@@ -225,7 +225,7 @@ public final class AdminController {
             SubFederacao subFed = new SubFederacao();
             subFed.setId(id);
             subDao.delete(subFed);
-            return "redirect:/fechaRecarrega";
+            return "redirect:fechaRecarrega";
         } else {
 
             model.addAttribute("subDAO", subDao);

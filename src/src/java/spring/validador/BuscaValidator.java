@@ -23,7 +23,11 @@ public class BuscaValidator implements Validator {
     }
 
     public void validate(Object target, Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "consulta",
-                "required.consulta", "É necessário informar uma consulta.");
+        //ValidationUtils.rejectIfEmpty(errors, "consulta", "required.consulta", "É necessário informar uma consulta.");
+        
+        Busca busca = (Busca) target;
+        if(busca.getConsulta().isEmpty() && busca.getAutor().isEmpty()){
+            errors.rejectValue("consulta","invalid.consulta", "Nenhuma consulta foi informada.");
+        }
     }
 }

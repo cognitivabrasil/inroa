@@ -4,6 +4,7 @@
  */
 package spring;
 
+import ferramentaBusca.Recuperador;
 import javax.servlet.http.HttpSession;
 import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public final class FEBController {
     public String inicio(Model model) {
         return index(model);
     }
+    
+    @RequestMapping("/index.*")
+    public String indexJSP(Model model) {
+        return index(model);
+    }
 
     @RequestMapping("/index")
     public String index(Model model) {
@@ -66,6 +72,25 @@ public final class FEBController {
             model.addAttribute("BuscaModel", consulta);
             return "index";
         } else {
+            return "consulta";
+        }
+    }
+    
+    @RequestMapping("/consultaAvancada")
+    public String consultaAvancada(
+            @ModelAttribute("buscaModel") Busca consulta,
+            BindingResult result,
+            Model model) {
+        model.addAttribute("item", "--DEUU");
+        buscaValidator.validate(consulta, result);
+        if (result.hasErrors()) {
+            model.addAttribute("BuscaModel", consulta);
+            model.addAttribute("repDAO", repDao);
+            model.addAttribute("subDAO", subDao);
+            return "index2";
+        } else {
+                //Recuperador rec = new Recuperador();
+                //rec.busca(consulta);
             return "consulta";
         }
     }
