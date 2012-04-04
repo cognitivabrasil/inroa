@@ -44,7 +44,7 @@ public class Operacoes {
                 return false;
             }
         } catch (NullPointerException n) {
-            return false;
+            return true;
         }
     }
 

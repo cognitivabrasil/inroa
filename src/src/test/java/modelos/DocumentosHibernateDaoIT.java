@@ -101,13 +101,13 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         assertThat(d.getTitles(), hasItem("teste2"));
         assertThat(d.getDescriptions(), hasItem("Bla bla"));
     }
-    
-        @Test
+
+    @Test
     public void testSaveDeleted() {
         OBAA obaa = new OBAA();
         obaa.setGeneral(new General());
 
-       
+
 
 
         Header h = mock(Header.class);

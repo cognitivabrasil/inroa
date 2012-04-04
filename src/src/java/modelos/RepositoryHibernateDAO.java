@@ -19,4 +19,5 @@ public class RepositoryHibernateDAO extends AbstractHibernateDAO<Repositorio> im
         Session s = this.sessionFactory.getCurrentSession();
         return (Repositorio) s.createQuery("from Repositorio WHERE nome = :nome").setString("nome", name).uniqueResult();
     }
+    
 }
