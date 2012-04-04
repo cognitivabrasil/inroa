@@ -12,7 +12,7 @@ package ORG.oclc.oai.server.crosswalk;
 
 import java.util.Properties;
 import ORG.oclc.oai.server.verb.CannotDisseminateFormatException;
-import modelos.Documento;
+import modelos.DocumentoReal;
 import modelos.Objeto;
 
 /**
@@ -90,7 +90,7 @@ public class XML2oai_obaa extends Crosswalk {
      */
     public String createMetadata(Object nativeItem)
 	throws CannotDisseminateFormatException {
-	Documento m  = (Documento)nativeItem;
+	DocumentoReal m  = (DocumentoReal)nativeItem;
 
 	StringBuffer s = new StringBuffer(200);
             s.append("<obaa:obaa xmlns:obaa=\"http://ltsc.ieee.org/xsd/LOM\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/lomv1.0/lom.xsd\">");

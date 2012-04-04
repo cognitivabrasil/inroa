@@ -28,12 +28,13 @@ import ORG.oclc.oai.server.verb.CannotDisseminateFormatException;
 import ORG.oclc.oai.server.verb.IdDoesNotExistException;
 import ORG.oclc.oai.server.verb.NoMetadataFormatsException;
 import ORG.oclc.oai.util.OAIUtil;
-import modelos.Documento;
+import ferramentaBusca.indexador.Documento;
 import modelos.Repositorio;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import modelos.DocumentoReal;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
 import org.hibernate.Criteria;
@@ -362,7 +363,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         Map listRecordsMap = new HashMap();
         ArrayList records = new ArrayList();
         
-               Documento m;
+               DocumentoReal m;
                
                Conectar c = new Conectar();
                
@@ -427,7 +428,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         List list = criteria.list();
         int totalRecords = Integer.parseInt(list.get(0).toString());
 	
-        Criteria criteria2 = session.createCriteria(Documento.class);
+        Criteria criteria2 = session.createCriteria(DocumentoReal.class);
 	if(use_from) {
 		criteria2.add(Restrictions.gt("timestamp", date_from));
 	}
@@ -455,7 +456,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         /* load the records ArrayList */
         while (it.hasNext()) {
             count++;
-            m = (Documento) it.next();
+            m = (DocumentoReal) it.next();
             String record = constructRecord(m, metadataPrefix);
             records.add(record);
         }
@@ -548,7 +549,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
             throw new BadResumptionTokenException();
         }
         
-               Documento m;
+               DocumentoReal m;
     
                Conectar c = new Conectar();
                
@@ -600,7 +601,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         // TODO: Como garantir que os resultados são consistentes mesmo que aja uma
         // mudança na base durante o processo de coleta?
         // TODO: Usar datas
-        Criteria criteria = session.createCriteria(Documento.class);
+        Criteria criteria = session.createCriteria(DocumentoReal.class);
 	if(use_from) {
 		criteria.add(Restrictions.gt("timestamp", date_from));
 	}
@@ -613,7 +614,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         List list = criteria.list();
         int totalRecords = Integer.parseInt(list.get(0).toString());
 
-        Criteria criteria2 = session.createCriteria(Documento.class);
+        Criteria criteria2 = session.createCriteria(DocumentoReal.class);
 	if(use_from) {
 		criteria2.add(Restrictions.gt("timestamp", date_from));
 	}
@@ -640,7 +641,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
         /* load the records ArrayList */
         while (it.hasNext()) {
             count++;
-            m = (Documento) it.next();
+            m = (DocumentoReal) it.next();
 	    try {
 	            String record = constructRecord(m, metadataPrefix);
             	records.add(record);

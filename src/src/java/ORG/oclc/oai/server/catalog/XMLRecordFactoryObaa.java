@@ -10,7 +10,7 @@
  */
 package ORG.oclc.oai.server.catalog;
 
-import modelos.Documento;
+import modelos.DocumentoReal;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class XMLRecordFactoryObaa extends RecordFactory {
      * @return OAI identifier
      */
     public String getOAIIdentifier(Object nativeItem) {
-	Documento m = (Documento)nativeItem;
+	DocumentoReal m = (DocumentoReal)nativeItem;
 	return m.getObaaEntry();
     }
 
@@ -78,7 +78,7 @@ public class XMLRecordFactoryObaa extends RecordFactory {
 	    Format formatter;
 	    formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	    
-           Documento m = (Documento)nativeItem;
+           DocumentoReal m = (DocumentoReal)nativeItem;
            return formatter.format(m.getTimestamp());
     }
 
@@ -91,7 +91,7 @@ public class XMLRecordFactoryObaa extends RecordFactory {
      */
     public Iterator getSetSpecs(Object nativeItem)
 	throws IllegalArgumentException  {
-	    Documento d = (Documento)nativeItem;
+	    DocumentoReal d = (DocumentoReal)nativeItem;
 	ArrayList list = new ArrayList();
         // TODO: Criar getSpecs 
         /*String xmlRec = (String)nativeItem;
@@ -134,8 +134,8 @@ public class XMLRecordFactoryObaa extends RecordFactory {
      */
     public boolean isDeleted(Object nativeItem)
 	throws IllegalArgumentException {
-	    Documento d = (Documento)nativeItem;
-	    return d.isExcluido();
+	    DocumentoReal d = (DocumentoReal)nativeItem;
+	    return d.isDeleted();
     }
 
     /**
