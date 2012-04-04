@@ -78,6 +78,7 @@ public class Recuperador {
         } else {
             
             if (autorb){
+                
                 if (consulta.isEmpty()){
                     //COM autor, SEM termo de busca
                     sqlOrdenacao = " a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, '"+autor+"')) DESC;";
@@ -95,11 +96,12 @@ public class Recuperador {
             if (idSubfed.length == 1 && idSubfed[0].isEmpty()) {
                 if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
                     LRU = cache.verificaConsulta();
-                    LRU = LRU && !autorb;
-                    System.out.println("LRU "+LRU);
-                    if (!LRU) {
+                    
+                    if (!LRU && !autorb) {
                         confederacao = true;
                         //busca na confederacao
+                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, autorb);
+                    } else { 
                         consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, autorb);
                     }
                 } else {
@@ -129,16 +131,17 @@ public class Recuperador {
         }
         
 
-        if (LRU){ //se a consulta ja esta no banco de dados e não for por autor
+        if (LRU && !autorb){ //se a consulta ja esta no banco de dados e não for por autor
             idsResultados = cache.getResultado();
         }
+        
         else { //se a consulta nao tiver no banco
             
-            System.out.println("SQL\n"+consultaSql);
+            System.out.println("SQL:\n"+consultaSql);
             PreparedStatement stmt = con.prepareStatement(consultaSql);
 
             ResultSet rs = stmt.executeQuery();
-            if (confederacao) { //se for confederacao e nao tiver no banco a consulta
+            if (confederacao && !autorb) { //se for confederacao e nao tiver no banco a consulta
                 while (rs.next()) {
                     idsResultados.add(rs.getInt("tid"));
                     cache.setResultado(rs.getString("tid"));

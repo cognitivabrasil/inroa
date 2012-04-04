@@ -23,7 +23,7 @@
 
         <script language="JavaScript" type="text/javascript">
             function geraRss() {
-                var consulta = document.getElementById("key").value;
+                var consulta = document.getElementById("consulta").value;
                 var repositorios = document.getElementsByName("replocal");
                 var idSubfed1 = document.getElementsByName("subfed");
                 var idSubRep1 = document.getElementsByName("subrep");
@@ -51,7 +51,7 @@
                     }
                 }
                 
-                window.location='rss.jsp?key='+consulta+idRepLocal+idSubfed+idSubRep;
+                window.location='rss.jsp?consulta='+consulta+idRepLocal+idSubfed+idSubRep;
             }
             function ocultar(id, idLink){
                 var valor = document.getElementById(idLink);
@@ -134,7 +134,7 @@
                             Texto para a busca:
                         </div>
                         <div class="Value">
-                            <input type="text" name="key" id="key" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                            <input type="text" name="consulta" id="consulta" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
                         </div>
                         <br>
                         <div class="Label">
