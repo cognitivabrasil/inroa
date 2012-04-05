@@ -1,86 +1,112 @@
+--------------------------DADOS SUBFEDERAÇÕES-------------------------
 ALTER TABLE dados_subfederacoes
    ADD COLUMN data_xml timestamp without time zone NOT NULL DEFAULT '0001-01-01 00:00:00';
 
+-------------------------LRU-------------------------
 CREATE TABLE consultas(
    consulta character varying NOT NULL,
    ids text,
    CONSTRAINT consultas_pkey PRIMARY KEY (consulta)
 ) WITH (OIDS = FALSE);
-
 ALTER TABLE consultas OWNER TO feb;
 
-ALTER TABLE documentos ADD COLUMN deleted BOOLEAN DEFAULT false;
+-------------------------DOCUMENTOS-------------------------
+ALTER TABLE documentos 
+    ADD COLUMN deleted BOOLEAN DEFAULT false,
+    ADD COLUMN obaaXml VARCHAR,
 
-ALTER TABLE documentos ADD COLUMN obaaXml VARCHAR;
+    ADD CONSTRAINT excluidos FOREIGN KEY (id_repositorio) REFERENCES repositorios(id) ON UPDATE CASCADE ON DELETE CASCADE;
+--adiciona os documentos exluidos na tabela
+UPDATE documentos d SET deleted=true FROM
+(
+	SELECT obaa_entry FROM excluidos
+) AS ex
+WHERE d.obaa_entry=ex.obaa_entry;
 
-CREATE TABLE mapeamentos_xslt (id INTEGER, description VARCHAR, xslt VARCHAR);
+DROP TABLE excluidos;
 
-ALTER TABLE mapeamentos_xslt OWNER TO feb;
 
-DROP TABLE repositorios CASCADE;
-
-ALTER TABLE repositorios (            
+-------------------------REPOSITORIOS-------------------------
+ALTER TABLE repositorios             
     ADD COLUMN data_ultima_atualizacao timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone,
     ADD COLUMN periodicidade_horas integer,
-    ADD COLUMN url_or_ip character varying(200) NOT NULL,
+    ADD COLUMN url_or_ip character varying(200) NOT NULL DEFAULT '',
     ADD COLUMN padrao_metadados integer,
     ADD COLUMN mapeamento_id integer DEFAULT 1 NOT NULL,
     ADD COLUMN metadata_prefix character varying(45),
     ADD COLUMN name_space character varying(45),
     ADD COLUMN set character varying(45),
-    ADD COLUMN data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone NOT NULL
-);
+    ADD COLUMN data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone NOT NULL,
+    ADD COLUMN mapeamento_id INT,
 
-ALTER TABLE public.repositorios OWNER TO feb;
+    ADD CONSTRAINT mapeamento FOREIGN KEY (mapeamento_id) REFERENCES mapeamentos(id),
+    ADD CONSTRAINT padraomet FOREIGN KEY (padrao_metadados) REFERENCES padraometadados(id) ON UPDATE CASCADE;
+    
+--ALTER TABLE ONLY repositorios
+--    ADD CONSTRAINT pki_rep PRIMARY KEY (id);
 
-ALTER TABLE ONLY repositorios
-    ADD CONSTRAINT pki_rep PRIMARY KEY (id);
+--adiciona os dados da info_repositorios na repositorios
+UPDATE repositorios r SET id=id_repositorio, data_ultima_atualizacao=ir.data_ultima_atualizacao, 
+periodicidade_horas=ir.periodicidade_horas, url_or_ip=ir.url_or_ip, padrao_metadados=ir.padrao_metadados, 
+mapeamento_id=tipo_mapeamento_id, metadata_prefix=ir.metadata_prefix, name_space=ir.name_space, set=ir.set, 
+data_xml=ir.data_xml FROM
+(
+	SELECT id_repositorio, data_ultima_atualizacao, periodicidade_horas, url_or_ip, 
+	padrao_metadados, tipo_mapeamento_id, metadata_prefix, name_space, set, data_xml 
+	FROM info_repositorios
+) AS ir
+WHERE r.id=ir.id_repositorio;
 
-ALTER TABLE ONLY documentos
-    ADD CONSTRAINT excluidos FOREIGN KEY (id_repositorio) REFERENCES repositorios(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY documentos
-    ADD CONSTRAINT repositorio FOREIGN KEY (id_repositorio) REFERENCES repositorios(id) ON UPDATE CASCADE ON DELETE CASCADE;
+DROP TABLE info_repositorios;
 
 CREATE INDEX fki_padraometadados ON repositorios USING btree (padrao_metadados);
-
-
 CREATE INDEX fki_mapeamento ON repositorios USING btree (mapeamento_id);
 
-
-ALTER TABLE ONLY repositorios
-    ADD CONSTRAINT padraomet FOREIGN KEY (padrao_metadados) REFERENCES padraometadados(id) ON UPDATE CASCADE;
-
-
-ALTER TABLE ONLY repositorios
-    ADD CONSTRAINT mapeamento FOREIGN KEY (mapeamento_id) REFERENCES mapeamentos(id);
-
--- ADIÇÃO DA TABELA mapeamentos
-CREATE SEQUENCE mapeamentos_id_seq
-   INCREMENT 1
-   START 1;
-ALTER TABLE mapeamentos_id_seq OWNER TO feb;
-
-DROP TABLE mapeamentos;
-DROP TABLE tipomapeamento;
-
-CREATE TABLE mapeamentos
+-------------------------AUTORES-------------------------
+CREATE TABLE autores
 (
-   id integer DEFAULT nextval('mapeamentos_id_seq'::regclass) NOT NULL, 
-   nome character varying(45) NOT NULL, 
-   descricao character varying(200) NOT NULL, 
-   xslt text NOT NULL, 
-   padrao_id integer NOT NULL, 
-   CONSTRAINT mapeamento_pkey PRIMARY KEY (id), 
-   CONSTRAINT padraometadados FOREIGN KEY (padrao_id) REFERENCES padraometadados (id) ON UPDATE CASCADE ON DELETE CASCADE
-) 
-WITH (
-  OIDS = FALSE
+  nome character varying NOT NULL,
+  documento integer NOT NULL,
+  CONSTRAINT pki_autores PRIMARY KEY (nome, documento),
+  CONSTRAINT fki_documentos FOREIGN KEY (documento)
+      REFERENCES documentos (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
 )
-;
-ALTER TABLE mapeamentos OWNER TO feb;
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE autores OWNER TO feb;
 
- ALTER TABLE repositorios ADD COLUMN mapeamento_id INT;
+CREATE INDEX fki_fki_documentos
+  ON autores
+  USING btree
+  (documento);
+
+--popular tabela autores com dados da objetos
+INSERT INTO autores (nome, documento) 
+	SELECT o.valor, d.id FROM objetos o, documentos d WHERE o.atributo='obaaEntity' AND d.id=o.documento;
+
+-------------------------MAPEAMENTOS-------------------------
+ ALTER TABLE mapeamentos
+    ADD COLUMN nome character varying(45) NOT NULL DEFAULT '', 
+    ADD COLUMN descricao character varying(200) NOT NULL DEFAULT '', 
+    ADD COLUMN xslt text NOT NULL DEFAULT '';
+ 
+ALTER TABLE mapeamentos 
+    RENAME padraometadados_id TO padrao_id;
+
+-- popula com os valores da tipo mapeamento
+UPDATE mapeamentos m SET nome=tipo.nome, descricao=tipo.descricao FROM
+(
+	SELECT id, nome, descricao
+	FROM tipomapeamento
+) AS tipo
+WHERE m.tipo_mapeamento_id=tipo.id;
+
+ALTER TABLE mapeamentos 
+    DROP CONSTRAINT tipomapeamento;
+
+DROP TABLE tipomapeamento;
 
 -- CRIAR A DATABASE DE TESTE
 CREATE DATABASE federacao_teste WITH TEMPLATE federacao ENCODING 'UTF-8';
