@@ -30,6 +30,8 @@ public abstract class AbstractHibernateDAO<T> {
 
     public void delete(T item) {
         this.sessionFactory.getCurrentSession().delete(item);
+        this.sessionFactory.getCurrentSession().flush();
+
     }
 
     public void save(T item) {
@@ -37,11 +39,11 @@ public abstract class AbstractHibernateDAO<T> {
         System.out.println(item.toString());
 
         this.sessionFactory.getCurrentSession().saveOrUpdate(item);
-                this.sessionFactory.getCurrentSession().flush();
+        this.sessionFactory.getCurrentSession().flush();
 
 
     }
-    
+
     public List<T> getAll() {
         return this.sessionFactory.getCurrentSession().createCriteria(type).list();
     }

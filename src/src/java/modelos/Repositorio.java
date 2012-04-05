@@ -181,7 +181,11 @@ public class Repositorio implements java.io.Serializable {
         this.periodicidadeAtualizacao = periodicidadeAtualizacao;
     }
 
+    /* TODO: o que fazer quando o rep nunca foi atualizado? */
     public Date getProximaAtualizacao() {
+        if(ultimaAtualizacao == null) {
+            return new Date();
+        }
         return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao * 60 * 60 * 1000); // soma a periodicidade em horas
     }
 
@@ -255,6 +259,16 @@ public class Repositorio implements java.io.Serializable {
      */
     protected void setColecoesInternal(String colecoesInternal) {
         this.colecoesInternal = colecoesInternal;
+    }
+    
+    @Deprecated
+    public String getColecoesString() {
+        return getColecoesInternal();
+    }
+    
+    @Deprecated 
+    public void setColecoesString(String s) {
+        setColecoesInternal(s);
     }
 
     /**

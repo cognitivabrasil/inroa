@@ -124,7 +124,7 @@
                 </div>
 
                 <div class="LinhaEntrada">
-                    <form:errors path="colecoes" cssClass="ValueErro" />
+                    <form:errors path="colecoesString" cssClass="ValueErro" />
                     <div class="Comentario">
                         Se for mais de uma separar por ponto e v&iacute;rgula.
                     </div>
@@ -135,7 +135,7 @@
                         Cole&ccedil;&otilde;es ou Comunidades:
                     </div>
                     <div class="Value">
-                        <form:input path="colecoes" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
+                        <form:input path="colecoesString" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
                     </div>
                 </div>
                 <div class="LinhaEntrada">
