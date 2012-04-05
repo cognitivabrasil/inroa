@@ -37,6 +37,8 @@ public abstract class AbstractHibernateDAO<T> {
         System.out.println(item.toString());
 
         this.sessionFactory.getCurrentSession().saveOrUpdate(item);
+                this.sessionFactory.getCurrentSession().flush();
+
 
     }
     
