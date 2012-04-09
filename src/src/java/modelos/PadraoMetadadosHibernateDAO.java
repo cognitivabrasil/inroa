@@ -4,10 +4,7 @@
  */
 package modelos;
 
-import java.util.List;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -16,4 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class PadraoMetadadosHibernateDAO extends AbstractHibernateDAO<PadraoMetadados> implements PadraoMetadadosDAO {
 
+    public PadraoMetadados get(String name){        
+        Session s = this.sessionFactory.getCurrentSession();
+        return (PadraoMetadados) s.createQuery("from PadraoMetadados WHERE nome = :nome").setString("nome", name).uniqueResult();
+    }
 }

@@ -397,6 +397,7 @@ src/src/java/spring/AdminController.java -text
 src/src/java/spring/ApplicationContextProvider.java -text
 src/src/java/spring/FEBController.java -text
 src/src/java/spring/validador/BuscaValidator.java -text
+src/src/java/spring/validador/PadraoValidator.java -text
 src/src/java/spring/validador/RepositorioValidator.java -text
 src/src/java/spring/validador/SubFederacaoValidador.java -text
 src/src/java/webservice/Webservice.java -text
@@ -457,7 +458,6 @@ src/src/main/webapp/admin/removerFederacao.jsp -text
 src/src/main/webapp/admin/removerRepositorio.jsp -text
 src/src/main/webapp/admin/testaSessao.jsp -text
 src/src/main/webapp/admin/testaSessaoNovaJanela.jsp -text
-src/src/main/webapp/admin/testeForm.jsp -text
 src/src/main/webapp/admin/testePaginacao.jsp -text
 src/src/main/webapp/consulta.jsp -text
 src/src/main/webapp/css/padrao.css -text

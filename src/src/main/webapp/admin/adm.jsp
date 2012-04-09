@@ -137,7 +137,7 @@ Author     : Marcos Nunes
                 <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}" >              
 
                     <td>
-                        <input type="button" class="botaoExcluir" title="Excluir padr&atilde;o de metadados" name="excluir" id="excluirPadrao" onclick="confirmaExclusao(${padraoMet.id},'padraometadados','msgerro','padroes',this.parentNode.parentNode.rowIndex);"/>
+                        <input type="button" class="botaoExcluir" title="Excluir padr&atilde;o de metadados" name="excluir" id="excluirPadrao" onclick="confirmaDelPadrao(${padraoMet.id},'msgerro','padroes',this.parentNode.parentNode.rowIndex);"/>
                         &nbsp;
                         <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarPadrao" onclick="NewWindow('./padraoMetadados/editaPadrao.jsp?id=${padraoMet.id}','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
 
@@ -152,14 +152,14 @@ Author     : Marcos Nunes
             <tr class='center'>
                 <td>
 
-                    <a title="Adicionar novo padr&atilde;o de metadados" onclick="NewWindow('./padraoMetadados/addPadrao.jsp','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a title="Adicionar novo padr&atilde;o de metadados" onclick="NewWindow('./padraoMetadados/addPadrao','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         <img src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
                     </a>
 
                 </td>
                 <td colspan="3" class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
-                    <a onclick="NewWindow('./padraoMetadados/addPadrao.jsp','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                    <a onclick="NewWindow('./padraoMetadados/addPadrao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         Adicionar novo padr&atilde;o
                     </a>
                     <div id='msgerro' class='textoErro center'></div>

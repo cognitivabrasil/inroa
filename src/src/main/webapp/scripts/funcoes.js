@@ -388,6 +388,75 @@ function exibeDivSenha(idSenha, idRepSenha)
     idRepSenha.className='LinhaEntrada';
 }
 
+/**
+ * Confirma se realmente deseja excluir, se sim chama o m&eacute;todo que exclui por ajax.
+ * @param id id do objeto a ser excluido
+ * @param idResultado id de onde ser&aacute; exibido o resultado.
+ * @param idTabela id da tabela html que a linha sera excluida
+ * @param linha numero da linha que sera excluida
+ */
+function confirmaDelPadrao(id, idResultado, idTabela, linha) {
+    if( confirm( 'Deseja realmente exluir?' ) ) {
+        excluirPadrao(id, idResultado, idTabela, linha);
+    } else {
+    
+    }
+}
+
+/**
+ * Utilizada para exluir padr&otilde;es de metadados na base utilizando ajax
+ * @param id id do padr&atilde;o a ser exclu&iacute;do
+ * @param idResultado id de onde ser&aacute; exibido o resultado.
+ * @param idTabela id da tabela html que a linha sera excluida
+ * @param linha numero da linha que sera excluida
+ */
+function excluirPadrao(id, idResultado, idTabela, linha)
+{
+    
+    //div onde sera adicionado o resultado
+    var exibeResultado = document.getElementById(idResultado);
+    
+    var ajax = openAjax(); // Inicia o Ajax.
+    
+    
+    ajax.open("GET", "excluirPadrao?id="+id, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+                       
+    
+    ajax.onreadystatechange = function()
+    {
+        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        {
+            exibeResultado.innerHTML = "Aguarde...";
+        }
+        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        {
+            if(ajax.status == 200)
+            {
+                var resultado = ajax.responseText;
+                //exibeResultado.innerHTML = resultado;
+                if(isNaN(parseInt(resultado))){
+                    exibeResultado.innerHTML = resultado;
+                }else{
+                    if(parseInt(resultado)>0){
+                        exibeResultado.innerHTML = "Exclu&iacute;do com sucesso.";
+                        removeLinha(idTabela, linha);
+                    }
+                    else{
+                        exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
+                    }
+                }                    
+            }
+            else
+            {
+                exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
+            }
+        }
+    }
+    ajax.send(null); // submete
+
+
+}
+
 function paranaodarerro(){
 //alguns navegadores excluem a ultima funcao.
 }

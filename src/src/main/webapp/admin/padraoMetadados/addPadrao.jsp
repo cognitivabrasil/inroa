@@ -8,6 +8,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="../testaSessaoNovaJanela.jsp"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@include file="../conexaoBD.jsp"%>
 <%
             request.setCharacterEncoding("UTF-8");
@@ -24,56 +25,47 @@
             //necessario para usar o ajax
         </script>
         <script type="text/javascript" src="../../scripts/validatejs.js"></script>
-        <script type="text/javascript">
+        <!--script type="text/javascript">
             var myForm = new Validate();
             myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do padr&atilde;o de metadados!'});
+            myForm.addRules({id:'metadataPrefix',option:'required',error:'* Voc&ecirc; deve informar o MetadataPrefix que &eacute; utilizado no OAI-PMH. Ex.: oai_obaa'});
+            myForm.addRules({id:'namespace',option:'required',error:'* Voc&ecirc; deve informar o namespace utilizado no xml do OAI-PMH!'});
             myForm.addRules({id:'atributos',option:'required',error:'* Voc&ecirc; deve informar os atributos do padr&atilde;o separados por ; (ponto e virgula)!'});
-            myForm.addRules({id:'metPrefix',option:'required',error:'* Voc&ecirc; deve informar o MetadataPrefix. Ex.: oai_obaa. &Eacute; utilizado no OAI-PMH.'});
-            myForm.addRules({id:'namespace',option:'required',error:'* Voc&ecirc; deve informar o namespace!'});
-        </script>
+        </script-->
 
     </head>
     <body>
 
         <div id="page">
-            <%
-            boolean formNull = true;
-            try {
-                String nome = request.getParameter("nome");
-                if (!nome.isEmpty()) {
-                    formNull = false;
-                }
-            } catch (Exception e) {
-                formNull = true;
 
-            }
-            if (formNull) {
-            %>
-            <form name="adicionarPadrao" action="" method="post" onsubmit="return myForm.Apply('MensagemErro')">
+            <form:form method="post" modelAttribute="padraoModel" action="salvaPadrao" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de mapeamentos cadastrados</div>
                 <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
                 <div class="EspacoAntes">&nbsp;</div>
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
                 <div class="Mapeamento">
+                    <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Legenda">
                         Nome do Padr&atilde;o:
                     </div>
                     <div class="Valor">
-                        <input type="text" id="nome" name="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
-
+                    
+                    <form:errors path="metadataPrefix" cssClass="ValueErro" />
                     <div class="Legenda">
                         MetadataPrefix:
                     </div>
                     <div class="Valor">
-                        <input type="text" id="metPrefix" name="metPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="metadataPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
 
+                    <form:errors path="namespace" cssClass="ValueErro" />
                     <div class="Legenda">
-                        NameSpace:
+                        Namespace:
                     </div>
                     <div class="Valor">
-                        <input type="text" id="namespace" name="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                     <div class="Valor">
                         <font class="textoErro">
@@ -81,11 +73,12 @@
                         </font>
                     </div>
                     
+                    <form:errors path="atributos" cssClass="ValueErro" />
                     <div class="Legenda">
                         Atributos:
                     </div>
                     <div class="Valor" id="descricao">
-                        <textarea name="atributos" id="atributos" rows="10" cols="50" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"></textarea>
+                        <form:textarea path="atributos" rows="10" cols="50" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
 
                     <div class="Buttons">
@@ -96,14 +89,9 @@
                     </div>
 
                 </div>
-            </form>
-            <%            } else {
-                String nome = request.getParameter("nome").trim();
-                String atributos = request.getParameter("atributos").trim();
-                String metPrefix = request.getParameter("metPrefix").trim();
-                String nameSpace = request.getParameter("namespace").trim();
-
-                
+            </form:form>
+            <%--
+               
 
                 //testa se os atributos estão preenchidos
                 if (nome.isEmpty() || atributos.isEmpty() || metPrefix.isEmpty() || nameSpace.isEmpty()) {
@@ -139,8 +127,8 @@
                     }
                 }
 
-            }
-            %>
+            
+            --%>
         </div>
     </body>
 </html>

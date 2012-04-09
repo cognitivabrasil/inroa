@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import spring.validador.PadraoValidator;
 import spring.validador.RepositorioValidator;
 import spring.validador.SubFederacaoValidador;
 
@@ -38,7 +39,7 @@ public final class AdminController {
     private MapeamentoDAO mapDao;
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
     private RepositorioValidator repValidator = new RepositorioValidator();
-    
+
     public AdminController() {
     }
 
@@ -85,7 +86,7 @@ public final class AdminController {
             @ModelAttribute("repModel") Repositorio rep,
             BindingResult result,
             Model model) {
-        
+
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
             model.addAttribute("repModel", rep);
@@ -95,7 +96,7 @@ public final class AdminController {
         } else {
             if (repDao.get(rep.getNome()) != null) { //se retornar algo é porque já existe um repositorio com esse nome
                 result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); //nao esta dentro da classe validator pq só executa isso quando for um repositorio novo, quando editar não.
-                
+
                 model.addAttribute("mapSelecionado", rep.getMapeamento().getId());
                 model.addAttribute("repModel", rep);
                 model.addAttribute("padraoMetadadosDAO", padraoDao);
@@ -117,14 +118,14 @@ public final class AdminController {
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "admin/editarRepositorio";
     }
-                 
+
     @RequestMapping("/salvarRepositorio")
     public String salvaRep(
             @ModelAttribute("repModel") Repositorio rep,
             @RequestParam(value = "id", required = true) int id,
             BindingResult result,
             Model model) {
-        
+
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
             model.addAttribute("repModel", rep);
@@ -240,22 +241,32 @@ public final class AdminController {
         return "admin/addPadrao";
     }
 
-    @RequestMapping("/testeForm")
-    public String teste(
-            @RequestParam(value = "submitted", required = false) boolean submitted,
-            @ModelAttribute("subDAO") SubFederacao subfed,
+    @RequestMapping("padraoMetadados/addPadrao")
+    public String cadastraPadrao(Model model) {
+        model.addAttribute("padraoModel", new PadraoMetadados());
+        System.out.println("teste: " + padraoDao.get("teste"));
+        return "admin/padraoMetadados/addPadrao";
+    }
+
+    @RequestMapping("padraoMetadados/salvaPadrao")
+    public String salvaPadrao(
+            @ModelAttribute("padraoModel") PadraoMetadados padrao,
+            BindingResult result,
             Model model) {
-        if (!submitted) {
-//            SubFederacao fed = new SubFederacao();
-//            fed.setNome("marcos");
-            model.addAttribute("subDAO", subDao.get(9));
-
-            return "admin/testeForm";
-
+        PadraoValidator padraoVal = new PadraoValidator();
+        padraoVal.validate(padrao, result);
+        if (result.hasErrors()) {
+            model.addAttribute("padraoModel", padrao);
+            return "admin/padraoMetadados/addPadrao";
         } else {
-            return "redirect:index";
+            if (padraoDao.get(padrao.getNome()) != null) {
+                result.rejectValue("nome", "invalid.nome", "Já existe um padrão cadastrado com esse nome.");
+                model.addAttribute("padraoModel", padrao);
+                return "admin/padraoMetadados/addPadrao";
+            }
+            padraoDao.save(padrao);
+            return "redirect:/admin/fechaRecarrega";
         }
-
     }
 
     @RequestMapping("/sair")
@@ -283,6 +294,16 @@ public final class AdminController {
         }
 
         return "admin/mapeamentos/listaMapeamentoPadraoSelecionado";
+    }
+
+    @RequestMapping("excluirPadrao")
+    public @ResponseBody
+    String excluiPadrao(@RequestParam int id) {
+        PadraoMetadados padrao = new PadraoMetadados();
+        padrao.setId(id);
+        padraoDao.delete(padrao);
+        String result = "1";
+        return result;
     }
 
     @RequestMapping("/testeMarcos")

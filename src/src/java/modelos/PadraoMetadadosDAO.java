@@ -39,4 +39,12 @@ public interface PadraoMetadadosDAO {
         * @return Repository
         */
        PadraoMetadados get(int id);
+       
+       /**
+        * Gets a specific MetadataRecord.
+        * 
+        * @param name name of the MetadataRecord
+        * @return PadraoMetadados
+        */
+       PadraoMetadados get(String name);
 }

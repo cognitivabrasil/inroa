@@ -5,6 +5,7 @@
 package modelos;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import org.springframework.core.style.ToStringCreator;
@@ -24,6 +25,12 @@ public class SubFederacao implements java.io.Serializable {
     private Set<RepositorioSubFed> repositorios;
 
     public SubFederacao() {
+        this.nome = "";
+        this.descricao = "";
+        this.url = "";
+        this.ultimaAtualizacao = new Date(0);
+        this.dataXML = new Date(0);
+        this.repositorios = new HashSet<RepositorioSubFed>();
     }
 
     public Date getDataXML() {

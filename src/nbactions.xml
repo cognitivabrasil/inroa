@@ -20,6 +20,7 @@
                 <netbeans.deploy>true</netbeans.deploy>
                 <netbeans.deploy.clientUrlPart>/</netbeans.deploy.clientUrlPart>
                 <netbeans.deploy.debugmode>true</netbeans.deploy.debugmode>
+                <skipTests>true</skipTests>
             </properties>
         </action>
         <action>

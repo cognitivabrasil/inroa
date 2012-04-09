@@ -166,6 +166,6 @@ public class teste {
 
       Date ontem = new Date(new Date().getTime()-(1000*24*60*60));
         System.out.println(ontem);
-
+      
         }
 }
