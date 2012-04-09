@@ -19,21 +19,21 @@ import java.util.ArrayList;
 public class Operacoes {
 
     /**
-     * Testa se a data recebida é anterior a 01/01/1000. Utilizado para testar
+     * Testa se a data recebida é anterior a 01/01/1970. Utilizado para testar
      * se a base de dados deve ser sincronizada do zero ou não.
      *
      * @param horaBase hora que será testada
      * @return true ou false. Se a data informada como parâmetro for menor
      * retorna true se não false
      */
-    public static boolean testarDataAnteriorMil(Date horaBase) {
+    public static boolean testarDataAnterior1970(Date horaBase) {
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
             Date dataTeste = null;
             try {
-                dataTeste = format.parse("01/01/1000");
+                dataTeste = format.parse("01/01/1970");
             } catch (ParseException p) {
                 System.err.println("FEB: ERRO ao efetuar o parse da hora. Mensagem: " + p.getMessage());
             }
@@ -120,7 +120,7 @@ public class Operacoes {
     public static String ultimaAtualizacaoFrase(Date data) {
         SimpleDateFormat formatdata = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formathora = new SimpleDateFormat("HH:mm:ss");
-        if (!Operacoes.testarDataAnteriorMil(data)) {
+        if (!Operacoes.testarDataAnterior1970(data)) {
             return "Dia " + formatdata.format(data) + " &agrave;s " + formathora.format(data);
         } else {
             return "Ainda n&atilde;o foi atualizado!";
@@ -140,7 +140,7 @@ public class Operacoes {
     public static String ultimaAtualizacaoFrase(Date data, String caminho) {
         SimpleDateFormat formatdata = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat formathora = new SimpleDateFormat("HH:mm:ss");
-        if (!Operacoes.testarDataAnteriorMil(data)) {
+        if (!Operacoes.testarDataAnterior1970(data)) {
             return "Dia " + formatdata.format(data) + " &agrave;s " + formathora.format(data);
         } else if (caminho.isEmpty()) {
             return ("N&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o");
@@ -160,7 +160,7 @@ public class Operacoes {
     public static String ultimaAtualizacaoSimples(Date data) {
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        if (!Operacoes.testarDataAnteriorMil(data)) {
+        if (!Operacoes.testarDataAnterior1970(data)) {
             return format.format(data);
         } else {
             return "Ainda n&atilde;o foi atualizado!";

@@ -126,7 +126,7 @@ public class Repositorios {
 
 
                     //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
-                    if (Operacoes.testarDataAnteriorMil(data_ultima_atualizacao)) {
+                    if (Operacoes.testarDataAnterior1970(data_ultima_atualizacao)) {
                         ultimaAtualizacao = null; //se passar null para o metodo de harvester ele busca desde o inicio do rep
                         Remover deleta = new Remover();
                         System.out.println("Deletando toda a base de dados do repositório: " + nome.toUpperCase());

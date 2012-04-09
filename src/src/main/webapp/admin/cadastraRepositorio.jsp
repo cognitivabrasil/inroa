@@ -141,7 +141,7 @@ Primeira etapa do cadastro de um repositorio
                         Ex: com1;com2;com3
                     </div>
                     <div class="Value">
-                        <form:input path="colecoes" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="colecoesString" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 

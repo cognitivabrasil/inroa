@@ -42,7 +42,7 @@ public class Repositorio implements java.io.Serializable {
         url = "";
         metadataPrefix = "";
         documentos = new HashSet<DocumentoReal>(0);
-        ultimaAtualizacao = null;
+        ultimaAtualizacao = new Date(0);
         namespace = "";
         periodicidadeAtualizacao = 1;
         colecoesInternal = "";
@@ -181,10 +181,9 @@ public class Repositorio implements java.io.Serializable {
         this.periodicidadeAtualizacao = periodicidadeAtualizacao;
     }
 
-    /* TODO: o que fazer quando o rep nunca foi atualizado? */
     public Date getProximaAtualizacao() {
-        if(ultimaAtualizacao == null) {
-            return new Date();
+        if(ultimaAtualizacao == null) { //TODO: Jorjao porque ta dando null se no construtor ta inicializando?
+            return new Date(0);
         }
         return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao * 60 * 60 * 1000); // soma a periodicidade em horas
     }

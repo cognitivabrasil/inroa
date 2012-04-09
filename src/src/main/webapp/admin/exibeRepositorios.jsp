@@ -88,11 +88,11 @@
                 </div>
                 <div class="Value">&nbsp;
                     <c:choose>
-                        <c:when test="${empty rep.colecoes}">
+                        <c:when test="${empty rep.colecoesString}">
                             Todas
                         </c:when>
                         <c:otherwise>
-                            ${rep.colecoes}
+                            ${rep.colecoesString}
                         </c:otherwise>
                     </c:choose>
                 </div>
