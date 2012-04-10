@@ -80,7 +80,7 @@ Author     : Marcos Nunes
                     <td >&nbsp;${rep.descricao}</td>
                     <td >&nbsp;
                         <div id="textResult${rep.id}">
-                            bla
+                            ${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
 
                             <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${rep.id}, document.getElementById('textResult'+${rep.id}));">
                                 <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
