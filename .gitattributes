@@ -204,7 +204,6 @@ src/sql/FEB_estrutura.sql -text
 src/sql/README.txt -text
 src/sql/current.sql -text
 src/sql/current_2.sql -text
-src/sql/preto@143.54.83.94 -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/OBAA/Accessibility/Accessibility.java -text
 src/src/java/OBAA/Accessibility/AltTextLang.java -text

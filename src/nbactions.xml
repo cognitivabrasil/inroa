@@ -43,4 +43,25 @@
                 <skipTests>true</skipTests>
             </properties>
         </action>
+        <action>
+            <actionName>run.single.deploy</actionName>
+            <goals>
+                <goal>package</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+                <netbeans.deploy>true</netbeans.deploy>
+                <netbeans.deploy.clientUrlPart>${webpagePath}</netbeans.deploy.clientUrlPart>
+            </properties>
+        </action>
+        <action>
+            <actionName>rebuild</actionName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+        </action>
     </actions>
