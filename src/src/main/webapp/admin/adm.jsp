@@ -139,7 +139,7 @@ Author     : Marcos Nunes
                     <td>
                         <input type="button" class="botaoExcluir" title="Excluir padr&atilde;o de metadados" name="excluir" id="excluirPadrao" onclick="confirmaDelPadrao(${padraoMet.id},'msgerro','padroes',this.parentNode.parentNode.rowIndex);"/>
                         &nbsp;
-                        <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarPadrao" onclick="NewWindow('./padraoMetadados/editaPadrao.jsp?id=${padraoMet.id}','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
+                        <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarPadrao" onclick="NewWindow('./padraoMetadados/editaPadrao?id=${padraoMet.id}','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');"/>
 
                     </td>
                     <td>${padraoMet.nome}</td>
@@ -157,14 +157,13 @@ Author     : Marcos Nunes
                     </a>
 
                 </td>
-                <td colspan="3" class="left bold" style="font-size:110%">
+                <td colspan="2" class="left bold" style="font-size:110%">
                     &nbsp;&nbsp;
                     <a onclick="NewWindow('./padraoMetadados/addPadrao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                         Adicionar novo padr&atilde;o
-                    </a>
-                    <div id='msgerro' class='textoErro center'></div>
-
+                    </a>                  
                 </td>
+                <td><div id='msgerro' class='textoErro left'></div></td>
 
 
 

@@ -452,7 +452,6 @@ src/src/main/webapp/admin/mapeamentos/salvarBaseAjax.jsp -text
 src/src/main/webapp/admin/mapeamentos/selecionaPadraoAddMap.jsp -text
 src/src/main/webapp/admin/padraoMetadados/addPadrao.jsp -text
 src/src/main/webapp/admin/padraoMetadados/editaPadrao.jsp -text
-src/src/main/webapp/admin/padraoMetadados/funcoesPadrao.js -text
 src/src/main/webapp/admin/padraoMetadados/padraoMetadados.jsp -text
 src/src/main/webapp/admin/padraoMetadados/respostaAjaxPadrao.jsp -text
 src/src/main/webapp/admin/recalcularIndice.jsp -text
@@ -490,6 +489,7 @@ src/src/main/webapp/main-servlet.xml -text
 src/src/main/webapp/rss.jsp -text
 src/src/main/webapp/scripts/funcoes.js -text
 src/src/main/webapp/scripts/funcoesMapeamento.js -text
+src/src/main/webapp/scripts/funcoesPadrao.js -text
 src/src/main/webapp/scripts/rss.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/test/java/OBAA/OBAATest.java -text
