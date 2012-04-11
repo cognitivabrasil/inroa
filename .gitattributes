@@ -399,6 +399,7 @@ src/src/java/spring/AdminController.java -text
 src/src/java/spring/ApplicationContextProvider.java -text
 src/src/java/spring/FEBController.java -text
 src/src/java/spring/validador/BuscaValidator.java -text
+src/src/java/spring/validador/InfoBDValidator.java -text
 src/src/java/spring/validador/PadraoValidator.java -text
 src/src/java/spring/validador/RepositorioValidator.java -text
 src/src/java/spring/validador/SubFederacaoValidador.java -text

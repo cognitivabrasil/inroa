@@ -19,43 +19,34 @@
         <script type="text/javascript" src="../scripts/funcoes.js"></script>
         <script type="text/javascript">
             var myForm = new Validate();
-            myForm.addRules({id:'usuariobd',option:'required',error:'* Voc&ecirc; deve informar o nome do usu&aacute;rio'});
-            myForm.addRules({id:'nomebd',option:'required',error:'* Voc&ecirc; deve informar o nome da base de dados!'});
-            myForm.addRules({id:'ipbd',option:'required',error:'* Voc&ecirc; deve o ip do banco de dados!'});
-            myForm.addRules({id:'portabd',option:'required',error:'* Voc&ecirc; deve informar a porta'});
+            myForm.addRules({id:'usuario',option:'required',error:'* Voc&ecirc; deve informar o nome do usu&aacute;rio'});
+            myForm.addRules({id:'base',option:'required',error:'* Voc&ecirc; deve informar o nome da base de dados!'});
+            myForm.addRules({id:'IP',option:'required',error:'* Voc&ecirc; deve o ip do banco de dados!'});
+            myForm.addRules({id:'porta',option:'required',error:'* Voc&ecirc; deve informar a porta'});
+            myForm.addRules({id:'senhaCriptografada', to:'confirmacaoSenhaBD', option:'isEqual',error:'* As senhas digitadas n&atilde;o est&atilde;o iguais!'});
         </script>
     </head>
     <body>
 
-        <div id="page">
+        <div id="page">            
+            <div class="subTitulo-center">&nbsp;Informa&ccedil;&otilde;es do Banco de Dados</div>
+            <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
+            <div class="EspacoAntes">&nbsp;</div>
+            <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
+                ${erro}
+            </div>
 
-
-
-
-
-            
-                <div class="subTitulo-center">&nbsp;Informa&ccedil;&otilde;es do Banco de Dados</div>
-                <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
-                <div class="EspacoAntes">&nbsp;</div>
-                <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
-                    ${erro}
-                </div>
-                
-                <form:form method="post" modelAttribute="conf" action="salvaSenhaBD" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
-                <div class="LinhaEntrada">
-                    <label class="Label">Usu&aacute;rio:</label>
-                    <div class="Value">
-                        <form:input path="usuario" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
+            <form:form method="post" modelAttribute="conf" action="salvaSenhaBD" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="LinhaEntrada">
-                    <label class="Label">Nome da base de dados: </label>
+                    <form:errors path="base" cssClass="ValueErro" />
+                    <label class="Label">Base de dados: </label>                    
                     <div class="Value">
                         <form:input path="base" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
+                    <form:errors path="IP" cssClass="ValueErro" />
                     <label class="Label">IP: </label>
                     <div class="Value">
                         <form:input path="IP" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
@@ -63,14 +54,23 @@
                 </div>
 
                 <div class="LinhaEntrada">
+                    <form:errors path="porta" cssClass="ValueErro" />
                     <label class="Label">Porta: </label>
                     <div class="Value">
-                        <form:input path="porta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="porta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onkeypress ="return ( isNumber(event) );" />
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
-                    <div class="Label">Senha do BD: </div>                    
+                    <form:errors path="usuario" cssClass="ValueErro" />
+                    <label class="Label">Usu&aacute;rio:</label>
+                    <div class="Value">
+                        <form:input path="usuario" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                    </div>
+                </div>
+
+                <div class="LinhaEntrada">
+                    <div class="Label">Senha: </div>                    
                     <div class="Value" id="divSenha">
                         <input type="button" value="Alterar senha" onclick="javaScript:exibeDivSenha(document.getElementById('divSenha'), document.getElementById('divRepSenha'))">
                         <form:hidden path="senhaCriptografada" />

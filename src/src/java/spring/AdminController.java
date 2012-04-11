@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import postgres.SingletonConfig;
 import spring.validador.PadraoValidator;
 import spring.validador.RepositorioValidator;
+import spring.validador.InfoBDValidator;
 import spring.validador.SubFederacaoValidador;
 
 /**
@@ -312,39 +313,29 @@ public final class AdminController {
         SingletonConfig.initConfig(servletContext);
         SingletonConfig conf = SingletonConfig.getConfig();
         model.addAttribute("conf", conf);
-        conf.setPorta("9999");
         return "admin/alterarSenhaBD";
     }
 
     @RequestMapping("/salvaSenhaBD")
     public String salvaSenhaDB(
             @ModelAttribute("conf") SingletonConfig conf,
-            @RequestParam int porta,
-            @RequestParam String usuario,
-            @RequestParam String base,
-            @RequestParam String IP,
-            @RequestParam(value = "SenhaBD", required = false) String senha,
             @RequestParam(value = "confirmacaoSenhaBD", required = false) String confSenha,
+            BindingResult result,
             Model model) {
-//        try{
-//        conf.setBase(base);
-//        conf.setIP(IP);
-//        conf.setUsuario(usuario);
-//        conf.setPorta(porta);
-//        if (!senha.isEmpty()) {
-//            conf.setSenhaCriptografada(senha);
-//        }
-//        }catch(Exception e){
-//            model.addAttribute("conf", conf);
-//            model.addAttribute("erro", "Erro ao setar os valor. Mensagem: "+e.getMessage());
-//            return "admin/alterarSenhaBD";
-//        }
-        if (conf.criaArquivo()) {
-            return "redirect:fechaRecarrega";
-        } else {
+
+        InfoBDValidator infoBDVal = new InfoBDValidator();
+        infoBDVal.validate(conf, result);
+        if (result.hasErrors()) {
             model.addAttribute("conf", conf);
-            model.addAttribute("erro", "Erro ao alterar os dados.");
             return "admin/alterarSenhaBD";
+        } else {
+            if (conf.criaArquivo()) {
+                return "redirect:fechaRecarrega";
+            } else {
+                model.addAttribute("conf", conf);
+                model.addAttribute("erro", "Erro ao alterar os dados.");
+                return "admin/alterarSenhaBD";
+            }
         }
     }
 

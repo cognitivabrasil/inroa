@@ -33,7 +33,7 @@ public class SingletonConfig {
     static ServletContext servletContext;
     private String usuario;
     private String senha;
-    private int porta;
+    private Integer porta;
     private String IP;
     private String base;
     String senhaCriptografada;
@@ -117,7 +117,7 @@ public class SingletonConfig {
                 //          System.out.println("Senha: " + properties.getProperty("Postgres.password"));
                 c.setSenha(properties.getProperty("Postgres.password"));
                 //           System.out.println("Porta: " + properties.getProperty("Postgres.port"));
-                c.setPorta(properties.getProperty("Postgres.port"));
+                c.setPorta(Integer.parseInt(properties.getProperty("Postgres.port")));
 //            System.out.println("Base: " + properties.getProperty("Postgres.base"));
                 c.setBase(properties.getProperty("Postgres.base"));
                 //           System.out.println("IP: " + properties.getProperty("Postgres.IP"));
@@ -238,20 +238,14 @@ public class SingletonConfig {
 
     }
 
-    public int getPorta() {
+    public Integer getPorta() {
         return porta;
     }
     
-    public void setPorta(int porta) {
+    public void setPorta(Integer porta) {
         this.porta = porta;
     }
-
-    public void setPorta(String porta) {
-
-        this.porta = (int) new Integer(porta);
-        //     System.out.println("porta: "+this.porta);
-    }
-    
+  
 
     public String getIP() {
         return IP;
