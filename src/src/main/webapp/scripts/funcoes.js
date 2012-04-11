@@ -384,7 +384,7 @@ function verificaMapOnLoad (idPadraoSelecionado, mapeamentoSelecionado, idResult
  */
 function exibeDivSenha(idSenha, idRepSenha)
 {
-    idSenha.innerHTML='<input name="SenhaBD" type="password" id="senhabd">';
+    idSenha.innerHTML='<input name="senhaCriptografada" type="password" id="senhabd">';
     idRepSenha.className='LinhaEntrada';
 }
 

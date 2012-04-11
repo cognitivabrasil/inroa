@@ -241,12 +241,17 @@ public class SingletonConfig {
     public int getPorta() {
         return porta;
     }
+    
+    public void setPorta(int porta) {
+        this.porta = porta;
+    }
 
     public void setPorta(String porta) {
 
         this.porta = (int) new Integer(porta);
         //     System.out.println("porta: "+this.porta);
     }
+    
 
     public String getIP() {
         return IP;
@@ -307,6 +312,12 @@ public class SingletonConfig {
     public void setSenhaCriptografada(String senhaDescriptografada) throws BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
         this.senhaCriptografada = criptografa(senhaDescriptografada);
     }
+    
+    public String getSenhaCriptografada(){
+        return this.senhaCriptografada;
+    }
+    
+    
 
     /**
      * Cria o arquivo feb.proprieties.

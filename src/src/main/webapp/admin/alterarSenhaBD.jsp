@@ -8,7 +8,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@include file="testaSessaoNovaJanela.jsp"%>
-<%@page import="postgres.SingletonConfig"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,62 +23,49 @@
             myForm.addRules({id:'nomebd',option:'required',error:'* Voc&ecirc; deve informar o nome da base de dados!'});
             myForm.addRules({id:'ipbd',option:'required',error:'* Voc&ecirc; deve o ip do banco de dados!'});
             myForm.addRules({id:'portabd',option:'required',error:'* Voc&ecirc; deve informar a porta'});
-
-
-
         </script>
     </head>
     <body>
-        <%
-                    boolean formNull = true;
-                    try {
-                        String usuario = request.getParameter("nomeBD");
-                        if (!usuario.isEmpty()) {
-                            formNull = false;
-                        }
-                    } catch (Exception e) {
-                        formNull = true;
-
-                    }
-                    // we should NOT connect to the DB here, just load the config
-                       SingletonConfig.initConfig(application);
-                    SingletonConfig conf = SingletonConfig.getConfig();
-                    
-                    if (formNull) {
-
-        %>
 
         <div id="page">
-            <FORM name="login" action="" method="post" onsubmit="return myForm.Apply('MensagemErro')">
+
+
+
+
+
+            
                 <div class="subTitulo-center">&nbsp;Informa&ccedil;&otilde;es do Banco de Dados</div>
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
                 <div class="EspacoAntes">&nbsp;</div>
-
+                <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
+                    ${erro}
+                </div>
+                
+                <form:form method="post" modelAttribute="conf" action="salvaSenhaBD" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="LinhaEntrada">
                     <label class="Label">Usu&aacute;rio:</label>
                     <div class="Value">
-                        <input type="text" name="usuarioBD" id="usuariobd" value="<%=conf.getUsuario()%>">
+                        <form:input path="usuario" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
                     <label class="Label">Nome da base de dados: </label>
                     <div class="Value">
-                        <input name="nomeBD" id="nomebd" type="text" id="nomebd" value="<%=conf.getBase()%>">
+                        <form:input path="base" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
-
                 <div class="LinhaEntrada">
                     <label class="Label">IP: </label>
                     <div class="Value">
-                        <input name="ipBD" type="text" id="ipbd" value="<%=conf.getIP()%>">
+                        <form:input path="IP" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
                     <label class="Label">Porta: </label>
                     <div class="Value">
-                        <input name="portaBD" type="text" id="portabd" value="<%=conf.getPorta()%>">
+                        <form:input path="porta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
@@ -86,7 +73,7 @@
                     <div class="Label">Senha do BD: </div>                    
                     <div class="Value" id="divSenha">
                         <input type="button" value="Alterar senha" onclick="javaScript:exibeDivSenha(document.getElementById('divSenha'), document.getElementById('divRepSenha'))">
-                        <input type="hidden" name="SenhaBD" value="">
+                        <form:hidden path="senhaCriptografada" />
                     </div>
                 </div>
                 <div class="hidden" id="divRepSenha">
@@ -104,11 +91,11 @@
                     </div>
                 </div>
 
-            </FORM>
+            </form:form>
         </div>
 
 
-        <%                    } else { //se o formulario ja foi preenchido entra no else
+        <%--                    } else { //se o formulario ja foi preenchido entra no else
 
                         String nomeBD = request.getParameter("nomeBD");
                         String senhaNova = request.getParameter("SenhaBD");
@@ -156,7 +143,7 @@
                         }
                     }
 
-        %>
+        --%>
 
         <%@include file="../googleAnalytics"%>
     </body>

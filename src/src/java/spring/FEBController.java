@@ -49,7 +49,7 @@ public final class FEBController {
 
     @RequestMapping("/index")
     public String index(Model model) {
-        model.addAttribute("buscaModel", new Busca());
+        model.addAttribute("buscaModel", new Consulta());
         return "index";
     }
 
@@ -63,7 +63,7 @@ public final class FEBController {
 
     @RequestMapping("/consulta")
     public String consulta(
-            @ModelAttribute("buscaModel") Busca consulta,
+            @ModelAttribute("buscaModel") Consulta consulta,
             BindingResult result,
             Model model) {
 
@@ -78,7 +78,7 @@ public final class FEBController {
     
     @RequestMapping("/consultaAvancada")
     public String consultaAvancada(
-            @ModelAttribute("buscaModel") Busca consulta,
+            @ModelAttribute("buscaModel") Consulta consulta,
             BindingResult result,
             Model model) {
         model.addAttribute("item", "--DEUU");
@@ -89,7 +89,7 @@ public final class FEBController {
             model.addAttribute("subDAO", subDao);
             return "index2";
         } else {
-                //Recuperador rec = new Recuperador();
+                Recuperador rec = new Recuperador();
                 //rec.busca(consulta);
             return "consulta";
         }

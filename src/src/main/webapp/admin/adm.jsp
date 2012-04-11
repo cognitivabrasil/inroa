@@ -44,7 +44,7 @@ Author     : Marcos Nunes
                     <a href="" onclick="javascript:NewWindow('alterarSenhaAdm.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Senha</a>
                 </td>
                 <td width ="13%">
-                    <a href="" onclick="javascript:NewWindow('alterarSenhaBD.jsp','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Base de Dados</a>
+                    <a href="" onclick="javascript:NewWindow('alterarSenhaBD','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Base de Dados</a>
                 </td>
                 <td class="sair" width =7%>
                     <a href="sair">Sair</a>

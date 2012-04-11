@@ -4,10 +4,7 @@
  */
 package spring;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
+import postgres.SingletonConfig;
 import spring.validador.PadraoValidator;
 import spring.validador.RepositorioValidator;
 import spring.validador.SubFederacaoValidador;
@@ -28,7 +25,7 @@ import spring.validador.SubFederacaoValidador;
 @Controller("admin")
 @RequestMapping("/admin/*")
 public final class AdminController {
-    
+
     @Autowired
     private RepositoryDAO repDao;
     @Autowired
@@ -39,7 +36,9 @@ public final class AdminController {
     private MapeamentoDAO mapDao;
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
     private RepositorioValidator repValidator = new RepositorioValidator();
-    
+    @Autowired
+    ServletContext servletContext;
+
     public AdminController() {
     }
 
@@ -56,7 +55,7 @@ public final class AdminController {
         System.out.println("request for in AdminController: " + viewName);
         return "admin/" + viewName;
     }
-    
+
     @RequestMapping("/")
     public String admin(Model model) {
         model.addAttribute("repDAO", repDao);
@@ -64,14 +63,14 @@ public final class AdminController {
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "admin/adm";
     }
-    
+
     @RequestMapping("/exibeRepositorios")
     public String exibeRep(@RequestParam(value = "id", required = true) int id,
             Model model) {
         model.addAttribute("rep", repDao.get(id));
         return "admin/exibeRepositorios";
     }
-    
+
     @RequestMapping("/cadastraRepositorio")
     public String cadastraRep(Model model) {
 
@@ -80,13 +79,13 @@ public final class AdminController {
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "admin/cadastraRepositorio";
     }
-    
+
     @RequestMapping("/salvarNovoRepositorio")
     public String salvaNovoRep(
             @ModelAttribute("repModel") Repositorio rep,
             BindingResult result,
             Model model) {
-        
+
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
             model.addAttribute("repModel", rep);
@@ -108,24 +107,24 @@ public final class AdminController {
             }
         }
     }
-    
+
     @RequestMapping("/editarRepositorio")
     public String editaRep(
             @RequestParam(value = "id", required = true) int id,
             Model model) {
-        
+
         model.addAttribute("repModel", repDao.get(id));
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "admin/editarRepositorio";
     }
-    
+
     @RequestMapping("/salvarRepositorio")
     public String salvaRep(
             @ModelAttribute("repModel") Repositorio rep,
             @RequestParam(value = "id", required = true) int id,
             BindingResult result,
             Model model) {
-        
+
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
             model.addAttribute("repModel", rep);
@@ -136,7 +135,7 @@ public final class AdminController {
             return "redirect:/admin/exibeRepositorios?id=" + id;
         }
     }
-    
+
     @RequestMapping("/removerRepositorio")
     public String apagaRep(
             @RequestParam(value = "submitted", required = false) boolean submitted,
@@ -148,19 +147,19 @@ public final class AdminController {
             repDao.delete(rep);
             return "redirect:fechaRecarrega";
         } else {
-            
+
             model.addAttribute("repDAO", repDao);
             return "admin/removerRepositorio";
         }
     }
-    
+
     @RequestMapping("/cadastraFederacao")
     public String cadastraFed(Model model) {
         SubFederacao subFed = new SubFederacao();
         model.addAttribute("subDAO", subFed);
         return "admin/cadastraFederacao";
     }
-    
+
     @RequestMapping("/salvarNovaFederacao")
     public String salvaFed(
             @ModelAttribute("subDAO") SubFederacao subfed,
@@ -170,7 +169,7 @@ public final class AdminController {
             model.addAttribute("subDAO", subfed);
             return "admin/cadastraFederacao";
         } else {
-            
+
             if (subDao.get(subfed.getNome()) != null) {
                 model.addAttribute("erro", "Já existe um federação cadastrada com esse nome!");
                 return "admin/cadastraFederacao";
@@ -180,7 +179,7 @@ public final class AdminController {
             }
         }
     }
-    
+
     @RequestMapping("/exibeFederacao")
     public String exibeFed(@RequestParam(value = "id", required = true) int id, Model model) {
 
@@ -188,7 +187,7 @@ public final class AdminController {
         model.addAttribute("subFeb", subDao.get(id));
         return "admin/exibeFederacao";
     }
-    
+
     @RequestMapping("/editarFederacao")
     public String editaFed(
             @RequestParam(value = "id", required = true) int id,
@@ -196,27 +195,27 @@ public final class AdminController {
         model.addAttribute("subDAO", subDao.get(id));
         return "admin/editarFederacao";
     }
-    
+
     @RequestMapping("/salvarFederacao")
     public String salvaFed(
             @RequestParam(value = "id", required = true) int id,
             @ModelAttribute("subDAO") SubFederacao subfed,
             Model model,
             BindingResult result) {
-        
+
         subFedValidador.validate(subfed, result);
         if (result.hasErrors()) {
             model.addAttribute("subDAO", subfed);
             return "admin/editarFederacao";
         } else {
-            
+
             subDao.save(subfed); //Grava a subfederacao modificada no formulario
 
             model.addAttribute("subDAO", subDao);
             return "redirect:admin/exibeFederacao?id=" + id;
         }
     }
-    
+
     @RequestMapping("/removerFederacao")
     public String apagaFed(
             @RequestParam(value = "submitted", required = false) boolean submitted,
@@ -228,18 +227,18 @@ public final class AdminController {
             subDao.delete(subFed);
             return "redirect:fechaRecarrega";
         } else {
-            
+
             model.addAttribute("subDAO", subDao);
             return "admin/removerFederacao";
         }
     }
-    
+
     @RequestMapping("padraoMetadados/addPadrao")
     public String cadastraPadrao(Model model) {
         model.addAttribute("padraoModel", new PadraoMetadados());
         return "admin/padraoMetadados/addPadrao";
     }
-    
+
     @RequestMapping("padraoMetadados/salvaPadrao")
     public String salvaPadrao(
             @ModelAttribute("padraoModel") PadraoMetadados padrao,
@@ -260,16 +259,16 @@ public final class AdminController {
             return "redirect:/admin/fechaRecarrega";
         }
     }
-    
+
     @RequestMapping("padraoMetadados/editaPadrao")
     public String editaPadrao(
             @RequestParam int id,
             Model model) {
         model.addAttribute("padrao", padraoDao.get(id));
-        
+
         return "admin/padraoMetadados/editaPadrao";
     }
-    
+
     @RequestMapping("/sair")
     public String sair(Model model, HttpSession session) {
         session.removeAttribute("usuario");
@@ -293,23 +292,65 @@ public final class AdminController {
                 model.addAttribute("novoRep", true);
             }
         }
-        
+
         return "admin/mapeamentos/listaMapeamentoPadraoSelecionado";
     }
-    
+
     @RequestMapping("excluirPadrao")
     public @ResponseBody
     String excluiPadrao(@RequestParam int id) {
         PadraoMetadados padrao = new PadraoMetadados();
         padrao.setId(id);
         padraoDao.delete(padrao);
-        String result = "1";
-        return result;
+        return "1";
     }
-    
+
+    @RequestMapping("/alterarSenhaBD")
+    public String alteraSenhaDB(Model model) {
+
+        // we should NOT connect to the DB here, just load the config
+        SingletonConfig.initConfig(servletContext);
+        SingletonConfig conf = SingletonConfig.getConfig();
+        model.addAttribute("conf", conf);
+        conf.setPorta("9999");
+        return "admin/alterarSenhaBD";
+    }
+
+    @RequestMapping("/salvaSenhaBD")
+    public String salvaSenhaDB(
+            @ModelAttribute("conf") SingletonConfig conf,
+            @RequestParam int porta,
+            @RequestParam String usuario,
+            @RequestParam String base,
+            @RequestParam String IP,
+            @RequestParam(value = "SenhaBD", required = false) String senha,
+            @RequestParam(value = "confirmacaoSenhaBD", required = false) String confSenha,
+            Model model) {
+//        try{
+//        conf.setBase(base);
+//        conf.setIP(IP);
+//        conf.setUsuario(usuario);
+//        conf.setPorta(porta);
+//        if (!senha.isEmpty()) {
+//            conf.setSenhaCriptografada(senha);
+//        }
+//        }catch(Exception e){
+//            model.addAttribute("conf", conf);
+//            model.addAttribute("erro", "Erro ao setar os valor. Mensagem: "+e.getMessage());
+//            return "admin/alterarSenhaBD";
+//        }
+        if (conf.criaArquivo()) {
+            return "redirect:fechaRecarrega";
+        } else {
+            model.addAttribute("conf", conf);
+            model.addAttribute("erro", "Erro ao alterar os dados.");
+            return "admin/alterarSenhaBD";
+        }
+    }
+
     @RequestMapping("/testeMarcos")
     public void verificaOAI() {
         System.out.println("entrou");
-        
+
     }
 }

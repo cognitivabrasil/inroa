@@ -11,11 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import postgres.Conectar;
 
 /**
  * Disponibiliza realizar Recuperador por similaridade
- * @author Marcos
+ * @author Marcos, Luiz
  */
 
 public class Recuperador {

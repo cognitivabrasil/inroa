@@ -11,7 +11,7 @@ import java.util.Set;
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  */
-public class Busca {
+public class Consulta {
 
     private String consulta;
     private Set<Integer> repositorios;
@@ -20,7 +20,7 @@ public class Busca {
     private String autor;
     
 
-    public Busca() {
+    public Consulta() {
         consulta = "";
         autor = "";
         repositorios = new HashSet<Integer>();

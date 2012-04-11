@@ -60,7 +60,9 @@ System.out.println(pageContext.getAttribute("item", pageContext.REQUEST_SCOPE));
                 idRepLocal = request.getParameterValues("replocal");
                 idSubfed = request.getParameterValues("subfed");
                 idSubRep = request.getParameterValues("subrep");
-
+                if(autor == null){
+                    autor = "";
+                }
                 int numObjetosEncontrados = 0; //inicializa int que tera o numero de resultados retornados
                 ArrayList<Integer> resultadoBusca = new ArrayList<Integer>(); //ArrayList que recebera o resultado da busca
 
@@ -152,14 +154,14 @@ System.out.println(pageContext.getAttribute("item", pageContext.REQUEST_SCOPE));
 
             <form action="<%= request.getRequestURI()%>" method="get">
                 <center>
-
+                    <p>offset='${offset}'</p>
 
                     <pg:pager
                     items="<%= numObjetosEncontrados%>"
-                    index="<%= index%>"
-                    maxPageItems="<%= maxPageItems%>"
-                    maxIndexPages="<%= maxIndexPages%>"
-                    isOffset="<%= true%>"
+                    index="center"
+                    maxPageItems="5"
+                    maxIndexPages="10"
+                    isOffset="true"
                         export="offset,currentPageNumber=pageNumber"
                         scope="page"
                         >
