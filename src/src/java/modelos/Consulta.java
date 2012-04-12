@@ -18,6 +18,7 @@ public class Consulta {
     private Set<Integer> federacoes;
     private Set<Integer> repSubfed;
     private String autor;
+    private boolean rss;
     
 
     public Consulta() {
@@ -26,6 +27,7 @@ public class Consulta {
         repositorios = new HashSet<Integer>();
         federacoes = new HashSet<Integer>();
         repSubfed = new HashSet<Integer>();
+        rss = false;
     }
 
     public String getConsulta() {
@@ -68,6 +70,20 @@ public class Consulta {
         this.repositorios = repositorios;
     }
     
+    public boolean hasAuthor(){
+        if (autor.equals("")) return false;
+        else
+            return true;
+    }
+
+    public boolean isRss() {
+        return rss;
+    }
+
+    public void setRss(boolean rss) {
+        this.rss = rss;
+    }
+     
     
     
 }

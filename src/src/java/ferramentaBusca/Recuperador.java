@@ -11,16 +11,137 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import modelos.Consulta;
+import modelos.DocumentoReal;
+import postgres.Conectar;
 
 /**
  * Disponibiliza realizar Recuperador por similaridade
+ *
  * @author Marcos, Luiz
  */
-
 public class Recuperador {
-    
+
     public Recuperador() {
     }
+
+    /**
+     *
+     * @param consulta
+     * @param indexIni ordem do primeiro objeto a ser retornado
+     * @param offset quantidade de objetos a serem retornados
+     * @return
+     */
+    
+    
+    public ArrayList<DocumentoReal> busca(Consulta consulta, int indexIni, int offset) {
+
+        Conectar c = new Conectar();
+        Connection con = c.conectaBD();
+        
+        StopWordTAD stWd = new StopWordTAD(con);
+        Documento docConsulta = new Documento(consulta.getConsulta(), stWd); //Cria tad Documento informando a consulta
+        ArrayList<String> tokensConsulta = docConsulta.getTokens(); //tokeniza as palavras da consulta e adiciona no ArrayList
+        ArrayList<DocumentoReal> resultados = new ArrayList<DocumentoReal>(); //lista dos documentos retornados da consulta
+
+        boolean confederacao = false;
+        boolean LRU = false;        
+
+        LRU cache = new LRU(tokensConsulta, con);
+
+        String consultaSql = ""; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
+        String sqlOrdenacao = ""; //eh preenchido pelo if que testa qual o tipo de ordenacao
+
+        
+        if (consulta.isRss()) {
+            //TODO: Fazer RSS para autor?
+            sqlOrdenacao = "') GROUP BY r1w.tid, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
+        } else {
+
+            if (consulta.hasAuthor()) {
+
+                if (consulta.getConsulta().isEmpty()) {
+                    //COM autor, SEM termo de busca
+                    sqlOrdenacao = " a.documento=d.id AND a.nome~@@'" + consulta.getAutor() + "' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, '" + consulta.getAutor() + "')) DESC;";
+                } else {
+                    //COM autor, COM termo de busca
+                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'" + consulta.getAutor() + "' GROUP BY r1w.tid, a.nome ORDER BY (qgram(a.nome, '" + consulta.getAutor() + "')) DESC, SUM (weight) DESC;";
+                }
+            } else {
+
+                sqlOrdenacao = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+            }
+        }
+
+        if (consulta.getRepositorios().isEmpty()) {
+            if (consulta.getFederacoes().isEmpty()) {
+                if (consulta.getRepSubfed().isEmpty()) {
+                    LRU = cache.verificaConsulta();
+
+                    if (LRU || consulta.hasAuthor()) {
+                                              
+                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, consulta.hasAuthor());
+                    } else {                        
+                        //busca na confederacao
+                        confederacao = true;
+                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, consulta.hasAuthor());
+                    }
+                } else {
+                    consultaSql = busca_subRep(tokensConsulta, consulta, sqlOrdenacao); //busca no subrepositorio
+                }
+            } else { //subfed != vazio e repLocal = vazio
+                if (consulta.getRepSubfed().isEmpty()) {
+                    consultaSql = busca_subfed(tokensConsulta, consulta, sqlOrdenacao);//busca na subfederacao
+                } else {
+                    consultaSql = busca_subfed_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca na subfederacao e no subrepositorio
+                }
+            }
+        } else { //replocal != vazio
+            if (consulta.getFederacoes().isEmpty()) { //replocal != vazio e subfed = vazio
+                if (consulta.getRepSubfed().isEmpty()) {
+                    consultaSql = busca_repLocal(tokensConsulta, consulta, sqlOrdenacao); //busca no repositorio local
+                } else {
+                    consultaSql = busca_repLocal_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca no reposiotio local e no subrepositorio
+                }
+            } else { //replocal != vazio e subfed != vazio
+                if (consulta.getRepSubfed().isEmpty()) {
+                    consultaSql = busca_repLocal_subfed(tokensConsulta, consulta, sqlOrdenacao);//busca na subfederacao
+                } else {
+                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca na subfederacao e no subrepositorio
+                }
+            }
+        }
+
+
+        if (LRU && !consulta.hasAuthor()) { //se a consulta ja esta no banco de dados e não for por autor
+            resultados = cache.getResultado();
+        } else { //se a consulta nao tiver no banco
+            
+            //TODO: chamada hibernate com a consultaSql
+            //PreparedStatement stmt = con.prepareStatement(consultaSql);
+
+            //ResultSet rs = stmt.executeQuery();
+            if (confederacao && !consulta.hasAuthor()) { //se for confederacao e nao tiver no banco a consulta
+                while (rs.next()) {
+                    //TODO: adicionar 
+                    
+                    resultados.add(rs.getInt("tid"));
+                    cache.setResultado(rs.getString("tid"));
+                }
+                cache.gravaResultado(); //armazena o resultado na tabela consultas (LRU)
+
+            } else { //se nao for na confederacao
+                while (rs.next()) {
+                    idsResultados.add(rs.getInt("tid"));
+                }
+            }
+
+        }
+        return resultados;
+    }
+
+
+//*/
 
     /**
      * M&eacute;todo para busca de objetos na base de dados. Se n&atilde;o for passado nenhum dos 3 &uacute;ltimos par&acirc;metros a busca ser&aacute; realizada em toda a confedera&ccedil;&atilde;o, deve ser especificado apenas os ids de onde deseja buscar, os demais par&acirc;metros de id devem ser passados null.

@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import modelos.DocumentoReal;
 import robo.util.Operacoes;
 
 /**
@@ -17,22 +17,27 @@ import robo.util.Operacoes;
  * @author Marcos
  */
 public class LRU {
+    //TODO: arrumar o SQL para retornar documentoReal (Hibernate)
 
     private String consulta;
     private Connection con;
-    private String resultado;
+    private String resultadoAntigo;
+    private ArrayList <DocumentoReal> resultado;
 
+    
     public LRU(String consulta, Connection con) {
         this.consulta = Operacoes.removeAcentuacao(consulta);
         this.con = con;
-        this.resultado = "";
+        this.resultadoAntigo = "";
+        this.resultado = new ArrayList<DocumentoReal>();
     }
 
     public LRU(ArrayList<String> consulta, Connection con) {
 
         this.consulta = Operacoes.arrayListToString(consulta);
         this.con = con;
-        this.resultado = "";
+        this.resultadoAntigo = "";
+        this.resultado = new ArrayList<DocumentoReal>();
     }
 
     /**
@@ -45,9 +50,9 @@ public class LRU {
         String sql = "SELECT ids FROM consultas where consulta='" + consulta + "'";
         PreparedStatement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
-        resultado = "";
+        resultadoAntigo = "";
         while (rs.next()) {
-            resultado = rs.getString(1);
+            resultadoAntigo = rs.getString(1);
             cache = true;
         }
 
@@ -57,19 +62,11 @@ public class LRU {
     /**
      * Retorna um ArrayList de inteiros contendo os ids dos objetos que contemplam a consulta.
      * @return ArrayList<Integer> contendo os ids dos objetos que contemplam a consulta
-     */
-    public ArrayList<Integer> getResultado() {
-        if (!resultado.isEmpty()) {
-            String resultadoS[] = resultado.split(",");
-            Integer resultadoI[] = new Integer[resultadoS.length];
-            for (int i = 0; i < resultadoS.length; i++) {
-                resultadoI[i] = Integer.parseInt(resultadoS[i]);
-            }
-
-            return new ArrayList<Integer>(Arrays.asList(resultadoI));
-        } else {
-            return new ArrayList<Integer>();
-        }
+     */    
+    public ArrayList<DocumentoReal> getResultado() {
+        
+        return resultado;
+        
     }
 
     /**
@@ -77,10 +74,10 @@ public class LRU {
      * @param resultado id do objeto que ser&acute; armazenado no resultado
      */
     public void setResultado(String resultado) {
-        if (this.resultado.isEmpty()) {
-            this.resultado = resultado;
+        if (this.resultadoAntigo.isEmpty()) {
+            this.resultadoAntigo = resultado;
         } else {
-            this.resultado += "," + resultado;
+            this.resultadoAntigo += "," + resultado;
         }
     }
 
@@ -93,7 +90,7 @@ public class LRU {
         String sql = "INSERT INTO consultas (consulta, ids) VALUES (?,?)";
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1, this.consulta);
-        stmt.setString(2, this.resultado);
+        stmt.setString(2, this.resultadoAntigo);
         stmt.executeUpdate();        
     }
 }
