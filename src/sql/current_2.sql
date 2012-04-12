@@ -273,7 +273,7 @@ ALTER TABLE public.padraometadados OWNER TO feb;
 --
 
 CREATE SEQUENCE padraometadados_id_seq
-    START WITH 1
+    START WITH 4
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -483,7 +483,7 @@ ALTER TABLE public.stopwords OWNER TO feb;
 --
 
 CREATE SEQUENCE stopwords_id_seq
-    START WITH 1
+    START WITH 180
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -875,13 +875,25 @@ DROP TABLE repositorios_2;
 
 
 --INSERTS PADRAO
+
 --
+-- TOC entry 2018 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: padraometadados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: feb
+--
+
+SELECT pg_catalog.setval('padraometadados_id_seq', 3, true);
+--
+-- TOC entry 2015 (class 0 OID 16455)
+-- Dependencies: 169
 -- Data for Name: padraometadados; Type: TABLE DATA; Schema: public; Owner: feb
 --
 
-INSERT INTO padraometadados VALUES (2, 'lom', 'oai_lom', 'lom');
-INSERT INTO padraometadados VALUES (3, 'obaa', 'oai_obaa', 'obaa');
-INSERT INTO padraometadados VALUES (1, 'Dublin Core', 'oai_dc', 'dc');
+INSERT INTO padraometadados (id, nome, metadata_prefix, name_space, atributos) VALUES (2, 'lom', 'oai_lom', 'lom', 'Identifier;Catalog;Entry;Title;Language;Description;Keyword;Coverage;Structure;AggregationLevel;Version;Status;Role;Entity;Date;MetaMetadataCatalog;MetaMetadataEntry;MetaMetadataRole;MetaMetadataEntity;MetaMetadataDate;MetadataSchema;MetaMetadataLanguage;Format;Size;Location;Type;Name;MinimumVersion;MaximumVersion ;InstallationRemarks;OtherPlatformRequirements;Duration;InteractivityType;LearningResourceType;InteractivityLevel;SemanticDensity;IntendedEndUserRole;Context;TypicalAgeRange;Difficulty;TypicalLearningTime;EducationalDescription;EducationalLanguage;Cost;CopyrightAndOtherRestrictions;RightsDescription;Kind;ResourceCatalog;ResourceEntry;ResourceDescription;AnnotationEntity;AnnotationDate;AnnotationDescription;Purpose;Source;TaxonId;TaxonEntry;ClassificationDescription;ClassificationKeyword');
+INSERT INTO padraometadados (id, nome, metadata_prefix, name_space, atributos) VALUES (3, 'obaa', 'oai_obaa', 'obaa', 'Entry;Identifier;Catalog;Title;Language;Description;Keyword;Coverage;Structure;AggregationLevel;Version;Status;Role;Entity;Date;MetaMetadataEntry;MetaMetadataRole;MetaMetadataEntity;MetaMetadataDate;MetadataSchema;MetaMetadataLanguage;Format;Size;Location;Type;Name;MinimumVersion;MaximumVersion ;InstallationRemarks;OtherPlatformRequirements;Duration;SupportedPlatforms;PlatformType;SpecificFormat;SpecificSize;SpecificLocation;SpecificType;SpecificName;SpecificMinimumVersion;SpecificMaximumVersion;SpecificInstallationRemarks;SpecificOtherPlatformRequirements;ServiceName;ServiceType;Provides;Essential;Protocol;OntologyLanguage;OntologyLocation;ServiceLanguage;ServiceLocation;InteractivityType;LearningResourceType;InteractivityLevel;SemanticDensity;IntendedEndUserRole;Context;TypicalAgeRange;Difficulty;TypicalLearningTime;EducationalDescription;EducationalLanguage;LearningContentType;Perception;Synchronism;CoPresence;Reciprocity;DidacticStrategy;Cost;CopyrightAndOtherRestrictions;RightsDescription;Kind;ResourceCatalog;ResourceEntry;ResourceDescription;AnnotationEntity;AnnotationDate;AnnotationDescription;Purpose;Source;TaxonId;TaxonEntry;ClassificationDescription;ClassificationKeyword;HasVisual;HasAuditory;HasText;HasTactile;DisplayTransformability;ControlFlexibility;EquivalentResource;IsSuplementary;AudioDescription;AudioDescriptionLanguage;AltTextLang;LongDescriptionLang;ColorAvoidance;GraphicAlternative;SignLanguage;CaptionTypeLanguage;CaptionRate;SegmentInformation;SegmentInformationIdentifier;SegmentInformationTitle;SegmentInformationDescription;SegmentInformationKeyword;SegmentMediaType;Start;End;SegmentGroupInformationIdentifier;GroupType;SegmentGroupInformationTitle;SegmentGroupInformationDescription;SegmentGroupInformationKeyword;SegmentsIdentifier');
+INSERT INTO padraometadados (id, nome, metadata_prefix, name_space, atributos) VALUES (1, 'Dublin Core', 'oai_dc', 'dc', 'Title;Language;Description;Subject;Coverage;Type;OtherContributor;Publisher;Format;Rights;Relation;Source;Date;Creator;Identifier');
+
+
 
 
 --
@@ -1069,10 +1081,13 @@ INSERT INTO stopwords VALUES (178, 'vezes');
 INSERT INTO stopwords VALUES (179, 'você');
 
 
+
 --
 -- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: feb
 --
 
-INSERT INTO usuarios VALUES (1, 'admin', '698dc19d489c4e4db73e28a713eab07b', 'Administrador da federação');
+INSERT INTO usuarios (login,senha,nome) VALUES ('admin', '698dc19d489c4e4db73e28a713eab07b', 'Administrador da federação');
 
-INSERT INTO mapeamentos VALUES (1,'nome', 'descricao', 'xslt', 1);
+INSERT INTO mapeamentos (nome, descricao, xslt, padrao_id) VALUES ('padrao_DC', 'descricao', 'xslt', 1);
+INSERT INTO mapeamentos (nome, descricao, xslt, padrao_id) VALUES ('padrao_LOM', 'descricao', 'xslt', 2);
+INSERT INTO mapeamentos (nome, descricao, xslt, padrao_id) VALUES ('padrao_OBAA', 'descricao', 'xslt', 3);
