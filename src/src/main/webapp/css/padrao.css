@@ -303,6 +303,9 @@ a:hover{
 .cabecalhoAdm .sair{
     font-weight: bold;
 }
+.cabecalhoAdm a{
+    text-decoration:underline;
+}
 
 .Mapeamento{
     margin-top:1%;
@@ -800,6 +803,18 @@ td{vertical-align:top;}
     padding-top: 0.5%;
     padding-right: 0.5%;
     font-style: italic;
+}
+.mensagemAdm{
+    float:left;
+    text-align: center;
+    padding-top: 0.5%;
+    padding-left: 40%;
+    color: red;
+}
+
+.mensagemSucesso{
+    text-align: center;
+    color: red;
 }
 
 /*CSS feito para subtituir o LinhaEntrada. O texto fica mais a esquerda e o LinhaEntrada mais no meio da tela*/

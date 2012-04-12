@@ -19,11 +19,7 @@
         <script type="text/javascript" src="../scripts/funcoes.js"></script>
         <script type="text/javascript">
             var myForm = new Validate();
-            myForm.addRules({id:'usuario',option:'required',error:'* Voc&ecirc; deve informar o nome do usu&aacute;rio'});
-            myForm.addRules({id:'base',option:'required',error:'* Voc&ecirc; deve informar o nome da base de dados!'});
-            myForm.addRules({id:'IP',option:'required',error:'* Voc&ecirc; deve o ip do banco de dados!'});
-            myForm.addRules({id:'porta',option:'required',error:'* Voc&ecirc; deve informar a porta'});
-            myForm.addRules({id:'senhaCriptografada', to:'confirmacaoSenhaBD', option:'isEqual',error:'* As senhas digitadas n&atilde;o est&atilde;o iguais!'});
+            myForm.addRules({id:'senhaCriptografada', to:'confsenhabd', option:'isEqual',error:'* As senhas digitadas n&atilde;o est&atilde;o iguais!'});
         </script>
     </head>
     <body>
@@ -79,7 +75,7 @@
                 <div class="hidden" id="divRepSenha">
                     <div class="Label">Repita a senha: </div>
                     <div class="Value">
-                        <input name="confirmacaoSenhaBD" type="password" id="confsenhabd" value="">
+                        <input name="confirmacaoSenhaBD" type="password" id="confsenhabd" value="${conf.senhaCriptografada}">
                     </div>
                 </div>
 

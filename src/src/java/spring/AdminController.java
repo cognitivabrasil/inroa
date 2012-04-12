@@ -4,6 +4,7 @@
  */
 package spring;
 
+import ferramentaBusca.IndexadorBusca;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import modelos.*;
@@ -63,6 +64,11 @@ public final class AdminController {
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "admin/adm";
+    }
+
+    @RequestMapping("/adm")
+    public String admin2(Model model) {
+        return admin(model);
     }
 
     @RequestMapping("/exibeRepositorios")
@@ -339,9 +345,17 @@ public final class AdminController {
         }
     }
 
-    @RequestMapping("/testeMarcos")
-    public void verificaOAI() {
-        System.out.println("entrou");
+    @RequestMapping("confirmaRecalcularIndice")
+    public String ConfirmaRecalcularIndice(Model model) {
 
+        return "admin/recalcularIndice";
+    }
+   
+    @RequestMapping("efetuaRecalculoIndice")
+    public String recalcularIndice(Model model) {
+        IndexadorBusca run = new IndexadorBusca();        
+        run.indexarTodosRepositorios();
+        model.addAttribute("fim", "Índice recalculado com sucesso!");
+        return "admin/recalcularIndice";
     }
 }

@@ -50,9 +50,11 @@ public class IndexadorBusca {
 
     /**
      * M&eacute;todo respons&aacute;vel por indexar todos reposit&oacute;rios cadastrados no banco de dados
-     * @param con Conexao com o banco de dados
+     * 
      */
-    public void indexarTodosRepositorios(Connection con) {
+    public void indexarTodosRepositorios() {
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
         String sql = "select id, nome from repositorios where nome != 'todos';";
 
         try {

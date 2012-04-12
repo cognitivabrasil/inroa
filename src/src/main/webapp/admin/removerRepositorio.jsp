@@ -22,7 +22,7 @@
             <div class="subTitulo-center">&nbsp;Ferramenta para remo&ccedil;&atilde;o de reposit&oacute;rios</div>
             <div class="EspacoAntes">&nbsp;</div>
 
-            <form name="adicionarRepositorio" action="removerRepositorio" method="get">
+            <form action="removerRepositorio" method="get">
                 <div class="LinhaEntrada">
                     <div class="Tab">
                         Deseja realmente remover o reposit&oacute;rio <b>${repDAO.get(param.id).nome}</b> ?

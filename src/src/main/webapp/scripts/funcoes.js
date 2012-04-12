@@ -386,6 +386,7 @@ function exibeDivSenha(idSenha, idRepSenha)
 {
     idSenha.innerHTML='<input name="senhaCriptografada" type="password" id="senhabd">';
     idRepSenha.className='LinhaEntrada';
+    document.getElementById("confsenhabd").value="";
 }
 
 /**
@@ -453,8 +454,13 @@ function excluirPadrao(id, idResultado, idTabela, linha)
         }
     }
     ajax.send(null); // submete
+}
 
-
+function recalcularIndice(destino, form){
+   destinodoc = document.getElementById(destino);
+   destinodoc.innerHTML = "<center><img src='../imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;  
+   form.className="hidden";
+    
 }
 
 function paranaodarerro(){

@@ -38,7 +38,7 @@ Author     : Marcos Nunes
                     Ferramenta Administrativa
                 </td>
                 <td width ="10%">
-                    <a href="" onclick="javascript:NewWindow('recalcularIndice.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">Recalcular o Indice</a>
+                    <a onclick="javascript:NewWindow('confirmaRecalcularIndice','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">Recalcular o &Iacute;ndice</a>
                 </td>
                 <td width ="10%">
                     <a href="" onclick="javascript:NewWindow('alterarSenhaAdm.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Senha</a>
@@ -51,6 +51,7 @@ Author     : Marcos Nunes
                 </td>
             </tr>
         </table>
+        <div class="mensagemAdm">${mensagem}</div>
         <div class="versao">Vers&atilde;o 3.0</div>
         <table class='repositorios-table' cellpadding=3>
             <tr>

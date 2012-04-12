@@ -32,7 +32,7 @@
             <FORM name="login" action="login" method="post" onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="EspacoAntes">&nbsp;</div>
-                <div class="TextoErro" id="MensagemErro">
+                <div class="textoErro" id="MensagemErro">
                     <!--Aqui o script colocara a mensagem de erro, se ocorrer-->
                     <c:out value="${erro}" />
                 </div>
