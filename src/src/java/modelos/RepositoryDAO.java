@@ -53,7 +53,7 @@ public interface RepositoryDAO {
      * Updates the repository with the same id as r2 safely, ignoring null and
      * blank values
      *
-     * It does NOT merge Relations, eg, the associated Documents are not merged.
+     * It does NOT merge the associated Documents.
      *
      * @param r2 A repository that we want to update.
      * @throws IllegalArgumentException when r2 is null
