@@ -101,7 +101,7 @@ public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {
     public void testSaveAndUpdate2() throws Exception {
         if (updated) {
             updated = false;
-            String[] ignore = {"id"};
+            String[] ignore = {"id", "atributos"};
             String[] sort = {"nome"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("padraometadados"), sort), new SortedTable(getConnection().createDataSet().getTable("padraometadados"), sort), ignore);
 

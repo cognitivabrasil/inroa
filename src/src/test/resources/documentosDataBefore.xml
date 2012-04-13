@@ -10,9 +10,9 @@ and open the template in the editor.
     <usuarios id="1" login="admin" senha="698dc19d489c4e4db73e28a713eab07b" nome="Administrador da federação"/>
     <usuarios id="2" login="admin2" senha="698dc19d489c4e4db73e28a713eab07b" nome="Administrador da federação"/>
             
-    <padraometadados id="1" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
-    <padraometadados id="2" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
-    <padraometadados id="3" nome="lom" metadata_prefix="oai_lom" name_space="lom"/>
+    <padraometadados id="1" nome="lom" metadata_prefix="oai_lom" name_space="lom" atributos=""/>
+    <padraometadados id="2" nome="lom" metadata_prefix="oai_lom" name_space="lom" atributos=""/>
+    <padraometadados id="3" nome="lom" metadata_prefix="oai_lom" name_space="lom" atributos=""/>
     
     <mapeamentos id="1" nome="Padrao" descricao="Blabla" xslt="xslt" padrao_id="1"/>
     <mapeamentos id="2" nome="Padrao" descricao="Blabla" xslt="xslt" padrao_id="1"/>
