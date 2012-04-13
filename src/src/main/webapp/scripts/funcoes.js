@@ -182,19 +182,31 @@ function atualizaRepAjax(id, exibeResultado)
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "atualizaRepAjax.jsp?id="+id, true); // Envia o termo da busca como uma querystring
+    ajax.open("POST", "atualizaRepAjax?id="+id, true); // Envia o termo da busca como uma querystring
 
     ajax.onreadystatechange = function()
     {
         if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
-            exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
+            exibeResultado.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='' align='middle'> Aguarde, atualizando...";
         }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
             if(ajax.status == 200)
             {
-                exibeResultado.innerHTML = "Atualizado!";
+                var resultado = ajax.responseText;
+                
+                if(isNaN(parseInt(resultado))){
+                    exibeResultado.innerHTML = resultado;
+                }else{
+                    if(parseInt(resultado)>0){
+                        exibeResultado.innerHTML = "Atualizado com sucesso.";
+                        removeLinha(idTabela, linha);
+                    }
+                    else{
+                        exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
+                    }
+                }  
             }
             else
             {
@@ -226,7 +238,7 @@ function atualizaSubfedAjax(id, exibeResultado)
     {
         if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
-            exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
+            exibeResultado.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
         }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
@@ -271,7 +283,7 @@ function apagaAtualizaRepAjax(id, exibeResultado)
         {
             if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
             {
-                exibeResultado.innerHTML = "<img src='./imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando... <BR> Mensagem estão sendo escritas no log";
+                exibeResultado.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando... <BR> Mensagem estão sendo escritas no log";
             }
             if(ajax.readyState == 4) // Quando estiver tudo pronto.
             {
@@ -458,7 +470,7 @@ function excluirPadrao(id, idResultado, idTabela, linha)
 
 function recalcularIndice(destino, form){
    destinodoc = document.getElementById(destino);
-   destinodoc.innerHTML = "<center><img src='../imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;  
+   destinodoc.innerHTML = "<center><img src='./feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;  
    form.className="hidden";
     
 }

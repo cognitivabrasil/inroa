@@ -18,6 +18,7 @@ import spring.validador.PadraoValidator;
 import spring.validador.RepositorioValidator;
 import spring.validador.InfoBDValidator;
 import spring.validador.SubFederacaoValidador;
+import robo.atualiza.Repositorios;
 
 /**
  * Controller para ferramenta administrativa
@@ -284,36 +285,6 @@ public final class AdminController {
         return "redirect:/";
     }
 
-    //------FUNCOES PARA AJAX------------
-    @RequestMapping("/mapeamentos/listaMapeamentoPadraoSelecionado")
-    public String listaMapSelecionadoAjax(
-            @RequestParam(value = "idpadrao", required = true) int idPadrao,
-            @RequestParam(value = "mapSelecionado", required = false) int mapSelecionado,
-            Model model) {
-        if (idPadrao <= 0) {
-            model.addAttribute("idZero", true);
-        } else {
-            model.addAttribute("padraoMet", padraoDao.get(idPadrao));
-            if (mapSelecionado > 0) {
-                model.addAttribute("mapSelecionado", mapSelecionado);
-            } else {
-                model.addAttribute("repModel", new Repositorio());
-                model.addAttribute("novoRep", true);
-            }
-        }
-
-        return "admin/mapeamentos/listaMapeamentoPadraoSelecionado";
-    }
-
-    @RequestMapping("excluirPadrao")
-    public @ResponseBody
-    String excluiPadrao(@RequestParam int id) {
-        PadraoMetadados padrao = new PadraoMetadados();
-        padrao.setId(id);
-        padraoDao.delete(padrao);
-        return "1";
-    }
-
     @RequestMapping("/alterarSenhaBD")
     public String alteraSenhaDB(Model model) {
 
@@ -376,7 +347,7 @@ public final class AdminController {
             Model model,
             HttpSession session) {
         String user = (String) session.getAttribute("usuario"); //pega o nome do usuario da sessao
-        
+
         if (!novaSenha.equals(confimaSenha)) {//testa se a nova senha e a confirmacao estao iguais
             model.addAttribute("erroSenhaConf", "Senhas não correspondem.");
             model.addAttribute("login", user);
@@ -395,11 +366,60 @@ public final class AdminController {
                     session.removeAttribute("usuario");//remove o usuario da sessao para que tenha que digitar a nova senha
                     return "redirect:fechaRecarrega";
                 } catch (Exception e) {
-                    model.addAttribute("erro", "Desculpe, não foi possível alterar a senha. Exception: "+e.toString());
+                    model.addAttribute("erro", "Desculpe, não foi possível alterar a senha. Exception: " + e.toString());
                     model.addAttribute("login", user);
                     return "admin/alterarSenhaAdm";
                 }
             }
         }
     }
+
+    //------FUNCOES PARA AJAX------------
+    @RequestMapping("/mapeamentos/listaMapeamentoPadraoSelecionado")
+    public String listaMapSelecionadoAjax(
+            @RequestParam(value = "idpadrao", required = true) int idPadrao,
+            @RequestParam(value = "mapSelecionado", required = false) int mapSelecionado,
+            Model model) {
+        if (idPadrao <= 0) {
+            model.addAttribute("idZero", true);
+        } else {
+            model.addAttribute("padraoMet", padraoDao.get(idPadrao));
+            if (mapSelecionado > 0) {
+                model.addAttribute("mapSelecionado", mapSelecionado);
+            } else {
+                model.addAttribute("repModel", new Repositorio());
+                model.addAttribute("novoRep", true);
+            }
+        }
+
+        return "admin/mapeamentos/listaMapeamentoPadraoSelecionado";
+    }
+
+    @RequestMapping("excluirPadrao")
+    public @ResponseBody
+    String excluiPadrao(@RequestParam int id) {
+        PadraoMetadados padrao = new PadraoMetadados();
+        try {
+            padrao.setId(id);
+            padraoDao.delete(padrao);
+            return "1";
+        } catch (Exception e) {
+            return "Ocorreu um erro ao excluir. Exception:"+e.toString();
+        }
+    }
+
+    @RequestMapping("atualizaRepAjax")
+    public @ResponseBody
+    String atualizaRepositorioAjax(@RequestParam int id) {
+
+        Repositorios repositorio = new Repositorios();
+        try {
+            repositorio.atualizaFerramentaAdm(id, false);
+            return "1";
+        } catch (Exception e) {
+            return "Ocorreu um erro ao atualizar o repositorio. Exception: "+e.toString();
+        }
+    }
+    
+    //------FIM FUNCOES PARA AJAX------------
 }

@@ -58,7 +58,13 @@ public class Repositorios {
                 int idRep = rs.getInt("idrep");
                 boolean atualizadoTemp = false;
                 //ATUALIZA REP
+                try{
                 atualizadoTemp = atualizaRepositorio(idRep, indexar, con); //chama o metodo que atualiza o repositorio
+                }catch(Exception e){
+                    /*
+                     * ATENÇÃO: esse catch está vazio porque já é feito o tratamento de exceção dentro do metodo atualizaRepositorio mas é preciso subir a exceção porque se atualizar um repositorio só pela ferramenta administrativa tem que saber se deu erro.
+                     */
+                }
 
                 if (atualizadoTemp) { //se algum repositorio foi atualizado entao recalcula o indice
                     atualizou = true;
@@ -66,7 +72,7 @@ public class Repositorios {
             }
 
         } catch (SQLException e) {
-            System.err.println("FEB ERRO: Erro na consulta SQL no metodo testa_atualizar_repositorio. Mensagem:" + e);
+            System.err.println("FEB ERRO: Erro na consulta SQL no metodo testa_atualizar_repositorio. Mensagem:" + e.toString());
         }
 
         return atualizou;
@@ -170,11 +176,14 @@ public class Repositorios {
             AtualizaBase.atualizaHora(idRepositorio, con, indexar.getDataXML());
 
         } catch (UnknownHostException u) {
-            System.err.println("FEB ERRO: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
+            System.err.println("FEB ERRO: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u.toString());
+            throw u;
         } catch (SQLException e) {
-            System.err.println("FEB ERRO: SQL Exception... Erro na consulta sql na classe Repositorios:" + e.getMessage());
+            System.err.println("FEB ERRO: SQL Exception... Erro na consulta sql na classe Repositorios:" + e.toString());
+            throw e;
         } catch (ParserConfigurationException e) {
-            System.err.println("FEB ERRO: O parser nao foi configurado corretamente. Mensagem: " + e.getMessage());
+            System.err.println("FEB ERRO: O parser nao foi configurado corretamente. Mensagem: " + e.toString());
+            throw e;
         } catch (SAXException e) {
             String msg = e.getMessage();
             String msgOAI = "\nFEB: ERRO no parser do OAI-PMH, mensagem: ";
@@ -196,14 +205,18 @@ public class Repositorios {
             } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
                 System.err.println(msgOAI + msg + " - The repository does not support sets.\n");
             } else {
-                System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e);
+                System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e.toString());
             }
+            throw e;
         } catch (FileNotFoundException e) {
-            System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: " + e + "\n");
+            System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: " + e.toString() + "\n");
+            throw e;
         } catch (IOException e) {
-            System.err.println("\nFEB ERRO: Nao foi possivel coletar ou ler o XML em: " + this.getClass() + ": " + e + "\n");
+            System.err.println("\nFEB ERRO: Nao foi possivel coletar ou ler o XML em: " + this.getClass() + ": " + e.toString() + "\n");
+            throw e;
         } catch (Exception e) {
-            System.err.println("\nFEB ERRO ao efetuar o Harvester " + e + "\n");
+            System.err.println("\nFEB ERRO ao efetuar o Harvester " + e.toString() + "\n");
+            throw e;
         } finally {
 
             return atualizou;
@@ -217,7 +230,7 @@ public class Repositorios {
      * @param apagar informar se deseja apagar toda a base. true apaga e false apenas atualiza.
      * @author Marcos Nunes
      */
-    public void atualizaFerramentaAdm(int idRep, boolean apagar) {
+    public void atualizaFerramentaAdm(int idRep, boolean apagar) throws Exception{
 
         Indexador indexar = new Indexador();
         Connection con = null;
@@ -257,6 +270,7 @@ public class Repositorios {
 
         } catch (SQLException e) {
             System.err.println("FEB ERRO: SQL Exception... Erro na consulta SQL no metodo atualizaFerramentaAdm: " + e);
+            throw e;
         } finally {
             try {
                 con.close(); //fechar conexao
