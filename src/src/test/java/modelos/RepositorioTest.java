@@ -4,7 +4,6 @@
  */
 package modelos;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
@@ -87,5 +86,46 @@ public class RepositorioTest {
         exp.add("Feliz da vida");
         
         assertEquals(exp, instance.getColecoes());
+    }
+    
+    @Test
+    public void testUpdateNotBlank() {
+        Repositorio r1 = new Repositorio();
+        
+        r1.setId(1);
+        
+        r1.setNome("Jorge");
+        r1.setUrl("bla");
+        
+        Repositorio r2 = new Repositorio();
+        
+        r2.setNome("Paulo");
+        r2.setNamespace("obaa");
+        
+        r1.merge(r2);
+        
+        assertEquals("Paulo", r1.getNome());
+        assertEquals("bla", r1.getUrl());
+        assertEquals("obaa", r1.getNamespace());
+    }
+    
+        @Test(expected=IllegalArgumentException.class)
+      public void testUpdateDifferentIds() {
+        Repositorio r1 = new Repositorio();
+        
+        r1.setId(1);
+        
+        r1.setNome("Jorge");
+        r1.setUrl("bla");
+        
+        Repositorio r2 = new Repositorio();
+        
+        r2.setId(3);
+        r2.setNome("Paulo");
+        r2.setNamespace("obaa");
+        
+         r1.merge(r2);
+        
+
     }
 }

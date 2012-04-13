@@ -36,7 +36,7 @@ public class Repositorio implements java.io.Serializable {
 //            //TODO:
 //            sessionFactory = ctx.getBean(SessionFactory.class);
 //        }
-        id = 0;
+        id = null;
         nome = "";
         descricao = "";
         url = "";
@@ -251,6 +251,49 @@ public class Repositorio implements java.io.Serializable {
      */
     protected String getColecoesInternal() {
         return colecoesInternal;
+    }
+    
+    private boolean notBlank(String s) {
+        return s != null && !(s.equals(""));
+    }
+    private boolean notBlank(Set s) {
+        return s != null && !(s.size()==0);
+    }
+    
+        /**
+     * Updates the repository with the same with the data in r2 safely, ignoring null and blank values
+     * 
+     * It does NOT merge Relations, eg, the associated Documents are not merged.
+     * @param r2 A repository that we want to update.
+     * @throws IllegalArgumentException If the ids dont match.
+     */
+    public void merge(Repositorio r2) {
+        
+        if(r2.getId() != null && r2.getId() != getId()) {
+            throw new IllegalArgumentException("Merge must not be used on repositories with different Ids");
+        }
+        
+        if(notBlank(r2.getDescricao())) {
+            setDescricao(r2.getDescricao());
+        }
+        if(notBlank(r2.getMetadataPrefix())) {
+            setMetadataPrefix(r2.getMetadataPrefix());
+        }
+        if(notBlank(r2.getNamespace())) {
+            setNamespace(r2.getNamespace());
+        }
+        if(notBlank(r2.getNome())) {
+            setNome(r2.getNome());
+        }
+        if(notBlank(r2.getUrl())) {
+            setUrl(r2.getUrl());
+        }
+        if(notBlank(r2.getColecoes())) {
+            setColecoes(r2.getColecoes());
+        }
+
+
+
     }
 
     /**

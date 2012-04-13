@@ -20,4 +20,13 @@ public class RepositoryHibernateDAO extends AbstractHibernateDAO<Repositorio> im
         return (Repositorio) s.createQuery("from Repositorio WHERE nome = :nome").setString("nome", name).uniqueResult();
     }
     
+
+    public void updateNotBlank(Repositorio r2) {
+        if(r2.getId() == null) {
+            throw new IllegalArgumentException("Cant update a new repository, save it instead");
+        }
+        Repositorio r = get(r2.getId());
+        r.merge(r2);
+    }
+    
 }
