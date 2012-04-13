@@ -454,6 +454,12 @@ a:hover{
 
 .LinhaEntrada .Value input{width:50%; border-color: #006699}
 .LinhaEntrada .Value select{width:50%; border-color: #006699}
+.LinhaEntrada .Value .disabled{
+    background-color: #D7EBFF;
+    border: 0px;
+    color: black;
+    text-align: center;
+}
 
 .EspacoPequeno{
     padding-top:1px;

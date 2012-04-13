@@ -40,6 +40,8 @@ public final class AdminController {
     private RepositorioValidator repValidator = new RepositorioValidator();
     @Autowired
     ServletContext servletContext;
+    @Autowired
+    private UsuarioDAO userDao;
 
     public AdminController() {
     }
@@ -350,12 +352,54 @@ public final class AdminController {
 
         return "admin/recalcularIndice";
     }
-   
+
     @RequestMapping("efetuaRecalculoIndice")
     public String recalcularIndice(Model model) {
-        IndexadorBusca run = new IndexadorBusca();        
+        IndexadorBusca run = new IndexadorBusca();
         run.indexarTodosRepositorios();
         model.addAttribute("fim", "Índice recalculado com sucesso!");
         return "admin/recalcularIndice";
+    }
+
+    @RequestMapping("alterarSenhaAdm")
+    public String alterarSenhaUser(Model model, HttpSession session) {
+        String user = (String) session.getAttribute("usuario");
+        model.addAttribute("login", user);
+        return "admin/alterarSenhaAdm";
+    }
+
+    @RequestMapping("gravaSenha")
+    public String gravaSenhaUser(
+            @RequestParam String senhaAtual,
+            @RequestParam String novaSenha,
+            @RequestParam String confimaSenha,
+            Model model,
+            HttpSession session) {
+        String user = (String) session.getAttribute("usuario"); //pega o nome do usuario da sessao
+        
+        if (!novaSenha.equals(confimaSenha)) {//testa se a nova senha e a confirmacao estao iguais
+            model.addAttribute("erroSenhaConf", "Senhas não correspondem.");
+            model.addAttribute("login", user);
+            return "admin/alterarSenhaAdm";
+        } else {
+            Usuario userModel = userDao.authenticate(user, senhaAtual);
+            if (userModel == null) {
+                model.addAttribute("erroSenha", "A senha fornecida estava incorreta.");
+                model.addAttribute("login", user);
+                return "admin/alterarSenhaAdm";
+            } else {
+                try {
+                    userModel.setPassword(novaSenha);
+                    userDao.save(userModel);
+                    //TODO: Quando passar para o spring security modificar a forma de deslogado o usuario aqui
+                    session.removeAttribute("usuario");//remove o usuario da sessao para que tenha que digitar a nova senha
+                    return "redirect:fechaRecarrega";
+                } catch (Exception e) {
+                    model.addAttribute("erro", "Desculpe, não foi possível alterar a senha. Exception: "+e.toString());
+                    model.addAttribute("login", user);
+                    return "admin/alterarSenhaAdm";
+                }
+            }
+        }
     }
 }

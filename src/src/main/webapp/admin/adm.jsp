@@ -41,7 +41,7 @@ Author     : Marcos Nunes
                     <a onclick="javascript:NewWindow('confirmaRecalcularIndice','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">Recalcular o &Iacute;ndice</a>
                 </td>
                 <td width ="10%">
-                    <a href="" onclick="javascript:NewWindow('alterarSenhaAdm.jsp','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Senha</a>
+                    <a href="" onclick="javascript:NewWindow('alterarSenhaAdm','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Senha</a>
                 </td>
                 <td width ="13%">
                     <a href="" onclick="javascript:NewWindow('alterarSenhaBD','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar Base de Dados</a>
@@ -77,10 +77,9 @@ Author     : Marcos Nunes
                         <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarRep" onclick="NewWindow('exibeRepositorios?id=${rep.id}','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
 
                     </td>
-                    <td >&nbsp;${rep.nome}</td>
-                    <td >&nbsp;${rep.descricao}</td>
-                    <td >&nbsp;
-
+                    <td>${rep.nome}</td>
+                    <td>${rep.descricao}</td>
+                    <td>
                         <c:choose>
                             <c:when test="${operacoesBean.dataAnteriorAtual(rep.proximaAtualizacao)}">
                                 <div id='textResult${param.id}' class="textoErro">&nbsp; 
