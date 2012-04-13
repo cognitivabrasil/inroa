@@ -101,8 +101,7 @@ public class Repositorios {
 
                 String nome = rs.getString("nome"); //atribiu a variavel nome o nome do repositorio retornado pela consulta sql
 
-                System.out.println("FEB -> " + dataFormat.format(new Date()));
-                System.out.println("FEB: Atualizando repositorio: " + nome);//imprime o nome do repositorio
+                System.out.println("FEB: (" + dataFormat.format(new Date())+ ") Atualizando repositorio: " + nome);//imprime o nome do repositorio
 
                 String url = rs.getString("url"); //pega a url retornada pela consulta sql
                 String metadataPrefix = rs.getString("metadata_prefix"); // para o OAI-PMH
@@ -111,7 +110,7 @@ public class Repositorios {
                     set = null;
                 }
                 if (url.isEmpty()) { //testa se a string url esta vazia.
-                    System.out.println("FEB: Nao existe uma url associada ao repositorio " + nome);
+                    System.err.println("FEB: Nao existe uma url associada ao repositorio " + nome);
                     atualizou = false;
 
                 } else {//repositorio possui url para atualizacao
@@ -233,7 +232,7 @@ public class Repositorios {
                 zeraDataRepositorio(idRep, stm); //se informado true seta a data da ultima atualizacao para zero
             }
 
-            if (idRep > 0) {
+            if (idRep > 0) { //atualizar um repositorio especifico ou todos. 0 = todos
                 recalcularIndice = atualizaRepositorio(idRep, indexar, con);
             } else {
                 String sql = "SELECT r.id as idrep" + " FROM repositorios r" + " WHERE r.nome!='todos';";

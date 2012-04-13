@@ -80,13 +80,27 @@ Author     : Marcos Nunes
                     <td >&nbsp;${rep.nome}</td>
                     <td >&nbsp;${rep.descricao}</td>
                     <td >&nbsp;
-                        <div id="textResult${rep.id}">
-                            ${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
 
-                            <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${rep.id}, document.getElementById('textResult'+${rep.id}));">
-                                <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                            </a>
-                        </div>
+                        <c:choose>
+                            <c:when test="${operacoesBean.dataAnteriorAtual(rep.proximaAtualizacao)}">
+                                <div id='textResult${param.id}' class="textoErro">&nbsp; 
+                                    ${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
+                                    &nbsp;
+                                    <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
+                                        <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'>
+                                    </a>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="Value" id="textResult${param.id}">&nbsp;
+                                    ${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
+                                    &nbsp;&nbsp;
+                                    <a title='Atualizar agora' onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
+                                        <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
+                                    </a> 
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
                 </tr>
 
@@ -176,7 +190,7 @@ Author     : Marcos Nunes
         <%--@include file="./mapeamentos/mapeamentos.jsp"--%>
         <!--Fim codigo que lista os mapeamentos-->
 
-        
+
         <table class='repositorios-table' cellpadding=3>
             <tr>
                 <th colspan=4>
@@ -191,28 +205,28 @@ Author     : Marcos Nunes
                 <th width="50%">Descri&ccedil;&atilde;o</th>
                 <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
             </tr>
-            
+
             <c:forEach var="subfed" items="${subDAO.all}" varStatus="status">  
                 <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}" >
-                <td>
-                    <input type="button" class="botaoExcluir" title="Excluir Subfedera&ccedil;&atilde;o" name="excluir" id="excluirSubfed" onclick="NewWindow('removerFederacao?id=${subfed.id}','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
-                    &nbsp;
-                    <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarSubfed" onclick="NewWindow('exibeFederacao?id=${subfed.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
+                    <td>
+                        <input type="button" class="botaoExcluir" title="Excluir Subfedera&ccedil;&atilde;o" name="excluir" id="excluirSubfed" onclick="NewWindow('removerFederacao?id=${subfed.id}','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
+                        &nbsp;
+                        <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarSubfed" onclick="NewWindow('exibeFederacao?id=${subfed.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
 
-                </td>
+                    </td>
                     <td>&nbsp;${subfed.nome}</td>
                     <td>&nbsp;${subfed.descricao}</td>
                     <td>&nbsp;
-                    <div id='textResultSF${subfed.id}'>
-                        ${operacoesBean.ultimaAtualizacaoFrase(subfed.ultimaAtualizacao)}
-                        
-                        <a title="Atualizar agora" onclick="javaScript:atualizaSubfedAjax(${subfed.id}, document.getElementById('textResultSF${subfed.id}'));">
-                            <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                        </a>                       
-                    </div>
-                </td>
-                
-            </tr>
+                        <div id='textResultSF${subfed.id}'>
+                            ${operacoesBean.ultimaAtualizacaoFrase(subfed.ultimaAtualizacao)}
+
+                            <a title="Atualizar agora" onclick="javaScript:atualizaSubfedAjax(${subfed.id}, document.getElementById('textResultSF${subfed.id}'));">
+                                <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </a>                       
+                        </div>
+                    </td>
+
+                </tr>
             </c:forEach>
 
             <tr class='center'>
