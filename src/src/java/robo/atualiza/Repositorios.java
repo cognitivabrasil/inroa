@@ -44,11 +44,10 @@ public class Repositorios {
         boolean atualizou = false;
         int tempoSeguranca = 4; //tempo para descontar da periodicidade da ultima atualizacao. Pq se o robo rodou ontem as 02h e atualizou o repositorio as 02:10h hoje quando rodar novamente nao vai atualiza pq nao faz 24h ainda.
 
-        String sql = "SELECT r.nome, r.id as idrep" + " FROM repositorios r, info_repositorios i "
-                + " WHERE r.id=i.id_repositorio"
-                + " AND r.nome!='todos'"
+        String sql = "SELECT r.nome, r.id as idrep" + " FROM repositorios r"
+                + " WHERE r.nome!='todos'"
                 + " AND r.nome!='OBAA'"
-                + " AND i.data_ultima_atualizacao < (now() - (i.periodicidade_horas-" + tempoSeguranca + ")*('1 HOUR')::INTERVAL);";
+                + " AND r.data_ultima_atualizacao < (now() - (r.periodicidade_horas-" + tempoSeguranca + ")*('1 HOUR')::INTERVAL);";
 
 
         try {
@@ -89,10 +88,9 @@ public class Repositorios {
 
         String caminhoDiretorioTemporario = conf.getCaminho();
 
-        String sql = "SELECT r.nome, i.data_ultima_atualizacao, i.url_or_ip as url, i.tipo_sincronizacao, i.metadata_prefix, i.set, to_char(i.data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as ultima_atualizacao_form"
-                + " FROM repositorios r, info_repositorios i"
-                + " WHERE r.id = i.id_repositorio"
-                + " AND r.id = " + idRepositorio + ";";
+        String sql = "SELECT r.nome, r.data_ultima_atualizacao, r.url_or_ip as url, r.metadata_prefix, r.set, to_char(r.data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as ultima_atualizacao_form"
+                + " FROM repositorios r"
+                + " WHERE r.id = " + idRepositorio + ";";
 
 
         try {
@@ -120,8 +118,7 @@ public class Repositorios {
 
                     String ultimaAtualizacao = rs.getString("ultima_atualizacao_form");
                     Date data_ultima_atualizacao = rs.getDate("data_ultima_atualizacao");
-                    ArrayList<String> caminhoXML = new ArrayList<String>(); //ArrayList que armazenara os caminhos para os xmls
-
+                    
                     System.out.println("\t FEB: Ultima Atualizacao: " + ultimaAtualizacao + " nome do rep: " + nome);
 
 
@@ -135,7 +132,7 @@ public class Repositorios {
                             deleta.apagaObjetosRepositorio(idRepositorio, con);
 
                         } catch (Exception e) {
-                            System.out.println("Error: " + e.toString());
+                            System.out.println("Erro FEB: " + e.toString());
                         }
                     }
 
@@ -154,9 +151,9 @@ public class Repositorios {
 
                     if (caminhoTeste.isDirectory()) {
                         //efetua o Harvester e grava os xmls na pasta temporaria
-
+                        
                         //coletando xmls
-                        caminhoXML = importar.coletaXML_ListRecords(url, ultimaAtualizacao, nome, caminhoDiretorioTemporario, metadataPrefix, set); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
+                        ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(url, ultimaAtualizacao, nome, caminhoDiretorioTemporario, metadataPrefix, set); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
 
                         //leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados
                         gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con);
@@ -254,18 +251,18 @@ public class Repositorios {
                 }
             }
             if (recalcularIndice) {
-                System.out.println("recalculando o indice " + dataFormat.format(new Date()));
+                System.out.println("FEB: recalculando o indice " + dataFormat.format(new Date()));
                 indexar.populateR1(con);
-                System.out.println("indice recalculado! " + dataFormat.format(new Date()));
+                System.out.println("FEB: indice recalculado! " + dataFormat.format(new Date()));
             }
 
         } catch (SQLException e) {
-            System.err.println("SQL Exception... Erro na consulta SQL no metodo atualizaFerramentaAdm: " + e);
+            System.err.println("FEB ERRO: SQL Exception... Erro na consulta SQL no metodo atualizaFerramentaAdm: " + e);
         } finally {
             try {
                 con.close(); //fechar conexao
             } catch (SQLException e) {
-                System.out.println("Erro ao fechar a conexão: " + e.getMessage());
+                System.out.println("FEB ERRO: Erro ao fechar a conexão: " + e.getMessage());
             }
         }
 
@@ -273,7 +270,7 @@ public class Repositorios {
     }
 
     private void zeraDataRepositorio(int idRep, Statement stm) throws SQLException {
-        String sql = "UPDATE info_repositorios set data_ultima_atualizacao='0001-01-01 00:00:00' WHERE id_repositorio=" + idRep;
+        String sql = "UPDATE repositorios set data_ultima_atualizacao='0001-01-01 00:00:00' WHERE id=" + idRep;
         stm.executeUpdate(sql);
 
     }

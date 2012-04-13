@@ -21,6 +21,7 @@
         <input type="hidden" id="namespace" name="namespace" value=''>
     </c:when>
     <c:otherwise>
+        <c:if test="${empty padraoMet.mapeamentos}"> <div class="ValueIndex textoErro">N&atilde;o existe nenhum mapeamento cadastrado!</div></c:if>
         <c:forEach var="map" items="${padraoMet.mapeamentos}">
             <div class="ValueIndex"><input type="radio" ${map.id == mapSelecionado ? 'checked=true':''} id="mapeamento.id" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
         </c:forEach>

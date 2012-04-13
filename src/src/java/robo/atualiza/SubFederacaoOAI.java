@@ -132,7 +132,7 @@ public class SubFederacaoOAI {
         } catch (UnknownHostException u) {
             System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
         } catch (SQLException e) {
-            System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: SQL Exception... Erro na consulta sql na classe Repositorios:" + e.getMessage());
+            System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: SQL Exception... Erro na consulta sql na classe SubFederacaoOAI:" + e.getMessage());
         } catch (ParserConfigurationException e) {
             System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: O parser nao foi configurado corretamente. " + e);
         } catch (SAXException e) {

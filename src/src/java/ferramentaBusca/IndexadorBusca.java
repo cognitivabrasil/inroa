@@ -157,7 +157,7 @@ public class IndexadorBusca {
 
     public void recalcularIndice(Connection con) {
         try {
-            System.err.println("recalculando o indice...");
+            System.err.println("FEB: recalculando o indice...");
             Long inicio = System.currentTimeMillis();
             indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
             Long fim = System.currentTimeMillis();
