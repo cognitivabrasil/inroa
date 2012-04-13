@@ -272,7 +272,7 @@ public class Repositorio implements java.io.Serializable {
      */
     public void merge(Repositorio r2) {
 
-        if (r2.getId() != null && r2.getId() != getId()) {
+        if (r2.getId() != null && !(r2.getId().equals(getId()))) {
             throw new IllegalArgumentException("Merge must not be used on repositories with different Ids");
         }
 

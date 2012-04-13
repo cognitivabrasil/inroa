@@ -27,6 +27,7 @@ public class RepositoryHibernateDAO extends AbstractHibernateDAO<Repositorio> im
         }
         Repositorio r = get(r2.getId());
         r.merge(r2);
+        save(r);
     }
     
 }

@@ -141,7 +141,7 @@ public final class AdminController {
             model.addAttribute("padraoMetadadosDAO", padraoDao);
             return "admin/editarRepositorio";
         } else {
-            repDao.save(rep);
+            repDao.updateNotBlank(rep);
             return "redirect:/admin/exibeRepositorios?id=" + id;
         }
     }
