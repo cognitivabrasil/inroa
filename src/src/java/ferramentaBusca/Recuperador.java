@@ -35,7 +35,7 @@ public class Recuperador {
     
     
     public ArrayList<DocumentoReal> busca(Consulta consulta, int indexIni, int offset) {
-
+/*
         Conectar c = new Conectar();
         Connection con = c.conectaBD();
         
@@ -137,7 +137,8 @@ public class Recuperador {
             }
 
         }
-        return resultados;
+        return resultados; */
+        return null;
     }
 
 
@@ -252,7 +253,8 @@ public class Recuperador {
         
 
         if (LRU && !autorb){ //se a consulta ja esta no banco de dados e não for por autor
-            idsResultados = cache.getResultado();
+            //TODO: removi pq tava dando erro
+            //idsResultados = cache.getResultado();
         }
         
         else { //se a consulta nao tiver no banco
