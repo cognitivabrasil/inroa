@@ -410,11 +410,13 @@ public final class AdminController {
 
     @RequestMapping("atualizaRepAjax")
     public @ResponseBody
-    String atualizaRepositorioAjax(@RequestParam int id) {
+    String atualizaRepositorioAjax(
+            @RequestParam int id,
+            @RequestParam boolean apagar) {
 
         Repositorios repositorio = new Repositorios();
         try {
-            repositorio.atualizaFerramentaAdm(id, false);
+            repositorio.atualizaFerramentaAdm(id, apagar);
             return "1";
         } catch (Exception e) {
             return "Ocorreu um erro ao atualizar o repositorio. Exception: "+e.toString();

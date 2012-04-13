@@ -168,8 +168,6 @@ function trim(str){
     return str.replace(/^\s+|\s+$/g,"");
 }
 
-
-
 /**
  * Função que atualiza o repositorio solicitado utilizando ajax.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
@@ -178,11 +176,22 @@ function trim(str){
 */
 function atualizaRepAjax(id, exibeResultado)
 {
+    atualizaRepAjaxExec(id, exibeResultado, false)
+}
 
+/**
+ * Função que atualiza o repositorio solicitado utilizando ajax.
+ * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
+ * @param id id do repositorio a ser atualizado
+ * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
+ * @param apagar informa se deve apagar todos os objetos do repositorio ou não.
+*/
+function atualizaRepAjaxExec(id, exibeResultado, apagar)
+{
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "atualizaRepAjax?id="+id, true); // Envia o termo da busca como uma querystring
+    ajax.open("POST", "atualizaRepAjax?id="+id+"&apagar="+apagar, true);
 
     ajax.onreadystatechange = function()
     {
@@ -232,7 +241,7 @@ function atualizaSubfedAjax(id, exibeResultado)
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "atualizaSubfedAjax.jsp?id="+id, true); // Envia o termo da busca como uma querystring
+    ajax.open("POST", "atualizaSubfedAjax.jsp?id="+id, true);
 
     ajax.onreadystatechange = function()
     {
@@ -267,40 +276,14 @@ function atualizaSubfedAjax(id, exibeResultado)
 
 
 /**
- * Função que remove todos os objetos de um reposiorio e atualiza novamente utilizando ajax.
+ * Função que remove todos os objetos de um repositorio e atualiza novamente utilizando ajax.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
  * @param id id do repositorio a ser atualizado
  * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
 */
 function apagaAtualizaRepAjax(id, exibeResultado)
 {
-    if (confirm("Deseja excluir todos os objetos e coletar novamente? \n\n Isso pode levar bastante tempo.")) {
-        var ajax = openAjax(); // Inicia o Ajax.
-
-        ajax.open("POST", "atualizaApagandoRepAjax.jsp?id="+id, true); // Envia o termo da busca como uma querystring
-
-        ajax.onreadystatechange = function()
-        {
-            if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-            {
-                exibeResultado.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando... <BR> Mensagem estão sendo escritas no log";
-            }
-            if(ajax.readyState == 4) // Quando estiver tudo pronto.
-            {
-                if(ajax.status == 200)
-                {
-                    //                var resultado = ajax.responseText;
-                    //                exibeResultado.innerHTML = resultado;
-                    exibeResultado.innerHTML = "Atualizado!";
-                }
-                else
-                {
-                    exibeResultado.innerHTML = "Erro nas funções do Ajax";
-                }
-            }
-        }
-        ajax.send(null); // submete
-    }
+    atualizaRepAjaxExec(id, exibeResultado, true);
 }
 
 /**
@@ -321,7 +304,7 @@ function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
     }else{
         var ajax = openAjax(); // Inicia o Ajax.
 
-        ajax.open("POST", "VerificaLinkOAI?"+link, true); // Envia o termo da busca como uma querystring
+        ajax.open("POST", "VerificaLinkOAI?"+link, true);
 
         ajax.onreadystatechange = function()
         {
@@ -432,7 +415,7 @@ function excluirPadrao(id, idResultado, idTabela, linha)
     var ajax = openAjax(); // Inicia o Ajax.
     
     
-    ajax.open("GET", "excluirPadrao?id="+id, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    ajax.open("GET", "excluirPadrao?id="+id, true);
                        
     
     ajax.onreadystatechange = function()

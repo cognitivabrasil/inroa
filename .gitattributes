@@ -427,7 +427,6 @@ src/src/main/webapp/WEB-INF/web.xml -text
 src/src/main/webapp/admin/adm.jsp -text
 src/src/main/webapp/admin/alterarSenhaAdm.jsp -text
 src/src/main/webapp/admin/alterarSenhaBD.jsp -text
-src/src/main/webapp/admin/atualizaApagandoRepAjax.jsp -text
 src/src/main/webapp/admin/atualizaSubfedAjax.jsp -text
 src/src/main/webapp/admin/cadastraFederacao.jsp -text
 src/src/main/webapp/admin/cadastraRepositorio.jsp -text
