@@ -58,4 +58,23 @@ public class SubFederacaoTest {
         int result = instance.getSizeDoc();
         assertEquals(7, result);
     }
+
+    @Test
+    public void testUpdateNotBlank() {
+        SubFederacao r1 = new SubFederacao();
+
+        r1.setId(1);
+
+        r1.setNome("Jorge");
+        r1.setUrl("bla");
+
+        SubFederacao r2 = new SubFederacao();
+
+        r2.setNome("Paulo");
+
+        r1.merge(r2);
+
+        assertEquals("Paulo", r1.getNome());
+        assertEquals("bla", r1.getUrl());
+    }
 }

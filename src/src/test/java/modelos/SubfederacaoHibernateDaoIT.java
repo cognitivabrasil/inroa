@@ -114,7 +114,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
         assertThat(ufrgs, is(notNullValue()));
         assertEquals("UFRGS", ufrgs.getNome());
-        assertEquals(1, ufrgs.getId());
+        assertEquals(1, (int)ufrgs.getId());
     }
 
     @Test

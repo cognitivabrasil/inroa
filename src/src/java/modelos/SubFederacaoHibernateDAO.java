@@ -16,10 +16,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 //@Transactional
 public class SubFederacaoHibernateDAO extends AbstractHibernateDAO<SubFederacao> implements SubFederacaoDAO {
 
-
+    @Override
     public SubFederacao get(String nome) {
         Session s = this.sessionFactory.getCurrentSession();
         return (SubFederacao) s.createQuery("from SubFederacao WHERE nome = :nome").setString("nome", nome).uniqueResult();
     }
 
+    @Override
+    public void updateNotBlank(SubFederacao r2) {
+        if (r2.getId() == null) {
+            throw new IllegalArgumentException("Cant update a new SubFederation, save it instead");
+        }
+        SubFederacao r = get(r2.getId());
+        r.merge(r2);
+        save(r);
+    }
 }

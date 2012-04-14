@@ -16,7 +16,7 @@ import org.springframework.core.style.ToStringCreator;
  */
 public class SubFederacao implements java.io.Serializable {
 
-    private int id;
+    private Integer id;
     private String nome;
     private String descricao;
     private String url;
@@ -49,7 +49,7 @@ public class SubFederacao implements java.io.Serializable {
         this.descricao = descricao;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -91,6 +91,42 @@ public class SubFederacao implements java.io.Serializable {
 
     public Date getProximaAtualizacao() {
         return new Date(this.ultimaAtualizacao.getTime() + 24 * 60 * 60 * 1000); // soma a periodicidade em horas
+    }
+    
+    
+    private boolean notBlank(String s) {
+        return s != null && !(s.equals(""));
+    }
+
+    private boolean notBlank(Set s) {
+        return s != null && !(s.size() == 0);
+    }
+
+    
+    /**
+     * Updates the repository with the same with the data in r2 safely, ignoring
+     * null and blank values
+     *
+     * @param r2 A repository that we want to update.
+     * @throws IllegalArgumentException If the ids dont match.
+     */
+    public void merge(SubFederacao r2) {
+
+        if (r2.getId() != null && !(r2.getId().equals(getId()))) {
+            throw new IllegalArgumentException("Merge must not be used on SubFederation with different Ids");
+        }
+
+        if (notBlank(r2.getDescricao())) {
+            setDescricao(r2.getDescricao());
+        }
+        if (notBlank(r2.getNome())) {
+            setNome(r2.getNome());
+        }
+        if (notBlank(r2.getUrl())) {
+            setUrl(r2.getUrl());
+        }
+
+
     }
 
     @Override

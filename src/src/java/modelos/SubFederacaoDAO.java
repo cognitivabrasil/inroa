@@ -49,5 +49,15 @@ public interface SubFederacaoDAO {
        void delete(SubFederacao s);
        
        //TODO: Tem que ter um metodo que teste se a subfederacao com o nome informado ja existe na base.
-    
+      
+       /**
+     * Updates the repository with the same id as r2 safely, ignoring null and
+     * blank values
+     *
+     * It does NOT merge the associated Documents.
+     *
+     * @param r2 A repository that we want to update.
+     * @throws IllegalArgumentException when r2 is null
+     */
+    void updateNotBlank(SubFederacao r2);
 }
