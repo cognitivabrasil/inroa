@@ -7,6 +7,7 @@ package modelos;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -17,7 +18,7 @@ public class RepositoryHibernateDAO extends AbstractHibernateDAO<Repositorio> im
  
     public Repositorio get(String name) {
         Session s = this.sessionFactory.getCurrentSession();
-        return (Repositorio) s.createQuery("from Repositorio WHERE nome = :nome").setString("nome", name).uniqueResult();
+        return (Repositorio)s.createCriteria(Repositorio.class).add(Restrictions.eq("nome", name).ignoreCase()).uniqueResult();
     }
     
 

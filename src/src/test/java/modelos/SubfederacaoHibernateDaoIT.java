@@ -114,7 +114,17 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
         assertThat(ufrgs, is(notNullValue()));
         assertEquals("UFRGS", ufrgs.getNome());
-        assertEquals(1, (int)ufrgs.getId());
+        assertEquals(1, (int) ufrgs.getId());
+    }
+
+    @Test
+    public void testGetByNameCaseInsensitive() {
+        SubFederacao ufrgs = instance.get("ufRgs");
+
+
+        assertThat(ufrgs, is(notNullValue()));
+        assertEquals("UFRGS", ufrgs.getNome());
+        assertEquals(1, (int) ufrgs.getId());
     }
 
     @Test
@@ -167,5 +177,4 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
         }
     }
-    
 }

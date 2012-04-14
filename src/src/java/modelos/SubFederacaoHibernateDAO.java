@@ -4,10 +4,8 @@
  */
 package modelos;
 
-import java.util.List;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -19,7 +17,7 @@ public class SubFederacaoHibernateDAO extends AbstractHibernateDAO<SubFederacao>
     @Override
     public SubFederacao get(String nome) {
         Session s = this.sessionFactory.getCurrentSession();
-        return (SubFederacao) s.createQuery("from SubFederacao WHERE nome = :nome").setString("nome", nome).uniqueResult();
+        return (SubFederacao)s.createCriteria(SubFederacao.class).add(Restrictions.eq("nome", nome).ignoreCase()).uniqueResult();
     }
 
     @Override

@@ -4,18 +4,9 @@
  */
 package modelos;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.util.List;
-import javax.sql.DataSource;
 import org.dbunit.Assertion;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.SortedTable;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -23,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -116,6 +106,14 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     @Test
     public void getByNameExists() {
         Repositorio cesta = instance.get("Cesta");
+
+        assertThat(cesta, is(notNullValue()));
+        assertEquals(1, (int) cesta.getId());
+    }
+
+    @Test
+    public void getByNameCaseInsensitive() {
+        Repositorio cesta = instance.get("cEsTa");
 
         assertThat(cesta, is(notNullValue()));
         assertEquals(1, (int) cesta.getId());
