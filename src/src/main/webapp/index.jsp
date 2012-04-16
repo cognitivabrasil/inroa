@@ -4,14 +4,15 @@
     Author     : Marcos
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <%
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8");
 
 %>
 <html>
@@ -28,7 +29,7 @@
     <body id="bodyMenor">
 
         <div id="page">
-
+            
             <div class="logoBusca"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></div>
 
 
@@ -41,13 +42,17 @@
                 <div class="linkCantoDireito"><a href="./admin/" title="Ferramenta Administrativa"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             </div>
             <div class="Espaco">&nbsp;</div>
-            
+
             <form:form method="post" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">   
-                
+
                 <div class="clear"> </div>
+                <div class="EspacoAntes">&nbsp;</div>
+
+                <c:if test="${!empty erro}">
+                    <div class="DivErro" id="MensagemErro">${erro}</div>
+                </c:if>
 
                 <div class="LinhaEntrada">                    
-                    <div class="EspacoAntes">&nbsp;</div>
                     <form:errors path="consulta" cssClass="ValueErro" />
                     <div class="Label">
                         Texto para a busca:

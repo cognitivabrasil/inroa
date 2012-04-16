@@ -19,6 +19,8 @@ public class Consulta {
     private Set<Integer> repSubfed;
     private String autor;
     private boolean rss;
+    private int inicio;
+    private int offset;
     
 
     public Consulta() {
@@ -28,6 +30,8 @@ public class Consulta {
         federacoes = new HashSet<Integer>();
         repSubfed = new HashSet<Integer>();
         rss = false;
+        inicio = 0;
+        offset = 5;
     }
 
     public String getConsulta() {
@@ -82,6 +86,34 @@ public class Consulta {
 
     public void setRss(boolean rss) {
         this.rss = rss;
+    }
+
+    /**
+     * Retorna o valor de inicio para busca. Utilizado para pagina&ccedil;&atilde;o dos resultados
+     * @return inteiro com o valor inicial
+     */
+    public int getInicio() {
+        return inicio;
+    }
+
+    /**
+     * Valor inicial para busca. Utilizado para pagina&ccedil;&atilde;o dos resultados
+     * @param inicio Valor inicial para busca, inicio = 5 informa que necessita dos resultados da consulta apartir do resultado 5.
+     */
+    public void setInicio(int inicio) {
+        this.inicio = inicio;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    /**
+     * Seta a quantidade de resultados para a busca.
+     * @param offset Quantidade de resultados que necessita como resposta.
+     */
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
      
     

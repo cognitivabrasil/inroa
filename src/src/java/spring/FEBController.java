@@ -30,7 +30,6 @@ public final class FEBController {
     @Autowired
     private SubFederacaoDAO subDao;
     private BuscaValidator buscaValidator;
-    
     @Autowired
     private PadraoMetadadosDAO padraoDao;
 
@@ -42,7 +41,7 @@ public final class FEBController {
     public String inicio(Model model) {
         return index(model);
     }
-    
+
     @RequestMapping("/index.*")
     public String indexJSP(Model model) {
         return index(model);
@@ -68,33 +67,47 @@ public final class FEBController {
             BindingResult result,
             Model model) {
 
+        model.addAttribute("BuscaModel", consulta);
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
-            model.addAttribute("BuscaModel", consulta);
             return "index";
         } else {
-            Recuperador rec = new Recuperador();
-            List<DocumentoReal> doc = rec.busca(consulta);
-            return "consulta";
+            try {
+                Recuperador rec = new Recuperador();
+                DocumentoReal docs = rec.busca(consulta);
+                model.addAttribute("documentos", docs);
+                return "consulta";
+            } catch (Exception e) {
+                model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
+                return "index";
+            }
         }
     }
-    
+
     @RequestMapping("/consultaAvancada")
     public String consultaAvancada(
             @ModelAttribute("buscaModel") Consulta consulta,
             BindingResult result,
             Model model) {
-        model.addAttribute("item", "--DEUU");
+        model.addAttribute("BuscaModel", consulta);
+        
         buscaValidator.validate(consulta, result);
-        if (result.hasErrors()) {
-            model.addAttribute("BuscaModel", consulta);
+        if (result.hasErrors()) {            
             model.addAttribute("repDAO", repDao);
             model.addAttribute("subDAO", subDao);
             return "index2";
         } else {
-//                Recuperador rec = new Recuperador();
-//                rec.busca(consulta);
-            return "consulta";
+            try {
+                Recuperador rec = new Recuperador();
+                DocumentoReal docs = rec.busca(consulta);
+                model.addAttribute("documentos", docs);
+                return "consulta";
+            } catch (Exception e) {
+                model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");                
+                model.addAttribute("repDAO", repDao);
+                model.addAttribute("subDAO", subDao);
+                return "index2";
+            }
         }
     }
 

@@ -480,6 +480,17 @@ a:hover{
     margin:0 0 15px 5%;
 }
 
+.DivErro{
+    color: red;
+    font-size:100%;
+    font-family:Verdana, Arial;
+    margin:0 0 15px 0;
+    border: 1px solid #EE2037;
+    background-color: #fedada;
+    text-align: center;
+    padding: 1%;
+}
+
 h1, h2, h3, h4, h5, h6{margin:0px 0px 5px;font-weight:normal;line-height:110%;}
 
 h1, h2{

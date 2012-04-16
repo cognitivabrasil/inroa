@@ -136,6 +136,35 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return getAttribute("obaaDescription");
     }
 
+    public List<String> getLocation() {
+        return getAttribute("obaaLocation");
+    }
+
+    public List<String> getDate() {
+        //TODO: fazer esse tratamento no mapeamento. Garantir que a data seja valida.
+        ArrayList<String> l = new ArrayList<String>();
+        for (Objeto o : getObjetos()) {
+            if (o.getAtributo().equalsIgnoreCase("obaaDate")) {
+                l.add(o.getValor().replaceAll("[A-Z,a-z,ê,Ê]", " ").replaceAll(" -", ""));
+            }
+        }
+        return l;
+    }
+
+    private List<String> getShortDescriptions() {
+        ArrayList<String> l = new ArrayList<String>();
+        for (Objeto o : getObjetos()) {
+            if (o.getAtributo().equalsIgnoreCase("obaaDescription")) {
+                if (o.getValor().length() >= 500) {
+                    l.add(o.getValor().substring(0, 500) + " (...)");
+                } else {
+                    l.add(o.getValor());
+                }
+            }
+        }
+        return l;
+    }
+
     /**
      * @return the repositorioSubFed
      */
@@ -148,5 +177,13 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
      */
     public void setRepositorioSubFed(RepositorioSubFed repositorioSubFed) {
         this.repositorioSubFed = repositorioSubFed;
+    }
+
+    public String getNomeRep() {
+        if (repositorio != null) {
+            return repositorio.getNome();
+        } else {
+            return "Subfedera&ccedil;&atilde;o "+repositorioSubFed.getSubFederacao().getNome()+" / "+repositorioSubFed.getNome();
+        }
     }
 }

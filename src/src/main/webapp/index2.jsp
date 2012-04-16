@@ -87,9 +87,14 @@
             <div class="linkCantoDireito"><a href="./admin/"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             <div class="Espaco">&nbsp;</div>
             
+            
             <form:form method="post" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">    
-                <div class="LinhaEntrada">
-                    <div class="EspacoAntes">&nbsp;</div>
+                <div class="EspacoAntes">&nbsp;</div>
+                <c:if test="${!empty erro}">
+                    <div class="DivErro" id="MensagemErro">${erro}</div>
+                </c:if>
+                    
+                <div class="LinhaEntrada">                    
                     <div class="Label">
                         Servidor:
                     </div>

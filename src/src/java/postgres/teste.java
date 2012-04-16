@@ -163,9 +163,12 @@ public class teste {
     public static void main(String[] args) {
 
         //Date hoje = new Date();
-
-      Date ontem = new Date(new Date().getTime()-(1000*24*60*60));
-        System.out.println(ontem);
+        String resumoLimitado = "marcos nunes";
+        if (resumoLimitado.length() >= 5) {
+                    System.out.println(resumoLimitado.substring(0, 5)+"(...)");
+                } else {
+                    System.out.println(resumoLimitado);
+                }
       
         }
 }
