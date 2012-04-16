@@ -72,6 +72,8 @@ public final class FEBController {
             model.addAttribute("BuscaModel", consulta);
             return "index";
         } else {
+            Recuperador rec = new Recuperador();
+            rec.busca(consulta);
             return "consulta";
         }
     }
@@ -90,7 +92,7 @@ public final class FEBController {
             return "index2";
         } else {
                 Recuperador rec = new Recuperador();
-                //rec.busca(consulta);
+                rec.busca(consulta);
             return "consulta";
         }
     }
