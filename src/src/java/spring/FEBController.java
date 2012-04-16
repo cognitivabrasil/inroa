@@ -72,8 +72,8 @@ public final class FEBController {
             model.addAttribute("BuscaModel", consulta);
             return "index";
         } else {
-            Recuperador rec = new Recuperador();
-            rec.busca(consulta);
+//            Recuperador rec = new Recuperador();
+//            rec.busca(consulta);
             return "consulta";
         }
     }
@@ -91,8 +91,8 @@ public final class FEBController {
             model.addAttribute("subDAO", subDao);
             return "index2";
         } else {
-                Recuperador rec = new Recuperador();
-                rec.busca(consulta);
+//                Recuperador rec = new Recuperador();
+//                rec.busca(consulta);
             return "consulta";
         }
     }

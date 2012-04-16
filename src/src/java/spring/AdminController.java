@@ -301,10 +301,16 @@ public final class AdminController {
             @RequestParam(value = "confirmacaoSenhaBD", required = false) String confSenha,
             BindingResult result,
             Model model) {
-
+        boolean senhaDiferentes = false;
         InfoBDValidator infoBDVal = new InfoBDValidator();
         infoBDVal.validate(conf, result);
-        if (result.hasErrors()) {
+        try{
+        if(!conf.descriptografa(conf.getSenhaCriptografada()).equals(confSenha)){ //testa se as senhas informadas sao iguais (confirmacao da senha).
+            model.addAttribute("erro", "Senhas não correspondem.");
+            senhaDiferentes = true;
+        }
+        
+        if (result.hasErrors() || senhaDiferentes) {
             model.addAttribute("conf", conf);
             return "admin/alterarSenhaBD";
         } else {
@@ -315,6 +321,11 @@ public final class AdminController {
                 model.addAttribute("erro", "Erro ao alterar os dados.");
                 return "admin/alterarSenhaBD";
             }
+        }
+        }catch(Exception e){
+            model.addAttribute("conf", conf);
+            model.addAttribute("erro", "Ocorreu um erro. Exception: "+e.toString());
+            return "admin/alterarSenhaBD";
         }
     }
 

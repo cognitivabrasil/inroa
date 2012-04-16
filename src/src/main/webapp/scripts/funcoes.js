@@ -373,7 +373,7 @@ function verificaMapOnLoad (idPadraoSelecionado, mapeamentoSelecionado, idResult
 }
 
 /**
- * Quando chamada adiciona no div informado um input password com o nome "SenhaBD" e o id "senhabd". Muda o css class do div que contem a repetição de senha.
+ * Quando chamada adiciona no div informado um input password com o nome "senhaCriptografada" e o id "senhabd". Muda o css class do div que contem a repetição de senha e apaga o seu valor.
  * @param idSenha div onde será colocado o input
  * @param idRepSenha div onde está o input para repetir a senha
  */

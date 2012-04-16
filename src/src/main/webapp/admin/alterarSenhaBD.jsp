@@ -19,7 +19,7 @@
         <script type="text/javascript" src="../scripts/funcoes.js"></script>
         <script type="text/javascript">
             var myForm = new Validate();
-            myForm.addRules({id:'senhaCriptografada', to:'confsenhabd', option:'isEqual',error:'* As senhas digitadas n&atilde;o est&atilde;o iguais!'});
+            myForm.addRules({id:'senhabd', to:'confsenhabd', option:'isEqual',error:'* As senhas digitadas n&atilde;o est&atilde;o iguais!'});
         </script>
     </head>
     <body>
@@ -73,6 +73,7 @@
                     </div>
                 </div>
                 <div class="hidden" id="divRepSenha">
+                    <div class="ValueErro">${erroSenhaConf}</div>
                     <div class="Label">Repita a senha: </div>
                     <div class="Value">
                         <input name="confirmacaoSenhaBD" type="password" id="confsenhabd" value="${conf.senhaCriptografada}">
