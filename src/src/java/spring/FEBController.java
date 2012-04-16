@@ -74,7 +74,7 @@ public final class FEBController {
         } else {
             try {
                 Recuperador rec = new Recuperador();
-                DocumentoReal docs = rec.busca(consulta);
+                List<DocumentoReal> docs = rec.busca(consulta);
                 model.addAttribute("documentos", docs);
                 return "consulta";
             } catch (Exception e) {
@@ -99,7 +99,7 @@ public final class FEBController {
         } else {
             try {
                 Recuperador rec = new Recuperador();
-                DocumentoReal docs = rec.busca(consulta);
+                List<DocumentoReal> docs = rec.busca(consulta);
                 model.addAttribute("documentos", docs);
                 return "consulta";
             } catch (Exception e) {

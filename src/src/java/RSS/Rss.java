@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.sql.*;
 import postgres.Conectar;
 import java.io.*;
+import java.util.*;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
+import modelos.Consulta;
+import modelos.DocumentoReal;
 
 /**
  *
@@ -22,14 +25,9 @@ import javax.xml.transform.stream.*;
 public class Rss {
 
     private String link;
-    static final String feedDescription = "Alimentador de objetos de aprendizagem. ";
-    private String textoBusca;
-    
+    static final String feedDescription = "Alimentador de objetos de aprendizagem. ";    
+    private Consulta c;
     private int rssTamMax = 30;
-    private String[] idRepLocal;
-    private String[] idSubfed;
-    private String[] idSubRep;
-
 
     /**
      * Construtor da classe Rss
@@ -39,13 +37,36 @@ public class Rss {
      **/
     public Rss(String search, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String link) {
         if (search == null) {
-            this.textoBusca = "";
+            c.setConsulta("");
         } else {
-            this.textoBusca = search;
+            c.setConsulta(search);
         }
-        this.idRepLocal = idRepLocal;
-        this.idSubfed = idSubfed;
-        this.idSubRep = idSubRep;
+        
+        Set repositorios = new TreeSet();
+        
+        for (int i=0;i>idRepLocal.length;i++){
+            repositorios.add(idRepLocal[i]);
+        }
+        
+        c.setRepositorios(repositorios);
+        
+        Set subFed = new TreeSet();
+        
+        for (int i=0;i>idSubfed.length;i++){
+            subFed.add(idSubfed[i]);
+        }
+        
+        c.setFederacoes(repositorios);
+        
+        Set repSubfed = new TreeSet();
+        
+        for (int i=0;i>idSubRep.length;i++){
+            repSubfed.add(idSubRep[i]);
+        }
+        
+        c.setRepSubfed(repositorios);
+        
+        
         this.link = link.substring(0, link.indexOf("rss.jsp"));
     }
 
@@ -55,7 +76,7 @@ public class Rss {
      * @return string correspondente ao xml do rss que ser&aacute; gerado
      **/
     public String generateFeed() {
-        ArrayList<Integer> idArray = new ArrayList<Integer>();
+        //ArrayList<Integer> idArray = new ArrayList<Integer>();
         Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
 
@@ -77,7 +98,7 @@ public class Rss {
 
             //titulo, descrição e link do rss
             Element rssTitle = doc.createElement("title");
-            Text text = doc.createTextNode("FEB - " + this.textoBusca);
+            Text text = doc.createTextNode("FEB - " + this.c.getConsulta());
             rssTitle.appendChild(text);
             channel.appendChild(rssTitle);
             Element rssDescription = doc.createElement("description");
@@ -90,22 +111,23 @@ public class Rss {
             channel.appendChild(rssLink);
 
 
+            c.setRss(true);
             //faz a busca da string search, com o id do repositorio escolhido na base de dados
             //idDoc é um array com os identificadores correspondentes à pesquisa
-            try {
-                idArray = rep.busca(this.textoBusca, con, this.idRepLocal, this.idSubfed, this.idSubRep, "data");
-            } catch (SQLException e) {
-                System.out.println("FEB: RSS - Problemas com a busca\n" + e);
-            }
-            
+           
+           List<DocumentoReal> docs = rep.busca(c);
+           
+           Iterator<DocumentoReal> idocs = docs.iterator();
             //adiciona um item no rss para cada elemento encontrado
-            for (int i = 0; i < idArray.size() && i < rssTamMax; i++) {
+           int i=0;
+            while (idocs.hasNext() && i<rssTamMax) {
+                i++;
                 //faz a busca pelo id
                     String titulo = "";
                     String resumo = "";
                     
                     Statement stm = con.createStatement();
-                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as id_subfed, d.id_repositorio as repositorio FROM documentos d, objetos o WHERE d.id=o.documento AND (o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$') AND d.id=" + idArray.get(i);
+                    String resultadoSQL = "SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as id_subfed, d.id_repositorio as repositorio FROM documentos d, objetos o WHERE d.id=o.documento AND (o.atributo ~* '^obaaDescription$' OR o.atributo ~* '^obaaTitle$') AND d.id=" + idocs.next().getId();
                     try {
                         ResultSet rs = stm.executeQuery(resultadoSQL);
                         //pega o proximo resultado retornado pela consulta sql
