@@ -5,6 +5,7 @@
 package spring;
 
 import ferramentaBusca.Recuperador;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +73,8 @@ public final class FEBController {
             model.addAttribute("BuscaModel", consulta);
             return "index";
         } else {
-//            Recuperador rec = new Recuperador();
-//            rec.busca(consulta);
+            Recuperador rec = new Recuperador();
+            List<DocumentoReal> doc = rec.busca(consulta);
             return "consulta";
         }
     }

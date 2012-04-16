@@ -11,9 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import modelos.Consulta;
 import modelos.DocumentoReal;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
 import postgres.Conectar;
+import spring.ApplicationContextProvider;
 
 /**
  * Disponibiliza realizar Recuperador por similaridade
@@ -34,15 +40,19 @@ public class Recuperador {
      */
     
     
-    public ArrayList<DocumentoReal> busca(Consulta consulta, int indexIni, int offset) {
-/*
+    public List<DocumentoReal> busca(Consulta consulta){
+        
+        ApplicationContext context = ApplicationContextProvider.getApplicationContext();
+        SessionFactory sf = context.getBean(SessionFactory.class);
+        Session s = sf.getCurrentSession();
+        
         Conectar c = new Conectar();
         Connection con = c.conectaBD();
         
         StopWordTAD stWd = new StopWordTAD(con);
         Documento docConsulta = new Documento(consulta.getConsulta(), stWd); //Cria tad Documento informando a consulta
         ArrayList<String> tokensConsulta = docConsulta.getTokens(); //tokeniza as palavras da consulta e adiciona no ArrayList
-        ArrayList<DocumentoReal> resultados = new ArrayList<DocumentoReal>(); //lista dos documentos retornados da consulta
+        List<DocumentoReal> docs;  //lista dos documentos retornados da consulta
 
         boolean confederacao = false;
         boolean LRU = false;        
@@ -76,7 +86,12 @@ public class Recuperador {
         if (consulta.getRepositorios().isEmpty()) {
             if (consulta.getFederacoes().isEmpty()) {
                 if (consulta.getRepSubfed().isEmpty()) {
-                    LRU = cache.verificaConsulta();
+                    try {
+                        LRU = cache.verificaConsulta();
+                    } catch (SQLException e) {
+                        System.out.println("FEB: Não foi possível verificar se a consulta estava nos LRU"+e);
+                        LRU = false;
+                    }
 
                     if (LRU || consulta.hasAuthor()) {
                                               
@@ -114,35 +129,39 @@ public class Recuperador {
 
 
         if (LRU && !consulta.hasAuthor()) { //se a consulta ja esta no banco de dados e não for por autor
-            resultados = cache.getResultado();
+            //resultados = cache.getResultado();
         } else { //se a consulta nao tiver no banco
             
-            //TODO: chamada hibernate com a consultaSql
             //PreparedStatement stmt = con.prepareStatement(consultaSql);
 
+  //          docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
+            
             //ResultSet rs = stmt.executeQuery();
             if (confederacao && !consulta.hasAuthor()) { //se for confederacao e nao tiver no banco a consulta
-                while (rs.next()) {
+                //while (docs.) {
                     //TODO: adicionar 
                     
-                    resultados.add(rs.getInt("tid"));
-                    cache.setResultado(rs.getString("tid"));
-                }
-                cache.gravaResultado(); //armazena o resultado na tabela consultas (LRU)
+                  //  resultados.add(rs.getInt("tid"));
+                  //  cache.setResultado(rs.getString("tid"));
+                //}
+                //cache.gravaResultado(); //armazena o resultado na tabela consultas (LRU)
 
             } else { //se nao for na confederacao
-                while (rs.next()) {
-                    idsResultados.add(rs.getInt("tid"));
+            //    while (rs.next()) {
+             //       idsResultados.add(rs.getInt("tid"));
                 }
             }
 
-        }
-        return resultados; */
-        return null;
+    //}
+        docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
+            
+        
+        return docs;
+        //return null;
     }
 
 
-//*/
+
 
     /**
      * M&eacute;todo para busca de objetos na base de dados. Se n&atilde;o for passado nenhum dos 3 &uacute;ltimos par&acirc;metros a busca ser&aacute; realizada em toda a confedera&ccedil;&atilde;o, deve ser especificado apenas os ids de onde deseja buscar, os demais par&acirc;metros de id devem ser passados null.
@@ -155,6 +174,8 @@ public class Recuperador {
      * @return ArrayList de inteiros contendo os ids dos documentos retornados na busca. Em ordem de relev&acirc;ncia.
      * @exception SQLException
      */
+
+/*
     public ArrayList<Integer> busca(String consulta,Connection con, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String ordenacao) throws SQLException {
         
         return (busca(consulta, null, con, idRepLocal, idSubfed, idSubRep, ordenacao));
@@ -279,7 +300,7 @@ public class Recuperador {
         }
         return idsResultados;
     }
-
+//*/
     //confederacao
     String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL, boolean autor) {
         
@@ -324,10 +345,10 @@ public class Recuperador {
     }
 
     //replocal
-    String busca_repLocal(ArrayList<String> tokensConsulta, String[] idRepLocal, String finalSQL, boolean autor) {
+    String busca_repLocal(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
         
         String consultaSql = "";
-        if (autor) {                     // if is a author request
+        if (c.hasAuthor()) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
@@ -341,12 +362,18 @@ public class Recuperador {
                     + " AND (";
         }
         
-        for (int i = 0; i < idRepLocal.length; i++) {
-            if (i == 0) {
-                consultaSql += " d.id_repositorio=" + idRepLocal[i];
+        Iterator<Integer> repositorios = c.getRepositorios().iterator();
+        boolean addOr = false;
+        
+        while (repositorios.hasNext()){
+            
+            if (!addOr){
+                consultaSql += " d.id_repositorio=" + repositorios.next();                
+                
             } else {
-                consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
-            }
+                consultaSql += " OR d.id_repositorio=" + repositorios.next();
+            }            
+            addOr = true;            
         }
 
         consultaSql += ") AND (r1w.token=";
@@ -364,9 +391,9 @@ public class Recuperador {
     }
 
     //subfed
-    String busca_subfed(ArrayList<String> tokensConsulta, String[] idSubfed, String finalSQL, boolean autor) {
+    String busca_subfed(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
         String consultaSql = "";
-        if (autor) {                    // if is a author request
+        if (c.hasAuthor()) {                    // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
@@ -380,15 +407,22 @@ public class Recuperador {
                 + " AND (";
         }
 
-        for (int i = 0; i < idSubfed.length; i++) {
-            if (i == 0) {
-                consultaSql += "rsf.id_subfed=" + idSubfed[i];
+        
+        Iterator<Integer> idsSubfed = c.getFederacoes().iterator();
+        boolean addOr = false;
+        
+        while (idsSubfed.hasNext()){
+            
+            if (!addOr){
+                consultaSql += "rsf.id_subfed=" + idsSubfed.next();
+                
             } else {
-                consultaSql += " OR rsf.id_subfed=" + idSubfed[i];
+                consultaSql += " OR rsf.id_subfed=" + idsSubfed.next();
             }
+            addOr = true;            
         }
-
-        consultaSql += ") AND (r1w.token=";
+        
+       consultaSql += ") AND (r1w.token=";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
@@ -403,10 +437,10 @@ public class Recuperador {
     }
 
     //repsubfed
-    String busca_subRep(ArrayList<String> tokensConsulta, String[] idSubRep, String finalSQL, boolean autor) {
+    String busca_subRep(ArrayList<String> tokensConsulta, Consulta c,String finalSQL) {
         
         String consultaSql = "";
-        if (autor) {                     // if is a author request
+        if (c.hasAuthor()) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
@@ -420,14 +454,21 @@ public class Recuperador {
                 + " AND (";
         }
 
-        for (int i = 0; i < idSubRep.length; i++) {
-            if (i == 0) {
-                consultaSql += "d.id_rep_subfed=" + idSubRep[i];
+        
+        Iterator<Integer> idsRepSubfed = c.getRepSubfed().iterator();
+        boolean addOr = false;
+        
+        while (idsRepSubfed.hasNext()){
+            
+            if (!addOr){
+                consultaSql += "d.id_rep_subfed=" + idsRepSubfed.next();
+                
             } else {
-                consultaSql += " OR d.id_rep_subfed=" + idSubRep[i];
+                consultaSql += " OR d.id_rep_subfed=" + idsRepSubfed.next();
             }
+            addOr = true;            
         }
-
+       
         consultaSql += ") AND (r1w.token=";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
@@ -443,10 +484,10 @@ public class Recuperador {
     }
 
     //replocal + subfed
-    String busca_repLocal_subfed(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String finalSQL, boolean autor) {
+    String busca_repLocal_subfed(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
 
         String consultaSql = "";
-        if (autor) {                     // if is a author request
+        if (c.hasAuthor()) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
@@ -460,24 +501,37 @@ public class Recuperador {
                 + " (d.id_rep_subfed = rsf.id AND (";
         }
         
-
-        for (int i = 0; i < idSubfed.length; i++) {
-            if (i == 0) {
-                consultaSql += "rsf.id_subfed=" + idSubfed[i];
+        
+        Iterator<Integer> idsSubfed = c.getFederacoes().iterator();
+        boolean addOr = false;
+        
+        while (idsSubfed.hasNext()){
+            
+            if (!addOr){
+                consultaSql += "rsf.id_subfed=" + idsSubfed.next();
+                
             } else {
-                consultaSql += " OR rsf.id_subfed=" + idSubfed[i];
+                consultaSql += " OR rsf.id_subfed=" + idsSubfed.next();
             }
+            addOr = true;            
         }
-
+        
+        Iterator<Integer> idsRepositorios = c.getRepositorios().iterator();
+        addOr = false;
+        
         consultaSql += ")) OR (";
-
-        for (int i = 0; i < idRepLocal.length; i++) {
-            if (i == 0) {
-                consultaSql += " d.id_repositorio=" + idRepLocal[i];
+        
+        while (idsRepositorios.hasNext()){
+            
+            if (!addOr){
+                consultaSql += " d.id_repositorio=" + idsRepositorios.next();
+                
             } else {
-                consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
+                consultaSql += " OR d.id_repositorio=" + idsRepositorios.next();
             }
+            addOr = true;            
         }
+       
 
         consultaSql += ")) AND (r1w.token=";
 
@@ -495,10 +549,10 @@ public class Recuperador {
     }
 
     //replocal + repsubfed
-    String busca_repLocal_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubRep, String finalSQL, boolean autor) {
+    String busca_repLocal_subrep(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
         
         String consultaSql = "";
-        if (autor) {                     // if is a author request
+        if (c.hasAuthor()) {                    // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
@@ -512,18 +566,26 @@ public class Recuperador {
                 + " AND (";
         }     
 
-        for (int i = 0; i < idRepLocal.length; i++) {
-            if (i == 0) {
-                consultaSql += " d.id_repositorio=" + idRepLocal[i];
+        Iterator<Integer> idsRepositorios = c.getRepositorios().iterator();
+        boolean addOr = false;
+      
+        while (idsRepositorios.hasNext()){
+            
+            if (!addOr){
+                consultaSql += " d.id_repositorio=" + idsRepositorios.next();
+                
             } else {
-                consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
+                consultaSql += " OR d.id_repositorio=" + idsRepositorios.next();
             }
+            addOr = true;            
         }
-
-        for (int i = 0; i < idSubRep.length; i++) {
-            consultaSql += " OR d.id_rep_subfed=" + idSubRep[i];
+        
+        Iterator<Integer> idsRepositoriosSubFed = c.getRepSubfed().iterator();
+                
+        while (idsRepositoriosSubFed.hasNext()){        
+            consultaSql += " OR d.id_rep_subfed=" + idsRepositoriosSubFed.next();                        
         }
-
+        
         consultaSql += ") AND (r1w.token=";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
@@ -540,10 +602,10 @@ public class Recuperador {
     }
 
     //subfed + repsubfed
-    String busca_subfed_subrep(ArrayList<String> tokensConsulta, String[] idSubfed, String[] idSubRep, String finalSQL, boolean autor) {
+    String busca_subfed_subrep(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
 
         String consultaSql = "";
-        if (autor) {                   // if is a author request
+        if (c.hasAuthor()) {                   // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
@@ -555,21 +617,30 @@ public class Recuperador {
                 consultaSql = "SELECT tid FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
                 + " AND (";
-        }         
+        }       
         
-        //for subfed
-        for (int i = 0; i < idSubfed.length; i++) {
-            if (i == 0) {
-                consultaSql += "rsf.id_subfed=" + idSubfed[i];
+        Iterator<Integer> idsSubFed = c.getFederacoes().iterator();
+        boolean addOr = false;
+        
+        while (idsSubFed.hasNext()){
+            
+            if (!addOr){
+                consultaSql += " rsf.id_subfed=" + idsSubFed.next();
+                
             } else {
-                consultaSql += " OR rsf.id_subfed=" + idSubfed[i];
+                consultaSql += " OR rsf.id_subfed=" + idsSubFed.next();
             }
-        }
-        //for subrep
-        for (int i = 0; i < idSubRep.length; i++) {
-            consultaSql += " OR rsf.id=" + idSubRep[i];
+            addOr = true;            
         }
 
+        Iterator<Integer> idsRepositoriosSubfed = c.getRepSubfed().iterator();
+                
+        while (idsRepositoriosSubfed.hasNext()){
+            
+           consultaSql += " OR rsf.id=" + idsRepositoriosSubfed.next();       
+        }
+        
+        
         consultaSql += ") AND (r1w.token=";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
@@ -585,10 +656,10 @@ public class Recuperador {
     }
 
     //replocal + subfed + repsubfed
-    String busca_repLocal_subfed_subrep(ArrayList<String> tokensConsulta, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String finalSQL, boolean autor) {
+    String busca_repLocal_subfed_subrep(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
        
         String consultaSql = "";
-        if (autor) {                   // if is a author request
+        if (c.hasAuthor()) {                   // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.id FROM documentos d, autores a WHERE ";
             } else {
@@ -602,25 +673,40 @@ public class Recuperador {
                 + " (d.id_rep_subfed = rsf.id AND (";
         } 
 
-        for (int i = 0; i < idSubfed.length; i++) {
-            if (i == 0) {
-                consultaSql += "rsf.id_subfed=" + idSubfed[i];
+        Iterator<Integer> idsSubFed = c.getFederacoes().iterator();
+        boolean addOr = false;
+        
+        while (idsSubFed.hasNext()){
+            
+            if (!addOr){
+                consultaSql += " rsf.id_subfed=" + idsSubFed.next();
+                
             } else {
-                consultaSql += " OR rsf.id_subfed=" + idSubfed[i];
+                consultaSql += " OR rsf.id_subfed=" + idsSubFed.next();
             }
+            addOr = true;            
         }
-
+        
+        Iterator<Integer> idsRepositorios = c.getRepositorios().iterator();
+        addOr = false;
+        
         consultaSql += ")) OR (";
-
-        for (int i = 0; i < idRepLocal.length; i++) {
-            if (i == 0) {
-                consultaSql += " d.id_repositorio=" + idRepLocal[i];
+        
+        while (idsRepositorios.hasNext()){
+            
+            if (!addOr){
+                consultaSql += " d.id_repositorio=" + idsRepositorios.next();            
             } else {
-                consultaSql += " OR d.id_repositorio=" + idRepLocal[i];
+                consultaSql += " OR d.id_repositorio=" + idsRepositorios.next();
             }
+            addOr = true;            
         }
-        for (int i = 0; i < idSubRep.length; i++) {
-            consultaSql += " OR d.id_rep_subfed=" + idSubRep[i];
+        
+        Iterator<Integer> idsRepositoriosSubfed = c.getRepSubfed().iterator();
+                
+        while (idsRepositoriosSubfed.hasNext()){
+            
+           consultaSql += " OR rsf.id=" + idsRepositoriosSubfed.next();
         }
 
         consultaSql += ")) AND (r1w.token=";

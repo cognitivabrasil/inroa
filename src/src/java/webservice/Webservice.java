@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import modelos.Consulta;
+import modelos.DocumentoReal;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -58,9 +61,12 @@ public class Webservice extends HttpServlet
                 Conectar conecta = new Conectar();
                 Connection conn = conecta.conectaBD();
                 Recuperador rep = new Recuperador();
-                ArrayList<Integer> id = rep.busca(query, conn, null, null, null, "Relevancia");
+                Consulta c = new Consulta();
                 
-                String xml = geraXML(id, conn, url, Integer.parseInt(page), limit);
+                c.setConsulta(query);
+                List<DocumentoReal> docs = rep.busca(c);
+                
+                String xml = geraXML(docs, conn, url, Integer.parseInt(page), limit);
                 out.println(xml);
 
                 conn.close();    
@@ -77,20 +83,23 @@ public class Webservice extends HttpServlet
         }
     }
 
-    public String geraXML(ArrayList id, Connection conn, String url, int page, int limit) throws SQLException, Exception
+    public String geraXML(List documentos, Connection conn, String url, int page, int limit) throws SQLException, Exception
     {
+        
         String xml = "<?xml version=\"1.0\"?>";
-        xml = xml + "<OBJS page=\""+page+"\" from=\""+(int)Math.ceil(id.size()/limit)+"\">";
+        xml = xml + "<OBJS page=\""+page+"\" from=\""+(int)Math.ceil(documentos.size()/limit)+"\">";
         HashMap<String, Integer> relatorio = new HashMap<String, Integer>();       
         
         Statement stmt = conn.createStatement();
        
-        if((page-1)*limit < id.size())
+        if((page-1)*limit < documentos.size())
         {    
-            for(int i = (page-1)*limit; i < id.size() && i < (page-1)*limit + limit; i++)
+            for(int i = (page-1)*limit; i < documentos.size() && i < (page-1)*limit + limit; i++)
             {            
-                ResultSet rs = stmt.executeQuery("SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as repsubfed, d.id_repositorio as repositorio FROM documentos d, objetos o WHERE d.id=o.documento AND d.id="+id.get(i));
-                xml = xml + "<OBJ id=\""+id.get(i)+"\">";
+                DocumentoReal doc = (DocumentoReal) documentos.get(i);
+                int id = doc.getId();
+                ResultSet rs = stmt.executeQuery("SELECT d.obaa_entry, o.atributo, o.valor, d.id_rep_subfed as repsubfed, d.id_repositorio as repositorio FROM documentos d, objetos o WHERE d.id=o.documento AND d.id="+id);
+                xml = xml + "<OBJ id=\""+id+"\">";
 
                 while(rs.next())
                 { 
