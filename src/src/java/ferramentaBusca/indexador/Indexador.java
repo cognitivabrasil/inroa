@@ -207,7 +207,7 @@ public class Indexador {
         PreparedStatement deletar1weights = con.prepareStatement(sqlDeletar1weights);
         deletar1weights.executeUpdate();
 
-        PreparedStatement R1Weights = con.prepareStatement("INSERT INTO r1weights(tid, token, weight) SELECT T.tid, T.token, I.idf*T.tf/L.len FROM r1idf I, r1tf T, r1length L WHERE I.token = T.token AND T.tid = L.tid;");
+        PreparedStatement R1Weights = con.prepareStatement("INSERT INTO r1weights(tid, token, weight)  SELECT  T.tid, T.token, (CASE L.len WHEN 0 THEN 0 ELSE I.idf*T.tf/L.len END) as weight FROM r1idf I, r1tf T, r1length L  WHERE I.token = T.token AND T.tid = L.tid;");
         R1Weights.execute();
         R1Weights.close();
 
