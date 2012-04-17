@@ -51,7 +51,6 @@ public class Indexador {
          * 			4 para descriç&atilde;o
          */
 
-        //NAO TERIA QUE DELETAR OS TOKENS ANTES?
 
         int id = doc.getId(); //recebe o id do documento que foi inserido na tabela documentos
 
@@ -215,7 +214,7 @@ public class Indexador {
 //////        R1Sum.execute();
 //////        R1Sum.close();
 
-        apagarCalculosIndice(con);
+//        apagarCalculosIndice(con);
 
     }
 

@@ -81,7 +81,6 @@
 
             <form action="<%= request.getRequestURI()%>" method="get">
                 <center>
-                    <p>offset='${offset}'</p>
 
                     <pg:pager
                     items="<%= numObjetosEncontrados%>"

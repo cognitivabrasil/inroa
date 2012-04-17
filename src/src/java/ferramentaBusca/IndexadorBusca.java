@@ -55,11 +55,11 @@ public class IndexadorBusca {
     public void indexarTodosRepositorios() {
         Conectar conecta = new Conectar();
         Connection con = conecta.conectaBD();
-        String sql = "select id, nome from repositorios where nome != 'todos';";
+        String sql = "select id, nome from repositorios;";
 
         try {
-            Statement stmDadosLdap = con.createStatement();
-            ResultSet rset = stmDadosLdap.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
+            Statement stmDados = con.createStatement();
+            ResultSet rset = stmDados.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
             while (rset.next()) {
                 System.out.println("Indexando repositorio " + rset.getString("nome"));
                 IndexaRep(rset.getInt("id"), con); //indexa o repositorio informado
