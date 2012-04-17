@@ -50,12 +50,12 @@ public class RecuperadorTest {
         
     public void testQuery() {
 
-        String sqlOrdenacao = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+        String sqlOrdenacao = "') GROUP BY d.id ORDER BY SUM(weight) DESC;";
         ArrayList<String> tokensConsulta = new ArrayList<String>();
 
-        tokensConsulta.add("educa");
+        tokensConsulta.add("gremi");
 
-        assertEquals("SELECT tid FROM r1weights r1w, documentos d WHERE r1w.tid=d.id  AND (r1w.token='educa') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;", r.buscaConfederacao(tokensConsulta, sqlOrdenacao, false));
+        assertEquals("SELECT d.* FROM r1weights r1w, documentos d WHERE r1w.tid=d.id  AND (r1w.token='gremi') GROUP BY d.id ORDER BY SUM(weight) DESC;", r.buscaConfederacao(tokensConsulta, sqlOrdenacao, false));
 
     }
 
@@ -67,7 +67,7 @@ public class RecuperadorTest {
         ArrayList<String> tokensConsulta = new ArrayList<String>();
         String sqlAutorSemQuery = "a.documento=d.id AND a.nome~@@'Carlos Heitor' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Carlos Heitor')) DESC;";
 
-        assertEquals("SELECT d.id as tid FROM documentos d, autores a WHERE a.documento=d.id AND a.nome~@@'Carlos Heitor' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Carlos Heitor')) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorSemQuery, true));
+        assertEquals("SELECT d.* FROM documentos d, autores a WHERE a.documento=d.id AND a.nome~@@'Carlos Heitor' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Carlos Heitor')) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorSemQuery, true));
     }
 
     /**
@@ -79,7 +79,7 @@ public class RecuperadorTest {
         tokensConsulta.add("educa");
         String sqlAutorComQuery = "') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY r1w.tid, a.nome ORDER BY (qgram(a.nome, 'Lília Ferreira Lobo')) DESC, SUM (weight) DESC;";
 
-        assertEquals("SELECT tid FROM r1weights r1w, documentos d, autores a WHERE r1w.tid=d.id  AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY r1w.tid, a.nome ORDER BY (qgram(a.nome, 'Lília Ferreira Lobo')) DESC, SUM (weight) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorComQuery, true));
+        assertEquals("SELECT d.* FROM r1weights r1w, documentos d, autores a WHERE r1w.tid=d.id  AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY r1w.tid, a.nome ORDER BY (qgram(a.nome, 'Lília Ferreira Lobo')) DESC, SUM (weight) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorComQuery, true));
 
     }
 

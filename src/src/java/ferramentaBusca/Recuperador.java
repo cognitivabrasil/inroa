@@ -65,7 +65,7 @@ public class Recuperador {
         
         if (consulta.isRss()) {
             //TODO: Fazer RSS para autor?
-            sqlOrdenacao = "') GROUP BY r1w.tid, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
+            sqlOrdenacao = "') GROUP BY d.id, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
         } else {
 
             if (consulta.hasAuthor()) {
@@ -79,7 +79,7 @@ public class Recuperador {
                 }
             } else {
 
-                sqlOrdenacao = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
+                sqlOrdenacao = "') GROUP BY d.id ORDER BY SUM(weight) DESC;";
             }
         }
 
@@ -306,11 +306,11 @@ public class Recuperador {
         
         if (autor) {                        // if is a author request
             if (tokensConsulta.isEmpty()) {   // see if have a query                
-                String consultaSql = "SELECT d.id as tid FROM documentos d, autores a WHERE "+finalSQL;
+                String consultaSql = "SELECT d.* FROM documentos d, autores a WHERE "+finalSQL;
                 return consultaSql;
                 
             } else {
-                String consultaSql = "SELECT tid FROM r1weights r1w, documentos d, autores a"
+                String consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
                         + " WHERE r1w.tid=d.id "
                         + " AND (r1w.token=";
 
@@ -327,7 +327,7 @@ public class Recuperador {
                 return consultaSql;
             }
         } else {
-            String consultaSql = "SELECT tid FROM r1weights r1w, documentos d"
+            String consultaSql = "SELECT d.* FROM r1weights r1w, documentos d"
                     + " WHERE r1w.tid=d.id "
                     + " AND (r1w.token=";
 

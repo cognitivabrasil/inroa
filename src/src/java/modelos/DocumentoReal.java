@@ -15,12 +15,16 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private int id;
     private String obaa_entry;
     private Date datetime;
-    private Set<Objeto> objetos = new HashSet<Objeto>(0);
+    private Set<Objeto> objetos;
     private Repositorio repositorio;
     private RepositorioSubFed repositorioSubFed;
     private boolean deleted;
 
     public DocumentoReal() {
+        obaa_entry = "";
+        datetime = new Date(0);
+        objetos = new HashSet<Objeto>();
+        deleted = false;
     }
 
     public void addTitle(String title) {
@@ -116,7 +120,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private List<String> getAttribute(String attribute) {
         ArrayList<String> l = new ArrayList<String>();
         for (Objeto o : getObjetos()) {
-            if (o.getAtributo() == attribute) {
+            if (o.getAtributo().equalsIgnoreCase(attribute)) {
                 l.add(o.getValor());
             }
         }
@@ -151,7 +155,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return l;
     }
 
-    private List<String> getShortDescriptions() {
+    public List<String> getShortDescriptions() {
         ArrayList<String> l = new ArrayList<String>();
         for (Objeto o : getObjetos()) {
             if (o.getAtributo().equalsIgnoreCase("obaaDescription")) {

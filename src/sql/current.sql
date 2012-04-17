@@ -127,3 +127,10 @@ DROP TABLE atributos;
 
 DROP SEQUENCE excluidos_id_seq;
 DROP SEQUENCE atributos_id_seq;
+ 
+---
+
+ALTER TABLE documentos
+   ALTER COLUMN deleted SET DEFAULT false;
+ALTER TABLE documentos
+   ALTER COLUMN deleted SET NOT NULL;

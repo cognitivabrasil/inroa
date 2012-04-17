@@ -100,6 +100,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         assertThat(d.getKeywords(), hasItem("key1"));
         assertThat(d.getTitles(), hasItem("teste2"));
         assertThat(d.getDescriptions(), hasItem("Bla bla"));
+        assertThat(d.getShortDescriptions(), hasItem("Bla bla"));
     }
 
     @Test

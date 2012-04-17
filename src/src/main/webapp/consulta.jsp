@@ -51,7 +51,7 @@
                 &nbsp;Consulta efetuada: <i>"<strong>${BuscaModel.consulta}</strong>"</i>
             </div>
             <div class="direita">
-                Total de <strong><%=numObjetosEncontrados%></strong> objeto(s) encontrado(s)&nbsp;
+                Total de <strong>${documentos.size()}</strong> objeto(s) encontrado(s)&nbsp;
             </div>
 
         </div>
@@ -113,8 +113,8 @@
                                            value="infoDetalhada.jsp?id=${doc.id}"
                                            scope="page"/>
 
-                                    <c:if test="${empty docs.titles}">
-                                        <div class=\"titulo\"><a href='${infoDetalhada}'>T&iacute;tulo n&atilde;o informado.</a></div>
+                                    <c:if test="${empty doc.titles}">
+                                        <div class="titulo"><a href='${infoDetalhada}'>T&iacute;tulo n&atilde;o informado.</a></div>
                                     </c:if>
                                     <c:forEach var="titulo" items="${doc.titles}">
                                         <div class="titulo">
@@ -161,6 +161,7 @@
                     </pg:pager>
                 </center>
             </form>
+                    <% }%>
         </div>
 
         <div class="rodapeConsulta">&nbsp;</div>

@@ -142,7 +142,7 @@ CREATE TABLE documentos (
     "timestamp" timestamp without time zone DEFAULT now(),
     palavras_chave character varying,
     id_rep_subfed integer,
-    deleted boolean,
+    deleted boolean NOT NULL DEFAULT false,
     obaaxml character varying
 );
 
