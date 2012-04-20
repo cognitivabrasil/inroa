@@ -180,4 +180,14 @@ public class Operacoes {
             return false;
         }
     }
+    
+    /**
+     * formata a data recebida para o padr&atilde;o do OAI-PMH. Ex: 2012-04-20T19:09:32Z
+     * @param date Objeto Date para ser formatado
+     * @return String contendo a data formatada.
+     */
+    public static String formatDateOAIPMH(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");        
+        return format.format(date);
+    }
 }

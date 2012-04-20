@@ -32,7 +32,7 @@ public class Robo {
 
 //TESTA/ATUALIZA SUBFEDERACAO
             SubFederacaoOAI subFed = new SubFederacaoOAI();
-            subFedAtualizada = subFed.testaAtualizaSubFedOAI(con, indexar);
+            subFedAtualizada = subFed.pre_AtualizaSubFedOAI(con, indexar);
             indexar.setDataXML("0");
 
 //TESTA REPOSITORIO

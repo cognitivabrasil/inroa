@@ -19,6 +19,7 @@ import spring.validador.RepositorioValidator;
 import spring.validador.InfoBDValidator;
 import spring.validador.SubFederacaoValidador;
 import robo.atualiza.Repositorios;
+import robo.atualiza.SubFederacaoOAI;
 
 /**
  * Controller para ferramenta administrativa
@@ -431,6 +432,19 @@ public final class AdminController {
             return "1";
         } catch (Exception e) {
             return "Ocorreu um erro ao atualizar o repositorio. Exception: "+e.toString();
+        }
+    }
+    
+    @RequestMapping("atualizaSubfedAjax")
+    public @ResponseBody
+    String atualizaFedAjax(@RequestParam int id) {
+        System.out.println("FEB: Solicitacao de atualizacao pela Ferramenta Administrativa...");
+        SubFederacaoOAI subFed = new SubFederacaoOAI();
+        try {
+            subFed.atualizaSubfedAdm(subDao.get(id));
+            return "1";
+        } catch (Exception e) {
+            return "Ocorreu um erro ao atualizar. Exception: "+e.toString();
         }
     }
     

@@ -85,7 +85,7 @@ public class Repositorios {
      * @param con Conex&atilde;o com a base de dados.
      * @return true ou false indicando se o reposit&aacute;rio foi atualizado ou n&atilde;
      */
-    private boolean atualizaRepositorio(int idRepositorio, Indexador indexar, Connection con) {
+    private boolean atualizaRepositorio(int idRepositorio, Indexador indexar, Connection con) throws Exception{
         boolean atualizou = false;
         Principal importar = new Principal();
         Informacoes conf = new Informacoes();

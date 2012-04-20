@@ -241,7 +241,7 @@ function atualizaSubfedAjax(id, exibeResultado)
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "atualizaSubfedAjax.jsp?id="+id, true);
+    ajax.open("POST", "atualizaSubfedAjax?id="+id, true);
 
     ajax.onreadystatechange = function()
     {
@@ -255,14 +255,16 @@ function atualizaSubfedAjax(id, exibeResultado)
             {
                 var resultado = ajax.responseText;
                 
-                if(resultado == 1)
-                {
-                    exibeResultado.innerHTML = "Atualizado!";
-                }
-                else{
-                    exibeResultado.innerHTML = "N&atilde;o foi poss&iacute;vel atualizar!";
-                }
-
+                if(isNaN(parseInt(resultado))){
+                    exibeResultado.innerHTML = resultado;
+                }else{
+                    if(parseInt(resultado)>0){
+                        exibeResultado.innerHTML = "Atualizado!";
+                    }
+                    else{
+                        exibeResultado.innerHTML = "Ocorreu algum erro ao Atualizar!";
+                    }
+                } 
             }
             else
             {

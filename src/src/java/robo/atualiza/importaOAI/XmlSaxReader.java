@@ -61,6 +61,7 @@ public class XmlSaxReader extends DefaultHandler {
      * @throws SAXException
      * @throws IOException
      */
+    @Deprecated
     public void parser(
             String caminhoXML,
             Indexador indexar,
