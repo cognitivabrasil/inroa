@@ -65,6 +65,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     @Override
     public void save(OBAA obaa, Header h) {
         DocumentoReal doc = new DocumentoReal();
+        doc.setDeleted(false);
         System.out.println("Going to create documento...");
 
         doc.setRepositorio(getRepository());
@@ -75,6 +76,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
             doc.setDeleted(true);
             deleteByObaaEntry(doc.getObaaEntry());
         } else {
+            doc.setDeleted(false);
             for (String t : obaa.getTitles()) {
                 doc.addTitle(t);
             }

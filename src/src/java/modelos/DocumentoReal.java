@@ -18,7 +18,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private Set<Objeto> objetos;
     private Repositorio repositorio;
     private RepositorioSubFed repositorioSubFed;
-    private boolean deleted;
+    private Boolean deleted;
 
     public DocumentoReal() {
         obaa_entry = "";
@@ -113,7 +113,10 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     /**
      * @param excluido the excluido to set
      */
-    public void setDeleted(boolean excluido) {
+    public void setDeleted(Boolean excluido) {
+        this.deleted = excluido;
+    }
+     public void isDeleted(boolean excluido) {
         this.deleted = excluido;
     }
 

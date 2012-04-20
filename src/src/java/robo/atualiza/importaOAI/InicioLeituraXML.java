@@ -12,6 +12,8 @@ import java.sql.Connection;
 import modelos.DocumentosDAO;
 import modelos.Repositorio;
 import modelos.RepositoryDAO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import spring.ApplicationContextProvider;
 
@@ -57,6 +59,8 @@ public class InicioLeituraXML {
 
             DocumentosDAO docDao = ctx.getBean(DocumentosDAO.class);
             RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
+            SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
+            Session session = sessionFactory.getCurrentSession();
             
             Repositorio r = repDao.get(id);
 
@@ -93,7 +97,10 @@ public class InicioLeituraXML {
                 } else {
                     System.err.println("FEB ERRO: O arquivo informado nao eh um arquivo ou nao pode ser lido. Caminho: " + caminhoXML.get(i));
                 }
+                
             }
+            /* gravar realmente as modificações */
+            session.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

@@ -26,7 +26,7 @@ public interface DocumentosDAO {
     DocumentoFebInterface get(String obaaEntry);
 
     /**
-     * 
+     * Need to call flush on session after saving many documents.
      * @param obaa
      * @param h
      */
