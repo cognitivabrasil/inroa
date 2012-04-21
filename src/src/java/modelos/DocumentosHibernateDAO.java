@@ -33,7 +33,6 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
                
     }
     
-   @Override
     public DocumentoReal get(String e) {
         return (DocumentoReal)getSession().createQuery(
                 "from DocumentoReal as doc where doc.obaaEntry = ?")
@@ -62,7 +61,6 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
         getSession().delete(d);
     }
 
-    @Override
     public void save(OBAA obaa, Header h) {
         DocumentoReal doc = new DocumentoReal();
         doc.setDeleted(false);
