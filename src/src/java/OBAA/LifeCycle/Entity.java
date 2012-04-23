@@ -25,7 +25,19 @@ import org.simpleframework.xml.Root;
 @Root(strict=false)
 @Namespace(reference="http://ltsc.ieee.org/xsd/LOM", prefix="obaa")
 public class Entity extends TextElement {
+    
+    String entity;
+    
     public Entity() {
+        entity = "";        
+    }
+
+    public String getEntity() {
+        return entity;
+    }
+
+    public void setEntity(String entity) {
+        this.entity = entity;
     }
 
 }

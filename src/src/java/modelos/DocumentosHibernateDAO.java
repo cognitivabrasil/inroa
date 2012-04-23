@@ -4,10 +4,10 @@
  */
 package modelos;
 
+import OBAA.LifeCycle.Contribute;
 import OBAA.OBAA;
 import java.util.List;
 import metadata.Header;
-import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +64,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     public void save(OBAA obaa, Header h) {
         DocumentoReal doc = new DocumentoReal();
         doc.setDeleted(false);
-        System.out.println("Going to create documento...");
+        System.out.println("Going to create documento "+h.getIdentifier());
 
         doc.setRepositorio(getRepository());
         doc.setObaaEntry(h.getIdentifier());
@@ -85,6 +85,10 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
             for (String d : obaa.getGeneral().getDescriptions()) {
                 doc.addDescription(d);
+            }
+            
+            for (Contribute c: obaa.getLifeCycle().getContribute()){
+                doc.addAuthor(c.getEntity());
             }
         }
 

@@ -34,6 +34,14 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         o.setDocumento(this);
         objetos.add(o);
     }
+    
+    public void addAuthor(String author) {
+        Objeto o = new Objeto();
+        o.setAtributo("obaaEntity");
+        o.setValor(author);
+        o.setDocumento(this);
+        objetos.add(o);
+    }
 
     public void addDescription(String title) {
         Objeto o = new Objeto();
@@ -130,6 +138,10 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return l;
     }
 
+    public List<String> getAuthors(){
+        return getAttribute("obaaEntity");
+    }
+    
     public List<String> getTitles() {
         return getAttribute("obaaTitle");
     }

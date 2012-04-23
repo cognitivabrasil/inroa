@@ -153,7 +153,8 @@ public class Recuperador {
             }
 
     //}
-        docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
+        docs = s.createSQLQuery("SELECT * from documentos WHERE id=1006").addEntity(DocumentoReal.class).list();
+        //docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
             
         
         return docs;
