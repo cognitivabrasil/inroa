@@ -73,16 +73,16 @@ public class XsltTest {
 		assert(!(l.getLifeCycle() == null));
 		assert(!(l.getLifeCycle().getContribute() == null));
 		assertThat(l.getLifeCycle().getContribute().get(0).getRole(), equalTo("author"));
-		assertThat(l.getLifeCycle().getContribute().get(0).getEntity(), equalTo("Jorjão"));
+		assertThat(l.getLifeCycle().getContribute().get(0).getFirstEntity(), equalTo("Jorjão"));
 		//TODO: se é o n-esimo contribuinte, pegar a n-esima data
 		//assertThat(l.getLifeCycle().getContribute().get(0).getDate(), equalTo("2006"));
 		assertThat(l.getLifeCycle().getContribute().get(0).getDate(), equalTo("2007-06-04T11:33:20Z"));
 		
 		assertThat(l.getLifeCycle().getContribute().get(1).getRole(), equalTo("unknown"));
-		assertThat(l.getLifeCycle().getContribute().get(1).getEntity(), equalTo("Sílton"));
+		assertThat(l.getLifeCycle().getContribute().get(1).getFirstEntity(), equalTo("Sílton"));
 		
 		assertThat(l.getLifeCycle().getContribute().get(2).getRole(), equalTo("publisher"));
-		assertThat(l.getLifeCycle().getContribute().get(2).getEntity(), equalTo("Pub 1"));
+		assertThat(l.getLifeCycle().getContribute().get(2).getFirstEntity(), equalTo("Pub 1"));
 	}
 	
 	@Test

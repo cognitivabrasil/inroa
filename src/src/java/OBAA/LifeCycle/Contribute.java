@@ -2,11 +2,8 @@ package OBAA.LifeCycle;
 
 import java.util.ArrayList;
 import java.util.List;
-import metadata.TextElement;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Namespace;
-import org.simpleframework.xml.Root;
 
 /**
  *
@@ -30,9 +27,6 @@ import org.simpleframework.xml.Root;
  *
  * @author LuizRossiNote
  */
-
-@Root(strict=false)
-@Namespace(reference="http://ltsc.ieee.org/xsd/LOM", prefix="obaa")
 public class Contribute {
     
     @ElementList(inline=true)
@@ -45,41 +39,55 @@ public class Contribute {
     private String date;
     
     public Contribute() {
-       	super(); 
+        entity = new ArrayList<Entity>();
+        role = new Role();
+        date = ""; 
+        
     }
 
-    private List<String> toStringList(List<? extends TextElement> elements) {
-		List<String> s = new ArrayList<String>();
-		for(TextElement e : elements) {
-			s.add(e.getText());
-		}
-		return s;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-    public String getEntity() {
-        return entity.get(0).toString();
-    }	   
+    /**
+ *
+ * <div class="en">
+ * The identification of and information about entities (i.e., people, organizations)
+ * contributing to this learning object. The entities shall be ordered as most relevant first
+ * 
+ * according to IEEE LOM http://ltsc.ieee.org/
+ * </div>
+ * <div class="br">
+ *
+ * Adaptado de http://www.portalobaa.org/
+ * </div>
+ */
+    public void addEntity(Entity entity) {
+        this.entity.add(entity);
+    }
 
-    public List<String> getEntities() {
-	    return toStringList(entity);
-	    
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public void setRole(String role) {
+        this.role.setRole(role);
     }
 
     public String getDate() {
-	    return date;
+        return date;
 
     }
-    
+
     public String getRole() {
-	    return role.getRole();
-
+        return role.getRole();
     }
     
-    public void setRole(String r) {
-	    role.setRole(r);
-
+    public String getFirstEntity() {
+        return entity.get(0).toString();
     }
-
-          
-    //TODO:
+    
+    public List<Entity> getEntity() {
+        return entity;
+    }
 }

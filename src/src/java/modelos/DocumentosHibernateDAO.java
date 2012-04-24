@@ -5,6 +5,7 @@
 package modelos;
 
 import OBAA.LifeCycle.Contribute;
+import OBAA.LifeCycle.Entity;
 import OBAA.OBAA;
 import java.util.List;
 import metadata.Header;
@@ -88,7 +89,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
             }
             
             for (Contribute c: obaa.getLifeCycle().getContribute()){
-                doc.addAuthor(c.getEntity());
+                for (Entity e: c.getEntity()){
+                    doc.addAuthor(e.getEntity());
+                }
             }
         }
 

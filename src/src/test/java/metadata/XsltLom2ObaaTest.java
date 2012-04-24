@@ -75,11 +75,11 @@ public class XsltLom2ObaaTest {
 		assert(!(l.getLifeCycle() == null));
 		assert(!(l.getLifeCycle().getContribute() == null));
 		assertThat(l.getLifeCycle().getContribute().get(0).getRole(), equalTo("author"));
-		assertThat(l.getLifeCycle().getContribute().get(0).getEntity(), equalTo("Tarouco, Liane"));
+		assertThat(l.getLifeCycle().getContribute().get(0).getFirstEntity(), equalTo("Tarouco, Liane"));
 		//TODO: se é o n-esimo contribuinte, pegar a n-esima data
 		//assertThat(l.getLifeCycle().getContribute().get(0).getDate(), equalTo("2006"));
 		assertThat(l.getLifeCycle().getContribute().get(1).getRole(), equalTo("Other"));
-		assertThat(l.getLifeCycle().getContribute().get(1).getEntity(), equalTo("CINTED/UFRGS"));
+		assertThat(l.getLifeCycle().getContribute().get(1).getFirstEntity(), equalTo("CINTED/UFRGS"));
 	}
 	
 	@Test

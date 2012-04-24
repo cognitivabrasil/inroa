@@ -146,7 +146,7 @@ public class OBAATest {
 	public void testOaiOBAALifeCycleContributeEntity() throws FileNotFoundException {
 		assert(!(l.getLifeCycle() == null));
 		assert(!(l.getLifeCycle().getContribute() == null));
-		assertThat(l.getLifeCycle().getContribute().get(0).getEntity(), equalTo("Tarouco, Liane"));
+		assertThat(l.getLifeCycle().getContribute().get(0).getFirstEntity(), equalTo("Tarouco, Liane"));
 	}
 	
 	@Test
