@@ -205,6 +205,7 @@ src/sql/README.txt -text
 src/sql/current.sql -text
 src/sql/current_2.sql -text
 src/src/conf/MANIFEST.MF -text
+src/src/java/Exception/RepositoriosException.java -text
 src/src/java/OBAA/Accessibility/Accessibility.java -text
 src/src/java/OBAA/Accessibility/AltTextLang.java -text
 src/src/java/OBAA/Accessibility/AlternativeToAuditory.java -text
