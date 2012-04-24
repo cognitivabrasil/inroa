@@ -4,10 +4,12 @@
  */
 package robo.atualiza;
 
+import Exception.RepositoriosException;
 import ferramentaBusca.indexador.Indexador;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -56,19 +58,16 @@ public class Repositorios {
 
             while (rs.next()) {
                 int idRep = rs.getInt("idrep");
-                boolean atualizadoTemp = false;
                 //ATUALIZA REP
                 try{
-                atualizadoTemp = atualizaRepositorio(idRep, indexar, con); //chama o metodo que atualiza o repositorio
+                    atualizaRepositorio(idRep, indexar, con); //chama o metodo que atualiza o repositorio
+                    atualizou = true;
                 }catch(Exception e){
                     /*
                      * ATENÇÃO: esse catch está vazio porque já é feito o tratamento de exceção dentro do metodo atualizaRepositorio mas é preciso subir a exceção porque se atualizar um repositorio só pela ferramenta administrativa tem que saber se deu erro.
                      */
                 }
 
-                if (atualizadoTemp) { //se algum repositorio foi atualizado entao recalcula o indice
-                    atualizou = true;
-                }
             }
 
         } catch (SQLException e) {
@@ -85,8 +84,8 @@ public class Repositorios {
      * @param con Conex&atilde;o com a base de dados.
      * @return true ou false indicando se o reposit&aacute;rio foi atualizado ou n&atilde;
      */
-    private boolean atualizaRepositorio(int idRepositorio, Indexador indexar, Connection con) throws Exception{
-        boolean atualizou = false;
+    private void atualizaRepositorio(int idRepositorio, Indexador indexar, Connection con) throws Exception{
+        
         Principal importar = new Principal();
         Informacoes conf = new Informacoes();
         InicioLeituraXML gravacao = new InicioLeituraXML();
@@ -94,7 +93,7 @@ public class Repositorios {
 
         String caminhoDiretorioTemporario = conf.getCaminho();
 
-        String sql = "SELECT r.nome, r.data_ultima_atualizacao, r.url_or_ip as url, r.metadata_prefix, r.set, to_char(r.data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as ultima_atualizacao_form"
+        String sql = "SELECT r.nomesss, r.data_ultima_atualizacao, r.url_or_ip as url, r.metadata_prefix, r.set, to_char(r.data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as ultima_atualizacao_form"
                 + " FROM repositorios r"
                 + " WHERE r.id = " + idRepositorio + ";";
 
@@ -103,7 +102,6 @@ public class Repositorios {
             Statement stm = con.createStatement();
             ResultSet rs = stm.executeQuery(sql);
             if (rs.next()) {
-
 
                 String nome = rs.getString("nome"); //atribiu a variavel nome o nome do repositorio retornado pela consulta sql
 
@@ -117,7 +115,7 @@ public class Repositorios {
                 }
                 if (url.isEmpty()) { //testa se a string url esta vazia.
                     System.err.println("FEB: Nao existe uma url associada ao repositorio " + nome);
-                    atualizou = false;
+                    throw new MalformedURLException("Nao existe uma url associada ao repositorio " + nome);
 
                 } else {//repositorio possui url para atualizacao
 
@@ -137,7 +135,7 @@ public class Repositorios {
                             deleta.apagaObjetosRepositorio(idRepositorio, con);
 
                         } catch (Exception e) {
-                            System.out.println("Erro FEB: " + e.toString());
+                            System.out.println("Erro FEB: erro ao deletar os objetos do repositorio "+nome+". Mensagem: " + e);
                         }
                     }
 
@@ -163,7 +161,6 @@ public class Repositorios {
                         //leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados
                         gravacao.leXMLgravaBase(caminhoXML, idRepositorio, indexar, con);
 
-                        atualizou = true;
                     } else {
                         System.err.println("FEB ERRO: O caminho informado nao eh um diretorio. E nao pode ser criado em: '" + caminhoDiretorioTemporario + "'");
                     }
@@ -175,6 +172,8 @@ public class Repositorios {
             //chama metodo que atualiza a hora da ultima atualizacao
             AtualizaBase.atualizaHora(idRepositorio, con, indexar.getDataXML());
 
+        } catch(MalformedURLException m){
+            System.err.println("\nFEB ERRO: "+m);
         } catch (UnknownHostException u) {
             System.err.println("FEB ERRO: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u.toString());
             throw u;
@@ -217,9 +216,6 @@ public class Repositorios {
         } catch (Exception e) {
             System.err.println("\nFEB ERRO ao efetuar o Harvester " + e.toString() + "\n");
             throw e;
-        } finally {
-
-            return atualizou;
         }
 
     }
@@ -240,32 +236,38 @@ public class Repositorios {
         try {
             con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
             Statement stm = con.createStatement();
+            ArrayList<String> erros = new ArrayList<String>();
 
             if (apagar) {
                 zeraDataRepositorio(idRep, stm); //se informado true seta a data da ultima atualizacao para zero
             }
 
             if (idRep > 0) { //atualizar um repositorio especifico ou todos. 0 = todos
-                recalcularIndice = atualizaRepositorio(idRep, indexar, con);
+                atualizaRepositorio(idRep, indexar, con);
             } else {
-                String sql = "SELECT r.id as idrep" + " FROM repositorios r" + " WHERE r.nome!='todos';";
-
+                String sql = "SELECT r.id as idrep nome FROM repositorios r;";
 
                 ResultSet rs = stm.executeQuery(sql);
 
                 while (rs.next()) {
                     int id = rs.getInt("idrep");
-                    boolean resultadoAtualiza = false;
-                    resultadoAtualiza = atualizaRepositorio(id, indexar, con); //chama o metodo que atualiza o repositorio
-                    if (resultadoAtualiza) { //se algum dos repositorios foi atualizado vai recalcular o indice
-                        recalcularIndice = resultadoAtualiza;
+                    try{
+                        atualizaRepositorio(id, indexar, con); //chama o metodo que atualiza o repositorio
+                        recalcularIndice = true;
+                    }catch(Exception e){
+                        erros.add(rs.getString("nome"));
                     }
+
                 }
             }
             if (recalcularIndice) {
                 System.out.println("FEB: recalculando o indice " + dataFormat.format(new Date()));
                 indexar.populateR1(con);
                 System.out.println("FEB: indice recalculado! " + dataFormat.format(new Date()));
+            }
+            if(erros.size()>0){
+                
+               // throw new 
             }
 
         } catch (SQLException e) {
