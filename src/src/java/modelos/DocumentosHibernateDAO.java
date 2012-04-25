@@ -67,7 +67,8 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
         doc.setDeleted(false);
         System.out.println("Going to create documento "+h.getIdentifier());
 
-        doc.setRepositorio(getRepository());
+        Repositorio r = getRepository();
+        doc.setRepositorio(r);
         doc.setObaaEntry(h.getIdentifier());
         doc.setTimestamp(h.getTimestamp());
 
