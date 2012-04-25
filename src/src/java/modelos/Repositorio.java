@@ -2,10 +2,12 @@
 package modelos;
 
 import java.util.*;
-import org.hibernate.SessionFactory;
+//import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
 import spring.ApplicationContextProvider;
+//import java.sql.*;
+import org.hibernate.*;
 
 /**
  *
@@ -127,6 +129,24 @@ public class Repositorio implements java.io.Serializable {
         return DataAccessUtils.intResult(
                 getSessionFactory().getCurrentSession().createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").
                 setParameter("rep", this).setParameter("deleted", false).list());
+    }
+
+    /**
+     * Delete all DocumentoReal from this Repositorio
+     * @return Rows affected 
+     */
+    public int dellAllDocs() {        
+        String hql = "delete from DocumentoReal as d WHERE d.repositorio = :rep";
+        Session session = getSessionFactory().getCurrentSession();
+        Query query = session.createQuery(hql);
+        query.setParameter("rep", this);
+        return query.executeUpdate();
+    }
+    
+    public List<Repositorio> getOutDatedDocs(){
+        //TODO: Jorjão ve se tu consegue fazer isso com linguagem do hibernate. Nao tem que ficar em RepositoryHibernateDAO?
+        //o incremento de 4 horas é para descontar da periodicidade da ultima atualizacao. Pq se o robo rodou ontem as 02h e atualizou o repositorio as 02:10h hoje quando rodar novamente nao vai atualiza pq nao faz 24h ainda.
+       return getSessionFactory().getCurrentSession().createSQLQuery("SELECT * FROM repositorios r WHERE r.data_ultima_atualizacao <= ((now() - r.periodicidade_horas * INTERVAL '1 DAY') + INTERVAL '4 HOUR')").addEntity(Repositorio.class).list();
     }
 
     /**
@@ -342,7 +362,7 @@ public class Repositorio implements java.io.Serializable {
                 //TODO:
                 sessionFactory = ctx.getBean(SessionFactory.class);
             } else {
-                throw new IllegalStateException("Could not get Application context");
+                throw new IllegalStateException("FEB ERRO: Could not get Application context");
             }
         }
         return sessionFactory;

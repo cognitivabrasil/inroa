@@ -187,7 +187,7 @@ public class SubFederacaoOAI {
      * @param nome Nome da Subfedera&ccedil;&atilde;o.
      */
     private static void testaSubfedAnterioraMil(Date data, int id, Connection con, String nome) {
-        if (Operacoes.testarDataAnterior1970(data)) {
+        if (data == null || Operacoes.testarDataAnterior1970(data)) {
             Remover deleta = new Remover();
             System.out.println("FEB: Deletando toda a base de dados da Subfederação: " + nome.toUpperCase());
             deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro

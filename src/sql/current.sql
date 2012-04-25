@@ -1,7 +1,7 @@
 
 --------------------------DADOS SUBFEDERAÇÕES-------------------------
 ALTER TABLE dados_subfederacoes
-   ADD COLUMN data_xml timestamp without time zone NOT NULL DEFAULT '0001-01-01 00:00:00';
+   ADD COLUMN data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00';
 
 -------------------------LRU-------------------------
 CREATE TABLE consultas(
@@ -37,7 +37,7 @@ ALTER TABLE repositorios
     ADD COLUMN metadata_prefix character varying(45),
     ADD COLUMN name_space character varying(45),
     ADD COLUMN set character varying(45),
-    ADD COLUMN data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone NOT NULL,
+    ADD COLUMN data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone,
     ADD COLUMN mapeamento_id INT,
 
     ADD CONSTRAINT mapeamento FOREIGN KEY (mapeamento_id) REFERENCES mapeamentos(id),

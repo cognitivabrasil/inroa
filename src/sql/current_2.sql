@@ -94,7 +94,7 @@ CREATE TABLE dados_subfederacoes (
     id integer NOT NULL,
     data_ultima_atualizacao timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone,
     url character varying(200) NOT NULL,
-    data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone NOT NULL
+    data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone
 );
 
 
@@ -425,7 +425,7 @@ CREATE TABLE repositorios (
     metadata_prefix character varying(45),
     name_space character varying(45),
     set character varying(45),
-    data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone NOT NULL
+    data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone
 );
 
 
@@ -1091,3 +1091,5 @@ INSERT INTO usuarios (login,senha,nome) VALUES ('admin', '698dc19d489c4e4db73e28
 INSERT INTO mapeamentos (nome, descricao, xslt, padrao_id) VALUES ('padrao_DC', 'descricao', 'xslt', 1);
 INSERT INTO mapeamentos (nome, descricao, xslt, padrao_id) VALUES ('padrao_LOM', 'descricao', 'xslt', 2);
 INSERT INTO mapeamentos (nome, descricao, xslt, padrao_id) VALUES ('padrao_OBAA', 'descricao', 'xslt', 3);
+
+ALTER TABLE repositorios ALTER COLUMN data_xml DROP NOT NULL;
