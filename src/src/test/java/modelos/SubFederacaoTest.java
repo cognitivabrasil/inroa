@@ -13,15 +13,23 @@ import static org.mockito.Mockito.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class SubFederacaoTest.
  *
  * @author paulo
  */
 public class SubFederacaoTest {
 
+    /**
+     * Instantiates a new sub federacao test.
+     */
     public SubFederacaoTest() {
     }
 
+    /**
+	 * Test to string.
+	 */
     @Test
     public void testToString() {
         System.out.println("toString");
@@ -31,6 +39,9 @@ public class SubFederacaoTest {
         assertThat(s.toString(), containsString("paulo"));
     }
 
+    /**
+     * Test get proxima atualizacao.
+     */
     @Test
     public void testGetProximaAtualizacao() {
         SubFederacao s = new SubFederacao();
@@ -38,6 +49,9 @@ public class SubFederacaoTest {
         assertThat(s.getProximaAtualizacao(), is(notNullValue()));
     }
 
+    /**
+     * Test get size doc.
+     */
     @Test
     public void testGetSizeDoc() {
         RepositorioSubFed r1 = mock(RepositorioSubFed.class);
@@ -59,6 +73,9 @@ public class SubFederacaoTest {
         assertEquals(7, result);
     }
 
+    /**
+     * Test update not blank.
+     */
     @Test
     public void testUpdateNotBlank() {
         SubFederacao r1 = new SubFederacao();

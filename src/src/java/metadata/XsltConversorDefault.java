@@ -5,21 +5,21 @@
 package metadata;
 
 /**
- *
+ * 
  * @author paulo
  */
 public class XsltConversorDefault implements MetadataConversorInterface {
-    
-    public String toObaa(String s) {
-		String foo_xsl = "src/xslt/lom2obaa_full.xsl"; //input xsl
 
-                try {
-		return XSLTUtil.transformString(s, foo_xsl);//.replaceAll("lom:", "obaa:");
-                }
-                catch(Exception e) {
-                    throw new RuntimeException("Error aplying XSLT");
-                }
-   
-}
-    
+	@Override
+	public final String toObaa(final String s) {
+		String fooXSL = "src/xslt/lom2obaa_full.xsl"; // input xsl
+
+		try {
+			return XSLTUtil.transformString(s, fooXSL);
+		} catch (Exception e) {
+			throw new RuntimeException("Error aplying XSLT");
+		}
+
+	}
+
 }

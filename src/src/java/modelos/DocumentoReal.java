@@ -13,7 +13,7 @@ import java.util.*;
 public class DocumentoReal implements java.io.Serializable, DocumentoFebInterface {
 
     private int id;
-    private String obaa_entry;
+    private String obaaEntry;
     private Date datetime;
     private Set<Objeto> objetos;
     private Repositorio repositorio;
@@ -21,7 +21,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private Boolean deleted;
 
     public DocumentoReal() {
-        obaa_entry = "";
+        obaaEntry = "";
         datetime = new Date(0);
         objetos = new HashSet<Objeto>();
         deleted = false;
@@ -76,11 +76,11 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     }
 
     public String getObaaEntry() {
-        return this.obaa_entry;
+        return this.obaaEntry;
     }
 
     public void setObaaEntry(String entry) {
-        this.obaa_entry = entry;
+        this.obaaEntry = entry;
     }
 
     /**

@@ -1,8 +1,11 @@
 /.pc
 src/.Makefile.swp
+src/.classpath
 src/.netbeans
 src/.pc
 src/.pom.xml.swp
+src/.project
+src/.settings
 src/.teste.xml.swp
 src/.union.sql.swp
 src/build

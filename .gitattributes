@@ -329,6 +329,7 @@ src/src/java/metadata/Request.java -text
 src/src/java/metadata/Spec.java -text
 src/src/java/metadata/TextElement.java -text
 src/src/java/metadata/XSLTUtil.java -text
+src/src/java/metadata/XsltConversor.java -text
 src/src/java/metadata/XsltConversorDefault.java -text
 src/src/java/metadata/conversor/Conversor.java -text
 src/src/java/metadata/conversor/Rule.java -text
@@ -494,6 +495,7 @@ src/src/main/webapp/scripts/validatejs.js -text
 src/src/test/java/OBAA/OBAATest.java -text
 src/src/test/java/ferramentaBusca/RecuperadorTest.java -text
 src/src/test/java/metadata/DublinCoreTest.java -text
+src/src/test/java/metadata/XsltConversorTest.java -text
 src/src/test/java/metadata/XsltDC2ObaaTest.java -text
 src/src/test/java/metadata/XsltLom2ObaaTest.java -text
 src/src/test/java/metadata/XsltTest.java -text

@@ -6,10 +6,18 @@ package metadata;
 
 /**
  *
- * @author paulo
+ * @author Paulo Schreiner <paulo@jorjao81.com>
  */
+
+
 public interface MetadataConversorInterface {
     
+    /**
+     * Converts the XML represent by the string to the OBAA format.
+     *
+     * @param XML in some metadata formata
+     * @return XML in the OBAA format
+     */
     String toObaa(String s);
     
 }
