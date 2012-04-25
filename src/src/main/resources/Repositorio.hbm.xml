@@ -18,6 +18,7 @@
         <property column="name_space" name="namespace" type="string"/>
         <property column="periodicidade_horas" name="periodicidadeAtualizacao" type="integer"/>
         <property column="set" name="colecoesInternal" type="string"/>
+        <property column="data_xml" name="dataOrigem" type="timestamp"/>
         <many-to-one class="modelos.PadraoMetadados" column="padrao_metadados" name="padraoMetadados"/>
         <many-to-one class="modelos.Mapeamento" column="mapeamento_id" name="mapeamento"/>
 

@@ -29,6 +29,7 @@ public class Repositorio implements java.io.Serializable {
     private PadraoMetadados padraoMetadados;
     private Mapeamento mapeamento;
     private SessionFactory sessionFactory;
+    private Date dataOrigem;
 
     public Repositorio() {
 //        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
@@ -162,6 +163,14 @@ public class Repositorio implements java.io.Serializable {
 
     public Date getUltimaAtualizacao() {
         return ultimaAtualizacao;
+    }
+
+    public Date getDataOrigem() {
+        return dataOrigem;
+    }
+
+    public void setDataOrigem(Date dataOrigem) {
+        this.dataOrigem = dataOrigem;
     }
 
     public String getNamespace() {

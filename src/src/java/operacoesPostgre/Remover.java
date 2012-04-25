@@ -1,6 +1,8 @@
 package operacoesPostgre;
 
 import java.sql.*;
+import postgres.Conectar;
+import java.sql.Connection;
 
 /**
  * Classe com metodos responsáveis por remover dados da base.
@@ -13,6 +15,19 @@ public class Remover {
     private static boolean debugOut = false;
     private static boolean debugErr = true;
 
+     /**
+     * Método respons&aacute;vel por apagar todos objetos de um reposit&oacute;rio
+     * @param idRepositorio o id do reposit&oacute;rio a ser apagado
+     * @param con Conex&atilde;o com a base a ser apagada.
+     * @return Retorna true se não ocorreu nenhum erro ao apagar os objetos ou false se ocorreu algum erro.
+     */
+    public void apagaObjetosRepositorio(int idRepositorio) {
+        Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
+
+        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
+        apagaObjetosRepositorio(idRepositorio, con);
+    }
+    
     /**
      * Método respons&aacute;vel por apagar todos objetos de um reposit&oacute;rio
      * @param idRepositorio o id do reposit&oacute;rio a ser apagado
@@ -20,7 +35,7 @@ public class Remover {
      * @return Retorna true se não ocorreu nenhum erro ao apagar os objetos ou false se ocorreu algum erro.
      */
     public void apagaObjetosRepositorio(int idRepositorio, Connection con) {
-
+         
         try {
             String sql = "DELETE FROM documentos WHERE id_repositorio = "+idRepositorio;
             Statement stm = con.createStatement();
