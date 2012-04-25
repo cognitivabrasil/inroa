@@ -2,6 +2,7 @@ package OBAA.LifeCycle;
 
 import java.util.ArrayList;
 import java.util.List;
+import metadata.TextElement;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 
@@ -62,6 +63,15 @@ public class Contribute {
  * Adaptado de http://www.portalobaa.org/
  * </div>
  */
+    
+    private List<String> toStringList(List<? extends TextElement> elements) {
+        List<String> s = new ArrayList<String>();
+	for(TextElement e : elements) {
+            s.add(e.getText());
+            }
+        return s;
+    }
+    
     public void addEntity(Entity entity) {
         this.entity.add(entity);
     }
@@ -87,6 +97,10 @@ public class Contribute {
         return entity.get(0).toString();
     }
     
+    public List<String> getEntities() {        
+        return toStringList(entity);
+    }
+        
     public List<Entity> getEntity() {
         return entity;
     }

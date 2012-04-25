@@ -21,6 +21,7 @@ public class TextElement
 	}
 
 	public TextElement() {
+            text = "";
 	}
 	
 	@Text(required=false)

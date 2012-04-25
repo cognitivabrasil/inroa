@@ -72,10 +72,10 @@ public class Recuperador {
 
                 if (consulta.getConsulta().isEmpty()) {
                     //COM autor, SEM termo de busca
-                    sqlOrdenacao = " a.documento=d.id AND a.nome~@@'" + consulta.getAutor() + "' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, '" + consulta.getAutor() + "')) DESC;";
+                    sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC;";
                 } else {
                     //COM autor, COM termo de busca
-                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'" + consulta.getAutor() + "' GROUP BY r1w.tid, a.nome ORDER BY (qgram(a.nome, '" + consulta.getAutor() + "')) DESC, SUM (weight) DESC;";
+                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC, SUM (weight) DESC;";
                 }
             } else {
 
@@ -153,8 +153,8 @@ public class Recuperador {
             }
 
     //}
-        docs = s.createSQLQuery("SELECT * from documentos WHERE id=1006").addEntity(DocumentoReal.class).list();
-        //docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
+        //docs = s.createSQLQuery("SELECT * from documentos WHERE id=1006").addEntity(DocumentoReal.class).list();
+        docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
             
         
         return docs;

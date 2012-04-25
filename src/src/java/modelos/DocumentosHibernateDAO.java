@@ -89,8 +89,10 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
             }
             
             for (Contribute c: obaa.getLifeCycle().getContribute()){
-                for (Entity e: c.getEntity()){
-                    doc.addAuthor(e.getEntity());
+                for (String e: c.getEntities()){    
+//                    if (e.equals("Semeler, Alexandre"))
+//                            System.out.println("STOP!");
+                    doc.addAuthor(e);
                 }
             }
         }
