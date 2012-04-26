@@ -2,18 +2,16 @@
 package modelos;
 
 import java.util.*;
-//import org.hibernate.SessionFactory;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
 import spring.ApplicationContextProvider;
-//import java.sql.*;
-import org.hibernate.*;
 
 /**
  *
- * Represents a single playable track in the music database.
- *
- * @author Jim Elliott (with help from Hibernate)
+ * @author Marcos, Paulo
  *
  */
 public class Repositorio implements java.io.Serializable {
@@ -133,20 +131,22 @@ public class Repositorio implements java.io.Serializable {
 
     /**
      * Delete all DocumentoReal from this Repositorio
-     * @return Rows affected 
+     *
+     * @return Rows affected
+     * 
      */
-    public int dellAllDocs() {        
+    public int dellAllDocs() {
         String hql = "delete from DocumentoReal as d WHERE d.repositorio = :rep";
         Session session = getSessionFactory().getCurrentSession();
         Query query = session.createQuery(hql);
         query.setParameter("rep", this);
         return query.executeUpdate();
     }
-    
-    public List<Repositorio> getOutDatedDocs(){
+
+    public List<Repositorio> getOutDatedDocs() {
         //TODO: Jorjão ve se tu consegue fazer isso com linguagem do hibernate. Nao tem que ficar em RepositoryHibernateDAO?
         //o incremento de 4 horas é para descontar da periodicidade da ultima atualizacao. Pq se o robo rodou ontem as 02h e atualizou o repositorio as 02:10h hoje quando rodar novamente nao vai atualiza pq nao faz 24h ainda.
-       return getSessionFactory().getCurrentSession().createSQLQuery("SELECT * FROM repositorios r WHERE r.data_ultima_atualizacao <= ((now() - r.periodicidade_horas * INTERVAL '1 DAY') + INTERVAL '4 HOUR')").addEntity(Repositorio.class).list();
+        return getSessionFactory().getCurrentSession().createSQLQuery("SELECT * FROM repositorios r WHERE r.data_ultima_atualizacao <= ((now() - r.periodicidade_horas * INTERVAL '1 DAY') + INTERVAL '4 HOUR')").addEntity(Repositorio.class).list();
     }
 
     /**
@@ -214,7 +214,15 @@ public class Repositorio implements java.io.Serializable {
         if (ultimaAtualizacao == null) { //TODO: Jorjao porque ta dando null se no construtor ta inicializando?
             return new Date(0);
         }
-        return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao * 60 * 60 * 1000); // soma a periodicidade em horas
+        return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao * 24 * 60 * 60 * 1000); // soma a periodicidade
+    }
+
+    public boolean isOutdated() {
+        if (getProximaAtualizacao().before(new Date())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -222,7 +230,7 @@ public class Repositorio implements java.io.Serializable {
      * @return The collections associated with this repository
      */
     public Set<String> getColecoes() {
-        if (colecoesInternal == "") {
+        if (colecoesInternal.isEmpty()) {
             return new HashSet<String>();
         } else {
             return new HashSet<String>(Arrays.asList(colecoesInternal.split(";")));
@@ -235,7 +243,7 @@ public class Repositorio implements java.io.Serializable {
      * @param c The collections
      */
     public void setColecoes(Collection<String> c) {
-        if (c.size() == 0) {
+        if (c.isEmpty()) {
             this.colecoesInternal = "";
         } else {
             this.colecoesInternal = join(c, ";");
@@ -287,7 +295,7 @@ public class Repositorio implements java.io.Serializable {
     }
 
     private boolean notBlank(Set s) {
-        return s != null && !(s.size() == 0);
+        return s != null && !(s.isEmpty());
     }
 
     /**

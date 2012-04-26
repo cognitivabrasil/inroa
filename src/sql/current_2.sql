@@ -94,7 +94,7 @@ CREATE TABLE dados_subfederacoes (
     id integer NOT NULL,
     data_ultima_atualizacao timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone,
     url character varying(200) NOT NULL,
-    data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone
+    data_xml character varying
 );
 
 
@@ -1093,3 +1093,6 @@ INSERT INTO mapeamentos (nome, descricao, xslt, padrao_id) VALUES ('padrao_LOM',
 INSERT INTO mapeamentos (nome, descricao, xslt, padrao_id) VALUES ('padrao_OBAA', 'descricao', 'xslt', 3);
 
 ALTER TABLE repositorios ALTER COLUMN data_xml DROP NOT NULL;
+ALTER TABLE dados_subfederacoes DROP COLUMN data_xml;
+ALTER TABLE dados_subfederacoes ADD COLUMN data_xml character varying;
+

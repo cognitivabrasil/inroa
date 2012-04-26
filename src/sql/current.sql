@@ -1,7 +1,7 @@
 
 --------------------------DADOS SUBFEDERAÇÕES-------------------------
-ALTER TABLE dados_subfederacoes
-   ADD COLUMN data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00';
+ALTER TABLE dados_subfederacoes DROP COLUMN data_xml;
+ALTER TABLE dados_subfederacoes ADD COLUMN data_xml character varying;
 
 -------------------------LRU-------------------------
 CREATE TABLE consultas(

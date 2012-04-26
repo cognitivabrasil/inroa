@@ -142,7 +142,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         SubFederacao f = new SubFederacao();
         f.setNome("Nova");
         f.setUrl("http://nova");
-        f.setDataXML(new Date());
+        f.setDataXML("2012-03-19T18:01:54Z");
 
         instance.save(f);
 

@@ -9,19 +9,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Date;
+import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
+import modelos.RepositorioSubFed;
 import modelos.SubFederacao;
-import operacoesPostgre.Remover;
+import modelos.SubFederacaoDAO;
+import org.hibernate.HibernateException;
+import org.springframework.context.ApplicationContext;
 import org.xml.sax.SAXException;
 import postgres.Conectar;
 import robo.atualiza.subfedOAI.Objetos;
 import robo.atualiza.subfedOAI.SubRepositorios;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
+import spring.ApplicationContextProvider;
 
 /**
  *
@@ -43,54 +46,58 @@ public class SubFederacaoOAI {
     public boolean pre_AtualizaSubFedOAI(Connection con, Indexador indexar) {
         boolean atualizou = false;
 
-        String sql = "SELECT id, url, nome, data_ultima_atualizacao, to_char(data_xml, 'YYYY-MM-DD\"T\"HH24:MI:SSZ') as data_formatada FROM dados_subfederacoes;";
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+        if (ctx == null) {
+            System.out.println("FEB ERRO: Could not get AppContext bean!");
+        } else {
 
-        try {
-            Statement stm = con.createStatement();
-            ResultSet rs = stm.executeQuery(sql);
+            try {
+                SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
+                List<SubFederacao> listaSubfed = subDao.getAll();
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                boolean atualizadoTemp = false;
-                String nome = rs.getString("nome");
-                String url = rs.getString("url");
+                for (SubFederacao subFed : listaSubfed) { //percorre todas as federacoes cadastradas
+                    boolean atualizadoTemp = false;
 
-                testaSubfedAnterioraMil(rs.getDate("data_ultima_atualizacao"), id, con, nome);//deleta toda a base se o ano da ultima atualizacao for menor que 1000
+                    if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataAnterior1970(subFed.getUltimaAtualizacao())) {
 
-                if (url.isEmpty()) { //testa se a string url esta vazia.
-                    System.err.println("FEB ERRO: Nao existe uma url associada ao repositorio " + nome);
-                } else {
-                    Informacoes info = new Informacoes();
+                        System.out.println("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
 
-                    if (url.endsWith("/")) { //se a url terminar com / concatena o endereço do oai-pmh sem a barra
-                        url += info.getOaiPMH();
+                        for (RepositorioSubFed r : subFed.getRepositorios()) {
+                            r.dellAllDocs();
+                        }
+                        System.out.println("FEB: Base deletada!");
+                    }
+
+                    if (subFed.getUrl().isEmpty()) { //testa se a string url esta vazia.
+                        System.err.println("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
                     } else {
-                        url += "/" + info.getOaiPMH();
-                    }
-                    Long inicio = System.currentTimeMillis();
-                    try {
-                        atualizadoTemp = atualizaSubFedOAI(id, url, rs.getString("data_formatada"), nome, con, indexar);
-                    } catch (Exception e) {
-                        /*
-                         * ATENÇÃO: esse catch está vazio porque já é feito o
-                         * tratamento de exceção dentro do metodo
-                         * atualizaSubFedOAI mas é preciso subir a exceção
-                         * porque se atualizar uma federação só pela ferramenta
-                         * administrativa tem que saber se deu erro.
-                         */
-                    }
-                    Long fim = System.currentTimeMillis();
-                    System.out.println("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + nome);
-                }
 
-                if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
-                    atualizou = true;
+                        Long inicio = System.currentTimeMillis();
+                        try {
+                            atualizaSubFedOAI(subFed, con, indexar);
+                            atualizadoTemp = true;
+                        } catch (Exception e) {
+                            /*
+                             * ATENÇÃO: esse catch está vazio porque já é feito
+                             * o tratamento de exceção dentro do metodo
+                             * atualizaSubFedOAI mas é preciso subir a exceção
+                             * porque se atualizar uma federação só pela
+                             * ferramenta administrativa tem que saber se deu
+                             * erro.
+                             */
+                        }
+                        Long fim = System.currentTimeMillis();
+                        System.out.println("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
+                    }
+
+                    if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
+                        atualizou = true;
+                    }
                 }
+            } catch (HibernateException h) {
+                System.err.println("FEB ERRO: Erro no Hibernate na classe: " + h.getClass() + ". Exception: " + h);
             }
-        } catch (SQLException e) {
-            System.err.println("FEB ERRO: Erro na consulta SQL no metodo testaAtualizaSubFedOAI. Mensagem:" + e);
         }
-
         return atualizou;
     }
 
@@ -114,21 +121,30 @@ public class SubFederacaoOAI {
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi
      * atualizada ou n&atilde;o.
      */
-    private boolean atualizaSubFedOAI(int idSubfed, String url, String ultimaAtualizacao, String nome, Connection con, Indexador indexar) throws Exception {
-        boolean atualizou = false;
-
-        System.out.println("FEB: Atualizando subfederacao: " + nome);//imprime o nome do repositorio
+    private void atualizaSubFedOAI(SubFederacao subFed, Connection con, Indexador indexar) throws Exception {
+        
+        System.out.println("FEB: Atualizando subfederacao: " + subFed.getNome());//imprime o nome do repositorio
 
         try {
+            Informacoes info = new Informacoes();
+            String url = subFed.getUrl();
+            if (url.endsWith("/")) { //se a url terminar com / concatena o endereço do oai-pmh sem a barra
+                url += info.getOaiPMH();
+            } else {
+                url += "/" + info.getOaiPMH();
+            }
             //atualizar repositorios da subfederacao
             SubRepositorios subRep = new SubRepositorios();
-            subRep.atualizaSubRepositorios(url, nome, idSubfed, con);
+            subRep.atualizaSubRepositorios(url, subFed.getNome(), subFed.getId(), con);
 
             //atualizar objetos da subfederacao
             Objetos obj = new Objetos();
-            obj.atualizaObjetosSubFed(url, ultimaAtualizacao, nome, "obaa", null, con, indexar);
-            atualizaTimestampSubFed(con, idSubfed, indexar.getDataXML()); //atualiza a hora da ultima atualizacao
-            atualizou = true;
+            obj.atualizaObjetosSubFed(url, subFed.getDataXML(), subFed.getNome(), "obaa", null, con, indexar);
+
+            if (indexar.getDataXML() != null) { //se foi coletada da data do xml entao atualiza as datas no objeto subFed
+                subFed.setUltimaAtualizacao(new Date());
+                subFed.setDataXML(indexar.getDataXML());
+            }
 
         } catch (UnknownHostException u) {
             System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
@@ -139,7 +155,7 @@ public class SubFederacaoOAI {
         } catch (ParserConfigurationException e) {
             System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: O parser nao foi configurado corretamente. " + e);
             throw e;
-        } catch (SAXException e) {            
+        } catch (SAXException e) {
             String msg = e.getMessage();
             String msgOAI = "\nFEB ERRO - Metodo atualizaSubFedOAI: erro no parser do OAI-PMH, mensagem: ";
             if (msg.equalsIgnoreCase("badArgument")) {
@@ -154,7 +170,8 @@ public class SubFederacaoOAI {
                 System.err.println(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
             } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
                 System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
-                atualizaTimestampSubFed(con, idSubfed, indexar.getDataXML()); //atualiza a hora da ultima atualizacao
+                subFed.setUltimaAtualizacao(new Date());
+                subFed.setDataXML(indexar.getDataXML());
             } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                 System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
             } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
@@ -172,47 +189,6 @@ public class SubFederacaoOAI {
         } catch (Exception e) {
             System.err.println("\nFEB ERRO - " + this.getClass() + ": erro ao efetuar o Harvester " + e + "\n");
             throw e;
-        } finally {
-            return atualizou;
-        }
-    }
-
-    /**
-     * Testa se a data informada &eacute anterior ao ano 1000, se positivo,
-     * deleta todos os objetos da Subfedera&ccedil;&atilde;o
-     *
-     * @param data Data a ser testada.
-     * @param id Id da Subfedera&ccedil;&atilde;o
-     * @param con Conex&atilde;o com a base de dados local.
-     * @param nome Nome da Subfedera&ccedil;&atilde;o.
-     */
-    private static void testaSubfedAnterioraMil(Date data, int id, Connection con, String nome) {
-        if (data == null || Operacoes.testarDataAnterior1970(data)) {
-            Remover deleta = new Remover();
-            System.out.println("FEB: Deletando toda a base de dados da Subfederação: " + nome.toUpperCase());
-            deleta.setDebugOut(false); //seta que nao e para imprimir mensagens de erro
-            try {
-                deleta.apagaObjetosSubfederacao(id, con);
-                System.out.println("FEB: Base deletada!");
-            } catch (Exception e) {
-                System.out.println("FEB ERRO - Metodo atualizaSubFedOAI: " + e.toString());
-            }
-        }
-    }
-
-    /**
-     * M&eacute;todo que atualiza a data da &uacute;ltima
-     * atualiza&ccedil;&atilde;o para a hora atual
-     *
-     * @param con Conex&atilde;o com a base de dados local
-     * @param idSubFed Id da subfedera&ccedil;&atilde;o que foi atualizada
-     * @throws SQLException
-     */
-    private void atualizaTimestampSubFed(Connection con, int idSubFed, String dataXML) throws SQLException {
-        if (!dataXML.equals("0")) {
-            String sql = "UPDATE dados_subfederacoes set data_ultima_atualizacao = now(), data_xml='" + dataXML + "' WHERE id=" + idSubFed;
-            Statement stm = con.createStatement();
-            stm.executeUpdate(sql);
         }
     }
 
@@ -228,20 +204,24 @@ public class SubFederacaoOAI {
         Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         Indexador indexar = new Indexador();
-        testaSubfedAnterioraMil(subFed.getUltimaAtualizacao(), subFed.getId(), con, subFed.getNome());//deleta toda a base se o ano da ultima atualizacao for menor que 1000
+
+        if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataAnterior1970(subFed.getUltimaAtualizacao())) {
+
+            System.out.println("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
+
+            for (RepositorioSubFed r : subFed.getRepositorios()) {
+                r.dellAllDocs();
+            }
+            System.out.println("FEB: Base deletada!");
+        }
+
         String url = subFed.getUrl();
         if (url.isEmpty()) { //testa se a string url esta vazia.
             System.err.println("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
         } else {
-            Informacoes info = new Informacoes();
 
-            if (url.endsWith("/")) { //se a url terminar com / concatena o endereço do oai-pmh sem a barra
-                url += info.getOaiPMH();
-            } else {
-                url += "/" + info.getOaiPMH();
-            }
             Long inicio = System.currentTimeMillis();
-            atualizaSubFedOAI(subFed.getId(), url, Operacoes.formatDateOAIPMH(subFed.getDataXML()), subFed.getNome(), con, indexar);
+            atualizaSubFedOAI(subFed, con, indexar);
             Long fim = System.currentTimeMillis();
             System.out.println("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
         }
@@ -257,6 +237,5 @@ public class SubFederacaoOAI {
         } catch (SQLException e) {
             System.out.println("FEB ERRO - Metodo atualizaSubFedOAI: Erro ao fechar a conexão no metodo atualizaSubfedAdm: " + e.getMessage());
         }
-
     }
 }

@@ -6,7 +6,6 @@ package modelos;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import org.springframework.core.style.ToStringCreator;
 
@@ -21,23 +20,23 @@ public class SubFederacao implements java.io.Serializable {
     private String descricao;
     private String url;
     private Date ultimaAtualizacao;
-    private Date dataXML;
+    private String dataXML;
     private Set<RepositorioSubFed> repositorios;
 
     public SubFederacao() {
         this.nome = "";
         this.descricao = "";
         this.url = "";
-        this.ultimaAtualizacao = new Date(0);
-        this.dataXML = new Date(0);
+        this.ultimaAtualizacao = null;
+        this.dataXML = null;
         this.repositorios = new HashSet<RepositorioSubFed>();
     }
 
-    public Date getDataXML() {
+    public String getDataXML() {
         return dataXML;
     }
 
-    public void setDataXML(Date dataXML) {
+    public void setDataXML(String dataXML) {
         this.dataXML = dataXML;
     }
 
@@ -99,7 +98,7 @@ public class SubFederacao implements java.io.Serializable {
     }
 
     private boolean notBlank(Set s) {
-        return s != null && !(s.size() == 0);
+        return s != null && !(s.isEmpty());
     }
 
     

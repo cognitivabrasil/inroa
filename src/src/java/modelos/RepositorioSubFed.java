@@ -5,6 +5,8 @@
 package modelos;
 
 import java.util.Set;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
@@ -88,4 +90,22 @@ public class RepositorioSubFed {
     public void setDocumentos(Set<DocumentoReal> documentos) {
         this.documentos = documentos;
     }
+    
+        
+    /**
+     * Delete all DocumentoReal from this Repositorio
+     *
+     * @return number os rows affected
+     * 
+     */
+    public int dellAllDocs() {
+        String hql = "delete from DocumentoReal as d WHERE d.repositorioSubFed = :rep";
+        Session session = getSessionFactory().getCurrentSession();
+        Query query = session.createQuery(hql);
+        query.setParameter("rep", this);
+        return query.executeUpdate();
+    }
+    
+
+    
 }

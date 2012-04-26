@@ -119,7 +119,7 @@
                 </div>
                 
                 <c:choose>
-                        <c:when test="${operacoesBean.dataAnteriorAtual(rep.proximaAtualizacao)}">
+                        <c:when test="${rep.isOutdated()}">
                             <div id='textResult${param.id}' class="ValueErro">&nbsp; 
                                 ${operacoesBean.ultimaAtualizacaoFrase(rep.proximaAtualizacao, rep.url)}
                                 &nbsp;&nbsp;

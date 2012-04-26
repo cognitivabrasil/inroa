@@ -14,7 +14,7 @@
         <property name="descricao" type="string"/>
         <property column="data_ultima_atualizacao" name="ultimaAtualizacao" type="timestamp"/>
         <property name="url" not-null="true" type="string"/>
-        <property column="data_xml" name="dataXML" type="timestamp"/>
+        <property column="data_xml" name="dataXML" type="string"/>
     
     <set name="repositorios" table="repositorios_subfed" cascade="all" inverse="true">
       <key column="id_subfed"/>

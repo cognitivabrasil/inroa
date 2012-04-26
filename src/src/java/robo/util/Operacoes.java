@@ -9,6 +9,8 @@ import java.util.Date;
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import modelos.Repositorio;
 
 /**
  * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como
@@ -175,7 +177,7 @@ public class Operacoes {
      * @return true se a data for anterior e falso caso contr&aacute;rio.
      */
     public static boolean dataAnteriorAtual(Date data) {
-        if (data.before(new Date())) {
+        if (data == null || data.before(new Date())) {
             return true;
         } else {
             return false;

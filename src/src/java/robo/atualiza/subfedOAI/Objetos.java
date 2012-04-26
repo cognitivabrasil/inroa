@@ -39,7 +39,7 @@ public class Objetos {
     public void atualizaObjetosSubFed(String endereco, String dataInicial, String nomeSubfed, String metadataPrefix, String set, Connection con, Indexador indexar) throws Exception {
         ArrayList<String> caminhosXML; //ArrayList que armazenara os caminhos para os xmls
         Informacoes conf = new Informacoes();
-        String caminhoDiretorioTemporario = "marcos"+conf.getCaminho();
+        String caminhoDiretorioTemporario = conf.getCaminho();
 
 
         File caminhoTeste = Operacoes.testaDiretorioTemp(caminhoDiretorioTemporario);
