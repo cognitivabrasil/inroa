@@ -107,6 +107,7 @@ public final class FEBController {
                 model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");                
                 model.addAttribute("repDAO", repDao);
                 model.addAttribute("subDAO", subDao);
+                System.out.println("FEB: Erro ao efetuar consulta: "+e);
                 return "index2";
             }
         }
