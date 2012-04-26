@@ -160,7 +160,7 @@
                 </div>
             </form:form>
             <div ALIGN="CENTER">
-                <a href="./index.jsp">Retornar a busca padr&atilde;o</a>
+                <a href="index">Retornar a busca padr&atilde;o</a>
             </div>
 
         </div>
