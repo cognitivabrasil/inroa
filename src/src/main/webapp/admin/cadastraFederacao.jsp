@@ -29,15 +29,15 @@
     </head>
     <body>
         <div id="page">
-            
+
             <div class="subTitulo-center">&nbsp;Entre com as informa&ccedil;&otilde;es para cadastrar uma nova federa&ccedil;&atilde;o</div>
             <div class="EspacoAntes">&nbsp;</div>
-            <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
-                <c:out value="${erro}"/>
-            </div>
+            <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
+            <c:if test="${!empty erro}">
+                <div class="DivErro">${erro}</div>
+            </c:if>
             <form:form method="post" modelAttribute="subDAO" action="salvarNovaFederacao" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
-                
-                <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
+
                 <div class="LinhaEntrada">
                     <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Label">
@@ -66,7 +66,7 @@
                         <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                                
                     </div>
                 </div>
-                
+
                 <div class="LinhaEntrada">
                     <div class="Buttons">
 
@@ -75,10 +75,10 @@
                         <input class="BOTAO" type="submit" value="Gravar >" name="submit" />
                     </div>
                 </div>
-                
+
             </form:form>
 
-            
+
         </div>
         <%@include file="../googleAnalytics"%>
     </body>

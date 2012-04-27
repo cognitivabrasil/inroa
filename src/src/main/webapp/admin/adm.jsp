@@ -213,16 +213,27 @@ Author     : Marcos Nunes
                         <input type="button" class="botaoEditar" title="Editar / Visualizar" name="editar" id="editarSubfed" onclick="NewWindow('exibeFederacao?id=${subfed.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" >
 
                     </td>
-                    <td>&nbsp;${subfed.nome}</td>
-                    <td>&nbsp;${subfed.descricao}</td>
-                    <td>&nbsp;
-                        <div id='textResultSF${subfed.id}'>
-                            ${operacoesBean.ultimaAtualizacaoFrase(subfed.ultimaAtualizacao)}
-
-                            <a title="Atualizar agora" onclick="javaScript:atualizaSubfedAjax(${subfed.id}, document.getElementById('textResultSF${subfed.id}'));">
-                                <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                            </a>                       
-                        </div>
+                    <td>${subfed.nome}</td>
+                    <td>${subfed.descricao}</td>
+                    <td>                              
+                        <c:choose>
+                            <c:when test="${subfed.isOutdated()}">
+                                <div id='textResultSF${subfed.id}' class='textoErro'>
+                                    ${subfed.ultimaAtualizacaoTxt}
+                                    <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">
+                                        <img src="<spring:url value="/imagens/erro_sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                                    </a> 
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div id='textResultSF${subfed.id}'>
+                                    ${subfed.ultimaAtualizacaoTxt}
+                                    <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">
+                                        <img src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />" border="0" width="24" height="24" alt="Visualizar" align="middle">
+                                    </a>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </td>
 
                 </tr>

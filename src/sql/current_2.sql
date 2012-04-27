@@ -1096,3 +1096,10 @@ ALTER TABLE repositorios ALTER COLUMN data_xml DROP NOT NULL;
 ALTER TABLE dados_subfederacoes DROP COLUMN data_xml;
 ALTER TABLE dados_subfederacoes ADD COLUMN data_xml character varying;
 
+--- 26/04/12
+ALTER TABLE dados_subfederacoes
+   ALTER COLUMN data_ultima_atualizacao DROP DEFAULT;
+ALTER TABLE repositorios
+   ALTER COLUMN data_ultima_atualizacao DROP DEFAULT;
+ALTER TABLE repositorios
+   ALTER COLUMN data_xml DROP DEFAULT;

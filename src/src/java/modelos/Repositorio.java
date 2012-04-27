@@ -217,6 +217,10 @@ public class Repositorio implements java.io.Serializable {
         return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao * 24 * 60 * 60 * 1000); // soma a periodicidade
     }
 
+    /**
+     * Test if repository is outdated.
+     * @return true if the repository is outdated or false if the repository is updated.
+     */
     public boolean isOutdated() {
         if (getProximaAtualizacao().before(new Date())) {
             return true;

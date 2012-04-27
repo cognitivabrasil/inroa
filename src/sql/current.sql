@@ -29,7 +29,7 @@ WHERE d.obaa_entry=ex.obaa_entry;
 
 -------------------------REPOSITORIOS-------------------------
 ALTER TABLE repositorios             
-    ADD COLUMN data_ultima_atualizacao timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone,
+    ADD COLUMN data_ultima_atualizacao timestamp without time zone,
     ADD COLUMN periodicidade_horas integer,
     ADD COLUMN url_or_ip character varying(200) NOT NULL DEFAULT '',
     ADD COLUMN padrao_metadados integer,
@@ -37,7 +37,7 @@ ALTER TABLE repositorios
     ADD COLUMN metadata_prefix character varying(45),
     ADD COLUMN name_space character varying(45),
     ADD COLUMN set character varying(45),
-    ADD COLUMN data_xml timestamp without time zone DEFAULT '0001-01-01 00:00:00'::timestamp without time zone,
+    ADD COLUMN data_xml timestamp without time zone,
     ADD COLUMN mapeamento_id INT,
 
     ADD CONSTRAINT mapeamento FOREIGN KEY (mapeamento_id) REFERENCES mapeamentos(id),
@@ -134,3 +134,7 @@ ALTER TABLE documentos
    ALTER COLUMN deleted SET DEFAULT false;
 ALTER TABLE documentos
    ALTER COLUMN deleted SET NOT NULL;
+
+--- 26/04/12
+ALTER TABLE dados_subfederacoes
+   ALTER COLUMN data_ultima_atualizacao DROP DEFAULT;

@@ -28,26 +28,26 @@
             <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de federa&ccedil;&otilde;es cadastradas</div>
 
 
-            <div class="subtitulo">Informa&ccedil;&otilde;es sobre as subfedera&ccedil;&otilde;es ${subFeb.nome}</div>
-            <div class="editar"><a href="./editarFederacao?id=${subFeb.id}">Editar</a></div>
+            <div class="subtitulo">Informa&ccedil;&otilde;es sobre as subfedera&ccedil;&otilde;es ${subFed.nome}</div>
+            <div class="editar"><a href="./editarFederacao?id=${subFed.id}">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
                     Nome:
                 </div>
-                <div class="Value">&nbsp;${subFeb.nome}</div>
+                <div class="Value">&nbsp;${subFed.nome}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Descri&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;${subFeb.descricao}</div>
+                <div class="Value">&nbsp;${subFed.descricao}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     URL da federa&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;${subFeb.url}</div>
+                <div class="Value">&nbsp;${subFed.url}</div>
             </div>
 
             <div class="LinhaEntrada">
@@ -55,9 +55,9 @@
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
                 </div>
                 <c:choose>
-                    <c:when test="${operacoesBean.dataAnteriorAtual(subFeb.proximaAtualizacao)}">
+                    <c:when test="${subFed.isOutdated()}">
                         <div id="textResultSF${param.id}" class='Value textoErro'>&nbsp;
-                            ${operacoesBean.ultimaAtualizacaoFrase(subFeb.ultimaAtualizacao, subFeb.url)}
+                            ${operacoesBean.ultimaAtualizacaoFrase(subFed.ultimaAtualizacao, subFed.url)}
                             <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
                                 <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a> 
@@ -65,7 +65,7 @@
                     </c:when>
                     <c:otherwise>
                         <div id="textResultSF${param.id}" class="Value">&nbsp;
-                            ${operacoesBean.ultimaAtualizacaoFrase(subFeb.ultimaAtualizacao, subFeb.url)}
+                            ${operacoesBean.ultimaAtualizacaoFrase(subFed.ultimaAtualizacao, subFed.url)}
                             <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
                                 <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a>
@@ -77,7 +77,7 @@
 
             <table  width=100% class="tableSubfed">
                 <th width="70%">Reposit&oacute;rio</th><th width="30%">N&uacute;mero de objetos</th>
-                <c:forEach var="rep" items="${subFeb.repositorios}" varStatus="status">
+                <c:forEach var="rep" items="${subFed.repositorios}" varStatus="status">
                     <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
                         <td>${rep.nome}</td>
                         <td align='center'>${rep.size} </td>
@@ -85,7 +85,7 @@
                 </c:forEach>                    
 
                 <tr class="bold">
-                    <th align="right">TOTAL</th> <th align='center'>${subFeb.sizeDoc}</th>
+                    <th align="right">TOTAL</th> <th align='center'>${subFed.sizeDoc}</th>
                 </tr>
             </table>
         </div>

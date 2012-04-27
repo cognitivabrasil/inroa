@@ -4,6 +4,7 @@
  */
 package modelos;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,7 @@ public class SubFederacao implements java.io.Serializable {
     private Set<RepositorioSubFed> repositorios;
 
     public SubFederacao() {
+        this.id = null;
         this.nome = "";
         this.descricao = "";
         this.url = "";
@@ -52,6 +54,10 @@ public class SubFederacao implements java.io.Serializable {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -89,10 +95,13 @@ public class SubFederacao implements java.io.Serializable {
     }
 
     public Date getProximaAtualizacao() {
-        return new Date(this.ultimaAtualizacao.getTime() + 24 * 60 * 60 * 1000); // soma a periodicidade em horas
+        if (this.ultimaAtualizacao == null) {
+            return null;
+        } else {
+            return new Date(this.ultimaAtualizacao.getTime() + 24 * 60 * 60 * 1000); // soma a periodicidade em dias
+        }
     }
-    
-    
+
     private boolean notBlank(String s) {
         return s != null && !(s.equals(""));
     }
@@ -101,7 +110,6 @@ public class SubFederacao implements java.io.Serializable {
         return s != null && !(s.isEmpty());
     }
 
-    
     /**
      * Updates the repository with the same with the data in r2 safely, ignoring
      * null and blank values
@@ -147,5 +155,27 @@ public class SubFederacao implements java.io.Serializable {
         }
 
         return size;
+    }
+
+    /**
+     * Test if federation is outdated.
+     *
+     * @return true if it is outdated or false if it is updated.
+     */
+    public boolean isOutdated() {
+        if (getProximaAtualizacao() == null || getProximaAtualizacao().before(new Date())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String getUltimaAtualizacaoTxt() {
+        SimpleDateFormat f = new SimpleDateFormat("'Dia' dd/MM/yyyy '&agrave;s' HH:mm:ss");
+        if (getUltimaAtualizacao() == null) {
+            return "Ainda n&atilde;o foi atualizado!";
+        } else {
+            return f.format(getUltimaAtualizacao());
+        }
     }
 }
