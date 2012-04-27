@@ -1,15 +1,12 @@
 <%--
     Document   : consulta
     Created on : 01/07/2009, 16:09:51
+    updated on: 26/04/2012
     Author     : Marcos
 --%>
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="operacoesPostgre.Consultar"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="ferramentaBusca.Recuperador"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
 
@@ -30,8 +27,6 @@
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
 
-            //TODO: ver como resolver isso
-            int numObjetosEncontrados = 10;
         %>
 
 
@@ -59,108 +54,98 @@
 
         <div id="body-resultado">
 
-            <%
-                if (numObjetosEncontrados == 0) { //se nao retorno nenhum objeto
-%>
-            <p align="center">
-                <strong>
-                    <font size="3" face="Verdana, Arial, Helvetica, sans-serif">
-                        Nenhum objeto encontrado
-                    </font>
-                </strong>
-            </p>
+            <c:choose>
+                <c:when test="${documentos.isEmpty()}">
+                    <p align="center">
+                        <strong>
+                            <font size="3" face="Verdana, Arial, Helvetica, sans-serif">
+                                Nenhum objeto encontrado
+                            </font>
+                        </strong>
+                    </p>
+                </c:when>
+                <c:otherwise>
+                    <form action="<%= request.getRequestURI()%>" method="get">
+                        <center>
+
+                            <pg:pager
+                            items="${documentos.size()}"
+                                index="center"
+                                maxPageItems="5"
+                                maxIndexPages="10"
+                                isOffset="true"
+                                export="offset,currentPageNumber=pageNumber"
+                                scope="page"
+                                >
+
+                                <%-- keep track of preference --%>
+                                <pg:param name="style"/>
+                                <pg:param name="position"/>
+                                <pg:param name="index"/>
+                                <pg:param name="maxPageItems"/>
+                                <pg:param name="maxIndexPages"/>
+
+                                <%-- salva pager offset durante as mudancas do form --%>
+                                <input type="hidden" name="pager.offset" value="<%= offset%>">
+
+                                <%-- Inclui paginacao antes dos resultados--%>
+                                <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>
+
+                                <div id="body-resultado-interno">
+                                    <c:forEach var="doc" items="${documentos}" varStatus="status">
+                                        <div class="resultadoConsulta">
+                                            <c:set var="infoDetalhada"
+                                                   value="infoDetalhada.jsp?id=${doc.id}"
+                                                   scope="page"/>
+
+                                            <c:if test="${empty doc.titles}">
+                                                <div class="titulo"><a href='${infoDetalhada}'>T&iacute;tulo n&atilde;o informado.</a></div>
+                                            </c:if>
+                                            <c:forEach var="titulo" items="${doc.titles}">
+                                                <div class="titulo">
+                                                    <a href='${infoDetalhada}'>
+                                                        ${titulo}
+                                                    </a>
+                                                </div>
+                                            </c:forEach>
 
 
-            <%//se retornou objetos
-            } else {
+                                            <c:forEach var="resumo" items="${doc.shortDescriptions}">
+                                                <div class="atributo">${resumo}</div>
+                                            </c:forEach>
 
-                String url = "";
-                //ver como passar o objeto consulta
+                                            <c:if test="${!empty doc.location}">
+                                                <div class="atributo"> Localiza&ccedil;&atilde;o:
+                                                    <c:forEach var="localizacao" items="${doc.location}">
+                                                        <div class="atributo"><a href="${localizacao}" target="_new">${localizacao}</a></div>
+                                                    </c:forEach>
+                                                </div>
+                                            </c:if>
 
-            %>
+                                            <c:if test="${!empty doc.date}">
+                                                <div class="atributo"> Data:
+                                                    <c:forEach var="data" items="${doc.date}">
+                                                        <div class="atributo">${data}</div>
+                                                    </c:forEach>
+                                                </div>
+                                            </c:if>
 
-            <form action="<%= request.getRequestURI()%>" method="get">
-                <center>
+                                            <c:if test="${!empty doc.nomeRep}">
+                                                <div class="atributo"> Reposit&oacute;rio: ${doc.nomeRep}</div>
+                                            </c:if>
 
-                    <pg:pager
-                    items="<%= numObjetosEncontrados%>"
-                        index="center"
-                        maxPageItems="5"
-                        maxIndexPages="10"
-                        isOffset="true"
-                        export="offset,currentPageNumber=pageNumber"
-                        scope="page"
-                        >
-
-                        <%-- keep track of preference --%>
-                        <pg:param name="style"/>
-                        <pg:param name="position"/>
-                        <pg:param name="index"/>
-                        <pg:param name="maxPageItems"/>
-                        <pg:param name="maxIndexPages"/>
-
-                        <%-- salva pager offset durante as mudancas do form --%>
-                        <input type="hidden" name="pager.offset" value="<%= offset%>">
-
-                        <%-- Inclui paginacao antes dos resultados--%>
-                        <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>
-
-                        <div id="body-resultado-interno">
-                            <c:forEach var="doc" items="${documentos}" varStatus="status">
-                                <div class="resultadoConsulta">
-                                    <c:set var="infoDetalhada"
-                                           value="infoDetalhada.jsp?id=${doc.id}"
-                                           scope="page"/>
-
-                                    <c:if test="${empty doc.titles}">
-                                        <div class="titulo"><a href='${infoDetalhada}'>T&iacute;tulo n&atilde;o informado.</a></div>
-                                    </c:if>
-                                    <c:forEach var="titulo" items="${doc.titles}">
-                                        <div class="titulo">
-                                            <a href='${infoDetalhada}'>
-                                                ${titulo}
-                                            </a>
                                         </div>
                                     </c:forEach>
-
-
-                                    <c:forEach var="resumo" items="${doc.shortDescriptions}">
-                                        <div class="atributo">${resumo}</div>
-                                    </c:forEach>
-
-                                    <c:if test="${!empty doc.location}">
-                                        <div class="atributo"> Localiza&ccedil;&atilde;o:
-                                            <c:forEach var="localizacao" items="${doc.location}">
-                                                <div class="atributo"><a href="${localizacao}" target="_new">${localizacao}</a></div>
-                                            </c:forEach>
-                                        </div>
-                                    </c:if>
-
-                                    <c:if test="${!empty doc.date}">
-                                        <div class="atributo"> Data:
-                                            <c:forEach var="data" items="${doc.date}">
-                                                <div class="atributo">${data}</div>
-                                            </c:forEach>
-                                        </div>
-                                    </c:if>
-
-                                    <c:if test="${!empty doc.nomeRep}">
-                                        <div class="atributo"> Reposit&oacute;rio: ${doc.nomeRep}</div>
-                                    </c:if>
-
-
 
                                 </div>
-                            </c:forEach>
+                                <%-- Inclui paginacao depois dos resultados--%>
+                                <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>
 
-                        </div>
-                        <%-- Inclui paginacao depois dos resultados--%>
-                        <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>
-
-                    </pg:pager>
-                </center>
-            </form>
-                    <% }%>
+                            </pg:pager>
+                        </center>
+                    </form>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <div class="rodapeConsulta">&nbsp;</div>
