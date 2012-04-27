@@ -71,11 +71,13 @@ public class ImporterTest {
 		r.setMapeamento(m);
 		
 		DocumentosDAO docDao = mock(DocumentosDAO.class);
+		RepositoryDAO repDao = mock(RepositoryDAO.class);
 				
 		Importer imp = new Importer();
 		imp.setInputFile(new File(inputXmlFile));
 		imp.setRepositorio(r);
 		imp.setDocDao(docDao);
+		imp.setRepDao(repDao);
 		imp.update();
 		
 		OaiOBAA oai = imp.getOaiObaa();
