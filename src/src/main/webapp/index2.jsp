@@ -77,7 +77,7 @@
         <div id="page">
 
 
-            <div class="logoBusca"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></div>
+            <div class="logoBusca"><a href="index"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></a></div>
 
 
             <div class="clear"> </div>
