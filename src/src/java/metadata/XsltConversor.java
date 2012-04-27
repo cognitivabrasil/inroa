@@ -1,6 +1,7 @@
 
 package metadata;
 
+import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -57,6 +58,19 @@ public class XsltConversor implements MetadataConversorInterface {
 			throw new RuntimeException("Erro ao realizar a conversão com XSLT");
 		}
 
+		return sw.toString();
+	}
+
+	public String toObaaFromFile(String inputXmlFile) {
+		// Transform the source XML to System.out.
+		StringWriter sw = new StringWriter();
+		try {
+			t.transform(new StreamSource(new File(inputXmlFile)),
+					new StreamResult(sw));
+		} catch (TransformerException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao realizar a conversão com XSLT");
+		}
 		return sw.toString();
 	}
 

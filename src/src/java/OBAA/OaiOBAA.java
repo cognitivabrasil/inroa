@@ -202,12 +202,28 @@ public class OaiOBAA {
 		}
 	}
         
+        /**
+         * Gets the size.
+         *
+         * @return the number of ListRecords present in the OAI File.
+         */
         public int getSize() {
             return ListRecords.size();
         }
 
+	/**
+	 * Gets the metadata (OBAA).
+	 *
+	 * @param index the index
+	 * @return the metadata in OBAA format or NULL in case it represents a deleted document.
+	 */
 	public OBAA getMetadata(int index) {
-		return ListRecords.get(index).getMetadata().getLom();
+		if(ListRecords.get(index).getMetadata() != null) {
+			return ListRecords.get(index).getMetadata().getLom();
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Header getHeader(int index) {

@@ -380,6 +380,7 @@ src/src/java/robo/atualiza/harvesterOAI/Principal.java -text
 src/src/java/robo/atualiza/harvesterOAI/package.html -text
 src/src/java/robo/atualiza/importaOAI/DadosObjetos.java -text
 src/src/java/robo/atualiza/importaOAI/Header.java -text
+src/src/java/robo/atualiza/importaOAI/Importer.java -text
 src/src/java/robo/atualiza/importaOAI/Indice.java -text
 src/src/java/robo/atualiza/importaOAI/InicioLeituraXML.java -text
 src/src/java/robo/atualiza/importaOAI/InsereObjetoBase.java -text
@@ -524,6 +525,7 @@ src/src/test/java/modelos/SubFederacaoTest.java -text
 src/src/test/java/modelos/SubfederacaoHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioTest.java -text
+src/src/test/java/robo/atualiza/importaOAI/ImporterTest.java -text
 src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text
 src/src/xslt/dc2obaa.xsl -text

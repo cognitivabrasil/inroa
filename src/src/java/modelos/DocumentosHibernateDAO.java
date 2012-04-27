@@ -144,8 +144,10 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
         return sessionFactory.getCurrentSession();
     }
 
-    /**
-     * @param session the session to set
-     */
+
+    @Override 
+    public void flush() {
+    	getSession().flush();
+    }
 
 }
