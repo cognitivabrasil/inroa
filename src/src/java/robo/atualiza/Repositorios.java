@@ -185,7 +185,7 @@ public class Repositorios {
 
                 //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
                 if (data_ultima_atualizacao == null || Operacoes.testarDataAnterior1970(data_ultima_atualizacao)) {
-                    rep.setDataOrigem(null); //se passar null para o metodo de harvester ele busca desde o inicio do rep
+                    rep.setDataOrigem(new Date(0)); //se passar null para o metodo de harvester ele busca desde o inicio do rep
                     System.out.println("FEB: Deletando todos os documentos do repositório: " + rep.getNome().toUpperCase());
                     try {
                         int result = rep.dellAllDocs();
@@ -269,6 +269,8 @@ public class Repositorios {
             throw e;
         } catch (Exception e) {
             System.err.println("\nFEB ERRO ao efetuar o Harvester " + e.toString() + "\n");
+            e.printStackTrace();
+
             throw e;
         }
     }

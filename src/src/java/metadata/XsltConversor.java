@@ -61,11 +61,11 @@ public class XsltConversor implements MetadataConversorInterface {
 		return sw.toString();
 	}
 
-	public String toObaaFromFile(String inputXmlFile) {
+	public String toObaaFromFile(File inputXmlFile) {
 		// Transform the source XML to System.out.
 		StringWriter sw = new StringWriter();
 		try {
-			t.transform(new StreamSource(new File(inputXmlFile)),
+			t.transform(new StreamSource(inputXmlFile),
 					new StreamResult(sw));
 		} catch (TransformerException e) {
 			e.printStackTrace();

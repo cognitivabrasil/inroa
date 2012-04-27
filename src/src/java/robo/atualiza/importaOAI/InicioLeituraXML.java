@@ -77,31 +77,18 @@ public class InicioLeituraXML {
             } //TODO: isso aqui ta mal. Se conseguiu nao tem que imprimir nada e todo o codigo deve estar dentro do else.
 
             DocumentosDAO docDao = ctx.getBean(DocumentosDAO.class);
-            
-            SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
-            Session session = sessionFactory.getCurrentSession();
-
-            docDao.setRepository(r);
+            RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
             
             for (int i = 0; i < caminhoXML.size(); i++) {
                 File arquivoXML = new File(caminhoXML.get(i));
                 if (arquivoXML.isFile() || arquivoXML.canRead()) {
-
-                    OaiOBAA oai = OaiOBAA.fromFilename(caminhoXML.get(i));
-                    for (int j = 0; j < oai.getSize() - 1; j++) {
-                        System.out.println("j: " + new Integer(j) + "/" + new Integer(oai.getSize()));
-                        metadata.Header header = oai.getHeader(j);
-                        OBAA obaa = null;
-                        if (!header.isDeleted()) {
-                            obaa = oai.getMetadata(j);
-                            System.out.println(obaa.getTitles().get(0));
-
-                        }
-                        docDao.save(obaa, oai.getHeader(j));
-                        System.out.println("Saved");
-                    }
-                    System.out.println("Out of for...");
-
+                	Importer imp = new Importer();
+                	imp.setInputFile(arquivoXML);
+                	imp.setRepositorio(r);
+                	imp.setDocDao(docDao);
+                	imp.setRepDao(repDao);
+                	imp.update();
+                	
                     //apaga arquivo XML
                     arquivoXML.delete();
 
@@ -110,7 +97,8 @@ public class InicioLeituraXML {
                 }
                 
             }
+            
             /* gravar realmente as modificações */
-            session.flush();
+            docDao.flush();
     }
 }

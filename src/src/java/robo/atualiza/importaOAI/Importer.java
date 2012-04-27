@@ -1,21 +1,30 @@
 package robo.atualiza.importaOAI;
 
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import OBAA.OaiOBAA;
 import metadata.XsltConversor;
 import modelos.DocumentosDAO;
 import modelos.Repositorio;
+import modelos.RepositoryDAO;
 
 // TODO: Auto-generated Javadoc
 public class Importer {
 	XsltConversor conversor;
 	Repositorio rep;
-	String inputXmlFile;
+	File inputXmlFile;
 	OaiOBAA oai;
 	
 	@Autowired
 	private DocumentosDAO docDao;
+	
+	@Autowired
+	private RepositoryDAO repDao;
 
 	/**
 	 * Sets the input file.
@@ -23,8 +32,14 @@ public class Importer {
 	 * @param inputFile the new input file
 	 */
 	public void setInputFile(String inputFile) {
-		this.inputXmlFile = inputFile; // input xml	
+		setInputFile(new File(inputFile));	
 	}
+	
+	public void setInputFile(File arquivoXML) {
+		inputXmlFile = arquivoXML;
+		
+	}
+
 
 	/**
 	 * Sets the repositorio.
@@ -43,9 +58,29 @@ public class Importer {
 		assert(inputXmlFile != null);
 		oai = OaiOBAA.fromString(conversor.toObaaFromFile(inputXmlFile));
 		
-		for(int i = 0; i < oai.getSize(); i++) {
+		docDao.setRepository(rep);
+		for(int i = 0; i < oai.getSize()-1; i++) {
+			System.out.print("Trying to get: ");
+			System.out.println(i);
 			docDao.save(oai.getMetadata(i), oai.getHeader(i));
 		}
+		
+		
+		// TODO: move the conversion to and from String of the date to OaiOBAA class
+		System.out.println(oai.getResponseDate());
+		Date d;
+		try {
+			d = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(oai.getResponseDate());
+			
+			System.out.println("Date: " + d.toString());
+			rep.setDataOrigem(d);
+			repDao.save(rep);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			System.err.println("Error in parsing date from OaiPMH, probably malformed XML.");
+		}
+
+		
 		
 		docDao.flush();
 	}
@@ -68,9 +103,15 @@ public class Importer {
 	 * 
 	 * @param documentDao the DocumentDAO to set
 	 */
-	protected void setDocDao(DocumentosDAO documentDao) {
+	void setDocDao(DocumentosDAO documentDao) {
 		this.docDao = documentDao;
 	}
+	
+	void setRepDao(RepositoryDAO repositoryDao) {
+		this.repDao = repositoryDao;
+	}
+
+
 
 
 

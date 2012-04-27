@@ -73,7 +73,7 @@ public class ImporterTest {
 		DocumentosDAO docDao = mock(DocumentosDAO.class);
 				
 		Importer imp = new Importer();
-		imp.setInputFile(inputXmlFile);
+		imp.setInputFile(new File(inputXmlFile));
 		imp.setRepositorio(r);
 		imp.setDocDao(docDao);
 		imp.update();

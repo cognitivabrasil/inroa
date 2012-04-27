@@ -76,10 +76,8 @@ public class Principal {
 
         //out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         listRecords.getDocument(); //lista o registros retornados
-        
-        MetadataConversorInterface conv = new XsltConversorDefault();
-        
-        out.write(conv.toObaa(listRecords.toString())); //imprime no arquivo os registros transformados para string
+                
+        out.write(listRecords.toString()); //imprime no arquivo os registros transformados para string
         out.close();//fecha o arquivo xml que estava sendo escrito
 
         while (!resumption.isEmpty()) { //enquanto existir resumptionToken segue efetuando harvester
@@ -96,7 +94,7 @@ public class Principal {
             resumption = listRecordsResume.getResumptionToken(); //armazena na variavel resumption o proximo ResumptionToken
             listRecordsResume.getDocument();
 
-            outResume.write(conv.toObaa(listRecordsResume.toString())); //imprime no arquivo o resultado
+            outResume.write(listRecordsResume.toString()); //imprime no arquivo o resultado
             outResume.close(); //fecha o arquivo xml
 
         }
