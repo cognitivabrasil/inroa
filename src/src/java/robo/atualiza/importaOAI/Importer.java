@@ -59,10 +59,28 @@ public class Importer {
 		oai = OaiOBAA.fromString(conversor.toObaaFromFile(inputXmlFile));
 		
 		docDao.setRepository(rep);
-		for(int i = 0; i < oai.getSize()-1; i++) {
+		for(int i = 0; i < oai.getSize(); i++) {
 			System.out.print("Trying to get: ");
 			System.out.println(i);
-			docDao.save(oai.getMetadata(i), oai.getHeader(i));
+			
+//			try {
+//				oai.getMetadata(i).getGeneral().getIdentifier().getEntry();
+//			}
+//			catch(NullPointerException e) {
+//				System.err.println("Elemento " + new Integer(i).toString()
+//						+ " gera nullPointer ao tentar pegar o OBAAEntry,"
+//						+ "provavelmente erro no repositório remoto ou no mapeamento");
+//				continue;
+//			}
+			
+			try {
+				
+				docDao.save(oai.getMetadata(i), oai.getHeader(i));
+			}
+			catch(NullPointerException e) {
+				System.err.println("NullPointer ao tentar inserir elemento " + new Integer(i).toString()
+						+ "");
+			}
 		}
 		
 		

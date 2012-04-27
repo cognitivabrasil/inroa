@@ -65,7 +65,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     public void save(OBAA obaa, Header h) {
         DocumentoReal doc = new DocumentoReal();
         doc.setDeleted(false);
-        System.out.println("Going to create documento "+h.getIdentifier());
+        //System.out.println("Going to create documento "+h.getIdentifier());
 
         Repositorio r = getRepository();
         doc.setRepositorio(r);
@@ -99,13 +99,13 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
         }
 
         try {
-            System.out.println("Trying to save");
+            //System.out.println("Trying to save");
             //Transaction t = getSession().beginTransaction();
 
 
             getSession().save(doc);
             for (Objeto o : doc.getObjetos()) {
-                System.out.println("Saving object");
+                //System.out.println("Saving object");
 
                 getSession().save(o);
             }

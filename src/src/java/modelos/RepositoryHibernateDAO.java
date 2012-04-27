@@ -4,24 +4,26 @@
  */
 package modelos;
 
-import java.util.List;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class RepositoryHibernateDAO.
  *
  * @author paulo
  */
 public class RepositoryHibernateDAO extends AbstractHibernateDAO<Repositorio> implements RepositoryDAO {
  
+	@Override
     public Repositorio get(String name) {
         Session s = this.sessionFactory.getCurrentSession();
-        return (Repositorio)s.createCriteria(Repositorio.class).add(Restrictions.eq("nome", name).ignoreCase()).uniqueResult();
+        return (Repositorio)s.createCriteria(Repositorio.class).
+        		add(Restrictions.eq("nome", name).ignoreCase()).uniqueResult();
     }
     
 
+    @Override
     public void updateNotBlank(Repositorio r2) {
         if(r2.getId() == null) {
             throw new IllegalArgumentException("Cant update a new repository, save it instead");

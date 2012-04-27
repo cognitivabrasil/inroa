@@ -44,6 +44,7 @@ public class Repositorio implements java.io.Serializable {
         metadataPrefix = "";
         documentos = new HashSet<DocumentoReal>(0);
         ultimaAtualizacao = new Date(0);
+        dataOrigem = new Date(0);
         namespace = "";
         periodicidadeAtualizacao = 1;
         colecoesInternal = "";

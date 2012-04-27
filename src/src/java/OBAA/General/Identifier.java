@@ -27,7 +27,7 @@ public class Identifier {
     @Element(required=false)	
     private String catalog;
 
-    @Element(required=true)
+    @Element(required=false)
     private String entry;
 
     public Identifier() {
