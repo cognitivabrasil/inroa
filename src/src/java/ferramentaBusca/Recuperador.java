@@ -379,6 +379,8 @@ public class Recuperador {
 
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
+        else
+            consultaSql += ")";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
@@ -424,8 +426,11 @@ public class Recuperador {
             addOr = true;            
         }
         
+
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
+        else
+            consultaSql += ")";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
@@ -472,8 +477,11 @@ public class Recuperador {
             addOr = true;            
         }
        
+
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
+        else
+            consultaSql += ")";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
@@ -538,7 +546,9 @@ public class Recuperador {
        
 
         if (!tokensConsulta.isEmpty())
-            consultaSql += ") AND (r1w.token=";
+            consultaSql += ")) AND (r1w.token=";
+        else
+            consultaSql += ")";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
@@ -593,6 +603,8 @@ public class Recuperador {
         
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
+        else
+            consultaSql += ")";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
@@ -649,6 +661,8 @@ public class Recuperador {
         
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
+        else
+            consultaSql += ")";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
@@ -717,7 +731,9 @@ public class Recuperador {
         }
 
         if (!tokensConsulta.isEmpty())
-            consultaSql += ") AND (r1w.token=";
+            consultaSql += ")) AND (r1w.token=";
+        else
+            consultaSql += ")";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
