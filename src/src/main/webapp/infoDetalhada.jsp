@@ -39,17 +39,15 @@ modelo de tópico:
         <div id="page">
             <%
 
-                String obaaEntry = "";
-                int idRep = 0;
-                int idSubrep = 0;
+                int idDoc = 0;
+
                 boolean variaveisParametro = false;
                 try {
 ///coletando valores por parametro
-                    obaaEntry = request.getParameter("id"); //coleta o obaaEntry
-                    idRep = Integer.parseInt(request.getParameter("idrep"));
-                    idSubrep = Integer.parseInt(request.getParameter("idsubrep"));
+                    idDoc = Integer.parseInt(request.getParameter("id"));
+                    
 
-                    if (obaaEntry.isEmpty() || (idRep <= 0 && idSubrep <= 0)) {
+                    if (idDoc <= 0) {
                         out.print("<p class='textoErro'>Erro! Parametros sem valor</p>");
                         out.print("<script type='text/javascript'>alert(Erro! Parametros sem valor'); "
                                 + "history.go(-1);</script>");
@@ -71,7 +69,7 @@ modelo de tópico:
                     HashMap dados = new HashMap(); //instancia um HashMap
 
                     try {
-                        Consultar busca = new Consultar(obaaEntry, idRep, idSubrep, con); //faz a con
+                        Consultar busca = new Consultar(idDoc, con); //faz a con
                         con.close();
                         resultHash = busca.getResultado(); //adicona no ArreyList o resultado da busca
                     } catch (NullPointerException err) {

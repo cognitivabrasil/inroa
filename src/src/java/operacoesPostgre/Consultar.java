@@ -49,20 +49,15 @@ public class Consultar {
      * @param idRep id do reposit&oacute;rio o qual o objeto pertence
      * @param con Conexão com a base de dados local
      */
-    public Consultar(String obaa_entry, int idRep, int idSubrep, Connection con) throws NullPointerException {
+    public Consultar(int idDoc, Connection con) throws NullPointerException {
         try {
 
 
             //consulta sql
             String consulta = "SELECT o.atributo, o.valor "
                     + "FROM objetos o, documentos d "
-                    + "WHERE d.obaa_entry = '" + obaa_entry.trim() + "' "
+                    + "WHERE d.id = " + idDoc
                     + "AND o.documento = d.id ";
-            if (idRep > 0) { //se for informado id do repositorio consulta no repositorio
-                consulta += "AND d.id_repositorio=" + idRep;
-            } else if (idSubrep > 0) { //se não consulta no repositorio da subfederacao
-                consulta += "AND d.id_rep_subfed=" + idSubrep;
-            }
 
 
             PreparedStatement stmt = con.prepareStatement(consulta);

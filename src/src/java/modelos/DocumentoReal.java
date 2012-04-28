@@ -175,7 +175,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         for (Objeto o : getObjetos()) {
             if (o.getAtributo().equalsIgnoreCase("obaaDescription")) {
                 if (o.getValor().length() >= 500) {
-                    l.add(o.getValor().substring(0, 500) + " (...)");
+                    l.add(o.getValor().substring(0, 500) + "(...)");
                 } else {
                     l.add(o.getValor());
                 }

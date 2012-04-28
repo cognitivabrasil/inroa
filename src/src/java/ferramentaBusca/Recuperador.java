@@ -78,8 +78,10 @@ public class Recuperador {
                     sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC, SUM (weight) DESC;";
                 }
             } else {
+//TODO: ver como vai ficar essa consulta
+//                sqlOrdenacao = "') GROUP BY d.id ORDER BY SUM(weight) DESC;";
+                  sqlOrdenacao = "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml ORDER BY SUM(weight) DESC LIMIT "+consulta.getLimit()+" OFFSET "+consulta.getOffset()+";";
 
-                sqlOrdenacao = "') GROUP BY d.id ORDER BY SUM(weight) DESC;";
             }
         }
 
@@ -155,7 +157,9 @@ public class Recuperador {
     //}
         //docs = s.createSQLQuery("SELECT * from documentos WHERE id=1006").addEntity(DocumentoReal.class).list();
         docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
-            
+        
+        //TODO: colocar o valor certo no sizeResult
+        consulta.setSizeResult(100);  
         
         return docs;
         //return null;

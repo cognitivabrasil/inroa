@@ -8,6 +8,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -45,7 +46,7 @@
                 &nbsp;Consulta efetuada: <i>"<strong>${BuscaModel.consulta}</strong>"</i>
             </div>
             <div class="direita">
-                Total de <strong>${pages.getNrOfElements()}</strong> objeto(s) encontrado(s)&nbsp;
+                Total de <strong>${BuscaModel.sizeResult}</strong> objeto(s) encontrado(s)&nbsp;
             </div>
 
         </div>
@@ -66,6 +67,36 @@
                 <c:otherwise>
                     <form action="<%= request.getRequestURI()%>" method="get">
                         <center>
+
+                            <pg:pager
+                            items="100"
+                                url="consulta"
+                                index="center"
+                                maxPageItems="${BuscaModel.limit}"
+                                maxIndexPages="10"
+                                isOffset="true"
+                                export="offset,currentPageNumber=pageNumber"
+                                scope="page"
+                                >                                
+                                <pg:param name="consulta"/>
+                                <pg:param name="repositorios"/>
+                                <pg:param name="federacoes"/>
+                                <pg:param name="repSubfed"/>
+                                <pg:param name="autor"/>
+                                
+
+                                <%-- keep track of preference --%>
+                                <pg:param name="style"/>
+                                <pg:param name="position"/>
+                                <pg:param name="index"/>
+                                <pg:param name="maxPageItems"/>
+                                <pg:param name="maxIndexPages"/>
+
+                                <%-- salva pager offset durante as mudancas do form --%>
+                                <input type="hidden" name="pager.offset" value="<%= offset%>">
+
+                                <%-- Inclui paginacao antes dos resultados--%>
+                                <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>
 
                                 <div id="body-resultado-interno">
                                     <c:forEach var="doc" items="${documentos}" varStatus="status">
@@ -114,6 +145,10 @@
                                     </c:forEach>
 
                                 </div>
+                                <%-- Inclui paginacao depois dos resultados--%>
+                                <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>
+
+                            </pg:pager>
                         </center>
                     </form>
                 </c:otherwise>
