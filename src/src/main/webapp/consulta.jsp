@@ -6,7 +6,7 @@
 --%>
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
 
@@ -29,6 +29,7 @@
 
         %>
 
+        
 
         <div class="logoBusca"><a href="index"><img src="imagens/Logo FEB_reduzido.png" width="7%" alt="Logo FEB_reduzido"/></a></div>
 
@@ -69,7 +70,7 @@
                         <center>
 
                             <pg:pager
-                            items="100"
+                            items="${BuscaModel.sizeResult}"
                                 url="consulta"
                                 index="center"
                                 maxPageItems="${BuscaModel.limit}"
@@ -78,7 +79,7 @@
                                 export="offset,currentPageNumber=pageNumber"
                                 scope="page"
                                 >                                
-                                <pg:param name="consulta"/>
+                                
                                 <pg:param name="repositorios"/>
                                 <pg:param name="federacoes"/>
                                 <pg:param name="repSubfed"/>
@@ -94,6 +95,7 @@
 
                                 <%-- salva pager offset durante as mudancas do form --%>
                                 <input type="hidden" name="pager.offset" value="<%= offset%>">
+                                
 
                                 <%-- Inclui paginacao antes dos resultados--%>
                                 <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>

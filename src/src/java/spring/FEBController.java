@@ -70,7 +70,7 @@ public final class FEBController {
         model.addAttribute("subDAO", subDao);
         return "index2";
     }
-    
+
     @RequestMapping("/consulta")
     public String consulta(HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
@@ -83,7 +83,7 @@ public final class FEBController {
             return "index";
         } else {
             try {
-                if(offset!=null){
+                if (offset != null) {
                     consulta.setOffset(offset);
                 }
 
@@ -94,7 +94,7 @@ public final class FEBController {
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                System.err.println("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "
+                System.err.println("FEB ERRO: Erro ao efetuar a consulta na base de dados. Exception: "
                         + e.toString());
                 return "index";
             }
@@ -120,6 +120,8 @@ public final class FEBController {
                 model.addAttribute("documentos", docs);
                 return "consulta";
             } catch (Exception e) {
+                model.addAttribute("repDAO", repDao);
+                model.addAttribute("subDAO", subDao);
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
                 System.err.println("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "
