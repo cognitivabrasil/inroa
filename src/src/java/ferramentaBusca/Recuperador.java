@@ -72,10 +72,10 @@ public class Recuperador {
 
                 if (consulta.getConsulta().isEmpty()) {
                     //COM autor, SEM termo de busca
-                    sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC;";
+                    sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC LIMIT "+consulta.getLimit()+" OFFSET "+consulta.getOffset()+";";
                 } else {
                     //COM autor, COM termo de busca
-                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC, SUM (weight) DESC;";
+                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC, SUM (weight) DESC LIMIT "+consulta.getLimit()+" OFFSET "+consulta.getOffset()+";";
                 }
             } else {
 //TODO: ver como vai ficar essa consulta
