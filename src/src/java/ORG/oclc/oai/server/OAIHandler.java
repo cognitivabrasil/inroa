@@ -125,6 +125,7 @@ public class OAIHandler extends HttpServlet {
                 attributes = getAttributes(properties);
             }
             
+            // TODO: Change to use Spring
             SingletonConfig.initConfig(context);
 
             log.debug("Store global properties");

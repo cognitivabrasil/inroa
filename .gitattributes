@@ -358,10 +358,6 @@ src/src/java/modelos/SubFederacaoHibernateDAO.java -text
 src/src/java/modelos/Usuario.java -text
 src/src/java/modelos/UsuarioDAO.java -text
 src/src/java/modelos/UsuarioHibernateDAO.java -text
-src/src/java/operacoesPostgre/Consultar.java -text
-src/src/java/operacoesPostgre/Remover.java -text
-src/src/java/operacoesPostgre/package.html -text
-src/src/java/postgres/AtualizaBase.java -text
 src/src/java/postgres/Conectar.java -text
 src/src/java/postgres/Excluir.java -text
 src/src/java/postgres/SingletonConfig.java -text
@@ -385,7 +381,6 @@ src/src/java/robo/atualiza/importaOAI/Indice.java -text
 src/src/java/robo/atualiza/importaOAI/InicioLeituraXML.java -text
 src/src/java/robo/atualiza/importaOAI/InsereObjetoBase.java -text
 src/src/java/robo/atualiza/importaOAI/OAI_Interface.java -text
-src/src/java/robo/atualiza/importaOAI/XmlSaxReader.java -text
 src/src/java/robo/atualiza/subfedOAI/Objetos.java -text
 src/src/java/robo/atualiza/subfedOAI/ParserListSets.java -text
 src/src/java/robo/atualiza/subfedOAI/ParserObjetos.java -text
