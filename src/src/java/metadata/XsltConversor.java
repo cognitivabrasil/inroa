@@ -55,7 +55,7 @@ public class XsltConversor implements MetadataConversorInterface {
 					new StreamResult(sw));
 		} catch (TransformerException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao realizar a conversão com XSLT");
+			throw new RuntimeException("Erro ao realizar a conversão com XSLT", e);
 		}
 
 		return sw.toString();
@@ -69,7 +69,7 @@ public class XsltConversor implements MetadataConversorInterface {
 					new StreamResult(sw));
 		} catch (TransformerException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Erro ao realizar a conversão com XSLT");
+			throw new RuntimeException("Erro ao realizar a conversão com XSLT", e);
 		}
 		return sw.toString();
 	}

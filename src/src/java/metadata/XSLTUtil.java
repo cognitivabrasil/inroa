@@ -14,14 +14,18 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author paulo
  */
 public class XSLTUtil {
+	static Logger log = Logger.getLogger(XSLTUtil.class.getName());
+
 	public static void handleException(Exception ex) {
 
-     	System.out.println("EXCEPTION: " + ex);
+     	log.error("EXCEPTION: " + ex);
      	ex.printStackTrace();
 }
 

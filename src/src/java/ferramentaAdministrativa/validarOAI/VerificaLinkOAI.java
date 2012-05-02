@@ -17,6 +17,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
 import robo.atualiza.harvesterOAI.Identify;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
@@ -26,6 +29,8 @@ import robo.util.Operacoes;
  * @author Marcos
  */
 public class VerificaLinkOAI extends HttpServlet {
+	static Logger log = Logger.getLogger(VerificaLinkOAI.class.getName());
+
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -108,10 +113,10 @@ public class VerificaLinkOAI extends HttpServlet {
                 arquivoXML.delete(); //apaga arquivo XML
                 resultado=true;
             } else {
-                System.err.println("FEB ERRO: O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoArquivoXML);
+                log.error("FEB ERRO: O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoArquivoXML);
             }
         } else {
-            System.out.println("FEB ERRO: O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
+            log.error("FEB ERRO: O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
         }
         }catch (Exception e){
             resultado = false;

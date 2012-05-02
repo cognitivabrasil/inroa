@@ -3,6 +3,9 @@ package ferramentaBusca;
 import ferramentaBusca.indexador.*;
 import postgres.Conectar;
 import java.sql.*;
+
+import org.apache.log4j.Logger;
+
 import robo.atualiza.importaOAI.Indice;
 
 /**
@@ -10,6 +13,8 @@ import robo.atualiza.importaOAI.Indice;
  * @author Marcos
  */
 public class IndexadorBusca {
+	static Logger log = Logger.getLogger(IndexadorBusca.class.getName());
+
 
     Indexador indexar = new Indexador();
     String atributos[] = {"obaaEntry", "obaaTitle", "obaaKeyword", "obaaEntity"}; //atributos para o criar o indice
@@ -61,19 +66,19 @@ public class IndexadorBusca {
             Statement stmDados = con.createStatement();
             ResultSet rset = stmDados.executeQuery(sql); //executa a consulta que esta na string sqlDadosLdap
             while (rset.next()) {
-                System.out.println("Indexando repositorio " + rset.getString("nome"));
+                log.info("Indexando repositorio " + rset.getString("nome"));
                 IndexaRep(rset.getInt("id"), con); //indexa o repositorio informado
 
             }
-            System.out.println("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
-            System.out.println("Calculando o indice....");
+            log.debug("\nInseriu todos. Agora está preenchedo tabelas auxiliares.");
+            log.debug("Calculando o indice....");
             Long meio = System.currentTimeMillis();
 
             indexar.populateR1(con); //preenche as tabelas auxiliares
 
             Long fim = System.currentTimeMillis();
-            System.out.println("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
-            System.out.println("Indice calculado!");
+            log.trace("- Levou " + ((fim - meio) / 1000) + " segundos calculando tabelas auxiliares.");
+            log.debug("Indice calculado!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -104,7 +109,7 @@ public class IndexadorBusca {
             Long inicio = System.currentTimeMillis();
             StopWordTAD stWd = new StopWordTAD(con);
             Indice indice = new Indice();
-            System.out.println("FEB: Inicio da indexacao...");
+            log.info("FEB: Inicio da indexacao...");
             try {
                 String sqlDoc = "";
                 if (idRepositorio > 0) {
@@ -144,24 +149,24 @@ public class IndexadorBusca {
 
 
                 Long meio = System.currentTimeMillis();
-                System.out.println("\n FEB: Levou " + ((meio - inicio) / 1000) + " segundos inserindo objetos.");
+                log.trace("\n FEB: Levou " + ((meio - inicio) / 1000) + " segundos inserindo objetos.");
 
 
             } catch (SQLException e) {
-                System.out.println("FEB: SQL Exception... Erro no SQL: "+ e.getMessage());
+                log.error("FEB: SQL Exception... Erro no SQL: "+ e.getMessage(), e);
             }
         }else
-            System.err.println("FEB - ERRO: Deve ser informado o id da subFedera&ccedil;&atilde;o ou do reposit&oacute;rio.");
+            log.error("FEB - ERRO: Deve ser informado o id da subFedera&ccedil;&atilde;o ou do reposit&oacute;rio.");
     }
 
 
     public void recalcularIndice(Connection con) {
         try {
-            System.err.println("FEB: recalculando o indice...");
+            log.debug("FEB: recalculando o indice...");
             Long inicio = System.currentTimeMillis();
             indexar.populateR1(con); //calcula/preeche as tabelas auxiliares
             Long fim = System.currentTimeMillis();
-            System.out.println("indice recalculado. Levou " + ((fim - inicio) / 1000) + " segundos inserindo objetos.");
+            log.debug("indice recalculado. Levou " + ((fim - inicio) / 1000) + " segundos inserindo objetos.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -186,7 +191,7 @@ public class IndexadorBusca {
         try {
             con.close(); //fechar conexao com o banco de dados
         } catch (SQLException e) {
-            System.out.println("Erro ao fechar conexao com o Postgres: "+e.getMessage());
+            log.error("Erro ao fechar conexao com o Postgres", e);
         }
 
     }

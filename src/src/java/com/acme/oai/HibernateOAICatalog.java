@@ -35,6 +35,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import modelos.DocumentoReal;
+
+import org.apache.log4j.Logger;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
 import org.hibernate.Criteria;
@@ -54,6 +56,7 @@ import postgres.Conectar;
  * @author Jeffrey A. Young, OCLC Online Computer Library Center
  */
 public class HibernateOAICatalog extends AbstractCatalog {
+	 static Logger log = Logger.getLogger(HibernateOAICatalog.class.getName());
     /**
      * maximum number of entries to return for ListRecords and ListIdentifiers
      */
@@ -386,10 +389,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
                   date_from = just_date.parse(from);
             }
             catch(ParseException e2) {
-                System.err.println("Erro nas datas\n");
-                System.err.println(from);
-                System.err.println(e.getMessage());
-                System.err.println(e2.getMessage());
+                log.info("Erro nas datas " + from + " " + e.getMessage() + " " + e2.getMessage());
                 use_from = false;
             }
         }
@@ -400,14 +400,12 @@ public class HibernateOAICatalog extends AbstractCatalog {
         }
         catch(ParseException e) {
             try {
-                  SimpleDateFormat just_date = OAIUtil.dateFormatter();
-                  date_until = just_date.parse(until);
+                  SimpleDateFormat justDate = OAIUtil.dateFormatter();
+                  date_until = justDate.parse(until);
             }
             catch(ParseException e2) {
-                System.err.println("Erro nas datas\n");
-                System.err.println(until);
-                System.err.println(e.getMessage());
-                System.err.println(e2.getMessage());
+                log.info("Erro nas datas " + until + " " + e.getMessage() + " " + e2.getMessage());
+
                 use_until = false;
             }
         }

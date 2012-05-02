@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import modelos.Consulta;
 import modelos.DocumentoReal;
+
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +29,8 @@ import spring.ApplicationContextProvider;
  * @author Marcos, Luiz
  */
 public class Recuperador {
+	static Logger log = Logger.getLogger(Recuperador.class.getName());
+
 
     public Recuperador() {
     }
@@ -91,7 +95,7 @@ public class Recuperador {
                     try {
                         LRU = cache.verificaConsulta();
                     } catch (SQLException e) {
-                        System.out.println("FEB: Não foi possível verificar se a consulta estava nos LRU "+e);
+                        log.debug("FEB: Não foi possível verificar se a consulta estava nos LRU ", e);
                         LRU = false;
                     }
 
@@ -165,147 +169,6 @@ public class Recuperador {
         //return null;
     }
 
-
-
-
-    /**
-     * M&eacute;todo para busca de objetos na base de dados. Se n&atilde;o for passado nenhum dos 3 &uacute;ltimos par&acirc;metros a busca ser&aacute; realizada em toda a confedera&ccedil;&atilde;o, deve ser especificado apenas os ids de onde deseja buscar, os demais par&acirc;metros de id devem ser passados null.
-     * @param consulta Texto que consultado.
-     * @param con Conex&atilde;o com a base de dados da confedera&ccedil;&atilde;o.
-     * @param idRepLocal id(s) do(s) reposit&oacute;rio(s) da confedera&ccedil;&atilde;o.
-     * @param idSubfed id(s) da(s) subfedera&ccedil;&atilde;o
-     * @param idSubRep id(s) do(s) reposit&otirio(s) da(s) subfedera&ccedil;&atilde;o
-     * @param ordenacao pelo que ser&aacute; ordenado o resultado, pela data ou por relev&atilde;ncia
-     * @return ArrayList de inteiros contendo os ids dos documentos retornados na busca. Em ordem de relev&acirc;ncia.
-     * @exception SQLException
-     */
-
-/*
-    public ArrayList<Integer> busca(String consulta,Connection con, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String ordenacao) throws SQLException {
-        
-        return (busca(consulta, null, con, idRepLocal, idSubfed, idSubRep, ordenacao));
-    }
-    
-    public ArrayList<Integer> busca(String consulta, String autor, Connection con, String[] idRepLocal, String[] idSubfed, String[] idSubRep, String ordenacao) throws SQLException {
-
-
-        if (idRepLocal == null) {  //tratamento de consistencia, para variaveis nulas
-            idRepLocal = new String[1];
-            idRepLocal[0] = "";
-        }
-        if (idSubfed == null) {
-            idSubfed = new String[1];
-            idSubfed[0] = "";
-        }
-        if (idSubRep == null) {
-            idSubRep = new String[1];
-            idSubRep[0] = "";
-        }
-
-
-        StopWordTAD stWd = new StopWordTAD(con);
-        Documento docConsulta = new Documento(consulta, stWd); //Cria tad Documento informando a consulta
-        ArrayList<String> tokensConsulta = docConsulta.getTokens(); //tokeniza as palavras da consulta e adiciona no ArrayList
-        ArrayList<Integer> idsResultados = new ArrayList<Integer>(); //lista dos ids dos documentos retornados da consulta
-
-        boolean confederacao = false;
-        boolean LRU = false;
-        boolean autorb = true;
-        
-        LRU cache = new LRU(tokensConsulta, con);
-
-        String consultaSql = ""; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
-        String sqlOrdenacao = ""; //eh preenchido pelo if que testa qual o tipo de ordenacao
-
-        if (autor == null || autor.isEmpty()) autorb = false;
-        
-        if (ordenacao.equals("data")) {
-            //TODO: Fazer RSS para autor?
-            sqlOrdenacao = "') GROUP BY r1w.tid, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
-        } else {
-            
-            if (autorb){
-                
-                if (consulta.isEmpty()){
-                    //COM autor, SEM termo de busca
-                    sqlOrdenacao = " a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, '"+autor+"')) DESC;";
-                } else {
-                    //COM autor, COM termo de busca
-                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~@@'"+autor+"' GROUP BY r1w.tid, a.nome ORDER BY (qgram(a.nome, '"+autor+"')) DESC, SUM (weight) DESC;";
-                }
-            } else {
-                
-                sqlOrdenacao = "') GROUP BY r1w.tid ORDER BY SUM(weight) DESC;";
-            }
-        }
-
-        if (idRepLocal.length == 1 && idRepLocal[0].isEmpty()) {
-            if (idSubfed.length == 1 && idSubfed[0].isEmpty()) {
-                if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    LRU = cache.verificaConsulta();
-                    
-                    if (!LRU && !autorb) {
-                        confederacao = true;
-                        //busca na confederacao
-                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, autorb);
-                    } else { 
-                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, autorb);
-                    }
-                } else {
-                    consultaSql = busca_subRep(tokensConsulta, idSubRep, sqlOrdenacao, autorb); //busca no subrepositorio
-                }
-            } else { //subfed != vazio e repLocal = vazio
-                if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_subfed(tokensConsulta, idSubfed, sqlOrdenacao, autorb);//busca na subfederacao
-                } else {
-                    consultaSql = busca_subfed_subrep(tokensConsulta, idSubfed, idSubRep, sqlOrdenacao, autorb); //busca na subfederacao e no subrepositorio
-                }
-            }
-        } else { //replocal != vazio
-            if (idSubfed.length == 1 && idSubfed[0].isEmpty()) { //replocal != vazio e subfed = vazio
-                if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_repLocal(tokensConsulta, idRepLocal, sqlOrdenacao, autorb); //busca no repositorio local
-                } else {
-                    consultaSql = busca_repLocal_subrep(tokensConsulta, idRepLocal, idSubRep, sqlOrdenacao, autorb); //busca no reposiotio local e no subrepositorio
-                }
-            } else { //replocal != vazio e subfed != vazio
-                if (idSubRep.length == 1 && idSubRep[0].isEmpty()) {
-                    consultaSql = busca_repLocal_subfed(tokensConsulta, idRepLocal, idSubfed, sqlOrdenacao, autorb);//busca na subfederacao
-                } else {
-                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, idRepLocal, idSubfed, idSubRep, sqlOrdenacao, autorb); //busca na subfederacao e no subrepositorio
-                }
-            }
-        }
-        
-
-        if (LRU && !autorb){ //se a consulta ja esta no banco de dados e não for por autor
-            //TODO: removi pq tava dando erro
-            //idsResultados = cache.getResultado();
-        }
-        
-        else { //se a consulta nao tiver no banco
-            
-            System.out.println("SQL:\n"+consultaSql);
-            PreparedStatement stmt = con.prepareStatement(consultaSql);
-
-            ResultSet rs = stmt.executeQuery();
-            if (confederacao && !autorb) { //se for confederacao e nao tiver no banco a consulta
-                while (rs.next()) {
-                    idsResultados.add(rs.getInt("tid"));
-                    cache.setResultado(rs.getString("tid"));
-                }
-                cache.gravaResultado(); //armazena o resultado na tabela consultas (LRU)
-                
-            } else { //se nao for na confederacao
-                while (rs.next()) {
-                    idsResultados.add(rs.getInt("tid"));
-                }
-            }
-
-        }
-        return idsResultados;
-    }
-//*/
     //confederacao
     String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL, boolean autor) {
         

@@ -63,12 +63,5 @@ public class Status {
     public String toString() {
         return this.status;
     }
-    
-//    public static void main(String[] args) {
-//        String teste = "revised";
-//        Status s = new Status();
-//        s.setStatus(teste);
-//        System.out.println("OK");
-//        
-//    }
+
 }
