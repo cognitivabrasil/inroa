@@ -7,6 +7,8 @@ package modelos;
 import java.util.List;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.SortedTable;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -34,6 +36,9 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
     RepositoryHibernateDAO instance;
+    
+    @Autowired
+    DocumentosHibernateDAO docDao;
 
     /**
      * Test of delete method, of class RepositoryHibernateDAO.
@@ -68,8 +73,6 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         List expResult = null;
         List result = instance.getAll();
         assertEquals(3, result.size());
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
     @Test
@@ -93,6 +96,21 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         assertEquals(2, l.size());
 
     }
+    
+    @Test
+    public void testDeleteRemovesDocumentos() {
+        Repositorio cesta = instance.get(1);
+        
+        int sizeCesta = cesta.getDocumentos().size();
+        int sizeAllBefore = docDao.getAll().size();
+        int sizeAfter = sizeAllBefore - sizeCesta;
+
+        instance.delete(cesta);        
+
+        assertEquals("Size of Cesta before", 5, sizeCesta);
+        assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());
+    }
+   
 
     @Test
     public void testGetMetadataRecord() {

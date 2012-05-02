@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="modelos.DocumentoReal" table="documentos">
         <id column="id" name="id" type="int">
@@ -8,6 +8,7 @@
             </generator>    
         </id>
         <property column="obaa_entry" name="obaaEntry" not-null="true" type="string"/>
+        <property column="obaaxml" name="obaaXml" type="string"/>
         <many-to-one class="modelos.Repositorio" column="id_repositorio" name="repositorio"/>
         <many-to-one class="modelos.RepositorioSubFed" column="id_rep_subfed" name="repositorioSubFed"/>
 

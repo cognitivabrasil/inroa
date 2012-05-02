@@ -20,7 +20,7 @@ import metadata.Header;
 public interface DocumentosDAO {
     
     /**
-     * Gets the.
+     * Gets the document with the specified OBAAEntry.
      *
      * @param obaaEntry the obaa entry
      * @return the document with the corresponding obaaEntry
@@ -30,22 +30,61 @@ public interface DocumentosDAO {
     /**
      * Need to call flush on session after saving many documents.
      *
-     * @param obaa the obaa
-     * @param h the h
+     * @param obaa the OBAA metadata
+     * @param h the OAI PMH header
      */
     void save(OBAA obaa, Header h);
     
-    /**
-     * Sets the repository.
-     *
-     * @param r the new repository
-     */
-    void setRepository(Repositorio r);
+
 
     
 	/**
 	 * Convenience method, will call flush on the current session.
 	 */
 	void flush();
+
+	/**
+	 * Gets all the documents present in the System.
+	 * Use with extreme care, as it might return to many results.
+	 *
+	 * @return All the documents
+	 */
+	List<DocumentoReal> getAll();
+
+	/**
+	 * Gets the document by ID.
+	 *
+	 * @param i the Id
+	 * @return the Document with the corresponding ID.
+	 */
+	DocumentoReal get(int i);
+
+	/**
+	 * Delete by obaa entry.
+	 *
+	 * @param e The obaaEntry
+	 */
+	void deleteByObaaEntry(String e);
+
+	/**
+	 * Delete a document.
+	 *
+	 * @param d the document to be deleted.
+	 */
+	void delete(DocumentoReal d);
+
+	/**
+	 * Gets the repository where saved documents will be inserted.
+	 *
+	 * @return the repository
+	 */
+	Repositorio getRepository();
+	
+    /**
+     * Sets the repository where saved documents will be inserted.
+     *
+     * @param r the new repository
+     */
+    void setRepository(Repositorio r);
     
 }

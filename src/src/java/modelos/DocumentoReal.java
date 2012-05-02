@@ -1,24 +1,32 @@
-// Generated 20/07/2011 15:25:15 by Hibernate Tools 3.2.0.b9
 package modelos;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import OBAA.OBAA;
+import OBAA.LifeCycle.Contribute;
 
 /**
  *
- * Represents a single playable track in the music database.
+ * Representa um documento na Federação;
  *
- * @author Jim Elliott (with help from Hibernate)
+ * @author Paulo Schreiner <paulo@jorjao81.com>
  *
  */
 public class DocumentoReal implements java.io.Serializable, DocumentoFebInterface {
-
-    private int id;
+	private static final long serialVersionUID = 61217365141633065L;
+	private int id;
     private String obaaEntry;
     private Date datetime;
     private Set<Objeto> objetos;
     private Repositorio repositorio;
     private RepositorioSubFed repositorioSubFed;
     private Boolean deleted;
+    private String obaaXml;
+    private OBAA metadata;
 
     public DocumentoReal() {
         obaaEntry = "";
@@ -198,11 +206,96 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         this.repositorioSubFed = repositorioSubFed;
     }
 
+    /**
+     * Gets a pretty version of the repository name.
+     * 
+     * If de document is in a repository, return that, if it is in a subFederation, return
+     * the name of the Federation and the repository.
+     * @return Name of the repository fit to print.
+     */
     public String getNomeRep() {
         if (repositorio != null) {
             return repositorio.getNome();
         } else {
-            return "Subfedera&ccedil;&atilde;o "+repositorioSubFed.getSubFederacao().getNome()+" / "+repositorioSubFed.getNome();
+            return "Subfedera&ccedil;&atilde;o "
+            		+ repositorioSubFed.getSubFederacao().getNome()
+            		+ " / " + repositorioSubFed.getNome();
         }
     }
+
+	/**
+	 * Gets the OBAA XML directly, consider using getMetadata() instead.
+	 * @return the obaaXml
+	 */
+	protected String getObaaXml() {
+		return obaaXml;
+	}
+
+	/**
+	 * Sets the OBAA XML directly, consider using setMetadata instead.
+	 * @param obaaXml the obaaXml to set
+	 */
+	protected void setObaaXml(String obaaXml) {
+		this.obaaXml = obaaXml;
+	}
+
+	/**
+	 * Returns the document metadata.
+	 * @return the metadata
+	 * @throws IllegalStateException if there is no XML metadata associated with the document
+	 */
+	public OBAA getMetadata() {
+		if(metadata == null) {
+			if(getObaaXml() == null) {
+				throw new IllegalStateException("No XML metadata associated with the Object");
+			}
+			metadata = OBAA.fromString(getObaaXml());
+		}
+		return metadata;
+	}
+
+	/**
+	 * Sets the metadata of the object, and updates the corresponding XML.
+	 * @param metadata the metadata to set
+	 */
+	public void setMetadata(OBAA metadata) {
+		this.metadata = metadata;
+		updateIndexes();
+		setObaaXml(metadata.toXml());
+	}
+
+	/**
+	 * Updates the indexes (i.e, the Objects related to this Document) from current metadata.
+	 * 
+	 * This is called inside setMetadata, to keep indexes up-to-date.
+	 */
+	private void updateIndexes() {
+		OBAA obaa = this.metadata;
+		
+		// Ensure removal of all objects
+		objetos.removeAll(objetos);
+		assert(objetos.isEmpty());
+		
+		// Then, add them again
+		for (String t : obaa.getTitles()) {
+			this.addTitle(t);
+		}
+
+		for (String k : obaa.getKeywords()) {
+			this.addKeyword(k);
+		}
+
+		for (String d : obaa.getGeneral().getDescriptions()) {
+			this.addDescription(d);
+		}
+
+		if (obaa.getLifeCycle() != null) {
+			for (Contribute c : obaa.getLifeCycle().getContribute()) {
+				for (String e : c.getEntities()) {
+					this.addAuthor(e);
+				}
+			}
+		}
+		
+	}
 }

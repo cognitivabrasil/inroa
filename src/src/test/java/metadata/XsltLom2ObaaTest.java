@@ -98,6 +98,19 @@ public class XsltLom2ObaaTest {
 		assertThat(l.getRights().getDescription(), equalTo("ihttp://creativecommons.org/licenses/by-sa/3.0/br/"));
 		
 	}
+	
+	/**
+	 * Test that location tag is correctly translated
+	 */
+	@Test
+	public void testLom2ObaaLocation() {
+		OBAA l = oai.getMetadata(0);
+		assert(!(l.getTechnical() == null));
+		assert(!(l.getTechnical().getLocation() == null));
+		assertThat(l.getTechnical().getLocation(), 
+				equalTo("http://cesta2.cinted.ufrgs.br/xmlui/handle/123456789/57"));
+		
+	}
 
 	@Test
 	public void testCestaCompleteOutput() throws FileNotFoundException {

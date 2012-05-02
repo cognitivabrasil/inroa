@@ -6,8 +6,12 @@ package metadata;
 
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 import OBAA.OBAA;
 import OBAA.OaiOBAA;
+
+import org.hamcrest.core.IsNull;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,11 +46,39 @@ public class XsltDC2ObaaTest {
 
 		try {
         		String s = XSLTUtil.transform(foo_xml, foo_xsl);
+        		PrintWriter out = new PrintWriter("dc2obaa.xml");
+        		out.print(s);
+        		out.close();
 			oai = OaiOBAA.fromString(s);
  		} catch (Exception ex) {
       			XSLTUtil.handleException(ex);
 			fail("Shoudln't throw exception");
  		}
+	}
+	
+	/**
+	 * Test that location tag is correctly translated
+	 */
+	@Test
+	public void testDC2ObaaLocation() {
+		OBAA l = oai.getMetadata(5);
+		assert(!(l.getTechnical() == null));
+		assert(!(l.getTechnical().getLocation() == null));
+		assertThat(l.getTechnical().getLocation(), 
+				equalTo("http://hdl.handle.net/10183/399"));
+		
+	}
+	
+	/**
+	 * Test that elements with no well formed URL return NULL
+	 * for the location
+	 */
+	@Test
+	public void testDC2ObaaLocationNull() {
+		OBAA l = oai.getMetadata(6);
+		assert(!(l.getTechnical() == null));
+		assertThat(l.getTechnical().getLocation(),
+				nullValue());		
 	}
 	
 	@After

@@ -265,6 +265,8 @@ src/src/java/OBAA/LifeCycle/LifeCycle.java -text
 src/src/java/OBAA/LifeCycle/Role.java -text
 src/src/java/OBAA/LifeCycle/Status.java -text
 src/src/java/OBAA/OBAA.java -text
+src/src/java/OBAA/OaiCannotDisseminateFormatException.java -text
+src/src/java/OBAA/OaiException.java -text
 src/src/java/OBAA/OaiOBAA.java -text
 src/src/java/OBAA/Relation/Kind.java -text
 src/src/java/OBAA/Relation/Relation.java -text
@@ -280,6 +282,8 @@ src/src/java/OBAA/SegmentInformationTable/SegmentList.java -text
 src/src/java/OBAA/SegmentInformationTable/SegmentMediaType.java -text
 src/src/java/OBAA/SegmentInformationTable/Segments.java -text
 src/src/java/OBAA/SegmentInformationTable/Start.java -text
+src/src/java/OBAA/Technical/Location.java -text
+src/src/java/OBAA/Technical/Technical.java -text
 src/src/java/ORG/oclc/oai/server/OAIHandler.java -text
 src/src/java/ORG/oclc/oai/server/catalog/AbstractCatalog.java -text
 src/src/java/ORG/oclc/oai/server/catalog/RecordFactory.java -text
@@ -495,6 +499,7 @@ src/src/main/webapp/scripts/funcoesPadrao.js -text
 src/src/main/webapp/scripts/rss.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/test/java/OBAA/OBAATest.java -text
+src/src/test/java/OBAA/OaiOBAATest.java -text
 src/src/test/java/ferramentaBusca/RecuperadorTest.java -text
 src/src/test/java/metadata/DublinCoreTest.java -text
 src/src/test/java/metadata/XsltConversorTest.java -text
@@ -510,13 +515,17 @@ src/src/test/java/metadata/conversor/RuleTest.java -text
 src/src/test/java/metadata/lom1.xml -text
 src/src/test/java/metadata/lume1.xml -text
 src/src/test/java/metadata/missing.xml -text
+src/src/test/java/metadata/oai_cannot_disseminate.xml -text
 src/src/test/java/metadata/oai_dc.xml -text
 src/src/test/java/metadata/oai_dc100.xml -text
 src/src/test/java/metadata/oai_dc10000.xml -text
+src/src/test/java/metadata/oai_error.xml -text
 src/src/test/java/metadata/oai_lom.xml -text
+src/src/test/java/metadata/oai_norecords.xml -text
 src/src/test/java/metadata/obaa1.xml -text
 src/src/test/java/metadata/teste1.xml -text
 src/src/test/java/modelos/AbstractDaoTest.java -text
+src/src/test/java/modelos/DocumentoTest.java -text
 src/src/test/java/modelos/DocumentosHibernateDaoIT.java -text
 src/src/test/java/modelos/MapeamentoHibernateDaoIT.java -text
 src/src/test/java/modelos/PadraoMetadadosHibernateDaoIT.java -text

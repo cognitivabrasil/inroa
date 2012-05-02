@@ -37,6 +37,8 @@ public final class FEBController {
     private RepositoryDAO repDao;
     @Autowired
     private SubFederacaoDAO subDao;
+    @Autowired
+    private DocumentosDAO docDao;
     private BuscaValidator buscaValidator;
     @Autowired
     private PadraoMetadadosDAO padraoDao;
@@ -70,7 +72,23 @@ public final class FEBController {
         model.addAttribute("subDAO", subDao);
         return "index2";
     }
-
+    
+    /**
+     * This method renders the object specified by the ID.
+     *
+     * @param id the id
+     * @param model the model
+     * @return appropriate view
+     */
+    @RequestMapping("/objetos/{id}")
+    public String infoDetalhada(@PathVariable Integer id, Model model) {
+    	DocumentoReal d = docDao.get(id);
+    	model.addAttribute("obaaEntry", d.getObaaEntry());
+    	model.addAttribute("title", d.getTitles().get(0));
+    	model.addAttribute("metadata", d.getMetadata());
+    	return "infoDetalhada";
+    }
+    
     @RequestMapping("/consulta")
     public String consulta(HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
@@ -83,7 +101,7 @@ public final class FEBController {
             return "index";
         } else {
             try {
-                if (offset != null) {
+                if(offset!=null){
                     consulta.setOffset(offset);
                 }
 
@@ -94,7 +112,7 @@ public final class FEBController {
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                System.err.println("FEB ERRO: Erro ao efetuar a consulta na base de dados. Exception: "
+                System.err.println("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "
                         + e.toString());
                 return "index";
             }
@@ -120,8 +138,6 @@ public final class FEBController {
                 model.addAttribute("documentos", docs);
                 return "consulta";
             } catch (Exception e) {
-                model.addAttribute("repDAO", repDao);
-                model.addAttribute("subDAO", subDao);
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
                 System.err.println("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "

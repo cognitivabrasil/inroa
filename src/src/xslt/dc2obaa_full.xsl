@@ -107,6 +107,12 @@ xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
 		</xsl:for-each>
 	
 	</obaa:lifeCycle>
+	
+	<obaa:technical>
+		<xsl:for-each select="dc:identifier">
+			<obaa:location><xsl:value-of select="."/></obaa:location>
+		</xsl:for-each>
+	</obaa:technical>
 
 	<obaa:rights>
 		<obaa:description><xsl:value-of select="dc:right"/></obaa:description>

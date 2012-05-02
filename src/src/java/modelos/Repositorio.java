@@ -16,7 +16,9 @@ import spring.ApplicationContextProvider;
  */
 public class Repositorio implements java.io.Serializable {
 
-    private Integer id;
+
+	private static final long serialVersionUID = 1011292251690153763L;
+	private Integer id;
     private String nome;
     private String descricao;
     private String url;

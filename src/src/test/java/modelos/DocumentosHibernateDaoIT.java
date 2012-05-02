@@ -102,6 +102,38 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         assertThat(d.getDescriptions(), hasItem("Bla bla"));
         assertThat(d.getShortDescriptions(), hasItem("Bla bla"));
     }
+    
+    @Test
+    public void testSaveSerializationDeserialization() {
+        OBAA obaa = new OBAA();
+        obaa.setGeneral(new General());
+
+        obaa.getGeneral().addTitle("teste1");
+        obaa.getGeneral().addTitle("teste2");
+
+        obaa.getGeneral().addKeyword("key1");
+        obaa.getGeneral().addKeyword("key2");
+        obaa.getGeneral().addKeyword("key3");
+
+        obaa.getGeneral().addDescription("Bla bla");
+
+
+        Header h = mock(Header.class);
+
+
+        when(h.getTimestamp()).thenReturn(new Date());
+        when(h.getIdentifier()).thenReturn("obaa:identifier");
+
+        instance.save(obaa, h);
+
+        DocumentoReal d = instance.get("obaa:identifier");
+        assertThat(d, notNullValue());
+        
+        assertThat("Should return metadata", d.getMetadata(), notNullValue());
+        assertThat(d.getMetadata().getTitles(), hasItem("teste1"));
+
+    }
+
 
     @Test
     public void testSaveDeleted() {

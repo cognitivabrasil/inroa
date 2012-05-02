@@ -20,6 +20,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.*;
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,9 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
     SubFederacaoHibernateDAO instance;
+    
+    @Autowired
+	private DocumentosDAO docDao;
 
     public SubfederacaoHibernateDaoIT() {
     }
@@ -97,14 +101,32 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testDelete() {
-        SubFederacao cesta = instance.get(1);
+    	SubFederacao cesta = instance.get(1);
 
-        instance.delete(cesta);
+        instance.delete(cesta);        
+        
 
         List<SubFederacao> l = instance.getAll();
         assertEquals(2, l.size());
 
 
+    }
+    
+    @Test
+    public void testDeleteRemovesDocuments() {
+        SubFederacao cesta = instance.get(1);
+
+        int sizeCesta = 0;
+        for(RepositorioSubFed r : cesta.getRepositorios()) {
+        	sizeCesta += r.getDocumentos().size();
+        }
+        int sizeAllBefore = docDao.getAll().size();
+        int sizeAfterShould = sizeAllBefore - sizeCesta;
+
+        instance.delete(cesta);        
+        
+        assertEquals("Size of UFRGS before", 2, sizeCesta);
+        assertEquals("Size of UFRGS after deletion", sizeAfterShould, docDao.getAll().size());
     }
 
     @Test

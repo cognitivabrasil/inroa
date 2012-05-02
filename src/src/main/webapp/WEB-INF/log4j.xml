@@ -20,20 +20,20 @@
 
 	<root>
 		<priority value="debug" />
-<!-- 		<appender-ref ref="console" /> -->
+		<appender-ref ref="console" /> 
 		<appender-ref ref="file" />
 	</root>
 
 	<category name="org.hibernate" additivity="false">
-		<priority value="error" />
-<!-- 		<appender-ref ref="console" />  -->
+		<priority value="warn" />
+		<appender-ref ref="console" /> 
 		<appender-ref ref="file" />
 
 	</category>
 	
 		<category name="org.springframework" additivity="false">
-		<priority value="error" />
-<!-- 		<appender-ref ref="console" />  -->
+		<priority value="warn" />
+ 		<appender-ref ref="console" />  
 		<appender-ref ref="file" />
 
 	</category>

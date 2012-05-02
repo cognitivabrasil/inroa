@@ -7,13 +7,20 @@ package OBAA;
 import OBAA.LifeCycle.LifeCycle;
 import metadata.Request;
 import metadata.Header;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
@@ -59,6 +66,23 @@ public class OBAATest {
 		assertThat(l.getTitles(), hasItems("Título 1"));
 	}
 	
+
+	/**
+	 * Test that if we serialize (toXml) and object and then deserialize it we
+	 * get the same results.
+	 * @throws Exception 
+	 */
+	@Test
+	public void testSerializationDeserialization() throws Exception {
+		String xml = l.toXml();
+		OBAA n = OBAA.fromString(xml);
+		
+		assertEquals("Titles should be the same", l.getTitles(), n.getTitles());
+		
+	}
+	
+
+	
 	@Test
 	public void testTitleFromReader() throws FileNotFoundException {
 		// TODO review the generated test code and remove the default call to fail.
@@ -67,6 +91,17 @@ public class OBAATest {
 		assert(!(l.getGeneral() == null));
 		assertThat(l.getTitles(), hasItems("Título 1"));
 	}
+	
+	@Test
+	public void testTitleFromString() throws IOException {
+		// TODO review the generated test code and remove the default call to fail.
+
+		String xml = FileUtils.readFileToString(new File("./src/test/java/metadata/obaa1.xml"));
+		l = OBAA.fromString(xml);
+		assert(!(l.getGeneral() == null));
+		assertThat(l.getTitles(), hasItems("Título 1"));
+	}
+	
 	@Test
 	public void testOBAA_General_AggregationLevel() throws FileNotFoundException {
 		assert(!(l.getGeneral() == null));
@@ -86,7 +121,7 @@ public class OBAATest {
 	}
 	
 	@Test
-	public void testOBAA_General_Identifier_Catalog() throws FileNotFoundException {
+	public void testOBAAGeneralIdentifierCatalog() throws FileNotFoundException {
 		assert(!(l.getGeneral() == null));
 		assert(!(l.getGeneral().getIdentifier() == null));
 		assertThat(l.getGeneral().getIdentifier().getCatalog(), equalTo("teste"));
@@ -265,6 +300,18 @@ public class OBAATest {
 		assert(!(l.getEducational() == null));
 		assert(!(l.getEducational().getContexts() == null));
 		assertThat(l.getEducational().getContexts(), hasItems("Educacao superior", "Profissionalizante"));
+	}
+	
+	/**
+	 * Test obaa technical location.
+	 *
+	 * @throws FileNotFoundException the file not found exception
+	 */
+	@Test
+	public void testOBAATechnicalLocation() throws FileNotFoundException {
+		assert(!(l.getTechnical() == null));
+		assert(!(l.getTechnical().getLocation() == null));
+		assertEquals(l.getTechnical().getLocation(), "http://cesta2.cinted.ufrgs.br/xmlui/handle/123456789/57");
 	}
 	
 	/*
