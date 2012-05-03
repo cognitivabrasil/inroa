@@ -8,6 +8,7 @@ import ferramentaBusca.IndexadorBusca;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import modelos.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,7 +59,8 @@ public final class AdminController {
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
-        System.out.println("request for in AdminController: " + viewName);
+        Logger  log = Logger.getLogger(this.getClass().getName());
+        log.info("request for in AdminController: "+ viewName);
         return "admin/" + viewName;
     }
 
@@ -451,8 +453,10 @@ public final class AdminController {
     @RequestMapping("atualizaSubfedAjax")
     public @ResponseBody
     String atualizaFedAjax(@RequestParam int id) {
-        System.out.println("FEB: Solicitacao de atualizacao pela Ferramenta Administrativa...");
+        Logger  log = Logger.getLogger(this.getClass().getName());
+        log.info("FEB: Solicitacao de atualizacao pela Ferramenta Administrativa...");
         SubFederacaoOAI subFed = new SubFederacaoOAI();
+        
         try {
             if (id > 0) {
                 subFed.atualizaSubfedAdm(subDao.get(id));
@@ -464,6 +468,7 @@ public final class AdminController {
 
             return "1";
         } catch (Exception e) {
+            log.error("Erro ao atualizar uma subfederação",e);
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
         }
     }

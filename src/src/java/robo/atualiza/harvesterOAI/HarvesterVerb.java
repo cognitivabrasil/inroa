@@ -42,6 +42,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.apache.log4j.Logger;
 
 //import org.apache.log4j.BasicConfigurator;
 //import org.apache.log4j.Logger;
@@ -187,7 +188,8 @@ public abstract class HarvesterVerb {
      */
     public HarvesterVerb(String requestURL) throws IOException,
     ParserConfigurationException, SAXException, TransformerException {
-        System.out.println("FEB - url: "+requestURL);
+        Logger  log = Logger.getLogger(this.getClass().getName());
+        log.info("FEB - url: "+requestURL);
         harvest(requestURL);
     }
     

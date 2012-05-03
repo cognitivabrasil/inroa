@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 import robo.atualiza.harvesterOAI.Principal;
 import robo.util.Informacoes;
@@ -85,16 +86,17 @@ public class Objetos {
             Indexador indexar,
             Connection con) throws ParserConfigurationException, SAXException, IOException, SQLException {
         boolean atualizou = false;
-
+         Logger  log = Logger.getLogger(this.getClass().getName());
          ParserObjetos parserObj = new ParserObjetos();
          HashMap<String, Integer> dadosSubRep = recuperaDadosSubRep(con);
 
         for (int i = 0; i < caminhoXML.size(); i++) {
             if(i==0){
-                System.out.println("FEB: Lendo os XMLs e inserindo os objetos na base");
+                log.info("FEB: Lendo os XMLs e inserindo os objetos na base");
             }
             File arquivoXML = new File(caminhoXML.get(i));
             if (arquivoXML.isFile() || arquivoXML.canRead()) {
+                log.info("FEB: Lendo XML "+i);
                 parserObj.parser(caminhoXML.get(i), indexar, con, dadosSubRep);//efetua a leitura do xml e insere os objetos na base de dados
                 atualizou = true;
 
@@ -102,7 +104,7 @@ public class Objetos {
                 arquivoXML.delete();
 
             } else {
-                System.out.println("FEB: O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
+                log.error("FEB: O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML.get(i));
             }
         }
         return atualizou;

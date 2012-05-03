@@ -16,6 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import modelos.RepositorioSubFed;
 import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.context.ApplicationContext;
 import org.xml.sax.SAXException;
@@ -31,6 +32,7 @@ import spring.ApplicationContextProvider;
  * @author Marcos
  */
 public class SubFederacaoOAI {
+    Logger log = Logger.getLogger(this.getClass().getName());
 
     /**
      * Atualiza todas as subfedera&ccedil;&otilde;es. Coleta da base os dados
@@ -45,10 +47,10 @@ public class SubFederacaoOAI {
      */
     public boolean pre_AtualizaSubFedOAI(Connection con, Indexador indexar) {
         boolean atualizou = false;
-
+        
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
-            System.out.println("FEB ERRO: Could not get AppContext bean!");
+            log.error("FEB ERRO: Could not get AppContext bean!");
         } else {
 
             try {
@@ -60,16 +62,16 @@ public class SubFederacaoOAI {
 
                     if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataAnterior1970(subFed.getUltimaAtualizacao())) {
 
-                        System.out.println("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
+                        log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
 
                         for (RepositorioSubFed r : subFed.getRepositorios()) {
                             r.dellAllDocs();
                         }
-                        System.out.println("FEB: Base deletada!");
+                        log.info("FEB: Base deletada!");
                     }
 
                     if (subFed.getUrl().isEmpty()) { //testa se a string url esta vazia.
-                        System.err.println("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
+                        log.error("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
                     } else {
 
                         Long inicio = System.currentTimeMillis();
@@ -87,7 +89,7 @@ public class SubFederacaoOAI {
                              */
                         }
                         Long fim = System.currentTimeMillis();
-                        System.out.println("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
+                        log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
                     }
 
                     if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
@@ -95,7 +97,7 @@ public class SubFederacaoOAI {
                     }
                 }
             } catch (HibernateException h) {
-                System.err.println("FEB ERRO: Erro no Hibernate na classe: " + h.getClass() + ". Exception: " + h);
+                log.error("FEB ERRO: Erro no Hibernate na classe: " + h.getClass() + ".", h);
             }
         }
         return atualizou;
@@ -122,73 +124,79 @@ public class SubFederacaoOAI {
      * atualizada ou n&atilde;o.
      */
     private void atualizaSubFedOAI(SubFederacao subFed, Connection con, Indexador indexar) throws Exception {
-        
-        System.out.println("FEB: Atualizando subfederacao: " + subFed.getNome());//imprime o nome do repositorio
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+        if (ctx == null) {
+            log.error("FEB ERRO: Could not get AppContext bean!");
+        } else {
+            log.info("FEB: Atualizando subfederacao: " + subFed.getNome());//imprime o nome do repositorio
 
-        try {
-            Informacoes info = new Informacoes();
-            String url = subFed.getUrl();
-            if (url.endsWith("/")) { //se a url terminar com / concatena o endereço do oai-pmh sem a barra
-                url += info.getOaiPMH();
-            } else {
-                url += "/" + info.getOaiPMH();
+            try {
+                Informacoes info = new Informacoes();
+                String url = subFed.getUrl();
+                if (url.endsWith("/")) { //se a url terminar com / concatena o endereço do oai-pmh sem a barra
+                    url += info.getOaiPMH();
+                } else {
+                    url += "/" + info.getOaiPMH();
+                }
+                //atualizar repositorios da subfederacao
+                SubRepositorios subRep = new SubRepositorios();
+                subRep.atualizaSubRepositorios(url, subFed.getNome(), subFed.getId(), con);
+
+                //atualizar objetos da subfederacao
+                Objetos obj = new Objetos();
+                obj.atualizaObjetosSubFed(url, subFed.getDataXML(), subFed.getNome(), "obaa", null, con, indexar);
+
+                if (indexar.getDataXML() != null) { //se foi coletada da data do xml entao atualiza as datas no objeto subFed
+                    subFed.setUltimaAtualizacao(new Date());
+                    subFed.setDataXML(indexar.getDataXML());
+                    SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
+                    subDao.save(subFed);
+                }
+
+            } catch (UnknownHostException u) {
+                System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
+                throw u;
+            } catch (SQLException e) {
+                System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: SQL Exception... Erro na consulta sql na classe SubFederacaoOAI:" + e.getMessage());
+                throw e;
+            } catch (ParserConfigurationException e) {
+                System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: O parser nao foi configurado corretamente. " + e);
+                throw e;
+            } catch (SAXException e) {
+                String msg = e.getMessage();
+                String msgOAI = "\nFEB ERRO - Metodo atualizaSubFedOAI: erro no parser do OAI-PMH, mensagem: ";
+                if (msg.equalsIgnoreCase("badArgument")) {
+                    System.err.println(msgOAI + msg + " - The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.\n");
+                } else if (msg.equalsIgnoreCase("badResumptionToken")) {
+                    System.err.println(msgOAI + msg + " - The value of the resumptionToken argument is invalid or expired.\n");
+                } else if (msg.equalsIgnoreCase("badVerb")) {
+                    System.err.println(msgOAI + msg + " - Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated. \n");
+                } else if (msg.equalsIgnoreCase("cannotDisseminateFormat")) {
+                    System.err.println(msgOAI + msg + " -  The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.\n");
+                } else if (msg.equalsIgnoreCase("idDoesNotExist")) {
+                    System.err.println(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
+                } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
+                    System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
+                    subFed.setUltimaAtualizacao(new Date());
+                    subFed.setDataXML(indexar.getDataXML());
+                } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
+                    System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
+                } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
+                    System.err.println(msgOAI + msg + " - The repository does not support sets.\n");
+                } else {
+                    System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e);
+                }
+                throw e;
+            } catch (FileNotFoundException e) {
+                System.err.println("\nFEB ERRO - " + this.getClass() + ": nao foi possivel coletar os dados de: " + e + "\n");
+                throw e;
+            } catch (IOException e) {
+                System.err.println("\nFEB ERRO - Nao foi possivel coletar ou ler o XML em " + this.getClass() + ": " + e + "\n");
+                throw e;
+            } catch (Exception e) {
+                System.err.println("\nFEB ERRO - " + this.getClass() + ": erro ao efetuar o Harvester " + e + "\n");
+                throw e;
             }
-            //atualizar repositorios da subfederacao
-            SubRepositorios subRep = new SubRepositorios();
-            subRep.atualizaSubRepositorios(url, subFed.getNome(), subFed.getId(), con);
-
-            //atualizar objetos da subfederacao
-            Objetos obj = new Objetos();
-            obj.atualizaObjetosSubFed(url, subFed.getDataXML(), subFed.getNome(), "obaa", null, con, indexar);
-
-            if (indexar.getDataXML() != null) { //se foi coletada da data do xml entao atualiza as datas no objeto subFed
-                subFed.setUltimaAtualizacao(new Date());
-                subFed.setDataXML(indexar.getDataXML());
-            }
-
-        } catch (UnknownHostException u) {
-            System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
-            throw u;
-        } catch (SQLException e) {
-            System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: SQL Exception... Erro na consulta sql na classe SubFederacaoOAI:" + e.getMessage());
-            throw e;
-        } catch (ParserConfigurationException e) {
-            System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: O parser nao foi configurado corretamente. " + e);
-            throw e;
-        } catch (SAXException e) {
-            String msg = e.getMessage();
-            String msgOAI = "\nFEB ERRO - Metodo atualizaSubFedOAI: erro no parser do OAI-PMH, mensagem: ";
-            if (msg.equalsIgnoreCase("badArgument")) {
-                System.err.println(msgOAI + msg + " - The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.\n");
-            } else if (msg.equalsIgnoreCase("badResumptionToken")) {
-                System.err.println(msgOAI + msg + " - The value of the resumptionToken argument is invalid or expired.\n");
-            } else if (msg.equalsIgnoreCase("badVerb")) {
-                System.err.println(msgOAI + msg + " - Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated. \n");
-            } else if (msg.equalsIgnoreCase("cannotDisseminateFormat")) {
-                System.err.println(msgOAI + msg + " -  The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.\n");
-            } else if (msg.equalsIgnoreCase("idDoesNotExist")) {
-                System.err.println(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
-            } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
-                System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
-                subFed.setUltimaAtualizacao(new Date());
-                subFed.setDataXML(indexar.getDataXML());
-            } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
-                System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
-            } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
-                System.err.println(msgOAI + msg + " - The repository does not support sets.\n");
-            } else {
-                System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e);
-            }
-            throw e;
-        } catch (FileNotFoundException e) {
-            System.err.println("\nFEB ERRO - " + this.getClass() + ": nao foi possivel coletar os dados de: " + e + "\n");
-            throw e;
-        } catch (IOException e) {
-            System.err.println("\nFEB ERRO - Nao foi possivel coletar ou ler o XML em " + this.getClass() + ": " + e + "\n");
-            throw e;
-        } catch (Exception e) {
-            System.err.println("\nFEB ERRO - " + this.getClass() + ": erro ao efetuar o Harvester " + e + "\n");
-            throw e;
         }
     }
 

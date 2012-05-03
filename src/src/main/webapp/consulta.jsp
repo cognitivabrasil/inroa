@@ -69,7 +69,7 @@
                         <center>
 
                             <pg:pager
-                            items="100"
+                            items="${BuscaModel.sizeResult}"
                                 url="consulta"
                                 index="center"
                                 maxPageItems="${BuscaModel.limit}"
