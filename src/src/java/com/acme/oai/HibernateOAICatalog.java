@@ -581,12 +581,9 @@ public class HibernateOAICatalog extends AbstractCatalog {
 
 		DocumentoReal m;
 
-		Conectar c = new Conectar();
-
-		Connection conn = c.conectaBD();
-
-		SessionFactory sessionFactory = new Configuration().configure()
-				.buildSessionFactory();
+		ApplicationContext ctx = ApplicationContextProvider
+				.getApplicationContext();
+		sessionFactory = ctx.getBean(SessionFactory.class);
 		Session session = sessionFactory.getCurrentSession();
 
 		SimpleDateFormat formatter = OAIUtil.dateFormatter();
