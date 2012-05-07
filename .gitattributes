@@ -287,7 +287,6 @@ src/src/java/ORG/oclc/oai/server/OAIHandler.java -text
 src/src/java/ORG/oclc/oai/server/catalog/AbstractCatalog.java -text
 src/src/java/ORG/oclc/oai/server/catalog/RecordFactory.java -text
 src/src/java/ORG/oclc/oai/server/catalog/XMLRecordFactoryObaa.java -text
-src/src/java/ORG/oclc/oai/server/catalog/helpers/RecordStringHandler.java -text
 src/src/java/ORG/oclc/oai/server/crosswalk/Crosswalk.java -text
 src/src/java/ORG/oclc/oai/server/crosswalk/CrosswalkItem.java -text
 src/src/java/ORG/oclc/oai/server/crosswalk/Crosswalks.java -text
