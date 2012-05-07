@@ -39,6 +39,9 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     
     @Autowired
     DocumentosHibernateDAO docDao;
+    
+    @Autowired
+    MapeamentoDAO mapDao;
 
     /**
      * Test of delete method, of class RepositoryHibernateDAO.
@@ -148,13 +151,13 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
      * Test of save method, of class RepositoryHibernateDAO.
      */
     @Test
-    @Ignore
     public void testSave() {
         Repositorio r = new Repositorio();
 
         r.setNome("Novo");
         r.setNamespace("obaa");
         r.setUrl("http://url");
+        r.setMapeamento(mapDao.get(1));
 
         instance.save(r);
 
@@ -166,13 +169,12 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
         updated = true;
     }
-
     @AfterTransaction
     public void testSaveAndUpdate2() throws Exception {
         if (updated) {
             updated = false;
             String[] ignore = {"id", "metadata_prefix", "periodicidade_horas", "padrao_metadados", "mapeamento_id", "descricao", "data_ultima_atualizacao",
-                "set", "tipo_mapeamento_id", "tipo_sincronizacao"};
+                "set", "tipo_mapeamento_id", "tipo_sincronizacao", "data_xml"};
             String[] sort = {"nome"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("repositorios"), sort), new SortedTable(getConnection().createDataSet().getTable("repositorios"), sort), ignore);
 
