@@ -78,6 +78,7 @@ p:password="${dataSource.password}" /> -->
  
     <bean id="UsuarioDAO"
         class="modelos.UsuarioHibernateDAO">
+<!--         <property name="sessionFactory" ref="sessionFactory"/> -->
     </bean>
      <context:annotation-config/>
 

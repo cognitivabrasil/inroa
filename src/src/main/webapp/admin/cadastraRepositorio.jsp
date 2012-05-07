@@ -18,7 +18,6 @@ Primeira etapa do cadastro de um repositorio
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        <%@include file="testaSessaoNovaJanela.jsp"%>
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="../scripts/validatejs.js"></script>

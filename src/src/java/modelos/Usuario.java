@@ -4,18 +4,28 @@
  */
 package modelos;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.DigestUtils;
 
 /**
  *
  * @author paulo
  */
-public class Usuario {
+public class Usuario implements UserDetails {
     private Integer id;
     private String login;
     private String passwordMd5;
     private String description;
 
+    static Logger log = Logger.getLogger(Usuario.class.getName());
+    
     /**
      * @return the id
      */
@@ -33,13 +43,15 @@ public class Usuario {
     /**
      * @return the login
      */
+    @Deprecated
     public String getLogin() {
-        return login;
+    	return getUsername();
     }
 
     /**
      * @param login the login to set
      */
+    @Deprecated
     public void setLogin(String login) {
         this.login = login;
     }
@@ -91,4 +103,48 @@ public class Usuario {
         }
         return getPasswordMd5().equals(DigestUtils.md5DigestAsHex(password.getBytes()));
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> authorities =
+				new HashSet<GrantedAuthority>();
+				authorities.add(new GrantedAuthorityImpl("ADMIN"));
+				return authorities;
+
+	}
+
+	@Override
+	public String getPassword() {
+		log.debug("Got password: " + getPasswordMd5());
+		return getPasswordMd5();
+	}
+
+	@Override
+	public String getUsername() {
+        return login;
+
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

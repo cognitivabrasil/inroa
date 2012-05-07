@@ -3,12 +3,10 @@ Document   : index
 Created on : 29/04/2009, 12:04:58
 Author     : Marcos Nunes
 --%>
-<%@page import="sun.security.krb5.internal.crypto.crc32"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@include file="testaSessao.jsp"%>
 <%@page import="robo.util.Operacoes" %>
 
 
