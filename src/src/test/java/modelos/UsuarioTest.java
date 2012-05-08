@@ -5,12 +5,21 @@
 package modelos;
 
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+
 import static org.junit.Assert.*;
 
 /**
  *
  * @author paulo
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:spring-security.xml"})
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class UsuarioTest {
 
     public UsuarioTest() {

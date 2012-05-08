@@ -37,6 +37,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     @Autowired
     RepositoryHibernateDAO instance;
     
+    
     @Autowired
     DocumentosHibernateDAO docDao;
     
@@ -109,6 +110,20 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         int sizeAfter = sizeAllBefore - sizeCesta;
 
         instance.delete(cesta);        
+
+        assertEquals("Size of Cesta before", 5, sizeCesta);
+        assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());
+    }
+    
+    @Test
+    public void testDellAllDocs() {
+        Repositorio cesta = instance.get(1);
+        
+        int sizeCesta = cesta.getDocumentos().size();
+        int sizeAllBefore = docDao.getAll().size();
+        int sizeAfter = sizeAllBefore - sizeCesta;
+
+        cesta.dellAllDocs();        
 
         assertEquals("Size of Cesta before", 5, sizeCesta);
         assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());

@@ -43,7 +43,7 @@ p:password="${dataSource.password}" /> -->
           p:username="feb"
           p:password="feb@RNP" />
 
-        <bean id="documentosDAO"
+       <bean id="documentosDAO"
       class="modelos.DocumentosHibernateDAO"
     />
     
@@ -78,6 +78,7 @@ p:password="${dataSource.password}" /> -->
  
     <bean id="UsuarioDAO"
         class="modelos.UsuarioHibernateDAO">
+<!--         <property name="sessionFactory" ref="sessionFactory"/> -->
     </bean>
      <context:annotation-config/>
 

@@ -40,13 +40,14 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml", "classpath:spring-security.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class UsuarioHibernateDaoIT extends AbstractDaoTest {
 
+	
     @Autowired
-    UsuarioHibernateDAO instance;
+    UsuarioDAO instance;
 
 
     public UsuarioHibernateDaoIT() {

@@ -9,10 +9,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.DigestUtils;
+
+import spring.ApplicationContextProvider;
 
 /**
  *
@@ -89,7 +94,8 @@ public class Usuario implements UserDetails {
      * @param password New password
      */
     public void setPassword(String password) {
-        setPasswordMd5(DigestUtils.md5DigestAsHex(password.getBytes()));
+    	assert(getPasswordEncoder() != null);
+    	setPasswordMd5(getPasswordEncoder().encodePassword(password, null));
     }
     
     /**
@@ -101,14 +107,14 @@ public class Usuario implements UserDetails {
         if(password == null) {
             return false;
         }
-        return getPasswordMd5().equals(DigestUtils.md5DigestAsHex(password.getBytes()));
+        return getPasswordMd5().equals(getPasswordEncoder().encodePassword(password, null));
     }
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities =
 				new HashSet<GrantedAuthority>();
-				authorities.add(new GrantedAuthorityImpl("ADMIN"));
+				authorities.add(new GrantedAuthorityImpl("PERM_VIEW_ADMIN"));
 				return authorities;
 
 	}
@@ -147,4 +153,14 @@ public class Usuario implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	/**
+	 * @return the passwordEncoder
+	 */
+	// TODO: Use autowired here, probalby needs AOP
+	private PasswordEncoder getPasswordEncoder() {
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+		return ctx.getBean(PasswordEncoder.class);
+	}
+
 }

@@ -2,11 +2,16 @@
 package modelos;
 
 import java.util.*;
+
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.transaction.annotation.Transactional;
+
 import spring.ApplicationContextProvider;
 
 /**
@@ -14,7 +19,9 @@ import spring.ApplicationContextProvider;
  * @author Marcos, Paulo
  *
  */
+@Transactional
 public class Repositorio implements java.io.Serializable {
+	static Logger log = Logger.getLogger(Repositorio.class.getName());
 
 
 	private static final long serialVersionUID = 1011292251690153763L;
@@ -31,6 +38,7 @@ public class Repositorio implements java.io.Serializable {
     private PadraoMetadados padraoMetadados;
     private Mapeamento mapeamento;
     private SessionFactory sessionFactory;
+    private Session session;
     private Date dataOrigem;
 
     public Repositorio() {
@@ -126,9 +134,10 @@ public class Repositorio implements java.io.Serializable {
      * @return Number of documents present in the repository (non-deleted
      * documents only)
      */
+    @Transactional(readOnly=true)
     public Integer getSize() {
         return DataAccessUtils.intResult(
-                getSessionFactory().getCurrentSession().createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").
+                getSession().createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").
                 setParameter("rep", this).setParameter("deleted", false).list());
     }
 
@@ -140,8 +149,7 @@ public class Repositorio implements java.io.Serializable {
      */
     public int dellAllDocs() {
         String hql = "delete from DocumentoReal as d WHERE d.repositorio = :rep";
-        Session session = getSessionFactory().getCurrentSession();
-        Query query = session.createQuery(hql);
+        Query query = getSession().createQuery(hql);
         query.setParameter("rep", this);
         return query.executeUpdate();
     }
@@ -149,7 +157,7 @@ public class Repositorio implements java.io.Serializable {
     public List<Repositorio> getOutDatedDocs() {
         //TODO: Jorjão ve se tu consegue fazer isso com linguagem do hibernate. Nao tem que ficar em RepositoryHibernateDAO?
         //o incremento de 4 horas é para descontar da periodicidade da ultima atualizacao. Pq se o robo rodou ontem as 02h e atualizou o repositorio as 02:10h hoje quando rodar novamente nao vai atualiza pq nao faz 24h ainda.
-        return getSessionFactory().getCurrentSession().createSQLQuery("SELECT * FROM repositorios r WHERE r.data_ultima_atualizacao <= ((now() - r.periodicidade_horas * INTERVAL '1 DAY') + INTERVAL '4 HOUR')").addEntity(Repositorio.class).list();
+        return getSession().createSQLQuery("SELECT * FROM repositorios r WHERE r.data_ultima_atualizacao <= ((now() - r.periodicidade_horas * INTERVAL '1 DAY') + INTERVAL '4 HOUR')").addEntity(Repositorio.class).list();
     }
 
     /**
@@ -366,6 +374,7 @@ public class Repositorio implements java.io.Serializable {
     public void setColecoesString(String s) {
         setColecoesInternal(s);
     }
+    
 
     /**
      * @return the sessionFactory
@@ -389,4 +398,27 @@ public class Repositorio implements java.io.Serializable {
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
+	/**
+	 * @return the session
+	 */
+	private Session getSession() {
+		if(session == null) {
+			try {
+				session = getSessionFactory().getCurrentSession();
+			}
+			catch(HibernateException e) {
+				log.warn("Could not getCurrentSession()!", e);
+				session = getSessionFactory().openSession();
+			}
+		}
+		return session;
+	}
+
+	/**
+	 * @param session the session to set
+	 */
+	private void setSession(Session session) {
+		this.session = session;
+	}
 }

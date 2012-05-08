@@ -22,6 +22,7 @@ import spring.validador.SubFederacaoValidador;
 import robo.atualiza.Repositorios;
 import robo.atualiza.SubFederacaoOAI;
 
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 /**
  * Controller para ferramenta administrativa
  *
