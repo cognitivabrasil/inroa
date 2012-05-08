@@ -32,7 +32,7 @@
 	</category>
 	
 		<category name="org.springframework" additivity="false">
-		<priority value="warn" />
+		<priority value="debug" />
  		<appender-ref ref="console" />  
 		<appender-ref ref="file" />
 

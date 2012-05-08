@@ -21,6 +21,21 @@ import spring.ApplicationContextProvider;
 
 /**
  *
+ *  ROLES ALLOWED
+ *  
+ *  For security implementation, a user may have many roles, here is a list of suggested roles and what they mean.
+ *  
+ *  PERM_MANAGE_USERS - This user has permission to create other users, delete them or change them, but he may
+ *  not give them more permissions than he already has.
+ *  PERM_UPDATE - Permission to update repositories or sub-federations, or recalculate the index
+ *  PERM_MANAGE_REP - Permission to add, change and delete existing repositories or subfederations
+ *  PERM_MANAGE_METADATA - Permission to add, change and delete metadata standards
+ *  PERM_MANAGE_MAPPINGS - Permission do add, change or update mappings
+ *  PERM_CHANGE_DATABASE - Permission to change the database config
+ *  PERM_VIEW_STATISTICS - Permission to view the statistics
+ *  
+ *  The main ADMIN user should have all the permissions.
+ *
  * @author paulo
  */
 public class Usuario implements UserDetails {
