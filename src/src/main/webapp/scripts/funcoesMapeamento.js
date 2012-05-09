@@ -3,7 +3,7 @@
  *
  * Funcoes utilizadas pelo mapeamento dinamico
  */
-
+rootUrl='/feb';
 botao='';
 linhaComposto=0;
 
@@ -429,7 +429,7 @@ function selecionaMapeamento(idResultado, idPadrao, mapSelecionado)
     
     var ajax = openAjax(); // Inicia o Ajax.
     
-    ajax.open("POST", "./mapeamentos/listaMapeamentoPadraoSelecionado?idpadrao="+idPadrao+"&mapSelecionado="+mapSelecionado, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    ajax.open("GET", rootUrl+"/admin/mapeamentos/listaMapeamentoPadraoSelecionado?idpadrao="+idPadrao+"&mapSelecionado="+mapSelecionado, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
     ajax.onreadystatechange = function()
     {

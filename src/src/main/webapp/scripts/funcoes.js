@@ -3,6 +3,7 @@
 * email: marcosn@gmail.com
 */
 
+rootUrl='/feb';
 
 /**
 * Abre uma nova janela conforme par&acirc;metros recebidos
@@ -191,13 +192,13 @@ function atualizaRepAjaxExec(id, exibeResultado, apagar)
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "atualizaRepAjax?id="+id+"&apagar="+apagar, true);
+    ajax.open("POST", rootUrl + "/admin/repositories/"+id+"/update?apagar="+apagar, true);
 
     ajax.onreadystatechange = function()
     {
         if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
-            exibeResultado.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='' align='middle'> Aguarde, atualizando...";
+            exibeResultado.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='' align='middle'> Aguarde, atualizando...";
         }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
@@ -306,7 +307,7 @@ function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
     }else{
         var ajax = openAjax(); // Inicia o Ajax.
 
-        ajax.open("POST", "VerificaLinkOAI?"+link, true);
+        ajax.open("GET", rootUrl+"/admin/VerificaLinkOAI?"+link, true);
 
         ajax.onreadystatechange = function()
         {
@@ -417,7 +418,7 @@ function excluirPadrao(id, idResultado, idTabela, linha)
     var ajax = openAjax(); // Inicia o Ajax.
     
     
-    ajax.open("GET", "excluirPadrao?id="+id, true);
+    ajax.open("POST", "excluirPadrao?id="+id, true);
                        
     
     ajax.onreadystatechange = function()

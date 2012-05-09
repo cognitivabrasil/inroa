@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import postgres.SingletonConfig;
 import spring.validador.PadraoValidator;
 import spring.validador.RepositorioValidator;
@@ -51,24 +52,9 @@ public final class AdminController {
     public AdminController() {
     }
 
-    /**
-     * Fallback: caso a URL não dê match em nenhum metodos, bate nesse
-     *
-     * @return Retorna o nove do view que foi passado na URL
-     */
-    @RequestMapping("{viewName}")
-    public String fallback(@PathVariable String viewName, Model model) {
-        model.addAttribute("repDAO", repDao);
-        model.addAttribute("subDAO", subDao);
-        model.addAttribute("padraoMetadadosDAO", padraoDao);
-        Logger  log = Logger.getLogger(this.getClass().getName());
-        log.info("request for in AdminController: "+ viewName);
-        return "admin/" + viewName;
-    }
-
     @RequestMapping("/")
     public String admin(Model model) {
-        model.addAttribute("repDAO", repDao);
+        model.addAttribute("repositories", repDao.getAll());
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         model.addAttribute("users", userDao.getAll());
@@ -80,14 +66,15 @@ public final class AdminController {
         return admin(model);
     }
 
-    @RequestMapping("/exibeRepositorios")
-    public String exibeRep(@RequestParam(value = "id", required = true) int id,
+    @RequestMapping("/repositories/{id}")
+    public String exibeRep(@PathVariable Integer id,
             Model model) {
         model.addAttribute("rep", repDao.get(id));
+        model.addAttribute("repId", id);
         return "admin/exibeRepositorios";
     }
 
-    @RequestMapping("/cadastraRepositorio")
+    @RequestMapping(value = "/repositories/new", method=RequestMethod.GET)
     public String cadastraRep(Model model) {
 
         //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
@@ -96,7 +83,7 @@ public final class AdminController {
         return "admin/cadastraRepositorio";
     }
 
-    @RequestMapping("/salvarNovoRepositorio")
+    @RequestMapping(value="/repositories/new", method=RequestMethod.POST)
     public String salvaNovoRep(
             @ModelAttribute("repModel") Repositorio rep,
             BindingResult result,
@@ -119,25 +106,26 @@ public final class AdminController {
                 return "admin/cadastraRepositorio";
             } else { //se retornar null é porque nao tem nenhum repositorio com esse nome
                 repDao.save(rep); //salva o novo repositorio return
-                return "redirect:fechaRecarrega";
+                return "redirect:/admin/fechaRecarrega";
             }
         }
     }
 
-    @RequestMapping("/editarRepositorio")
+    @RequestMapping(value = "/repositories/{id}/edit", method = RequestMethod.GET)
     public String editaRep(
-            @RequestParam(value = "id", required = true) int id,
+            @PathVariable Integer id,
             Model model) {
 
         model.addAttribute("repModel", repDao.get(id));
         model.addAttribute("padraoMetadadosDAO", padraoDao);
+        model.addAttribute("idRep", id);
         return "admin/editarRepositorio";
     }
 
-    @RequestMapping("/salvarRepositorio")
+    @RequestMapping(value = "/repositories/{id}/edit", method = RequestMethod.POST)
     public String salvaRep(
             @ModelAttribute("repModel") Repositorio rep,
-            @RequestParam(value = "id", required = true) int id,
+            @PathVariable Integer id,
             BindingResult result,
             Model model) {
 
@@ -145,28 +133,46 @@ public final class AdminController {
         if (result.hasErrors()) {
             model.addAttribute("repModel", rep);
             model.addAttribute("padraoMetadadosDAO", padraoDao);
+            model.addAttribute("idRep", id);
             return "admin/editarRepositorio";
         } else {
             repDao.updateNotBlank(rep);
-            return "redirect:/admin/exibeRepositorios?id=" + id;
+            return "redirect:/admin/repositories/" + id;
+        }
+    }
+    
+    @RequestMapping(value="/repositories/{id}/update", method = RequestMethod.POST)
+    public @ResponseBody
+    String atualizaRepositorioAjax(
+    		@PathVariable Integer id,
+            @RequestParam boolean apagar) {
+
+        Repositorios repositorio = new Repositorios();
+        try {
+            repositorio.atualizaFerramentaAdm(id, apagar);
+            return "1";
+        } catch (Exception e) {
+            return "Ocorreu um erro ao atualizar o repositorio. Exception: " + e.toString();
         }
     }
 
-    @RequestMapping("/removerRepositorio")
-    public String apagaRep(
-            @RequestParam(value = "submitted", required = false) boolean submitted,
-            @RequestParam(value = "id", required = true) int id,
-            Model model) {
-        if (submitted) {
+
+    @RequestMapping(value="/repositories/{id}/delete", method = RequestMethod.POST)
+    public String deleteRepository(
+    		@PathVariable Integer id,
+    		Model model) {
             Repositorio rep = new Repositorio();
             rep.setId(id);
             repDao.delete(rep);
-            return "redirect:fechaRecarrega";
-        } else {
-
-            model.addAttribute("repDAO", repDao);
+            return "redirect:/admin/fechaRecarrega";
+    }
+    
+    @RequestMapping(value="/repositories/{id}/delete", method = RequestMethod.GET)
+    public String showRepositoryDeleteConfirmation(
+    		@PathVariable Integer id,
+            Model model) {
+            model.addAttribute("rep", repDao.get(id));
             return "admin/removerRepositorio";
-        }
     }
 
     @RequestMapping("/cadastraFederacao")
@@ -191,7 +197,7 @@ public final class AdminController {
                     return "admin/cadastraFederacao";
                 } else {
                     subDao.save(subfed); //Grava a subfederacao modificada no formulario
-                    return "redirect:fechaRecarrega";
+                    return "redirect:/admin/fechaRecarrega";
                 }
             } catch (Exception e) {
                 model.addAttribute("erro", "Exception: " + e);
@@ -438,20 +444,6 @@ public final class AdminController {
         }
     }
 
-    @RequestMapping("atualizaRepAjax")
-    public @ResponseBody
-    String atualizaRepositorioAjax(
-            @RequestParam int id,
-            @RequestParam boolean apagar) {
-
-        Repositorios repositorio = new Repositorios();
-        try {
-            repositorio.atualizaFerramentaAdm(id, apagar);
-            return "1";
-        } catch (Exception e) {
-            return "Ocorreu um erro ao atualizar o repositorio. Exception: " + e.toString();
-        }
-    }
 
     @RequestMapping("atualizaSubfedAjax")
     public @ResponseBody

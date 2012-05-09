@@ -19,8 +19,8 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 		<remember-me />
 		<logout logout-success-url="/" />
 		
-		<!-- allow any user to view the main admin page -->
-		<intercept-url pattern="/admin/*" method="GET"
+		<!-- allow any user to view (GET) the pages. Changes should only be effected with POST requests -->
+		<intercept-url pattern="/admin/**" method="GET"
 			access="hasAnyRole( 
 			'PERM_MANAGE_USERS',
 			'PERM_UPDATE',
@@ -29,6 +29,12 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 			'PERM_MANAGE_MAPPINGS',
 			'PERM_CHANGE_DATABASE',
 			'PERM_VIEW_STATISTICS' )" />
+			
+		<intercept-url pattern="/admin/repositories/*/update*" method="POST"
+			access="hasRole('PERM_UPDATE')" />
+		<intercept-url pattern="/admin/repositories/**" method="POST"
+			access="hasRole('PERM_MANAGE_REP')" />
+			
 
 		<!-- deny all access not explicitly given -->
 		<intercept-url pattern="/admin/**" access="denyAll" />

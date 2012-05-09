@@ -15,9 +15,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
-        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js"></script>
+        <c:url var="css" value="/css/padrao.css"/>
+        <c:url var="favicon" value="/imagens/favicon.ico"/>
+        <c:url var="funcoes" value="/scripts/funcoes.js"/>
+        <link rel="StyleSheet" href="${css}" type="text/css">
+        <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
+        <script language="JavaScript" type="text/javascript" src="${funcoes}"></script>
     </head>
 
     <body>
@@ -30,8 +33,9 @@
             <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <div class="editar">
-                <input type="button" class="botaoEditar" title="Editar" name="editar" id="editarRep" onclick="location.href='./editarRepositorio?id=${param.id}'" >
-                <a href="./editarRepositorio?id=${param.id}">Editar</a>                
+            	<c:url var="editar" value="/admin/repositories/${repId}/edit"/>
+                <input type="button" class="botaoEditar" title="Editar" name="editar" id="editarRep" onclick="location.href='${editar}'" >
+                <a href="${editar}">Editar</a>                
             </div>
 
             <div class="LinhaEntrada">
@@ -119,20 +123,22 @@
                 
                 <c:choose>
                         <c:when test="${rep.isOutdated()}">
-                            <div id='textResult${param.id}' class="ValueErro">&nbsp; 
+                            <div id='textResult${repId}' class="ValueErro">&nbsp; 
                                 ${operacoesBean.ultimaAtualizacaoFrase(rep.proximaAtualizacao, rep.url)}
                                 &nbsp;&nbsp;
-                                <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${param.id}, this.parentNode);">
-                                    <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'>
+                                <a title="Atualizar agora" onclick="javaScript:atualizaRepAjax(${repId}, this.parentNode);">
+                                	<c:url var="erro_sincronizar" value="/imagens/erro_sincronizar.png"/>
+                                    <img src="${erro_sincronizar }" border='0' width='24' height='24' alt='Atualizar' align='middle'>
                                 </a>
                             </div>
                         </c:when>
                         <c:otherwise>
-                           <div class="Value" id="textResult${param.id}">&nbsp;
+                           <div class="Value" id="textResult${repId}">&nbsp;
                                ${operacoesBean.ultimaAtualizacaoFrase(rep.proximaAtualizacao, rep.url)}
                                &nbsp;&nbsp;
-                               <a title='Atualizar agora' onclick="javaScript:atualizaRepAjax(${param.id}, this.parentNode);">
-                                   <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
+                               <a title='Atualizar agora' onclick="javaScript:atualizaRepAjax(${repId}, this.parentNode);">
+                               		<c:url var="sync" value="/imagens/sincronizar.png"/>
+                                   <img src="${sync}" border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                                </a> 
                            </div>
                         </c:otherwise>
@@ -147,7 +153,7 @@
                 <div class="Value">
                     <div>&nbsp; ${rep.size}</div>
 
-                    <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Formatar e restaurar" onclick="javascript:apagaAtualizaRepAjax(${param.id}, this.parentNode)"></div>
+                    <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Formatar e restaurar" onclick="javascript:apagaAtualizaRepAjax(${repId}, this.parentNode)"></div>
 
                 </div>               
             </div>

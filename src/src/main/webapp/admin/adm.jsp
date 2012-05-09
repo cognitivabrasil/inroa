@@ -67,15 +67,15 @@ Author     : Marcos Nunes
 			<th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
 
 		</tr>
-		<c:forEach var="rep" items="${repDAO.all}" varStatus="status">
+		<c:forEach var="rep" items="${repositories}" varStatus="status">
 			<tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
 
 				<td><input type="button" class="botaoExcluir"
 					title="Excluir reposit&oacute;rio" name="excluir" id="excluirRep"
-					onclick="NewWindow('removerRepositorio?id=${rep.id}','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					onclick="NewWindow('repositories/${rep.id}/delete','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 					&nbsp; <input type="button" class="botaoEditar"
 					title="Editar / Visualizar" name="editar" id="editarRep"
-					onclick="NewWindow('exibeRepositorios?id=${rep.id}','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					onclick="NewWindow('repositories/${rep.id}','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 
 				</td>
 				<td>${rep.nome}</td>
@@ -110,15 +110,16 @@ Author     : Marcos Nunes
 
 
 		<tr class='center'>
+			<c:url var="newRepositoryUrl" value="/admin/repositories/new"/>
 			<td><a title="Adicionar novo reposit&oacute;rio"
-				onclick="NewWindow('cadastraRepositorio','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+				onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 					<img
 					src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 					border="0" width="24" height="24" alt="Visualizar" align="middle">
 			</a></td>
 			<td colspan="2" class="left bold" style="font-size: 110%">
 				&nbsp;&nbsp; <a
-				onclick="NewWindow('cadastraRepositorio','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+				onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 					Adicionar novo reposit&oacute;rio </a>
 
 			</td>

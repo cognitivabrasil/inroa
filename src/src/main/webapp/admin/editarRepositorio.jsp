@@ -16,11 +16,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>FEB - Ferramenta Administrativa</title>
-        <link rel="StyleSheet" href="../css/padrao.css" type="text/css"/>
-        <script language="JavaScript" type="text/javascript" src="../scripts/funcoes.js"></script>
-        <script language="JavaScript" type="text/javascript" src="../scripts/funcoesMapeamento.js"></script>
-        <script type="text/javascript" src="../scripts/validatejs.js"></script>
-        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        
+        <c:url var="favicon" value="/imagens/favicon.ico" />
+<c:url var="css" value="/css/padrao.css" />
+<c:url var="validateJs" value="/scripts/validatejs.js" />
+<c:url var="funcoesJs" value="/scripts/funcoes.js" />
+
+<c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
+        <link rel="StyleSheet" href="${css }" type="text/css"/>
+        <script language="JavaScript" type="text/javascript" src="${funcoesJs }"></script>
+        <script language="JavaScript" type="text/javascript" src="${funcoesMapeamentoJs }"></script>
+        <script type="text/javascript" src="${validateJs }"></script>
+        <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
     </head>
 
     <body onload="verificaMapOnLoad('${repModel.padraoMetadados.id}', '${repModel.mapeamento.id}', 'resultado');">
@@ -41,7 +48,7 @@
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.nome}</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <div class="EspacoAntes">&nbsp;</div>
-            <form:form method="post" modelAttribute="repModel" action="salvarRepositorio" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
+            <form:form method="post" modelAttribute="repModel" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
                 
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
                     <c:out value="${erro}"/>
@@ -147,10 +154,10 @@
                     </div>
                 </div>
 
-                <input type="hidden" name="id" value="${param.id}"/>
+                <input type="hidden" name="id" value="${idRep}"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
-                        <input type="button" value="&lArr; Voltar" onclick="location.href='exibeRepositorios?id=${repModel.id}'"/>
+                        <input type="button" value="&lArr; Voltar" onclick="location.href='./${repModel.id}'"/>
                         <input type="submit" value="Gravar &rArr;" name="submit" />
 
                     </div>
