@@ -274,6 +274,56 @@ Author     : Marcos Nunes
 			</td>
 		</tr>
 	</table>
+	
+	
+		<table class='repositorios-table' cellpadding=3>
+		<tr>
+			<th colspan=4><font size="3%" color=black>Lista de Usuários</font></th>
+		</tr>
+
+		<tr style="background-color: #AEC9E3">
+			<th width="10%">Opera&ccedil;&otilde;es</th>
+
+			<th width="20%">Nome</th>
+			<th width="50%">Descri&ccedil;&atilde;o</th>
+			<th width="20%">Perfil</th>
+		</tr>
+
+		<c:forEach var="user" items="${users}" varStatus="status">
+			<tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
+				<td><input type="button" class="botaoExcluir"
+					title="Excluir Subfedera&ccedil;&atilde;o" name="excluir"
+					id="excluirSubfed"
+					onclick="NewWindow('removerFederacao?id=${subfed.id}','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					&nbsp; <input type="button" class="botaoEditar"
+					title="Editar / Visualizar" name="editar" id="editarSubfed"
+					onclick="NewWindow('exibeFederacao?id=${subfed.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+
+				</td>
+				<td>${user.username}</td>
+				<td>${user.description}</td>
+				<td>${user.role}</td>
+
+			</tr>
+		</c:forEach>
+
+		<tr class='center'>
+			<td><a title="Adicionar nova subfedera&ccedil;&atilde;o"
+				onclick="NewWindow('cadastraFederacao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					<img
+					src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+					border="0" width="24" height="24" alt="Visualizar" align="middle">
+			</a></td>
+			<td colspan="2" class="left bold" style="font-size: 110%">
+				&nbsp;&nbsp; <a
+				onclick="NewWindow('cadastraFederacao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					Adicionar novo usuário </a>
+			</td>
+			<td>
+		
+			</td>
+		</tr>
+	</table>
 
 
 

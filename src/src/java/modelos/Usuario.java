@@ -4,10 +4,12 @@
  */
 package modelos;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -21,7 +23,7 @@ import spring.ApplicationContextProvider;
 
 /**
  *
- *  ROLES ALLOWED
+ *  PERMISSIONS ALLOWED
  *  
  *  For security implementation, a user may have many roles, here is a list of suggested roles and what they mean.
  *  
@@ -43,6 +45,9 @@ public class Usuario implements UserDetails {
     private String login;
     private String passwordMd5;
     private String description;
+    /* Internal representation of permission, as a string separated bu commas */
+    private String permissionsInternal;
+    private String role;
 
     static Logger log = Logger.getLogger(Usuario.class.getName());
     
@@ -62,6 +67,7 @@ public class Usuario implements UserDetails {
 
     /**
      * @return the login
+     * @deprecated use {@link #getUsername()} instead.
      */
     @Deprecated
     public String getLogin() {
@@ -70,11 +76,22 @@ public class Usuario implements UserDetails {
 
     /**
      * @param login the login to set
+     * @deprecated use {@link #setUsername(String)} instead.
      */
     @Deprecated
     public void setLogin(String login) {
         this.login = login;
     }
+    
+    /**
+     * Sets the username.
+     *
+     * @param login the new username
+     */
+    public void setUsername(String login) {
+        this.login = login;
+    }
+
 
     /**
      * @return the passwordMd5
@@ -117,7 +134,9 @@ public class Usuario implements UserDetails {
      * Authenticates this user
      * @param password Cleartext password
      * @return true if password matches the user, false otherwise
+     * @deprecated authentication should be done by spring security
      */
+    @Deprecated
     public boolean authenticate(String password) {
         if(password == null) {
             return false;
@@ -125,18 +144,22 @@ public class Usuario implements UserDetails {
         return getPasswordMd5().equals(getPasswordEncoder().encodePassword(password, null));
     }
 
+    /*
+     * Implemented to satisfy SpringSecurity
+     */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<GrantedAuthority> authorities =
 				new HashSet<GrantedAuthority>();
-				authorities.add(new GrantedAuthorityImpl("PERM_VIEW_ADMIN"));
+		for(String s : getPermissions()) {
+				authorities.add(new GrantedAuthorityImpl(s));
+		}
 				return authorities;
 
 	}
 
 	@Override
 	public String getPassword() {
-		log.debug("Got password: " + getPasswordMd5());
 		return getPasswordMd5();
 	}
 
@@ -176,6 +199,48 @@ public class Usuario implements UserDetails {
 	private PasswordEncoder getPasswordEncoder() {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
 		return ctx.getBean(PasswordEncoder.class);
+	}
+
+	/**
+	 * @return the permissions
+	 */
+	public Set<String> getPermissions() {
+		return new HashSet<String>(Arrays.asList(StringUtils.split(getPermissionsInternal(), ',')));
+	}
+
+	/**
+	 * @param perm the permissions to set
+	 */
+	public void setPermissions(Set<String> perm) {
+		setPermissionsInternal(StringUtils.join(perm, ','));
+	}
+
+	/**
+	 * @return the permissionsInternal
+	 */
+	private String getPermissionsInternal() {
+		return permissionsInternal;
+	}
+
+	/**
+	 * @param permissionsInternal the permissionsInternal to set
+	 */
+	private void setPermissionsInternal(String permissionsInternal) {
+		this.permissionsInternal = permissionsInternal;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public String getRole() {
+		return role;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

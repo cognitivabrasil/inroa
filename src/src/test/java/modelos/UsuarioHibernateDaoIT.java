@@ -112,6 +112,13 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
         assertEquals("698dc19d489c4e4db73e28a713eab07b", u.getPasswordMd5());
         assertEquals("Administrador da federação", u.getDescription());
     }
+    
+    @Test
+    public void testGetPermissions() {
+        Usuario u = instance.get("admin");
+        
+        assertThat(u.getPermissions(), hasItems("PERM_MANAGE_USERS", "PERM_MANAGE_MAPPING"));
+    }
 
     /**
      * Test of getAll method, of class UsuarioHibernateDAO.
@@ -153,7 +160,7 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
     public void testSaveAndUpdate2() throws Exception {
         if (updated) {
             updated = false;
-            String[] ignore = {"id"};
+            String[] ignore = {"id", "permissions", "role"};
             String[] sort = {"login"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("usuarios"), sort), new SortedTable(getConnection().createDataSet().getTable("usuarios"), sort), ignore);
 

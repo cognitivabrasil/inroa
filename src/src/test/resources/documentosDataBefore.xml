@@ -7,7 +7,7 @@ and open the template in the editor.
 <dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="dataset.xsd">
              
-    <usuarios id="1" login="admin" senha="698dc19d489c4e4db73e28a713eab07b" nome="Administrador da federação"/>
+    <usuarios id="1" login="admin" senha="698dc19d489c4e4db73e28a713eab07b" nome="Administrador da federação" permissions="PERM_MANAGE_USERS,PERM_MANAGE_MAPPING"/>
     <usuarios id="2" login="admin2" senha="698dc19d489c4e4db73e28a713eab07b" nome="Administrador da federação"/>
             
     <padraometadados id="1" nome="lom" metadata_prefix="oai_lom" name_space="lom" atributos=""/>

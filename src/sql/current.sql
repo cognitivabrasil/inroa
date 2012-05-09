@@ -339,3 +339,11 @@ ALTER TABLE documentos
 --- 26/04/12
 ALTER TABLE dados_subfederacoes
    ALTER COLUMN data_ultima_atualizacao DROP DEFAULT;
+
+
+--- 9/5/12
+ALTER TABLE usuarios ADD COLUMN permissions VARCHAR(200);
+UPDATE usuarios SET permissions = 'PERM_MANAGER_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS' WHERE login = 'admin';
+
+ALTER TABLE usuarios ADD COLUMN role VARCHAR(20);
+UPDATE usuarios SET role = 'Administrador' WHERE login = 'admin';
