@@ -201,8 +201,12 @@ src/sql/FEB_1.9.sql -text
 src/sql/FEB_dados.sql -text
 src/sql/FEB_estrutura.sql -text
 src/sql/README.txt -text
+src/sql/achronimous.sql -text
 src/sql/current.sql -text
 src/sql/current_2.sql -text
+src/sql/guth.sql -text
+src/sql/normalize.sql -text
+src/sql/sim_guth_normalize.sql -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/Exception/RepositoriosException.java -text
 src/src/java/OBAA/Accessibility/Accessibility.java -text
@@ -454,8 +458,10 @@ src/src/main/webapp/admin/padraoMetadados/respostaAjaxPadrao.jsp -text
 src/src/main/webapp/admin/recalcularIndice.jsp -text
 src/src/main/webapp/admin/removerFederacao.jsp -text
 src/src/main/webapp/admin/removerRepositorio.jsp -text
+src/src/main/webapp/admin/statistics.jsp -text
 src/src/main/webapp/admin/testePaginacao.jsp -text
 src/src/main/webapp/consulta.jsp -text
+src/src/main/webapp/css/jquery.jqplot.min.css -text
 src/src/main/webapp/css/padrao.css -text
 src/src/main/webapp/googleAnalytics -text
 src/src/main/webapp/imagens/Lapiz-24x24.png -text
@@ -485,6 +491,9 @@ src/src/main/webapp/rss.jsp -text
 src/src/main/webapp/scripts/funcoes.js -text
 src/src/main/webapp/scripts/funcoesMapeamento.js -text
 src/src/main/webapp/scripts/funcoesPadrao.js -text
+src/src/main/webapp/scripts/jqplot.pieRenderer.min.js -text
+src/src/main/webapp/scripts/jquery-1.7.2.js -text
+src/src/main/webapp/scripts/jquery.jqplot.min.js -text
 src/src/main/webapp/scripts/rss.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/test/java/OBAA/OBAATest.java -text
