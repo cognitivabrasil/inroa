@@ -295,10 +295,10 @@ Author     : Marcos Nunes
 				<td><input type="button" class="botaoExcluir"
 					title="Excluir Subfedera&ccedil;&atilde;o" name="excluir"
 					id="excluirSubfed"
-					onclick="NewWindow('removerFederacao?id=${subfed.id}','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					onclick="NewWindow('./users/${user.id}/delete','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 					&nbsp; <input type="button" class="botaoEditar"
 					title="Editar / Visualizar" name="editar" id="editarSubfed"
-					onclick="NewWindow('exibeFederacao?id=${subfed.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					onclick="NewWindow('./users/${user.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 
 				</td>
 				<td>${user.username}</td>
@@ -309,15 +309,15 @@ Author     : Marcos Nunes
 		</c:forEach>
 
 		<tr class='center'>
-			<td><a title="Adicionar nova subfedera&ccedil;&atilde;o"
-				onclick="NewWindow('cadastraFederacao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+			<td><a title="Adicionar novo usuário"
+				onclick="NewWindow('./users/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 					<img
 					src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 					border="0" width="24" height="24" alt="Visualizar" align="middle">
 			</a></td>
 			<td colspan="2" class="left bold" style="font-size: 110%">
 				&nbsp;&nbsp; <a
-				onclick="NewWindow('cadastraFederacao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+				onclick="NewWindow('./users/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 					Adicionar novo usuário </a>
 			</td>
 			<td>

@@ -397,12 +397,12 @@ ALTER TABLE public.r1weights OWNER TO feb;
 -- Name: repositorios_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
 --
 
--- CREATE SEQUENCE repositorios_id_seq
---     START WITH 1
---     INCREMENT BY 1
---     NO MINVALUE
---     NO MAXVALUE
---     CACHE 1;
+ CREATE SEQUENCE repositorios_id_seq
+     START WITH 1
+     INCREMENT BY 1
+     NO MINVALUE
+     NO MAXVALUE
+     CACHE 1;
 
 
 ALTER TABLE public.repositorios_id_seq OWNER TO feb;
@@ -1299,6 +1299,16 @@ ALTER TABLE repositorios
 ALTER TABLE repositorios
    ALTER COLUMN data_xml DROP DEFAULT;
 
+ALTER TABLE dados_subfederacoes
+   ALTER COLUMN data_ultima_atualizacao DROP DEFAULT;
+
+
+--- 9/5/12
+ALTER TABLE usuarios ADD COLUMN permissions VARCHAR(200);
+UPDATE usuarios SET permissions = 'PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS' WHERE login = 'admin';
+
+ALTER TABLE usuarios ADD COLUMN role VARCHAR(20);
+UPDATE usuarios SET role = 'Administrador' WHERE login = 'admin';
 
 --- 10/05/12
 ALTER TABLE repositorios ADD CONSTRAINT uni_nome UNIQUE (nome);
