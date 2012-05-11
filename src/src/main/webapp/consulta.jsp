@@ -6,7 +6,7 @@
 --%>
 
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
 
@@ -43,7 +43,8 @@
         </div>
         <div class="cabecalhoConsulta">
             <div class="esquerda">
-                &nbsp;Consulta efetuada: <i>"<strong>${BuscaModel.consulta}</strong>"</i>
+                <c:if test="${!empty BuscaModel.consulta}"> &nbsp;Consulta efetuada <i>"<strong>${BuscaModel.consulta}</strong>"</i></c:if>
+                <c:if test="${!empty BuscaModel.autor}"> &nbsp;Autor: <i>"<strong>${BuscaModel.autor}</strong>"</i></c:if>
             </div>
             <div class="direita">
                 Total de <strong>${BuscaModel.sizeResult}</strong> objeto(s) encontrado(s)&nbsp;
@@ -77,8 +78,7 @@
                                 isOffset="true"
                                 export="offset,currentPageNumber=pageNumber"
                                 scope="page"
-                                >                                
-                                <pg:param name="consulta"/>
+                                >                           
                                 <pg:param name="repositorios"/>
                                 <pg:param name="federacoes"/>
                                 <pg:param name="repSubfed"/>

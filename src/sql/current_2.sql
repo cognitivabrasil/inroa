@@ -1298,3 +1298,7 @@ ALTER TABLE repositorios
    ALTER COLUMN data_ultima_atualizacao DROP DEFAULT;
 ALTER TABLE repositorios
    ALTER COLUMN data_xml DROP DEFAULT;
+
+
+--- 10/05/12
+ALTER TABLE repositorios ADD CONSTRAINT uni_nome UNIQUE (nome);

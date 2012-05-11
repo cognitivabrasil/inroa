@@ -37,7 +37,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 			
 
 		<!-- deny all access not explicitly given -->
-		<intercept-url pattern="/admin/**" access="denyAll" />
+		<!--intercept-url pattern="/admin/**" access="denyAll" /-->
 
 
 	</http>

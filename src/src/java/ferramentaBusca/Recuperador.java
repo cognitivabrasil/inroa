@@ -6,9 +6,8 @@ package ferramentaBusca;
 
 import ferramentaBusca.indexador.Documento;
 import ferramentaBusca.indexador.StopWordTAD;
+import java.math.BigInteger;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -62,6 +61,7 @@ public class Recuperador {
         boolean LRU = false;        
 
         LRU cache = new LRU(tokensConsulta, con);
+        
 
         String consultaSql = ""; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
         String sqlOrdenacao = ""; //eh preenchido pelo if que testa qual o tipo de ordenacao
@@ -160,10 +160,24 @@ public class Recuperador {
 
     //}
         //docs = s.createSQLQuery("SELECT * from documentos WHERE id=1006").addEntity(DocumentoReal.class).list();
-        docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
+        log.debug(consultaSql);
+        docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();       
+        
+        
+        consultaSql = consultaSql.replace("SELECT d.*", "SELECT COUNT(DISTINCT(d.id))");
+        
+        consultaSql = consultaSql.substring(0, consultaSql.indexOf("GROUP"));
+        System.out.println(consultaSql);
+        BigInteger nResult = (BigInteger) s.createSQLQuery(consultaSql).uniqueResult();
         
         //TODO: colocar o valor certo no sizeResult
-        consulta.setSizeResult(100);  
+        consulta.setSizeResult(nResult.intValue());
+        
+        try{
+        con.close();
+        }catch(SQLException se){
+            System.out.println("Erro ao fechar a conexao com a base. Classe: "+se.getClass() +" Exception: "+se);
+        }
         
         return docs;
         //return null;
