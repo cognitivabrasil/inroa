@@ -72,7 +72,10 @@ Primeira etapa do cadastro de um repositorio
 				<form:errors path="role" cssClass="ValueErro" />
 				<div class="Label">Tipo de usuário:</div>
 				<div class="Value">
-					<form:input path="role" maxlength="20" />
+					<form:select path="role">
+   <form:option value="NONE" label="--- Select ---"/>
+   <form:options items="${roleList}" />
+</form:select>
 				</div>
 
 				<div class="Espaco">&nbsp;</div>

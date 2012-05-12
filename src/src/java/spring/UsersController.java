@@ -4,18 +4,21 @@
  */
 package spring;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import ferramentaBusca.IndexadorBusca;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpSession;
-import modelos.*;
 
-import org.apache.log4j.Logger;
+import modelos.Usuario;
+import modelos.UsuarioDAO;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,16 +26,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import postgres.SingletonConfig;
-import spring.validador.PadraoValidator;
-import spring.validador.RepositorioValidator;
-import spring.validador.InfoBDValidator;
-import spring.validador.SubFederacaoValidador;
-import robo.atualiza.Repositorios;
-import robo.atualiza.SubFederacaoOAI;
-
+/**
+ * The Class UserDto.
+ * 
+ * This class represents the User Data Transfer Object, i.e,
+ * the backend of the User form. It can be populated with
+ * a {@link Usuario} object, and return an updated one.
+ */
 class UserDto {
 	private Integer id;
 	private String username;
@@ -41,9 +46,17 @@ class UserDto {
 	private String confirmPassword;
 	private String description;
 
+	/**
+	 * Instantiates an empty UserDto.
+	 */
 	public UserDto() {
 	};
 
+	/**
+	 * Instantiates a userDto based on the Usuario object.
+	 *
+	 * @param u the {@link Usuario}
+	 */
 	public UserDto(Usuario u) {
 		setUsername(u.getUsername());
 		setId(u.getId());
@@ -51,6 +64,14 @@ class UserDto {
 		setDescription(u.getDescription());
 	}
 
+	/**
+	 * Gets the Usuario object corresponding to the Dto.
+	 *
+	 * 
+	 * @param u the Usuario to be update or null if it is a new
+	 * Usuario
+	 * @return the updated or new Usuario, ready to be saved
+	 */
 	Usuario getUsuario(Usuario u) {
 		if (u == null) {
 			u = new Usuario();
@@ -60,6 +81,7 @@ class UserDto {
 		}
 		u.setUsername(username);
 		u.setRole(role);
+		u.setPermissions(getPermissions(role));
 		u.setDescription(description);
 		return u;
 	}
@@ -111,8 +133,56 @@ class UserDto {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	/**
+	 * Reference data for the roles.
+	 *
+	 * @return the map
+	 */
+	protected static Map<String, Map<String, String>> referenceData() {
+
+		Map<String, Map<String, String>> referenceData = new HashMap<String, Map<String, String>>();
+
+		Map<String, String> roles = new LinkedHashMap<String, String>();
+		roles.put("root", "Superusuário");
+		roles.put("admin", "Administrador de federações");
+		roles.put("update", "Visualizar e atualizar");
+		roles.put("view", "Somente visualizar");
+		referenceData.put("roleList", roles);
+
+		return referenceData;
+	}
+
+	/**
+	 * Gets the permissions by the role.
+	 *
+	 * @param role the role
+	 * @return the permissions
+	 */
+	private Set<String> getPermissions(String role) {
+		Map<String, List<String>> roles = new LinkedHashMap<String, List<String>>();
+		roles.put(
+				"root",
+				Arrays.asList(StringUtils
+						.split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS",
+								',')));
+		roles.put(
+				"admin",
+				Arrays.asList(StringUtils
+						.split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_VIEW_STATISTICS",
+								',')));
+		roles.put("update", Arrays.asList(StringUtils.split(
+				"PERM_UPDATE,PERM_VIEW_STATISTICS", ',')));
+		roles.put("view",
+				Arrays.asList(StringUtils.split("PERM_VIEW_STATISTICS", ',')));
+		return new HashSet<String>(roles.get(role));
+
+	}
 }
 
+/**
+ * The Class UserValidator, validates a UserDto.
+ */
 @Component
 class UserValidator implements Validator {
 	@Autowired
@@ -137,9 +207,9 @@ class UserValidator implements Validator {
 			// is a NEW user, check that password is not blank
 			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password",
 					"required.password", "É necessário informar uma senha.");
-			if (userDao.get(u.getUsername()) != null) { 
+			if (userDao.get(u.getUsername()) != null) {
 				errors.rejectValue("username", "invalid.username",
-						"Já existe um usuário com esse nome."); 
+						"Já existe um usuário com esse nome.");
 			}
 		}
 
@@ -149,9 +219,10 @@ class UserValidator implements Validator {
 						"As senhas devem se iguais");
 			}
 		}
-
-		if (!u.getRole().equals("admin")) {
-			errors.rejectValue("role", "ivalid.role", "Role inválido");
+		// verifies that the role exists
+		if (UserDto.referenceData().get("roleList").get(u.getRole()) == null) {
+			errors.rejectValue("role", "required.role", 
+					"É necessário informar um perfil");
 		}
 
 	}
@@ -159,55 +230,64 @@ class UserValidator implements Validator {
 }
 
 /**
- * Controller for users
+ * Controller for users.
  * 
  * @author Paulo Schreiner <paulo@jorjao81.com>
  */
 @Controller("users")
 @RequestMapping("/admin/users/*")
 public final class UsersController {
-	@Autowired
-	ServletContext servletContext;
-	@Autowired
-	private UsuarioDAO userDao;
+	@Autowired 	ServletContext servletContext;
+	@Autowired 	private UsuarioDAO userDao;
+	@Autowired 	private UserValidator userValidator;
 
-	@Autowired
-	private RepositoryDAO repDao;
-	@Autowired
-	private SubFederacaoDAO subDao;
-	@Autowired
-	private PadraoMetadadosDAO padraoDao;
-	@Autowired
-	private MapeamentoDAO mapDao;
-
-	@Autowired
-	private UserValidator userValidator;
-
+	/**
+	 * Instantiates a new users controller.
+	 */
 	public UsersController() {
 	}
 
+	/**
+	 * Shows details of the user.
+	 *
+	 * @param id the user id
+	 */
 	@RequestMapping("/{id}")
-	public String exibeRep(@PathVariable Integer id, Model model) {
+	public String userShow(@PathVariable Integer id, Model model) {
 		model.addAttribute("user", userDao.get(id));
 		return "admin/users/show";
 	}
 
+	/**
+	 * Shows new user forme.
+	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String cadastraRep(Model model) {
-
-		// TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento
-		// atraves do repModel
+	public String userNewShow(Model model) {
 		model.addAttribute("userModel", new UserDto());
+		model.addAttribute("roleList", UserDto.referenceData().get("roleList"));
 		return "admin/users/form";
 	}
 
+	/**
+	 * Shows edit user form.
+	 *
+	 * @param id the user id
+	 */
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
 	public String userEditShow(@PathVariable Integer id, Model model) {
 
 		model.addAttribute("userModel", new UserDto(userDao.get(id)));
+		model.addAttribute("roleList", UserDto.referenceData().get("roleList"));
+
 		return "admin/users/form";
 	}
-
+	/**
+	 * Actually changes the user.
+	 *
+	 * @param u the UserDto, as filled by the form
+	 * @return edit page reloaded with error descriptions in case of error,
+returns to main admin page otherwise
+	 */
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
 	public String userEditDo(@PathVariable Integer id,
 			@ModelAttribute("userModel") UserDto u, BindingResult result,
@@ -216,44 +296,63 @@ public final class UsersController {
 		userValidator.validate(u, result);
 		if (result.hasErrors()) {
 			model.addAttribute("userModel", u);
+			model.addAttribute("roleList",
+					UserDto.referenceData().get("roleList"));
+
 			return "admin/users/form";
-		} else { // se retornar null é porque nao tem nenhum repositorio com
-					// esse nome
-			userDao.save(u.getUsuario(userDao.get(id))); // salva o novo
-															// repositorio
-															// return
+		} else { 
+			userDao.save(u.getUsuario(userDao.get(id)));
 			return "redirect:/admin/fechaRecarrega";
 		}
 
 	}
 
+	/**
+	 * Actually creates the new user.
+	 *
+	 * @param u the UserDto, as filled by the form
+	 * @return edit page reloaded with error descriptions in case of error,
+returns to main admin page otherwise
+	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public String salvaNovoRep(@ModelAttribute("userModel") UserDto u,
+	public String userNewDo(@ModelAttribute("userModel") UserDto u,
 			BindingResult result, Model model) {
 		userValidator.validate(u, result);
 		if (result.hasErrors()) {
 			model.addAttribute("userModel", u);
+			model.addAttribute("roleList",
+					UserDto.referenceData().get("roleList"));
+
 			return "admin/users/form";
-		} else { // se retornar null é porque nao tem nenhum repositorio com
-					// esse nome
-			userDao.save(u.getUsuario(null)); // salva o novo repositorio return
+		} else { 
+			userDao.save(u.getUsuario(null)); 
 			return "redirect:/admin/fechaRecarrega";
 		}
 
 	}
 
+	/**
+	 * Actually deletes the user, unless its the last one.
+	 *
+	 * @param id the user id
+	 * @throws RuntimeException if the user is the last one
+	 */
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
 	public String userDeleteDo(@PathVariable Integer id, Model model) {
-		if(userDao.getAll().size() == 1) {
+		if (userDao.getAll().size() == 1) {
 			throw new RuntimeException("Cannot delete last user");
 		}
 		userDao.delete(userDao.get(id));
 		return "redirect:/admin/fechaRecarrega";
 	}
 
+	/**
+	 * Asks for confirmation for the delete operation.
+	 *
+	 * @param id the user id
+	 */
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-	public String userDeleteShow(@PathVariable Integer id,
-			Model model) {
+	public String userDeleteShow(@PathVariable Integer id, Model model) {
 		model.addAttribute("user", userDao.get(id));
 		return "admin/users/confirmDelete";
 	}
