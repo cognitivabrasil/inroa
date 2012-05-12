@@ -167,6 +167,6 @@
 
         </div>
 
-        <%@include file="../googleAnalytics"%>
+        <%@include file="../../googleAnalytics"%>
     </body>
 </html>

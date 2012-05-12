@@ -43,7 +43,6 @@ public final class AdminController {
     @Autowired
     private MapeamentoDAO mapDao;
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
-    private RepositorioValidator repValidator = new RepositorioValidator();
     @Autowired
     ServletContext servletContext;
     @Autowired
@@ -64,115 +63,6 @@ public final class AdminController {
     @RequestMapping("/adm")
     public String admin2(Model model) {
         return admin(model);
-    }
-
-    @RequestMapping("/repositories/{id}")
-    public String exibeRep(@PathVariable Integer id,
-            Model model) {
-        model.addAttribute("rep", repDao.get(id));
-        model.addAttribute("repId", id);
-        return "admin/exibeRepositorios";
-    }
-
-    @RequestMapping(value = "/repositories/new", method=RequestMethod.GET)
-    public String cadastraRep(Model model) {
-
-        //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
-        model.addAttribute("repModel", new Repositorio());
-        model.addAttribute("padraoMetadadosDAO", padraoDao);
-        return "admin/cadastraRepositorio";
-    }
-
-    @RequestMapping(value="/repositories/new", method=RequestMethod.POST)
-    public String salvaNovoRep(
-            @ModelAttribute("repModel") Repositorio rep,
-            BindingResult result,
-            Model model) {
-
-        repValidator.validate(rep, result);
-        if (result.hasErrors()) {
-            model.addAttribute("repModel", rep);
-            model.addAttribute("padraoMetadadosDAO", padraoDao);
-            model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
-            return "admin/cadastraRepositorio";
-        } else {
-            if (repDao.get(rep.getNome()) != null) { //se retornar algo é porque já existe um repositorio com esse nome
-                result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); //nao esta dentro da classe validator pq só executa isso quando for um repositorio novo, quando editar não.
-
-                model.addAttribute("mapSelecionado", rep.getMapeamento().getId());
-                model.addAttribute("repModel", rep);
-                model.addAttribute("padraoMetadadosDAO", padraoDao);
-                model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
-                return "admin/cadastraRepositorio";
-            } else { //se retornar null é porque nao tem nenhum repositorio com esse nome
-                repDao.save(rep); //salva o novo repositorio return
-                return "redirect:/admin/fechaRecarrega";
-            }
-        }
-    }
-
-    @RequestMapping(value = "/repositories/{id}/edit", method = RequestMethod.GET)
-    public String editaRep(
-            @PathVariable Integer id,
-            Model model) {
-
-        model.addAttribute("repModel", repDao.get(id));
-        model.addAttribute("padraoMetadadosDAO", padraoDao);
-        model.addAttribute("idRep", id);
-        return "admin/editarRepositorio";
-    }
-
-    @RequestMapping(value = "/repositories/{id}/edit", method = RequestMethod.POST)
-    public String salvaRep(
-            @ModelAttribute("repModel") Repositorio rep,
-            @PathVariable Integer id,
-            BindingResult result,
-            Model model) {
-
-        repValidator.validate(rep, result);
-        if (result.hasErrors()) {
-            model.addAttribute("repModel", rep);
-            model.addAttribute("padraoMetadadosDAO", padraoDao);
-            model.addAttribute("idRep", id);
-            return "admin/editarRepositorio";
-        } else {
-            repDao.updateNotBlank(rep);
-            return "redirect:/admin/repositories/" + id;
-        }
-    }
-    
-    @RequestMapping(value="/repositories/{id}/update", method = RequestMethod.POST)
-    public @ResponseBody
-    String atualizaRepositorioAjax(
-    		@PathVariable Integer id,
-            @RequestParam boolean apagar) {
-
-        Repositorios repositorio = new Repositorios();
-        try {
-            repositorio.atualizaFerramentaAdm(id, apagar);
-            return "1";
-        } catch (Exception e) {
-            return "Ocorreu um erro ao atualizar o repositorio. Exception: " + e.toString();
-        }
-    }
-
-
-    @RequestMapping(value="/repositories/{id}/delete", method = RequestMethod.POST)
-    public String deleteRepository(
-    		@PathVariable Integer id,
-    		Model model) {
-            Repositorio rep = new Repositorio();
-            rep.setId(id);
-            repDao.delete(rep);
-            return "redirect:/admin/fechaRecarrega";
-    }
-    
-    @RequestMapping(value="/repositories/{id}/delete", method = RequestMethod.GET)
-    public String showRepositoryDeleteConfirmation(
-    		@PathVariable Integer id,
-            Model model) {
-            model.addAttribute("rep", repDao.get(id));
-            return "admin/removerRepositorio";
     }
 
     @RequestMapping("/cadastraFederacao")
