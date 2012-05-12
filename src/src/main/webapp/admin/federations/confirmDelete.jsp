@@ -12,9 +12,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        <link rel="StyleSheet" media="screen" href="../css/padrao.css" type="text/css"/>
-        <script type="text/javascript" src="../scripts/funcoes.js"></script>
-        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<c:url var="favicon" value="/imagens/favicon.ico" />
+<c:url var="css" value="/css/padrao.css" />
+<c:url var="validateJs" value="/scripts/validatejs.js" />
+<c:url var="funcoesJs" value="/scripts/funcoes.js" />
+
+<c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
+
+<link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
+<link rel="StyleSheet" href="${css }" type="text/css" />
+<script type="text/javascript" src="${validateJs }"></script>
+<script type="text/javascript" src="${funcoesJs }"></script>
     </head>
     <body>
         <div id="page">
@@ -24,12 +32,12 @@
             <form name="removerFederacao" action="removerFederacao" method="post">
                 <div class="LinhaEntrada">
                     <div class="Tab">
-                        Deseja realmente remover a Subfedera&ccedil;&atilde;o <b>${subDAO.get(param.id).nome}</b> ?
+                        Deseja realmente remover a Subfedera&ccedil;&atilde;o <b>${federation.nome}</b> ?
                     </div>
                     <BR>
                 </div>
                 <input type="hidden" name="submitted" value="true"/>
-                <input type="hidden" name="id" value="${param.id}">
+                <input type="hidden" name="id" value="${federation.id}">
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="submit" value="&nbsp;Sim&nbsp;" name="submit" />
@@ -38,6 +46,6 @@
                 </div>
             </form>
         </div>
-        <%@include file="../googleAnalytics"%>
+        <%@include file="../../googleAnalytics"%>
     </body>
 </html>

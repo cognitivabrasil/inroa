@@ -36,12 +36,19 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 		<intercept-url pattern="/admin/repositories/**" method="POST"
 			access="hasRole('PERM_MANAGE_REP')" />
 
+		<intercept-url pattern="/admin/repositories/*/update*"
+			method="POST" access="hasRole('PERM_UPDATE')" />
+		<intercept-url pattern="/admin/repositories/update*"
+			method="POST" access="hasRole('PERM_UPDATE')" />
+		<intercept-url pattern="/admin/repositories/**" method="POST"
+			access="hasRole('PERM_MANAGE_REP')" />
+
 
 		<intercept-url pattern="/admin/users/**" method="POST"
 			access="hasRole('PERM_MANAGE_USERS')" />
 
 		<!-- deny all access not explicitly given -->
-		<!--intercept-url pattern="/admin/**" access="denyAll" /-->
+		<intercept-url pattern="/admin/**" access="denyAll" />
 
 
 	</http>

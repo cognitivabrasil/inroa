@@ -242,7 +242,7 @@ function atualizaSubfedAjax(id, exibeResultado)
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "atualizaSubfedAjax?id="+id, true);
+    ajax.open("POST", rootUrl + "/admin/federations/"+id+"/update?apagar="+apagar, true);
 
     ajax.onreadystatechange = function()
     {
@@ -272,7 +272,7 @@ function atualizaSubfedAjax(id, exibeResultado)
                 exibeResultado.innerHTML = "Erro nas funções do Ajax";
             }
         }
-    }
+    };
     ajax.send(null); // submete
 }
 

@@ -15,8 +15,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
-        <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<c:url var="favicon" value="/imagens/favicon.ico" />
+<c:url var="css" value="/css/padrao.css" />
+<c:url var="validateJs" value="/scripts/validatejs.js" />
+<c:url var="funcoesJs" value="/scripts/funcoes.js" />
+
+<c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
+
+<link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
+<link rel="StyleSheet" href="${css }" type="text/css" />
+<script type="text/javascript" src="${validateJs }"></script>
+<script type="text/javascript" src="${funcoesJs }"></script>
     </head>
 
     <body>
@@ -27,26 +36,26 @@
             <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de federa&ccedil;&otilde;es cadastradas</div>
 
 
-            <div class="subtitulo">Informa&ccedil;&otilde;es sobre as subfedera&ccedil;&otilde;es ${subFed.nome}</div>
-            <div class="editar"><a href="./editarFederacao?id=${subFed.id}">Editar</a></div>
+            <div class="subtitulo">Informa&ccedil;&otilde;es sobre as subfedera&ccedil;&otilde;es ${federation.nome}</div>
+            <div class="editar"><a href="./${federation.id}/edit">Editar</a></div>
 
             <div class="LinhaEntrada">
                 <div class="Label">
                     Nome:
                 </div>
-                <div class="Value">&nbsp;${subFed.nome}</div>
+                <div class="Value">&nbsp;${federation.nome}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     Descri&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;${subFed.descricao}</div>
+                <div class="Value">&nbsp;${federation.descricao}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">
                     URL da federa&ccedil;&atilde;o:
                 </div>
-                <div class="Value">&nbsp;${subFed.url}</div>
+                <div class="Value">&nbsp;${federation.url}</div>
             </div>
 
             <div class="LinhaEntrada">
@@ -54,19 +63,19 @@
                     &Uacute;ltima Atualiza&ccedil;&atilde;o:
                 </div>
                 <c:choose>
-                    <c:when test="${subFed.isOutdated()}">
+                    <c:when test="${federation.isOutdated()}">
                         <div id="textResultSF${param.id}" class='Value textoErro'>&nbsp;
-                            ${operacoesBean.ultimaAtualizacaoFrase(subFed.ultimaAtualizacao, subFed.url)}
-                            <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
-                                <img src='../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
+                            ${operacoesBean.ultimaAtualizacaoFrase(federation.ultimaAtualizacao, federation.url)}
+                            <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${federation.id}, this.parentNode);">
+                                <img src='../../imagens/erro_sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a> 
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <div id="textResultSF${param.id}" class="Value">&nbsp;
-                            ${operacoesBean.ultimaAtualizacaoFrase(subFed.ultimaAtualizacao, subFed.url)}
-                            <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${param.id}, this.parentNode);">
-                                <img src='../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
+                        <div id="textResultSF${federation.id}" class="Value">&nbsp;
+                            ${operacoesBean.ultimaAtualizacaoFrase(federation.ultimaAtualizacao, federation.url)}
+                            <a title='Atualizar agora' onclick="javaScript:atualizaSubfedAjax(${federation.id}, this.parentNode);">
+                                <img src='../../imagens/sincronizar.png' border='0' width='24' height='24' alt='Atualizar' align='middle'> 
                             </a>
                         </div>
                     </c:otherwise>
@@ -76,7 +85,7 @@
 
             <table  width=100% class="tableSubfed">
                 <th width="70%">Reposit&oacute;rio</th><th width="30%">N&uacute;mero de objetos</th>
-                <c:forEach var="rep" items="${subFed.repositorios}" varStatus="status">
+                <c:forEach var="rep" items="${federation.repositorios}" varStatus="status">
                     <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
                         <td>${rep.nome}</td>
                         <td align='center'>${rep.size} </td>
@@ -84,11 +93,11 @@
                 </c:forEach>                    
 
                 <tr class="bold">
-                    <th align="right">TOTAL</th> <th align='center'>${subFed.sizeDoc}</th>
+                    <th align="right">TOTAL</th> <th align='center'>${federation.sizeDoc}</th>
                 </tr>
             </table>
         </div>
 
-        <%@include file="../googleAnalytics"%>
+        <%@include file="../../googleAnalytics"%>
     </body>
 </html>
