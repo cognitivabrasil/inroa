@@ -20,7 +20,7 @@ import spring.ApplicationContextProvider;
  *
  */
 @Transactional
-public class Repositorio implements java.io.Serializable {
+public class Repositorio implements java.io.Serializable, RepositorioGenerico {
 	static Logger log = Logger.getLogger(Repositorio.class.getName());
 
 

@@ -1,17 +1,15 @@
 package robo.atualiza.importaOAI;
 
+import OBAA.OaiOBAA;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import OBAA.OaiOBAA;
 import metadata.XsltConversor;
 import modelos.DocumentosDAO;
 import modelos.Repositorio;
 import modelos.RepositoryDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 // TODO: Auto-generated Javadoc
 public class Importer {
@@ -128,9 +126,5 @@ public class Importer {
 	void setRepDao(RepositoryDAO repositoryDao) {
 		this.repDao = repositoryDao;
 	}
-
-
-
-
 
 }

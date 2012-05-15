@@ -329,7 +329,7 @@ src/src/java/metadata/DublinCore.java -text
 src/src/java/metadata/Header.java -text
 src/src/java/metadata/MetadataConversorInterface.java -text
 src/src/java/metadata/Request.java -text
-src/src/java/metadata/Spec.java -text
+src/src/java/metadata/SetSpec.java -text
 src/src/java/metadata/TextElement.java -text
 src/src/java/metadata/XSLTUtil.java -text
 src/src/java/metadata/XsltConversor.java -text
@@ -351,6 +351,7 @@ src/src/java/modelos/PadraoMetadados.java -text
 src/src/java/modelos/PadraoMetadadosDAO.java -text
 src/src/java/modelos/PadraoMetadadosHibernateDAO.java -text
 src/src/java/modelos/Repositorio.java -text
+src/src/java/modelos/RepositorioGenerico.java -text
 src/src/java/modelos/RepositorioSubFed.java -text
 src/src/java/modelos/RepositoryDAO.java -text
 src/src/java/modelos/RepositoryHibernateDAO.java -text
@@ -384,6 +385,7 @@ src/src/java/robo/atualiza/importaOAI/Indice.java -text
 src/src/java/robo/atualiza/importaOAI/InicioLeituraXML.java -text
 src/src/java/robo/atualiza/importaOAI/InsereObjetoBase.java -text
 src/src/java/robo/atualiza/importaOAI/OAI_Interface.java -text
+src/src/java/robo/atualiza/subfedOAI/Importer.java -text
 src/src/java/robo/atualiza/subfedOAI/Objetos.java -text
 src/src/java/robo/atualiza/subfedOAI/ParserListSets.java -text
 src/src/java/robo/atualiza/subfedOAI/ParserObjetos.java -text
@@ -526,6 +528,7 @@ src/src/test/java/metadata/oai_dc10000.xml -text
 src/src/test/java/metadata/oai_error.xml -text
 src/src/test/java/metadata/oai_lom.xml -text
 src/src/test/java/metadata/oai_norecords.xml -text
+src/src/test/java/metadata/oai_obaa.xml -text
 src/src/test/java/metadata/obaa1.xml -text
 src/src/test/java/metadata/teste1.xml -text
 src/src/test/java/modelos/AbstractDaoTest.java -text

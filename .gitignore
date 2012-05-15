@@ -19,5 +19,6 @@ src/profiles.xml
 src/src/main/resources/.Repositorio.hbm.xml.swp
 src/src/main/webapp/META-INF
 src/src/main/webapp/WEB-INF
+src/src/test/java/metadata/.oai_obaa.xml.swp
 src/target
 src/test

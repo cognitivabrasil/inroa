@@ -4,10 +4,24 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.fail;
 
 import java.io.FileNotFoundException;
+import metadata.Header;
 
 import org.junit.Test;
 
 public class OaiOBAATest {
+    
+        @Test
+        public void testSetSpec() throws FileNotFoundException {
+            OaiOBAA l = OaiOBAA.fromFilename("./src/test/java/metadata/oai_obaa.xml");
+            
+            Header h = l.getHeader(0);
+            
+            assertEquals("oai:cesta2.cinted.ufrgs.br:123456789/57", h.getIdentifier());
+            
+            assert(h.getSetSpec() != null);
+            assertEquals("Cesta", h.getSetSpec().get(0));
+        }
+    
 	/**
 	 * Test that trying to load a an invalid OAI-PMH url throws the correct Exception.
 	 *

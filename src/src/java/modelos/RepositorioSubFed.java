@@ -16,7 +16,7 @@ import spring.ApplicationContextProvider;
  *
  * @author Marcos
  */
-public class RepositorioSubFed {
+public class RepositorioSubFed implements RepositorioGenerico{
 
     private int id;
     private String nome;
@@ -104,6 +104,26 @@ public class RepositorioSubFed {
         Query query = session.createQuery(hql);
         query.setParameter("rep", this);
         return query.executeUpdate();
+    }
+    
+    @Override
+    public boolean equals(Object rsf){
+        if(rsf == null || !rsf.getClass().equals(RepositorioSubFed.class))
+            return false;
+        else
+        return this.getNome().equals( ((RepositorioSubFed)rsf).getNome());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        return hash;
+    }
+    
+    @Override
+    public String toString() {
+        return getNome();
     }
     
 

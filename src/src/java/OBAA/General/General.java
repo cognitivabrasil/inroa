@@ -7,6 +7,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
 import org.simpleframework.xml.Root;
+import robo.util.Operacoes;
 
 /**
  * <div class="en"> This category groups the general information that describes
@@ -47,14 +48,6 @@ public class General {
     public General() {
     }
 
-    private List<String> toStringList(List<? extends TextElement> elements) {
-        List<String> s = new ArrayList<String>();
-        for (TextElement e : elements) {
-            s.add(e.getText());
-        }
-        return s;
-    }
-
     //Titles
     public void setTitles(List<Title> titles) {
         this.title = titles;
@@ -69,7 +62,7 @@ public class General {
     }
 
     public List<String> getDescriptions() {
-        return toStringList(description);
+        return Operacoes.toStringList(description);
     }
 
     public void addDescription(String title) {
@@ -77,7 +70,7 @@ public class General {
     }
 
     public List<String> getCoverages() {
-        return toStringList(coverage);
+        return Operacoes.toStringList(coverage);
     }
 
     //Keywords
@@ -86,7 +79,7 @@ public class General {
     }
 
     public List<String> getKeywords() {
-        return toStringList(keyword);
+        return Operacoes.toStringList(keyword);
     }
 
     public void addKeyword(String keyword) {

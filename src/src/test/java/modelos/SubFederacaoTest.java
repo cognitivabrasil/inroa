@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.*;
 /**
  * The Class SubFederacaoTest.
  *
- * @author paulo
+ * @author paulo, Marcos
  */
 public class SubFederacaoTest {
 
@@ -93,5 +93,51 @@ public class SubFederacaoTest {
 
         assertEquals("Paulo", r1.getNome());
         assertEquals("bla", r1.getUrl());
+    }
+    
+    /**
+     * Test update the list of repositories.
+     */
+    @Test
+    public void testUpdateListRepositories() throws Exception{
+        
+        Set<RepositorioSubFed> listSubRep = new HashSet<RepositorioSubFed>();
+        RepositorioSubFed rsf = new RepositorioSubFed();
+        rsf.setNome("marcos");
+        listSubRep.add(rsf);
+        
+        rsf = new RepositorioSubFed();
+        rsf.setNome("jorge");
+        listSubRep.add(rsf);
+        
+        rsf = new RepositorioSubFed();
+        rsf.setNome("nunes");
+        listSubRep.add(rsf);
+        
+        SubFederacao r1 = new SubFederacao();
+        r1.setRepositorios(listSubRep);
+        
+        Set<String> listaNova = new HashSet<String>();
+        listaNova.add("marcos");
+        listaNova.add("jorge");
+        listaNova.add("preto");
+        
+        r1.atualizaListaSubRepositorios(listaNova);
+       Set<RepositorioSubFed> correto = new HashSet<RepositorioSubFed>();
+       
+        rsf = new RepositorioSubFed();
+        rsf.setNome("marcos");
+        correto.add(rsf);
+        
+        rsf = new RepositorioSubFed();
+        rsf.setNome("jorge");
+        correto.add(rsf);
+        
+        rsf = new RepositorioSubFed();
+        rsf.setNome("preto");
+        correto.add(rsf);
+        
+        assertEquals(correto, r1.getRepositorios());
+        
     }
 }

@@ -26,19 +26,20 @@ public class Robo {
         Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
         boolean repAtualizado = false;
         boolean subFedAtualizada = false;
-        if (con != null) {
+        
 
             SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 //TESTA/ATUALIZA SUBFEDERACAO
             SubFederacaoOAI subFed = new SubFederacaoOAI();
-            subFedAtualizada = subFed.pre_AtualizaSubFedOAI(con, indexar);
+            subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);
             indexar.setDataXML(null);
 
 //TESTA REPOSITORIO
             Repositorios repositorio = new Repositorios();
-            repAtualizado = repositorio.testa_atualizar_repositorio(con, indexar);
+            repAtualizado = repositorio.testa_atualizar_repositorio(indexar);
 
+            if (con != null) {
 
 //TESTA SE PRECISA RECALCULA O INDICE
             try {

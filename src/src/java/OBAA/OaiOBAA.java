@@ -194,6 +194,11 @@ public class OaiOBAA {
 			throws FileNotFoundException {
 		return fromReader(new FileReader(new File(filename)));
 	}
+        
+        public static OaiOBAA fromFile(File file)
+			throws FileNotFoundException {
+		return fromReader(new FileReader(file));
+	}
 
 	public static OaiOBAA fromString(String s) {
 		return fromReader(new StringReader(s));

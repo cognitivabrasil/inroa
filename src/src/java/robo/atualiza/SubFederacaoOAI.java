@@ -32,6 +32,7 @@ import spring.ApplicationContextProvider;
  * @author Marcos
  */
 public class SubFederacaoOAI {
+
     Logger log = Logger.getLogger(this.getClass().getName());
 
     /**
@@ -45,9 +46,9 @@ public class SubFederacaoOAI {
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi
      * atualizada ou n&atilde;o.
      */
-    public boolean pre_AtualizaSubFedOAI(Connection con, Indexador indexar) {
+    public boolean pre_AtualizaSubFedOAI(Indexador indexar) {
         boolean atualizou = false;
-        
+
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.error("FEB ERRO: Could not get AppContext bean!");
@@ -76,7 +77,7 @@ public class SubFederacaoOAI {
 
                         Long inicio = System.currentTimeMillis();
                         try {
-                            atualizaSubFedOAI(subFed, con, indexar);
+                            atualizaSubFedOAI(subFed, indexar);
                             atualizadoTemp = true;
                         } catch (Exception e) {
                             /*
@@ -123,7 +124,7 @@ public class SubFederacaoOAI {
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi
      * atualizada ou n&atilde;o.
      */
-    private void atualizaSubFedOAI(SubFederacao subFed, Connection con, Indexador indexar) throws Exception {
+    private void atualizaSubFedOAI(SubFederacao subFed, Indexador indexar) throws Exception {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.error("FEB ERRO: Could not get AppContext bean!");
@@ -140,18 +141,17 @@ public class SubFederacaoOAI {
                 }
                 //atualizar repositorios da subfederacao
                 SubRepositorios subRep = new SubRepositorios();
-                subRep.atualizaSubRepositorios(url, subFed.getNome(), subFed.getId(), con);
+                subRep.atualizaSubRepositorios(url, subFed);
 
                 //atualizar objetos da subfederacao
                 Objetos obj = new Objetos();
-                obj.atualizaObjetosSubFed(url, subFed.getDataXML(), subFed.getNome(), "obaa", null, con, indexar);
+                obj.atualizaObjetosSubFed(url, subFed, indexar);
 
-                if (indexar.getDataXML() != null) { //se foi coletada da data do xml entao atualiza as datas no objeto subFed
-                    subFed.setUltimaAtualizacao(new Date());
-                    subFed.setDataXML(indexar.getDataXML());
-                    SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
-                    subDao.save(subFed);
-                }
+
+                subFed.setUltimaAtualizacao(new Date());
+                SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
+                subDao.save(subFed);
+
 
             } catch (UnknownHostException u) {
                 System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
@@ -229,7 +229,7 @@ public class SubFederacaoOAI {
         } else {
 
             Long inicio = System.currentTimeMillis();
-            atualizaSubFedOAI(subFed, con, indexar);
+            atualizaSubFedOAI(subFed, indexar);
             Long fim = System.currentTimeMillis();
             System.out.println("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
         }

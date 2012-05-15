@@ -2,8 +2,7 @@ package robo.atualiza.harvesterOAI;
 
 import java.io.*;
 import java.util.ArrayList;
-import metadata.MetadataConversorInterface;
-import metadata.XsltConversorDefault;
+import java.util.Set;
 import robo.util.Operacoes;
 //import util.*;
 
@@ -26,7 +25,7 @@ public class Principal {
      * @param set nome do conjunto que restringir&aacute; a consulta. Nome da coleção ou da comunidade.
      * @return Retorna um ArrayList de Strings contendo o(s) caminho(s) para o(s) xml(s) salvo(s).
      */
-    public ArrayList<String> coletaXML_ListRecords(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix, String set) throws Exception {
+    public ArrayList<String> coletaXML_ListRecords(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix, Set<String> set) throws Exception {
         this.endereco = endereco;
         this.dataInicial = dataInicial;
         this.metadataPrefix = metadataPrefix;
@@ -44,10 +43,9 @@ public class Principal {
         if (set == null) {
             coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, null);
         } else {
-            String[] setVet = set.split(";");
-            for (int i = 0; i < setVet.length; i++) { //percorre todos os sets que tem que atualizar.
-
-                numeroXML = coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, setVet[i]); //coleta todos os dados do set especificado
+            
+            for (String setInterno : set) { //percorre todos os sets que tem que atualizar.
+                numeroXML = coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, setInterno); //coleta todos os dados do set especificado
             }
         }
 

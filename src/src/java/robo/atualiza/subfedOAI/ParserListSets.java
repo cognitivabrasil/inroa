@@ -2,7 +2,8 @@ package robo.atualiza.subfedOAI;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -20,7 +21,7 @@ public class ParserListSets extends DefaultHandler {
 
     /** Buffer que guarda as informacoes quando um texto e encontrado */
     private StringBuffer valorAtual = new StringBuffer(50);
-    private ArrayList<String> subRepositorios;
+    private Set<String> subRepositorios;
 
 
 
@@ -35,7 +36,7 @@ public class ParserListSets extends DefaultHandler {
      * @throws SAXException
      * @throws IOException
      */
-    public ArrayList<String> parser(
+    public Set<String> parser(
             File caminhoXML)
             throws ParserConfigurationException,
             SAXException,
@@ -83,7 +84,7 @@ public class ParserListSets extends DefaultHandler {
             throw new SAXException(erro);
 
         } else if(tag.equalsIgnoreCase("ListSets")){
-            subRepositorios = new ArrayList<String>();
+            subRepositorios = new HashSet<String>();
         }
 
 

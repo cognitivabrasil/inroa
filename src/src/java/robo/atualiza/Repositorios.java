@@ -12,14 +12,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import modelos.Repositorio;
 import modelos.RepositoryDAO;
@@ -50,7 +48,7 @@ public class Repositorios {
      * @return true ou false indicando se algum reposit&aacute;rio foi
      * atualizado ou n&atilde;
      */
-    public boolean testa_atualizar_repositorio(Connection con, Indexador indexar) {
+    public boolean testa_atualizar_repositorio(Indexador indexar) {
         boolean atualizou = false;
 
        Repositorio repositorio = new Repositorio();
@@ -169,7 +167,7 @@ public class Repositorios {
         try {
             System.out.println("FEB: (" + dataFormat.format(new Date()) + ") Atualizando repositorio: " + rep.getNome());//imprime o nome do repositorio
 
-            String set = rep.getColecoesString();
+            Set<String> set = rep.getColecoes();
             if (set == null || set.isEmpty()) {
                 set = null;
             }

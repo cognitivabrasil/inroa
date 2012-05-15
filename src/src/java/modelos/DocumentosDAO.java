@@ -11,14 +11,14 @@ import metadata.Header;
 // TODO: Auto-generated Javadoc
 /**
  * DAO interface for FEB documents.
- * 
- * This will be injected by Spring, and can be
- * used to do operations on FEB documents.
- * 
+ *
+ * This will be injected by Spring, and can be used to do operations on FEB
+ * documents.
+ *
  * @author Paulo Schreiner <paulo@jorjao81.com>
  */
 public interface DocumentosDAO {
-    
+
     /**
      * Gets the document with the specified OBAAEntry.
      *
@@ -34,57 +34,60 @@ public interface DocumentosDAO {
      * @param h the OAI PMH header
      */
     void save(OBAA obaa, Header h);
-    
 
+    /**
+     * Convenience method, will call flush on the current session.
+     */
+    void flush();
 
-    
-	/**
-	 * Convenience method, will call flush on the current session.
-	 */
-	void flush();
+    /**
+     * Gets all the documents present in the System. Use with extreme care, as
+     * it might return to many results.
+     *
+     * @return All the documents
+     */
+    List<DocumentoReal> getAll();
 
-	/**
-	 * Gets all the documents present in the System.
-	 * Use with extreme care, as it might return to many results.
-	 *
-	 * @return All the documents
-	 */
-	List<DocumentoReal> getAll();
+    /**
+     * Gets the document by ID.
+     *
+     * @param i the Id
+     * @return the Document with the corresponding ID.
+     */
+    DocumentoReal get(int i);
 
-	/**
-	 * Gets the document by ID.
-	 *
-	 * @param i the Id
-	 * @return the Document with the corresponding ID.
-	 */
-	DocumentoReal get(int i);
+    /**
+     * Delete by obaa entry.
+     *
+     * @param e The obaaEntry
+     */
+    void deleteByObaaEntry(String e);
 
-	/**
-	 * Delete by obaa entry.
-	 *
-	 * @param e The obaaEntry
-	 */
-	void deleteByObaaEntry(String e);
+    /**
+     * Delete a document.
+     *
+     * @param d the document to be deleted.
+     */
+    void delete(DocumentoReal d);
 
-	/**
-	 * Delete a document.
-	 *
-	 * @param d the document to be deleted.
-	 */
-	void delete(DocumentoReal d);
+    /**
+     * Gets the repository where saved documents will be inserted.
+     *
+     * @return the repository
+     */
+    RepositorioGenerico getRepository();
 
-	/**
-	 * Gets the repository where saved documents will be inserted.
-	 *
-	 * @return the repository
-	 */
-	Repositorio getRepository();
-	
     /**
      * Sets the repository where saved documents will be inserted.
      *
      * @param r the new repository
      */
-    void setRepository(Repositorio r);
-    
+    void setRepository(RepositorioGenerico r);
+
+    /**
+     * Sets the federation where saved documents will be inserted.
+     *
+     * @param s the new federation
+     */
+    void setFederation(SubFederacao s);
 }

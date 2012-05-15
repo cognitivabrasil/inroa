@@ -11,6 +11,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
+import robo.util.Operacoes;
 
 /**
  *
@@ -28,7 +29,7 @@ public class Header {
 	private String datestamp;
 
 	@ElementList(inline=true,required=false)
-	private List<Spec> setSpec;
+	private List<SetSpec> setSpec;
 	
 
 	Header() {
@@ -79,15 +80,15 @@ public class Header {
 	/**
 	 * @return the setSpec
 	 */
-	//public String getSetSpec() {
-	//	return setSpec;
-	//}
+	public List<String> getSetSpec() {
+		return Operacoes.toStringList(this.setSpec);
+	}
 
 	/**
 	 * @param setSpec the setSpec to set
 	 */
-	//public void setSetSpec(String setSpec) {
-	//	this.setSpec = setSpec;
-	//}
+	public void setSetSpec(List<SetSpec> setSpec) {
+		this.setSpec = setSpec;
+	}
 
 }

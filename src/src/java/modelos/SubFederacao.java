@@ -5,6 +5,7 @@
 package modelos;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -177,5 +178,45 @@ public class SubFederacao implements java.io.Serializable {
         } else {
             return f.format(getUltimaAtualizacao());
         }
+    }
+    
+     /**
+     * M&eacute;todo que atualiza a base de dados local com os
+     * reposit&oacute;rios da subfedera&ccedil;&atilde;o
+     *
+     * @param subFed objeto federa&ccedil;&atilde;o
+     * @param listaSubRep ArrayList de Strings contento o nome dos
+     * reposit&oacute;rios da subfedera&ccedil;&atilde;o
+     * @throws Exception
+     */
+    public void atualizaListaSubRepositorios(Set<String> listaSubRep) {
+    
+            Set<RepositorioSubFed> repSubFed = this.getRepositorios();
+            
+
+            for (String nomeSubRep : listaSubRep) {
+                RepositorioSubFed repTest = new RepositorioSubFed();
+                repTest.setNome(nomeSubRep);
+
+                if (!repSubFed.contains(repTest)) { //se nao tiver na base o repositorio, adiciona.
+                    repSubFed.add(repTest);
+                }
+            }
+
+            Set<RepositorioSubFed> newListRepositories = new HashSet<RepositorioSubFed>();
+            for (RepositorioSubFed repTest : repSubFed) { 
+                if (listaSubRep.contains(repTest.getNome())) { //se tiver na base algum repositorio que nao esteja na lista, remove.
+                    newListRepositories.add(repTest);
+                }
+            }        
+            this.setRepositorios(newListRepositories); //armazena o Set modificado
+    }
+    
+    public RepositorioSubFed getRepositoryByName(String nome){
+        for(RepositorioSubFed repSub : getRepositorios()){
+            if(repSub.getNome().equals(nome))
+                return repSub;
+        }
+        return null;
     }
 }

@@ -10,6 +10,8 @@ import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import metadata.TextElement;
 import modelos.Repositorio;
 
 /**
@@ -198,5 +200,13 @@ public class Operacoes {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             return format.format(date);
         }
+    }
+    
+        public static List<String> toStringList(List<? extends TextElement> elements) {
+        List<String> s = new ArrayList<String>();
+        for (TextElement e : elements) {
+            s.add(e.getText());
+        }
+        return s;
     }
 }
