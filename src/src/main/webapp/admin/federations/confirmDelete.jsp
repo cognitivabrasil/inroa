@@ -20,7 +20,7 @@
 <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
 
 <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
-<link rel="StyleSheet" href="${css }" type="text/css" />
+<link rel="StyleSheet" href="${css}" type="text/css" />
 <script type="text/javascript" src="${validateJs }"></script>
 <script type="text/javascript" src="${funcoesJs }"></script>
     </head>
@@ -29,7 +29,7 @@
             <div class="subTitulo-center">&nbsp;Ferramenta para remo&ccedil;&atilde;o de subfedera&ccedil;&otilde;es</div>
             <div class="EspacoAntes">&nbsp;</div>
 
-            <form name="removerFederacao" action="removerFederacao" method="post">
+            <form name="removerFederacao" method="post">
                 <div class="LinhaEntrada">
                     <div class="Tab">
                         Deseja realmente remover a Subfedera&ccedil;&atilde;o <b>${federation.nome}</b> ?

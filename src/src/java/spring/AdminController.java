@@ -65,90 +65,7 @@ public final class AdminController {
         return admin(model);
     }
 
-    @RequestMapping("/cadastraFederacao")
-    public String cadastraFed(Model model) {
-        SubFederacao subFed = new SubFederacao();
-        model.addAttribute("subDAO", subFed);
-        return "admin/cadastraFederacao";
-    }
-
-    @RequestMapping("/salvarNovaFederacao")
-    public String salvaFed(
-            @ModelAttribute("subDAO") SubFederacao subfed,
-            Model model, BindingResult result) {
-        subFedValidador.validate(subfed, result);
-        if (result.hasErrors()) {
-            model.addAttribute("subDAO", subfed);
-            return "admin/cadastraFederacao";
-        } else {
-            try {
-                if (subDao.get(subfed.getNome()) != null) {
-                    model.addAttribute("erro", "Já existe um federação cadastrada com esse nome!");
-                    return "admin/cadastraFederacao";
-                } else {
-                    subDao.save(subfed); //Grava a subfederacao modificada no formulario
-                    return "redirect:/admin/fechaRecarrega";
-                }
-            } catch (Exception e) {
-                model.addAttribute("erro", "Exception: " + e);
-                return "admin/cadastraFederacao";
-            }
-        }
-    }
-
-    @RequestMapping("/exibeFederacao")
-    public String exibeFed(@RequestParam(value = "id", required = true) int id, Model model) {
-
-        model.addAttribute("subFed", subDao.get(id));
-        return "admin/exibeFederacao";
-    }
-
-    @RequestMapping("/editarFederacao")
-    public String editaFed(
-            @RequestParam(value = "id", required = true) int id,
-            Model model) {
-        model.addAttribute("subDAO", subDao.get(id));
-        return "admin/editarFederacao";
-    }
-
-    @RequestMapping("/salvarFederacao")
-    public String salvaFed(
-            @RequestParam int id,
-            @ModelAttribute("subDAO") SubFederacao subfed,
-            Model model,
-            BindingResult result) {
-        try {
-            subFedValidador.validate(subfed, result);
-            if (result.hasErrors()) {
-                model.addAttribute("subDAO", subfed);
-                return "admin/editarFederacao";
-            } else {
-                subDao.updateNotBlank(subfed); //Grava a subfederacao modificada no formulario
-                return "redirect:exibeFederacao?id=" + id;
-            }
-        } catch (Exception e) {
-            model.addAttribute("erro", "Ocorreu um erro. Exception: " + e);
-            model.addAttribute("subDAO", subfed);
-            return "admin/editarFederacao";
-        }
-    }
-
-    @RequestMapping("/removerFederacao")
-    public String apagaFed(
-            @RequestParam(value = "submitted", required = false) boolean submitted,
-            @RequestParam(value = "id", required = true) int id,
-            Model model) {
-        if (submitted) {
-            SubFederacao subFed = new SubFederacao();
-            subFed.setId(id);
-            subDao.delete(subFed);
-            return "redirect:fechaRecarrega";
-        } else {
-
-            model.addAttribute("subDAO", subDao);
-            return "admin/removerFederacao";
-        }
-    }
+   
 
     @RequestMapping("padraoMetadados/addPadrao")
     public String cadastraPadrao(Model model) {
@@ -334,28 +251,5 @@ public final class AdminController {
         }
     }
 
-
-    @RequestMapping("atualizaSubfedAjax")
-    public @ResponseBody
-    String atualizaFedAjax(@RequestParam int id) {
-        Logger  log = Logger.getLogger(this.getClass().getName());
-        log.info("FEB: Solicitacao de atualizacao pela Ferramenta Administrativa...");
-        SubFederacaoOAI subFed = new SubFederacaoOAI();
-        
-        try {
-            if (id > 0) {
-                subFed.atualizaSubfedAdm(subDao.get(id));
-            } else {
-                for (SubFederacao subFederacao : subDao.getAll()) {
-                    subFed.atualizaSubfedAdm(subFederacao);
-                }
-            }
-
-            return "1";
-        } catch (Exception e) {
-            log.error("Erro ao atualizar uma subfederação",e);
-            return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
-        }
-    }
     //------FIM FUNCOES PARA AJAX------------
 }
