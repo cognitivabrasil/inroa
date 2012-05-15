@@ -533,8 +533,8 @@ public class HibernateOAICatalog extends AbstractCatalog {
 		 ***********************************************************************/
 		listRecordsMap.put("records", records.iterator());
 
-		session.close();
-		sessionFactory.close();
+//		session.close();
+//		sessionFactory.close();
 
 		return listRecordsMap;
 	}
@@ -716,8 +716,8 @@ public class HibernateOAICatalog extends AbstractCatalog {
 		 ***********************************************************************/
 		listRecordsMap.put("records", records.iterator());
 
-		session.close();
-		sessionFactory.close();
+//		session.close();
+//		sessionFactory.close();
 
 		return listRecordsMap;
 	}
@@ -758,14 +758,11 @@ public class HibernateOAICatalog extends AbstractCatalog {
 		purge(); // clean out old resumptionTokens
 		Map listSetsMap = new HashMap();
 		/**********************************************************************
-		 * YOUR CODE GOES HERE
-		 **********************************************************************/
-		Conectar c = new Conectar();
-
-		Connection conn = c.conectaBD();
-
-		SessionFactory sessionFactory = new Configuration().configure()
-				.buildSessionFactory();
+		 * YOUR CODE GOES HERE */
+		
+	ApplicationContext ctx = ApplicationContextProvider
+				.getApplicationContext();
+		sessionFactory = ctx.getBean(SessionFactory.class);
 		Session session = sessionFactory.getCurrentSession();
 
 		Criteria criteria2 = session.createCriteria(Repositorio.class);
