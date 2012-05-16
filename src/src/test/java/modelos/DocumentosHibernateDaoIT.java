@@ -6,6 +6,8 @@ package modelos;
 
 import OBAA.General.General;
 import OBAA.OBAA;
+
+import java.lang.reflect.Field;
 import java.util.Date;
 import metadata.Header;
 import static org.junit.Assert.*;
@@ -35,7 +37,45 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
     DocumentosHibernateDAO instance;
+    
+    @Autowired
+    RepositoryHibernateDAO repDao;
 
+    @Test
+    public void testSaveException() throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
+        OBAA obaa = new OBAA();
+        obaa.setGeneral(new General());
+
+        obaa.getGeneral().addTitle("teste1");
+        obaa.getGeneral().addTitle("teste2");
+
+        obaa.getGeneral().addKeyword("key1");
+        obaa.getGeneral().addKeyword("key2");
+        obaa.getGeneral().addKeyword("key3");
+
+        obaa.getGeneral().addDescription("Bla bla");
+        
+        // set repository to null through reflection
+        Class  aClass = DocumentosHibernateDAO.class;
+        Field field = aClass.getDeclaredField("repository");
+        field.setAccessible(true);        
+        field.set(instance, null);
+
+        Header h = mock(Header.class);
+        
+        when(h.getTimestamp()).thenReturn(new Date());
+        when(h.getIdentifier()).thenReturn("obaa:identifier");
+
+        try {
+        	instance.save(obaa, h);	
+        	fail("Should throw IllegalStateException!");
+        }
+        	catch(IllegalStateException e) {
+        		
+        }
+
+    }
+    
     @Test
     public void testGet() {
         DocumentoReal d = instance.get(1);
@@ -92,6 +132,10 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
         when(h.getTimestamp()).thenReturn(new Date());
         when(h.getIdentifier()).thenReturn("obaa:identifier");
+    
+        Repositorio r = repDao.get(1);
+        assertThat(r, notNullValue());
+        instance.setRepository(r);
 
         instance.save(obaa, h);
 
@@ -119,7 +163,9 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
 
         Header h = mock(Header.class);
-
+        
+        Repositorio r = repDao.get(1);
+        instance.setRepository(r);
 
         when(h.getTimestamp()).thenReturn(new Date());
         when(h.getIdentifier()).thenReturn("obaa:identifier");
@@ -133,6 +179,8 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         assertThat(d.getMetadata().getTitles(), hasItem("teste1"));
 
     }
+
+
 
 
     @Test
@@ -150,6 +198,8 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         when(h.getIdentifier()).thenReturn("dois");
         when(h.isDeleted()).thenReturn(true);
 
+        Repositorio r = repDao.get(1);
+        instance.setRepository(r);
 
         instance.save(obaa, h);
 
