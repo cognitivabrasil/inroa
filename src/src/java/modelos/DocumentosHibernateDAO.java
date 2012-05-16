@@ -92,7 +92,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
      * @see modelos.DocumentosDAO#save(OBAA.OBAA, metadata.Header)
      */
     @Override
-    public void save(OBAA obaa, Header h) {
+    public void save(OBAA obaa, Header h) throws IllegalStateException{
         DocumentoReal doc = new DocumentoReal();
         doc.setDeleted(false);
         log.trace("Going to create documento " + h.getIdentifier());
@@ -104,6 +104,8 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
             log.debug("Armazenando objeto do tipo Repositorio");
             Repositorio r = (Repositorio)getRepository();
             doc.setRepositorio(r);
+        } else{
+            throw new IllegalStateException("Have to set repository or federation before calling save.");
         } 
 
         doc.setObaaEntry(h.getIdentifier());

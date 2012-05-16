@@ -29,6 +29,7 @@ public interface DocumentosDAO {
 
     /**
      * Need to call flush on session after saving many documents.
+     * Need to set one repository or one federation before.
      *
      * @param obaa the OBAA metadata
      * @param h the OAI PMH header
