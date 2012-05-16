@@ -13,7 +13,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Import the OBAA xml file to OBAA object and saves in database. Only for federation.
+ * Import the OBAA xml file to OBAA object and saves in database. Only for
+ * federation.
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  * @author Paulo Schreiner <paulo@jorjao81.com>
@@ -25,8 +26,7 @@ public class Importer {
     OaiOBAA oai;
     @Autowired
     private DocumentosDAO docDao;
-    @Autowired
-    private SubFederacaoDAO subFedDao;
+
     Logger log = Logger.getLogger(this.getClass().getName());
 
     /**
@@ -43,7 +43,6 @@ public class Importer {
 
     }
 
-
     /**
      * Sets the federation.
      *
@@ -54,16 +53,17 @@ public class Importer {
     }
 
     /**
-     * Updates the repository from the XML input file.
+     * Updates the repository from the XML input file. This metod dont'n save
+     * the federation.
      */
-    public void update() throws Exception{
+    public void update() throws Exception {
         assert (inputXmlFile != null);
         oai = OaiOBAA.fromFile(inputXmlFile);
 
         docDao.setFederation(subFed);
 
         for (int i = 0; i < oai.getSize(); i++) {
-            
+
             try {
                 log.debug("Saving object: " + oai.getHeader(i).getIdentifier());
                 docDao.save(oai.getMetadata(i), oai.getHeader(i));
@@ -71,25 +71,10 @@ public class Importer {
                 log.error("NullPointer ao tentar inserir elemento " + new Integer(i).toString(), e);
             }
         }
-
-
-        // TODO: move the conversion to and from String of the date to OaiOBAA class
-        log.debug(oai.getResponseDate());
         
-//        try {
-//            Date d = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(oai.getResponseDate());
-
-            
-            subFed.setDataXML(oai.getResponseDate());
-            subFedDao.save(subFed);
-//        } catch (ParseException e) {
-//            // TODO Auto-generated catch block
-//            System.err.println("Error in parsing date from OaiPMH, probably malformed XML.");
-//        }
-
-
 
         docDao.flush();
+        subFed.setDataXML(oai.getResponseDate());
     }
 
     /**
@@ -113,7 +98,4 @@ public class Importer {
         this.docDao = documentDao;
     }
 
-    void setSubFedDao(SubFederacaoDAO subFedDao) {
-        this.subFedDao = subFedDao;
-    }
 }

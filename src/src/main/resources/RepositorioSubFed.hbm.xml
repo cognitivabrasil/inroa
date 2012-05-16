@@ -11,10 +11,10 @@
         
         <many-to-one class="modelos.SubFederacao" column="id_subfed" name="subFederacao" not-null="true"/>    
         
-       <set name="documentos" table="documentos" cascade="all-delete-orphan">
-      <key column="id_rep_subfed"/>
-      <one-to-many class="modelos.DocumentoReal"/>
-    </set>
+        <set name="documentos" table="documentos" cascade="all">
+            <key column="id_rep_subfed"/>
+            <one-to-many class="modelos.DocumentoReal"/>
+        </set>
 
     </class>
 </hibernate-mapping>

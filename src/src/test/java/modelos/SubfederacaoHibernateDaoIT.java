@@ -7,9 +7,7 @@ package modelos;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import javax.sql.DataSource;
 import org.dbunit.Assertion;
 import org.dbunit.database.DatabaseConnection;
@@ -34,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import robo.atualiza.subfedOAI.SubRepositorios;
 
 /**
  *
@@ -165,7 +164,15 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         f.setNome("Nova");
         f.setUrl("http://nova");
         f.setDataXML("2012-03-19T18:01:54Z");
-
+        
+        Set<String> listaRep = new HashSet<String>();
+        listaRep.add("marcos");
+        listaRep.add("jorge");
+        listaRep.add("preto");
+        
+        f.atualizaListaSubRepositorios(listaRep);
+        
+        
         instance.save(f);
 
         SubFederacao fTeste = instance.get("Nova");
@@ -173,7 +180,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         assertEquals("Nova", fTeste.getNome());
 
         assertEquals("Nr correto de Subfederacoes apos adicao", 4, instance.getAll().size());
-
+        System.out.println("Repositorios: "+fTeste.getRepositorios());
         SubFederacao f2 = instance.get(3);
         f2.setNome("Jorjao");
         f2.setUrl("http://jorjao");

@@ -16,7 +16,7 @@
         <property name="url" not-null="true" type="string"/>
         <property column="data_xml" name="dataXML" type="string"/>
     
-    <set name="repositorios" table="repositorios_subfed" cascade="all-delete-orphan" inverse="true">
+    <set name="repositorios" table="repositorios_subfed" cascade="all" inverse="true">
       <key column="id_subfed"/>
       <one-to-many class="modelos.RepositorioSubFed"/>
     </set>

@@ -64,8 +64,10 @@ public class Objetos {
                 if (!caminhosXML.isEmpty()) {
                     log.info("FEB: Lendo os XMLs e inserindo os objetos na base");
                 }
+                
                 DocumentosDAO docDao = ctx.getBean(DocumentosDAO.class);
-                SubFederacaoDAO subFedDao = ctx.getBean(SubFederacaoDAO.class);
+
+                
                 for (String caminho : caminhosXML) {
 
                     File arquivoXML = new File(caminho);
@@ -75,7 +77,6 @@ public class Objetos {
                         Importer imp = new Importer();
                         imp.setInputFile(arquivoXML);
                         imp.setDocDao(docDao);
-                        imp.setSubFedDao(subFedDao);
                         imp.setSubFed(subFed);
                         imp.update();
 

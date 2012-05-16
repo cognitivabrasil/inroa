@@ -1,11 +1,8 @@
 package OBAA;
 
-import static org.junit.Assert.*;
-import static org.junit.Assert.fail;
-
 import java.io.FileNotFoundException;
 import metadata.Header;
-
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class OaiOBAATest {
@@ -19,7 +16,7 @@ public class OaiOBAATest {
             assertEquals("oai:cesta2.cinted.ufrgs.br:123456789/57", h.getIdentifier());
             
             assert(h.getSetSpec() != null);
-            assertEquals("Cesta", h.getSetSpec().get(0));
+            assertEquals("RepUfrgs1", h.getSetSpec().get(0));
         }
     
 	/**

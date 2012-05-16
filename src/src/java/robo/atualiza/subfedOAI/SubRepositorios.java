@@ -11,18 +11,22 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Set;
 import modelos.SubFederacao;
+import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
 import robo.atualiza.harvesterOAI.ListSets;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
+import spring.ApplicationContextProvider;
 
 /**
  *
  * @author Marcos
  */
 public class SubRepositorios {
+
     Logger log = Logger.getLogger(this.getClass().getName());
-    
+
     /**
      * Coleta o XML com os reposit&oacute;rios da subfedera&ccedil;&atilde;o
      * efetua o parser a atualiza a base de dados local.
@@ -34,27 +38,38 @@ public class SubRepositorios {
      */
     public void atualizaSubRepositorios(String enderecoOAI, SubFederacao subFed) throws Exception {
         log.debug("Atualizando os subrepositorios");
-        Informacoes conf = new Informacoes();
-        String caminhoDiretorioTemporario = conf.getCaminho();
-        File caminhoTeste = Operacoes.testaDiretorioTemp(caminhoDiretorioTemporario);
-        if (caminhoTeste.isDirectory()) {//efetua o Harvester e grava os xmls na pasta temporaria
-
-            String caminhoArquivoXML = coletaXML_ListSets(enderecoOAI, subFed.getNome(), caminhoDiretorioTemporario); //coleta o xml por OAI-PMH
-
-            ParserListSets parserListSets = new ParserListSets();
-            File arquivoXML = new File(caminhoArquivoXML);
-            if (arquivoXML.isFile() || arquivoXML.canRead()) {
-
-                Set<String> listaSubrep = parserListSets.parser(arquivoXML);//efetua a leitura do xml e insere os objetos na base de dados
-                subFed.atualizaListaSubRepositorios(listaSubrep);
-
-                arquivoXML.delete(); //apaga arquivo XML
-                log.debug("Subrepositorios atualizados");
-            } else {
-                log.error("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoArquivoXML);
-            }
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+        if (ctx == null) {
+            log.error("Could not get AppContext bean! Class: " + this.getClass().getName());
+            throw new IllegalStateException("Could not get AppContext bean! Class: " + this.getClass().getName());
         } else {
-            log.error("O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
+            
+            Informacoes conf = new Informacoes();
+            String caminhoDiretorioTemporario = conf.getCaminho();
+            File caminhoTeste = Operacoes.testaDiretorioTemp(caminhoDiretorioTemporario);
+            if (caminhoTeste.isDirectory()) {//efetua o Harvester e grava os xmls na pasta temporaria
+
+                String caminhoArquivoXML = coletaXML_ListSets(enderecoOAI, subFed.getNome(), caminhoDiretorioTemporario); //coleta o xml por OAI-PMH
+
+                ParserListSets parserListSets = new ParserListSets();
+                File arquivoXML = new File(caminhoArquivoXML);
+                if (arquivoXML.isFile() || arquivoXML.canRead()) {
+
+                    Set<String> listaSubrep = parserListSets.parser(arquivoXML);//efetua a leitura do xml e insere os objetos na base de dados
+                    log.debug("Repositorios coletados: " + listaSubrep);
+                    subFed.atualizaListaSubRepositorios(listaSubrep);
+                    
+                    SubFederacaoDAO subFedDao = ctx.getBean(SubFederacaoDAO.class);
+                    subFedDao.save(subFed);
+                    
+                    arquivoXML.delete(); //apaga arquivo XML
+                    log.debug("Subrepositorios atualizados");
+                } else {
+                    log.error("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoArquivoXML);
+                }
+            } else {
+                log.error("O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
+            }
         }
 
     }
@@ -89,6 +104,4 @@ public class SubRepositorios {
 
         return caminhoAbsoluto;
     }
-    
-
 }

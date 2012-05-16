@@ -529,6 +529,7 @@ src/src/test/java/metadata/oai_error.xml -text
 src/src/test/java/metadata/oai_lom.xml -text
 src/src/test/java/metadata/oai_norecords.xml -text
 src/src/test/java/metadata/oai_obaa.xml -text
+src/src/test/java/metadata/oai_subRepositorios.xml -text
 src/src/test/java/metadata/obaa1.xml -text
 src/src/test/java/metadata/teste1.xml -text
 src/src/test/java/modelos/AbstractDaoTest.java -text
@@ -543,6 +544,8 @@ src/src/test/java/modelos/SubfederacaoHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioTest.java -text
 src/src/test/java/robo/atualiza/importaOAI/ImporterTest.java -text
+src/src/test/java/robo/atualiza/subfedOAI/ImporterTestIT.java -text
+src/src/test/java/robo/atualiza/subfedOAI/SubRepositorios.java -text
 src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text
 src/src/xslt/dc2obaa.xsl -text

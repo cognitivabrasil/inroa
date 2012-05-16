@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.style.ToStringCreator;
 import org.springframework.dao.support.DataAccessUtils;
 import spring.ApplicationContextProvider;
 
@@ -123,7 +124,7 @@ public class RepositorioSubFed implements RepositorioGenerico{
     
     @Override
     public String toString() {
-        return getNome();
+        return new ToStringCreator(this).append("id", this.getId()).append("nome", this.getNome()).toString();
     }
     
 

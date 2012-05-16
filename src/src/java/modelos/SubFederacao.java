@@ -196,6 +196,7 @@ public class SubFederacao implements java.io.Serializable {
 
             for (String nomeSubRep : listaSubRep) {
                 RepositorioSubFed repTest = new RepositorioSubFed();
+                repTest.setSubFederacao(this);
                 repTest.setNome(nomeSubRep);
 
                 if (!repSubFed.contains(repTest)) { //se nao tiver na base o repositorio, adiciona.
