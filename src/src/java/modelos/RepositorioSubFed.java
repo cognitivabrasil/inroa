@@ -100,6 +100,7 @@ public class RepositorioSubFed implements RepositorioGenerico{
      * 
      */
     public int dellAllDocs() {
+        //TODO: nao teria só que trocar o deleted pra true? Pq ta deletando tudo da base.
         String hql = "delete from DocumentoReal as d WHERE d.repositorioSubFed = :rep";
         Session session = getSessionFactory().getCurrentSession();
         Query query = session.createQuery(hql);

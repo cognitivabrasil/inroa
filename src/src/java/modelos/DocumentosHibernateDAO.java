@@ -32,7 +32,6 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
      * repository where new documents are going to be saved
      */
     private RepositorioGenerico repository;
-    
     private SubFederacao federation;
 
     /**
@@ -92,22 +91,26 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
      * @see modelos.DocumentosDAO#save(OBAA.OBAA, metadata.Header)
      */
     @Override
-    public void save(OBAA obaa, Header h) throws IllegalStateException{
+    public void save(OBAA obaa, Header h) throws IllegalStateException {
         DocumentoReal doc = new DocumentoReal();
         doc.setDeleted(false);
         log.trace("Going to create documento " + h.getIdentifier());
 
-        if((getRepository()==null) && (this.federation == null)){
+        if ((getRepository() == null) && (this.federation == null)) {
             throw new IllegalStateException("Have to set repository or federation before calling save.");
-        } 
-        else if(getRepository()==null){
-            log.debug("Armazenando objeto do tipo RepositorioSubFed");            
-            doc.setRepositorioSubFed(this.federation.getRepositoryByName(h.getSetSpec().get(0))); //pega o nome do repositorio do cabeçalho e busca o objeto pelo nome inserindo no doc.
+        } else if (getRepository() == null) {
+            log.debug("Armazenando objeto do tipo RepositorioSubFed");
+            RepositorioSubFed repSubFed = this.federation.getRepositoryByName(h.getSetSpec().get(0));
+            if (repSubFed == null) {
+                throw new IllegalStateException("The repository '"+h.getSetSpec().get(0)+"' doesn't exists in the federation '"+ this.federation.getNome()+"'");
+            } else {
+                doc.setRepositorioSubFed(repSubFed); //pega o nome do repositorio do cabeçalho e busca o objeto pelo nome inserindo no doc.
+            }
         } else if (getRepository().getClass().equals(Repositorio.class)) {
             log.debug("Armazenando objeto do tipo Repositorio");
-            Repositorio r = (Repositorio)getRepository();
+            Repositorio r = (Repositorio) getRepository();
             doc.setRepositorio(r);
-        } 
+        }
 
         doc.setObaaEntry(h.getIdentifier());
         doc.setTimestamp(h.getTimestamp());
@@ -138,9 +141,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
     @Override
     public void setRepository(RepositorioGenerico repository) {
-    	if(repository == null) {
-    		throw new IllegalArgumentException("called setRepository() with a null argument.");
-    	}
+        if (repository == null) {
+            throw new IllegalArgumentException("called setRepository() with a null argument.");
+        }
         this.repository = repository;
     }
 

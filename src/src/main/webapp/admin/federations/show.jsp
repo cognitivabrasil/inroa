@@ -15,17 +15,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-<c:url var="favicon" value="/imagens/favicon.ico" />
-<c:url var="css" value="/css/padrao.css" />
-<c:url var="validateJs" value="/scripts/validatejs.js" />
-<c:url var="funcoesJs" value="/scripts/funcoes.js" />
+        <c:url var="favicon" value="/imagens/favicon.ico" />
+        <c:url var="css" value="/css/padrao.css" />
+        <c:url var="validateJs" value="/scripts/validatejs.js" />
+        <c:url var="funcoesJs" value="/scripts/funcoes.js" />
 
-<c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
+        <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
 
-<link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
-<link rel="StyleSheet" href="${css }" type="text/css" />
-<script type="text/javascript" src="${validateJs }"></script>
-<script type="text/javascript" src="${funcoesJs }"></script>
+        <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
+        <link rel="StyleSheet" href="${css }" type="text/css" />
+        <script type="text/javascript" src="${validateJs }"></script>
+        <script type="text/javascript" src="${funcoesJs }"></script>
     </head>
 
     <body>
@@ -96,6 +96,9 @@
                     <th align="right">TOTAL</th> <th align='center'>${federation.sizeDoc}</th>
                 </tr>
             </table>
+            <div id="removeAtualiza" class="ApagaObjetos">&nbsp;
+                <input type="button" value="Formatar e restaurar" onclick="javascript:deleteAndUpdateSubFedAjax(${federation.id}, this.parentNode)">
+            </div>
         </div>
 
         <%@include file="../../googleAnalytics"%>

@@ -43,7 +43,7 @@
             </div>
             <div class="Espaco">&nbsp;</div>
 
-            <form:form method="post" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">   
+            <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">   
 
                 <div class="clear"> </div>
                 <div class="EspacoAntes">&nbsp;</div>

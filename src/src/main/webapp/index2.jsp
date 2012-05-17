@@ -88,7 +88,7 @@
             <div class="Espaco">&nbsp;</div>
             
             
-            <form:form method="post" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">    
+            <form:form method="get" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">    
                 <div class="EspacoAntes">&nbsp;</div>
                 <c:if test="${!empty erro}">
                     <div class="DivErro" id="MensagemErro">${erro}</div>

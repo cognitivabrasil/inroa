@@ -442,7 +442,6 @@ src/src/main/webapp/admin/federations/confirmDelete.jsp -text
 src/src/main/webapp/admin/federations/edit.jsp -text
 src/src/main/webapp/admin/federations/new.jsp -text
 src/src/main/webapp/admin/federations/show.jsp -text
-src/src/main/webapp/admin/mapeamentos/APAGAR-addMapeamento.jsp -text
 src/src/main/webapp/admin/mapeamentos/addTipoMap.jsp -text
 src/src/main/webapp/admin/mapeamentos/adicionaMapBranco.jsp -text
 src/src/main/webapp/admin/mapeamentos/consultadescricao.jsp -text

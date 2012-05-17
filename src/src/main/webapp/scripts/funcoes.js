@@ -231,6 +231,15 @@ function atualizaRepAjaxExec(id, exibeResultado, apagar)
 }
 
 /**
+ * Deletes all documents of federation and updates again
+ * @param id int id of federation
+ * @param showResult div html where the status and results will be presented
+ **/
+function deleteAndUpdateSubFedAjax(id, showResult){
+   updateFederationExec(id, showResult, true);
+}
+
+/**
  * Função que atualiza a subfedera&ccedil;&atilde;o solicitada utilizando ajax.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
  * @param id id da subfedera&ccedil;&atilde;o a ser atualizada
@@ -238,17 +247,24 @@ function atualizaRepAjaxExec(id, exibeResultado, apagar)
 */
 function atualizaSubfedAjax(id, exibeResultado)
 {
+    atualizaRepAjaxExec(id, exibeResultado, false);
+}
 
+/**
+ * Private. Use atualizaSubfedAjax or deleteAndUpdateSubFedAjax.
+ */
+function updateFederationExec(id, showResult, del)
+{
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", rootUrl + "/admin/federations/"+id+"/update", true);
+    ajax.open("POST", rootUrl + "/admin/federations/"+id+"/update?apagar="+del, true);
     
     ajax.onreadystatechange = function()
     {
         if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
-            exibeResultado.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
+            showResult.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
         }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
@@ -257,19 +273,19 @@ function atualizaSubfedAjax(id, exibeResultado)
                 var resultado = ajax.responseText;
                 
                 if(isNaN(parseInt(resultado))){
-                    exibeResultado.innerHTML = resultado;
+                    showResult.innerHTML = resultado;
                 }else{
                     if(parseInt(resultado)>0){
-                        exibeResultado.innerHTML = "Atualizado!";
+                        showResult.innerHTML = "Atualizado!";
                     }
                     else{
-                        exibeResultado.innerHTML = "Ocorreu algum erro ao Atualizar!";
+                        showResult.innerHTML = "Ocorreu algum erro ao Atualizar!";
                     }
                 } 
             }
             else
             {
-                exibeResultado.innerHTML = "Erro nas funções do Ajax";
+                showResult.innerHTML = "Erro nas funções do Ajax";
             }
         }
     }

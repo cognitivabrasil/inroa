@@ -151,16 +151,17 @@ public final class FederationsController {
 
     @RequestMapping(value="/{id}/update", method = RequestMethod.POST)
     public @ResponseBody
-    String atualizaFedAjax(@PathVariable("id") Integer id) {
+    String atualizaFedAjax(@PathVariable("id") Integer id,
+            @RequestParam boolean apagar) {
         log.info("FEB: Solicitacao de atualizacao pela Ferramenta Administrativa...");
         SubFederacaoOAI subFed = new SubFederacaoOAI();
         
         try {
             if (id > 0) {
-                subFed.atualizaSubfedAdm(subDao.get(id));
+                subFed.atualizaSubfedAdm(subDao.get(id), apagar);
             } else {
                 for (SubFederacao subFederacao : subDao.getAll()) {
-                    subFed.atualizaSubfedAdm(subFederacao);
+                    subFed.atualizaSubfedAdm(subFederacao, apagar);
                 }
             }
 

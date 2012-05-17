@@ -375,17 +375,7 @@ a:hover{
 .LinhaEntrada .Value{
     margin:0 0 20px 41%;
 }
-.LinhaEntrada .Value .ApagaObjetos{
-    margin-top: 2%;
-}
-.LinhaEntrada .Value .ApagaObjetos input{
-    background-color: #EE2037;
-    border-color: white;
-    color: white;
-    font-weight: bold;
-    width:auto;
-    font-size: 80%;
-}
+
 .LinhaEntrada .Value linha{
     padding:0;
     border: 1px solid #000000;
@@ -861,4 +851,17 @@ td{vertical-align:top;}
     float:right;
     text-align:left;
     margin-right:2%;
+}
+
+.ApagaObjetos{
+    margin-top: 2%;
+    text-align: center;
+}
+.ApagaObjetos input{
+    background-color: #EE2037;
+    border-color: white;
+    color: white;
+    font-weight: bold;
+    width:auto;
+    font-size: 90%;
 }

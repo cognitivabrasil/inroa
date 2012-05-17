@@ -104,7 +104,7 @@ public class Repositorios {
                 if (idRep > 0) { //atualizar um repositorio especifico ou todos. 0 = todos
                     Repositorio rep = repDao.get(idRep);
                     if (apagar) {
-                        rep.setUltimaAtualizacao(new Date(0));
+                        rep.setUltimaAtualizacao(null);
                         //todo: zerar o repositorio
                     }
                     atualizaRepositorio(rep, indexar);

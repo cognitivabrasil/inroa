@@ -35,13 +35,17 @@
     <body id="bodyMenor">
 
         <div id="page">
+            <!--Cabeçalho-->
+            <div class="logoBusca"><a href="index"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></a></div>
+            <div class="clear"> </div>
+            <div class="EspacoPequeno">&nbsp;</div>
+            <!--Fim do cabeçalho-->
 
 
-
-            <div class="subTitulo-center">&nbsp;Digite seu usu&aacute;rio e
+            <div class="subTituloBusca">&nbsp;Digite seu usu&aacute;rio e
                 sua senha para acessar o sistema</div>
             <div class="linkCantoEsquerdo">
-                <a href="./">Ir para Ferramenta de Busca</a>
+                <a href="index">Ferramenta de Busca</a>
             </div>
             <div class="clear"></div>
 
@@ -74,11 +78,11 @@
                                onBlur="this.className=''">
                     </div>
                 </div>
-                
-                    <div class="center">
-                        <input name="_spring_security_remember_me" type="checkbox"> Permanecer logado
-                    </div>
-                
+
+                <div class="center">
+                    <input name="_spring_security_remember_me" type="checkbox"> Permanecer logado
+                </div>
+
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input class="BOTAO" name="submeter"
@@ -88,20 +92,6 @@
 
             </FORM>
         </div>
-        <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl."
-            : "http://www.");
-            document
-            .write(unescape("%3Cscript src='"
-                + gaJsHost
-                + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-        </script>
-        <script type="text/javascript">
-            try {
-                var pageTracker = _gat._getTracker("UA-15028081-2");
-                pageTracker._trackPageview();
-            } catch (err) {
-            }
-        </script>
+        <%@include file="googleAnalytics"%>
     </BODY>
 </HTML>

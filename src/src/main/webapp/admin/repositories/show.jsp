@@ -152,11 +152,11 @@
                 </div>
                 <div class="Value">
                     <div>&nbsp; ${rep.size}</div>
-
-                    <div id="removeAtualiza" class="ApagaObjetos">&nbsp;<input type="button" value="Formatar e restaurar" onclick="javascript:apagaAtualizaRepAjax(${repId}, this.parentNode)"></div>
-
                 </div>               
             </div>
+                <div id="removeAtualiza" class="ApagaObjetos">&nbsp;
+                        <input type="button" value="Formatar e restaurar" onclick="javascript:apagaAtualizaRepAjax(${repId}, this.parentNode)">
+                    </div>
         </div>
 
         <%@include file="../../googleAnalytics"%>
