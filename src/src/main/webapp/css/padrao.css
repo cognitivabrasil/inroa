@@ -694,36 +694,6 @@ td{vertical-align:top;}
 }
 
 
-.topicosObj .nome{
-    float:left;
-    text-align:left;
-    margin-left:10%
-}
-
-.topicosObj .valor{
-    margin:0% 0% 1% 19%;
-
-}
-.topicosObj .titulo{
-    margin:1% 0% 1% 7%;
-    font-size:120%;
-    text-decoration:underline;
-}
-.subTopicosObj .nome{
-    float:left;
-    text-align:left;
-    margin-left:13%;
-}
-.subTopicosObj .valor{
-    margin:0% 0% 1% 15%;
-
-}
-.subTopicosObj .titulo{
-    margin:1% 0% 1% 9%;
-    font-size:108%;
-    text-decoration:underline;
-}
-
 .linkRSS{
     font-weight:inherit;
     color:black;
@@ -858,4 +828,31 @@ td{vertical-align:top;}
     font-weight: bold;
     width:auto;
     font-size: 90%;
+}
+
+.metadados {
+    margin-left: 1%;
+}
+.metadados .subnivel{
+    margin-left: 2%;
+    margin-top: 1%;
+}
+.metadados .subnivel .titulo{
+    font-size:120%;
+    text-decoration:underline;
+}
+
+.metadados .subnivel .atributo{
+    clear: both;
+    margin-top: 0.5%;
+}
+.metadados .subnivel .atributo .nome{
+    float: left;
+    text-align:left;
+    margin-left:3%;
+    font-weight: bold; 
+    margin-right: 1%;
+}
+.metadados .subnivel .atributo .valor{
+    margin:0% 0% 1% 12%;
 }

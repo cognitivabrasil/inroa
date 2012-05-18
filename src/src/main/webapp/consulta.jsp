@@ -21,12 +21,8 @@
     </head>
     <body id="body">
         <%
-            //pegar valor do model pelo jsp
-            //System.out.println(pageContext.getAttribute("item", pageContext.REQUEST_SCOPE));
-
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
-
         %>
 
 

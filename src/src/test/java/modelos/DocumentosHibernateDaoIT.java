@@ -21,6 +21,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import org.junit.Ignore;
 import static org.mockito.Mockito.*;
 
 /**
@@ -41,7 +42,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
     @Autowired
     RepositoryHibernateDAO repDao;
 
-    @Test
+    @Test @Ignore
     public void testSaveException() throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
         OBAA obaa = new OBAA();
         obaa.setGeneral(new General());
