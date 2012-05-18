@@ -347,6 +347,3 @@ UPDATE usuarios SET permissions = 'PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP
 
 ALTER TABLE usuarios ADD COLUMN role VARCHAR(20);
 UPDATE usuarios SET role = 'Administrador' WHERE login = 'admin';
-
--- 17/05/2012
-ALTER TABLE autores ADD CONSTRAINT fki_documentos FOREIGN KEY (documento) REFERENCES documentos (id) ON UPDATE CASCADE ON DELETE CASCADE;
