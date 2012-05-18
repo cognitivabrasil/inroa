@@ -65,13 +65,14 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         
         when(h.getTimestamp()).thenReturn(new Date());
         when(h.getIdentifier()).thenReturn("obaa:identifier");
-
+        
+        
         try {
         	instance.save(obaa, h);	
         	fail("Should throw IllegalStateException!");
         }
         	catch(IllegalStateException e) {
-        		
+                    System.err.println("ERRO TESTE: "+e);
         }
 
     }
