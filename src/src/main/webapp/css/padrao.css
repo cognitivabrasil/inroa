@@ -293,13 +293,6 @@ a:hover{
     vertical-align: middle;
     text-align: center;
 }
-.cabecalhoAdm .title{
-    font-size:130%;
-    font-weight:bold;
-    text-align:center;
-    font-style:italic;    
-    padding:4px;
-}
 .cabecalhoAdm .sair{
     font-weight: bold;
 }
@@ -780,8 +773,9 @@ td{vertical-align:top;}
 
 .socialBookmarks {
     float: right;
-    margin-top: 5px;
+    margin-top: 1px;
     margin-right: 30px;
+    margin-bottom: 15px;
 }
 .socialBookmark {
     float: right;

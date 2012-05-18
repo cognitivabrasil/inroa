@@ -30,13 +30,11 @@
         %>
 
 
-        <div class="logoBusca"><a href="index"><img src="imagens/Logo FEB_reduzido.png" width="7%" alt="Logo FEB_reduzido"/></a></div>
-
-
-        <div class="clear"> </div>
-
-        <div class="EspacoPequeno">&nbsp;</div>
-        <div class="subTituloBusca">&nbsp;Resultado da Pesquisa</div>
+        <jsp:include page="cabecalho.jsp">
+                <jsp:param value="Resultado da Pesquisa" name="titulo" />
+                <jsp:param value="7%" name="tamanho" />
+            </jsp:include>
+        
 
         <div id="page-sub-header">
             <a href="index">Efetuar nova consulta</a>

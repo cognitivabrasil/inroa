@@ -35,15 +35,10 @@
     <body id="bodyMenor">
 
         <div id="page">
-            <!--Cabeçalho-->
-            <div class="logoBusca"><a href="index"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></a></div>
-            <div class="clear"> </div>
-            <div class="EspacoPequeno">&nbsp;</div>
-            <!--Fim do cabeçalho-->
-
-
-            <div class="subTituloBusca">&nbsp;Digite seu usu&aacute;rio e
-                sua senha para acessar o sistema</div>
+            <jsp:include page="cabecalho.jsp">
+                <jsp:param value="Digite seu usu&aacute;rio e sua senha para acessar o sistema" name="titulo" />
+            </jsp:include>
+            
             <div class="linkCantoEsquerdo">
                 <a href="index">Ferramenta de Busca</a>
             </div>

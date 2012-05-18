@@ -38,13 +38,15 @@ modelo de tópico:
 
 
 	<div id="page">
+            <jsp:include page="cabecalho.jsp">
+                <jsp:param value="Resultado da Pesquisa" name="titulo" />
+                <jsp:param value="7%" name="tamanho" />
+            </jsp:include>
 
-
-		<div class="tituloPrincipal">
-			<div class="tituloObj">
-				&diams; ${title}
-
-				<div class="socialBookmarks">
+            <input class="BOTAO" type="button" value="&lArr; Voltar"
+			onclick="javascript:history.back(-1);" />
+            
+            <div class="socialBookmarks">
 					<div class="socialBookmark">
 						<g:plusone size="medium"></g:plusone>
 					</div>
@@ -58,11 +60,17 @@ modelo de tópico:
 					<div id="fb-root" class="socialBookmark">
 						<script
 							src="http://connect.facebook.net/pt_BR/all.js#appId=109445635823915&amp;xfbml=1"></script>
-						<fb:like href="" send="false" width="50" show_faces="false"
-							action="like" font=""></fb:like>
+						<fb:like href="" send="false" width="80" show_faces="false" layout="button_type" colorscheme="light"
+							action="recommend" font=""></fb:like>
 
 					</div>
 				</div>
+            <div class="clear"> </div>
+		<div class="tituloPrincipal">
+			<div class="tituloObj">
+				&diams; ${title}
+
+				
 			</div>
 			<div class="identificadorObj">Objeto ${obaaEntry}</div>
 

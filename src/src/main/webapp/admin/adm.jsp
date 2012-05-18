@@ -27,16 +27,22 @@ Author     : Marcos Nunes
 	src="<spring:url value="/scripts/funcoesMapeamento.js" htmlEscape="true" />"></script>
 
 </head>
-<body style="cursor: wait">
-
+<body>
+    
+   
 
 	<jsp:useBean id="operacoesBean" class="robo.util.Operacoes"
 		scope="page" />
+        
+        <jsp:include page="../cabecalho.jsp">
+                <jsp:param value="Ferramenta Administrativa" name="titulo" />
+                <jsp:param value="7%" name="tamanho" />
+            </jsp:include>
 
 
 	<table class="cabecalhoAdm">
 		<tr>
-			<td width=50% class="title">Ferramenta Administrativa</td>
+			
 			<td width="10%"><a
 				onclick="javascript:NewWindow('confirmaRecalcularIndice','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">Recalcular
 					o &Iacute;ndice</a></td>
@@ -367,9 +373,7 @@ Author     : Marcos Nunes
 			</tr>
 		</table>
 	</div>
-	<script language="JavaScript" type="text/javascript">
-            document.body.style.cursor="default";
-        </script>
+
 	<%@include file="../googleAnalytics"%>
 </BODY>
 </html>

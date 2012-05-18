@@ -76,14 +76,10 @@
         <!-- incluir um arquivo %@ include file="top.html" %> -->
         <div id="page">
 
-
-            <div class="logoBusca"><a href="index"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></a></div>
-
-
-            <div class="clear"> </div>
-
-            <div class="EspacoPequeno">&nbsp;</div>
-            <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
+            <jsp:include page="cabecalho.jsp">
+                <jsp:param value="Consulta de Objetos Educacionais" name="titulo" />
+            </jsp:include>
+            
             <div class="linkCantoDireito"><a href="./admin/"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             <div class="Espaco">&nbsp;</div>
             

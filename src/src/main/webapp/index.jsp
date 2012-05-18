@@ -29,14 +29,12 @@
     <body id="bodyMenor">
 
         <div id="page">
-            
-            <div class="logoBusca"><img class="logo" src="imagens/Logo FEB_reduzido.png" alt="Logo FEB_reduzido"/></div>
 
 
-            <div class="clear"> </div>
+            <jsp:include page="cabecalho.jsp">
+                <jsp:param value="Consulta de Objetos Educacionais" name="titulo" />
+            </jsp:include>
 
-            <div class="EspacoPequeno">&nbsp;</div>
-            <div class="subTituloBusca">&nbsp;Consulta de Objetos Educacionais</div>
             <div>
                 <div class="linkCantoEsquerdo"> <a href="http://feb.ufrgs.br/feb"><img src="imagens/Logo FEB_reduzido_45x32.png" alt="Logo FEB_reduzido" title="Buscar na Confederação"/>  Confederação</a></div>
                 <div class="linkCantoDireito"><a href="./admin/" title="Ferramenta Administrativa"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>

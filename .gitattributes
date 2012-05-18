@@ -468,6 +468,7 @@ src/src/main/webapp/admin/testePaginacao.jsp -text
 src/src/main/webapp/admin/users/confirmDelete.jsp -text
 src/src/main/webapp/admin/users/form.jsp -text
 src/src/main/webapp/admin/users/show.jsp -text
+src/src/main/webapp/cabecalho.jsp -text
 src/src/main/webapp/consulta.jsp -text
 src/src/main/webapp/css/jquery.jqplot.min.css -text
 src/src/main/webapp/css/padrao.css -text
