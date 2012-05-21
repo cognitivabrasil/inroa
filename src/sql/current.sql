@@ -347,3 +347,20 @@ UPDATE usuarios SET permissions = 'PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP
 
 ALTER TABLE usuarios ADD COLUMN role VARCHAR(20);
 UPDATE usuarios SET role = 'Administrador' WHERE login = 'admin';
+
+-- 21/05/2012
+CREATE SEQUENCE autores_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 3897
+  CACHE 1;
+ALTER TABLE autores_id_seq
+  OWNER TO feb;
+
+
+ALTER TABLE autores ADD COLUMN id integer;
+ALTER TABLE autores ALTER COLUMN id SET NOT NULL;
+ALTER TABLE autores ALTER COLUMN id SET DEFAULT nextval('autores_id_seq'::regclass);
+
+
