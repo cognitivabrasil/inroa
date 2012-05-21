@@ -18,6 +18,10 @@
             <one-to-many class="modelos.Objeto"/>
         </set>
         <property name="deleted" type="boolean"/>
-
+        
+        <set name="autores" cascade="all" table="autores">
+            <key column="documento"/>
+            <one-to-many class="modelos.Autor"/>
+        </set>
     </class>
 </hibernate-mapping>

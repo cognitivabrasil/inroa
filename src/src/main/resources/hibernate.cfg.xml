@@ -13,5 +13,6 @@
     <mapping resource="SubFederacao.hbm.xml"/>
     <mapping resource="RepositorioSubFed.hbm.xml"/>
     <mapping resource="Usuario.hbm.xml"/>
+    <mapping resource="autores.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

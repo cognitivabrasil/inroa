@@ -27,12 +27,14 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private Boolean deleted;
     private String obaaXml;
     private OBAA metadata;
+    private Set<Autor> autores;
 
     public DocumentoReal() {
         obaaEntry = "";
         datetime = new Date(0);
         objetos = new HashSet<Objeto>();
         deleted = false;
+        autores = new HashSet<Autor>();
     }
 
     public void addTitle(String title) {
@@ -49,6 +51,10 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         o.setValor(author);
         o.setDocumento(this);
         objetos.add(o);
+        Autor a = new Autor();
+        a.setNome(author);
+        a.setDoc(this);
+        autores.add(a);
     }
 
     public void addDescription(String title) {
@@ -91,6 +97,15 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         this.obaaEntry = entry;
     }
 
+    public Set<Autor> getAutores() {
+        return autores;
+    }
+
+    public void setAutores(Set<Autor> autores) {
+        this.autores = autores;
+    } 
+    
+    
     /**
      * @return the objeto
      */

@@ -420,6 +420,7 @@ src/src/main/resources/RepositorioSubFed.hbm.xml -text
 src/src/main/resources/SubFederacao.hbm.xml -text
 src/src/main/resources/Usuario.hbm.xml -text
 src/src/main/resources/applicationContext.xml -text
+src/src/main/resources/autores.hbm.xml -text
 src/src/main/resources/dummy.properties -text
 src/src/main/resources/feb.properties -text
 src/src/main/resources/hibernate.cfg.xml -text

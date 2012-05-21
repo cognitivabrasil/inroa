@@ -177,16 +177,6 @@ public class Indexador {
      */
     public void populateR1(Connection con) throws SQLException {
         
-        //apaga a tabela autores
-        PreparedStatement deleteAutor = con.prepareStatement("DELETE FROM autores");
-        deleteAutor.execute();
-        deleteAutor.close();
-        
-        //popula novamente a tabela autores
-        PreparedStatement populaAutor = con.prepareStatement("INSERT INTO autores (nome, documento) SELECT lower(o.valor), d.id FROM objetos o, documentos d WHERE o.atributo='obaaEntity' AND d.id=o.documento;");
-        populaAutor.execute();
-        populaAutor.close();
-        
 
         //apaga as tabelas antes de inserir
         apagarCalculosIndice(con);

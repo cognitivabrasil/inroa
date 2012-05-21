@@ -10,6 +10,7 @@ package modelos;
  * @author cei
  */
 public class Autor {
+    private int id;
     private String nome;
     private DocumentoReal doc;
 
@@ -29,4 +30,11 @@ public class Autor {
         this.nome = nome;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }    
 }
