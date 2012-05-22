@@ -5,7 +5,7 @@
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-		xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:security="http://www.springframework.org/schema/security"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
@@ -45,43 +45,122 @@ p:password="${dataSource.password}" /> -->
           p:password="feb@RNP" />
 
     <bean id="documentosDAO"
-      class="modelos.DocumentosHibernateDAO"
+          class="modelos.DocumentosHibernateDAO"
     />
     
     <bean id="sessionFactory"
-      class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
     </bean>
 
 
     <bean id="transactionManager"
-      class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <tx:annotation-driven/>
 
     <bean id="repositoryDAO"
-       class="modelos.RepositoryHibernateDAO">
-</bean>
+          class="modelos.RepositoryHibernateDAO">
+    </bean>
 
     <bean id="subFederationDAO"
-       class="modelos.SubFederacaoHibernateDAO">
+          class="modelos.SubFederacaoHibernateDAO">
     </bean>
  
     <bean id="PadraoMetadadosDAO"
-        class="modelos.PadraoMetadadosHibernateDAO">
+          class="modelos.PadraoMetadadosHibernateDAO">
     </bean>
     
     <bean id="MapeamentoDAO"
-        class="modelos.MapeamentoHibernateDAO">
+          class="modelos.MapeamentoHibernateDAO">
     </bean>
  
     <bean id="UsuarioDAO"
-        class="modelos.UsuarioHibernateDAO">
+          class="modelos.UsuarioHibernateDAO">
 <!--         <property name="sessionFactory" ref="sessionFactory"/> -->
     </bean>
-     <context:annotation-config/>
-
+    <context:annotation-config/>
+ <!--Inicio Inicializar o Robo-->
+ <!--
+    <bean id="taskRobo" class="robo.main.Robo" />
+     
+    <bean id="detailTaskRobo" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="taskRobo"/>
+        <property name="targetMethod" value="testaUltimaImportacao"/>
+    </bean>
+    
+    <property name="concurrent" value="false" />
+    
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="detailTaskRobo" />
+        <property name="cronExpression" value="0 0 15 30 * ?" />
+    </bean>
+    
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean> -->
+ <!--Fim Inicializar o Robo-->
+ <!--
+    <bean id="tarefaExemplo" class="postgres.teste"/>
  
+    <bean id="detalheTarefa" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="tarefaExemplo"/>
+        <property name="targetMethod" value="testeScheduling"/>
+        <property name="concurrent" value="false" />
+    </bean>
+
+    
+
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="detalheTarefa" />
+        <property name="startDelay" value="10000" />
+        <property name="repeatInterval" value="90000" />
+    </bean>
+
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="detalheTarefa" />
+        <property name="cronExpression" value="0 0 17 * * ?" />
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger" />
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean>
+-->
+
+
+<bean id="robo" class="robo.main.Robo"/>
+
+<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  <property name="targetObject" ref="robo" />
+  <property name="targetMethod" value="testaUltimaImportacao" />
+  <property name="concurrent" value="false" />
+</bean>
+
+
+<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    <property name="jobDetail" ref="jobDetail" />
+    <!-- run every morning at 2 AM -->
+    <property name="cronExpression" value="0 0 2 * * ?" />
+</bean>
+
+<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <property name="triggers">
+        <list>
+            <ref bean="cronTrigger" />
+        </list>
+    </property>
+</bean>
+
 </beans>
+ 

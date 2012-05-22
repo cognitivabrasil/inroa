@@ -53,8 +53,8 @@ public class Repositorio implements java.io.Serializable, RepositorioGenerico {
         url = "";
         metadataPrefix = "";
         documentos = new HashSet<DocumentoReal>(0);
-        ultimaAtualizacao = new Date(0);
-        dataOrigem = new Date(0);
+        ultimaAtualizacao = null;
+        dataOrigem = null;
         namespace = "";
         periodicidadeAtualizacao = 1;
         colecoesInternal = "";

@@ -50,10 +50,6 @@ org.springframework.web.filter.DelegatingFilterProxy
         <url-pattern>/webservice</url-pattern>
     </servlet-mapping>
     
-    <listener>
-        <listener-class>robo.main.Inicializador</listener-class>
-    </listener>
-    
 
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
