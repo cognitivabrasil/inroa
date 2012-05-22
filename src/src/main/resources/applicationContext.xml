@@ -83,84 +83,30 @@ p:password="${dataSource.password}" /> -->
     </bean>
     <context:annotation-config/>
  <!--Inicio Inicializar o Robo-->
- <!--
-    <bean id="taskRobo" class="robo.main.Robo" />
-     
-    <bean id="detailTaskRobo" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="taskRobo"/>
-        <property name="targetMethod" value="testaUltimaImportacao"/>
-    </bean>
-    
-    <property name="concurrent" value="false" />
-    
-    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="detailTaskRobo" />
-        <property name="cronExpression" value="0 0 15 30 * ?" />
-    </bean>
-    
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <ref bean="cronTrigger" />
-            </list>
-        </property>
-    </bean> -->
- <!--Fim Inicializar o Robo-->
- <!--
-    <bean id="tarefaExemplo" class="postgres.teste"/>
- 
-    <bean id="detalheTarefa" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="tarefaExemplo"/>
-        <property name="targetMethod" value="testeScheduling"/>
+  
+    <bean id="robo" class="robo.main.Robo"/>
+
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="robo" />
+        <property name="targetMethod" value="testaUltimaImportacao" />
         <property name="concurrent" value="false" />
     </bean>
 
-    
-
-    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-        <property name="jobDetail" ref="detalheTarefa" />
-        <property name="startDelay" value="10000" />
-        <property name="repeatInterval" value="90000" />
-    </bean>
 
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="detalheTarefa" />
-        <property name="cronExpression" value="0 0 17 * * ?" />
+        <property name="jobDetail" ref="jobDetail" />
+    <!-- run every morning at 2 AM -->
+        <property name="cronExpression" value="0 0 2 * * ?" />
     </bean>
 
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <ref bean="simpleTrigger" />
                 <ref bean="cronTrigger" />
             </list>
         </property>
     </bean>
--->
-
-
-<bean id="robo" class="robo.main.Robo"/>
-
-<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-  <property name="targetObject" ref="robo" />
-  <property name="targetMethod" value="testaUltimaImportacao" />
-  <property name="concurrent" value="false" />
-</bean>
-
-
-<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-    <property name="jobDetail" ref="jobDetail" />
-    <!-- run every morning at 2 AM -->
-    <property name="cronExpression" value="0 0 2 * * ?" />
-</bean>
-
-<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-    <property name="triggers">
-        <list>
-            <ref bean="cronTrigger" />
-        </list>
-    </property>
-</bean>
+<!--Fim Inicializar o Robo-->
 
 </beans>
  

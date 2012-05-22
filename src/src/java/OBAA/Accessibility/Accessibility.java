@@ -48,5 +48,5 @@ private String var;
 
     public String getAccessibility() {
         return var;
-    }
+    }   
 }
