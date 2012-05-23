@@ -14,10 +14,10 @@ package robo.util;
 public class Informacoes {
 
     private String barra = System.getProperty("file.separator");
-    private String so = System.getProperty("os.name").toUpperCase();
-    private String caminhoWin = "C:" + barra + "temp";  
-    
-    private String CaminhoLinux = barra + "tmp";
+//    private String so = System.getProperty("os.name").toUpperCase();
+//    private String caminhoWin = "C:" + barra + "temp";  
+//    
+//    private String CaminhoLinux = barra + "tmp";
 
     private String oaiPMH = "OAIHandler";
 
@@ -26,24 +26,14 @@ public class Informacoes {
      * @return Retorna uma String contendo caminho para o diretorio temporario onde serão armazenados os arquivos xml temporários
      */
     public String getCaminho() {
-        if (so.contains("LINUX")) {
-            return this.CaminhoLinux;
-        } else {
-            return this.caminhoWin;
-        }
+       return System.getProperty("java.io.tmpdir");
+//        if (so.contains("LINUX")) {
+//            return this.CaminhoLinux;
+//        } else {
+//            return this.caminhoWin;
+//        }
     }
 
-    /**
-     * Altera o diretório temporário onde serão armazenados os arquivos temporários do robô.
-     * @param caminho String contento o caminho para o diretório temporário
-     */
-    public void setCaminho(String caminho) {
-        if (so.contains("LINUX")) {
-            this.CaminhoLinux = caminho;
-        } else {
-            this.caminhoWin = caminho;
-        }
-    }
 
     public void setOaiPMH(String oaiPMH) {
         this.oaiPMH = oaiPMH;
