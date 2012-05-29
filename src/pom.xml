@@ -347,7 +347,7 @@
 
 					<connectors>
 						<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-							<port>9090</port>
+							<port>9091</port>
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
 					</connectors>
@@ -373,7 +373,7 @@
 					</executions>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<stopKey>foo</stopKey>
-					<stopPort>9999</stopPort>
+					<stopPort>9998</stopPort>
 					<webAppConfig>
 						<contextPath>/feb</contextPath>
 					</webAppConfig>
