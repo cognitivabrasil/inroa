@@ -543,7 +543,7 @@ src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioTest.java -text
 src/src/test/java/robo/atualiza/importaOAI/ImporterTest.java -text
 src/src/test/java/robo/atualiza/subfedOAI/ImporterTestIT.java -text
-src/src/test/java/robo/atualiza/subfedOAI/SubRepositorios.java -text
+src/src/test/java/robo/atualiza/subfedOAI/SubRepositoriosTest.java -text
 src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text
 src/src/xslt/dc2obaa.xsl -text

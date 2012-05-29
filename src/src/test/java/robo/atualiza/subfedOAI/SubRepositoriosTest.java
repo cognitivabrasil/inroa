@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners(DependencyInjectionTestExecutionListener.class)
-public class SubRepositorios {
+public class SubRepositoriosTest {
     
     @Test
     public void testParserXML() throws ParserConfigurationException, IOException, SAXException{

@@ -379,3 +379,8 @@ xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
   </xsl:copy>
 </xsl:template></xsl:stylesheet>', 3);
 
+-- CRIAR A DATABASE DE TESTE
+    CREATE DATABASE federacao_teste WITH TEMPLATE federacao ENCODING 'UTF-8';
+    ALTER DATABASE federacao_teste OWNER TO feb;
+
+

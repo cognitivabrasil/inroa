@@ -32,6 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Integration tests of the UsuarioHibernateDao
@@ -135,6 +136,7 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     @Rollback(false)
+    @Transactional
     public void testSaveAndUpdate() throws Exception {
         System.out.println("save");
         Usuario r = instance.get(1);

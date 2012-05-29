@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 import postgres.Conectar;
 import robo.atualiza.Repositorios;
 import robo.atualiza.SubFederacaoOAI;
@@ -14,12 +19,12 @@ import robo.atualiza.SubFederacaoOAI;
  * Ferramenta de Sincronismo (Robô)
  * @author Marcos
  */
-public class Robo {
-    
+public class Robo {    
     /**
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma consulta na base de dados, procurando por reposit&oacute;rios que est&atilde;o desatualizados, quando encontra algum, chama o m&eacute;todo que atualiza o repositório.
      * @author Marcos Nunes
      */
+	@Transactional
     public void testaUltimaImportacao() {
         Logger log = Logger.getLogger(Robo.class.getName());
         SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -36,9 +41,6 @@ public class Robo {
         boolean repAtualizado = false;
         boolean subFedAtualizada = false;
         
-
-            
-
 //TESTA/ATUALIZA SUBFEDERACAO
             SubFederacaoOAI subFed = new SubFederacaoOAI();
             subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);

@@ -93,6 +93,13 @@
 			<version>8.7</version>
 		</dependency>
 
+    <!-- AOP dependency -->
+    <dependency>
+    	<groupId>cglib</groupId>
+	<artifactId>cglib</artifactId>
+	<version>2.2</version>
+    </dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
