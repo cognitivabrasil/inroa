@@ -192,6 +192,185 @@ modelo de tópico:
                    onclick="javascript:history.back(-1);" />
 
         </div>
+
+                <div id="sidetree">
+            <div class="treeheader">&nbsp;</div>
+            <div id="sidetreecontrol"><a href="?#">Contrair Todos</a> | <a href="?#">Expandir Todos</a></div>
+
+            <c:choose>
+
+                <c:when test="${empty metadata.general.identifiers}">
+                    <h3>N&atilde;o h&aacute; metadados cadastrados para esse objeto!</h3>
+                </c:when>
+                <c:otherwise>
+                    <ul id="tree" class="treeview-famfamfam">
+                        <c:if test="${!empty metadata.general}">
+                            <li><span class="title">General</span>
+                                <ul>
+                                    <c:forEach var="identifier" items="${metadata.general.identifiers}">
+                                        <li><span class="title">Identificador</span>
+                                            <ul>
+                                                <c:if test="${!empty identifier.entry}">
+                                                    <li><strong>Entry: </strong>${identifier.entry}</li>
+                                                </c:if>
+                                                <c:if test="${!empty identifier.catalog}">
+                                                    <li><strong>Catálogo: </strong>${identifier.catalog}</li>
+                                                </c:if>
+                                            </ul>
+                                        </li>
+                                    </c:forEach>
+
+                                    <c:forEach var="title" items="${metadata.general.titles}">
+                                        <li><strong>Título: </strong>${title}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="language" items="${metadata.general.languages}">
+                                        <li><strong>Idioma: </strong>${language}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="description" items="${metadata.general.descriptions}">
+                                        <li><strong>Descrição: </strong>${description}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="keyword" items="${metadata.general.keywords}">
+                                        <li><strong>Palavra-chave: </strong>${keyword}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="coverage" items="${metadata.general.coverages}">
+                                        <li><strong>Cobertura: </strong>${coverage}</li>
+                                    </c:forEach>
+
+                                    <c:if test="${!empty metadata.general.structure}">
+                                        <li><strong>Estrutura: </strong>${metadata.general.structure}</li>
+                                    </c:if>
+                                    <c:if test="${!empty metadata.general.aggregationLevel}">
+                                        <li><strong>Nível de agregação: </strong>${metadata.general.aggregationLevel}</li>
+                                    </c:if>
+                                </ul> <!--/GENERAL-->
+                            </li> <!--/GENERAL-->
+                        </c:if> <!--/GENERAL-->
+
+                        <c:if test="${!empty metadata.lifeCycle}">
+                            <li><span class="title">Ciclo de Vida</span>
+                                <ul>
+                                    <li>
+                                        <c:if test="${!empty metadata.lifeCycle.version}">
+                                        <li><strong>Versão: </strong>${metadata.lifeCycle.version}</li>
+                                    </c:if>
+
+                                    <c:if test="${!empty metadata.lifeCycle.status}">
+                                        <li><strong>Estado: </strong>${metadata.lifeCycle.status}</li>
+                                    </c:if>
+
+                                    <c:forEach var="contribute" items="${metadata.lifeCycle.contribute}">
+                                        <li><span class="title">Contribuinte</span>
+                                            <ul>
+                                                <c:if test="${!empty contribute.role}">
+                                                    <li><strong>Papel: </strong>${contribute.role}</li>
+                                                </c:if>
+
+                                                <c:forEach var="entity" items="${contribute.entity}">
+                                                    <li><strong>Entidade: </strong>${entity}</li>
+                                                </c:forEach>
+
+                                                <c:if test="${!empty contribute.date}">
+                                                    <li><strong>Data: </strong>${contribute.date}</li>
+                                                </c:if>
+
+                                            </ul>
+                                        </li>
+                                    </c:forEach>
+
+                                </ul> <!--/LIFE CYCLE-->
+                            </li> <!--/LIFE CYCLE-->
+                        </c:if> <!--/LIFE CYCLE-->
+
+                        <c:if test="${!empty metadata.rights}">
+                            <li><span class="title">Direitos</span>
+                                <ul>
+                                    <c:if test="${!empty metadata.rights.cost}">
+                                        <li><strong>Custo: </strong>${metadata.rights.cost}</li>
+                                    </c:if>
+
+                                    <c:if test="${!empty metadata.rights.copyright}">
+                                        <li><strong>Direito autoral: </strong>${metadata.rights.copyright}</li>
+                                    </c:if>
+
+                                    <c:if test="${!empty metadata.rights.description}">
+                                        <li><strong>Descrição: </strong>${metadata.rights.description}</li>
+                                    </c:if>
+                                </ul> <!--/RIGHTS-->
+                            </li> <!--/RIGHTS-->
+                        </c:if> <!--/RIGHTS-->
+
+                        <c:if test="${!empty metadata.educational}">
+                            <li><span class="title">Educacional</span>
+                                <ul>
+                                    <c:if test="${!empty metadata.educational.interactivityType}">
+                                        <li><strong>Tipo de interação: </strong>${metadata.educational.interactivityType}</li>
+                                    </c:if>
+
+                                    <c:if test="${!empty metadata.educational.interactivityLevel}">
+                                        <li><strong>Nível de interatividade: </strong>${metadata.educational.interactivityLevel}</li>
+                                    </c:if>
+
+                                    <c:if test="${!empty metadata.educational.semanticDensity}">
+                                        <li><strong>Densidade Semântica: </strong>${metadata.educational.semanticDensity}</li>
+                                    </c:if>
+
+                                    <c:if test="${!empty metadata.educational.difficulty}">
+                                        <li><strong>Dificuldade: </strong>${metadata.educational.difficulty}</li>
+                                    </c:if>
+
+                                    <c:if test="${!empty metadata.educational.typicalLearningTime}">
+                                        <li><strong>Tempo típico de aprendizagem: </strong>${metadata.educational.typicalLearningTime}</li>
+                                    </c:if>
+
+                                    <c:forEach var="intendedEndUserRole" items="${metadata.educational.intendedEndUserRoles}">
+                                        <li><strong>Desenvolvido para: </strong>${intendedEndUserRole}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="learningResourceType" items="${metadata.educational.learningResourceTypes}">
+                                        <li><strong>Tipo de recurso: </strong>${learningResourceType}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="typicalAgeRange" items="${metadata.educational.typicalAgeRanges}">
+                                        <li><strong>Faixa etária: </strong>${typicalAgeRange}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="description" items="${metadata.educational.descriptions}">
+                                        <li><strong>Descrição: </strong>${description}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="language" items="${metadata.educational.languages}">
+                                        <li><strong>Idioma: </strong>${language}</li>
+                                    </c:forEach>
+
+                                    <c:forEach var="context" items="${metadata.educational.contexts}">
+                                        <li><strong>Contexto: </strong>${context}</li>
+                                    </c:forEach>
+                                </ul> <!--/educational-->
+                            </li> <!--/educational-->
+                        </c:if> <!--/educational-->
+
+                        <c:if test="${!empty metadata.technical}">
+                            <li><span class="title">Technical</span>
+                                <ul>
+                                    <c:forEach var="location" items="${metadata.technical.location}">
+                                        <li><strong>Localização: </strong>${location}</li>
+                                    </c:forEach>
+
+
+                                </ul> <!--/technical-->
+                            </li><!--/technical-->
+                        </c:if> <!--/technical-->
+                    </ul>
+                </c:otherwise>
+
+            </c:choose>
+        </div>
+
+
         <%@include file="googleAnalytics"%>
     </body>
 </html>

@@ -43,18 +43,6 @@ function NewWindow(mypage,myname,w,h,features){
 }
 
 /**
-* Cria uma mascara em um imput conforme parametros recebidos
-* ex.: <input name="CPF" id="cpf" type="text" maxlength="14" size="40" onkeypress="formatar_mascara(this, '###.###.###-##')" />
-*/
-function formatar_mascara(src, mascara) {
-    var campo = src.value.length;
-    var saida = mascara.substring(0,1);
-    var texto = mascara.substring(campo);
-    if(texto.substring(0,1) != saida) {
-        src.value += texto.substring(0,1);
-    }
-}
-/**
  *Função que fecha a janela popup e regarrega a janela principal
  */
 function fechaRecarrega() {
@@ -93,30 +81,6 @@ function isNumber(e){
     else return true;
 }
 
-/**
- *Cria uma mascara no formato ip em um imput.
- *@param e event. Caracter que foi digitado.
- *@param obj imput que recebera a mascara
- */
-function maskIP(e,obj){
-    var evt;
-    if (document.all){
-        evt=event.keyCode;
-    } // caso seja IE
-    else{
-        evt = e.charCode;
-    }    // do contrário...
-    if (evt <20) return true;    // liberando teclas de controle
-    if ( (/^(\d{1,3}\.){3}\d{3}$/).test(obj.value) ) return false;
-    var chr= String.fromCharCode(evt);    // pegando a tecla digitada
-    if (! (/[\d\.]/).test(chr)) return false; // testando se é uma tecla válida (um digito ou um ponto)
-    if (chr=='.')
-        return (!(/\.$|^(\d{1,3}\.){3}/).test(obj.value) );
-    else
-    if( (/\d{3}$/).test(obj.value) )
-        obj.value+='.';
-    return true;
-}
 
 /**
  *Função responsavel por inserir um valor ao input informado
@@ -193,13 +157,9 @@ function atualizaRepAjaxExec(id, exibeResultado, apagar)
     var ajax = openAjax(); // Inicia o Ajax.
 
     ajax.open("POST", rootUrl + "/admin/repositories/"+id+"/update?apagar="+apagar, true);
-
+    exibeResultado.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='' align='middle'> Aguarde, atualizando...";
     ajax.onreadystatechange = function()
     {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-        {
-            exibeResultado.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='' align='middle'> Aguarde, atualizando...";
-        }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
             if(ajax.status == 200)
@@ -259,13 +219,9 @@ function updateFederationExec(id, showResult, del)
     var ajax = openAjax(); // Inicia o Ajax.
 
     ajax.open("POST", rootUrl + "/admin/federations/"+id+"/update?apagar="+del, true);
-    
+    showResult.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
     ajax.onreadystatechange = function()
     {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-        {
-            showResult.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
-        }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
             if(ajax.status == 200)
@@ -324,14 +280,9 @@ function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
         var ajax = openAjax(); // Inicia o Ajax.
 
         ajax.open("GET", rootUrl+"/admin/VerificaLinkOAI?"+link, true);
-
+        divErro.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
         ajax.onreadystatechange = function()
         {
-        
-            if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-            {
-                divErro.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
-            }
             if(ajax.readyState == 4) // Quando estiver tudo pronto.
             {
                 if(ajax.status == 200)
@@ -436,13 +387,9 @@ function excluirPadrao(id, idResultado, idTabela, linha)
     
     ajax.open("POST", "excluirPadrao?id="+id, true);
                        
-    
+    exibeResultado.innerHTML = "Aguarde...";
     ajax.onreadystatechange = function()
     {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-        {
-            exibeResultado.innerHTML = "Aguarde...";
-        }
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
         {
             if(ajax.status == 200)

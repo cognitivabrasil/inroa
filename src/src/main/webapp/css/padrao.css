@@ -25,8 +25,11 @@ body
 }
 
 #bodyMenor{
+    margin-top: 1%;
     width: 735px;
-
+    margin-left: auto;
+    margin-right: auto;
+    
 }
 
 #bodyLetraMaior{
@@ -366,7 +369,7 @@ a:hover{
 }
 
 .LinhaEntrada .Value{
-    margin:0 0 20px 41%;
+    margin:0 0 15px 41%;
 }
 
 .LinhaEntrada .Value linha{
@@ -856,3 +859,5 @@ td{vertical-align:top;}
 .metadados .subnivel .atributo .valor{
     margin:0% 0% 1% 12%;
 }
+
+.margin-top{margin-top: 2%;}

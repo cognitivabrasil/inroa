@@ -130,7 +130,7 @@
 
 
                 <div class="clear"> </div>
-                <div id="modificavel">
+                <div id="modificavel" class="margin-top">
                     <div class="LinhaEntrada">
                         <form:errors path="consulta" cssClass="ValueErro" />
                         <div class="Label">
@@ -139,7 +139,8 @@
                         <div class="Value">
                             <input type="text" name="consulta" id="consulta" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
                         </div>
-                        <br>
+                        </div>
+                        <div class="LinhaEntrada">
                         <div class="Label">
                             Autor:
                         </div>
