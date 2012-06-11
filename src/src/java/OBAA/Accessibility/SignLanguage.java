@@ -20,8 +20,16 @@ package OBAA.Accessibility;
 
 /**
  * <div class="en">
- *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * Sign Language: Indicates that the described resource contains sign language 
+ * alternatives, in the specified language, for text in the referenced primary 
+ * resource.
+ * 
+ * Value Space: AmericanASL, AustralianAuslan, AustrianASQ, BrasilianLIBRAS, 
+    BritishBSL,DanishDSL, FrenchLSF, GermanDGS, IrishISL, ItalianLIS, JapaneseJSL,
+MalaysianMSL, MexicanLSM, NativeAmerican, NetherlandsNGT, NorwegianNSL, QuebecLSQ,
+RussianRSL, SingaporeSLS, SpanishLSE, SwedishSWL or other
+ *      
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
  *</div>
  *
  * <div class="br">
@@ -32,21 +40,29 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class SignLanguage {
-private String var;
+    
+    private String signLanguage;
+    private enum setOfTerms {AmericanASL, AustralianAuslan, AustrianASQ, BrasilianLIBRAS, 
+    BritishBSL,DanishDSL, FrenchLSF, GermanDGS, IrishISL, ItalianLIS, JapaneseJSL,
+MalaysianMSL, MexicanLSM, NativeAmerican, NetherlandsNGT, NorwegianNSL, QuebecLSQ,
+RussianRSL, SingaporeSLS, SpanishLSE, SwedishSWL, other};
 
     public SignLanguage() {
-        var = "";
+        signLanguage = "";
     }
 
-    public SignLanguage(String var) {
-        this.var = var;
-    }
+    public void SignLanguage(String signLanguage) throws IllegalArgumentException{
+        
+        try {
+            setOfTerms.valueOf(signLanguage);
+            this.signLanguage = signLanguage;
 
-    public void setSignLanguage(String var) {
-        this.var = var;
+        } catch (IllegalArgumentException I) {
+            throw new IllegalArgumentException("SignLanguage must be one of: AmericanASL, AustralianAuslan, AustrianASQ, BrasilianLIBRAS,BritishBSL,DanishDSL, FrenchLSF, GermanDGS, IrishISL, ItalianLIS, JapaneseJSL, MalaysianMSL, MexicanLSM, NativeAmerican, NetherlandsNGT, NorwegianNSL, QuebecLSQ, RussianRSL, SingaporeSLS, SpanishLSE, SwedishSWL or other");
+        }
     }
 
     public String getSignLanguage() {
-        return var;
+        return signLanguage;
     }
 }

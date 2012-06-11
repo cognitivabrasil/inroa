@@ -21,7 +21,7 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * according to IMS
  *</div>
  *
  * <div class="br">
@@ -32,21 +32,11 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class Accessibility {
-private String var;
+
+    private ResourceDescription resourceDescription;    
 
     public Accessibility() {
-        var = "";
+        
     }
 
-    public Accessibility(String var) {
-        this.var = var;
-    }
-
-    public void setAccessibility(String var) {
-        this.var = var;
-    }
-
-    public String getAccessibility() {
-        return var;
-    }   
 }

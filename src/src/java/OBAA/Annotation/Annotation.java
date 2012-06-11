@@ -18,35 +18,64 @@
 
 package OBAA.Annotation;
 
+import java.util.Date;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 /**
  * <div class="en">
  *
+ * This category provides comments on the educational use of this learning 
+ * object, and information on when and by whom the comments were created.
+ * This category enables educators to share their assessments of learning 
+ * objects, suggestions for use, etc.
+ * 
  * according to IEEE LOM http://ltsc.ieee.org/
  *</div>
  *
  * <div class="br">
- * 
+ * Grupo de metadados com comentários sobre o uso educacional do objeto.
  *
  * Adaptado de http://www.portalobaa.org
  *</div>
  * @author LuizRossi
  */
+@Root
 public class Annotation {
-private String var;
+    @Element
+    private String entity;
+    @Element
+    private Date date;
+    @Element
+    private String description;
 
     public Annotation() {
-        var = "";
+       entity = "";
+       date = new Date();
+       description = "";
     }
 
-    public Annotation(String var) {
-        this.var = var;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public void setAnnotation(String var) {
-        this.var = var;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getAnnotation() {
-        return var;
+    public void setEntity(String entity) {
+        this.entity = entity;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getEntity() {
+        return entity;
     }
 }

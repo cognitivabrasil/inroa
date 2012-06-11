@@ -20,8 +20,17 @@ package OBAA.Accessibility;
 
 /**
  * <div class="en">
- *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * The presentation or display of most resources can be transformed if 
+ * appropriate formats, mark-up or software development practices are used to 
+ * create the resources. This requires that the content and content-structure 
+ * are independent of the presentation of the content. The means to achieve this 
+ * is to keep presentational and structural mark-up separate (see W3C guidelines) 
+ * Display transformability specifies how the display or presentation of a 
+ * resource (e.g., font colour, font size, background colour, layout, image size) 
+ * is amenable to transformation. It can be determined using a number of 
+ * available Web content evaluation and repair tools. E.g. CSS, XSLT, ...
+ * 
+ * according to IMS GLOBAL http://www.imsglobal.org/specificationdownload.cfm
  *</div>
  *
  * <div class="br">
@@ -32,21 +41,19 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class DisplayTransformability {
-private String var;
+    
+    private String displayTranformabulity;
 
     public DisplayTransformability() {
-        var = "";
+        displayTranformabulity = "";
     }
 
-    public DisplayTransformability(String var) {
-        this.var = var;
+       public void setControlFlexibility(String displayTranformabulity) {
+        this.displayTranformabulity = displayTranformabulity;
     }
 
-    public void setDisplayTransformability(String var) {
-        this.var = var;
-    }
 
     public String getDisplayTransformability() {
-        return var;
+        return displayTranformabulity;
     }
 }

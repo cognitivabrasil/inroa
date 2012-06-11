@@ -18,35 +18,35 @@
 
 package OBAA.SegmentInformationTable;
 
+import java.util.ArrayList;
+
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * according to TV Anytime http://www.tv-anytime.org/
  *</div>
  *
  * <div class="br">
- * 
+ *
+ * Conjunto dos grupos de segmento.
  *
  * Adaptado de http://www.portalobaa.org
  *</div>
  * @author LuizRossi
  */
 public class SegmentGroupList {
-private String var;
 
-    public SegmentGroupList() {
-        var = "";
+    private ArrayList <SegmentGroupInformation> segmentGroupInformations;
+
+      public SegmentGroupList() {
+        segmentGroupInformations = new ArrayList<SegmentGroupInformation>();
     }
 
-    public SegmentGroupList(String var) {
-        this.var = var;
+    public void addSegmentGroupInformation(SegmentGroupInformation newSegmentGroupInformation) {
+        this.segmentGroupInformations.add(newSegmentGroupInformation);
     }
 
-    public void setSegmentGroupList(String var) {
-        this.var = var;
-    }
-
-    public String getSegmentGroupList() {
-        return var;
+    public ArrayList <SegmentGroupInformation> getSegmentGroupInformation() {
+        return this.segmentGroupInformations;
     }
 }

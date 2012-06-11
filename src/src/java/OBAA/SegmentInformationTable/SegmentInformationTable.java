@@ -21,10 +21,13 @@ package OBAA.SegmentInformationTable;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * according to TV Anytime http://www.tv-anytime.org/
  *</div>
  *
  * <div class="br">
+ * 
+ * Grupo que conterá o conjunto de informações de segmentação dos objetos de 
+ * aprendizagem e de grupos de segmentos dos objetos de aprendizagem.
  * 
  *
  * Adaptado de http://www.portalobaa.org
@@ -32,21 +35,28 @@ package OBAA.SegmentInformationTable;
  * @author LuizRossi
  */
 public class SegmentInformationTable {
-private String var;
+
+    private SegmentList segmentList;
+    private SegmentGroupList segmentGroupList;
+
+    public void setSegmentGroupList(SegmentGroupList segmentGroupList) {
+        this.segmentGroupList = segmentGroupList;
+    }
+
+    public SegmentGroupList getSegmentGroupList() {
+        return segmentGroupList;
+    }    
+    
 
     public SegmentInformationTable() {
-        var = "";
+        segmentList = new SegmentList();
     }
 
-    public SegmentInformationTable(String var) {
-        this.var = var;
+    public void setSegmentList(SegmentList segmentList) {
+        this.segmentList = segmentList;
     }
 
-    public void setSegmentInformationTable(String var) {
-        this.var = var;
-    }
-
-    public String getSegmentInformationTable() {
-        return var;
+    public SegmentList getSegmentList() {
+        return segmentList;
     }
 }

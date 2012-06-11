@@ -21,7 +21,12 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * Pointer to an equivalent resource (meta-data) of the described resource or 
+ * parts thereof.
+ * 
+ * Recommended: URI of another object.
+ * 
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
  *</div>
  *
  * <div class="br">
@@ -31,22 +36,19 @@ package OBAA.Accessibility;
  *</div>
  * @author LuizRossi
  */
-public class HasTacticle {
-private String var;
+public class EquivalentResource {
 
-    public HasTacticle() {
-        var = "";
+    String uri;
+
+    public EquivalentResource() {
+       uri = "";
     }
 
-    public HasTacticle(String var) {
-        this.var = var;
+    public void setEquivalentResource(String uri) {
+        this.uri = uri;
     }
 
-    public void setHasTacticle(String var) {
-        this.var = var;
-    }
-
-    public String getHasTacticle() {
-        return var;
+    public String getEquivalentResource() {
+        return uri;
     }
 }

@@ -18,35 +18,35 @@
 
 package OBAA.SegmentInformationTable;
 
+import java.util.ArrayList;
+
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * according to TV Anytime http://www.tv-anytime.org/
  *</div>
  *
  * <div class="br">
  * 
+ * Conjunto de informações de segmentos.
  *
  * Adaptado de http://www.portalobaa.org
  *</div>
  * @author LuizRossi
  */
 public class SegmentList {
-private String var;
+    
+    private ArrayList <SegmentInformation> segment;
 
     public SegmentList() {
-        var = "";
+        segment = new ArrayList<SegmentInformation>();
+    }
+    
+    public void addSegmentList(SegmentInformation newSegment) {
+        segment.add(newSegment);
     }
 
-    public SegmentList(String var) {
-        this.var = var;
-    }
-
-    public void setSegmentList(String var) {
-        this.var = var;
-    }
-
-    public String getSegmentList() {
-        return var;
+    public ArrayList <SegmentInformation> getSegmentList() {
+        return this.getSegmentList();
     }
 }

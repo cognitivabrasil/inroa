@@ -16,7 +16,9 @@
  * along with Obaa. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package OBAA.Accessibility;
+package OBAA.Educational;
+
+import org.simpleframework.xml.Attribute;
 
 /**
  * <div class="en">
@@ -25,29 +27,32 @@ package OBAA.Accessibility;
  *</div>
  *
  * <div class="br">
- * 
+ * Especifica a forma sensorial pela qual o aluno receberá as informações do 
+ * objeto de aprendizagem.
  *
  * Adaptado de http://www.portalobaa.org
  *</div>
  * @author LuizRossi
  */
-public class HasVisual {
+public class DidaticStrategy {
+@Attribute
+private String perception;
 
-    private String var;
-
-    public HasVisual() {
-        var = "";
+    public DidaticStrategy() {
+        perception = "";
     }
 
-    public HasVisual(String var) {
-        this.var = var;
+    public DidaticStrategy(String perception) {
+        this.perception = perception;
     }
 
-    public void setHasVisual(String var) {
-        this.var = var;
+    public void setDidaticStrategy(String perception) {
+        this.perception = perception;
     }
 
-    public String getHasVisual() {
-        return var;
+    public String getDidaticStrategy() {
+        return perception;
     }
+
+    
 }

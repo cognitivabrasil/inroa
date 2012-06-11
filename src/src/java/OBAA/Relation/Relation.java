@@ -18,6 +18,10 @@
 
 package OBAA.Relation;
 
+import OBAA.General.Identifier;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 /**
  * <div class="en">
  *
@@ -31,22 +35,37 @@ package OBAA.Relation;
  *</div>
  * @author LuizRossi
  */
+@Root
 public class Relation {
-private String var;
+    @Element (name = "Kind")
+    private Kind kind;
+    @Element (name = "Resource")
+    private Resource resource;
+
 
     public Relation() {
-        var = "";
+        kind = new Kind();
+        resource = new Resource();       
     }
 
-    public Relation(String var) {
-        this.var = var;
+    public void setKind(Kind kind) {
+        this.kind = kind;
+    }
+     public void setKind(String kind) throws IllegalArgumentException {        
+        this.kind.setKind(kind);
+     }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+    
+    public Kind getKind() {
+        return kind;
     }
 
-    public void setRelation(String var) {
-        this.var = var;
+    public Resource getResource() {
+        return resource;
     }
-
-    public String getRelation() {
-        return var;
-    }
+ 
+    
 }

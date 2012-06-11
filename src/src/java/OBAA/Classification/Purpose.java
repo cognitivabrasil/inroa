@@ -18,9 +18,17 @@
 
 package OBAA.Classification;
 
+import org.simpleframework.xml.Attribute;
+
 /**
  * <div class="en">
  *
+ * The purpose of classifying this learning object.
+ * 
+ * Value Space: discipline, idea, prerequisite, educational objective,
+ * accessibility, restrictions, educational level, skill level, security level
+ * or competency.
+ * 
  * according to IEEE LOM http://ltsc.ieee.org/
  *</div>
  *
@@ -32,21 +40,28 @@ package OBAA.Classification;
  * @author LuizRossi
  */
 public class Purpose {
-private String var;
+    
+    @Attribute
+    private String value;
+    private enum setOfTerms {discipline,idea,prerequisite,educational_objective,
+    accessibility,restrictions,educational_level,skill_level, security_level,
+    competency};
 
     public Purpose() {
-        var = "";
+        value = "";
     }
 
-    public Purpose(String var) {
-        this.var = var;
-    }
+    public void setPurpose(String purpose) throws IllegalArgumentException{
+        try {
+            setOfTerms.valueOf(purpose);
+            this.value = purpose;
 
-    public void setPurpose(String var) {
-        this.var = var;
+        } catch (IllegalArgumentException I) {
+            throw new IllegalArgumentException("Purpose must be one of: fatual, conceitual, procedimental, atitudinal");
+        }
     }
 
     public String getPurpose() {
-        return var;
+        return this.value;
     }
 }

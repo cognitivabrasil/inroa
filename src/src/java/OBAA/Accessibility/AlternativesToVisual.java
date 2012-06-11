@@ -21,7 +21,10 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * Visual content presented in a different modality.
+ * 
+ * 
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
  *</div>
  *
  * <div class="br">
@@ -32,21 +35,13 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class AlternativesToVisual {
-private String var;
+
+    private AudioDescription audioDescription;
+    private String AltTextLang;
+    private String longDescriptionLang;
+    private ColorAvoidance colorAvoidance;
 
     public AlternativesToVisual() {
-        var = "";
-    }
-
-    public AlternativesToVisual(String var) {
-        this.var = var;
-    }
-
-    public void setAlternativesToVisual(String var) {
-        this.var = var;
-    }
-
-    public String getAlternativesToVisual() {
-        return var;
+       
     }
 }

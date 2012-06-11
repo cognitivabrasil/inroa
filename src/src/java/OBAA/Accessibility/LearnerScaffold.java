@@ -21,7 +21,13 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * Indicates that the described resource is or contains one or more of the 
+ * learnerScaffold tools.
+ * 
+ * Value Space: dictionary, calculator, noteTaking, peerInteraction, abacus
+ * thesaurus, spellChecker, homophoneChecker, mindMappingSoftware or outlineTool
+ * 
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
  *</div>
  *
  * <div class="br">
@@ -32,21 +38,29 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class LearnerScaffold {
-private String var;
+
+    private String learnerScaffold;
+    private enum setOfTerms {
+        dictionary, calculator, noteTaking, peerInteraction, abacus, thesaurus, 
+        spellChecker, homophoneChecker, mindMappingSoftware, outlineTool
+    };
 
     public LearnerScaffold() {
-        var = "";
+        learnerScaffold = "";
     }
 
-    public LearnerScaffold(String var) {
-        this.var = var;
-    }
+    public void setLearnerScaffold(String learnerScaffold) throws IllegalArgumentException{
+        
+        try {
+            setOfTerms.valueOf(learnerScaffold);
+            this.learnerScaffold = learnerScaffold;
 
-    public void setLearnerScaffold(String var) {
-        this.var = var;
+        } catch (IllegalArgumentException I) {
+            throw new IllegalArgumentException("LearnerScaffold must be one of: dictionary, calculator, noteTaking, peerInteraction, abacus, thesaurus, spellChecker, homophoneChecker, mindMappingSoftware or outlineTool");
+        }
     }
 
     public String getLearnerScaffold() {
-        return var;
+        return this.learnerScaffold;
     }
 }

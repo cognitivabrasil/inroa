@@ -1,52 +1,66 @@
 /*
- * OBAA - Agent Based Leanring Objetcs
- *
- * This file is part of Obaa.
- * Obaa is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Obaa is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with Obaa. If not, see <http://www.gnu.org/licenses/>.
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
-
 package OBAA.Accessibility;
 
 /**
+ *
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
- *</div>
- *
+ * according to IMS
+ * </div>
  * <div class="br">
- * 
  *
- * Adaptado de http://www.portalobaa.org
- *</div>
- * @author LuizRossi
+ * Adaptado de http://www.portalobaa.org/
+ * </div>
+ *
+ * @author LuizRossiNote
  */
 public class Equivalent {
-private String var;
-
+    
+    private PrimaryResource prmairyResouce;
+    private PrimaryFile primaryFile;
+    private boolean supplementaty;
+    private Content content;
+    
     public Equivalent() {
-        var = "";
+        prmairyResouce = new PrimaryResource();
+        primaryFile = new PrimaryFile();
+        supplementaty = false;
+        content = new Content();
+        
     }
 
-    public Equivalent(String var) {
-        this.var = var;
+    public void setContent(Content content) {
+        this.content = content;
     }
 
-    public void setEquivalent(String var) {
-        this.var = var;
+    public void setPrimaryFile(PrimaryFile primaryFile) {
+        this.primaryFile = primaryFile;
     }
 
-    public String getEquivalent() {
-        return var;
+    public void setPrmairyResouce(PrimaryResource prmairyResouce) {
+        this.prmairyResouce = prmairyResouce;
+    }
+
+    public void setSupplementaty(boolean supplementaty) {
+        this.supplementaty = supplementaty;
+    }
+
+    public Content getContent() {
+        return content;
+    }
+
+    public PrimaryFile getPrimaryFile() {
+        return primaryFile;
+    }
+
+    public PrimaryResource getPrmairyResouce() {
+        return prmairyResouce;
+    }
+    
+    public boolean isSupplementaty(){
+        return supplementaty;
     }
 }

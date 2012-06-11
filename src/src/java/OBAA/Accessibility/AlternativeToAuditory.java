@@ -21,7 +21,9 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * Auditory content presented in a different modality.
+ * 
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
  *</div>
  *
  * <div class="br">
@@ -29,24 +31,16 @@ package OBAA.Accessibility;
  *
  * Adaptado de http://www.portalobaa.org
  *</div>
+ * 
  * @author LuizRossi
  */
 public class AlternativeToAuditory {
-private String var;
+
+    private CaptionType captionType;
+    private SignLanguage signLanguage;
 
     public AlternativeToAuditory() {
-        var = "";
+        
     }
 
-    public AlternativeToAuditory(String var) {
-        this.var = var;
-    }
-
-    public void setAlternativeToAuditory(String var) {
-        this.var = var;
-    }
-
-    public String getAlternativeToAuditory() {
-        return var;
-    }
 }

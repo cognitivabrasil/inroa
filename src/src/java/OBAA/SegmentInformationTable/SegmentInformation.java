@@ -18,35 +18,93 @@
 
 package OBAA.SegmentInformationTable;
 
+import java.util.Collection;
+
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * according to TV Anytime http://www.tv-anytime.org/
  *</div>
  *
  * <div class="br">
  * 
+ * Agrupamento das informações de um segmento (SegmentInformationType do TV-Anytime)
  *
  * Adaptado de http://www.portalobaa.org
  *</div>
  * @author LuizRossi
  */
 public class SegmentInformation {
-private String var;
+
+    private String identifier;
+    private String title;
+    private String description; 
+    private Collection <String> keyword;
+    private SegmentMediaType segmentMediaType;
+    private String start; //TODO: implement the mediaTimeType MPEG-7
+    private String end;
 
     public SegmentInformation() {
-        var = "";
+        this.identifier = "";
+        this.title = "";
+        this.description = "";
+       
     }
 
-    public SegmentInformation(String var) {
-        this.var = var;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setSegmentInformation(String var) {
-        this.var = var;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
-    public String getSegmentInformation() {
-        return var;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
+
+    public void addKeyword(String newKeyword) {
+        this.keyword.add(newKeyword);
+    }
+
+    public void setSegmentMediaType(SegmentMediaType segmentMediaType) {
+        this.segmentMediaType = segmentMediaType;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public Collection<String> getKeyword() {
+        return keyword;
+    }
+
+    public SegmentMediaType getSegmentMediaType() {
+        return segmentMediaType;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+    
 }

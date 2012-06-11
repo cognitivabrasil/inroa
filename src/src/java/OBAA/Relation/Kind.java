@@ -18,8 +18,27 @@
 
 package OBAA.Relation;
 
+import org.simpleframework.xml.Attribute;
+
 /**
  * <div class="en">
+ * 
+ * Nature of the relationship between this learning object and the target 
+ * learning object, identified by 7.2:Relation.Resource.
+ * 
+ * Based on Dublin Core: 
+ * ispartof: is part of
+ * haspart: has part
+ * isversionof: is version of
+ * hasversion: has version
+ * isformatof: is format of
+ * hasformat: has format
+ * references: references
+ * isreferencedby: is referenced by
+ * isbasedon: is based on
+ * isbasisfor: is basis for
+ * requires: requires
+ * isrequiredby: is required by
  *
  * according to IEEE LOM http://ltsc.ieee.org/
  *</div>
@@ -32,21 +51,29 @@ package OBAA.Relation;
  * @author LuizRossi
  */
 public class Kind {
-private String var;
+    @Attribute
+    private String kind;
+        private enum setOfTerms {
+        isPartOf, hasPart, isVersionOf, hasVersion, isFormatOf, hasFormat, 
+        references, isReferencedBy, isBasedOn, isBasisFor, requires, isRequiredBy
+    };
 
     public Kind() {
-        var = "";
+        kind = "";
     }
 
-    public Kind(String var) {
-        this.var = var;
-    }
+   public void setKind(String kind) throws IllegalArgumentException{
+        
+        try {
+            setOfTerms.valueOf(kind);
+            this.kind = kind;
 
-    public void setKind(String var) {
-        this.var = var;
+        } catch (IllegalArgumentException I) {
+            throw new IllegalArgumentException("Kind must be one of:  isPartOf, hasPart, isVersionOf, hasVersion, isFormatOf, hasFormat, references, isReferencedBy, isBasedOn, isBasisFor, requires or isRequiredBy");
+        }
     }
 
     public String getKind() {
-        return var;
+        return kind;
     }
 }

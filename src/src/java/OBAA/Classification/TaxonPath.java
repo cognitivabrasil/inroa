@@ -18,6 +18,10 @@
 
 package OBAA.Classification;
 
+import java.util.ArrayList;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+
 /**
  * <div class="en">
  *
@@ -32,21 +36,32 @@ package OBAA.Classification;
  * @author LuizRossi
  */
 public class TaxonPath {
-private String var;
+    @Element
+    private String source;
+    @ElementList
+    private ArrayList<Taxon> taxons;
 
     public TaxonPath() {
-        var = "";
+        source = "";
+        taxons = new ArrayList<Taxon>();
     }
 
-    public TaxonPath(String var) {
-        this.var = var;
+    public void setSource(String source) {
+        this.source = source;
     }
 
-    public void setTaxonPath(String var) {
-        this.var = var;
+    public void addTaxons(Taxon newTaxon) {
+        this.taxons.add(newTaxon);
     }
 
-    public String getTaxonPath() {
-        return var;
+    public String getSource() {
+        return source;
     }
+
+    public ArrayList<Taxon> getTaxons() {
+        return taxons;
+    }
+
+       
+    
 }

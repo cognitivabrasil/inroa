@@ -19,7 +19,9 @@
 package OBAA.Educational;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import metadata.TextElement;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -106,7 +108,6 @@ public class Educational {
  *
  * @author LuizRossi
  */
-	//TODO: Verify args
 	@Element(required=false)
 	private String interactivityType;
 
@@ -142,7 +143,7 @@ public class Educational {
  *</div>
  * @author LuizRossi
  */
-	//Todo: Verify args
+	
 	@Element(required=false)
 	private String interactivityLevel;
 
@@ -255,8 +256,6 @@ public class Educational {
  *</div>
  * @author LuizRossi
  */
-	//@Element(required=false)
-	//private String typicalAgeRange;
 
 	@ElementList(inline=true,required=false)
 	List<IntendedEndUserRole> intendedEndUserRole;
@@ -276,6 +275,14 @@ public class Educational {
 	@ElementList(inline=true,required=false)
 	private List<Context> context;
 
+        @Element (name = "LearningContentType")
+        private LearningContentType learningContentType;
+        
+        @Element (name = "Interaction")
+        private Interaction interaction;
+        
+        @Element (name = "DidaticStrategy")
+        private DidaticStrategy didaticStrategy;
 
     public Educational() {
     }
@@ -302,6 +309,74 @@ public class Educational {
 	public List<String> getContexts() {
 	    return toStringList(context);
     	}
+
+    public void setContext(List<Context> context) {
+        this.context = context;
+    }
+
+    public void setDescription(List<Description> description) {
+        this.description = description;
+    }
+
+    public void setDidaticStrategy(DidaticStrategy didaticStrategy) {
+        this.didaticStrategy = didaticStrategy;
+    }
+
+    public void setIntendedEndUserRole(List<IntendedEndUserRole> intendedEndUserRole) {
+        this.intendedEndUserRole = intendedEndUserRole;
+    }
+
+    public void setInteraction(Interaction interaction) {
+        this.interaction = interaction;
+    }
+
+    public void setLanguage(List<Language> language) {
+        this.language = language;
+    }
+
+    public void setLearningContentType(LearningContentType learningContentType) {
+        this.learningContentType = learningContentType;
+    }
+
+    public void setLearningResourceType(List<LearningResourceType> learningResourceType) {
+        this.learningResourceType = learningResourceType;
+    }
+
+    public List<Context> getContext() {
+        return context;
+    }
+
+    public List<Description> getDescription() {
+        return description;
+    }
+
+    public DidaticStrategy getDidaticStrategy() {
+        return didaticStrategy;
+    }
+
+    public List<IntendedEndUserRole> getIntendedEndUserRole() {
+        return intendedEndUserRole;
+    }
+
+    public Interaction getInteraction() {
+        return interaction;
+    }
+
+    public List<Language> getLanguage() {
+        return language;
+    }
+
+    public LearningContentType getLearningContentType() {
+        return learningContentType;
+    }
+
+    public List<LearningResourceType> getLearningResourceType() {
+        return learningResourceType;
+    }
+
+    public List<TypicalAgeRange> getTypicalAgeRange() {
+        return typicalAgeRange;
+    }
 
 	/**
 	 * @return the interactivityType
@@ -373,12 +448,6 @@ public class Educational {
 		this.typicalLearningTime = typicalLearningTime;
 	}
 
-	/**
-	 * @return the typicalAgeRange
-	 */
-	public String getTypicalAgeRange() {
-		return toStringList(typicalAgeRange).get(0);
-	}
 
 	/**
 	 * @param typicalAgeRange the typicalAgeRange to set

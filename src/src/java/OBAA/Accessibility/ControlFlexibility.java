@@ -21,7 +21,11 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * Control flexibility describes how the resource supports a choice of methods 
+ * of controlling the resource functions. It is anticipated that this will be 
+ * determined using accessibility-checking tools.
+ * 
+ * according to IMS GLOBAL http://www.imsglobal.org/specificationdownload.cfm
  *</div>
  *
  * <div class="br">
@@ -32,21 +36,17 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class ControlFlexibility {
-private String var;
+private String controlFlexibility;
 
     public ControlFlexibility() {
-        var = "";
+        controlFlexibility = "";
     }
 
-    public ControlFlexibility(String var) {
-        this.var = var;
-    }
-
-    public void setControlFlexibility(String var) {
-        this.var = var;
+    public void setControlFlexibility(String controlFlexibility) {
+        this.controlFlexibility = controlFlexibility;
     }
 
     public String getControlFlexibility() {
-        return var;
+        return controlFlexibility;
     }
 }

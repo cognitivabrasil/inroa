@@ -18,9 +18,21 @@
 
 package OBAA.Classification;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+import java.util.TreeSet;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 /**
  * <div class="en">
  *
+ * This category describes where this learning object falls within a particular 
+ * classification system. To define multiple classifications, there may be 
+ * multiple instances of this category.
+ * 
  * according to IEEE LOM http://ltsc.ieee.org/
  *</div>
  *
@@ -31,22 +43,55 @@ package OBAA.Classification;
  *</div>
  * @author LuizRossi
  */
+@Root
 public class Classification {
-private String var;
-
+    @Element (name = "Purpose")
+    private Purpose purpose;
+    @ElementList (name = "TaxonPath")
+    private Set <TaxonPath> taxonPath;
+    @Element (name = "Description")
+    private String description;
+    @ElementList (name = "Keywords")
+    private ArrayList<String> keywords;
+    
     public Classification() {
-        var = "";
+        
+        purpose = new Purpose();
+        description = "";
+        keywords = new ArrayList<String>();
+        taxonPath = new TreeSet<TaxonPath>();
+     
     }
 
-    public Classification(String var) {
-        this.var = var;
+    public void setPurpose(Purpose purpose) {
+      this.purpose = purpose;
+    }
+    public void setPurpose(String purpose) throws IllegalArgumentException {        
+        this.purpose.setPurpose(purpose);
+    }
+    public Purpose getPurpose() {
+        return purpose;
     }
 
-    public void setClassification(String var) {
-        this.var = var;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getClassification() {
-        return var;
+    public void setTaxonPath(Set<TaxonPath> taxonPath) {
+        this.taxonPath = taxonPath;
     }
+    public Set<TaxonPath> getTaxon(){
+        return taxonPath;
+    
+    }
+    public void addTaxonPath (TaxonPath newTaxonPath){        
+        this.taxonPath.add(newTaxonPath);
+    }
+
+    public void addKeyword(String keyword) {
+        this.keywords.add(keyword);
+    }
+
+   
+    
 }

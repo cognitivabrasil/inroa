@@ -15,12 +15,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Obaa. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package OBAA.Accessibility;
+
 
 /**
  * <div class="en">
  *
+ * Indicates that the described resource is an audio description for the 
+ * referenced primary resource.
+ * 
+ * Value Space: Standard or expanded
+ * 
  * according to IEEE LOM http://ltsc.ieee.org/
  *</div>
  *
@@ -32,21 +37,40 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class AudioDescription {
-private String var;
+    
+    private String audioDescriptionType;
+    private enum setOfTerms {standard, expanded};
+    private String language;
+    
 
     public AudioDescription() {
-        var = "";
+        audioDescriptionType = "standard";
+        language = "";
     }
 
-    public AudioDescription(String var) {
-        this.var = var;
+
+    public void setAudioDescription(String audioDescriptionType) throws IllegalArgumentException{
+        
+        try {
+            setOfTerms.valueOf(audioDescriptionType);
+            this.audioDescriptionType = audioDescriptionType;
+
+        } catch (IllegalArgumentException I) {
+            throw new IllegalArgumentException("AudioDescriptionType must be standard or expanded.");
+        }
     }
 
-    public void setAudioDescription(String var) {
-        this.var = var;
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
-    public String getAudioDescription() {
-        return var;
+    
+    public String getAudioDescriptionType() {
+        return audioDescriptionType;
     }
+
+    public String getLanguage() {
+        return language;
+    }
+    
 }

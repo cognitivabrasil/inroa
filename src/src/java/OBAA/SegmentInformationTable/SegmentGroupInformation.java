@@ -18,35 +18,89 @@
 
 package OBAA.SegmentInformationTable;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * according to TV Anytime http://www.tv-anytime.org/
  *</div>
  *
  * <div class="br">
  * 
+ * Conjunto de informações do grupo de segmentos (SegmentGroupInformationType do TV-Anytime).
  *
  * Adaptado de http://www.portalobaa.org
  *</div>
  * @author LuizRossi
  */
 public class SegmentGroupInformation {
-private String var;
+    
+    private String identifier;
+    private GroupType groupType;
+    private String title;
+    private String description;
+    private Collection<String> keywords;
+    private Segments segments;
 
     public SegmentGroupInformation() {
-        var = "";
+        identifier = "";
+        groupType = new GroupType();
+        title = "";
+        description = "";
+        segments = new Segments();
     }
 
-    public SegmentGroupInformation(String var) {
-        this.var = var;
+    public void addKeyword(String newKeyword) {
+        this.keywords.add(newKeyword);
     }
 
-    public void setSegmentGroupInformation(String var) {
-        this.var = var;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getSegmentGroupInformation() {
-        return var;
+    public void setGroupType(GroupType groupType) {
+        this.groupType = groupType;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public void setKeywords(Collection<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    public void setSegments(Segments segments) {
+        this.segments = segments;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public GroupType getGroupType() {
+        return groupType;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public Collection<String> getKeywords() {
+        return keywords;
+    }
+
+    public Segments getSegments() {
+        return segments;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

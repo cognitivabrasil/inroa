@@ -263,7 +263,7 @@ public class OBAATest {
 	@Test
 	public void testOBAA_Educational_TypicalAgeRange() throws FileNotFoundException {
 		assert(!(l.getEducational() == null));
-		assertThat(l.getEducational().getTypicalAgeRange(), equalTo("adult"));
+		assertThat(l.getEducational().getTypicalAgeRange().get(0).getText(), equalTo("adult"));
 	}
 	
 	@Test

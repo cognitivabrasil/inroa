@@ -21,7 +21,16 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * Indicates that the described resource contains a text caption for the 
+ * referenced primary resource.
+ * 
+ * Verbatim: Indicates that the caption is a verbatim caption. Mutually 
+ * exclusive with reducedReadingLevel
+ * 
+ * Enhanced Caption: Indicates that the caption is an enhanced caption.
+ * 
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
+ * 
  *</div>
  *
  * <div class="br">
@@ -32,21 +41,71 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class CaptionType {
-private String var;
+
+    private String language;
+    private boolean verbatim;
+    private boolean reducedReadingLevel;
+    private ReducedSpeed reducedSpeed;
+    private boolean enhancedCaption;
 
     public CaptionType() {
-        var = "";
+
+        language = "";
+        verbatim = true;
+        reducedReadingLevel = false;
     }
 
-    public CaptionType(String var) {
-        this.var = var;
+    /**
+     * If is set verbatim true, the reducedReadingLevel is set false and viceverse, due to the muttualy exclusion of these two params;
+     * @param verbatim 
+     */
+    
+    public void setVerbatim(boolean verbatim) {
+        
+        this.reducedReadingLevel = !verbatim;            
+        this.verbatim = verbatim;
     }
 
-    public void setCaptionType(String var) {
-        this.var = var;
+    /**
+     * If is set Reduced Reading Level true, the verbatim is set false and viceverse, due to the muttualy exclusion of these two params;
+
+     * @param reducedReadingLevel 
+     */
+    public void setReducedReadingLevel(boolean reducedReadingLevel) {
+        this.verbatim = !reducedReadingLevel;
+        this.reducedReadingLevel = reducedReadingLevel;
     }
 
-    public String getCaptionType() {
-        return var;
+    public void setEnhancedCaption(boolean enhancedCaption) {
+        this.enhancedCaption = enhancedCaption;
     }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public void setReducedSpeed(ReducedSpeed reducedSpeed) {
+        this.reducedSpeed = reducedSpeed;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public ReducedSpeed getReducedSpeed() {
+        return reducedSpeed;
+    }
+    
+    public boolean getVerbatim () {
+        return this.verbatim;    
+    }
+    
+    public boolean getReducedReadingLevel () {
+        return this.reducedReadingLevel;    
+    }
+    
+    public boolean getEnhancedCaption () {
+        return this.enhancedCaption;    
+    }
+
 }

@@ -15,38 +15,48 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Obaa. If not, see <http://www.gnu.org/licenses/>.
  */
-
-package OBAA.Accessibility;
+package OBAA.Technical;
 
 /**
+ *
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
- *</div>
- *
- * <div class="br">
+ * The technology required to use this learning
+ * object, e.g., hardware, software, network, etc.
  * 
+ * according to IEEE LOM http://ltsc.ieee.org/
+ * </div>
+ * 
+ * 
+ * <div class="br">
  *
- * Adaptado de http://www.portalobaa.org
- *</div>
- * @author LuizRossi
+ * Adaptado de http://www.portalobaa.org/
+ * </div>
+ *
+ * @author LuizRossiNote
  */
-public class Supplementary {
-private String var;
-
-    public Supplementary() {
-        var = "";
+public class Type {
+    
+    private String type;
+    private enum setOfTerms {
+        middleware, browser, operatingSystem 
+    };
+    
+    public Type() {
+        type = "";
     }
+    
+    public void setType(String type) {
+     try {
+            setOfTerms.valueOf(type);
+            this.type = type;
 
-    public Supplementary(String var) {
-        this.var = var;
+        } catch (IllegalArgumentException I) {
+            throw new IllegalArgumentException("Type must be middleware, browser or operatingSystem ");
+        }
     }
-
-    public void setSupplementary(String var) {
-        this.var = var;
-    }
-
-    public String getSupplementary() {
-        return var;
+    
+    public String getType() {
+        return (this.type);
     }
 }

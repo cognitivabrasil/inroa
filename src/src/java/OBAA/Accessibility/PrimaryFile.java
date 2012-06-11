@@ -21,7 +21,12 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * A reference to file(s) (meta-data) within the primary resource for which the 
+ * described resource is an equivalent (if applicable)
+ * 
+ * Recommended: URI of another object.
+ * 
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
  *</div>
  *
  * <div class="br">
@@ -32,21 +37,17 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class PrimaryFile {
-private String var;
+private String uri;
 
     public PrimaryFile() {
-        var = "";
+        uri = "";
     }
 
-    public PrimaryFile(String var) {
-        this.var = var;
-    }
-
-    public void setPrimaryFile(String var) {
-        this.var = var;
+    public void setPrimaryFile(String uri) {
+        this.uri = uri;
     }
 
     public String getPrimaryFile() {
-        return var;
+        return uri;
     }
 }

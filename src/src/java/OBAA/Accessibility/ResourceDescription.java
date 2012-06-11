@@ -1,4 +1,4 @@
-/*
+ /*
  * OBAA - Agent Based Leanring Objetcs
  *
  * This file is part of Obaa.
@@ -32,21 +32,13 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class ResourceDescription {
-private String var;
+
+    private Primary primary;
+    private Equivalent equivalent;
+    
 
     public ResourceDescription() {
-        var = "";
+     
     }
 
-    public ResourceDescription(String var) {
-        this.var = var;
-    }
-
-    public void setResourceDescription(String var) {
-        this.var = var;
-    }
-
-    public String getResourceDescription() {
-        return var;
-    }
 }

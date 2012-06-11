@@ -24,26 +24,31 @@ import robo.util.Operacoes;
 @Root(strict = false)
 @Namespace(reference = "http://ltsc.ieee.org/xsd/LOM", prefix = "obaa")
 public class General {
-    /*
-     * Title
-     */
+
+    @Element(required = false)
+    private Identifier identifier;
 
     @ElementList(inline = true)
     private List<Title> title = new ArrayList<Title>();
-    @ElementList(inline = true, required = false)
-    private List<Keyword> keyword = new ArrayList<Keyword>();
-    @ElementList(inline = true, required = false)
-    private List<Description> description = new ArrayList<Description>();
-    @ElementList(inline = true, required = false)
-    private List<Coverage> coverage = new ArrayList<Coverage>();
-    @Element(required = false)
-    private int aggregationLevel;
-    @Element(required = false)
-    private Identifier identifier;
+    
     @Element(required = false)
     private String language;
+      
+    @ElementList(inline = true, required = false)
+    private List<Description> description = new ArrayList<Description>();
+    
+    @ElementList(inline = true, required = false)
+    private List<Keyword> keyword = new ArrayList<Keyword>();
+        
+    @ElementList(inline = true, required = false)
+    private List<Coverage> coverage = new ArrayList<Coverage>();
+   
     @Element(required = false)
     private Structure structure;
+    
+    @Element(required = false)
+    private int aggregationLevel;
+        
 
     public General() {
     }

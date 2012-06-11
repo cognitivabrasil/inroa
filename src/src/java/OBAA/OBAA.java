@@ -6,12 +6,16 @@
  */
 package OBAA;
 
+import OBAA.Accessibility.Accessibility;
+import OBAA.Classification.Classification;
 import OBAA.Educational.Educational;
 import OBAA.LifeCycle.LifeCycle;
 import OBAA.General.General;
 import OBAA.Rights.Rights;
 import OBAA.Technical.Technical;
-
+import OBAA.Metametadata.Metametadata;
+import OBAA.Relation.Relation;
+import OBAA.SegmentInformationTable.SegmentInformationTable;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,12 +23,14 @@ import java.io.FileReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import metadata.DublinCore;
+import java.util.Set;
 import metadata.TextElement;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -64,6 +70,18 @@ public class OBAA {
 	
 	@Element(required=false)
 	private Technical technical;
+        
+        @Element(required=false)
+        Metametadata metametadata;    
+        
+        @ElementList (name = "Relations")
+        Set<Relation> relations;
+        
+        
+        Set<Annotation> annotations;
+        Set<Classification> classifications;
+        Accessibility accessibility;
+        Set<SegmentInformationTable> segmentsInformationTable;
 
 	/**
  	* Creates an empty DublinCore objetct.

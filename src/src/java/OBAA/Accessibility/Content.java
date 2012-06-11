@@ -21,7 +21,10 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * The features of the content of the equivalent resource that parallel the 
+ * ACCLIP specification.
+ * 
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
  *</div>
  *
  * <div class="br">
@@ -32,21 +35,14 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class Content {
-private String var;
+
+    private AlternativesToVisual alternativesToVisual;
+    private AlternativeToText alternativeToText;
+    private AlternativeToAuditory alternativeToAuditory;
+    private LearnerScaffold learnerScaffold;
 
     public Content() {
-        var = "";
+        
     }
 
-    public Content(String var) {
-        this.var = var;
-    }
-
-    public void setContent(String var) {
-        this.var = var;
-    }
-
-    public String getContent() {
-        return var;
-    }
 }

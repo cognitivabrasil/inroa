@@ -21,7 +21,12 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
- * according to IEEE LOM http://ltsc.ieee.org/
+ * Textual content presented in a different modality.
+ * 
+ * Graphic Alernative: Indicates that the described resource contains graphical 
+ * alternatives for text in the referenced primary resource.
+ *      
+ * according to IMS GLOBAL v1.0 http://www.imsglobal.org/
  *</div>
  *
  * <div class="br">
@@ -32,21 +37,13 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class AlternativeToText {
-private String var;
+
+    private boolean graphicAlternative;
+    private SignLanguage signLanguage;
+    
 
     public AlternativeToText() {
-        var = "";
+      
     }
 
-    public AlternativeToText(String var) {
-        this.var = var;
-    }
-
-    public void setAlternativeToText(String var) {
-        this.var = var;
-    }
-
-    public String getAlternativeToText() {
-        return var;
-    }
 }

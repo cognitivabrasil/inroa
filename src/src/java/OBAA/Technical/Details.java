@@ -15,38 +15,46 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Obaa. If not, see <http://www.gnu.org/licenses/>.
  */
-
-package OBAA.Accessibility;
+package OBAA.Technical;
 
 /**
+ *
  * <div class="en">
  *
  * according to IEEE LOM http://ltsc.ieee.org/
- *</div>
- *
+ * </div>
  * <div class="br">
- * 
  *
- * Adaptado de http://www.portalobaa.org
- *</div>
- * @author LuizRossi
+ * Adaptado de http://www.portalobaa.org/
+ * </div>
+ *
+ * @author LuizRossiNote
  */
-public class CaptionRate {
-private String var;
-
-    public CaptionRate() {
-        var = "";
+public class Details {
+    
+    private String details; //Especificação de detalhes do serviço fora do escopo de metadados (ex.: parâmetros).
+    private String location; //A URL, URI ou qualquer outra especificação para acessar o serviço. (relacionado ao item 4.3 do IEEE-LOM).
+    
+    public Details() {
+        details = "";
+        location = "";
     }
 
-    public CaptionRate(String var) {
-        this.var = var;
+    public void setDetails(String details) {
+        this.details = details;
+    }
+    
+    public String getDetails() {
+        return (this.details);
     }
 
-    public void setCaptionRate(String var) {
-        this.var = var;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getCaptionRate() {
-        return var;
+    public String getLocation() {
+        return location;
     }
+    
+    
 }

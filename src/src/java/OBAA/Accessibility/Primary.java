@@ -32,21 +32,54 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class Primary {
-private String var;
+
+    private boolean hasVisual;
+    private boolean hasAudititory;
+    private boolean hasText;
+    private boolean hasTacticle;
+    private EarlStatement earlStatement;
+    private EquivalentResource equivalentResource;
+    
 
     public Primary() {
-        var = "";
+        hasVisual = false;
+        hasAudititory = false;
+        hasText = false;
+        hasTacticle = false;
+        earlStatement = new EarlStatement();
+        equivalentResource = new EquivalentResource();
+       }
+
+    public void setEarlStatement(EarlStatement earlStatement) {
+        this.earlStatement = earlStatement;
     }
 
-    public Primary(String var) {
-        this.var = var;
+    public void setEquivalentResource(EquivalentResource equivalentResource) {
+        this.equivalentResource = equivalentResource;
     }
 
-    public void setPrimary(String var) {
-        this.var = var;
+    public void setHasAudititory(boolean hasAudititory) {
+        this.hasAudititory = hasAudititory;
     }
 
-    public String getPrimary() {
-        return var;
+    public void setHasTacticle(boolean hasTacticle) {
+        this.hasTacticle = hasTacticle;
     }
+
+    public void setHasText(boolean hasText) {
+        this.hasText = hasText;
+    }
+
+    public void setHasVisual(boolean hasVisual) {
+        this.hasVisual = hasVisual;
+    }
+
+    public EarlStatement getEarlStatement() {
+        return earlStatement;
+    }
+
+    public EquivalentResource getEquivalentResource() {
+        return equivalentResource;
+    }
+    
 }

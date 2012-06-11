@@ -21,6 +21,8 @@ package OBAA.Accessibility;
 /**
  * <div class="en">
  *
+ * Named witch color is avoided in the described resource
+ * 
  * according to IEEE LOM http://ltsc.ieee.org/
  *</div>
  *
@@ -32,21 +34,21 @@ package OBAA.Accessibility;
  * @author LuizRossi
  */
 public class ColorAvoidance {
-private String var;
+private String colorAvoidance;
 
     public ColorAvoidance() {
-        var = "";
+        colorAvoidance = "";
     }
 
-    public ColorAvoidance(String var) {
-        this.var = var;
+    public ColorAvoidance(String colorAvoidance) {
+        this.colorAvoidance = colorAvoidance;
     }
 
-    public void setColorAvoidance(String var) {
-        this.var = var;
+    public void setColorAvoidance(String colorAvoidance) {
+        this.colorAvoidance = colorAvoidance;
     }
 
     public String getColorAvoidance() {
-        return var;
+        return colorAvoidance;
     }
 }
