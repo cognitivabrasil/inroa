@@ -74,7 +74,7 @@ public class OBAA {
         @Element(required=false)
         Metametadata metametadata;    
         
-        @ElementList (name = "Relations")
+        @ElementList (name = "Relations", required = false) // TODO: tem certeza que não tem q ser inline?
         Set<Relation> relations;
         
         

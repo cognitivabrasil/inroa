@@ -275,14 +275,15 @@ public class Educational {
 	@ElementList(inline=true,required=false)
 	private List<Context> context;
 
-        @Element (name = "LearningContentType")
+        @Element (name = "LearningContentType", required = false)
         private LearningContentType learningContentType;
         
-        @Element (name = "Interaction")
+        @Element (name = "Interaction", required = false)
         private Interaction interaction;
         
-        @Element (name = "DidaticStrategy")
-        private DidaticStrategy didaticStrategy;
+        //@Element (name = "DidaticStrategy", required = false)
+        //private DidaticStrategy didaticStrategy; 
+        // TODO: Pretto...
 
     public Educational() {
     }
@@ -318,9 +319,10 @@ public class Educational {
         this.description = description;
     }
 
-    public void setDidaticStrategy(DidaticStrategy didaticStrategy) {
-        this.didaticStrategy = didaticStrategy;
-    }
+    // TODO:
+//    public void setDidaticStrategy(DidaticStrategy didaticStrategy) {
+//        this.didaticStrategy = didaticStrategy;
+//    }
 
     public void setIntendedEndUserRole(List<IntendedEndUserRole> intendedEndUserRole) {
         this.intendedEndUserRole = intendedEndUserRole;
@@ -350,9 +352,10 @@ public class Educational {
         return description;
     }
 
-    public DidaticStrategy getDidaticStrategy() {
-        return didaticStrategy;
-    }
+    // TODO:
+//    public DidaticStrategy getDidaticStrategy() {
+//        return didaticStrategy;
+//    }
 
     public List<IntendedEndUserRole> getIntendedEndUserRole() {
         return intendedEndUserRole;
