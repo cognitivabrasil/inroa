@@ -270,6 +270,7 @@ src/src/java/OBAA/OBAA.java -text
 src/src/java/OBAA/OaiCannotDisseminateFormatException.java -text
 src/src/java/OBAA/OaiException.java -text
 src/src/java/OBAA/OaiOBAA.java -text
+src/src/java/OBAA/OaiParseErrorException.java -text
 src/src/java/OBAA/Relation/Kind.java -text
 src/src/java/OBAA/Relation/Relation.java -text
 src/src/java/OBAA/Relation/Resource.java -text
@@ -513,7 +514,6 @@ src/src/main/webapp/scripts/rss.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/test/java/OBAA/OBAATest.java -text
 src/src/test/java/OBAA/OaiOBAATest.java -text
-src/src/test/java/OBAA/OaiParseErrorException.java -text
 src/src/test/java/ferramentaBusca/RecuperadorTest.java -text
 src/src/test/java/metadata/DublinCoreTest.java -text
 src/src/test/java/metadata/XsltConversorTest.java -text
