@@ -53,7 +53,7 @@ Author     : Marcos Nunes
 			</security:authorize>
 
 			<td width="10%"><a href=""
-				onclick="javascript:NewWindow('alterarSenhaAdm','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar
+				onclick="javascript:NewWindow('./users/passwd','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar
 					Senha</a></td>
 
 			<security:authorize access="hasRole('PERM_CHANGE_DATABASE')">

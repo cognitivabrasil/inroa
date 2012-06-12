@@ -441,7 +441,6 @@ src/src/main/webapp/WEB-INF/log4j.xml -text
 src/src/main/webapp/WEB-INF/main-servlet.xml -text
 src/src/main/webapp/WEB-INF/web.xml -text
 src/src/main/webapp/admin/adm.jsp -text
-src/src/main/webapp/admin/alterarSenhaAdm.jsp -text
 src/src/main/webapp/admin/alterarSenhaBD.jsp -text
 src/src/main/webapp/admin/conexaoBD.jsp -text
 src/src/main/webapp/admin/erroBase.jsp -text
@@ -474,6 +473,7 @@ src/src/main/webapp/admin/statistics.jsp -text
 src/src/main/webapp/admin/testePaginacao.jsp -text
 src/src/main/webapp/admin/users/confirmDelete.jsp -text
 src/src/main/webapp/admin/users/form.jsp -text
+src/src/main/webapp/admin/users/passwd.jsp -text
 src/src/main/webapp/admin/users/show.jsp -text
 src/src/main/webapp/cabecalho.jsp -text
 src/src/main/webapp/consulta.jsp -text

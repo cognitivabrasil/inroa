@@ -4,6 +4,7 @@
  */
 package spring;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import modelos.Usuario;
 import modelos.UsuarioDAO;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,76 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+class UserPasswordDto {
+	private String username;
+	private String password;
+	private String confirmPassword;
+	private String oldPassword;
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getOldPassword() {
+		return oldPassword;
+	}
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+}
+
+/**
+ * The Class UserValidator, validates a UserPasswordDto.
+ */
+@Component
+class UserPasswordValidator implements Validator {
+	private Usuario user;
+	
+	@Override
+	public boolean supports(Class clazz) {
+		return UserPasswordDto.class.isAssignableFrom(clazz);
+	}
+	
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
+	@Override
+	public void validate(Object target, Errors errors) {
+		UserPasswordDto u = (UserPasswordDto) target;
+				
+		System.out.println(user);
+		if(!user.authenticate(u.getOldPassword())) {
+			errors.rejectValue("oldPassword", "password.incorrect", "Senha informada incorreta.");
+		}
+
+		if (u.getPassword() != null || u.getConfirmPassword() != null) {
+			if (!u.getPassword().equals(u.getConfirmPassword())) {
+				errors.rejectValue("password", "notmatch.password",
+						"As senhas devem se iguais");
+			}
+			else if (u.getPassword().length() < 5) {
+				errors.rejectValue("password", "too_short.password", "A senha deve conter no mínimo 5 letras");
+			}
+		}
+
+	}
+
+}
 
 /**
  * The Class UserDto.
@@ -240,6 +312,8 @@ public final class UsersController {
 	@Autowired 	ServletContext servletContext;
 	@Autowired 	private UsuarioDAO userDao;
 	@Autowired 	private UserValidator userValidator;
+	
+	Logger log = Logger.getLogger(UsersController.class);
 
 	/**
 	 * Instantiates a new users controller.
@@ -266,6 +340,41 @@ public final class UsersController {
 		model.addAttribute("userModel", new UserDto());
 		model.addAttribute("roleList", UserDto.referenceData().get("roleList"));
 		return "admin/users/form";
+	}
+	
+	@RequestMapping(value = "/passwd", method = RequestMethod.GET)
+	public String passwdShow(Model model, Principal principal) {
+		UserPasswordDto u = new UserPasswordDto();
+		u.setUsername(principal.getName());
+		model.addAttribute("user", u);
+		
+		return "admin/users/passwd";
+	}
+	
+	@RequestMapping(value = "/passwd", method = RequestMethod.POST)
+	public String passwdChange(Model model, Principal principal, 
+			@ModelAttribute("user") UserPasswordDto u,
+			BindingResult result) {
+		Usuario user = userDao.get(principal.getName());
+		
+		UserPasswordValidator userPasswordValidator = new UserPasswordValidator();
+		userPasswordValidator.setUser(user);
+
+
+		assert(userPasswordValidator != null);
+		userPasswordValidator.validate(u, result);
+		if (result.hasErrors()) {
+			u.setUsername(user.getUsername());
+			model.addAttribute("user", u);
+			return "admin/users/passwd";
+			} else { 
+			log.debug("Changing password from user " + user.getUsername());
+			user.setPassword(u.getPassword());
+			userDao.save(user);
+			return "redirect:/admin/fechaRecarrega";
+		}
+		
+
 	}
 
 	/**

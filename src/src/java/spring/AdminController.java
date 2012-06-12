@@ -109,16 +109,6 @@ public final class AdminController {
         return "redirect:/";
     }
 
-    @RequestMapping("/alterarSenhaBD")
-    public String alteraSenhaDB(Model model) {
-
-        // we should NOT connect to the DB here, just load the config
-        SingletonConfig.initConfig(servletContext);
-        SingletonConfig conf = SingletonConfig.getConfig();
-        model.addAttribute("conf", conf);
-        return "admin/alterarSenhaBD";
-    }
-
     @RequestMapping("/salvaSenhaBD")
     public String salvaSenhaDB(
             @ModelAttribute("conf") SingletonConfig conf,
