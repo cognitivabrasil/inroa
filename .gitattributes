@@ -513,6 +513,7 @@ src/src/main/webapp/scripts/rss.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/test/java/OBAA/OBAATest.java -text
 src/src/test/java/OBAA/OaiOBAATest.java -text
+src/src/test/java/OBAA/OaiParseErrorException.java -text
 src/src/test/java/ferramentaBusca/RecuperadorTest.java -text
 src/src/test/java/metadata/DublinCoreTest.java -text
 src/src/test/java/metadata/XsltConversorTest.java -text
@@ -535,6 +536,7 @@ src/src/test/java/metadata/oai_dc10000.xml -text
 src/src/test/java/metadata/oai_error.xml -text
 src/src/test/java/metadata/oai_lom.xml -text
 src/src/test/java/metadata/oai_norecords.xml -text
+src/src/test/java/metadata/oai_norecords2.xml -text
 src/src/test/java/metadata/oai_obaa.xml -text
 src/src/test/java/metadata/oai_subRepositorios.xml -text
 src/src/test/java/metadata/obaa1.xml -text

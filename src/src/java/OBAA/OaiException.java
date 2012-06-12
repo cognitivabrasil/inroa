@@ -29,6 +29,23 @@ public class OaiException extends RuntimeException {
 		this.setDescription(message);
 		this.setUrl(url);
 	}
+	
+	/**
+	 * Instantiates a new oai exception.
+	 *
+	 * @param name the name of the exception
+	 * @param message the message
+	 * @param url the url that caused the exception
+	 * @param cause Cause of the exception
+	 */
+	public OaiException(String name, String message, String url, Throwable cause) {
+		super("OaiException " + name + " while trying to access OAI-PMH url: "
+				+ url
+				+ ": " + message, cause);
+		this.setName(name);
+		this.setDescription(message);
+		this.setUrl(url);
+	}
 
 	/**
 	 * @return the url

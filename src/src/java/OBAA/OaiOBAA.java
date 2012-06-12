@@ -210,7 +210,16 @@ public class OaiOBAA {
 
 		try {
 			dc = serializer.read(OaiOBAA.class, s);
-		} catch (java.lang.Exception e) {
+		}
+		catch(javax.xml.stream.XMLStreamException e) {
+			if(e.getMessage().startsWith("ParseError")) {
+				throw new OaiParseErrorException("error while parsing Xml", url, e);
+			}
+			else {
+				throw new OaiException("unidentifiedException", "Unidentified OAI exception", url, e);
+			}
+		}
+		catch (java.lang.Exception e) {
 			throw new RuntimeException(e);
 		}
 
@@ -267,6 +276,10 @@ public class OaiOBAA {
 	 * @return the number of ListRecords present in the OAI File.
 	 */
 	public int getSize() {
+		if(ListRecords == null) {
+			log.error("ListRecords should never be null, something is wrong!!!");
+			return 0;
+		}
 		return ListRecords.size();
 	}
 
