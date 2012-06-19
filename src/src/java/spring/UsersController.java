@@ -122,7 +122,7 @@ class UserDto {
 	 * Instantiates an empty UserDto.
 	 */
 	public UserDto() {
-	};
+	}
 
 	/**
 	 * Instantiates a userDto based on the Usuario object.

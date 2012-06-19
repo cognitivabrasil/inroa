@@ -39,6 +39,9 @@ public class LifeCycle {
 	 * @return the status
 	 */
 	public String getStatus() {
+            if(status == null)
+                return null;
+            else
 		return status.toString();
 	}
 
