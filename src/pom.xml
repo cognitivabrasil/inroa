@@ -5,7 +5,7 @@
 	<groupId>feb</groupId>
 	<artifactId>feb</artifactId>
 	<packaging>war</packaging>
-        <version>3.0</version>
+        <version>3.0-alpha</version>
 	<name>FEB</name>
 	<url>http://feb.ufrgs.br</url>
 	<!-- Shared version number properties -->
