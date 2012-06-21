@@ -111,7 +111,7 @@
 			<div class="Label">Pr&oacute;xima Atualiza&ccedil;&atilde;o:</div>
 
 			<c:choose>
-				<c:when test="${rep.isOutdated()}">
+				<c:when test="${rep.isOutdated}">
 					<div id='textResult${repId}' class="ValueErro">
 						&nbsp;
 						${operacoesBean.ultimaAtualizacaoFrase(rep.proximaAtualizacao,

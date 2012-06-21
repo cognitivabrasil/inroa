@@ -163,7 +163,7 @@ public class SubFederacao implements java.io.Serializable {
      *
      * @return true if it is outdated or false if it is updated.
      */
-    public boolean isOutdated() {
+    public boolean getIsOutdated() {
         if (getProximaAtualizacao() == null || getProximaAtualizacao().before(new Date())) {
             return true;
         } else {

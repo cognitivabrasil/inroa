@@ -98,7 +98,7 @@ Author     : Marcos Nunes
 				<td>${rep.nome}</td>
 				<td>${rep.descricao}</td>
 				<td><c:choose>
-						<c:when test="${rep.isOutdated()}">
+						<c:when test="${rep.isOutdated}">
 							<div id='textResult${param.id}' class="textoErro">
 								&nbsp;
 								${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
@@ -264,7 +264,7 @@ Author     : Marcos Nunes
 				<td>${subfed.nome}</td>
 				<td>${subfed.descricao}</td>
 				<td><c:choose>
-						<c:when test="${subfed.isOutdated()}">
+						<c:when test="${subfed.isOutdated}">
 							<div id='textResultSF${subfed.id}' class='textoErro'>
 								${subfed.ultimaAtualizacaoTxt}
 								<security:authorize access="hasRole('PERM_UPDATE')">

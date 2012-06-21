@@ -64,7 +64,7 @@
 		<div class="LinhaEntrada">
 			<div class="Label">&Uacute;ltima Atualiza&ccedil;&atilde;o:</div>
 			<c:choose>
-				<c:when test="${federation.isOutdated()}">
+				<c:when test="${federation.isOutdated}">
 					<div id="textResultSF${param.id}" class='Value textoErro'>
 						&nbsp;
 						${operacoesBean.ultimaAtualizacaoFrase(federation.ultimaAtualizacao,
