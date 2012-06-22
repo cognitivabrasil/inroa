@@ -14,8 +14,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import OBAA.OBAA;
-import OBAA.LifeCycle.Contribute;
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.LifeCycle.Contribute;
+
 
 /**
  * The Class DocumentosHibernateDAO.

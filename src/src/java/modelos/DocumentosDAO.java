@@ -4,8 +4,9 @@
  */
 package modelos;
 
-import OBAA.OBAA;
 import java.util.List;
+
+import cognitivabrasil.obaa.OBAA;
 import metadata.Header;
 
 // TODO: Auto-generated Javadoc

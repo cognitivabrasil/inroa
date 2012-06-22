@@ -6,8 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import OBAA.OBAA;
-import OBAA.LifeCycle.Contribute;
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.LifeCycle.Contribute;
+
 
 /**
  *
