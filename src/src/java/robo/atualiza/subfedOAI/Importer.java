@@ -4,13 +4,14 @@
  */
 package robo.atualiza.subfedOAI;
 
-import OBAA.OaiOBAA;
 import java.io.File;
 import modelos.DocumentosDAO;
 import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import cognitivabrasil.obaa.OaiOBAA;
 
 /**
  * Import the OBAA xml file to OBAA object and saves in database. Only for
