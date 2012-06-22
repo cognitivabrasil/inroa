@@ -14,6 +14,11 @@
 			<id>excilys</id>
 			<url>http://repository.excilys.com/content/repositories/releases</url>
 		</repository>
+
+		<repository>
+			<id>cognitivabrasil</id>
+			<url>http://143.54.83.93/maven/</url>
+		</repository>
 	</repositories>
 
 	<properties>
@@ -92,12 +97,12 @@
 			<version>8.7</version>
 		</dependency>
 
-    <!-- AOP dependency -->
-    <dependency>
-    	<groupId>cglib</groupId>
-	<artifactId>cglib</artifactId>
-	<version>2.2.2</version>
-    </dependency>
+		<!-- AOP dependency -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -165,7 +170,7 @@
 			<version>1.5.6</version>
 		</dependency>
 
-		<!-- Core utilities used by other modules. Define this if you use Spring
+		<!-- Core utilities used by other modules. Define this if you use Spring 
 			Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -173,7 +178,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Expression Language (depends on spring-core) Define this if you use
+		<!-- Expression Language (depends on spring-core) Define this if you use 
 			Spring Expression APIs (org.springframework.expression.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -181,7 +186,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Bean Factory and JavaBeans utilities (depends on spring-core) Define
+		<!-- Bean Factory and JavaBeans utilities (depends on spring-core) Define 
 			this if you use Spring Bean APIs (org.springframework.beans.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -189,7 +194,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Aspect Oriented Programming (AOP) Framework (depends on spring-core,
+		<!-- Aspect Oriented Programming (AOP) Framework (depends on spring-core, 
 			spring-beans) Define this if you use Spring AOP APIs (org.springframework.aop.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -197,8 +202,8 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Application Context (depends on spring-core, spring-expression, spring-aop,
-			spring-beans) This is the central artifact for Spring's Dependency Injection
+		<!-- Application Context (depends on spring-core, spring-expression, spring-aop, 
+			spring-beans) This is the central artifact for Spring's Dependency Injection 
 			Container and is generally always defined -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -206,7 +211,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Various Application Context utilities, including EhCache, JavaMail,
+		<!-- Various Application Context utilities, including EhCache, JavaMail, 
 			Quartz, and Freemarker integration Define this if you need any of these integrations -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -214,8 +219,8 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Transaction Management Abstraction (depends on spring-core, spring-beans,
-			spring-aop, spring-context) Define this if you use Spring Transactions or
+		<!-- Transaction Management Abstraction (depends on spring-core, spring-beans, 
+			spring-aop, spring-context) Define this if you use Spring Transactions or 
 			DAO Exception Hierarchy (org.springframework.transaction.*/org.springframework.dao.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -223,7 +228,7 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- JDBC Data Access Library (depends on spring-core, spring-beans, spring-context,
+		<!-- JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, 
 			spring-tx) Define this if you use Spring's JdbcTemplate API (org.springframework.jdbc.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -231,8 +236,8 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA,
-			and iBatis. (depends on spring-core, spring-beans, spring-context, spring-tx)
+		<!-- Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, 
+			and iBatis. (depends on spring-core, spring-beans, spring-context, spring-tx) 
 			Define this if you need ORM (org.springframework.orm.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -240,8 +245,8 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Object-to-XML Mapping (OXM) abstraction and integration with JAXB,
-			JiBX, Castor, XStream, and XML Beans. (depends on spring-core, spring-beans,
+		<!-- Object-to-XML Mapping (OXM) abstraction and integration with JAXB, 
+			JiBX, Castor, XStream, and XML Beans. (depends on spring-core, spring-beans, 
 			spring-context) Define this if you need OXM (org.springframework.oxm.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -249,9 +254,9 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Web application development utilities applicable to both Servlet and
-			Portlet Environments (depends on spring-core, spring-beans, spring-context)
-			Define this if you use Spring MVC, or wish to use Struts, JSF, or another
+		<!-- Web application development utilities applicable to both Servlet and 
+			Portlet Environments (depends on spring-core, spring-beans, spring-context) 
+			Define this if you use Spring MVC, or wish to use Struts, JSF, or another 
 			web framework with Spring (org.springframework.web.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -259,8 +264,8 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Spring MVC for Servlet Environments (depends on spring-core, spring-beans,
-			spring-context, spring-web) Define this if you use Spring MVC with a Servlet
+		<!-- Spring MVC for Servlet Environments (depends on spring-core, spring-beans, 
+			spring-context, spring-web) Define this if you use Spring MVC with a Servlet 
 			Container such as Apache Tomcat (org.springframework.web.servlet.*) -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -268,14 +273,14 @@
 			<version>${org.springframework.version}</version>
 		</dependency>
 
-		<!-- Spring MVC for Portlet Environments (depends on spring-core, spring-beans,
-			spring-context, spring-web) Define this if you use Spring MVC with a Portlet
+		<!-- Spring MVC for Portlet Environments (depends on spring-core, spring-beans, 
+			spring-context, spring-web) Define this if you use Spring MVC with a Portlet 
 			Container (org.springframework.web.portlet.*) -->
-		<!--<dependency> <groupId>org.springframework</groupId> <artifactId>spring-webmvc-portlet</artifactId>
+		<!--<dependency> <groupId>org.springframework</groupId> <artifactId>spring-webmvc-portlet</artifactId> 
 			<version>${org.springframework.version}</version> </dependency> -->
 
-		<!-- Support for testing Spring applications with tools such as JUnit and
-			TestNG This artifact is generally always defined with a 'test' scope for
+		<!-- Support for testing Spring applications with tools such as JUnit and 
+			TestNG This artifact is generally always defined with a 'test' scope for 
 			the integration testing framework and unit testing stubs -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -305,10 +310,10 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-                <dependency>
-		    <groupId>org.quartz-scheduler</groupId>
-		    <artifactId>quartz</artifactId>
-		    <version>1.8.5</version>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.8.5</version>
 		</dependency>
 
 
@@ -325,7 +330,7 @@
 			<artifactId>jstl</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-                <!-- JSP API -->
+		<!-- JSP API -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -346,7 +351,7 @@
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat6-maven-plugin</artifactId>
 				<version>2.0-SNAPSHOT</version>
-				<!--<configuration> <server>febserver</server> <port>8080</port> <url>http://localhost:8080/feb</url>
+				<!--<configuration> <server>febserver</server> <port>8080</port> <url>http://localhost:8080/feb</url> 
 					</configuration> -->
 			</plugin>
 
@@ -428,14 +433,30 @@
 			</plugin>
 
 			<plugin>
-
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.6</version>
+				<configuration>
+					<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+					<argLine>${jacoco.agent.argLine}</argLine>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+					<propertyName>jacoco.agent.argLine</propertyName> <!-- default: argLine -->
+					<includes>
+						<include>com/comoyo/**</include>
+					</includes>
+					<destFile>${project.build.directory}/jacoco-integration.exec</destFile> <!-- agent -->
+					<dataFile>${project.build.directory}/jacoco-integration.exec</dataFile> <!-- report -->
+				</configuration>
 				<executions>
 					<execution>
+						<id>agent</id>
 						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
+							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -444,7 +465,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<!--<configuration> <webappDirectory>web</webappDirectory> <webXml>web/WEB-INF/web.xml</webXml>
+				<!--<configuration> <webappDirectory>web</webappDirectory> <webXml>web/WEB-INF/web.xml</webXml> 
 					</configuration> -->
 			</plugin>
 			<plugin>
@@ -526,5 +547,5 @@
 
 		</plugins>
 	</reporting>
-    <version>2.5-alpha</version>
+	<version>2.5-alpha</version>
 </project>
