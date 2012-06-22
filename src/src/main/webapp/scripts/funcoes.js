@@ -141,62 +141,31 @@ function trim(str){
 */
 function atualizaRepAjax(id, exibeResultado)
 {
-    atualizaRepAjaxExec(id, exibeResultado, false)
+    var link = rootUrl + "/admin/repositories/"+id+"/update?apagar=false";
+    updateSubnodeAjax(link, exibeResultado);
 }
 
 /**
- * Função que atualiza o repositorio solicitado utilizando ajax.
+ * Função que remove todos os objetos de um repositorio e atualiza novamente utilizando ajax.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
  * @param id id do repositorio a ser atualizado
  * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
- * @param apagar informa se deve apagar todos os objetos do repositorio ou não.
 */
-function atualizaRepAjaxExec(id, exibeResultado, apagar)
+function apagaAtualizaRepAjax(id, exibeResultado)
 {
-
-    var ajax = openAjax(); // Inicia o Ajax.
-
-    ajax.open("POST", rootUrl + "/admin/repositories/"+id+"/update?apagar="+apagar, true);
-    exibeResultado.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='' align='middle'> Aguarde, atualizando...";
-    ajax.onreadystatechange = function()
-    {
-        if(ajax.readyState == 4) // Quando estiver tudo pronto.
-        {
-            if(ajax.status == 200)
-            {
-                var resultado = ajax.responseText;
-                
-                if(isNaN(parseInt(resultado))){
-                    exibeResultado.innerHTML = resultado;
-                }else{
-                    if(parseInt(resultado)>0){
-                        exibeResultado.innerHTML = "Atualizado com sucesso.";
-                        removeLinha(idTabela, linha);
-                    }
-                    else{
-                        exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
-                    }
-                }  
-            }
-            else
-            {
-                exibeResultado.innerHTML = "Erro nas funções do Ajax";
-            }
-        }
-    }
-    ajax.send(null); // submete
-//document.getElementById("nome").value= "";//limpa os campos
-//document.getElementById("nome").setFocus=true;
-
+    var link = rootUrl + "/admin/repositories/"+id+"/update?apagar=true";
+    updateSubnodeAjax(link, exibeResultado);
 }
 
 /**
- * Deletes all documents of federation and updates again
+ * pt: Deleta todos os documentos da federação e atualiza novamente.
+ * en: Deletes all documents of federation and updates again.
  * @param id int id of federation
  * @param showResult div html where the status and results will be presented
  **/
 function deleteAndUpdateSubFedAjax(id, showResult){
-   updateFederationExec(id, showResult, true);
+    var link = rootUrl + "/admin/federations/"+id+"/update?apagar=true";
+    updateSubnodeAjax(link, showResult);
 }
 
 /**
@@ -207,19 +176,22 @@ function deleteAndUpdateSubFedAjax(id, showResult){
 */
 function atualizaSubfedAjax(id, exibeResultado)
 {
-    atualizaRepAjaxExec(id, exibeResultado, false);
+    var link = rootUrl + "/admin/federations/"+id+"/update?apagar=false";
+    updateSubnodeAjax(link, exibeResultado);
 }
 
 /**
- * Private. Use atualizaSubfedAjax or deleteAndUpdateSubFedAjax.
- */
-function updateFederationExec(id, showResult, del)
+ * Função que atualiza o subNodo solicitado utilizando ajax.
+ * Quando chamada, ela repassa os dados, utilizando ajax, para o controller que rodar&aacute; sem que a pagina principal seja recarregada.
+ * @param link link para o controller que deverá ser chamado
+ * @param showResults div onde o status e o resultado ser&atilde;o apresentado.
+*/
+function updateSubnodeAjax(link, showResults)
 {
+    var ajax = openAjax(); // Start Ajax.
 
-    var ajax = openAjax(); // Inicia o Ajax.
-
-    ajax.open("POST", rootUrl + "/admin/federations/"+id+"/update?apagar="+del, true);
-    showResult.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
+    ajax.open("POST", link, true);
+    showResults.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
     ajax.onreadystatechange = function()
     {
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
@@ -227,39 +199,27 @@ function updateFederationExec(id, showResult, del)
             if(ajax.status == 200)
             {
                 var resultado = ajax.responseText;
-                
+
                 if(isNaN(parseInt(resultado))){
-                    showResult.innerHTML = resultado;
+                    showResults.innerHTML = resultado;
                 }else{
                     if(parseInt(resultado)>0){
-                        showResult.innerHTML = "Atualizado!";
+                        showResults.innerHTML = "Atualizado com sucesso.";
                     }
                     else{
-                        showResult.innerHTML = "Ocorreu algum erro ao Atualizar!";
+                        showResults.innerHTML = "Ocorreu algum erro ao Atualizar!";
                     }
-                } 
+                }
             }
             else
             {
-                showResult.innerHTML = "Erro nas funções do Ajax";
+                showResults.innerHTML = "Erro nas funções do Ajax";
             }
         }
     }
     ajax.send(null); // submete
 }
 
-
-
-/**
- * Função que remove todos os objetos de um repositorio e atualiza novamente utilizando ajax.
- * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
- * @param id id do repositorio a ser atualizado
- * @param exibeResultado div onde o status e o resultado ser&atilde;o apresentado.
-*/
-function apagaAtualizaRepAjax(id, exibeResultado)
-{
-    atualizaRepAjaxExec(id, exibeResultado, true);
-}
 
 /**
  * Verifica a consistencia do link OAI-PMH
@@ -418,9 +378,9 @@ function excluirPadrao(id, idResultado, idTabela, linha)
 }
 
 function recalcularIndice(destino, form){
-   destinodoc = document.getElementById(destino);
-   destinodoc.innerHTML = "<center><img src='./feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;  
-   form.className="hidden";
+    destinodoc = document.getElementById(destino);
+    destinodoc.innerHTML = "<center><img src='./feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;
+    form.className="hidden";
     
 }
 

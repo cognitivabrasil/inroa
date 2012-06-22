@@ -21,11 +21,13 @@ import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import modelos.Repositorio;
 import modelos.RepositoryDAO;
+import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
 import postgres.Conectar;
 import robo.atualiza.harvesterOAI.Principal;
-import robo.atualiza.importaOAI.InicioLeituraXML;
+import robo.atualiza.importaOAI.XMLtoDB;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
 import spring.ApplicationContextProvider;
@@ -37,6 +39,7 @@ import spring.ApplicationContextProvider;
 public class Repositorios {
 
     private SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    static Logger log = Logger.getLogger(Repositorios.class);
 
     /**
      * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o
@@ -89,7 +92,8 @@ public class Repositorios {
 
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
-            System.out.println("FEB ERRO: Could not get AppContext bean!");
+            log.fatal("Could not get AppContext bean!");
+            throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
 
             Indexador indexar = new Indexador();
@@ -119,28 +123,28 @@ public class Repositorios {
                             recalcularIndice = true;
                         } catch (Exception e) {
                             erros.add(r.getNome());
-                            System.err.println("FEB ERRO: Erro ao atualizar o repositorio " + r.getNome() + " Exception: " + e);
+                            log.error("FEB ERRO: Erro ao atualizar o repositorio " + r.getNome(), e);
                         }
                     }
                 }
 
                 if (recalcularIndice) {
-                    System.out.println("FEB: recalculando o indice " + dataFormat.format(new Date()));
+                    log.info("FEB: recalculando o indice " + dataFormat.format(new Date()));
                     indexar.populateR1(con);
-                    System.out.println("FEB: indice recalculado! " + dataFormat.format(new Date()));
+                    log.info("FEB: indice recalculado! " + dataFormat.format(new Date()));
                 }
                 if (erros.size() > 0) {
                     throw new RepositoriosException(getMensagem(erros)); //gera uma exception informando o nome dos repositorios que nao foram atualizados
                 }
 
             } catch (SQLException e) {
-                System.err.println("FEB ERRO: SQL Exception... Erro na consulta SQL no metodo atualizaFerramentaAdm: " + e);
+                log.error("FEB ERRO: SQL Exception... Erro na consulta SQL.", e);
                 throw e;
             } finally {
                 try {
                     con.close(); //fechar conexao
                 } catch (SQLException e) {
-                    System.out.println("FEB ERRO: Erro ao fechar a conexão: " + e.getMessage());
+                    log.error("FEB ERRO: Erro ao fechar a conexão.", e);
                 }
             }
         }
@@ -161,36 +165,36 @@ public class Repositorios {
 
         Principal importar = new Principal();
         Informacoes conf = new Informacoes();
-        InicioLeituraXML gravacao = new InicioLeituraXML();
+        XMLtoDB gravar = new XMLtoDB();
         String caminhoDiretorioTemporario = conf.getCaminho();
 
         try {
-            System.out.println("FEB: (" + dataFormat.format(new Date()) + ") Atualizando repositorio: " + rep.getNome());//imprime o nome do repositorio
+            log.info("FEB: (" + dataFormat.format(new Date()) + ") Atualizando repositorio: " + rep.getNome());//imprime o nome do repositorio
 
             Set<String> set = rep.getColecoes();
             if (set == null || set.isEmpty()) {
                 set = null;
             }
             if (rep.getUrl().isEmpty()) { //testa se a string url esta vazia.
-                System.err.println("FEB: Nao existe uma url associada ao repositorio " + rep.getNome());
+                log.error("FEB: Nao existe uma url associada ao repositorio " + rep.getNome());
                 throw new MalformedURLException("Nao existe uma url associada ao repositorio " + rep.getNome());
 
             } else {//repositorio possui url para atualizacao
 
                 Date data_ultima_atualizacao = rep.getUltimaAtualizacao();
 
-                System.out.println("\t FEB: Ultima Atualizacao: " + data_ultima_atualizacao + " nome do rep: " + rep.getNome());
+                log.info("\t FEB: Ultima Atualizacao: " + data_ultima_atualizacao + " nome do rep: " + rep.getNome());
 
                 //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
-                if (data_ultima_atualizacao == null || Operacoes.testarDataAnterior1970(data_ultima_atualizacao)) {
+                if (data_ultima_atualizacao == null || Operacoes.testarDataDifZero(data_ultima_atualizacao)) {
                     rep.setDataOrigem(new Date(0)); //se passar null para o metodo de harvester ele busca desde o inicio do rep
-                    System.out.println("FEB: Deletando todos os documentos do repositório: " + rep.getNome().toUpperCase());
+                    log.info("FEB: Deletando todos os documentos do repositório: " + rep.getNome().toUpperCase());
                     try {
                         int result = rep.dellAllDocs();
-                        System.out.println("FEB: " + result + " documentos deletados.");
+                        log.info("FEB: " + result + " documentos deletados.");
 
                     } catch (Exception e) {
-                        System.out.println("FEB ERRO: erro ao deletar os objetos do repositorio " + rep.getNome() + ". Mensagem: " + e);
+                        log.error("Erro ao deletar os objetos do repositorio " + rep.getNome() + ".", e);
                     }
                 }
 
@@ -214,61 +218,59 @@ public class Repositorios {
                     ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(rep.getUrl(), Operacoes.formatDateOAIPMH(rep.getDataOrigem()), rep.getNome(), caminhoDiretorioTemporario, rep.getMetadataPrefix(), set); //chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
 
                     //leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados
-                    gravacao.leXMLgravaBase(caminhoXML, rep, indexar);
+                    gravar.saveXML(caminhoXML, rep, indexar);
 
                 } else {
-                    System.err.println("FEB ERRO: O caminho informado nao eh um diretorio. E nao pode ser criado em: '" + caminhoDiretorioTemporario + "'");
+                    log.error("O caminho informado nao eh um diretorio. E nao pode ser criado em: '" + caminhoDiretorioTemporario + "'");
                 }
-
             }
 
             rep.setUltimaAtualizacao(new Date()); //atualiza a hora da ultima atualizacao
 
         } catch (MalformedURLException m) {
-            System.err.println("\nFEB ERRO: " + m);
+            log.error("Erro na url", m);
         } catch (UnknownHostException u) {
-            System.err.println("FEB ERRO: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u.toString());
+            log.error("FEB ERRO: Nao foi possivel encontrar o servidor oai-pmh informado.", u);
             throw u;
         } catch (SQLException e) {
-            System.err.println("FEB ERRO: SQL Exception... Erro na consulta sql na classe Repositorios:" + e.toString());
+            log.error("FEB ERRO: SQL Exception... Erro na consulta sql na classe Repositorios.", e);
             throw e;
         } catch (ParserConfigurationException e) {
-            System.err.println("FEB ERRO: O parser nao foi configurado corretamente. Mensagem: " + e.toString());
+            log.error("FEB ERRO: O parser nao foi configurado corretamente.", e);
             throw e;
         } catch (SAXException e) {
             String msg = e.getMessage();
             String msgOAI = "\nFEB: ERRO no parser do OAI-PMH, mensagem: ";
             if (msg.equalsIgnoreCase("badArgument")) {
-                System.err.println(msgOAI + msg + " - The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.\n");
+                log.error(msgOAI + msg + " - The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.\n");
             } else if (msg.equalsIgnoreCase("badResumptionToken")) {
-                System.err.println(msgOAI + msg + " - The value of the resumptionToken argument is invalid or expired.\n");
+                log.error(msgOAI + msg + " - The value of the resumptionToken argument is invalid or expired.\n");
             } else if (msg.equalsIgnoreCase("badVerb")) {
-                System.err.println(msgOAI + msg + " - Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated. \n");
+                log.error(msgOAI + msg + " - Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated. \n");
             } else if (msg.equalsIgnoreCase("cannotDisseminateFormat")) {
-                System.err.println(msgOAI + msg + " -  The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.\n");
+                log.error(msgOAI + msg + " -  The metadata format identified by the value given for the metadataPrefix argument is not supported by the item or by the repository.\n");
             } else if (msg.equalsIgnoreCase("idDoesNotExist")) {
-                System.err.println(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
+                log.error(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
             } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
-                System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
+                log.warn("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
                 rep.setUltimaAtualizacao(new Date()); //atualiza a hora da ultima atualizacao
             } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
-                System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
+                log.error(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
             } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
-                System.err.println(msgOAI + msg + " - The repository does not support sets.\n");
+                log.error(msgOAI + msg + " - The repository does not support sets.\n");
             } else {
-                System.err.println("\nFEB ERRO: Problema ao fazer o parse do arquivo. " + e.toString());
+                log.error("\nFEB ERRO: Problema ao fazer o parse do arquivo. ", e);
             }
             throw e;
         } catch (FileNotFoundException e) {
             System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: " + e.toString() + "\n");
             throw e;
         } catch (IOException e) {
-            System.err.println("\nFEB ERRO: Nao foi possivel coletar ou ler o XML em: " + this.getClass() + ": " + e.toString() + "\n");
+            log.error("\nFEB ERRO: Nao foi possivel coletar ou ler o XML em: " + this.getClass() + ".", e);
             throw e;
         } catch (Exception e) {
-            System.err.println("\nFEB ERRO ao efetuar o Harvester " + e.toString() + "\n");
+            log.error("\nFEB ERRO ao efetuar o Harvester.", e);
             e.printStackTrace();
-
             throw e;
         }
     }

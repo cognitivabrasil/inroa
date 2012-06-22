@@ -57,6 +57,7 @@ public final class AdminController {
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         model.addAttribute("users", userDao.getAll());
+        model.addAttribute("versao", "2.5-alpha");
         return "admin/adm";
     }
 

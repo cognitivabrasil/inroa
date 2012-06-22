@@ -26,8 +26,6 @@
 </head>
 
 <body>
-	<jsp:useBean id="operacoesBean" class="robo.util.Operacoes"
-		scope="page" />
 
 	<div id="page">
 
@@ -105,7 +103,7 @@
 		<div class="EspacoAntes">&nbsp;</div>
 		<div class="LinhaEntrada">
 			<div class="Label">&Uacute;ltima Atualiza&ccedil;&atilde;o:</div>
-			<div class="Value">&nbsp;${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}</div>
+			<div class="Value">&nbsp;${rep.ultimaAtualizacaoFormatada}</div>
 		</div>
 		<div class="LinhaEntrada">
 			<div class="Label">Pr&oacute;xima Atualiza&ccedil;&atilde;o:</div>
@@ -114,8 +112,7 @@
 				<c:when test="${rep.isOutdated}">
 					<div id='textResult${repId}' class="ValueErro">
 						&nbsp;
-						${operacoesBean.ultimaAtualizacaoFrase(rep.proximaAtualizacao,
-						rep.url)} &nbsp;&nbsp;
+						${rep.ultimaAtualizacaoFormatada} &nbsp;&nbsp;
 						<security:authorize access="hasRole('PERM_UPDATE')">
 
 							<a title="Atualizar agora"
@@ -131,8 +128,7 @@
 				<c:otherwise>
 					<div class="Value" id="textResult${repId}">
 						&nbsp;
-						${operacoesBean.ultimaAtualizacaoFrase(rep.proximaAtualizacao,
-						rep.url)} &nbsp;&nbsp;
+						${rep.ultimaAtualizacaoFormatada} &nbsp;&nbsp;
 						<security:authorize access="hasRole('PERM_UPDATE')">
 
 							<a title='Atualizar agora'

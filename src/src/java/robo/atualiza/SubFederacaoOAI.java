@@ -33,7 +33,7 @@ import spring.ApplicationContextProvider;
  */
 public class SubFederacaoOAI {
     
-    Logger log = Logger.getLogger(this.getClass().getName());
+    Logger log = Logger.getLogger(SubFederacaoOAI.class);
 
     /**
      * Atualiza todas as subfedera&ccedil;&otilde;es. Coleta da base os dados
@@ -61,7 +61,7 @@ public class SubFederacaoOAI {
                 for (SubFederacao subFed : listaSubfed) { //percorre todas as federacoes cadastradas
                     boolean atualizadoTemp = false;
                     
-                    if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataAnterior1970(subFed.getUltimaAtualizacao())) {
+                    if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataDifZero(subFed.getUltimaAtualizacao())) {
                         
                         log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
                         
@@ -219,7 +219,7 @@ public class SubFederacaoOAI {
             subFed.setDataXML(null);
         }
         
-        if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataAnterior1970(subFed.getUltimaAtualizacao())) {
+        if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataDifZero(subFed.getUltimaAtualizacao())) {
             
             log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
             

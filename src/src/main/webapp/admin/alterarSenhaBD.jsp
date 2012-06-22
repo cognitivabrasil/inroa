@@ -90,57 +90,6 @@
             </form:form>
         </div>
 
-
-        <%--                    } else { //se o formulario ja foi preenchido entra no else
-
-                        String nomeBD = request.getParameter("nomeBD");
-                        String senhaNova = request.getParameter("SenhaBD");
-                        String confimaSenha = request.getParameter("confirmacaoSenhaBD");
-                        String ip = request.getParameter("ipBD");
-                        String usuario = request.getParameter("usuarioBD");
-                        String porta = request.getParameter("portaBD");
-                        if (nomeBD.isEmpty() || ip.isEmpty() || usuario.isEmpty() || porta.isEmpty()) {
-                            out.print("<script type='text/javascript'>alert('Os campos: nome, ip, usuario e senha devem ser preenchidos!');</script>"
-                                    + "<script type='text/javascript'>history.back(-1);</script>");
-                        } else {
-
-
-
-                            if (!senhaNova.equals(confimaSenha)) {//testa se a nova senha e a confirmacao estao iguais
-                                out.print("<script type='text/javascript'>alert('As senhas informadas não conferem. Digite novamente!');</script>"
-                                        + "<script type='text/javascript'>history.back(-1);</script>");
-                            }
-
-                            try {
-
-                                conf.setBase(nomeBD);
-                                conf.setIP(ip);
-                                conf.setUsuario(usuario);
-                                conf.setPorta(porta);
-                                if (!senhaNova.isEmpty()) {
-                                    conf.setSenhaCriptografada(senhaNova);
-                                }
-                                boolean resultado = conf.criaArquivo();
-                                if (resultado) {
-                                    out.print("<script type='text/javascript'> alert('Dados alterados com sucesso!');"
-                                            + "fechaRecarrega();</script>");//fecha a popup e recarrega a pagina principal
-                                } else {
-                                    out.print("<script type='text/javascript'>alert('Erro ao alterar os dados.');</script>"
-                                            + "<script type='text/javascript'>history.back(-1);</script>");
-                                }
-
-
-                            } catch (Exception e) {
-                                System.err.println("FEB ERRO: erro ao alterar as informacoes da base de dados. " + this.getClass() + " Mensagem:" + e);
-                                out.print("<script type='text/javascript'>alert('Erro ao alterar os dados.');</script>"
-                                        + "<script type='text/javascript'>history.back(-1);</script>");
-                            }
-
-                        }
-                    }
-
-        --%>
-
         <%@include file="../googleAnalytics"%>
     </body>
 </html>

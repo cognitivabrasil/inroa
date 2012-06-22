@@ -30,8 +30,6 @@
 </head>
 
 <body>
-	<jsp:useBean id="operacoesBean" class="robo.util.Operacoes"
-		scope="page" />
 
 	<div id="page">
 
@@ -67,8 +65,7 @@
 				<c:when test="${federation.isOutdated}">
 					<div id="textResultSF${param.id}" class='Value textoErro'>
 						&nbsp;
-						${operacoesBean.ultimaAtualizacaoFrase(federation.ultimaAtualizacao,
-						federation.url)}
+						${federation.ultimaAtualizacaoFormatada}
 						<security:authorize access="hasRole('PERM_UPDATE')">
 
 							<a title='Atualizar agora'
@@ -82,8 +79,7 @@
 				<c:otherwise>
 					<div id="textResultSF${federation.id}" class="Value">
 						&nbsp;
-						${operacoesBean.ultimaAtualizacaoFrase(federation.ultimaAtualizacao,
-						federation.url)}
+						${federation.ultimaAtualizacaoFormatada}
 						<security:authorize access="hasRole('PERM_UPDATE')">
 
 							<a title='Atualizar agora'

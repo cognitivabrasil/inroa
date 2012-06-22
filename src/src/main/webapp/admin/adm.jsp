@@ -33,10 +33,6 @@ Author     : Marcos Nunes
 <body>
 
 
-
-	<jsp:useBean id="operacoesBean" class="robo.util.Operacoes"
-		scope="page" />
-
 	<jsp:include page="../cabecalho.jsp">
 		<jsp:param value="Ferramenta Administrativa" name="titulo" />
 		<jsp:param value="7%" name="tamanho" />
@@ -68,7 +64,7 @@ Author     : Marcos Nunes
 		</tr>
 	</table>
 	<div class="mensagemAdm">${mensagem}</div>
-	<div class="versao">Vers&atilde;o 3.0</div>
+	<div class="versao">Vers&atilde;o ${versao}</div>
 	<table class='repositorios-table' cellpadding=3>
 		<tr>
 			<th colspan=4><font size="3%" color=black>Lista de
@@ -101,7 +97,7 @@ Author     : Marcos Nunes
 						<c:when test="${rep.isOutdated}">
 							<div id='textResult${param.id}' class="textoErro">
 								&nbsp;
-								${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
+								${rep.ultimaAtualizacaoFormatada}
 								&nbsp;
 								<security:authorize access="hasRole('PERM_UPDATE')">
 
@@ -117,7 +113,7 @@ Author     : Marcos Nunes
 						<c:otherwise>
 							<div class="Value" id="textResult${param.id}">
 								&nbsp;
-								${operacoesBean.ultimaAtualizacaoFrase(rep.ultimaAtualizacao)}
+								${rep.ultimaAtualizacaoFormatada}
 								&nbsp;&nbsp; <a title='Atualizar agora'
 									onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
 									<img src='../imagens/sincronizar.png' border='0' width='24'
@@ -266,7 +262,7 @@ Author     : Marcos Nunes
 				<td><c:choose>
 						<c:when test="${subfed.isOutdated}">
 							<div id='textResultSF${subfed.id}' class='textoErro'>
-								${subfed.ultimaAtualizacaoTxt}
+								${subfed.ultimaAtualizacaoFormatada}
 								<security:authorize access="hasRole('PERM_UPDATE')">
 
 									<a title='Atualizar agora'
@@ -281,7 +277,7 @@ Author     : Marcos Nunes
 						</c:when>
 						<c:otherwise>
 							<div id='textResultSF${subfed.id}'>
-								${subfed.ultimaAtualizacaoTxt}
+								${subfed.ultimaAtualizacaoFormatada}
 								<security:authorize access="hasRole('PERM_UPDATE')">
 									<a title='Atualizar agora'
 										onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">

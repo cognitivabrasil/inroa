@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.core.style.ToStringCreator;
+import robo.util.Operacoes;
 
 /**
  *
@@ -73,6 +74,14 @@ public class SubFederacao implements java.io.Serializable {
 
     public Date getUltimaAtualizacao() {
         return ultimaAtualizacao;
+    }
+    /**
+     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada.
+     * Se a federa&ccedil;&atilde;o n&atilde;o tiver uma url associada ele informa que n&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o.
+     * @return String contendo a data neste formato: Dia "x" &agrave;s "y"
+     */
+    public String getUltimaAtualizacaoFormatada(){
+        return Operacoes.ultimaAtualizacaoFrase(getUltimaAtualizacao(), getUrl());
     }
 
     public void setUltimaAtualizacao(Date ultimaAtualizacao) {
@@ -171,14 +180,6 @@ public class SubFederacao implements java.io.Serializable {
         }
     }
 
-    public String getUltimaAtualizacaoTxt() {
-        SimpleDateFormat f = new SimpleDateFormat("'Dia' dd/MM/yyyy '&agrave;s' HH:mm:ss");
-        if (getUltimaAtualizacao() == null) {
-            return "Ainda n&atilde;o foi atualizado!";
-        } else {
-            return f.format(getUltimaAtualizacao());
-        }
-    }
     
      /**
      * M&eacute;todo que atualiza a base de dados local com os

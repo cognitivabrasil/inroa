@@ -388,13 +388,11 @@ src/src/java/robo/atualiza/importaOAI/DadosObjetos.java -text
 src/src/java/robo/atualiza/importaOAI/Header.java -text
 src/src/java/robo/atualiza/importaOAI/Importer.java -text
 src/src/java/robo/atualiza/importaOAI/Indice.java -text
-src/src/java/robo/atualiza/importaOAI/InicioLeituraXML.java -text
-src/src/java/robo/atualiza/importaOAI/InsereObjetoBase.java -text
 src/src/java/robo/atualiza/importaOAI/OAI_Interface.java -text
+src/src/java/robo/atualiza/importaOAI/XMLtoDB.java -text
 src/src/java/robo/atualiza/subfedOAI/Importer.java -text
 src/src/java/robo/atualiza/subfedOAI/Objetos.java -text
 src/src/java/robo/atualiza/subfedOAI/ParserListSets.java -text
-src/src/java/robo/atualiza/subfedOAI/ParserObjetos.java -text
 src/src/java/robo/atualiza/subfedOAI/SubRepositorios.java -text
 src/src/java/robo/main/Robo.java -text
 src/src/java/robo/main/package.html -text

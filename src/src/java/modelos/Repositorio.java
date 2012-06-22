@@ -11,6 +11,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.transaction.annotation.Transactional;
+import robo.util.Operacoes;
 
 import spring.ApplicationContextProvider;
 
@@ -194,6 +195,15 @@ public class Repositorio implements java.io.Serializable, RepositorioGenerico {
 
     public Date getUltimaAtualizacao() {
         return ultimaAtualizacao;
+    }
+
+    /**
+     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada.
+     * Se o reposit&oacute;rio n&atilde;o tiver uma url associada ele informa que n&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o.
+     * @return String contendo a data neste formato: Dia "x" &agrave;s "y"
+     */
+    public String getUltimaAtualizacaoFormatada(){
+        return Operacoes.ultimaAtualizacaoFrase(getUltimaAtualizacao(), getUrl());
     }
 
     public Date getDataOrigem() {
