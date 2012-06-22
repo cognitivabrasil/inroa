@@ -104,7 +104,7 @@ CREATE OPERATOR ~## (
 --
 
 CREATE SEQUENCE autores_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -171,7 +171,7 @@ ALTER TABLE public.dados_subfederacoes OWNER TO feb;
 --
 
 CREATE SEQUENCE dados_subfederacoes_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -220,7 +220,7 @@ ALTER TABLE public.documentos OWNER TO feb;
 --
 
 CREATE SEQUENCE documentos_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -246,7 +246,7 @@ ALTER SEQUENCE documentos_id_seq OWNED BY documentos.id;
 --
 
 CREATE SEQUENCE mapeamentos_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -295,7 +295,7 @@ ALTER TABLE public.objetos OWNER TO feb;
 --
 
 CREATE SEQUENCE objetos_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -337,7 +337,7 @@ ALTER TABLE public.padraometadados OWNER TO feb;
 --
 
 CREATE SEQUENCE padraometadados_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -462,7 +462,7 @@ ALTER TABLE public.r1weights OWNER TO feb;
 --
 
 CREATE SEQUENCE repositorios_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -502,7 +502,7 @@ ALTER TABLE public.repositorios OWNER TO feb;
 --
 
 CREATE SEQUENCE repositorios_subfed_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     MINVALUE 0
     NO MAXVALUE
@@ -547,7 +547,7 @@ ALTER TABLE public.stopwords OWNER TO feb;
 --
 
 CREATE SEQUENCE stopwords_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
@@ -590,7 +590,7 @@ ALTER TABLE public.usuarios OWNER TO feb;
 --
 
 CREATE SEQUENCE usuarios_id_seq
-    START WITH 1
+    START WITH 100
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
