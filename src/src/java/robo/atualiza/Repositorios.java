@@ -109,6 +109,7 @@ public class Repositorios {
                     Repositorio rep = repDao.get(idRep);
                     if (apagar) {
                         rep.setUltimaAtualizacao(null);
+                        rep.setDataOrigem(null);
                         //todo: zerar o repositorio
                     }
                     atualizaRepositorio(rep, indexar);
@@ -186,8 +187,7 @@ public class Repositorios {
                 log.info("\t FEB: Ultima Atualizacao: " + data_ultima_atualizacao + " nome do rep: " + rep.getNome());
 
                 //se a data da ultima atualização for inferior a 01/01/1000 apaga todos as informacoes do repositorio
-                if (data_ultima_atualizacao == null || Operacoes.testarDataDifZero(data_ultima_atualizacao)) {
-                    rep.setDataOrigem(new Date(0)); //se passar null para o metodo de harvester ele busca desde o inicio do rep
+                if ((data_ultima_atualizacao == null && rep.getDataOrigem()==null) || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(rep.getDataOrigem()))) {
                     log.info("FEB: Deletando todos os documentos do repositório: " + rep.getNome().toUpperCase());
                     try {
                         int result = rep.dellAllDocs();
