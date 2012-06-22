@@ -1,9 +1,14 @@
-package OBAA;
+package cognitivabrasil.obaa;
 
 import java.io.FileNotFoundException;
 import metadata.Header;
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import cognitivabrasil.obaa.OaiCannotDisseminateFormatException;
+import cognitivabrasil.obaa.OaiException;
+import cognitivabrasil.obaa.OaiOBAA;
+import cognitivabrasil.obaa.OaiParseErrorException;
 
 public class OaiOBAATest {
 

@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package OBAA;
+package cognitivabrasil.obaa;
 
-import OBAA.LifeCycle.LifeCycle;
 import metadata.Request;
 import metadata.Header;
 
@@ -19,6 +18,8 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+
+import cognitivabrasil.obaa.LifeCycle.LifeCycle;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -143,7 +144,7 @@ public class OBAATest {
 	@Test
 	public void testOBAA_General_Language() throws FileNotFoundException {
 		assert(!(l.getGeneral() == null));
-		assertThat(l.getGeneral().getLanguage(), equalTo("pt_BR"));
+		assertThat(l.getGeneral().getLanguages(), hasItem("pt_BR"));
 	}
 	
 	@Test
@@ -263,7 +264,7 @@ public class OBAATest {
 	@Test
 	public void testOBAA_Educational_TypicalAgeRange() throws FileNotFoundException {
 		assert(!(l.getEducational() == null));
-		assertThat(l.getEducational().getTypicalAgeRange().get(0).getText(), equalTo("adult"));
+		assertThat(l.getEducational().getTypicalAgeRanges().get(0), equalTo("adult"));
 	}
 	
 	@Test
