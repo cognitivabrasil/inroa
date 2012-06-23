@@ -102,7 +102,7 @@ modelo de tópico:
                                 <c:when
                                     test="${metadata.technical != null && metadata.technical.location != null}">
                                     <div class="valor">
-                                        <a href="${metadata.technical.location}" target="_blank">${metadata.technical.location}</a>
+                                        <a href="${metadata.technical.firstHttpLocation}" target="_blank">${metadata.technical.firstHttpLocation}</a>
                                     </div>
                                 </c:when>
                                 <c:otherwise>
@@ -111,10 +111,12 @@ modelo de tópico:
                             </c:choose>
                         </div>
 
-                        <c:if test="${!empty metadata.general.language}">
+                        <c:if test="${!empty metadata.general.languages}">
                             <div class="atributo">
                                 <div class="nome">Idioma:</div>
-                                <div class="valor">&nbsp; ${metadata.general.language}</div>
+                                <c:forEach var="language" items="${metadata.general.languages }">
+                                <div class="valor">&nbsp; ${language}</div>
+                                </c:forEach>
                             </div>
                         </c:if>
 
