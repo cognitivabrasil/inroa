@@ -150,7 +150,7 @@ public class OBAATest {
 	@Test
 	public void testOBAA_General_Structure() throws FileNotFoundException {
 		assert(!(l.getGeneral() == null));
-		assertThat(l.getGeneral().getStructure(), equalTo("atomic"));
+		assertThat(l.getGeneral().getStructure(), equalTo("Atômico"));
 	}
 	
 	@Test
@@ -196,7 +196,7 @@ public class OBAATest {
 	public void testOBAA_LifeCycle_Contribute_Role() throws FileNotFoundException {
 		assert(!(l.getLifeCycle() == null));
 		assert(!(l.getLifeCycle().getContribute() == null));
-		assertThat(l.getLifeCycle().getContribute().get(0).getRole(), equalTo("author"));
+		assertThat(l.getLifeCycle().getContribute().get(0).getRole(), equalTo("Autor"));
 	}
 	
 	@Test
@@ -271,15 +271,15 @@ public class OBAATest {
 	public void testOBAA_Educational_IntendedEndUserRoles_Role() throws FileNotFoundException {
 		assert(!(l.getEducational() == null));
 		assert(!(l.getEducational().getIntendedEndUserRoles() == null));
-		assertThat(l.getEducational().getIntendedEndUserRoles().get(0), equalTo("teacher"));
-		assertThat(l.getEducational().getIntendedEndUserRoles().get(1), equalTo("manager"));
+		assertThat(l.getEducational().getIntendedEndUserRoles().get(0), equalTo("Professor"));
+		assertThat(l.getEducational().getIntendedEndUserRoles().get(1), equalTo("Gestor"));
 	}
 	
 	@Test
 	public void testOBAA_Educational_LearningResourceTypes() throws FileNotFoundException {
 		assert(!(l.getEducational() == null));
 		assert(!(l.getEducational().getLearningResourceTypes() == null));
-		assertThat(l.getEducational().getLearningResourceTypes(), hasItems("simulation", "experiment"));
+		assertThat(l.getEducational().getLearningResourceTypes(), hasItems("Simulação", "Experimento"));
 	}
 	
 	@Test
@@ -312,7 +312,7 @@ public class OBAATest {
 	public void testOBAATechnicalLocation() throws FileNotFoundException {
 		assert(!(l.getTechnical() == null));
 		assert(!(l.getTechnical().getLocation() == null));
-		assertEquals(l.getTechnical().getLocation(), "http://cesta2.cinted.ufrgs.br/xmlui/handle/123456789/57");
+		assertEquals(l.getTechnical().getFirstHttpLocation(), "http://cesta2.cinted.ufrgs.br/xmlui/handle/123456789/57");
 	}
 	
 	/*

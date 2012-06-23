@@ -8,8 +8,8 @@ import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-import OBAA.OBAA;
-import OBAA.OaiOBAA;
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.OaiOBAA;
 
 import org.hamcrest.core.IsNull;
 import org.junit.After;
@@ -64,7 +64,7 @@ public class XsltDC2ObaaTest {
 		OBAA l = oai.getMetadata(5);
 		assert(!(l.getTechnical() == null));
 		assert(!(l.getTechnical().getLocation() == null));
-		assertThat(l.getTechnical().getLocation(), 
+		assertThat(l.getTechnical().getLocation().get(0).getText(), 
 				equalTo("http://hdl.handle.net/10183/399"));
 		
 	}
@@ -77,7 +77,7 @@ public class XsltDC2ObaaTest {
 	public void testDC2ObaaLocationNull() {
 		OBAA l = oai.getMetadata(6);
 		assert(!(l.getTechnical() == null));
-		assertThat(l.getTechnical().getLocation(),
+		assertThat(l.getTechnical().getFirstHttpLocation(),
 				nullValue());		
 	}
 	

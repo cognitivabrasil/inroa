@@ -4,8 +4,8 @@
  */
 package metadata;
 
-import OBAA.OBAA;
-import OBAA.OaiOBAA;
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.OaiOBAA;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -67,23 +67,6 @@ public class XsltTest {
 		assertThat(l.getGeneral().getIdentifier().getEntry(), equalTo("http://hdl.handle.net/10183/394"));
 	}
 	
-	@Test
-	public void testDC2OBAA_Contribute() {
-		OBAA l = oai.getMetadata(0);
-		assert(!(l.getLifeCycle() == null));
-		assert(!(l.getLifeCycle().getContribute() == null));
-		assertThat(l.getLifeCycle().getContribute().get(0).getRole(), equalTo("author"));
-		assertThat(l.getLifeCycle().getContribute().get(0).getFirstEntity(), equalTo("Jorjão"));
-		//TODO: se é o n-esimo contribuinte, pegar a n-esima data
-		//assertThat(l.getLifeCycle().getContribute().get(0).getDate(), equalTo("2006"));
-		assertThat(l.getLifeCycle().getContribute().get(0).getDate(), equalTo("2007-06-04T11:33:20Z"));
-		
-		assertThat(l.getLifeCycle().getContribute().get(1).getRole(), equalTo("unknown"));
-		assertThat(l.getLifeCycle().getContribute().get(1).getFirstEntity(), equalTo("Sílton"));
-		
-		assertThat(l.getLifeCycle().getContribute().get(2).getRole(), equalTo("publisher"));
-		assertThat(l.getLifeCycle().getContribute().get(2).getFirstEntity(), equalTo("Pub 1"));
-	}
 	
 	@Test
 	public void testDC2OBAA_General() {

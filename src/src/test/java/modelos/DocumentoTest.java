@@ -14,7 +14,7 @@ import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.springframework.test.annotation.ExpectedException;
 
-import OBAA.OBAA;
+import cognitivabrasil.obaa.OBAA;
 
 public class DocumentoTest {
 

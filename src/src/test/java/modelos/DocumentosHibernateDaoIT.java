@@ -4,8 +4,8 @@
  */
 package modelos;
 
-import OBAA.General.General;
-import OBAA.OBAA;
+import cognitivabrasil.obaa.General.General;
+import cognitivabrasil.obaa.OBAA;
 
 import java.lang.reflect.Field;
 import java.util.Date;

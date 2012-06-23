@@ -4,7 +4,7 @@
  */
 package robo.atualiza.subfedOAI;
 
-import OBAA.OaiOBAA;
+import cognitivabrasil.obaa.OaiOBAA;
 import modelos.AbstractDaoTest;
 import modelos.DocumentosDAO;
 import modelos.SubFederacao;

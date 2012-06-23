@@ -247,7 +247,6 @@ src/src/java/metadata/Header.java -text
 src/src/java/metadata/MetadataConversorInterface.java -text
 src/src/java/metadata/Request.java -text
 src/src/java/metadata/SetSpec.java -text
-src/src/java/metadata/TextElement.java -text
 src/src/java/metadata/XSLTUtil.java -text
 src/src/java/metadata/XsltConversor.java -text
 src/src/java/metadata/XsltConversorDefault.java -text

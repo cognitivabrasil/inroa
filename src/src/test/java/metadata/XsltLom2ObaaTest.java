@@ -6,8 +6,8 @@ package metadata;
 
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
-import OBAA.OBAA;
-import OBAA.OaiOBAA;
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.OaiOBAA;
 import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -74,7 +74,7 @@ public class XsltLom2ObaaTest {
 		OBAA l = oai.getMetadata(0);
 		assert(!(l.getLifeCycle() == null));
 		assert(!(l.getLifeCycle().getContribute() == null));
-		assertThat(l.getLifeCycle().getContribute().get(0).getRole(), equalTo("author"));
+		assertThat(l.getLifeCycle().getContribute().get(0).getRole(), equalTo("Autor"));
 		assertThat(l.getLifeCycle().getContribute().get(0).getFirstEntity(), equalTo("Tarouco, Liane"));
 		//TODO: se é o n-esimo contribuinte, pegar a n-esima data
 		//assertThat(l.getLifeCycle().getContribute().get(0).getDate(), equalTo("2006"));
@@ -107,7 +107,7 @@ public class XsltLom2ObaaTest {
 		OBAA l = oai.getMetadata(0);
 		assert(!(l.getTechnical() == null));
 		assert(!(l.getTechnical().getLocation() == null));
-		assertThat(l.getTechnical().getLocation(), 
+		assertThat(l.getTechnical().getFirstHttpLocation(), 
 				equalTo("http://cesta2.cinted.ufrgs.br/xmlui/handle/123456789/57"));
 		
 	}

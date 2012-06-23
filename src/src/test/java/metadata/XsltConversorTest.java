@@ -8,8 +8,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import OBAA.OBAA;
-import OBAA.OaiOBAA;
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.OaiOBAA;
 
 // TODO: Auto-generated Javadoc
 /**
