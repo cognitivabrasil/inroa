@@ -219,14 +219,6 @@ src/src/java/ferramentaBusca/indexador/Indexador.java -text
 src/src/java/ferramentaBusca/indexador/StopWordTAD.java -text
 src/src/java/ferramentaBusca/indexador/package.html -text
 src/src/java/ferramentaBusca/package.html -text
-src/src/java/metadata/DublinCore.java -text
-src/src/java/metadata/Header.java -text
-src/src/java/metadata/MetadataConversorInterface.java -text
-src/src/java/metadata/Request.java -text
-src/src/java/metadata/SetSpec.java -text
-src/src/java/metadata/XSLTUtil.java -text
-src/src/java/metadata/XsltConversor.java -text
-src/src/java/metadata/XsltConversorDefault.java -text
 src/src/java/metadata/conversor/Conversor.java -text
 src/src/java/metadata/conversor/Rule.java -text
 src/src/java/metadata/conversor/package-info.java -text
