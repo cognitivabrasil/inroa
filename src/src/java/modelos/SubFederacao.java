@@ -4,12 +4,12 @@
  */
 package modelos;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.springframework.core.style.ToStringCreator;
+
 import robo.util.Operacoes;
 
 /**
@@ -18,7 +18,9 @@ import robo.util.Operacoes;
  */
 public class SubFederacao implements java.io.Serializable {
 
-    private Integer id;
+
+	private static final long serialVersionUID = 7452479917517752879L;
+	private Integer id;
     private String nome;
     private String descricao;
     private String url;
@@ -216,8 +218,9 @@ public class SubFederacao implements java.io.Serializable {
     
     public RepositorioSubFed getRepositoryByName(String nome){
         for(RepositorioSubFed repSub : getRepositorios()){
-            if(repSub.getNome().equals(nome))
+            if(repSub.getNome().equals(nome)) {
                 return repSub;
+            }
         }
         return null;
     }

@@ -12,7 +12,8 @@ import java.util.*;
  */
 public class PadraoMetadados implements java.io.Serializable {
 
-    private int id;
+	private static final long serialVersionUID = -8862349037606469252L;
+	private int id;
     private String nome;
     private String metadataPrefix;
     private String namespace;

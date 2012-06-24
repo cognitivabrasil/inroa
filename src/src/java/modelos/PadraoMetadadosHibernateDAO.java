@@ -5,6 +5,7 @@
 package modelos;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 
 /**
@@ -15,6 +16,6 @@ public class PadraoMetadadosHibernateDAO extends AbstractHibernateDAO<PadraoMeta
 
     public PadraoMetadados get(String name){        
         Session s = this.sessionFactory.getCurrentSession();
-        return (PadraoMetadados) s.createQuery("from PadraoMetadados WHERE nome = :nome").setString("nome", name).uniqueResult();
+        return (PadraoMetadados) s.createCriteria(PadraoMetadados.class).add(Restrictions.eq("nome", name)).uniqueResult();
     }
 }

@@ -4,9 +4,6 @@
 
 package modelos;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  *  
@@ -17,7 +14,11 @@ import java.util.Date;
 public class Objeto  implements java.io.Serializable {
 
 
-     private int id;
+     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int id;
      private DocumentoReal documento;
      private String atributo;
      private String valor;

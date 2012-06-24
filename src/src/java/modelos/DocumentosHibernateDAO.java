@@ -26,8 +26,8 @@ import cognitivabrasil.obaa.LifeCycle.Contribute;
 public class DocumentosHibernateDAO implements DocumentosDAO {
 
     @Autowired
-    SessionFactory sessionFactory;
-    Logger log = Logger.getLogger(DocumentosHibernateDAO.class.getName());
+    private SessionFactory sessionFactory;
+    private static Logger log = Logger.getLogger(DocumentosHibernateDAO.class.getName());
 
     /*
      * repository where new documents are going to be saved
@@ -70,7 +70,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<DocumentoReal> getAll() {
-        return getSession().createQuery("from DocumentoReal").list();
+        return getSession().createCriteria(DocumentoReal.class).list();
     }
 
     @Override

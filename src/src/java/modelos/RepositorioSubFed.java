@@ -72,13 +72,6 @@ public class RepositorioSubFed implements RepositorioGenerico{
     }
 
     /**
-     * @param sessionFactory the sessionFactory to set
-     */
-    private void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    /**
      * @return the documentos
      */
     public Set<DocumentoReal> getDocumentos() {
@@ -94,7 +87,10 @@ public class RepositorioSubFed implements RepositorioGenerico{
     
         
     /**
-     * Delete all DocumentoReal from this Repositorio
+     * Delete all DocumentoReal from this Repositorio. 
+     * 
+     * This is mainly used to reset a repository, e.g., when the user manually
+     * chooses to do so in the interface.
      *
      * @return number os rows affected
      * 
@@ -112,8 +108,9 @@ public class RepositorioSubFed implements RepositorioGenerico{
     public boolean equals(Object rsf){
         if(rsf == null || !rsf.getClass().equals(RepositorioSubFed.class))
             return false;
-        else
-        return this.getNome().equals( ((RepositorioSubFed)rsf).getNome());
+        else {
+        	return this.getNome().equals( ((RepositorioSubFed)rsf).getNome());
+        }
     }
 
     @Override

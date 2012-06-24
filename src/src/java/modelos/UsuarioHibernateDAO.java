@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class UsuarioHibernateDAO extends AbstractHibernateDAO<Usuario> implements UsuarioDAO, UserDetailsService {
 
-    static Logger log = Logger.getLogger(UsuarioHibernateDAO.class.getName());
+    private static Logger log = Logger.getLogger(UsuarioHibernateDAO.class.getName());
 
     @Override
     public Usuario authenticate(String login, String password) {
