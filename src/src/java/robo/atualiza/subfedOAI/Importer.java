@@ -5,6 +5,8 @@
 package robo.atualiza.subfedOAI;
 
 import java.io.File;
+import java.util.Date;
+
 import modelos.DocumentosDAO;
 import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
@@ -67,6 +69,8 @@ public class Importer {
 
             try {
                 log.debug("Saving object: " + oai.getHeader(i).getIdentifier());
+                
+                oai.getHeader(i).setDatestamp(new Date());
                 docDao.save(oai.getMetadata(i), oai.getHeader(i));
             } catch (NullPointerException e) {
                 log.error("NullPointer ao tentar inserir elemento " + new Integer(i).toString(), e);

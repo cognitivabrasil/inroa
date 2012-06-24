@@ -75,6 +75,8 @@ public class Importer {
 //			}
 			
 			try {
+				oai.getHeader(i).setDatestamp(new Date()); // set date to current date (instead of the
+									// repository date
 				
 				docDao.save(oai.getMetadata(i), oai.getHeader(i));
 			}
