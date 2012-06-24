@@ -8,7 +8,7 @@
  * or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ORG.oclc.oai.server.catalog;
+package feb.oai.server.catalog;
 
 import modelos.DocumentoReal;
 import java.text.Format;
@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
+
+import ORG.oclc.oai.server.catalog.RecordFactory;
 
 /**
  * XMLRecordFactory converts native XML "items" to "record" Strings.

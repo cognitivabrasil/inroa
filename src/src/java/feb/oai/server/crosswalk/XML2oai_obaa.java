@@ -8,9 +8,11 @@
  * or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ORG.oclc.oai.server.crosswalk;
+package feb.oai.server.crosswalk;
 
 import java.util.Properties;
+
+import ORG.oclc.oai.server.crosswalk.Crosswalk;
 import ORG.oclc.oai.server.verb.CannotDisseminateFormatException;
 import modelos.DocumentoReal;
 import modelos.Objeto;
