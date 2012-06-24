@@ -52,8 +52,10 @@ public class Importer {
 
 	/**
 	 * Updates the repository from the XML input file.
+	 * 
+	 * @return number of updated objects
 	 */
-	public void update() {
+	public int update() {
 		assert(inputXmlFile != null);
 		oai = OaiOBAA.fromString(conversor.toObaaFromFile(inputXmlFile));
 		
@@ -80,6 +82,7 @@ public class Importer {
 				System.err.println("NullPointer ao tentar inserir elemento " + new Integer(i).toString()
 						+ "");
 			}
+			
 		}
 		
 		
@@ -100,6 +103,9 @@ public class Importer {
 		
 		
 		docDao.flush();
+		
+		return oai.getSize();
+
 	}
 	
 	/**

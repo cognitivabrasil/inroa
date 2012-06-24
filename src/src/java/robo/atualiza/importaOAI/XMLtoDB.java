@@ -59,13 +59,16 @@ public class XMLtoDB {
      * xml
      * @param r reposit&oacute;rio a ser atualizado
      * @param indexar variavel do tipo Indexador
+     * @return number of update documents
      *
      */
-    public void saveXML(
+    public int saveXML(
             ArrayList<String> caminhoXML,
             Repositorio r,
             Indexador indexar) throws Exception {
 
+    	int updated = 0;
+    	
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.fatal("Could not get AppContext bean!");
@@ -83,7 +86,7 @@ public class XMLtoDB {
                     imp.setRepositorio(r);
                     imp.setDocDao(docDao);
                     imp.setRepDao(repDao);
-                    imp.update();
+                    updated += imp.update();
 
                     //apaga arquivo XML
                     arquivoXML.delete();
@@ -97,6 +100,7 @@ public class XMLtoDB {
              * gravar realmente as modificações
              */
             docDao.flush();
+            return updated;
         }
     }
 }
