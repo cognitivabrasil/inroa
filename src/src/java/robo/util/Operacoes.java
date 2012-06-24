@@ -4,15 +4,13 @@
  */
 package robo.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.io.File;
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
 import metadata.TextElement;
-import modelos.Repositorio;
 
 /**
  * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como
