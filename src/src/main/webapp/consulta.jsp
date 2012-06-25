@@ -50,7 +50,7 @@
         <div id="body-resultado">
 
             <c:choose>
-                <c:when test="${documentos.isEmpty()}">
+                <c:when test="${empty documentos}">
                     <p align="center">
                         <strong>
                             <font size="3" face="Verdana, Arial, Helvetica, sans-serif">
@@ -60,7 +60,7 @@
                     </p>
                 </c:when>
                 <c:otherwise>
-                    <form action="<%= request.getRequestURI()%>" method="get">
+                    <form action="<%= request.getRequestURI()%>" method="get" acceptCharset="utf-8">
                         <center>
 
                             <pg:pager

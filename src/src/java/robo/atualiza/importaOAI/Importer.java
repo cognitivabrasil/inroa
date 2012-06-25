@@ -1,5 +1,6 @@
 package robo.atualiza.importaOAI;
 
+import cognitivabrasil.obaa.OaiOBAA;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,8 +10,6 @@ import modelos.DocumentosDAO;
 import modelos.Repositorio;
 import modelos.RepositoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import cognitivabrasil.obaa.OaiOBAA;
 
 // TODO: Auto-generated Javadoc
 public class Importer {

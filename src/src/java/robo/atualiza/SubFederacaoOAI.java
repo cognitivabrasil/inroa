@@ -61,8 +61,7 @@ public class SubFederacaoOAI {
                 for (SubFederacao subFed : listaSubfed) { //percorre todas as federacoes cadastradas
                     boolean atualizadoTemp = false;
                     
-                    if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataDifZero(subFed.getUltimaAtualizacao())) {
-                        
+                    if ((subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null)) {
                         log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
                         
                         for (RepositorioSubFed r : subFed.getRepositorios()) {
@@ -219,7 +218,7 @@ public class SubFederacaoOAI {
             subFed.setDataXML(null);
         }
         
-        if (subFed.getUltimaAtualizacao() == null || Operacoes.testarDataDifZero(subFed.getUltimaAtualizacao())) {
+        if (subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null) {
             
             log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
             

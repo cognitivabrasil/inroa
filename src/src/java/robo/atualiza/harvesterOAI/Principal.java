@@ -1,6 +1,9 @@
 package robo.atualiza.harvesterOAI;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Set;
 import robo.util.Operacoes;
