@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelos;
 
 import java.util.Set;
@@ -17,7 +13,7 @@ import spring.ApplicationContextProvider;
  *
  * @author Marcos
  */
-public class RepositorioSubFed implements RepositorioGenerico{
+public class RepositorioSubFed implements SubNodo{
 
     private int id;
     private String nome;
@@ -123,8 +119,5 @@ public class RepositorioSubFed implements RepositorioGenerico{
     @Override
     public String toString() {
         return new ToStringCreator(this).append("id", this.getId()).append("nome", this.getNome()).toString();
-    }
-    
-
-    
+    }    
 }

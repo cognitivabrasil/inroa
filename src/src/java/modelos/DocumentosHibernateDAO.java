@@ -1,22 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelos;
 
+import cognitivabrasil.obaa.OBAA;
 import java.util.List;
-
 import metadata.Header;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import cognitivabrasil.obaa.OBAA;
-import cognitivabrasil.obaa.LifeCycle.Contribute;
-
 
 /**
  * The Class DocumentosHibernateDAO.
@@ -32,7 +23,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     /*
      * repository where new documents are going to be saved
      */
-    private RepositorioGenerico repository;
+    private SubNodo repository;
     private SubFederacao federation;
 
     /**
@@ -103,7 +94,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
             log.debug("Armazenando objeto do tipo RepositorioSubFed");
             RepositorioSubFed repSubFed = this.federation.getRepositoryByName(h.getSetSpec().get(0));
             if (repSubFed == null) {
-                throw new IllegalStateException("The repository '"+h.getSetSpec().get(0)+"' doesn't exists in the federation '"+ this.federation.getNome()+"'");
+                throw new IllegalStateException("The repository '" + h.getSetSpec().get(0) + "' doesn't exists in the federation '" + this.federation.getNome() + "'");
             } else {
                 doc.setRepositorioSubFed(repSubFed); //pega o nome do repositorio do cabeçalho e busca o objeto pelo nome inserindo no doc.
             }
@@ -136,12 +127,12 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     }
 
     @Override
-    public RepositorioGenerico getRepository() {
+    public SubNodo getRepository() {
         return repository;
     }
 
     @Override
-    public void setRepository(RepositorioGenerico repository) {
+    public void setRepository(SubNodo repository) {
         if (repository == null) {
             throw new IllegalArgumentException("called setRepository() with a null argument.");
         }

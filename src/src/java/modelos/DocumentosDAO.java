@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelos;
 
-import java.util.List;
-
 import cognitivabrasil.obaa.OBAA;
+import java.util.List;
 import metadata.Header;
 
 // TODO: Auto-generated Javadoc
@@ -77,14 +72,14 @@ public interface DocumentosDAO {
      *
      * @return the repository
      */
-    RepositorioGenerico getRepository();
+    SubNodo getRepository();
 
     /**
      * Sets the repository where saved documents will be inserted.
      *
      * @param r the new repository
      */
-    void setRepository(RepositorioGenerico r);
+    void setRepository(SubNodo r);
 
     /**
      * Sets the federation where saved documents will be inserted.

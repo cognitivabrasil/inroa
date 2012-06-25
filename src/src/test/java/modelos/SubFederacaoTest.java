@@ -1,18 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelos;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-
+import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+ 
 // TODO: Auto-generated Javadoc
 /**
  * The Class SubFederacaoTest.

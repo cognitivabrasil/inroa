@@ -14,7 +14,7 @@ import robo.util.Operacoes;
  *
  * @author Marcos Nunes
  */
-public class SubFederacao implements java.io.Serializable {
+public class SubFederacao implements java.io.Serializable, SubNodo {
 
 
 	private static final long serialVersionUID = 7452479917517752879L;
@@ -165,6 +165,11 @@ public class SubFederacao implements java.io.Serializable {
         }
 
         return size;
+    }
+    
+    @Override
+    public Integer getSize() {
+        return ((Integer) getSizeDoc());
     }
 
     /**

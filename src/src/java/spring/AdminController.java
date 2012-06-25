@@ -1,29 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package spring;
 
 import ferramentaBusca.IndexadorBusca;
+import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import modelos.*;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import postgres.SingletonConfig;
-import spring.validador.PadraoValidator;
-import spring.validador.RepositorioValidator;
 import spring.validador.InfoBDValidator;
+import spring.validador.PadraoValidator;
 import spring.validador.SubFederacaoValidador;
-import robo.atualiza.Repositorios;
-import robo.atualiza.SubFederacaoOAI;
 
 /**
  * Controller para ferramenta administrativa
@@ -65,8 +55,6 @@ public final class AdminController {
     public String admin2(Model model) {
         return admin(model);
     }
-
-   
 
     @RequestMapping("padraoMetadados/addPadrao")
     public String cadastraPadrao(Model model) {
@@ -199,9 +187,23 @@ public final class AdminController {
             }
         }
     }
-    
+
+    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
+    public String statistics(Model model) {
+        
+        List repList = repDao.getAll();        
+        Estatistica e = new Estatistica();
+        model.addAttribute("arrayJs", e.fromListToJsList(repList));
+        
+        
+        //Lista de Federações
+
+        return "admin/statistics";
+    }
+
     /**
      * Fecha a pop-up e recarrega a janela principal
+     *
      * @return admin/fechaRecarrega.jsp
      */
     @RequestMapping("fechaRecarrega")
@@ -241,6 +243,5 @@ public final class AdminController {
             return "Ocorreu um erro ao excluir. Exception:" + e.toString();
         }
     }
-
     //------FIM FUNCOES PARA AJAX------------
 }

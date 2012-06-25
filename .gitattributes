@@ -228,6 +228,7 @@ src/src/java/modelos/DocumentoFebInterface.java -text
 src/src/java/modelos/DocumentoReal.java -text
 src/src/java/modelos/DocumentosDAO.java -text
 src/src/java/modelos/DocumentosHibernateDAO.java -text
+src/src/java/modelos/Estatistica.java -text
 src/src/java/modelos/Mapeamento.java -text
 src/src/java/modelos/MapeamentoDAO.java -text
 src/src/java/modelos/MapeamentoHibernateDAO.java -text
@@ -244,6 +245,7 @@ src/src/java/modelos/ResultadoConsulta.java -text
 src/src/java/modelos/SubFederacao.java -text
 src/src/java/modelos/SubFederacaoDAO.java -text
 src/src/java/modelos/SubFederacaoHibernateDAO.java -text
+src/src/java/modelos/SubNodo.java -text
 src/src/java/modelos/Usuario.java -text
 src/src/java/modelos/UsuarioDAO.java -text
 src/src/java/modelos/UsuarioHibernateDAO.java -text
@@ -420,6 +422,7 @@ src/src/test/java/modelos/MapeamentoHibernateDaoIT.java -text
 src/src/test/java/modelos/PadraoMetadadosHibernateDaoIT.java -text
 src/src/test/java/modelos/RepositorioTest.java -text
 src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text
+src/src/test/java/modelos/StatisticsIT.java -text
 src/src/test/java/modelos/SubFederacaoTest.java -text
 src/src/test/java/modelos/SubfederacaoHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text

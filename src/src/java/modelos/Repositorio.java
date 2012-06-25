@@ -2,7 +2,6 @@
 package modelos;
 
 import java.util.*;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -22,11 +21,10 @@ import spring.ApplicationContextProvider;
  * 
  */
 @Transactional
-public class Repositorio implements java.io.Serializable, RepositorioGenerico {
-	static Logger log = Logger.getLogger(Repositorio.class.getName());
-
-	private static final long serialVersionUID = 1011292251690153763L;
-	private Integer id;
+public class Repositorio implements java.io.Serializable, SubNodo {
+    static Logger log = Logger.getLogger(Repositorio.class.getName());
+    private static final long serialVersionUID = 1011292251690153763L;
+    private Integer id;
 	private String nome;
 	private String descricao;
 	private String url;
