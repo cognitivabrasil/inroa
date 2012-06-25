@@ -1,20 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package robo.atualiza.subfedOAI;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import ORG.oclc.oai.harvester2.verb.ListSets;
+import java.io.*;
 import java.util.Set;
 import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
-import robo.atualiza.harvesterOAI.ListSets;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
 import spring.ApplicationContextProvider;

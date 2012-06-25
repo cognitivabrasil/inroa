@@ -1,5 +1,6 @@
 package robo.atualiza.harvesterOAI;
 
+import ORG.oclc.oai.harvester2.verb.ListRecords;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -7,6 +8,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Set;
 import robo.util.Operacoes;
+
 //import util.*;
 
 // http://alcme.oclc.org/oaicat/

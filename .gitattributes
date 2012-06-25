@@ -256,13 +256,6 @@ src/src/java/postgres/package.html -text
 src/src/java/postgres/teste.java -text
 src/src/java/robo/atualiza/Repositorios.java -text
 src/src/java/robo/atualiza/SubFederacaoOAI.java -text
-src/src/java/robo/atualiza/harvesterOAI/GetRecord.java -text
-src/src/java/robo/atualiza/harvesterOAI/HarvesterVerb.java -text
-src/src/java/robo/atualiza/harvesterOAI/Identify.java -text
-src/src/java/robo/atualiza/harvesterOAI/ListIdentifiers.java -text
-src/src/java/robo/atualiza/harvesterOAI/ListMetadataFormats.java -text
-src/src/java/robo/atualiza/harvesterOAI/ListRecords.java -text
-src/src/java/robo/atualiza/harvesterOAI/ListSets.java -text
 src/src/java/robo/atualiza/harvesterOAI/Principal.java -text
 src/src/java/robo/atualiza/harvesterOAI/package.html -text
 src/src/java/robo/atualiza/importaOAI/DadosObjetos.java -text
