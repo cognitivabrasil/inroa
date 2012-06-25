@@ -84,7 +84,7 @@ public class Recuperador {
             } else {
 //TODO: ver como vai ficar essa consulta
 //                sqlOrdenacao = "') GROUP BY d.id ORDER BY SUM(weight) DESC;";
-                  sqlOrdenacao = "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml ORDER BY SUM(weight) DESC LIMIT "+consulta.getLimit()+" OFFSET "+consulta.getOffset()+";";
+                  sqlOrdenacao = "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave ORDER BY SUM(weight) DESC LIMIT "+consulta.getLimit()+" OFFSET "+consulta.getOffset()+";";
 
             }
         }
