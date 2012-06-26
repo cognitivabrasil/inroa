@@ -26,7 +26,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
 import postgres.Conectar;
-import robo.atualiza.harvesterOAI.Principal;
+import robo.atualiza.harvesterOAI.Harvester;
 import robo.atualiza.importaOAI.XMLtoDB;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
@@ -179,7 +179,7 @@ public class Repositorios {
     public int atualizaRepositorio(Repositorio rep, Indexador indexar)
             throws Exception {
 
-        Principal importar = new Principal();
+        Harvester importar = new Harvester();
         Informacoes conf = new Informacoes();
         XMLtoDB gravar = new XMLtoDB();
         String caminhoDiretorioTemporario = conf.getCaminho();

@@ -12,7 +12,7 @@ import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
-import robo.atualiza.harvesterOAI.Principal;
+import robo.atualiza.harvesterOAI.Harvester;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
 import spring.ApplicationContextProvider;
@@ -57,7 +57,7 @@ public class Objetos {
             if (caminhoTeste.isDirectory()) {
 
                 //efetua o Harvester e grava os xmls na pasta temporaria
-                Principal harvesterOAI = new Principal();
+                Harvester harvesterOAI = new Harvester();
                 ArrayList<String> caminhosXML = harvesterOAI.coletaXML_ListRecords(endereco, subFed.getDataXML(), subFed.getNome(), caminhoDiretorioTemporario, "obaa", null);
 
                 //efetua o parser do xml e insere os documentos na base            

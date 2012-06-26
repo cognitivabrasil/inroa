@@ -7,17 +7,20 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Set;
+import modelos.Repositorio;
+import org.apache.log4j.Logger;
 import robo.util.Operacoes;
 
 //import util.*;
 
 // http://alcme.oclc.org/oaicat/
 // http://www.oclc.org/research/software/oai/harvester2.htm
-public class Principal {
+public class Harvester {
 
     private String endereco;
     private String dataInicial;
     private String metadataPrefix;
+    static Logger log = Logger.getLogger(Repositorio.class);
 
     /**
      * Metodo que efetua o Harvesting OAI-PHM e imprime arquivos xml's com os resultados
@@ -54,7 +57,7 @@ public class Principal {
             }
         }
 
-        System.out.println("FEB: Arquivos XML foram gravados");
+        log.info("FEB: Arquivos XML foram gravados");
 
 
         return caminhosXML;

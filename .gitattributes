@@ -237,7 +237,6 @@ src/src/java/modelos/PadraoMetadados.java -text
 src/src/java/modelos/PadraoMetadadosDAO.java -text
 src/src/java/modelos/PadraoMetadadosHibernateDAO.java -text
 src/src/java/modelos/Repositorio.java -text
-src/src/java/modelos/RepositorioGenerico.java -text
 src/src/java/modelos/RepositorioSubFed.java -text
 src/src/java/modelos/RepositoryDAO.java -text
 src/src/java/modelos/RepositoryHibernateDAO.java -text
@@ -256,7 +255,7 @@ src/src/java/postgres/package.html -text
 src/src/java/postgres/teste.java -text
 src/src/java/robo/atualiza/Repositorios.java -text
 src/src/java/robo/atualiza/SubFederacaoOAI.java -text
-src/src/java/robo/atualiza/harvesterOAI/Principal.java -text
+src/src/java/robo/atualiza/harvesterOAI/Harvester.java -text
 src/src/java/robo/atualiza/harvesterOAI/package.html -text
 src/src/java/robo/atualiza/importaOAI/DadosObjetos.java -text
 src/src/java/robo/atualiza/importaOAI/Header.java -text
