@@ -12,7 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.transaction.annotation.Transactional;
 import robo.util.Operacoes;
-
 import spring.ApplicationContextProvider;
 
 /**
@@ -73,6 +72,7 @@ public class Repositorio implements java.io.Serializable, SubNodo {
     /**
      * @return the nome
      */
+    @Override
     public String getNome() {
         return nome;
     }
@@ -123,6 +123,7 @@ public class Repositorio implements java.io.Serializable, SubNodo {
      * documents only)
      */
     @Transactional(readOnly = true)
+    @Override
     public Integer getSize() {
         return DataAccessUtils.intResult(getSession().createQuery(
                 "select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").setParameter("rep", this).setParameter("deleted", false).list());

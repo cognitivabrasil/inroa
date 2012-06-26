@@ -4,31 +4,25 @@
  */
 package robo.atualiza.importaOAI;
 
-import static org.junit.Assert.assertEquals;
-
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.OaiOBAA;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import modelos.DocumentosDAO;
 import modelos.Mapeamento;
 import modelos.Repositorio;
 import modelos.RepositoryDAO;
-
-import org.junit.Ignore;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import static org.mockito.Mockito.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.*;
-
-import cognitivabrasil.obaa.OBAA;
-import cognitivabrasil.obaa.OaiOBAA;
 
 /**
  *

@@ -23,7 +23,7 @@ public class Harvester {
     static Logger log = Logger.getLogger(Repositorio.class);
 
     /**
-     * Metodo que efetua o Harvesting OAI-PHM e imprime arquivos xml's com os resultados
+     * Metodo que efetua o Harvesting OAI-PHM e salva arquivos xml's com os resultados
      * @param endereco URL do repositório que responde com o padrao OAI-PMH
      * @param dataInicial data inicial para o filtro da busca. From
      * @param dataFinal data final para o filtro da busca. Until
