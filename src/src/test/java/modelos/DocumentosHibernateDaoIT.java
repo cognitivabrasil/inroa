@@ -2,23 +2,23 @@ package modelos;
 
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
-
 import java.lang.reflect.Field;
 import java.util.Date;
 import metadata.Header;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import org.junit.Ignore;
-import static org.mockito.Mockito.*;
 
 /**
  * Integration tests of the UsuarioHibernateDao

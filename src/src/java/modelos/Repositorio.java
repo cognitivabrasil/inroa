@@ -21,7 +21,7 @@ import spring.ApplicationContextProvider;
  *
  */
 @Transactional
-public class Repositorio implements java.io.Serializable, RepositorioGenerico {
+public class Repositorio implements java.io.Serializable, SubNodo {
 
     static Logger log = Logger.getLogger(Repositorio.class.getName());
     private static final long serialVersionUID = 1011292251690153763L;
