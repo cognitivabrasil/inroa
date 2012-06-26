@@ -82,6 +82,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         this.id = id;
     }
 
+    @Override
     public Date getTimestamp() {
         return this.datetime;
     }
@@ -90,6 +91,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         this.datetime = date;
     }
 
+    @Override
     public String getObaaEntry() {
         return this.obaaEntry;
     }
@@ -138,6 +140,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     /**
      * @return the excluido
      */
+    @Override
     public boolean isDeleted() {
         return deleted;
     }
@@ -166,15 +169,18 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return getAttribute("obaaEntity");
     }
     
+    @Override
     public List<String> getTitles() {
         return getAttribute("obaaTitle");
     }
 
+    @Override
     public List<String> getKeywords() {
         return getAttribute("obaaKeyword");
 
     }
 
+    @Override
     public List<String> getDescriptions() {
         return getAttribute("obaaDescription");
     }
