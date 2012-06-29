@@ -16,6 +16,7 @@ import robo.util.Operacoes;
  *
  * @author Marcos
  */
+@Deprecated
 public class LRU {
     //TODO: arrumar o SQL para retornar documentoReal (Hibernate)
 

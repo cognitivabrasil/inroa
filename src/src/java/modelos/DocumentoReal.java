@@ -1,25 +1,27 @@
 package modelos;
 
+import cognitivabrasil.obaa.LifeCycle.Contribute;
+import cognitivabrasil.obaa.OBAA;
+import ferramentaBusca.indexador.StopWordTAD;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import cognitivabrasil.obaa.OBAA;
-import cognitivabrasil.obaa.LifeCycle.Contribute;
-
+import org.apache.log4j.Logger;
+import robo.util.Operacoes;
 
 /**
  *
  * Representa um documento na Federação;
  *
- * @author Paulo Schreiner <paulo@jorjao81.com>
+ * @author Paulo Schreiner <paulo@jorjao81.com>, Marcos Nunes <marcosn@gmail.com>, Luiz Rossi <lh.rossi@gmail.com>
  *
  */
 public class DocumentoReal implements java.io.Serializable, DocumentoFebInterface {
-	private static final long serialVersionUID = 61217365141633065L;
-	private int id;
+
+    private static final long serialVersionUID = 61217365141633065L;
+    private int id;
     private String obaaEntry;
     private Date datetime;
     private Set<Objeto> objetos;
@@ -29,6 +31,11 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private String obaaXml;
     private OBAA metadata;
     private Set<Autor> autores;
+    private StopWordTAD stopWd;
+    static Logger log = Logger.getLogger(DocumentoReal.class);
+    List<String> titleTokens;
+    List<String> keywordTokens;
+    List<String> descriptionTokens;
 
     public DocumentoReal() {
         obaaEntry = "";
@@ -36,6 +43,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         objetos = new HashSet<Objeto>();
         deleted = false;
         autores = new HashSet<Autor>();
+        stopWd = new StopWordTAD();
     }
 
     public void addTitle(String title) {
@@ -45,8 +53,8 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         o.setDocumento(this);
         objetos.add(o);
     }
-    
-    public void addAuthor(String author) {        
+
+    public void addAuthor(String author) {
         Objeto o = new Objeto();
         o.setAtributo("obaaEntity");
         o.setValor(author);
@@ -106,9 +114,8 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
 
     public void setAutores(Set<Autor> autores) {
         this.autores = autores;
-    } 
-    
-    
+    }
+
     /**
      * @return the objeto
      */
@@ -151,7 +158,8 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     public void setDeleted(Boolean excluido) {
         this.deleted = excluido;
     }
-     public void isDeleted(boolean excluido) {
+
+    public void isDeleted(boolean excluido) {
         this.deleted = excluido;
     }
 
@@ -165,10 +173,10 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return l;
     }
 
-    public List<String> getAuthors(){
+    public List<String> getAuthors() {
         return getAttribute("obaaEntity");
     }
-    
+
     @Override
     public List<String> getTitles() {
         return getAttribute("obaaTitle");
@@ -230,9 +238,10 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
 
     /**
      * Gets a pretty version of the repository name.
-     * 
-     * If de document is in a repository, return that, if it is in a subFederation, return
-     * the name of the Federation and the repository.
+     *
+     * If de document is in a repository, return that, if it is in a
+     * subFederation, return the name of the Federation and the repository.
+     *
      * @return Name of the repository fit to print.
      */
     public String getNomeRep() {
@@ -240,84 +249,140 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
             return repositorio.getNome();
         } else {
             return "Subfedera&ccedil;&atilde;o "
-            		+ repositorioSubFed.getSubFederacao().getNome()
-            		+ " / " + repositorioSubFed.getNome();
+                    + repositorioSubFed.getSubFederacao().getNome()
+                    + " / " + repositorioSubFed.getNome();
         }
     }
 
-	/**
-	 * Gets the OBAA XML directly, consider using getMetadata() instead.
-	 * @return the obaaXml
-	 */
-	protected String getObaaXml() {
-		return obaaXml;
-	}
+    /**
+     * Gets the OBAA XML directly, consider using getMetadata() instead.
+     *
+     * @return the obaaXml
+     */
+    public String getObaaXml() {
+        return obaaXml;
+    }
 
-	/**
-	 * Sets the OBAA XML directly, consider using setMetadata instead.
-	 * @param obaaXml the obaaXml to set
-	 */
-	protected void setObaaXml(String obaaXml) {
-		this.obaaXml = obaaXml;
-	}
+    /**
+     * Sets the OBAA XML directly, consider using setMetadata instead.
+     *
+     * @param obaaXml the obaaXml to set
+     */
+    protected void setObaaXml(String obaaXml) {
+        this.obaaXml = obaaXml;
+    }
 
-	/**
-	 * Returns the document metadata.
-	 * @return the metadata
-	 * @throws IllegalStateException if there is no XML metadata associated with the document
-	 */
-	public OBAA getMetadata() {
-		if(metadata == null) {
-			if(getObaaXml() == null) {
-				throw new IllegalStateException("No XML metadata associated with the Object");
-			}
-			metadata = OBAA.fromString(getObaaXml());
-		}
-		return metadata;
-	}
+    /**
+     * Returns the document metadata.
+     *
+     * @return the metadata
+     * @throws IllegalStateException if there is no XML metadata associated with
+     * the document
+     */
+    public OBAA getMetadata() {
+        if (metadata == null) {
+            if (getObaaXml() == null) {
+                throw new IllegalStateException("No XML metadata associated with the Object");
+            }
+            metadata = OBAA.fromString(getObaaXml());
+        }
+        return metadata;
+    }
 
-	/**
-	 * Sets the metadata of the object, and updates the corresponding XML.
-	 * @param metadata the metadata to set
-	 */
-	public void setMetadata(OBAA metadata) {
-		this.metadata = metadata;
-		updateIndexes();
-		setObaaXml(metadata.toXml());
-	}
+    /**
+     * Sets the metadata of the object, and updates the corresponding XML.
+     *
+     * @param metadata the metadata to set
+     */
+    public void setMetadata(OBAA metadata) {
+        this.metadata = metadata;
+        updateIndexes();
+        setObaaXml(metadata.toXml());
+    }
 
-	/**
-	 * Updates the indexes (i.e, the Objects related to this Document) from current metadata.
-	 * 
-	 * This is called inside setMetadata, to keep indexes up-to-date.
-	 */
-	private void updateIndexes() {
-		OBAA obaa = this.metadata;
-		
-		// Ensure removal of all objects
-		objetos.removeAll(objetos);
-		assert(objetos.isEmpty());
-		
-		// Then, add them again
-		for (String t : obaa.getTitles()) {
-			this.addTitle(t);
-		}
+    /**
+     * Updates the indexes (i.e, the Objects related to this Document) from
+     * current metadata.
+     *
+     * This is called inside setMetadata, to keep indexes up-to-date.
+     */
+    private void updateIndexes() {
+        OBAA obaa = this.metadata;
 
-		for (String k : obaa.getKeywords()) {
-			this.addKeyword(k);
-		}
+        // Ensure removal of all objects
+        objetos.removeAll(objetos);
+        assert (objetos.isEmpty());
 
-		for (String d : obaa.getGeneral().getDescriptions()) {
-			this.addDescription(d);
-		}
+        // Then, add them again
+        for (String t : obaa.getTitles()) {
+            this.addTitle(t);
+        }
 
-		if (obaa.getLifeCycle() != null) {
-			for (Contribute c : obaa.getLifeCycle().getContribute()) {
-				for (String e : c.getEntities()) {
-					this.addAuthor(e.toLowerCase());
-				}
-			}
-		}
-		
-	}
+        for (String k : obaa.getKeywords()) {
+            this.addKeyword(k);
+        }
+
+        for (String d : obaa.getGeneral().getDescriptions()) {
+            this.addDescription(d);
+        }
+
+        if (obaa.getLifeCycle() != null) {
+            for (Contribute c : obaa.getLifeCycle().getContribute()) {
+                for (String e : c.getEntities()) {
+                    this.addAuthor(e.toLowerCase());
+                }
+            }
+        }
+
+    }
+
+    public List<String> getTitlesTokenized() {
+        if (titleTokens == null) {
+            titleTokens = new ArrayList<String>();
+            for (String titulo : getTitles()) {
+                titleTokens.addAll(Operacoes.tokeniza(titulo, stopWd));
+            }
+
+        }
+        return titleTokens;
+
+    }
+
+    public List<String> getKeywordsTokenized() {
+        if (keywordTokens == null) {
+            keywordTokens = new ArrayList<String>();
+            for (String keyword : getKeywords()) {
+                keywordTokens.addAll(Operacoes.tokeniza(keyword, stopWd));
+            }
+
+        }
+        return keywordTokens;
+
+    }
+
+    public List<String> getDescriptionsTokenized() {
+        if (descriptionTokens == null) {
+            descriptionTokens = new ArrayList<String>();
+            for (String description : getDescriptions()) {
+                descriptionTokens.addAll(Operacoes.tokeniza(description, stopWd));
+            }
+        }
+        return descriptionTokens;
+    }
+
+    public ArrayList<String> getTokens() {
+        ArrayList<String> tokens = new ArrayList<String>();
+
+        tokens.addAll(getTitlesTokenized());
+
+        tokens.addAll(getKeywordsTokenized());
+
+        tokens.addAll(getDescriptionsTokenized());
+
+        return (tokens);
+    }
+
+    public boolean isIndexEmpty() {
+        return (getTitles().isEmpty() && getKeywords().isEmpty() && getDescriptions().isEmpty());
+    }
 }

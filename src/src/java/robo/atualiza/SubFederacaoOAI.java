@@ -32,7 +32,7 @@ import spring.ApplicationContextProvider;
  * @author Marcos
  */
 public class SubFederacaoOAI {
-    
+
     Logger log = Logger.getLogger(SubFederacaoOAI.class);
 
     /**
@@ -48,32 +48,32 @@ public class SubFederacaoOAI {
      */
     public boolean pre_AtualizaSubFedOAI(Indexador indexar) {
         boolean atualizou = false;
-        
+
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.error("FEB ERRO: Could not get AppContext bean!");
         } else {
-            
+
             try {
                 SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
                 List<SubFederacao> listaSubfed = subDao.getAll();
-                
+
                 for (SubFederacao subFed : listaSubfed) { //percorre todas as federacoes cadastradas
                     boolean atualizadoTemp = false;
-                    
+
                     if ((subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null)) {
                         log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
-                        
+
                         for (RepositorioSubFed r : subFed.getRepositorios()) {
                             r.dellAllDocs();
                         }
                         log.info("FEB: Base deletada!");
                     }
-                    
+
                     if (subFed.getUrl().isEmpty()) { //testa se a string url esta vazia.
                         log.error("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
                     } else {
-                        
+
                         Long inicio = System.currentTimeMillis();
                         try {
                             atualizaSubFedOAI(subFed, indexar);
@@ -91,7 +91,7 @@ public class SubFederacaoOAI {
                         Long fim = System.currentTimeMillis();
                         log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
                     }
-                    
+
                     if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
                         atualizou = true;
                     }
@@ -145,13 +145,13 @@ public class SubFederacaoOAI {
                 //atualizar objetos da subfederacao
                 Objetos obj = new Objetos();
                 obj.atualizaObjetosSubFed(url, subFed, indexar);
-                
-                
+
+
                 subFed.setUltimaAtualizacao(new Date());
                 SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
                 subDao.save(subFed);
-                
-                
+
+
             } catch (UnknownHostException u) {
                 System.err.println("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
                 throw u;
@@ -177,7 +177,6 @@ public class SubFederacaoOAI {
                 } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
                     System.out.println("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
                     subFed.setUltimaAtualizacao(new Date());
-                    subFed.setDataXML(indexar.getDataXML());
                 } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                     System.err.println(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
                 } else if (msg.equalsIgnoreCase("noSetHierarchy")) {
@@ -207,48 +206,44 @@ public class SubFederacaoOAI {
      * @return true se atualizou e false caso contr&aacute;rio.
      */
     public void atualizaSubfedAdm(SubFederacao subFed, boolean apagar) throws Exception {
-        
-        Conectar conectar = new Conectar(); //instancia uma variavel da classe Conectar
-        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-        Indexador indexar = new Indexador();
-        
-        if (apagar) {
-            log.debug("Setar como null a data da última atualização e dataXML para que apague toda a base antes de atualizar.");
-            subFed.setUltimaAtualizacao(null);
-            subFed.setDataXML(null);
-        }
-        
-        if (subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null) {
-            
-            log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
-            
-            for (RepositorioSubFed r : subFed.getRepositorios()) {
-                r.dellAllDocs();
-            }
-            log.info("FEB: Base deletada!");
-        }
-        
-        String url = subFed.getUrl();
-        if (url.isEmpty()) { //testa se a string url esta vazia.
-            log.error("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+        if (ctx == null) {
+            log.error("FEB ERRO: Could not get AppContext bean!");
         } else {
-            
+            Indexador indexar = ctx.getBean(Indexador.class);
+
+            if (apagar) {
+                log.debug("Setar como null a data da última atualização e dataXML para que apague toda a base antes de atualizar.");
+                subFed.setUltimaAtualizacao(null);
+                subFed.setDataXML(null);
+            }
+
+            if (subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null) {
+
+                log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
+
+                for (RepositorioSubFed r : subFed.getRepositorios()) {
+                    r.dellAllDocs();
+                }
+                log.info("FEB: Base deletada!");
+            }
+
+            String url = subFed.getUrl();
+            if (url.isEmpty()) { //testa se a string url esta vazia.
+                log.error("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
+            } else {
+
+                Long inicio = System.currentTimeMillis();
+                atualizaSubFedOAI(subFed, indexar);
+                Long fim = System.currentTimeMillis();
+                log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
+            }
+
+            log.info("FEB: recalculando o indice.");
             Long inicio = System.currentTimeMillis();
-            atualizaSubFedOAI(subFed, indexar);
+            indexar.populateR1();
             Long fim = System.currentTimeMillis();
-            log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
-        }
-        
-        log.info("FEB: recalculando o indice.");
-        Long inicio = System.currentTimeMillis();
-        indexar.populateR1(con);
-        Long fim = System.currentTimeMillis();
-        log.info("FEB: indice recalculado em " + (fim - inicio) / 1000 + " segundos.");
-        
-        try {
-            con.close(); //fechar conexao
-        } catch (SQLException e) {
-            log.error("FEB ERRO - Metodo atualizaSubFedOAI: Erro ao fechar a conexão no metodo atualizaSubfedAdm: " + e.getMessage());
+            log.info("FEB: indice recalculado em " + (fim - inicio) / 1000 + " segundos.");
         }
     }
 }

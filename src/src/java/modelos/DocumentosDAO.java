@@ -87,4 +87,11 @@ public interface DocumentosDAO {
      * @param s the new federation
      */
     void setFederation(SubFederacao s);
+
+    /**
+     * Get document without tokens.
+     * Documents that have not been tokenized.
+     * @return List of documents without tokens.
+     */
+    List<DocumentoReal> getwithoutToken();
 }

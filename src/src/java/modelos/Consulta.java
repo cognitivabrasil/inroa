@@ -4,8 +4,11 @@
  */
 package modelos;
 
+import ferramentaBusca.indexador.StopWordTAD;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import robo.util.Operacoes;
 
 /**
  *
@@ -22,6 +25,7 @@ public class Consulta {
     private int limit;
     private int offset;
     private int sizeResult;
+    StopWordTAD stWd;
     
 
     public Consulta() {
@@ -34,6 +38,11 @@ public class Consulta {
         limit = 5   ;
         offset = 0;
         sizeResult = 0;
+        stWd = new StopWordTAD();
+    }
+
+    public List<String> getConsultaTokenizada(){
+        return Operacoes.tokeniza(this.consulta, stWd);
     }
 
     public String getConsulta() {

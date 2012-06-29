@@ -210,10 +210,8 @@ src/src/java/feb/oai/server/catalog/XMLRecordFactoryObaa.java -text
 src/src/java/feb/oai/server/crosswalk/XML2oai_obaa.java -text
 src/src/java/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text
 src/src/java/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
-src/src/java/ferramentaBusca/IndexadorBusca.java -text
 src/src/java/ferramentaBusca/LRU.java -text
 src/src/java/ferramentaBusca/Recuperador.java -text
-src/src/java/ferramentaBusca/indexador/Documento.java -text
 src/src/java/ferramentaBusca/indexador/Indexador.java -text
 src/src/java/ferramentaBusca/indexador/StopWordTAD.java -text
 src/src/java/ferramentaBusca/indexador/package.html -text
@@ -245,11 +243,12 @@ src/src/java/modelos/SubFederacao.java -text
 src/src/java/modelos/SubFederacaoDAO.java -text
 src/src/java/modelos/SubFederacaoHibernateDAO.java -text
 src/src/java/modelos/SubNodo.java -text
+src/src/java/modelos/TokensDao.java -text
+src/src/java/modelos/TokensHibernateDao.java -text
 src/src/java/modelos/Usuario.java -text
 src/src/java/modelos/UsuarioDAO.java -text
 src/src/java/modelos/UsuarioHibernateDAO.java -text
 src/src/java/postgres/Conectar.java -text
-src/src/java/postgres/Excluir.java -text
 src/src/java/postgres/SingletonConfig.java -text
 src/src/java/postgres/package.html -text
 src/src/java/postgres/teste.java -text
@@ -260,7 +259,6 @@ src/src/java/robo/atualiza/harvesterOAI/package.html -text
 src/src/java/robo/atualiza/importaOAI/DadosObjetos.java -text
 src/src/java/robo/atualiza/importaOAI/Header.java -text
 src/src/java/robo/atualiza/importaOAI/Importer.java -text
-src/src/java/robo/atualiza/importaOAI/Indice.java -text
 src/src/java/robo/atualiza/importaOAI/OAI_Interface.java -text
 src/src/java/robo/atualiza/importaOAI/XMLtoDB.java -text
 src/src/java/robo/atualiza/subfedOAI/Importer.java -text
@@ -283,7 +281,6 @@ src/src/java/spring/validador/InfoBDValidator.java -text
 src/src/java/spring/validador/PadraoValidator.java -text
 src/src/java/spring/validador/RepositorioValidator.java -text
 src/src/java/spring/validador/SubFederacaoValidador.java -text
-src/src/java/webservice/Webservice.java -text
 src/src/main/resources/Documentos.hbm.xml -text
 src/src/main/resources/Mapping.hbm.xml -text
 src/src/main/resources/MetadataRecord.hbm.xml -text
@@ -315,17 +312,6 @@ src/src/main/webapp/admin/federations/confirmDelete.jsp -text
 src/src/main/webapp/admin/federations/edit.jsp -text
 src/src/main/webapp/admin/federations/new.jsp -text
 src/src/main/webapp/admin/federations/show.jsp -text
-src/src/main/webapp/admin/mapeamentos/addTipoMap.jsp -text
-src/src/main/webapp/admin/mapeamentos/adicionaMapBranco.jsp -text
-src/src/main/webapp/admin/mapeamentos/consultadescricao.jsp -text
-src/src/main/webapp/admin/mapeamentos/deletaBaseAjax.jsp -text
-src/src/main/webapp/admin/mapeamentos/editaMapeamentos.jsp -text
-src/src/main/webapp/admin/mapeamentos/listaMapeamentoPadraoSelecionado.jsp -text
-src/src/main/webapp/admin/mapeamentos/mapeamentos.jsp -text
-src/src/main/webapp/admin/mapeamentos/removerMapeamento.jsp -text
-src/src/main/webapp/admin/mapeamentos/respostaAjax.jsp -text
-src/src/main/webapp/admin/mapeamentos/salvarBaseAjax.jsp -text
-src/src/main/webapp/admin/mapeamentos/selecionaPadraoAddMap.jsp -text
 src/src/main/webapp/admin/padraoMetadados/addPadrao.jsp -text
 src/src/main/webapp/admin/padraoMetadados/editaPadrao.jsp -text
 src/src/main/webapp/admin/padraoMetadados/padraoMetadados.jsp -text
@@ -417,6 +403,7 @@ src/src/test/java/modelos/RepositoryHibernateDaoIT.java -text
 src/src/test/java/modelos/StatisticsIT.java -text
 src/src/test/java/modelos/SubFederacaoTest.java -text
 src/src/test/java/modelos/SubfederacaoHibernateDaoIT.java -text
+src/src/test/java/modelos/TokensHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioHibernateDaoIT.java -text
 src/src/test/java/modelos/UsuarioTest.java -text
 src/src/test/java/robo/atualiza/importaOAI/ImporterTest.java -text

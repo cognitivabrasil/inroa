@@ -75,11 +75,10 @@ public class Importer {
             } catch (NullPointerException e) {
                 log.error("NullPointer ao tentar inserir elemento " + new Integer(i).toString(), e);
             }
-        }
-        
+        }        
 
         docDao.flush();
-        subFed.setDataXML(oai.getResponseDate());
+        subFed.setDataXMLTemp(oai.getResponseDate());
     }
 
     /**

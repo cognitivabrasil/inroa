@@ -1,6 +1,6 @@
 package spring;
 
-import ferramentaBusca.IndexadorBusca;
+import ferramentaBusca.indexador.Indexador;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -37,6 +37,8 @@ public final class AdminController {
     ServletContext servletContext;
     @Autowired
     private UsuarioDAO userDao;
+    @Autowired
+    private Indexador indexador;
 
     public AdminController() {
     }
@@ -140,8 +142,8 @@ public final class AdminController {
 
     @RequestMapping("efetuaRecalculoIndice")
     public String recalcularIndice(Model model) {
-        IndexadorBusca run = new IndexadorBusca();
-        run.indexarTodosRepositorios();
+        
+        indexador.indexarTodosRepositorios();
         model.addAttribute("fim", "Índice recalculado com sucesso!");
         return "admin/recalcularIndice";
     }

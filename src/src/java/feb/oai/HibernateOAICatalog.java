@@ -27,16 +27,13 @@ import ORG.oclc.oai.server.verb.CannotDisseminateFormatException;
 import ORG.oclc.oai.server.verb.IdDoesNotExistException;
 import ORG.oclc.oai.server.verb.NoMetadataFormatsException;
 import ORG.oclc.oai.util.OAIUtil;
-import ferramentaBusca.indexador.Documento;
 import modelos.Repositorio;
-import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import modelos.DocumentoReal;
 
 import org.apache.log4j.Logger;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -45,7 +42,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import postgres.Conectar;
 import spring.ApplicationContextProvider;
 
 /**
@@ -65,7 +61,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
 	 */
 	private static int maxListSize;
 
-	@Autowired
+	
 	SessionFactory sessionFactory;
 
 	/**
@@ -762,7 +758,7 @@ public class HibernateOAICatalog extends AbstractCatalog {
 		
 	ApplicationContext ctx = ApplicationContextProvider
 				.getApplicationContext();
-		sessionFactory = ctx.getBean(SessionFactory.class);
+		SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 		Session session = sessionFactory.getCurrentSession();
 
 		Criteria criteria2 = session.createCriteria(Repositorio.class);

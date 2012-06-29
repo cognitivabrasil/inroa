@@ -376,7 +376,7 @@ ALTER TABLE public.r1idf OWNER TO feb;
 --
 
 CREATE TABLE r1length (
-    tid integer NOT NULL,
+    documento_id integer NOT NULL,
     len double precision
 );
 
@@ -396,19 +396,7 @@ CREATE TABLE r1size (
 
 ALTER TABLE public.r1size OWNER TO feb;
 
---
--- TOC entry 174 (class 1259 OID 16469)
--- Dependencies: 6
--- Name: r1sum; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
 
-CREATE TABLE r1sum (
-    token text NOT NULL,
-    total double precision
-);
-
-
-ALTER TABLE public.r1sum OWNER TO feb;
 
 --
 -- TOC entry 175 (class 1259 OID 16475)
@@ -417,7 +405,7 @@ ALTER TABLE public.r1sum OWNER TO feb;
 --
 
 CREATE TABLE r1tf (
-    tid integer NOT NULL,
+    documento_id integer NOT NULL,
     token text NOT NULL,
     tf integer
 );
@@ -432,7 +420,7 @@ ALTER TABLE public.r1tf OWNER TO feb;
 --
 
 CREATE TABLE r1tokens (
-    id integer NOT NULL,
+    documento_id integer NOT NULL,
     token text NOT NULL,
     field integer
 );
@@ -447,7 +435,7 @@ ALTER TABLE public.r1tokens OWNER TO feb;
 --
 
 CREATE TABLE r1weights (
-    tid integer NOT NULL,
+    documento_id integer NOT NULL,
     token text NOT NULL,
     weight double precision
 );

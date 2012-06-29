@@ -5,18 +5,14 @@
 package spring;
 
 import ferramentaBusca.Recuperador;
-
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import modelos.*;
-
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +23,7 @@ import spring.validador.BuscaValidator;
  * Controller geral para o FEB
  *
  * @author Paulo Schreiner <paulo@jorjao81.com>
+ * @author Marcos Nunes <marcosn@gmail.com>
  */
 @Controller("feb")
 public final class FEBController {
@@ -40,10 +37,6 @@ public final class FEBController {
     @Autowired
     private DocumentosDAO docDao;
     private BuscaValidator buscaValidator;
-    @Autowired
-    private PadraoMetadadosDAO padraoDao;
-    @Autowired
-    private SessionFactory sessionFactory;
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
@@ -72,7 +65,7 @@ public final class FEBController {
         model.addAttribute("subDAO", subDao);
         return "index2";
     }
-    
+
     /**
      * This method renders the object specified by the ID.
      *
@@ -82,13 +75,13 @@ public final class FEBController {
      */
     @RequestMapping("/objetos/{id}")
     public String infoDetalhada(@PathVariable Integer id, Model model) {
-    	DocumentoReal d = docDao.get(id);
-    	model.addAttribute("obaaEntry", d.getObaaEntry());
-    	model.addAttribute("title", d.getTitles().get(0));
-    	model.addAttribute("metadata", d.getMetadata());
-    	return "infoDetalhada";
+        DocumentoReal d = docDao.get(id);
+        model.addAttribute("obaaEntry", d.getObaaEntry());
+        model.addAttribute("title", d.getTitles().get(0));
+        model.addAttribute("metadata", d.getMetadata());
+        return "infoDetalhada";
     }
-    
+
     @RequestMapping("/consulta")
     public String consulta(HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
@@ -101,7 +94,7 @@ public final class FEBController {
             return "index";
         } else {
             try {
-                if(offset!=null){
+                if (offset != null) {
                     consulta.setOffset(offset);
                 }
 
@@ -174,6 +167,46 @@ public final class FEBController {
                 model.addAttribute("erro", "Usuário ou senha incorretos!");
             }
             return "login";
+        }
+    }
+
+    @RequestMapping("obaaconsulta")
+    public @ResponseBody
+    String webservice(
+            @RequestParam String query,
+            @RequestParam int limit,
+            @RequestParam int offset) {
+
+        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        try{
+        if (query == null || query.isEmpty()) {
+                xml = "<FEB> "
+                        + "  <error code=\"badQuery\">empty query</error> "
+                        + "</FEB>";
+            } else {
+                String encodedQuery = URLDecoder.decode(query, "UTF-8");
+
+                Recuperador rep = new Recuperador();
+                Consulta c = new Consulta();
+
+                c.setConsulta(encodedQuery);
+                c.setLimit(limit);
+                c.setOffset(offset);
+                List<DocumentoReal> docs = rep.busca(c);
+                if (docs.size() > 0) {
+                    xml = "<ListRecords>";
+                }
+                for (DocumentoReal doc : docs) {
+                    xml = "<record><metadata>"
+                            + doc.getObaaXml()
+                            + "</metadata></record>";
+                }
+            }
+
+        return xml;
+        
+        }catch (UnsupportedEncodingException u){
+            return "<error code=\"UnsupportedEncoding\">Unsupported Encoding to UTF-8. Error: "+u+"</error>";
         }
     }
 }

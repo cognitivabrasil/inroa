@@ -80,6 +80,10 @@ p:password="${dataSource.password}" /> -->
         class="modelos.UsuarioHibernateDAO">
 <!--         <property name="sessionFactory" ref="sessionFactory"/> -->
     </bean>
+
+    <bean id="TokensDAO"
+        class="modelos.TokensHibernateDao">
+    </bean>
      <context:annotation-config/>
 
  

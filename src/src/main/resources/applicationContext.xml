@@ -81,6 +81,14 @@ p:password="${dataSource.password}" /> -->
           class="modelos.UsuarioHibernateDAO">
 <!--         <property name="sessionFactory" ref="sessionFactory"/> -->
     </bean>
+
+    <bean id="TokensDAO"
+              class="modelos.TokensHibernateDao">
+    </bean>
+    
+    <bean id="Indexador"
+              class="ferramentaBusca.indexador.Indexador">
+    </bean>
     <context:annotation-config/>
  <!--Inicio Inicializar o Robo-->
   

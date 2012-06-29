@@ -4,6 +4,7 @@
  */
 package robo.util;
 
+import ferramentaBusca.indexador.StopWordTAD;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 import metadata.TextElement;
+import org.apache.log4j.Logger;
+import ptstemmer.Stemmer;
+import ptstemmer.exceptions.PTStemmerException;
 
 /**
  * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como
@@ -19,10 +23,12 @@ import metadata.TextElement;
  * @author Marcos
  */
 public class Operacoes {
+    static Logger log = Logger.getLogger(Operacoes.class);
 
     /**
-     * Testa se a data recebida é newDate(0) ou se j&aacute; foi alterada. Utilizado para testar
-     * se a base de dados deve ser sincronizada do zero ou não.
+     * Testa se a data recebida é newDate(0) ou se j&aacute; foi alterada.
+     * Utilizado para testar se a base de dados deve ser sincronizada do zero ou
+     * não.
      *
      * @param horaBase hora que será testada
      * @return true ou false. Se a data informada como parâmetro for menor
@@ -33,7 +39,7 @@ public class Operacoes {
             Date dataTeste = new Date(1);
 
             return dataTeste.after(horaBase);
-            
+
         } catch (NullPointerException n) {
             return true;
         }
@@ -114,7 +120,7 @@ public class Operacoes {
         SimpleDateFormat f = new SimpleDateFormat("'Dia' dd/MM/yyyy '&agrave;s' HH:mm:ss");
         if (data == null || testarDataDifZero(data)) {
             return "Ainda n&atilde;o foi atualizado!";
-        } else if (url==null || url.isEmpty()) {
+        } else if (url == null || url.isEmpty()) {
             return ("N&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o");
         } else {
             return f.format(data);
@@ -169,12 +175,56 @@ public class Operacoes {
             return format.format(date);
         }
     }
-    
-        public static List<String> toStringList(List<? extends TextElement> elements) {
+
+    public static List<String> toStringList(List<? extends TextElement> elements) {
         List<String> s = new ArrayList<String>();
         for (TextElement e : elements) {
             s.add(e.getText());
         }
         return s;
+    }
+
+    /**
+     * Esse m&eacute;todo retorna uma lista de palavras stemizada, sem stopwords
+     *
+     * @param S String que será tokenizada
+     * @param stopWords a variável com as stopwords sem estarem carregas
+     * @return lista de palavras stemizada, sem stopwords
+     */
+    public static List<String> tokeniza(String S, StopWordTAD stopWords) {
+
+        ArrayList<String> Words = new ArrayList<String>();
+
+        try {
+            Stemmer st;
+            st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
+
+            st.enableCaching(1000);
+
+            S = S.toLowerCase();
+
+            st.remove(stopWords.getRes());
+
+            S = Operacoes.removeAcentuacao(S); //chama o metodo que substitui as letras acentuadas e todo tipo de caracter alem de [a-zA-Z_0-9]
+
+            String tokens[];
+            tokens = st.getPhraseStems(S);
+
+            for (int i = 0; i < tokens.length; i++) {
+
+                if (!tokens[i].isEmpty()) {
+                    Words.add(tokens[i]);
+                }
+
+            }
+
+            if (Words.size() < 1) {
+                log.debug("Nenhuma palavra capturada! String: " + S + ". Provavelmente todos os tokens foram considerados StopWords.");
+            }
+            return Words;
+        } catch (PTStemmerException e) {
+            log.error("Erro ao stemmizar a frase: " + S, e);
+            return Words;
+        }
     }
 }

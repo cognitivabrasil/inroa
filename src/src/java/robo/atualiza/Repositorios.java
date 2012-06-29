@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
-import postgres.Conectar;
 import robo.atualiza.harvesterOAI.Harvester;
 import robo.atualiza.importaOAI.XMLtoDB;
 import robo.util.Informacoes;
@@ -102,14 +100,10 @@ public class Repositorios {
                     "Could not get AppContext bean!");
         } else {
 
-            Indexador indexar = new Indexador();
-            Connection con = null;
+            Indexador indexar = ctx.getBean(Indexador.class);
             boolean recalcularIndice = false;
-            Conectar conectar = new Conectar(); // instancia uma variavel da
-            // classe Conectar
             RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
-            try {
-                con = conectar.conectaBD(); // chama o metodo conectaBD da
+
                 // classe conectar
                 ArrayList<String> erros = new ArrayList<String>();
 
@@ -145,24 +139,13 @@ public class Repositorios {
                 if (recalcularIndice) {
                     log.info("FEB: recalculando o indice "
                             + dataFormat.format(new Date()));
-                    indexar.populateR1(con);
+                    indexar.populateR1();
                     log.info("FEB: indice recalculado! "
                             + dataFormat.format(new Date()));
                 }
                 if (erros.size() > 0) {
                     throw new RepositoriosException(getMensagem(erros)); // gera uma exception informando o nome dos repositorios que nao foram atualizados
                 }
-
-            } catch (SQLException e) {
-                log.error("FEB ERRO: SQL Exception... Erro na consulta SQL.", e);
-                throw e;
-            } finally {
-                try {
-                    con.close(); // fechar conexao
-                } catch (SQLException e) {
-                    log.error("FEB ERRO: Erro ao fechar a conexão.", e);
-                }
-            }
         }
 
     }

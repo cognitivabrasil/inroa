@@ -24,6 +24,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     private String url;
     private Date ultimaAtualizacao;
     private String dataXML;
+    private String dataXMLTemp;
     private Set<RepositorioSubFed> repositorios;
 
     public SubFederacao() {
@@ -42,6 +43,15 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
     public void setDataXML(String dataXML) {
         this.dataXML = dataXML;
+        this.dataXMLTemp=null;
+    }
+
+    public String getDataXMLTemp() {
+        return dataXMLTemp;
+    }
+
+    public void setDataXMLTemp(String dataXMLTemp) {
+        this.dataXMLTemp = dataXMLTemp;
     }
 
     public String getDescricao() {
@@ -86,6 +96,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
     public void setUltimaAtualizacao(Date ultimaAtualizacao) {
         this.ultimaAtualizacao = ultimaAtualizacao;
+        setDataXML(this.dataXMLTemp);
     }
 
     public String getUrl() {

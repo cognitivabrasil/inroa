@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * The Class DocumentosHibernateDAO.
  *
  * @author Paulo Schreiner <paulo@jorjao81.com>
+ * @author Marcos Nunes <marcosn@gmail.com>
  */
 public class DocumentosHibernateDAO implements DocumentosDAO {
 
@@ -156,5 +157,13 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     @Override
     public void flush() {
         getSession().flush();
+    }
+
+    @Override
+    public List<DocumentoReal> getwithoutToken(){
+        //retorna todos documentos que nao possuem r1tokens preenchido
+        String sql = "select d.id, d.obaa_entry, d.id_repositorio from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL AND d.deleted = FALSE";
+
+        return getSession().createSQLQuery(sql).addEntity(DocumentoReal.class).list();
     }
 }
