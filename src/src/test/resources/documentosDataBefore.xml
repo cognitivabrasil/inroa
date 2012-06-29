@@ -19,20 +19,20 @@ and open the template in the editor.
 
 
             
-    <repositorios id="1" nome="Cesta" descricao="dfsd" 
-                  url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request" 
+    <repositorios id="1" nome="Cesta" descricao="dfsd"
+                  url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request"
                   periodicidade_horas="24"
                   metadata_prefix="lom"
                   padrao_metadados="1"
                   mapeamento_id="1"
                   name_space="lom" />
-    <repositorios id="2" nome="Teste2" descricao="dfsd" url_or_ip="http://"        
+    <repositorios id="2" nome="Teste2" descricao="dfsd" url_or_ip="http://"
                   periodicidade_horas="24"
                   padrao_metadados="1"
                   mapeamento_id="1"
                   metadata_prefix="lom"
                   name_space="lom" />
-    <repositorios id="3" nome="Teste3" descricao="dfsd" url_or_ip="http://"        
+    <repositorios id="3" nome="Teste3" descricao="dfsd" url_or_ip="http://"
                   periodicidade_horas="24"
                   padrao_metadados="1"
                   mapeamento_id="1"
@@ -60,8 +60,26 @@ and open the template in the editor.
     <documentos id="4" obaa_entry="quatro" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="true"/>
     <documentos id="5" obaa_entry="cinco" id_repositorio="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
     <documentos id="6" obaa_entry="cinco2" id_rep_subfed="1" timestamp="2012-03-09 07:51:22.48377" deleted="false"/>
-        
 
+    <objetos id="1" atributo="obaaTitle" valor="Ataque a o TCP - Mitnick" documento="1" />
+    <objetos id="2" atributo="obaaTitle" valor="Exploraração segurança TCP" documento="1" />
+    <objetos id="3" atributo="obaaKeyword" valor="ataque Mitnick" documento="1" />
+    <objetos id="4" atributo="obaaKeyword" valor="segurança" documento="1" />
+    <objetos id="5" atributo="obaaKeyword" valor="TCP" documento="1" />
+    <objetos id="6" atributo="obaaDescription" valor="Animação ilustrando a troca de mensagens que ocorre quando um intruso bloqueia um computador medianteo envio de mensagens de hadshake repetidas e depois impersona esta máquina enquanto ela está imobilizada." documento="1" />
+
+    <stopwords id="1" stopword="a"/>" />
+    <stopwords id="2" stopword="o" />
+    <stopwords id="3" stopword="de" />
+    <stopwords id="4" stopword="depois" />
+    <stopwords id="5" stopword="que" />
+    <stopwords id="6" stopword="quando" />
+    <stopwords id="7" stopword="um" />
+    <stopwords id="8" stopword="e" />
+    <stopwords id="9" stopword="esta" />
+    <stopwords id="10" stopword="está" />
+    <stopwords id="11" stopword="enquanto" />
+    <stopwords id="12" stopword="ela" />
 
 
 </dataset>
