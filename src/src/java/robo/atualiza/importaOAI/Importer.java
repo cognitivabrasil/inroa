@@ -94,7 +94,7 @@ public class Importer {
 			d = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(oai.getResponseDate());
 			
 			System.out.println("Date: " + d.toString());
-			rep.setDataOrigem(d);
+			rep.setDataOrigemTemp(d);
 			repDao.save(rep);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

@@ -39,6 +39,7 @@ public class Repositorio implements java.io.Serializable, SubNodo {
     private SessionFactory sessionFactory;
     private Session session;
     private Date dataOrigem;
+    private Date dataOrigemTemp;
 
     public Repositorio() {
         // ApplicationContext ctx =
@@ -183,6 +184,9 @@ public class Repositorio implements java.io.Serializable, SubNodo {
 
     public void setUltimaAtualizacao(Date ultimaAtualizacao) {
         this.ultimaAtualizacao = ultimaAtualizacao;
+        if(this.dataOrigemTemp!=null){
+            this.dataOrigem = this.dataOrigemTemp;
+        }
     }
 
     public Date getUltimaAtualizacao() {
@@ -208,7 +212,17 @@ public class Repositorio implements java.io.Serializable, SubNodo {
 
     public void setDataOrigem(Date dataOrigem) {
         this.dataOrigem = dataOrigem;
+        this.dataOrigemTemp = null;
     }
+
+    public Date getDataOrigemTemp() {
+        return dataOrigemTemp;
+    }
+
+    public void setDataOrigemTemp(Date dataOrigemTemp) {
+        this.dataOrigemTemp = dataOrigemTemp;
+    }
+
 
     public String getNamespace() {
         return namespace;

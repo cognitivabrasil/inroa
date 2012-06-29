@@ -16,9 +16,8 @@ import robo.util.Operacoes;
  */
 public class SubFederacao implements java.io.Serializable, SubNodo {
 
-
-	private static final long serialVersionUID = 7452479917517752879L;
-	private Integer id;
+    private static final long serialVersionUID = 7452479917517752879L;
+    private Integer id;
     private String nome;
     private String descricao;
     private String url;
@@ -43,7 +42,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
     public void setDataXML(String dataXML) {
         this.dataXML = dataXML;
-        this.dataXMLTemp=null;
+        this.dataXMLTemp = null;
     }
 
     public String getDataXMLTemp() {
@@ -69,11 +68,12 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
 
+    @Override
     public String getNome() {
         return nome;
     }
@@ -85,18 +85,24 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     public Date getUltimaAtualizacao() {
         return ultimaAtualizacao;
     }
+
     /**
-     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada.
-     * Se a federa&ccedil;&atilde;o n&atilde;o tiver uma url associada ele informa que n&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o.
+     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se a
+     * federa&ccedil;&atilde;o n&atilde;o tiver uma url associada ele informa
+     * que n&atilde;o foi informado um endere&ccedil;o para
+     * sincroniza&ccedil;&atilde;o.
+     *
      * @return String contendo a data neste formato: Dia "x" &agrave;s "y"
      */
-    public String getUltimaAtualizacaoFormatada(){
+    public String getUltimaAtualizacaoFormatada() {
         return Operacoes.ultimaAtualizacaoFrase(getUltimaAtualizacao(), getUrl());
     }
 
     public void setUltimaAtualizacao(Date ultimaAtualizacao) {
         this.ultimaAtualizacao = ultimaAtualizacao;
-        setDataXML(this.dataXMLTemp);
+        if (dataXMLTemp != null) {
+            this.dataXML = this.dataXMLTemp;
+        }
     }
 
     public String getUrl() {
@@ -177,7 +183,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
         return size;
     }
-    
+
     @Override
     public Integer getSize() {
         return ((Integer) getSizeDoc());
@@ -196,8 +202,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
         }
     }
 
-    
-     /**
+    /**
      * M&eacute;todo que atualiza a base de dados local com os
      * reposit&oacute;rios da subfedera&ccedil;&atilde;o
      *
@@ -207,32 +212,32 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
      * @throws Exception
      */
     public void atualizaListaSubRepositorios(Set<String> listaSubRep) {
-    
-            Set<RepositorioSubFed> repSubFed = this.getRepositorios();
-            
 
-            for (String nomeSubRep : listaSubRep) {
-                RepositorioSubFed repTest = new RepositorioSubFed();
-                repTest.setSubFederacao(this);
-                repTest.setNome(nomeSubRep);
+        Set<RepositorioSubFed> repSubFed = this.getRepositorios();
 
-                if (!repSubFed.contains(repTest)) { //se nao tiver na base o repositorio, adiciona.
-                    repSubFed.add(repTest);
-                }
+
+        for (String nomeSubRep : listaSubRep) {
+            RepositorioSubFed repTest = new RepositorioSubFed();
+            repTest.setSubFederacao(this);
+            repTest.setNome(nomeSubRep);
+
+            if (!repSubFed.contains(repTest)) { //se nao tiver na base o repositorio, adiciona.
+                repSubFed.add(repTest);
             }
+        }
 
-            Set<RepositorioSubFed> newListRepositories = new HashSet<RepositorioSubFed>();
-            for (RepositorioSubFed repTest : repSubFed) { 
-                if (listaSubRep.contains(repTest.getNome())) { //se tiver na base algum repositorio que nao esteja na lista, remove.
-                    newListRepositories.add(repTest);
-                }
-            }        
-            this.setRepositorios(newListRepositories); //armazena o Set modificado
+        Set<RepositorioSubFed> newListRepositories = new HashSet<RepositorioSubFed>();
+        for (RepositorioSubFed repTest : repSubFed) {
+            if (listaSubRep.contains(repTest.getNome())) { //se tiver na base algum repositorio que nao esteja na lista, remove.
+                newListRepositories.add(repTest);
+            }
+        }
+        this.setRepositorios(newListRepositories); //armazena o Set modificado
     }
-    
-    public RepositorioSubFed getRepositoryByName(String nome){
-        for(RepositorioSubFed repSub : getRepositorios()){
-            if(repSub.getNome().equals(nome)) {
+
+    public RepositorioSubFed getRepositoryByName(String nome) {
+        for (RepositorioSubFed repSub : getRepositorios()) {
+            if (repSub.getNome().equals(nome)) {
                 return repSub;
             }
         }
