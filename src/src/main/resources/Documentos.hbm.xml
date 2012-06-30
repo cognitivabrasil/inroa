@@ -13,7 +13,7 @@
         <many-to-one class="modelos.RepositorioSubFed" column="id_rep_subfed" name="repositorioSubFed"/>
 
         <property name="timestamp" type="timestamp"/>
-        <set name="objetos" cascade="all" table="objetos">
+        <set name="objetos" cascade="all-delete-orphan" table="objetos" inverse="true">
             <key column="documento"/>
             <one-to-many class="modelos.Objeto"/>
         </set>
