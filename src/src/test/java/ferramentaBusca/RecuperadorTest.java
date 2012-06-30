@@ -11,15 +11,19 @@ import java.util.TreeSet;
 import modelos.Consulta;
 import static org.junit.Assert.assertEquals;
 import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 /**
  *
  * @author cei
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = "classpath:pretoTestApplicationContext.xml")
-//@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@Ignore
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class RecuperadorTest {
 
     Recuperador r;
