@@ -206,8 +206,6 @@ src/src/conf/MANIFEST.MF -text
 src/src/java/Exception/RepositoriosException.java -text
 src/src/java/RSS/Rss.java -text
 src/src/java/feb/oai/HibernateOAICatalog.java -text
-src/src/java/feb/oai/server/catalog/XMLRecordFactoryObaa.java -text
-src/src/java/feb/oai/server/crosswalk/XML2oai_obaa.java -text
 src/src/java/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text
 src/src/java/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
 src/src/java/ferramentaBusca/LRU.java -text
@@ -312,6 +310,7 @@ src/src/main/webapp/admin/federations/confirmDelete.jsp -text
 src/src/main/webapp/admin/federations/edit.jsp -text
 src/src/main/webapp/admin/federations/new.jsp -text
 src/src/main/webapp/admin/federations/show.jsp -text
+src/src/main/webapp/admin/mapeamentos/listaMapeamentoPadraoSelecionado.jsp -text
 src/src/main/webapp/admin/padraoMetadados/addPadrao.jsp -text
 src/src/main/webapp/admin/padraoMetadados/editaPadrao.jsp -text
 src/src/main/webapp/admin/padraoMetadados/padraoMetadados.jsp -text

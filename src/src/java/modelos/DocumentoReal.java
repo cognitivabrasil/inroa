@@ -1,9 +1,11 @@
 package modelos;
 
+import ORG.oclc.oai.models.HibernateOaiDocument;
 import cognitivabrasil.obaa.LifeCycle.Contribute;
 import cognitivabrasil.obaa.OBAA;
 import ferramentaBusca.indexador.StopWordTAD;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -18,7 +20,7 @@ import robo.util.Operacoes;
  * @author Paulo Schreiner <paulo@jorjao81.com>, Marcos Nunes <marcosn@gmail.com>, Luiz Rossi <lh.rossi@gmail.com>
  *
  */
-public class DocumentoReal implements java.io.Serializable, DocumentoFebInterface {
+public class DocumentoReal implements java.io.Serializable, DocumentoFebInterface, HibernateOaiDocument {
 
     private static final long serialVersionUID = 61217365141633065L;
     private int id;
@@ -385,4 +387,27 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     public boolean isIndexEmpty() {
         return (getTitles().isEmpty() && getKeywords().isEmpty() && getDescriptions().isEmpty());
     }
+
+    /* from here on down we implement the methods required by the HibernateOaiDocument interface */
+	@Override
+	public String getXml() {
+		return getObaaXml();
+	}
+
+	@Override
+	public String getOaiIdentifier() {
+		return getObaaEntry();
+	}
+
+	@Override
+	public Collection<String> getSets() {
+		Collection<String> c = new HashSet<String>();
+		if(getRepositorio() != null) {
+			c.add(getRepositorio().getNome());
+		}
+		else {
+			c.add(getRepositorioSubFed().getNome());
+		}
+		return c;
+	}
 }
