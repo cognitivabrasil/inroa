@@ -21,17 +21,6 @@ public class StopWordTAD {
     public StopWordTAD() {
         res = new HashSet<String>();
         idioma = "portugues";
-        Conectar conecta = new Conectar();
-        Connection con = conecta.conectaBD();
-        //apaga as tabelas antes de inserir
-
-        load(con);
-
-        try {
-            con.close(); //fechar conexao com o banco de dados
-        } catch (SQLException e) {
-            log.error("Erro ao fechar conexao com o Postgres", e);
-        }
     }
 
     public StopWordTAD(HashSet<String> lista) {
@@ -60,14 +49,16 @@ public class StopWordTAD {
         this.idioma = idioma;
     }
 
+
     /**
      * Função para carregar as stop words do banco de dados
      *
      * @return
      */
-    private boolean load(Connection con) {
+    public boolean load() {
+        Conectar conecta = new Conectar();
+        Connection con = conecta.conectaBD();
         try {
-
             Statement stm = con.createStatement();
 
             String sql = "SELECT stopword FROM stopwords;";
@@ -80,6 +71,12 @@ public class StopWordTAD {
         } catch (SQLException e) {
             System.out.println("ERRO ao carregar a lista de stop Words: " + e);
             return false;
+        } finally {
+            try {
+                con.close(); //fechar conexao com o banco de dados
+            } catch (SQLException e) {
+                log.error("Erro ao fechar conexao com o Postgres", e);
+            }
         }
     }
 }

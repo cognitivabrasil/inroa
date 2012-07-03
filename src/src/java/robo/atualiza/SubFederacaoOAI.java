@@ -19,6 +19,7 @@ import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
 import postgres.Conectar;
 import robo.atualiza.subfedOAI.Objetos;
@@ -51,7 +52,8 @@ public class SubFederacaoOAI {
 
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
-            log.error("FEB ERRO: Could not get AppContext bean!");
+            log.fatal("Could not get AppContext bean!");
+            throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
 
             try {
@@ -126,7 +128,8 @@ public class SubFederacaoOAI {
     private void atualizaSubFedOAI(SubFederacao subFed, Indexador indexar) throws Exception {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
-            log.error("FEB ERRO: Could not get AppContext bean!");
+            log.fatal("Could not get AppContext bean!");
+            throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
             log.info("FEB: Atualizando subfederacao: " + subFed.getNome());//imprime o nome do repositorio
 
@@ -208,7 +211,8 @@ public class SubFederacaoOAI {
     public void atualizaSubfedAdm(SubFederacao subFed, boolean apagar) throws Exception {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
-            log.error("FEB ERRO: Could not get AppContext bean!");
+            log.fatal("Could not get AppContext bean!");
+            throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
             Indexador indexar = ctx.getBean(Indexador.class);
 
@@ -238,12 +242,7 @@ public class SubFederacaoOAI {
                 Long fim = System.currentTimeMillis();
                 log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
             }
-
-            log.info("FEB: recalculando o indice.");
-            Long inicio = System.currentTimeMillis();
             indexar.populateR1();
-            Long fim = System.currentTimeMillis();
-            log.info("FEB: indice recalculado em " + (fim - inicio) / 1000 + " segundos.");
         }
     }
 }

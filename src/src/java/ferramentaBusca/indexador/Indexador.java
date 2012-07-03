@@ -109,7 +109,7 @@ public class Indexador {
      *
      */
     public void populateR1() {
-        log.debug("FEB: recalculando o indice...");
+        log.info("FEB: recalculando o indice...");
         Long inicio = System.currentTimeMillis();
 
 
@@ -118,14 +118,14 @@ public class Indexador {
 
         preencheR1Tokens(); //procura por documentos que nao foram tokenizados e tokeniza.
 
-        String r1size = "INSERT INTO r1size(size) SELECT COUNT(id) FROM documentos;";
+        String r1size = "INSERT INTO r1size(size) SELECT COUNT(d.id) FROM documentos d;";
 
         getSession().createSQLQuery(r1size).executeUpdate();
 
-        String r1idf = "INSERT INTO r1idf(token, idf) SELECT T.token, LOG(S.size)-LOG(COUNT(DISTINCT(id))) FROM r1tokens T, r1size S group by T.token, S.size;";
+        String r1idf = "INSERT INTO r1idf(token, idf) SELECT t.token, LOG(s.size)-LOG(COUNT(DISTINCT(t.documento_id))) FROM r1tokens t, r1size s group by t.token, s.size;";
         getSession().createSQLQuery(r1idf).executeUpdate();
 
-        String r1tf = "INSERT INTO r1tf(documento_id, token, tf) SELECT t.documento_id , t.token, SUM(CASE t.field WHEN 1 THEN 3 ELSE 1 END) FROM r1tokens t GROUP BY t.id, t.token;";
+        String r1tf = "INSERT INTO r1tf(documento_id, token, tf) SELECT t.documento_id , t.token, SUM(CASE t.field WHEN 1 THEN 3 ELSE 1 END) FROM r1tokens t GROUP BY t.documento_id, t.token;";
         getSession().createSQLQuery(r1tf).executeUpdate();
         //TODO: O r1idf e o  r1tf podem ser executados juntos para melhorar a performance. Pois são inserts demorados
         
@@ -141,7 +141,7 @@ public class Indexador {
 //        apagarCalculosIndice(con);
 
         Long fim = System.currentTimeMillis();
-        log.debug("indice recalculado. Levou " + ((fim - inicio) / 1000) + " segundos inserindo objetos.");
+        log.info("indice recalculado. Levou " + ((fim - inicio) / 1000) + " segundos inserindo objetos.");
     }
 
     /**
@@ -173,10 +173,14 @@ public class Indexador {
     private void preencheR1Tokens() {
 
         for (DocumentoReal doc : docDao.getwithoutToken()) {
+            System.out.println("doc.id: "+doc.getId());
+                if(doc.getId()==56059){
+                    System.out.println("");
+                }
             if (doc.isIndexEmpty()) {
                 log.warn("FEB: Foi encontrado um documento sem nenhum atributo. \n obaaEntry: " + doc.getObaaEntry());
                 docDao.delete(doc);
-                log.warn("FEB: Documento deletado");
+                log.warn("FEB: Documento deletado");                
             } else {
                 tokenDao.saveTokens(doc);
             }

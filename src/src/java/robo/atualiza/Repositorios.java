@@ -96,8 +96,7 @@ public class Repositorios {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.fatal("Could not get AppContext bean!");
-            throw new ApplicationContextException(
-                    "Could not get AppContext bean!");
+            throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
 
             Indexador indexar = ctx.getBean(Indexador.class);
@@ -137,11 +136,7 @@ public class Repositorios {
                 }
 
                 if (recalcularIndice) {
-                    log.info("FEB: recalculando o indice "
-                            + dataFormat.format(new Date()));
                     indexar.populateR1();
-                    log.info("FEB: indice recalculado! "
-                            + dataFormat.format(new Date()));
                 }
                 if (erros.size() > 0) {
                     throw new RepositoriosException(getMensagem(erros)); // gera uma exception informando o nome dos repositorios que nao foram atualizados
@@ -225,18 +220,9 @@ public class Repositorios {
 
                     // coletando xmls
                     ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(rep.getUrl(), Operacoes.formatDateOAIPMH(rep.getDataOrigem()), rep.getNome(), caminhoDiretorioTemporario, rep.getMetadataPrefix(), set); // chama o
-                    // metodo que
-                    // efetua o
-                    // HarvesterVerb
-                    // grava um xml
-                    // em disco e
-                    // retorna um
-                    // arrayList com
-                    // os caminhos
-                    // para os XML
+                    // metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
 
-                    // leXMLgravaBase: le do xml traduz para o padrao OBAA e
-                    // armazena na base de dados
+                    // leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados
                     updated = gravar.saveXML(caminhoXML, rep, indexar);
 
                 } else {

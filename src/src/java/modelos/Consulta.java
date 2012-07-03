@@ -8,7 +8,11 @@ import ferramentaBusca.indexador.StopWordTAD;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextException;
 import robo.util.Operacoes;
+import spring.ApplicationContextProvider;
 
 /**
  *
@@ -26,7 +30,8 @@ public class Consulta {
     private int offset;
     private int sizeResult;
     StopWordTAD stWd;
-    
+    private String idioma;
+    static Logger log = Logger.getLogger(Consulta.class);
 
     public Consulta() {
         consulta = "";
@@ -35,14 +40,21 @@ public class Consulta {
         federacoes = new HashSet<Integer>();
         repSubfed = new HashSet<Integer>();
         rss = false;
-        limit = 5   ;
+        limit = 5;
         offset = 0;
         sizeResult = 0;
-        stWd = new StopWordTAD();
+        idioma = "pt-BR";
     }
 
-    public List<String> getConsultaTokenizada(){
-        return Operacoes.tokeniza(this.consulta, stWd);
+    public List<String> getConsultaTokenizada() {
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+        if (ctx == null) {
+            log.fatal("Could not get AppContext bean!");
+            throw new ApplicationContextException("Could not get AppContext bean!");
+        } else {
+            StopWordsDao stopWordDao = ctx.getBean(StopWordsDao.class);
+            return Operacoes.tokeniza(this.consulta, stopWordDao.getStopWords(idioma));
+        }
     }
 
     public String getConsulta() {
@@ -84,11 +96,13 @@ public class Consulta {
     public void setRepositorios(Set<Integer> repositorios) {
         this.repositorios = repositorios;
     }
-    
-    public boolean hasAuthor(){
-        if (autor.equals("")) return false;
-        else
+
+    public boolean hasAuthor() {
+        if (autor.equals("")) {
+            return false;
+        } else {
             return true;
+        }
     }
 
     public boolean isRss() {
@@ -100,7 +114,9 @@ public class Consulta {
     }
 
     /**
-     * Retorna o valor de inicio para busca. Utilizado para pagina&ccedil;&atilde;o dos resultados
+     * Retorna o valor de inicio para busca. Utilizado para
+     * pagina&ccedil;&atilde;o dos resultados
+     *
      * @return inteiro com o valor inicial
      */
     public int getLimit() {
@@ -108,19 +124,23 @@ public class Consulta {
     }
 
     /**
-     * Valor inicial para busca. Utilizado para pagina&ccedil;&atilde;o dos resultados
-     * @param limit Valor inicial para busca, inicio = 5 informa que necessita dos resultados da consulta apartir do resultado 5.
+     * Valor inicial para busca. Utilizado para pagina&ccedil;&atilde;o dos
+     * resultados
+     *
+     * @param limit Valor inicial para busca, inicio = 5 informa que necessita
+     * dos resultados da consulta apartir do resultado 5.
      */
     public void setLimit(int limit) {
         this.limit = limit;
     }
-    
+
     public int getOffset() {
         return offset;
     }
 
     /**
      * Seta a quantidade de resultados para a busca.
+     *
      * @param offset Quantidade de resultados que necessita como resposta.
      */
     public void setOffset(int offset) {
@@ -134,7 +154,4 @@ public class Consulta {
     public void setSizeResult(int sizeResult) {
         this.sizeResult = sizeResult;
     }
-     
-    
-    
 }

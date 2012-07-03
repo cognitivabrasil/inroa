@@ -237,6 +237,9 @@ src/src/java/modelos/RepositorioSubFed.java -text
 src/src/java/modelos/RepositoryDAO.java -text
 src/src/java/modelos/RepositoryHibernateDAO.java -text
 src/src/java/modelos/ResultadoConsulta.java -text
+src/src/java/modelos/StopWordHibernateDao.java -text
+src/src/java/modelos/StopWords.java -text
+src/src/java/modelos/StopWordsDao.java -text
 src/src/java/modelos/SubFederacao.java -text
 src/src/java/modelos/SubFederacaoDAO.java -text
 src/src/java/modelos/SubFederacaoHibernateDAO.java -text

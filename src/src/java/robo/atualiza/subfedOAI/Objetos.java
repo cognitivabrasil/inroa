@@ -9,9 +9,9 @@ import java.io.File;
 import java.util.ArrayList;
 import modelos.DocumentosDAO;
 import modelos.SubFederacao;
-import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextException;
 import robo.atualiza.harvesterOAI.Harvester;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
@@ -46,7 +46,8 @@ public class Objetos {
 
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
-            log.error("Could not get AppContext bean! Class: " + this.getClass().getName());
+            log.fatal("Could not get AppContext bean!");
+            throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
 
 

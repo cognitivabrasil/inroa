@@ -55,11 +55,7 @@ public class Robo {
 
 //           if ((subFedAtualizada || repAtualizado) && nDocumentos!=selectNumeroDocumentos(con)) {
         if (subFedAtualizada || repAtualizado) {
-            log.info("FEB: recalculando o indice " + dataFormat.format(new Date()));
-            Long inicioIndice = System.currentTimeMillis();
             indexar.populateR1();
-            Long fimIndice = System.currentTimeMillis();
-            log.info("FEB: indice recalculado em: " + (fimIndice - inicioIndice) / 1000 + " segundos! ");
         } else {
             log.info("FEB: NAO existe atualizaçoes para os repositorios! " + dataFormat.format(new Date()));
         }

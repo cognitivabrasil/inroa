@@ -3,6 +3,7 @@ package modelos;
 import ORG.oclc.oai.models.HibernateOaiDocument;
 import cognitivabrasil.obaa.LifeCycle.Contribute;
 import cognitivabrasil.obaa.OBAA;
+import ferramentaBusca.indexador.Indexador;
 import ferramentaBusca.indexador.StopWordTAD;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,13 +12,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextException;
 import robo.util.Operacoes;
+import spring.ApplicationContextProvider;
 
 /**
  *
  * Representa um documento na Federação;
  *
- * @author Paulo Schreiner <paulo@jorjao81.com>, Marcos Nunes <marcosn@gmail.com>, Luiz Rossi <lh.rossi@gmail.com>
+ * @author Paulo Schreiner <paulo@jorjao81.com>
+ * @author Marcos Nunes <marcosn@gmail.com>
+ * @author Luiz Rossi <lh.rossi@gmail.com>
  *
  */
 public class DocumentoReal implements java.io.Serializable, DocumentoFebInterface, HibernateOaiDocument {
@@ -33,7 +39,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private String obaaXml;
     private OBAA metadata;
     private Set<Autor> autores;
-    private StopWordTAD stopWd;
+    private String language;
     static Logger log = Logger.getLogger(DocumentoReal.class);
     List<String> titleTokens;
     List<String> keywordTokens;
@@ -45,7 +51,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         objetos = new HashSet<Objeto>();
         deleted = false;
         autores = new HashSet<Autor>();
-        stopWd = new StopWordTAD();
+        language = "pt-BR";
     }
 
     public void addTitle(String title) {
@@ -145,6 +151,15 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     public void setRepositorio(Repositorio repositorio) {
         this.repositorio = repositorio;
     }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
 
     /**
      * @return the excluido
@@ -342,7 +357,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         if (titleTokens == null) {
             titleTokens = new ArrayList<String>();
             for (String titulo : getTitles()) {
-                titleTokens.addAll(Operacoes.tokeniza(titulo, stopWd));
+                titleTokens.addAll(Operacoes.tokeniza(titulo, getStopWords()));
             }
 
         }
@@ -354,7 +369,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         if (keywordTokens == null) {
             keywordTokens = new ArrayList<String>();
             for (String keyword : getKeywords()) {
-                keywordTokens.addAll(Operacoes.tokeniza(keyword, stopWd));
+                keywordTokens.addAll(Operacoes.tokeniza(keyword, getStopWords()));
             }
 
         }
@@ -366,7 +381,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         if (descriptionTokens == null) {
             descriptionTokens = new ArrayList<String>();
             for (String description : getDescriptions()) {
-                descriptionTokens.addAll(Operacoes.tokeniza(description, stopWd));
+                descriptionTokens.addAll(Operacoes.tokeniza(description, getStopWords()));
             }
         }
         return descriptionTokens;
@@ -388,26 +403,40 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return (getTitles().isEmpty() && getKeywords().isEmpty() && getDescriptions().isEmpty());
     }
 
-    /* from here on down we implement the methods required by the HibernateOaiDocument interface */
-	@Override
-	public String getXml() {
-		return getObaaXml();
-	}
+    /*
+     * from here on down we implement the methods required by the
+     * HibernateOaiDocument interface
+     */
+    @Override
+    public String getXml() {
+        return getObaaXml();
+    }
 
-	@Override
-	public String getOaiIdentifier() {
-		return getObaaEntry();
-	}
+    @Override
+    public String getOaiIdentifier() {
+        return getObaaEntry();
+    }
 
-	@Override
-	public Collection<String> getSets() {
-		Collection<String> c = new HashSet<String>();
-		if(getRepositorio() != null) {
-			c.add(getRepositorio().getNome());
-		}
-		else {
-			c.add(getRepositorioSubFed().getNome());
-		}
-		return c;
-	}
+    @Override
+    public Collection<String> getSets() {
+        Collection<String> c = new HashSet<String>();
+        if (getRepositorio() != null) {
+            c.add(getRepositorio().getNome());
+        } else {
+            c.add(getRepositorioSubFed().getNome());
+        }
+        return c;
+    }
+
+    private List<String> getStopWords() {
+        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+        if (ctx == null) {
+            log.fatal("Could not get AppContext bean!");
+            throw new ApplicationContextException("Could not get AppContext bean!");
+        } else {
+
+            StopWordsDao stopWordDao = ctx.getBean(StopWordsDao.class);
+            return stopWordDao.getStopWords(this.language);
+        }
+    }
 }

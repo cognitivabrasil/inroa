@@ -188,10 +188,10 @@ public class Operacoes {
      * Esse m&eacute;todo retorna uma lista de palavras stemizada, sem stopwords
      *
      * @param S String que será tokenizada
-     * @param stopWords a variável com as stopwords sem estarem carregas
+     * @param stopWords lista de stopwords
      * @return lista de palavras stemizada, sem stopwords
      */
-    public static List<String> tokeniza(String S, StopWordTAD stopWords) {
+    public static List<String> tokeniza(String S, List<String> stopWords) {
 
         ArrayList<String> Words = new ArrayList<String>();
 
@@ -203,7 +203,7 @@ public class Operacoes {
 
             S = S.toLowerCase();
 
-            st.remove(stopWords.getRes());
+            st.remove(stopWords);
 
             S = Operacoes.removeAcentuacao(S); //chama o metodo que substitui as letras acentuadas e todo tipo de caracter alem de [a-zA-Z_0-9]
 

@@ -162,7 +162,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     @Override
     public List<DocumentoReal> getwithoutToken(){
         //retorna todos documentos que nao possuem r1tokens preenchido
-        String sql = "select d.id, d.obaa_entry, d.id_repositorio from documentos d left join r1tokens r on r.id = d.id where r.id IS NULL AND d.deleted = FALSE";
+        String sql = "SELECT d.* FROM documentos d LEFT JOIN r1tokens r1t ON r1t.documento_id = d.id WHERE r1t.documento_id IS NULL AND d.deleted = FALSE";
 
         return getSession().createSQLQuery(sql).addEntity(DocumentoReal.class).list();
     }
