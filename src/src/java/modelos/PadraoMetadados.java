@@ -6,6 +6,8 @@ package modelos;
 
 import java.util.*;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  *
  * @author Marcos Nunes
@@ -36,14 +38,32 @@ public class PadraoMetadados implements java.io.Serializable {
         this.id = id;
     }
 
+    /**
+     * 
+     * @deprecated use @{link getName()} instead.
+     */
+    @Deprecated
     public String getNome() {
         return nome;
     }
 
+    /**
+     * 
+     * @deprecated use @{link setName()} instead.
+     */
+    @Deprecated
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    public String getName() {
+        return nome;
+    }
 
+    public void setName(String nome) {
+        this.nome = nome;
+    }
+   
     /**
      * @return the metadataPrefix
      */
@@ -88,19 +108,6 @@ public class PadraoMetadados implements java.io.Serializable {
         this.atributos = atributos;
     }
     
-    static String join(Collection<?> s, String delimiter) {
-        StringBuilder builder = new StringBuilder();
-        Iterator iter = s.iterator();
-        while (iter.hasNext()) {
-            builder.append(iter.next());
-            if (!iter.hasNext()) {
-                break;
-            }
-            builder.append(delimiter);
-        }
-        return builder.toString();
-    }
-    
     /**
      *  Separa os atributos da string e coloca em um Set usando o delimitador ";"
      * @return Set<String> contendo todos os atributos.
@@ -117,7 +124,7 @@ public class PadraoMetadados implements java.io.Serializable {
         if (c.isEmpty()) {
             this.atributos = "";
         } else {
-            this.atributos = join(c, ";");
+            this.atributos = StringUtils.join(c, ";");
         }
     }
     

@@ -226,8 +226,62 @@ Author     : Marcos Nunes
 	<!--Fim codigo que lista os padroes-->
 
 	<!--Insere codigo que lista os mapeamentos-->
-	<%--@include file="./mapeamentos/mapeamentos.jsp"--%>
-	<!--Fim codigo que lista os mapeamentos-->
+
+	<table class='repositorios-table' id='padroes' cellpadding=3>
+		<tr>
+			<th colspan=4><font size="3%" color=black>Lista de Mapeamentos</font></th>
+		</tr>
+
+		<tr style="background-color: #AEC9E3">
+			<th width="10%">Opera&ccedil;&otilde;es</th>
+
+
+			<th width="20%">Nome</th>
+			<th width="50%">Descrição</th>
+			<th width="20%">Padrão Metadados</th>
+
+		</tr>
+		<c:forEach var="mapeamento" items="${mapeamentos}"
+			varStatus="status">
+			<tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
+
+
+				<td><security:authorize
+						access="hasRole('PERM_MANAGE_METADATA')">
+						<input type="button" class="botaoExcluir"
+							title="Excluir padr&atilde;o de metadados" name="excluir"
+							id="excluirPadrao"
+							onclick="confirmaDelPadrao(${mapeamento.id},'msgerro','padroes',this.parentNode.parentNode.rowIndex);" />
+					</security:authorize> &nbsp; <input type="button" class="botaoEditar"
+					title="Editar / Visualizar" name="editar" id="editarPadrao"
+					onclick="NewWindow('./mapeamentos/${mapeamento.id}','editaMapeamento','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
+				</td>
+				<td>${mapeamento.name}</td>
+				<td>${mapeamento.description}</td>
+				<td>${mapeamento.padraoMetadados.name}</td>
+
+			</tr>
+		</c:forEach>
+
+		<security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+
+			<tr class='center'>
+				<td><a title="Adicionar novo padr&atilde;o de metadados"
+					onclick="NewWindow('./padraoMetadados/addPadrao','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+						<img
+						src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+						border="0" width="24" height="24" alt="Visualizar" align="middle">
+				</a></td>
+				<td colspan="2" class="left bold" style="font-size: 110%">
+					&nbsp;&nbsp; <a
+					onclick="NewWindow('./padraoMetadados/addPadrao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+						Adicionar novo padr&atilde;o </a>
+				</td>
+				<td><div id='msgerro' class='textoErro left'></div></td>
+			</tr>
+		</security:authorize>
+	</table>
+<!--Fim codigo que lista os mapeamentos-->
 
 
 	<table class='repositorios-table' cellpadding=3>
