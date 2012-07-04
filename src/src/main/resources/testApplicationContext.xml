@@ -84,6 +84,8 @@ p:password="${dataSource.password}" /> -->
     <bean id="TokensDAO"
         class="modelos.TokensHibernateDao">
     </bean>
+
+    <bean id="StopWord" class="modelos.StopWordHibernateDao"></bean>
      <context:annotation-config/>
 
  

@@ -141,7 +141,7 @@ public class Indexador {
 //        apagarCalculosIndice(con);
 
         Long fim = System.currentTimeMillis();
-        log.info("indice recalculado. Levou " + ((fim - inicio) / 1000) + " segundos inserindo objetos.");
+        log.info("indice recalculado. Levou " + ((fim - inicio) / 1000) + " segundos recalculando o indice.");
     }
 
     /**
@@ -173,10 +173,6 @@ public class Indexador {
     private void preencheR1Tokens() {
 
         for (DocumentoReal doc : docDao.getwithoutToken()) {
-            System.out.println("doc.id: "+doc.getId());
-                if(doc.getId()==56059){
-                    System.out.println("");
-                }
             if (doc.isIndexEmpty()) {
                 log.warn("FEB: Foi encontrado um documento sem nenhum atributo. \n obaaEntry: " + doc.getObaaEntry());
                 docDao.delete(doc);
