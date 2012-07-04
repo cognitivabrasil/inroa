@@ -211,7 +211,6 @@ src/src/java/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
 src/src/java/ferramentaBusca/LRU.java -text
 src/src/java/ferramentaBusca/Recuperador.java -text
 src/src/java/ferramentaBusca/indexador/Indexador.java -text
-src/src/java/ferramentaBusca/indexador/StopWordTAD.java -text
 src/src/java/ferramentaBusca/indexador/package.html -text
 src/src/java/ferramentaBusca/package.html -text
 src/src/java/metadata/conversor/Conversor.java -text

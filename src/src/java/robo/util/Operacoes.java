@@ -4,7 +4,6 @@
  */
 package robo.util;
 
-import ferramentaBusca.indexador.StopWordTAD;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

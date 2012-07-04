@@ -4,7 +4,6 @@
  */
 package modelos;
 
-import ferramentaBusca.indexador.StopWordTAD;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +28,6 @@ public class Consulta {
     private int limit;
     private int offset;
     private int sizeResult;
-    StopWordTAD stWd;
     private String idioma;
     static Logger log = Logger.getLogger(Consulta.class);
 
