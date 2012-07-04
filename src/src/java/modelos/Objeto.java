@@ -1,67 +1,58 @@
-
-
 // Generated 20/07/2011 15:25:15 by Hibernate Tools 3.2.0.b9
-
 package modelos;
 
-
 /**
- *  
- *       Represents a single playable track in the music database.
- *       @author Jim Elliott (with help from Hibernate)
- *     
+ *
+ *
+ * @author Paulo
+ *
  */
-public class Objeto  implements java.io.Serializable {
+public class Objeto implements java.io.Serializable {
 
-
-     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private int id;
-     private DocumentoReal documento;
-     private String atributo;
-     private String valor;
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private DocumentoReal documento;
+    private String atributo;
+    private String valor;
 
     public Objeto() {
     }
 
-	
     public int getId() {
         return this.id;
     }
-    
+
     protected void setId(int id) {
         this.id = id;
     }
 
-	/**
-	 * @return the atributo
-	 */
-	public String getAtributo() {
-		return atributo;
-	}
+    /**
+     * @return the atributo
+     */
+    public String getAtributo() {
+        return atributo;
+    }
 
-	/**
-	 * @param atributo the atributo to set
-	 */
-	public void setAtributo(String atributo) {
-		this.atributo = atributo;
-	}
+    /**
+     * @param atributo the atributo to set
+     */
+    public void setAtributo(String atributo) {
+        this.atributo = atributo;
+    }
 
-	/**
-	 * @return the valor
-	 */
-	public String getValor() {
-		return valor;
-	}
+    /**
+     * @return the valor
+     */
+    public String getValor() {
+        return valor;
+    }
 
-	/**
-	 * @param valor the valor to set
-	 */
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
+    /**
+     * @param valor the valor to set
+     */
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
 
     /**
      * @return the documento
@@ -71,14 +62,9 @@ public class Objeto  implements java.io.Serializable {
     }
 
     /**
-     * @param documento the documento to set 
+     * @param documento the documento to set
      */
     public void setDocumento(DocumentoReal documento) {
         this.documento = documento;
     }
-    
-
-
 }
-
-
