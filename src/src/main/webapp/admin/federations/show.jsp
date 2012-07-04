@@ -64,7 +64,7 @@
 			<c:choose>
 				<c:when test="${federation.isOutdated}">
 					<div id="textResultSF${param.id}" class='Value textoErro'>
-						&nbsp;
+                                            <span>
 						${federation.ultimaAtualizacaoFormatada}
 						<security:authorize access="hasRole('PERM_UPDATE')">
 
@@ -74,11 +74,12 @@
 								width='24' height='24' alt='Atualizar' align='middle'>
 							</a>
 						</security:authorize>
+                                                </span>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div id="textResultSF${federation.id}" class="Value">
-						&nbsp;
+						<span>
 						${federation.ultimaAtualizacaoFormatada}
 						<security:authorize access="hasRole('PERM_UPDATE')">
 
@@ -88,6 +89,7 @@
 								height='24' alt='Atualizar' align='middle'>
 							</a>
 						</security:authorize>
+                                                </span>
 					</div>
 				</c:otherwise>
 			</c:choose>

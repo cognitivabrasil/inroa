@@ -102,7 +102,7 @@
 		<div class="EspacoAntes">&nbsp;</div>
 		<div class="LinhaEntrada">
 			<div class="Label">&Uacute;ltima Atualiza&ccedil;&atilde;o:</div>
-			<div class="Value">&nbsp;${rep.ultimaAtualizacaoFormatada}</div>
+			<div class="Value">${rep.ultimaAtualizacaoFormatada}</div>
 		</div>
 		<div class="LinhaEntrada">
 			<div class="Label">Pr&oacute;xima Atualiza&ccedil;&atilde;o:</div>
@@ -110,7 +110,7 @@
 			<c:choose>
 				<c:when test="${rep.isOutdated}">
 					<div id='textResult${repId}' class="ValueErro">
-						&nbsp;
+                                            <span>
 						${rep.ultimaAtualizacaoFormatada} &nbsp;&nbsp;
 						<security:authorize access="hasRole('PERM_UPDATE')">
 
@@ -122,11 +122,12 @@
 								alt='Atualizar' align='middle'>
 							</a>
 						</security:authorize>
+                                                </span>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="Value" id="textResult${repId}">
-						&nbsp;
+                                            <span>
 						${rep.ultimaAtualizacaoFormatada} &nbsp;&nbsp;
 						<security:authorize access="hasRole('PERM_UPDATE')">
 
@@ -137,6 +138,7 @@
 								align='middle'>
 							</a>
 						</security:authorize>
+                                                </span>
 					</div>
 				</c:otherwise>
 			</c:choose>
