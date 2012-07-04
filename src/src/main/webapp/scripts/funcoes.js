@@ -202,18 +202,22 @@ function updateSubnodeAjax(link, showResults)
 
                 if(isNaN(parseInt(resultado))){
                     showResults.innerHTML = resultado;
+                    showResults.className = "textoErro";
                 }else{
                     if(parseInt(resultado)>0){
-                        showResults.innerHTML = "Atualizado com sucesso.";
+                        showResults.innerHTML = "Atualizado com sucesso!";
+                        showResults.className="sucesso";
                     }
                     else{
                         showResults.innerHTML = "Ocorreu algum erro ao Atualizar!";
+                        showResults.className = "textoErro";                        
                     }
                 }
             }
             else
             {
                 showResults.innerHTML = "Erro nas funções do Ajax";
+                showResults.className = "textoErro";
             }
         }
     }

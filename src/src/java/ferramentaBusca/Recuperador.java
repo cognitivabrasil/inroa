@@ -124,7 +124,7 @@ public class Recuperador {
                 
             } else {
                 String consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
-                        + " WHERE r1w.tid=d.id "
+                        + " WHERE r1w.documento_id=d.id "
                         + " AND (r1w.token=";
 
                 for (int i = 0; i < tokensConsulta.size(); i++) {
@@ -141,7 +141,7 @@ public class Recuperador {
             }
         } else {
             String consultaSql = "SELECT d.* FROM r1weights r1w, documentos d"
-                    + " WHERE r1w.tid=d.id "
+                    + " WHERE r1w.documento_id=d.id "
                     + " AND (r1w.token=";
 
             for (int i = 0; i < tokensConsulta.size(); i++) {
@@ -166,12 +166,12 @@ public class Recuperador {
                 consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
-                        + " WHERE r1w.tid=d.id "
+                        + " WHERE r1w.documento_id=d.id "
                         + " AND (";
             }
         } else {
             consultaSql = "SELECT d.* FROM r1weights r1w, documentos d "
-                    + " WHERE r1w.tid=d.id "
+                    + " WHERE r1w.documento_id=d.id "
                     + " AND (";
         }
         
@@ -214,12 +214,12 @@ public class Recuperador {
                 consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
-                        + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
+                        + " WHERE r1w.documento_id=d.id AND d.id_rep_subfed = rsf.id"
                         + " AND (";
             }
         } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf"
-                + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id "
+                + " WHERE r1w.documento_id=d.id AND d.id_rep_subfed = rsf.id "
                 + " AND (";
         }
 
@@ -265,12 +265,12 @@ public class Recuperador {
                 consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
-                        + " WHERE r1w.tid=d.id "
+                        + " WHERE r1w.documento_id=d.id "
                         + " AND (";
             }
         } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d"
-                + " WHERE r1w.tid=d.id "
+                + " WHERE r1w.documento_id=d.id "
                 + " AND (";
         }
 
@@ -316,12 +316,12 @@ public class Recuperador {
                 consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
-                + " WHERE r1w.tid=d.id AND ("
+                + " WHERE r1w.documento_id=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
             }
         } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf"
-                + " WHERE r1w.tid=d.id AND ("
+                + " WHERE r1w.documento_id=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
         }
         
@@ -384,12 +384,12 @@ public class Recuperador {
                 consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
-                + " WHERE r1w.tid=d.id"
+                + " WHERE r1w.documento_id=d.id"
                 + " AND (";
             }
         } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d"
-                + " WHERE r1w.tid=d.id"
+                + " WHERE r1w.documento_id=d.id"
                 + " AND (";
         }     
 
@@ -440,12 +440,12 @@ public class Recuperador {
                 consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
-                + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
+                + " WHERE r1w.documento_id=d.id AND d.id_rep_subfed = rsf.id"
                 + " AND (";
             }
         } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf"
-                + " WHERE r1w.tid=d.id AND d.id_rep_subfed = rsf.id"
+                + " WHERE r1w.documento_id=d.id AND d.id_rep_subfed = rsf.id"
                 + " AND (";
         }       
         
@@ -496,12 +496,12 @@ public class Recuperador {
                 consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
-                + " WHERE r1w.tid=d.id AND ("
+                + " WHERE r1w.documento_id=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
             }
         } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf"
-                + " WHERE r1w.tid=d.id AND ("
+                + " WHERE r1w.documento_id=d.id AND ("
                 + " (d.id_rep_subfed = rsf.id AND (";
         } 
 
