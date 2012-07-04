@@ -5,9 +5,7 @@
 package RSS;
 
 import ferramentaBusca.Recuperador;
-import java.util.ArrayList;
 import java.sql.*;
-import postgres.Conectar;
 import java.io.*;
 import java.util.*;
 import org.w3c.dom.*;
@@ -77,9 +75,7 @@ public class Rss {
      **/
     public String generateFeed() {
         //ArrayList<Integer> idArray = new ArrayList<Integer>();
-        Conectar conectar = new Conectar(); //instancia uma variavel da classe conectar
-        Connection con = conectar.conectaBD(); //chama o metodo conectaBD da classe conectar
-
+        Connection con = null; //TODO: tirei a conexao com o postgres, tem que refatorar para usar o hibernate.
         Recuperador rep = new Recuperador();
         String xml = "";
 

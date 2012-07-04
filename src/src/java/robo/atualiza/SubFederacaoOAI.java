@@ -8,7 +8,6 @@ import ferramentaBusca.indexador.Indexador;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -21,11 +20,9 @@ import org.hibernate.HibernateException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
-import postgres.Conectar;
 import robo.atualiza.subfedOAI.Objetos;
 import robo.atualiza.subfedOAI.SubRepositorios;
 import robo.util.Informacoes;
-import robo.util.Operacoes;
 import spring.ApplicationContextProvider;
 
 /**

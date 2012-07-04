@@ -248,7 +248,6 @@ src/src/java/modelos/TokensHibernateDao.java -text
 src/src/java/modelos/Usuario.java -text
 src/src/java/modelos/UsuarioDAO.java -text
 src/src/java/modelos/UsuarioHibernateDAO.java -text
-src/src/java/postgres/Conectar.java -text
 src/src/java/postgres/SingletonConfig.java -text
 src/src/java/postgres/package.html -text
 src/src/java/postgres/teste.java -text
@@ -305,7 +304,6 @@ src/src/main/webapp/WEB-INF/main-servlet.xml -text
 src/src/main/webapp/WEB-INF/web.xml -text
 src/src/main/webapp/admin/adm.jsp -text
 src/src/main/webapp/admin/alterarSenhaBD.jsp -text
-src/src/main/webapp/admin/conexaoBD.jsp -text
 src/src/main/webapp/admin/erroBase.jsp -text
 src/src/main/webapp/admin/fechaRecarrega.jsp -text
 src/src/main/webapp/admin/federations/confirmDelete.jsp -text
