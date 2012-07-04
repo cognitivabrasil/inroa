@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import modelos.Consulta;
 import modelos.DocumentoReal;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -208,7 +207,7 @@ public class Recuperador {
 
     //subfed
     protected String busca_subfed(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
-        String consultaSql = "";
+        String consultaSql;
         if (c.hasAuthor()) {                    // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";

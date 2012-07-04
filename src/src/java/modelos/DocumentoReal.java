@@ -178,9 +178,6 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return l;
     }
 
-    public List<String> getAuthors() {
-        return getAttribute("obaaEntity");
-    }
 
     @Override
     public List<String> getTitles() {
