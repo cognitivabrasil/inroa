@@ -720,7 +720,7 @@ ALTER TABLE ONLY mapeamentos
 --
 
 ALTER TABLE ONLY autores
-    ADD CONSTRAINT pki_autores PRIMARY KEY (nome, documento);
+    ADD CONSTRAINT pki_autores PRIMARY KEY (id);
 
 
 --

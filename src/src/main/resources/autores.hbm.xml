@@ -6,7 +6,7 @@
         <id column="id" name="id" type="int">
             <generator class="sequence">
                 <param name="sequence">autores_id_seq</param>
-            </generator>    
+            </generator>
         </id>
         <property column="nome" name="nome" type="string"/>        
         <many-to-one class="modelos.DocumentoReal" column="documento" name="doc"/>
