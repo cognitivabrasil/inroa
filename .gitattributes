@@ -248,6 +248,9 @@ src/src/java/modelos/TokensHibernateDao.java -text
 src/src/java/modelos/Usuario.java -text
 src/src/java/modelos/UsuarioDAO.java -text
 src/src/java/modelos/UsuarioHibernateDAO.java -text
+src/src/java/modelos/Visitas.java -text
+src/src/java/modelos/VisitasDao.java -text
+src/src/java/modelos/VisitasHibernateDao.java -text
 src/src/java/postgres/SingletonConfig.java -text
 src/src/java/postgres/package.html -text
 src/src/java/postgres/teste.java -text
@@ -289,6 +292,7 @@ src/src/main/resources/Repositorio.hbm.xml -text
 src/src/main/resources/RepositorioSubFed.hbm.xml -text
 src/src/main/resources/SubFederacao.hbm.xml -text
 src/src/main/resources/Usuario.hbm.xml -text
+src/src/main/resources/Visitas.hbm.xml -text
 src/src/main/resources/applicationContext.xml -text
 src/src/main/resources/autores.hbm.xml -text
 src/src/main/resources/dummy.properties -text

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="modelos.Visitas" table="visitas">
+        <id column="id" name="id" type="int">
+            <generator class="sequence">
+                <param name="sequence">visitas_id_seq</param>
+            </generator>  
+        </id>
+    <property name="horario" type="timestamp" column="horario"/>
+    </class>
+</hibernate-mapping>

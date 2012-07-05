@@ -571,6 +571,29 @@ CREATE TABLE usuarios (
 
 ALTER TABLE public.usuarios OWNER TO feb;
 
+
+-- Table: visitas
+
+CREATE TABLE visitas (
+  id serial NOT NULL,
+  horario timestamp without time zone
+);
+
+ALTER TABLE visitas
+  OWNER TO feb;
+COMMENT ON TABLE visitas IS 'contador de visitas do FEB';
+
+-- Sequence: visitas_id_seq
+
+CREATE SEQUENCE visitas_id_seq
+    START WITH 100
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE public.visitas_id_seq OWNER TO feb;
+
 --
 -- TOC entry 183 (class 1259 OID 16528)
 -- Dependencies: 6 182

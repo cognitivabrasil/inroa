@@ -1,14 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package modelos;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +11,6 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import spring.ApplicationContextProvider;
 
 /**
@@ -39,8 +33,8 @@ import spring.ApplicationContextProvider;
  * @author paulo
  */
 public class Usuario implements UserDetails {
-	private static final long serialVersionUID = -2896658180312977640L;
-	private Integer id;
+    private static final long serialVersionUID = -2896658180312977640L;
+    private Integer id;
     private String login;
     private String passwordMd5;
     private String description;
