@@ -163,7 +163,6 @@ src/cucumber/features/step_definitions/search_steps.rb -text
 src/cucumber/features/support/env.rb -text
 src/cucumber/vazio.c -text
 src/cucumber/vazio.sh -text
-src/dc2obaa.xml -text
 src/debian/README.Debian -text
 src/debian/README.source -text
 src/debian/changelog -text

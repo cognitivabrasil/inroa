@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
+import java.io.File;
 
 import org.hamcrest.core.IsNull;
 import org.junit.After;
@@ -83,6 +84,8 @@ public class XsltDC2ObaaTest {
 	
 	@After
 	public void tearDown() {
+            File dc2obaa = new File("dc2obaa.xml");
+            dc2obaa.delete();
 	}
 
 	@Test

@@ -287,7 +287,7 @@ Author     : Marcos Nunes
 	<table class='repositorios-table' cellpadding=3>
 		<tr>
 			<th colspan=4><font size="3%" color=black>Lista de
-					Subfedera&ccedil;&atilde;o cadastradas</font></th>
+					Subfedera&ccedil;&otilde;es cadastradas</font></th>
 		</tr>
 
 		<tr style="background-color: #AEC9E3">
