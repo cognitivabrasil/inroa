@@ -28,16 +28,13 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     private SubFederacao federation;
 
     /**
-     * Gets a List of Documents by obaa entry. Note that in theory it shouldn't
-     * be possible to have 2 objects with the same OBAAEntry but in some bizarre
-     * circumstances it might happen.
-     *
+     * Gets a List of Documents by obaa entry.
      * @param e the ObaaEntry
      * @return List of documentos with this obaaEntry
      */
     @SuppressWarnings("unchecked")
-    private List<DocumentoReal> getByObaaEntry(String e) {
-        return getSession().createCriteria(DocumentoReal.class).add(Restrictions.eq("obaaEntry", e)).list();
+    private DocumentoReal getByObaaEntry(String e) {
+        return (DocumentoReal) getSession().createCriteria(DocumentoReal.class).add(Restrictions.eq("obaaEntry", e)).uniqueResult();
 
     }
 
@@ -67,8 +64,8 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
     @Override
     public void deleteByObaaEntry(String e) {
-        for (DocumentoReal d : getByObaaEntry(e)) {
-            log.trace("DeleteByObaaEntry: " + e);
+        DocumentoReal d = getByObaaEntry(e); 
+        if(d!= null) {
             delete(d);
         }
     }
@@ -85,8 +82,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
      */
     @Override
     public void save(OBAA obaa, Header h) throws IllegalStateException {
-        DocumentoReal doc = new DocumentoReal();
-        doc.setDeleted(false);
+    	
+    	DocumentoReal doc = new DocumentoReal();
+        		doc.setDeleted(false);
         log.trace("Going to create documento " + h.getIdentifier());
 
         if ((getRepository() == null) && (this.federation == null)) {
@@ -107,10 +105,13 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
         doc.setObaaEntry(h.getIdentifier());
         doc.setTimestamp(h.getTimestamp());
+        
+        deleteWithoutId(doc);
+        
 
         if (h.isDeleted()) {
             doc.setDeleted(true);
-            deleteByObaaEntry(doc.getObaaEntry());
+//            deleteByObaaEntry(doc.getObaaEntry());
         } else {
             doc.setMetadata(obaa);
         }
@@ -127,7 +128,34 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
         }
     }
 
-    @Override
+    /**
+     * Deletes a DocumentReal by obaaEntry and (sub)rep id.
+     * 
+     * @param doc
+     */
+    private void deleteWithoutId(DocumentoReal doc) {
+			DocumentoReal d;
+			if(doc.getRepositorio() != null) {
+				d = (DocumentoReal) getSession().createCriteria(DocumentoReal.class).
+						add(Restrictions.eq("repositorio", doc.getRepositorio())).
+						add(Restrictions.eq("obaaEntry", doc.getObaaEntry())).
+						uniqueResult();
+			}
+			else if(doc.getRepositorio() != null) {
+				d = (DocumentoReal) getSession().createCriteria(DocumentoReal.class).
+						add(Restrictions.eq("repositorioSubFed", doc.getRepositorioSubFed())).
+						add(Restrictions.eq("obaaEntry", doc.getObaaEntry())).
+						uniqueResult();
+			}
+			else {
+				return;
+			}
+			if(d != null) {
+				delete(d);
+			}
+	}
+
+	@Override
     public SubNodo getRepository() {
         return repository;
     }

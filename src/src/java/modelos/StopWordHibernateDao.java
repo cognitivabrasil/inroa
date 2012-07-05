@@ -11,11 +11,13 @@ import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  */
+@Transactional
 public class StopWordHibernateDao implements StopWordsDao {
 
     @Autowired

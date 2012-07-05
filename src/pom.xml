@@ -466,31 +466,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                    <argLine>${jacoco.agent.argLine}</argLine>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <configuration>
-                    <propertyName>jacoco.agent.argLine</propertyName> <!-- default: argLine -->
-                    <includes>
-                        <include>com/comoyo/**</include>
-                    </includes>
-                    <destFile>${project.build.directory}/jacoco-integration.exec</destFile> <!-- agent -->
-                    <dataFile>${project.build.directory}/jacoco-integration.exec</dataFile> <!-- report -->
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
             <plugin>

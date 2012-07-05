@@ -16,6 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -24,6 +26,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
+@Transactional
 public class TokensHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
@@ -31,7 +35,7 @@ public class TokensHibernateDaoIT extends AbstractDaoTest {
     @Autowired
     DocumentosHibernateDAO docDao;
     @Autowired
-    private SessionFactory sessionFactory;
+    SessionFactory sessionFactory;
 
     @Test
     public void testSaveTokens() {

@@ -87,4 +87,8 @@ public class TokensHibernateDao implements TokensDao {
             query.executeUpdate();
         }
     }
+
+	public void setSessionFactory(SessionFactory sessionFactory2) {
+		sessionFactory = sessionFactory2;		
+	}
 }

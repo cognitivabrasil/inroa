@@ -4,10 +4,17 @@ import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import metadata.Header;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +44,8 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
     
     @Autowired
     RepositoryHibernateDAO repDao;
+    
+    @Autowired SessionFactory sessionFactory;
 
     @Test @Ignore
     public void testSaveException() throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
@@ -179,8 +188,68 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         assertThat(d.getMetadata().getTitles(), hasItem("teste1"));
 
     }
+    
+    /** an existing document, when saved, should replace the old one. */
+    @Test
+    public void saveExisting() {
+        OBAA obaa = new OBAA();
+        obaa.setGeneral(new General());
+
+        obaa.getGeneral().addTitle("teste1");
+        obaa.getGeneral().addTitle("teste2");
+
+        obaa.getGeneral().addKeyword("key1");
+        obaa.getGeneral().addKeyword("key2");
+        obaa.getGeneral().addKeyword("key3");
+
+        obaa.getGeneral().addDescription("Bla bla");
 
 
+        Header h = mock(Header.class);
+        
+        Repositorio r = repDao.get(1);
+        instance.setRepository(r);
+
+        when(h.getTimestamp()).thenReturn(new Date());
+        when(h.getIdentifier()).thenReturn("dois"); // existing obaa entry
+
+        int oldSize = instance.getAll().size();
+        instance.save(obaa, h);
+
+        DocumentoReal d = instance.get("obaa:identifier");
+       
+        assertThat(instance.getAll().size(), equalTo(oldSize));
+
+    }
+
+    @Test
+    public void cascadesObjects() {
+        Session s = sessionFactory.getCurrentSession();
+
+        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(6));
+
+        instance.delete(instance.get(1));
+        
+        s.flush();
+        
+        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(0));
+
+    }
+    
+    @Test
+    public void removesObjects() {
+        Session s = sessionFactory.getCurrentSession();
+
+        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(6));
+
+        DocumentoReal doc = instance.get(1);
+        doc.getObjetos().clear();
+                
+        s.flush();
+        
+        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(0));
+
+    }
 
 
     @Test
