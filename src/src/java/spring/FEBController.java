@@ -176,22 +176,32 @@ public final class FEBController {
     }
 
     /**
-     * Webservice com a funcionalidade de utilizar o sistema de consulta do FEB retornando os documentos no formato XML.
-     * Utiliza os mesmos métodos da ferramenta de busca principal do FEB.
-     * Retorna um xml FEB com os objetos no padrão de metadados OBAA.
-     * Existe uma tag de erro que contém um code e uma mensagem: <error code="code">Message</error>
-     * codigos existentes:
-     *  + "badQuery" - Caso a consulta não tenha sido informada
-     *  + "limitExceeded" - Caso o limit informado seja superior a 100, que é o limite máximo permitido (este limite máximo existe para que as consultar por webservice não comprometam o desempenho da base de dados).
-     *  + "UnsupportedEncoding" - Caso ocorra um erro ao codificar a query em utf-8
+     * Webservice com a funcionalidade de utilizar o sistema de consulta do FEB
+     * retornando os documentos no formato XML. Utiliza os mesmos métodos da
+     * ferramenta de busca principal do FEB. Retorna um xml FEB com os objetos
+     * no padrão de metadados OBAA. Existe uma tag de erro que contém um code e
+     * uma mensagem: <error code="code">Message</error> codigos existentes: +
+     * "badQuery" - Caso a consulta não tenha sido informada + "limitExceeded" -
+     * Caso o limit informado seja superior a 100, que é o limite máximo
+     * permitido (este limite máximo existe para que as consultar por webservice
+     * não comprometam o desempenho da base de dados). + "UnsupportedEncoding" -
+     * Caso ocorra um erro ao codificar a query em utf-8
+     *
      * @param query String que será utilizada para buscar documentos.
+     * @param autor String contendo o nome do autor que será utilizado na busca.
      * @param limit Número de resultados por resposta. O máximo é 100.
-     * @param offset Utilizado em conjunto com o limit. Se o limit for 5 e o offset 0, retornará os 5 primeiros objetos, alterando o offset para 1 retornará os próximos 5 resultados. Isto é utilizado para efetuar uma paginação.
-     * @return XML FEB contendo os documentos, no padrão de metadados OBAA, referentes a consulta.
+     * @param offset Utilizado em conjunto com o limit. Se o limit for 5 e o
+     * offset 0, retornará os 5 primeiros objetos, alterando o offset para 1
+     * retornará os próximos 5 resultados. Isto é utilizado para efetuar uma
+     * paginação.
+     * @return XML FEB contendo os documentos, no padrão de metadados OBAA,
+     * referentes a consulta.
      */
-    @RequestMapping(value="obaaconsulta", method=RequestMethod.GET, produces="text/xml;charset=UTF-8")
-    public @ResponseBody String webservice(
+    @RequestMapping(value = "obaaconsulta", method = RequestMethod.GET, produces = "text/xml;charset=UTF-8")
+    public @ResponseBody
+    String webservice(
             @RequestParam(required = false) String query,
+            @RequestParam(required = false) String autor,
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) Integer offset) {
 
@@ -199,29 +209,37 @@ public final class FEBController {
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                 + "<FEB>";
         try {
-            if (query == null || query.isEmpty()) {
+            if ((query == null || query.isEmpty()) && (autor == null || autor.isEmpty())) {
                 xml += "<error code=\"badQuery\">empty query</error> ";
             } else if (limit != null && limit > 100) {
                 xml += "<error code=\"limitExceeded\">The maximum is 100</error> ";
             } else {
-                String encodedQuery = URLDecoder.decode(query, "UTF-8");
 
                 Recuperador rep = new Recuperador();
                 Consulta c = new Consulta();
+                if (query != null) {
+                    String encodedQuery = URLDecoder.decode(query, "UTF-8");
+                    c.setConsulta(encodedQuery);
+                }
 
-                c.setConsulta(encodedQuery);
                 if (limit != null) {
                     c.setLimit(limit);
                 }
                 if (offset != null) {
                     c.setOffset(offset);
                 }
+                if (autor != null) {
+                    c.setAutor(autor);
+                }
                 List<DocumentoReal> docs = rep.busca(c);
 
                 xml += "<ListRecords "
-                        + "query=\""+query+"\" "
-                        + "limit=\""+c.getLimit()+"\" "
-                        + "offset=\""+c.getOffset()+"\" >";
+                        + "query=\"" + c.getConsulta() + "\" ";
+                if (!c.getAutor().isEmpty()) {
+                    xml += "autor=\"" + c.getAutor() + "\" ";
+                }
+                xml += "limit=\"" + c.getLimit() + "\" "
+                        + "offset=\"" + c.getOffset() + "\" >";
 
                 for (DocumentoReal doc : docs) {
                     xml += "<document><metadata>"
@@ -231,7 +249,7 @@ public final class FEBController {
                 xml += "</ListRecords> ";
             }
             xml += "</FEB>";
-            log.debug(xml);
+            log.debug("Uso do webservice: consulta: " + query + " Autor: " + autor + " limit: " + limit + " offset: " + offset);
             return xml;
 
         } catch (UnsupportedEncodingException u) {
