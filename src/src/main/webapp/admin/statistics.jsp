@@ -10,23 +10,20 @@
 <html>
     <head>     
         <link rel="StyleSheet"
-	href='<spring:url value="/css/jquery.jqplot.min.css" htmlEscape="true" />'
-	type="text/css">
-        
+              href='<spring:url value="/css/jquery.jqplot.min.css" htmlEscape="true" />'
+              type="text/css">
+
         <script language="javascript" type="text/javascript" src='<spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
         <script language="javascript" type="text/javascript" src='<spring:url value="/scripts/jquery.jqplot.min.js" htmlEscape="true" />'></script>
         <script type="text/javascript" src='<spring:url value="/scripts/jqplot.pieRenderer.min.js" htmlEscape="true" />'></script>        
         <script class="code" type="text/javascript">
+
             $(document).ready(function(){
-            var data = [
-                
-                [<% out.print("'UFRGS'");%>, 12],['MEC', 9], ['local', 14], 
-                ['UFMA', 16],['Fiocruz', 7], ['UFES', 9], ['UFSCAR', 9], ['IFSul', 9]
-            ];
-            var plot1 = jQuery.jqplot ('chart1', [data], 
+
+            var plot1 = jQuery.jqplot ('chart1', [${arrayJs}], 
                 { 
                     title: {
-                            text: 'Quantidade de objetos: Federações',
+                            text: 'Quantidade de objetos: FederaÃ§Ãµes',
                             show: true
                         },                
                 seriesDefaults: {
@@ -44,11 +41,78 @@
             );
             });
         </script>      
+
+        <script>      
+            $(document).ready(function(){
+                var plot2 = $.jqplot ('chart2', [[3,7,9,1,4,6,8,2,5]], {                    
+                    title: 'NÃºmero de Visitas',
+                    axesDefaults: {
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                    },
+                    axes: {                    
+                        xaxis: {
+                            label: "MÃªs",
+                            pad: 0
+                        },
+                        yaxis: {
+                            label: "Visitas"
+                        }
+                    }
+                });
+            });
+        </script>   
+
+        <script>
+            $(document).ready(function(){
+                var data = [
+                
+                    [<% out.print("'UFRGS'");%>, 18],['MEC', 12], ['local', 8], 
+                    ['UFMA', 23],['Fiocruz', 3], ['UFES', 14], ['UFSCAR', 8], ['IFSul', 4]
+                ];
+                var plot3 = jQuery.jqplot ('chart3', [data], 
+                { 
+                    title: {
+                        text: 'Quantidade de acessos: FederaÃ§Ãµes',
+                        show: true
+                    },                
+                    seriesDefaults: {
+                        // Make this a pie chart.
+                        renderer: jQuery.jqplot.PieRenderer, 
+                        rendererOptions: {
+                            // Put data labels on the pie slices.
+                            // By default, labels show the percentage of the slice.
+                            showDataLabels: true,
+                            dataLabels: 'value'
+                        }
+                    }, 
+                    legend: { show:true, location: 'e' }
+                }
+            );
+            });   
+            
+        </script>
+
     </head>
-      
-  
+
+
     <body>   
-        <div id="chart1" style="height:350px; width:500px;"></div>        
+        <div id="chart1" style="height:350px; width:500px;"></div>  
+
+        <div id="chart2" style="height:350px; width:500px;"></div>
+        
+        <div id="chart3" style="height:350px; width:500px;"></div>
+
+        <table>
+            10 Consultas mais realizadas
+        </table>
+            
+        <table>
+            10 Objetos mais acessados
+        </table>
+        <p>
+            RelaÃ§Ã£o consultas/visita: 1
+        </p>
+        
     </body>
-    
+
 </html>

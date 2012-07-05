@@ -1,20 +1,12 @@
 package modelos;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
-
+import cognitivabrasil.obaa.OBAA;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-
 import org.apache.commons.io.FileUtils;
-import org.hamcrest.Matcher;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import org.junit.Test;
-import org.springframework.test.annotation.ExpectedException;
-
-import cognitivabrasil.obaa.OBAA;
 
 public class DocumentoTest {
 

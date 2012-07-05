@@ -786,7 +786,7 @@ ALTER TABLE ONLY usuarios
 -- Name: fki_; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
 --
 
-CREATE INDEX fki_ ON r1length USING btree (tid);
+CREATE INDEX fki_ ON r1length USING btree (documento_id);
 
 
 --
@@ -795,7 +795,7 @@ CREATE INDEX fki_ ON r1length USING btree (tid);
 -- Name: fki_documentos; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
 --
 
-CREATE INDEX fki_documentos ON r1tokens USING btree (id);
+CREATE INDEX fki_documentos ON r1tokens USING btree (documento_id);
 
 
 --
@@ -850,7 +850,7 @@ CREATE INDEX fki_repositorio ON documentos USING btree (id_repositorio);
 --
 
 ALTER TABLE ONLY r1tokens
-    ADD CONSTRAINT documentos FOREIGN KEY (id) REFERENCES documentos(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT documentos FOREIGN KEY (documento_id) REFERENCES documentos(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
