@@ -92,7 +92,7 @@
                     
                 <div class="LinhaEntrada">                    
                     <div class="Label">
-                        Servidor:
+                        
                     </div>
 
                     <c:forEach var="rep" items="${repDAO.all}" varStatus="i">

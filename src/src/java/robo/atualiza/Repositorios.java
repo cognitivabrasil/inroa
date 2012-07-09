@@ -36,8 +36,7 @@ import spring.ApplicationContextProvider;
  */
 public class Repositorios {
 
-    private SimpleDateFormat dataFormat = new SimpleDateFormat(
-            "dd/MM/yyyy HH:mm:ss");
+    private SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     static Logger log = Logger.getLogger(Repositorios.class);
 
     /**
@@ -113,24 +112,23 @@ public class Repositorios {
                         rep.setUltimaAtualizacao(null);
                         rep.setDataOrigem(null);
                     }
-                    if (atualizaRepositorio(rep, indexar) == 0) {
-                        recalcularIndice = false;
-                    } else {
+                    if (atualizaRepositorio(rep, indexar) > 0) {
                         recalcularIndice = true;
                     }
                     repDao.save(rep);
 
                 } else {
                     List<Repositorio> repositorios = repDao.getAll();
-                    for (Repositorio r : repositorios) {
+                    for (Repositorio rep : repositorios) {
                         try {
-                            if (atualizaRepositorio(r, indexar) > 0) {
+                            if (atualizaRepositorio(rep, indexar) > 0) {
                                 recalcularIndice = true;
                             }
+                            repDao.save(rep);
                         } catch (Exception e) {
-                            erros.add(r.getNome());
+                            erros.add(rep.getNome());
                             log.error("FEB ERRO: Erro ao atualizar o repositorio "
-                                    + r.getNome(), e);
+                                    + rep.getNome(), e);
                         }
                     }
                 }

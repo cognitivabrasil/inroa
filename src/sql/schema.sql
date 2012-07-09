@@ -1,3 +1,6 @@
+--criar o usuario feb
+CREATE USER feb WITH PASSWORD 'feb@RNP';
+
 --
 -- PostgreSQL database dump
 --
@@ -575,7 +578,7 @@ ALTER TABLE public.usuarios OWNER TO feb;
 -- Table: visitas
 
 CREATE TABLE visitas (
-  id serial NOT NULL,
+  id integer NOT NULL,
   horario timestamp without time zone
 );
 
