@@ -19,7 +19,7 @@
         </set>
         <property name="deleted" type="boolean"/>
         
-        <set name="autores" cascade="all" table="autores">
+        <set name="autores" cascade="all-delete-orphan" table="autores" inverse="true">
             <key column="documento"/>
             <one-to-many class="modelos.Autor"/>
         </set>
