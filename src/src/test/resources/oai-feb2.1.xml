@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2012-07-09T18:46:23Z</responseDate>
+	<request verb="ListRecords" metadataPrefix="obaa">http://143.54.83.93/feb/OAIHandler</request>
+	<ListRecords>
+		<record>
+			<header>
+				<identifier>oai:www.lume.ufrgs.br:10183/394</identifier>
+				<datestamp>2011-09-14T15:02:59Z</datestamp>
+				<setSpec>LUME</setSpec>
+			</header>
+			<metadata>
+				<obaa:obaa xmlns:obaa="http://ltsc.ieee.org/xsd/LOM"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/lomv1.0/lom.xsd">
+					<obaa:general xmlns:obaa="http://ltsc.ieee.org/xsd/LOM">
+						<obaa:identifier>
+							<obaa:entry>oai:www.lume.ufrgs.br:10183/394</obaa:entry>
+						</obaa:identifier>
+						<obaa:obaaKeyword>Public-key cryptography</obaa:obaaKeyword>
+						<obaa:obaaDescription>Description 1</obaa:obaaDescription>
+						<obaa:obaaLearningResourceType>Dissertação</obaa:obaaLearningResourceType>
+						<obaa:obaaKeyword>Criptografia</obaa:obaaKeyword>
+						<obaa:obaaKeyword>Elliptic curves</obaa:obaaKeyword>
+						<obaa:obaaKeyword>Seguranca : Computadores</obaa:obaaKeyword>
+						<obaa:obaaFormat>506857 bytes</obaa:obaaFormat>
+						<obaa:obaaEntity>Araujo Neto, Afonso Comba de</obaa:obaaEntity>
+						<obaa:obaaIdentifier>000578214</obaa:obaaIdentifier>
+						<obaa:obaaKeyword>Semantic security</obaa:obaaKeyword>
+						<obaa:obaaFormat>application/pdf</obaa:obaaFormat>
+						<obaa:obaaIdentifier>http://hdl.handle.net/10183/394</obaa:obaaIdentifier>
+						<obaa:obaaTitle>A semantically secure public key algorithm based
+							on elliptic curves</obaa:obaaTitle>
+						<obaa:obaaKeyword>Complex multiplication</obaa:obaaKeyword>
+						<obaa:obaaTitle>Título 1</obaa:obaaTitle>
+						<obaa:obaaKeyword>Cryptographically strong pseudorandom bit
+							generators</obaa:obaaKeyword>
+						<obaa:obaaDescription>Esta dissertação apresenta o desenvolvimento
+							de um novo algoritmo de criptografia de chave pública. Este
+							algoritmo apresenta duas características que o tornam único, e
+							que foram tomadas como guia para a sua concepção. A primeira
+							característica é que ele é semanticamente seguro. Isto significa
+							que nenhum adversário limitado polinomialmente consegue obter
+							qualquer informação parcial sobre o conteúdo que foi cifrado, nem
+							mesmo decidir se duas cifrações distintas correspondem ou não a
+							um mesmo conteúdo. A segunda característica é que ele depende,
+							para qualquer tamanho de texto claro, de uma única premissa de
+							segurança: que o logaritmo no grupo formado pelos pontos de uma
+							curva elíptica de ordem prima seja computacionalmente intratável.
+							Isto é obtido garantindo-se que todas as diferentes partes do
+							algoritmo sejam redutíveis a este problema. É apresentada também
+							uma forma simples de estendê-lo a fim de que ele apresente
+							segurança contra atacantes ativos, em especial, contra ataques de
+							texto cifrado adaptativos. Para tanto, e a fim de manter a
+							premissa de que a segurança do algoritmo seja unicamente
+							dependente do logaritmo elíptico, é apresentada uma nova função
+							de resumo criptográfico (hash) cuja segurança é baseada no mesmo
+							problema.</obaa:obaaDescription>
+						<obaa:obaaDate>2007-06-04T11:33:20Z</obaa:obaaDate>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaDate>2006</obaa:obaaDate>
+					</obaa:general>
+				</obaa:obaa>
+			</metadata>
+		</record>
+		<record>
+			<header>
+				<identifier>oai:www.lume.ufrgs.br:10183/395</identifier>
+				<datestamp>2011-09-14T15:02:59Z</datestamp>
+				<setSpec>LUME</setSpec>
+			</header>
+			<metadata>
+				<obaa:obaa xmlns:obaa="http://ltsc.ieee.org/xsd/LOM"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/lomv1.0/lom.xsd">
+					<obaa:general xmlns:obaa="http://ltsc.ieee.org/xsd/LOM">
+						<obaa:identifier>
+							<obaa:entry>oai:www.lume.ufrgs.br:10183/395</obaa:entry>
+						</obaa:identifier>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaKeyword>Achyrocline satureioides</obaa:obaaKeyword>
+						<obaa:obaaResourceDescription>Caderno de farmácia. Porto Alegre,
+							RS</obaa:obaaResourceDescription>
+						<obaa:obaaFormat>application/pdf</obaa:obaaFormat>
+						<obaa:obaaEntity>Schenkel, Eloir Paulo</obaa:obaaEntity>
+						<obaa:obaaTitle>Atividade antiespasmódica do extrato alcoólico de
+							marcela (Achyrocline satureioides (Lam.) D.C., Compositae) sobre
+							a musculatura lisa genital de ratos</obaa:obaaTitle>
+						<obaa:obaaIdentifier>000051143</obaa:obaaIdentifier>
+						<obaa:obaaKeyword>Produtos naturais</obaa:obaaKeyword>
+						<obaa:obaaDate>2007-06-04T11:53:47Z</obaa:obaaDate>
+						<obaa:obaaKeyword>Marcela</obaa:obaaKeyword>
+						<obaa:obaaFormat>193295 bytes</obaa:obaaFormat>
+						<obaa:obaaDate>1985</obaa:obaaDate>
+						<obaa:obaaKeyword>Fitoquimica</obaa:obaaKeyword>
+						<obaa:obaaEntity>Langeloh, Augusto</obaa:obaaEntity>
+						<obaa:obaaLearningResourceType>Trabalho completo publicado em
+							evento</obaa:obaaLearningResourceType>
+						<obaa:obaaIdentifier>http://hdl.handle.net/10183/395</obaa:obaaIdentifier>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+					</obaa:general>
+				</obaa:obaa>
+			</metadata>
+		</record>
+		<record>
+			<header>
+				<identifier>oai:www.lume.ufrgs.br:10183/396</identifier>
+				<datestamp>2011-09-14T15:02:59Z</datestamp>
+				<setSpec>LUME</setSpec>
+			</header>
+			<metadata>
+				<obaa:obaa xmlns:obaa="http://ltsc.ieee.org/xsd/LOM"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/lomv1.0/lom.xsd">
+					<obaa:general xmlns:obaa="http://ltsc.ieee.org/xsd/LOM">
+						<obaa:identifier>
+							<obaa:entry>oai:www.lume.ufrgs.br:10183/396</obaa:entry>
+						</obaa:identifier>
+						<obaa:obaaResourceDescription>Caderno de farmácia. Porto Alegre,
+							RS</obaa:obaaResourceDescription>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaKeyword>Farmacognosia</obaa:obaaKeyword>
+						<obaa:obaaKeyword>Limonium brasiliense</obaa:obaaKeyword>
+						<obaa:obaaFormat>application/pdf</obaa:obaaFormat>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaLearningResourceType>Trabalho completo publicado em
+							evento</obaa:obaaLearningResourceType>
+						<obaa:obaaTitle>Estudos farmacológicos preliminares das raízes do
+							Limonium brasiliense (Boiss.) Kuntze - Plumbaginaceae (baicuru)</obaa:obaaTitle>
+						<obaa:obaaKeyword>Baicuru</obaa:obaaKeyword>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaEntity>Moura, Tulio Flavio A.L. e</obaa:obaaEntity>
+						<obaa:obaaIdentifier>http://hdl.handle.net/10183/396</obaa:obaaIdentifier>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaIdentifier>000013479</obaa:obaaIdentifier>
+						<obaa:obaaEntity>Schenkel, Eloir Paulo</obaa:obaaEntity>
+						<obaa:obaaEntity>Santos, Rosana Isabel dos</obaa:obaaEntity>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaDate>2007-06-04T11:53:48Z</obaa:obaaDate>
+						<obaa:obaaFormat>116573 bytes</obaa:obaaFormat>
+						<obaa:obaaEntity>Simoes, Claudia Maria Oliveira</obaa:obaaEntity>
+						<obaa:obaaDate>1985</obaa:obaaDate>
+						<obaa:obaaEntity>Schapoval, Elfrides Eva Scherman</obaa:obaaEntity>
+					</obaa:general>
+				</obaa:obaa>
+			</metadata>
+		</record>
+		<record>
+			<header>
+				<identifier>oai:www.lume.ufrgs.br:10183/397</identifier>
+				<datestamp>2011-09-14T15:02:59Z</datestamp>
+				<setSpec>LUME</setSpec>
+			</header>
+			<metadata>
+				<obaa:obaa xmlns:obaa="http://ltsc.ieee.org/xsd/LOM"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/lomv1.0/lom.xsd">
+					<obaa:general xmlns:obaa="http://ltsc.ieee.org/xsd/LOM">
+						<obaa:identifier>
+							<obaa:entry>oai:www.lume.ufrgs.br:10183/397</obaa:entry>
+						</obaa:identifier>
+						<obaa:obaaEntity>Galvao, Ana Maria Mattos</obaa:obaaEntity>
+						<obaa:obaaFormat>application/pdf</obaa:obaaFormat>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaTitle>Parâmetros para distribuição de recursos
+							financeiros gerenciados pelo Sistema de Bibliotecas da
+							Universidade - SBU na compra de periódicos</obaa:obaaTitle>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaLearningResourceType>Trabalho completo publicado em
+							evento</obaa:obaaLearningResourceType>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaDate>1996</obaa:obaaDate>
+						<obaa:obaaEntity>Burger, Maria Cristina</obaa:obaaEntity>
+						<obaa:obaaEntity>Scharnberg, June Magda Rosa</obaa:obaaEntity>
+						<obaa:obaaEntity>Pavão, Caterina Marta Groposo</obaa:obaaEntity>
+						<obaa:obaaRole>Autor</obaa:obaaRole>
+						<obaa:obaaIdentifier>http://hdl.handle.net/10183/397</obaa:obaaIdentifier>
+						<obaa:obaaKeyword>Biblioteca universitária</obaa:obaaKeyword>
+						<obaa:obaaIdentifier>000189344</obaa:obaaIdentifier>
+						<obaa:obaaDate>2007-06-04T11:53:48Z</obaa:obaaDate>
+						<obaa:obaaFormat>58932 bytes</obaa:obaaFormat>
+						<obaa:obaaResourceDescription>Seminario Nacional de Bibliotecas
+							Universitarias (9. : 1996 : Curitiba). Anais. Curitiba :
+							Ufp/Pucpr, 1996.</obaa:obaaResourceDescription>
+					</obaa:general>
+				</obaa:obaa>
+			</metadata>
+		</record>
+		<resumptionToken expirationDate="2012-07-09T19:46:24Z">500|obaa|0001-01-01T00:00:00Z|9999-12-31T23:59:59Z</resumptionToken>
+	</ListRecords>
+</OAI-PMH>

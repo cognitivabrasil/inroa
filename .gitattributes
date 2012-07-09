@@ -296,6 +296,7 @@ src/src/main/resources/applicationContext.xml -text
 src/src/main/resources/autores.hbm.xml -text
 src/src/main/resources/dummy.properties -text
 src/src/main/resources/feb.properties -text
+src/src/main/resources/feb2to3.xsl -text
 src/src/main/resources/hibernate.cfg.xml -text
 src/src/main/resources/manifest.mf -text
 src/src/main/resources/spring-security.xml -text
@@ -379,6 +380,7 @@ src/src/test/java/ferramentaBusca/RecuperadorTest.java -text
 src/src/test/java/metadata/DublinCoreTest.java -text
 src/src/test/java/metadata/XsltConversorTest.java -text
 src/src/test/java/metadata/XsltDC2ObaaTest.java -text
+src/src/test/java/metadata/XsltFeb2ToFeb3Test.java -text
 src/src/test/java/metadata/XsltLom2ObaaTest.java -text
 src/src/test/java/metadata/XsltTest.java -text
 src/src/test/java/metadata/cesta1.xml -text
@@ -420,6 +422,7 @@ src/src/test/java/robo/atualiza/subfedOAI/ImporterTestIT.java -text
 src/src/test/java/robo/atualiza/subfedOAI/SubRepositoriosTest.java -text
 src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text
+src/src/test/resources/oai-feb2.1.xml -text
 src/src/xslt/dc2obaa.xsl -text
 src/src/xslt/dc2obaa_full.xsl -text
 src/src/xslt/do.sh -text

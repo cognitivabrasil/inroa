@@ -131,6 +131,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     /**
      * Deletes a DocumentReal by obaaEntry and (sub)rep id.
      * 
+     * This used because of the very unfortunate fact that obaaEntries may not be unique.
      * @param doc
      */
     private void deleteWithoutId(DocumentoReal doc) {
