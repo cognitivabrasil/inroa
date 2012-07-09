@@ -161,7 +161,8 @@ CREATE TABLE dados_subfederacoes (
     id integer NOT NULL,
     data_ultima_atualizacao timestamp without time zone,
     url character varying(200) NOT NULL,
-    data_xml character varying
+    data_xml character varying,
+    version character varying(20)
 );
 
 

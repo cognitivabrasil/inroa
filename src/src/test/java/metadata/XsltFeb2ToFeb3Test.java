@@ -7,6 +7,8 @@ package metadata;
 
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import java.io.File;
@@ -39,11 +41,12 @@ public class XsltFeb2ToFeb3Test {
 	
 	@Before
 	public void setUp() {
- 		String foo_xml = "src/test/resources/oai-feb2.1.xml"; //input xml
-		String foo_xsl = "src/main/resources/feb2to3.xsl"; //input xsl
+		
+		InputStream xml = this.getClass().getResourceAsStream("/oai-feb2.1.xml");
+		InputStream xsl = this.getClass().getResourceAsStream("/feb2to3.xsl"); //input xsl
 
 		try {
-        		String s = XSLTUtil.transform(foo_xml, foo_xsl);
+        		String s = XSLTUtil.transform(xml, xsl);
         		System.out.println(s);
 			oai = OaiOBAA.fromString(s);
  		} catch (Exception ex) {

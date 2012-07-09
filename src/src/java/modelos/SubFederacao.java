@@ -23,6 +23,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     private String url;
     private Date ultimaAtualizacao;
     private String dataXML;
+    private String version;
     private String dataXMLTemp;
     private Set<RepositorioSubFed> repositorios;
 
@@ -243,4 +244,12 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
         }
         return null;
     }
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 }
