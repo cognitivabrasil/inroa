@@ -28,8 +28,8 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 		p:password="feb@RNP" />
 
 	<bean id="documentosDAO" class="modelos.DocumentosHibernateDAO" />
-
-	<bean id="sessionFactory"
+        
+        <bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
@@ -64,12 +64,14 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<bean id="Indexador" class="ferramentaBusca.indexador.Indexador">
 	</bean>
 
-        <bean id="StopWord" class="modelos.StopWordHibernateDao"></bean>
+        <bean id="StopWord" class="modelos.StopWordHibernateDao" />
+        
+        <bean id="visitasDao" class="modelos.VisitasHibernateDao" />
         
 	<context:annotation-config />
 	<!--Inicio Inicializar o Robo -->
 
-	<bean id="robo" class="robo.main.Robo" />
+	<bean id="robo" class="robo.main.Robo" />        
 
 	<bean id="jobDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">

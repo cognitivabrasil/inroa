@@ -205,12 +205,12 @@ public class Repositorios {
                     caminhoTeste.mkdirs();// cria o diretorio
                 } else { // APAGA TODOS ARQUIVOS XML do FEB DA PASTA
                     File[] arquivos = caminhoTeste.listFiles();
-                    for (File toDelete : arquivos) {
-                        if (toDelete.getName().startsWith("FEB-")
-                                && toDelete.getName().endsWith(".xml")) {
-                            toDelete.delete();
-                        }
-                    }
+//                    for (File toDelete : arquivos) {
+//                        if (toDelete.getName().startsWith("FEB-")
+//                                && toDelete.getName().endsWith(".xml")) {
+//                            toDelete.delete();
+//                        }
+//                    }
                 }
 
                 if (caminhoTeste.isDirectory()) {

@@ -89,7 +89,7 @@ public class XMLtoDB {
                     updated += imp.update();
 
                     //apaga arquivo XML
-                    arquivoXML.delete();
+//                    arquivoXML.delete();
 
                 } else {
                     log.error("FEB ERRO: O arquivo informado nao eh um arquivo ou nao pode ser lido. Caminho: " + caminhoXML.get(i));

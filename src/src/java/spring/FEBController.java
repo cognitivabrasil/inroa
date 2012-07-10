@@ -33,6 +33,9 @@ public final class FEBController {
     private SubFederacaoDAO subDao;
     @Autowired
     private DocumentosDAO docDao;
+    @Autowired
+    private VisitasDao visDao;
+    
     private BuscaValidator buscaValidator;
     Logger log = Logger.getLogger(FEBController.class);
 
@@ -53,6 +56,8 @@ public final class FEBController {
     @RequestMapping("/index")
     public String index(Model model) {
         model.addAttribute("buscaModel", new Consulta());
+        Visita v = new Visita();
+        visDao.save(v);
         return "index";
     }
 

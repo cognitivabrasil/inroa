@@ -4,13 +4,15 @@ import java.util.Date;
 
 /**
  *
- * @author cei
+ * @author Luiz Henrique Longhi Rossi <lh.rossi@cognitivabrasil.com.br>
  */
-public class Visitas {
+public class Visita {
     private int id;
-    private Date horario;
+    private Date horario;   
+    
 
-    public Visitas() {
+    public Visita() {
+        horario = new Date();
     }
 
     public Date getHorario() {
@@ -27,5 +29,5 @@ public class Visitas {
 
     public void setId(int id) {
         this.id = id;
-    }    
+    } 
 }

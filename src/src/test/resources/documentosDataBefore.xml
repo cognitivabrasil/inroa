@@ -81,5 +81,7 @@ and open the template in the editor.
     <stopwords id="11" stopword="enquanto" />
     <stopwords id="12" stopword="ela" />
 
+   <visitas id="1" horario="2012-07-10 10:04:47" /> 
+   <visitas id="2" horario="2012-07-09 12:06:01" /> 
 
 </dataset>

@@ -42,7 +42,7 @@ ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
 -- TOC entry 189 (class 3079 OID 11685)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
-
+-- Este comando é para a versão do postgres 9.1
 --CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
@@ -806,6 +806,13 @@ ALTER TABLE ONLY repositorios
 ALTER TABLE ONLY usuarios
     ADD CONSTRAINT usuarios_pkey PRIMARY KEY (id);
 
+
+-- Constraint: visitas_pki
+
+-- ALTER TABLE visitas DROP CONSTRAINT visitas_pki;
+
+ALTER TABLE visitas
+  ADD CONSTRAINT visitas_pki PRIMARY KEY(id);
 
 --
 -- TOC entry 2065 (class 1259 OID 18018)

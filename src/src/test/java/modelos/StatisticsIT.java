@@ -1,16 +1,21 @@
 package modelos;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import org.hibernate.SessionFactory;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -20,8 +25,14 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class StatisticsIT {
+public class StatisticsIT extends AbstractDaoTest {
 
+    @Autowired
+    VisitasDao v;
+    
+    @Autowired
+    SessionFactory sessionFactory;
+    
     public StatisticsIT() {
     }
 
@@ -35,10 +46,28 @@ public class StatisticsIT {
 
     @Before
     public void setUp() {
+        
+//        Calendar c1 = Calendar.getInstance();        
+//        c1.set(2012, 6, 10);
+//        
+//        Calendar c2 = Calendar.getInstance();        
+//        c2.set(2012, 6, 9);
+//        
+//        Date d1 = c1.getTime();
+//        Date d2 = c2.getTime();
+//                
+//        
+//        String sql = "INSERT INTO visitas (horario) VALUES ("+d1+", "+d2+")";
+//        
+//        System.out.println("!!!!!!!!!!!!!!"+sql);
+//        sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();        
     }
 
     @After
     public void tearDown() {
+//        String sql = "DELETE FROM visitas";
+//        Session s = this.sessionFactory.getCurrentSession();
+//        s.createSQLQuery(sql).executeUpdate();
     }
 
     @Test
@@ -63,5 +92,10 @@ public class StatisticsIT {
         Estatistica run = new Estatistica();
         String teste = run.fromListToJsList(repList);
         System.out.println(teste);
+    }
+    
+    @Test 
+    public void testVisits() {
+        assertEquals(2, v.visitsInAMonth(7));
     }
 }
