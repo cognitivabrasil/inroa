@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:obaa="http://ltsc.ieee.org/xsd/LOM"
-	xmlns:oai_pmh="http://www.openarchives.org/OAI/2.0/"
-    xpath-default-namespace="http://www.openarchives.org/OAI/2.0/"> 
+	xmlns:obaa="http://ltsc.ieee.org/xsd/LOM" xmlns:oai_pmh="http://www.openarchives.org/OAI/2.0/"
+	xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
 
 	<xsl:output method="xml" encoding="UTF-8" />
 	<xsl:template match="/">
@@ -46,8 +45,10 @@
 		</xsl:copy>
 	</xsl:template>
 
-<xsl:template match="obaa:obaa">
-<obaa:obaa xmlns:obaa="http://ltsc.ieee.org/xsd/LOM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/obaav1.0/obaa.xsd">
+	<xsl:template match="obaa:obaa">
+		<obaa:obaa xmlns:obaa="http://ltsc.ieee.org/xsd/LOM"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/obaav1.0/obaa.xsd">
 
 
 			<obaa:general>
@@ -95,6 +96,16 @@
 					</obaa:contribute>
 				</xsl:for-each>
 
+				<xsl:for-each select="obaa:general/obaa:obaaResourceDescription">
+					<obaa:contribute>
+						<obaa:role>publisher</obaa:role>
+						<obaa:entity>
+							<xsl:value-of select="." />
+						</obaa:entity>
+					</obaa:contribute>
+				</xsl:for-each>
+
+
 			</obaa:lifeCycle>
 
 			<obaa:technical>
@@ -103,11 +114,25 @@
 						<xsl:value-of select="." />
 					</obaa:location>
 				</xsl:for-each>
+
+				<xsl:for-each select="obaa:general/obaa:obaaFormat">
+					<obaa:format>
+						<xsl:value-of select="." />
+					</obaa:format>
+				</xsl:for-each>
 			</obaa:technical>
+
+			<obaa:educational>
+				<xsl:for-each select="obaa:general/obaa:obaaLearningResourceType">
+					<obaa:learningResourceType>
+						<xsl:value-of select="." />
+					</obaa:learningResourceType>
+				</xsl:for-each>
+			</obaa:educational>
 
 
 		</obaa:obaa>
-		</xsl:template>
+	</xsl:template>
 
 </xsl:stylesheet>
 

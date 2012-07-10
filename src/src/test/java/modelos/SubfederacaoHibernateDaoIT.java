@@ -194,7 +194,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
     public void testSaveAndUpdate2() throws Exception {
         if (updated) {
             updated = false;
-            String[] ignore = {"id", "data_xml", "data_ultima_atualizacao", "descricao"};
+            String[] ignore = {"id", "data_xml", "data_ultima_atualizacao", "descricao", "version"};
             String[] sort = {"nome"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("dados_subfederacoes"), sort), new SortedTable(getConnection().createDataSet().getTable("dados_subfederacoes"), sort), ignore);
 

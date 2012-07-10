@@ -11,6 +11,8 @@ import java.io.InputStream;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
+import cognitivabrasil.obaa.LifeCycle.Contribute;
+
 import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -47,7 +49,7 @@ public class XsltFeb2ToFeb3Test {
 
 		try {
         		String s = XSLTUtil.transform(xml, xsl);
-        		System.out.println(s);
+//        		System.out.println(s);
 			oai = OaiOBAA.fromString(s);
  		} catch (Exception ex) {
       			XSLTUtil.handleException(ex);
@@ -66,66 +68,64 @@ public class XsltFeb2ToFeb3Test {
 		assertThat(l.getGeneral().getTitles(), hasItems("Título 1"));
 	}
 	
-//	@Test
-//	public void testDC2OBAA_identifier() {
-//		OBAA l = oai.getMetadata(0);
-//		assert (!(l.getGeneral() == null));
-//		assert (!(l.getGeneral().getIdentifier() == null));
-//		assertThat(l.getGeneral().getIdentifier().getEntry(),
-//				equalTo("baskjikM"));
-//	}
-//
-//	@Test
-//	public void testDC2OBAA_Contribute() {
-//		OBAA l = oai.getMetadata(0);
-//		assert (!(l.getLifeCycle() == null));
-//		assert (!(l.getLifeCycle().getContribute() == null));
-//		assertThat(l.getLifeCycle().getContribute().get(0).getRole(),
-//				equalTo("Autor"));
-//		assertThat(l.getLifeCycle().getContribute().get(0).getFirstEntity(),
-//				equalTo("Tarouco, Liane"));
-//		// TODO: se é o n-esimo contribuinte, pegar a n-esima data
-//		// assertThat(l.getLifeCycle().getContribute().get(0).getDate(),
-//		// equalTo("2006"));
-//		assertThat(l.getLifeCycle().getContribute().get(1).getRole(),
-//				equalTo("Other"));
-//		assertThat(l.getLifeCycle().getContribute().get(1).getFirstEntity(),
-//				equalTo("CINTED/UFRGS"));
-//	}
-//
-//	@Test
-//	public void testDC2OBAA_General() {
-//		OBAA l = oai.getMetadata(0);
-//		assert (!(l.getGeneral() == null));
-//		assertThat(
-//				l.getGeneral().getDescriptions(),
-//				hasItems("Animação ilustrando a troca de mensagens que ocorre quando um intruso bloqueia um computador medianteo envio de mensagens de hadshake repetidas e depois impersona esta máquina enquanto ela está imobilizada."));
-//		assertThat(l.getGeneral().getKeywords(),
-//				hasItems("TCP", "segurança", "ataque Mitnick"));
-//
-//	}
-//
-//	@Test
-//	public void testDC2OBAA_Rights() {
-//		OBAA l = oai.getMetadata(0);
-//		assert (!(l.getRights() == null));
-//		assertThat(l.getRights().getDescription(),
-//				equalTo("ihttp://creativecommons.org/licenses/by-sa/3.0/br/"));
-//
-//	}
-//
-//	/**
-//	 * Test that location tag is correctly translated
-//	 */
-//	@Test
-//	public void testLom2ObaaLocation() {
-//		OBAA l = oai.getMetadata(0);
-//		assert (!(l.getTechnical() == null));
-//		assert (!(l.getTechnical().getLocation() == null));
-//		assertThat(
-//				l.getTechnical().getFirstHttpLocation(),
-//				equalTo("http://cesta2.cinted.ufrgs.br/xmlui/handle/123456789/57"));
-//
-//	}
-//
+	@Test
+	public void description() {
+		OBAA l = oai.getMetadata(0);
+		assertThat(l.getGeneral().getDescriptions(), hasItems("Description 1"));
+	}
+	
+	@Test
+	public void keywords() {
+		OBAA l = oai.getMetadata(0);
+		assertThat(l.getGeneral().getKeywords(), hasItems("Complex multiplication"));
+	}
+	
+	@Test
+	public void author() {
+		OBAA l = oai.getMetadata(0);
+		boolean found = false;
+		for(Contribute c : l.getLifeCycle().getContribute()) {
+			if("Araujo Neto, Afonso Comba de".equals(c.getFirstEntity())) {
+				found = true;
+			}
+		}
+		assert(found);
+	}
+	
+	@Test
+	public void location() {
+		OBAA l = oai.getMetadata(0);
+		assertThat(l.getTechnical().getFirstHttpLocation(), equalTo("http://hdl.handle.net/10183/394"));
+	}
+	
+	@Test
+	public void learningResourceType() {
+		OBAA l = oai.getMetadata(0);
+		assertThat(l.getEducational().getLearningResourceTypes(), hasItems("Dissertação"));
+	}
+	
+	@Test 
+	public void format() {
+		OBAA l = oai.getMetadata(0);
+		boolean found = false;
+		for(cognitivabrasil.obaa.Technical.Format f : l.getTechnical().getFormat()) {
+			if("application/pdf".equals(f.getText())) {
+				found = true;
+			}
+		}
+		assert(found);
+	}
+	
+	@Test
+	public void resourceDescription() {
+		OBAA l = oai.getMetadata(1);
+		boolean found = false;
+		for(Contribute c : l.getLifeCycle().getContribute()) {
+			if("Caderno de farmácia".equals(c.getFirstEntity()) && "Publicador".equals(c.getRole())) {
+				found = true;
+			}
+		}
+		assert(found);
+	}
+	
 }
