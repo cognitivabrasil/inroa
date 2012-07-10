@@ -279,6 +279,7 @@ src/src/java/spring/FEBController.java -text
 src/src/java/spring/FederationsController.java -text
 src/src/java/spring/MapeamentosController.java -text
 src/src/java/spring/RepositoriesController.java -text
+src/src/java/spring/ServerInfo.java -text
 src/src/java/spring/UsersController.java -text
 src/src/java/spring/validador/BuscaValidator.java -text
 src/src/java/spring/validador/InfoBDValidator.java -text

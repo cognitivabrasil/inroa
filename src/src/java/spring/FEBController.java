@@ -24,6 +24,7 @@ import spring.validador.BuscaValidator;
 @Controller("feb")
 public final class FEBController {
 
+	@Autowired ServerInfo serverInfo;
     @Autowired
     private UsuarioDAO userDao;
     @Autowired
@@ -165,6 +166,11 @@ public final class FEBController {
             }
             return "login";
         }
+    }
+    
+    @RequestMapping("/version")
+    public @ResponseBody String version() {
+    	return serverInfo.getFullVersion();
     }
 
     /**

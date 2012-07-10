@@ -40,6 +40,7 @@ public final class AdminController {
     private UsuarioDAO userDao;
     @Autowired
     private Indexador indexador;
+    @Autowired private ServerInfo serverInfo;
 
     public AdminController() {
     }
@@ -51,7 +52,7 @@ public final class AdminController {
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         model.addAttribute("users", userDao.getAll());
-        model.addAttribute("versao", "2.5-alpha");
+        model.addAttribute("versao", serverInfo.getFullVersion());
         return "admin/adm";
     }
 
