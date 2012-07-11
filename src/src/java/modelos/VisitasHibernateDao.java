@@ -15,8 +15,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements VisitasDao {
 
-
-     @Override    
+    @Override
     public int visitsInAMonth(int month, int year) {
 
 
@@ -36,29 +35,39 @@ public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements
 
         Date fromDate = from.getTime();
         Date untilDate = until.getTime();
-        
+
         Session s = this.sessionFactory.getCurrentSession();
-        
+
         Criteria c = s.createCriteria(Visita.class);
-                
+
         c.add(Restrictions.gt("horario", fromDate));
         c.add(Restrictions.lt("horario", untilDate));
-        
+
         c.setProjection(Projections.rowCount());
-        
+
         List list = c.list();
-        return (Integer.parseInt(list.get(0).toString()));    
+        return (Integer.parseInt(list.get(0).toString()));
     }
 
     @Override
     public List<Integer> visitsInAYear(int year) {
-      
+
         List output = new ArrayList();
-        
-        for (int i=1; i<=12; i++){
+
+        for (int i = 1; i <= 12; i++) {
             output.add(visitsInAMonth(i, year));
         }
-        
+
         return output;
+    }
+
+    @Override
+    public Visita get(int id) {
+
+        Session s = this.sessionFactory.getCurrentSession();
+        Visita v = (Visita) s.createCriteria(Visita.class).
+                add(Restrictions.eq("id", id)).uniqueResult();
+
+        return v;
     }
 }

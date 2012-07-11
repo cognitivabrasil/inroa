@@ -1,11 +1,12 @@
 package spring;
 
 import ferramentaBusca.Recuperador;
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelos.*;
 import org.apache.log4j.Logger;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import robo.atualiza.importaOAI.Importer;
 import robo.atualiza.importaOAI.XMLtoDB;
 import spring.validador.BuscaValidator;
 
@@ -27,7 +27,8 @@ import spring.validador.BuscaValidator;
 @Controller("feb")
 public final class FEBController {
 
-	@Autowired ServerInfo serverInfo;
+    @Autowired
+    ServerInfo serverInfo;
     @Autowired
     private UsuarioDAO userDao;
     @Autowired
@@ -38,7 +39,6 @@ public final class FEBController {
     private DocumentosDAO docDao;
     @Autowired
     private VisitasDao visDao;
-    
     private BuscaValidator buscaValidator;
     Logger log = Logger.getLogger(FEBController.class);
 
@@ -47,20 +47,28 @@ public final class FEBController {
     }
 
     @RequestMapping("/")
-    public String inicio(Model model) {
-        return index(model);
+    public String inicio(Model model, HttpServletResponse response, @CookieValue(value="feb.cookie", required=false) String cookie) {
+        return index(model, response, cookie);
     }
 
     @RequestMapping("/index.*")
-    public String indexJSP(Model model) {
-        return index(model);
+    public String indexJSP(Model model, HttpServletResponse response, @CookieValue(value="feb.cookie", required=false) String cookie) {
+        return index(model, response, cookie);
     }
 
     @RequestMapping("/index")
-    public String index(Model model) {
+    public String index(Model model, HttpServletResponse response, @CookieValue(value="feb.cookie", required=false) String cookie) {
+        
         model.addAttribute("buscaModel", new Consulta());
-        Visita v = new Visita();
-        visDao.save(v);
+        
+        if (cookie == null) {            
+            Visita newVisitor = new Visita();                                   
+            visDao.save(newVisitor);
+            Integer id = newVisitor.getId();
+            Cookie cookieNew = new Cookie("feb.cookie", id.toString());
+            response.addCookie(cookieNew);            
+        } 
+        
         return "index";
     }
 
@@ -175,14 +183,15 @@ public final class FEBController {
             return "login";
         }
     }
-    
+
     @RequestMapping("/version")
-    public @ResponseBody String version() {
-    	return serverInfo.getFullVersion();
+    public @ResponseBody
+    String version() {
+        return serverInfo.getFullVersion();
     }
 
-    @RequestMapping(value="teste", method= RequestMethod.GET)
-    public void testeLume(){
+    @RequestMapping(value = "teste", method = RequestMethod.GET)
+    public void testeLume() {
         XMLtoDB test = new XMLtoDB();
         test.testeLume(docDao, repDao);
     }
