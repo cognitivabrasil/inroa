@@ -10,6 +10,23 @@
 	<url>http://feb.ufrgs.br</url>
 	<!-- Shared version number properties -->
 
+	<properties>
+		<org.springframework.version>3.1.0.RELEASE</org.springframework.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
+		<include.tests>nothing-to-include</include.tests>
+	</properties>
+	<profiles>
+		<profile>
+			<id>sonar</id>
+			<properties>
+				<include.tests>**/*IT.java</include.tests>
+			</properties>
+		</profile>
+	</profiles>
+
+
 	<scm>
 		<connection>scm:svn:https://svn.rnp.br/repos/gt-feb</connection>
 		<developerConnection>scm:svn:https://svn.rnp.br/repos/gt-feb</developerConnection>
@@ -33,12 +50,7 @@
 		</repository>
 	</repositories>
 
-	<properties>
-		<org.springframework.version>3.1.0.RELEASE</org.springframework.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
-	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -516,6 +528,12 @@
 				<version>2.12</version>
 				<configuration>
 					<skipTests>false</skipTests>
+					<includes>
+						<include>**/Test*.java</include>
+						<include>**/*Test.java</include>
+						<include>**/*TestCase.java</include>
+						<include>${include.tests}</include>
+					</includes>
 				</configuration>
 			</plugin>
 			<plugin>
