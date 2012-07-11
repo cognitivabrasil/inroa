@@ -16,20 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TokensHibernateDao implements TokensDao {
 
     @Autowired
-    SessionFactory sessionFactory;
-
-    @Override
-    public void delete(DocumentoReal doc) {
-        String sql = "DELETE FROM r1tokens where documento_id=" + doc.getId();
-        Session s = this.sessionFactory.getCurrentSession();
-        s.createSQLQuery(sql).executeUpdate();
-
-    }
-
-    @Override
-    public void saveTokens(DocumentoReal doc) {
-    	doc.generateTokens();
-    }
+    private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory2) {
 		sessionFactory = sessionFactory2;		

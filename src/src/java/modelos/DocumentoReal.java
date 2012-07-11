@@ -20,6 +20,7 @@ import spring.ApplicationContextProvider;
  *
  */
 public class DocumentoReal implements java.io.Serializable, DocumentoFebInterface, HibernateOaiDocument {
+    static Logger log = Logger.getLogger(DocumentoReal.class);
 
     private static final long serialVersionUID = 61217365141633065L;
     private int id;
@@ -34,7 +35,6 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private Set<Autor> autores;
     private Set<Token> tokens;
     private String language;
-    static Logger log = Logger.getLogger(DocumentoReal.class);
     List<String> titleTokens;
     List<String> keywordTokens;
     List<String> descriptionTokens;
@@ -374,7 +374,13 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return descriptionTokens;
     }
 
-    public List<String> generateTokens() {
+    /**
+     * Generates {@link Token}s from titles, keywords and descriptions and adds them to the object.
+     * 
+     * First, it clears existing tokens.
+     */
+    public void generateTokens() {
+    	tokens.clear();
     	for(String t : getTitlesTokenized()) {
     		tokens.add(new Token(t, this, 1));
     	}
@@ -385,12 +391,6 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     	for(String t : getDescriptionsTokenized()) {
     		tokens.add(new Token(t, this, 3));
     	}
-    	
-    	List<String> l = new ArrayList<String>();
-    	l.addAll(getTitlesTokenized());
-    	l.addAll(getKeywordsTokenized());
-    	l.addAll(getDescriptionsTokenized());
-    	return l;
     }
 
     public boolean isIndexEmpty() {

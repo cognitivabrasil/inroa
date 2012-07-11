@@ -97,8 +97,7 @@ public class Indexador {
      * @param doc Documento a ser adicionado
      */
     public void addDocLimpantoTokens(DocumentoReal doc) {
-        tokenDao.delete(doc); //deleta todos os tokens do documento
-        tokenDao.saveTokens(doc);
+        doc.generateTokens();
     }
 
     /**
@@ -183,7 +182,7 @@ public class Indexador {
                 docDao.delete(doc);
                 log.warn("FEB: Documento deletado");                
             } else {
-                tokenDao.saveTokens(doc);
+                doc.generateTokens();
             }
         }
     }

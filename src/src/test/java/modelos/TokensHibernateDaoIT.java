@@ -47,8 +47,9 @@ public class TokensHibernateDaoIT extends AbstractDaoTest {
 		List<String> tokensList = Arrays.asList(tokensArray);
 		DocumentoReal doc = docDao.get(1);
 
-		tokensDao.saveTokens(doc);
-
+		doc.generateTokens();
+		
+		
 		// here we need to flush, since we are acessing the raw database
 		sessionFactory.getCurrentSession().flush();
 		

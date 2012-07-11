@@ -248,7 +248,6 @@ src/src/java/modelos/SubNodo.java -text
 src/src/java/modelos/Token.java -text
 src/src/java/modelos/TokensDao.java -text
 src/src/java/modelos/TokensHibernateDao.java -text
-src/src/java/modelos/TokensHibernateNativeSqlDao.java -text
 src/src/java/modelos/Usuario.java -text
 src/src/java/modelos/UsuarioDAO.java -text
 src/src/java/modelos/UsuarioHibernateDAO.java -text

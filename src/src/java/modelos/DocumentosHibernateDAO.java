@@ -129,9 +129,8 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
         }
 
-        getSession().flush();
         log.debug("Tokenizando o documento");
-        tokenDao.saveTokens(doc);
+        doc.generateTokens();
     }
 
     /**
