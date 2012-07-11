@@ -16,6 +16,8 @@ import modelos.RepositoryDAO;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.Mockito.*;
@@ -33,21 +35,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 @TestExecutionListeners(DependencyInjectionTestExecutionListener.class)
 public class ImporterTest {
 	/**
-	 * Read file as string.
-	 *
-	 * @param filePath the file path
-	 * @return the string
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	private static String readFileAsString(String filePath) throws IOException {
-		byte[] buffer = new byte[(int) new File(filePath).length()];
-		FileInputStream f = null;
-		f = new FileInputStream(filePath);
-		f.read(buffer);
-		return new String(buffer);
-	}
-
-	/**
 	 * Tests that the importer is converting the file and calling the
 	 * correct number of save() in the document DAO, from a sample DC input.
 	 * @throws IOException 
@@ -56,7 +43,7 @@ public class ImporterTest {
 	public void testImportDC() throws IOException {
 		String inputXmlFile = "src/test/java/metadata/oai_dc.xml"; // input xml
 		String inputXsltFile = "src/xslt/dc2obaa_full.xsl"; // input xsl
-		String xslt = readFileAsString(inputXsltFile);
+		String xslt = FileUtils.readFileToString(new File(inputXsltFile));
 		
 		Mapeamento m = new Mapeamento();
 		m.setXslt(xslt);

@@ -127,11 +127,11 @@ public class Importer {
 	 * 
 	 * @param documentDao the DocumentDAO to set
 	 */
-	void setDocDao(DocumentosDAO documentDao) {
+	public void setDocDao(DocumentosDAO documentDao) {
 		this.docDao = documentDao;
 	}
 	
-	void setRepDao(RepositoryDAO repositoryDao) {
+	public void setRepDao(RepositoryDAO repositoryDao) {
 		this.repDao = repositoryDao;
 	}
 

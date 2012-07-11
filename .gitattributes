@@ -384,6 +384,7 @@ src/src/main/webapp/scripts/validatejs.js -text
 src/src/test/java/cognitivabrasil/obaa/OBAATest.java -text
 src/src/test/java/cognitivabrasil/obaa/OaiOBAATest.java -text
 src/src/test/java/ferramentaBusca/RecuperadorTest.java -text
+src/src/test/java/functionaltests/LumeXmlIT.java -text
 src/src/test/java/metadata/DublinCoreTest.java -text
 src/src/test/java/metadata/XsltConversorTest.java -text
 src/src/test/java/metadata/XsltDC2ObaaTest.java -text
