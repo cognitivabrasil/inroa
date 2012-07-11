@@ -382,14 +382,14 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     public void generateTokens() {
     	tokens.clear();
     	for(String t : getTitlesTokenized()) {
-    		tokens.add(new Token(t, this, 1));
+    		tokens.add(new Token(t, this, Token.TITLE));
     	}
 
     	for(String t : getKeywordsTokenized()) {
-    		tokens.add(new Token(t, this, 2));
+    		tokens.add(new Token(t, this, Token.KEYWORD));
     	}
     	for(String t : getDescriptionsTokenized()) {
-    		tokens.add(new Token(t, this, 3));
+    		tokens.add(new Token(t, this, Token.DESCRIPTION));
     	}
     }
 

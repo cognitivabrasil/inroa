@@ -1,6 +1,10 @@
 package modelos;
 
 public class Token {
+	public static int TITLE = 1;
+	public static int KEYWORD = 2;
+	public static int DESCRIPTION = 3;
+	
 	private Integer id;
 	private DocumentoReal documento;
 	private String token;

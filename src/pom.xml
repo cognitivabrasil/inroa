@@ -490,6 +490,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>${include.tests}</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
