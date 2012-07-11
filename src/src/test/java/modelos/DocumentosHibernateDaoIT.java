@@ -37,7 +37,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-@Ignore
 public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired

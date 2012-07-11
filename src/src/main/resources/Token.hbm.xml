@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="modelos.Token" table="r1tokens">
+    <meta attribute="class-description"> 
+    </meta>
+ <id column="id" name="id" type="int">
+        <generator class="sequence">
+                <param name="sequence">tokens_id_seq</param>
+        </generator>    </id>
+    <property name="token" not-null="true" type="string"/>
+    <property name="field" type="int">
+    </property>
+    
+    <many-to-one name="documento" class="modelos.DocumentoReal" fetch="select">
+            <column name="documento_id" not-null="true" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

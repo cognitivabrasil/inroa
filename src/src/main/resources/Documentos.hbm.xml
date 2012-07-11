@@ -1,27 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="modelos.DocumentoReal" table="documentos">
-        <id column="id" name="id" type="int">
-            <generator class="sequence">
-                <param name="sequence">documentos_id_seq</param>
-            </generator>    
-        </id>
-        <property column="obaa_entry" name="obaaEntry" not-null="true" type="string"/>
-        <property column="obaaxml" name="obaaXml" type="string"/>
-        <many-to-one class="modelos.Repositorio" column="id_repositorio" name="repositorio"/>
-        <many-to-one class="modelos.RepositorioSubFed" column="id_rep_subfed" name="repositorioSubFed"/>
+	<class name="modelos.DocumentoReal" table="documentos">
+		<id column="id" name="id" type="int">
+			<generator class="sequence">
+				<param name="sequence">documentos_id_seq</param>
+			</generator>
+		</id>
+		<property column="obaa_entry" name="obaaEntry" not-null="true"
+			type="string" />
+		<property column="obaaxml" name="obaaXml" type="string" />
+		<many-to-one class="modelos.Repositorio" column="id_repositorio"
+			name="repositorio" />
+		<many-to-one class="modelos.RepositorioSubFed" column="id_rep_subfed"
+			name="repositorioSubFed" />
 
-        <property name="timestamp" type="timestamp"/>
-        <set name="objetos" cascade="all-delete-orphan" table="objetos" inverse="true">
-            <key column="documento"/>
-            <one-to-many class="modelos.Objeto"/>
-        </set>
-        <property name="deleted" type="boolean"/>
-        
-        <set name="autores" cascade="all-delete-orphan" table="autores" inverse="true">
-            <key column="documento"/>
-            <one-to-many class="modelos.Autor"/>
-        </set>
-    </class>
+		<property name="timestamp" type="timestamp" />
+		<set name="objetos" cascade="all-delete-orphan" table="objetos"
+			inverse="true">
+			<key column="documento" />
+			<one-to-many class="modelos.Objeto" />
+		</set>
+		<property name="deleted" type="boolean" />
+
+		<set name="autores" cascade="all-delete-orphan" table="autores"
+			inverse="true">
+			<key column="documento" />
+			<one-to-many class="modelos.Autor" />
+		</set>
+
+		<set name="tokens" cascade="all-delete-orphan" table="r1tokens"
+			inverse="true">
+			<key column="documento_id" />
+			<one-to-many class="modelos.Token" />
+		</set>
+	</class>
 </hibernate-mapping>

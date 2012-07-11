@@ -20,9 +20,6 @@ SET search_path = public, pg_catalog;
 -- Name: padraometadados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: feb
 --
 
-SELECT pg_catalog.setval('padraometadados_id_seq', 2, true);
-
-
 --
 -- TOC entry 2038 (class 0 OID 0)
 -- Dependencies: 181
@@ -31,14 +28,6 @@ SELECT pg_catalog.setval('padraometadados_id_seq', 2, true);
 
 SELECT pg_catalog.setval('stopwords_id_seq', 179, true);
 
-
---
--- TOC entry 2039 (class 0 OID 0)
--- Dependencies: 183
--- Name: usuarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: feb
---
-
-SELECT pg_catalog.setval('usuarios_id_seq', 2, true);
 
 
 --

@@ -197,6 +197,7 @@ src/nb-configuration.xml -text
 src/nbactions.xml -text
 src/pom.xml -text
 src/settings.xml -text
+src/sql/create.sh -text
 src/sql/current_2_old.sql -text
 src/sql/current_old.sql -text
 src/sql/data.sql -text
@@ -244,8 +245,10 @@ src/src/java/modelos/SubFederacao.java -text
 src/src/java/modelos/SubFederacaoDAO.java -text
 src/src/java/modelos/SubFederacaoHibernateDAO.java -text
 src/src/java/modelos/SubNodo.java -text
+src/src/java/modelos/Token.java -text
 src/src/java/modelos/TokensDao.java -text
 src/src/java/modelos/TokensHibernateDao.java -text
+src/src/java/modelos/TokensHibernateNativeSqlDao.java -text
 src/src/java/modelos/Usuario.java -text
 src/src/java/modelos/UsuarioDAO.java -text
 src/src/java/modelos/UsuarioHibernateDAO.java -text
@@ -293,6 +296,7 @@ src/src/main/resources/Objeto.hbm.xml -text
 src/src/main/resources/Repositorio.hbm.xml -text
 src/src/main/resources/RepositorioSubFed.hbm.xml -text
 src/src/main/resources/SubFederacao.hbm.xml -text
+src/src/main/resources/Token.hbm.xml -text
 src/src/main/resources/Usuario.hbm.xml -text
 src/src/main/resources/Visita.hbm.xml -text
 src/src/main/resources/applicationContext.xml -text

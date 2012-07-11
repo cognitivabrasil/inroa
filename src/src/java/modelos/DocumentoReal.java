@@ -32,6 +32,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     private String obaaXml;
     private OBAA metadata;
     private Set<Autor> autores;
+    private Set<Token> tokens;
     private String language;
     static Logger log = Logger.getLogger(DocumentoReal.class);
     List<String> titleTokens;
@@ -42,6 +43,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         obaaEntry = "";
         datetime = new Date(0);
         objetos = new HashSet<Objeto>();
+        tokens = new HashSet<Token>();
         deleted = false;
         autores = new HashSet<Autor>();
         language = "pt-BR";
@@ -372,16 +374,23 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return descriptionTokens;
     }
 
-    public ArrayList<String> getTokens() {
-        ArrayList<String> tokens = new ArrayList<String>();
+    public List<String> generateTokens() {
+    	for(String t : getTitlesTokenized()) {
+    		tokens.add(new Token(t, this, 1));
+    	}
 
-        tokens.addAll(getTitlesTokenized());
-
-        tokens.addAll(getKeywordsTokenized());
-
-        tokens.addAll(getDescriptionsTokenized());
-
-        return (tokens);
+    	for(String t : getKeywordsTokenized()) {
+    		tokens.add(new Token(t, this, 2));
+    	}
+    	for(String t : getDescriptionsTokenized()) {
+    		tokens.add(new Token(t, this, 3));
+    	}
+    	
+    	List<String> l = new ArrayList<String>();
+    	l.addAll(getTitlesTokenized());
+    	l.addAll(getKeywordsTokenized());
+    	l.addAll(getDescriptionsTokenized());
+    	return l;
     }
 
     public boolean isIndexEmpty() {
@@ -414,6 +423,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     }
 
     private List<String> getStopWords() {
+    	// TODO: this is ugly...
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.fatal("Could not get AppContext bean!");
@@ -424,4 +434,12 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
             return stopWordDao.getStopWords(this.language);
         }
     }
+
+	public void setTokens(Set<Token> tokens) {
+		this.tokens = tokens;
+	}
+
+	public Set<Token> getTokens() {
+		return tokens;
+	}
 }

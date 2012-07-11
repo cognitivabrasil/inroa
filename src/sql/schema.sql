@@ -423,7 +423,19 @@ ALTER TABLE public.r1tf OWNER TO feb;
 -- Name: r1tokens; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
 --
 
+CREATE SEQUENCE tokens_id_seq
+    START WITH 100
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.repositorios_id_seq OWNER TO feb;
+
+
 CREATE TABLE r1tokens (
+    id integer DEFAULT nextval('tokens_id_seq'::regclass) NOT NULL,
     documento_id integer NOT NULL,
     token text NOT NULL,
     field integer

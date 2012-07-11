@@ -5,11 +5,12 @@
     <!--<property name="hibernate.default_schema">public</property>!-->
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.connection.autocommit">true</property>
-<!--      <property name="hibernate.show_sql">true</property> -->
+     <property name="hibernate.show_sql">true</property>
     <mapping resource="Mapping.hbm.xml"/>
     <mapping resource="MetadataRecord.hbm.xml"/>
     <mapping resource="Documentos.hbm.xml"/>
     <mapping resource="Objeto.hbm.xml"/>
+    <mapping resource="Token.hbm.xml"/>  
     <mapping resource="Repositorio.hbm.xml"/>
     <mapping resource="SubFederacao.hbm.xml"/>
     <mapping resource="RepositorioSubFed.hbm.xml"/>
