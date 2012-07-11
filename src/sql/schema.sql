@@ -430,8 +430,7 @@ CREATE SEQUENCE tokens_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.repositorios_id_seq OWNER TO feb;
+ALTER TABLE public.tokens_id_seq OWNER TO feb;
 
 
 CREATE TABLE r1tokens (
