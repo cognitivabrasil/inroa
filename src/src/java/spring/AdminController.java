@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import modelos.*;
-
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +41,8 @@ public final class AdminController {
     @Autowired
     private Indexador indexador;
     @Autowired private ServerInfo serverInfo;
+
+    static Logger log = Logger.getLogger(AdminController.class);
 
     public AdminController() {
     }
@@ -145,7 +147,7 @@ public final class AdminController {
 
     @RequestMapping("efetuaRecalculoIndice")
     public String recalcularIndice(Model model) {
-        
+        log.info("Recalculando indice - Solicitação feita pela ferramenta administrativa.");
         indexador.indexarTodosRepositorios();
         model.addAttribute("fim", "Índice recalculado com sucesso!");
         return "admin/recalcularIndice";

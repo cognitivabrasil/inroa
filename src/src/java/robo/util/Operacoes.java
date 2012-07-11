@@ -22,6 +22,7 @@ import ptstemmer.exceptions.PTStemmerException;
  * @author Marcos
  */
 public class Operacoes {
+
     static Logger log = Logger.getLogger(Operacoes.class);
 
     /**
@@ -191,39 +192,45 @@ public class Operacoes {
      * @return lista de palavras stemizada, sem stopwords
      */
     public static List<String> tokeniza(String S, List<String> stopWords) {
-
+        if (stopWords.isEmpty()) {
+            log.warn("A lista de stopWords está vazia. Nenhuma StopWord será removida!");
+        }
         ArrayList<String> Words = new ArrayList<String>();
+        if (S.isEmpty() || S == null) {
+            log.debug("O atributo a ser tokenizado está vazio!");
+        }else{
 
-        try {
-            Stemmer st;
-            st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
+            try {
+                Stemmer st;
+                st = Stemmer.StemmerFactory(Stemmer.StemmerType.ORENGO);
 
-            st.enableCaching(1000);
+                st.enableCaching(1000);
 
-            S = S.toLowerCase();
+                S = S.toLowerCase();
 
-            st.remove(stopWords);
+                st.remove(stopWords);
 
-            S = Operacoes.removeAcentuacao(S); //chama o metodo que substitui as letras acentuadas e todo tipo de caracter alem de [a-zA-Z_0-9]
+                S = Operacoes.removeAcentuacao(S); //chama o metodo que substitui as letras acentuadas e todo tipo de caracter alem de [a-zA-Z_0-9]
 
-            String tokens[];
-            tokens = st.getPhraseStems(S);
+                String tokens[];
+                tokens = st.getPhraseStems(S);
 
-            for (int i = 0; i < tokens.length; i++) {
+                for (int i = 0; i < tokens.length; i++) {
 
-                if (!tokens[i].isEmpty()) {
-                    Words.add(tokens[i]);
+                    if (!tokens[i].isEmpty()) {
+                        Words.add(tokens[i]);
+                    }
                 }
 
-            }
+                if (Words.size() < 1) {
+                    log.debug("Nenhuma palavra capturada! String: \"" + S + "\". Provavelmente todos os tokens foram considerados StopWords.");
+                }
 
-            if (Words.size() < 1) {
-                log.debug("Nenhuma palavra capturada! String: " + S + ". Provavelmente todos os tokens foram considerados StopWords.");
+            } catch (PTStemmerException e) {
+                log.error("Erro ao stemmizar a frase: " + S, e);
+                return Words;
             }
-            return Words;
-        } catch (PTStemmerException e) {
-            log.error("Erro ao stemmizar a frase: " + S, e);
-            return Words;
         }
+        return Words;
     }
 }

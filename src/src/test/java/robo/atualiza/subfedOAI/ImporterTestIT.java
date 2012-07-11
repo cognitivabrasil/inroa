@@ -11,6 +11,7 @@ import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
 import org.hibernate.SessionFactory;
 import static org.junit.Assert.assertEquals;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
+@Ignore
 public class ImporterTestIT extends AbstractDaoTest {
 
     @Autowired

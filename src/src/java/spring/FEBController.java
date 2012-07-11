@@ -1,6 +1,7 @@
 package spring;
 
 import ferramentaBusca.Recuperador;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import robo.atualiza.importaOAI.Importer;
+import robo.atualiza.importaOAI.XMLtoDB;
 import spring.validador.BuscaValidator;
 
 /**
@@ -176,6 +179,12 @@ public final class FEBController {
     @RequestMapping("/version")
     public @ResponseBody String version() {
     	return serverInfo.getFullVersion();
+    }
+
+    @RequestMapping(value="teste", method= RequestMethod.GET)
+    public void testeLume(){
+        XMLtoDB test = new XMLtoDB();
+        test.testeLume(docDao, repDao);
     }
 
     /**

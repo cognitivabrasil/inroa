@@ -51,9 +51,9 @@ public class XMLtoDB {
     }
 
     /**
-     * M&eacute;todo que chama o parser xml o qual insere na base de dados os registros
-     * contidos nos arquivos xml recebidos como par&acirc;metro. Recebe um ou mais
-     * arquivos xml para realizar o parser e inserir objetos.
+     * M&eacute;todo que chama o parser xml o qual insere na base de dados os
+     * registros contidos nos arquivos xml recebidos como par&acirc;metro.
+     * Recebe um ou mais arquivos xml para realizar o parser e inserir objetos.
      *
      * @param caminhoXML ArrayList de Strings contendo caminhos para os arquivos
      * xml
@@ -67,8 +67,8 @@ public class XMLtoDB {
             Repositorio r,
             Indexador indexar) throws Exception {
 
-    	int updated = 0;
-    	
+        int updated = 0;
+
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.fatal("Could not get AppContext bean!");
@@ -96,11 +96,21 @@ public class XMLtoDB {
                 }
             }
 
-            /*
-             * gravar realmente as modificações
-             */
-            docDao.flush();
             return updated;
         }
+    }
+
+    public void testeLume(DocumentosDAO docDao, RepositoryDAO repDao) {
+        String inputXmlFile = "/home/marcos/NetBeansProjects/feb/src/test/java/metadata/lume_erro_null_documento.xml";
+
+
+        Repositorio r = repDao.get("LUME");
+
+        Importer imp = new Importer();
+        imp.setInputFile(new File(inputXmlFile));
+        imp.setRepositorio(r);
+        imp.setDocDao(docDao);
+        imp.setRepDao(repDao);
+        imp.update();
     }
 }

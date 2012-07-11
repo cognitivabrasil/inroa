@@ -22,7 +22,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 		<!-- allow any user to view (GET) the pages. Changes should only be effected 
 			with POST requests -->
         <intercept-url pattern="/admin/**" method="GET"
-                       access="hasAnyRole( 
+                       access="hasAnyRole(
 			'PERM_MANAGE_USERS',
 			'PERM_UPDATE',
 			'PERM_MANAGE_REP',
@@ -43,12 +43,17 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <intercept-url pattern="/admin/repositories/**" method="POST"
                        access="hasRole('PERM_MANAGE_REP')" />
 			
-        <intercept-url pattern="/admin/federations/*/update*" 
+        <intercept-url pattern="/admin/federations/*/update*"
                        method="POST" access="hasRole('PERM_UPDATE')" />
         <intercept-url pattern="/admin/federations/update*"
                        method="POST" access="hasRole('PERM_UPDATE')" />
         <intercept-url pattern="/admin/federations/**" method="POST"
                        access="hasRole('PERM_MANAGE_REP')" />
+                       
+        <intercept-url pattern="/admin/efetuaRecalculoIndice" method="POST"
+                                      access="hasRole('PERM_UPDATE')" />
+
+
 
 
         <intercept-url pattern="/admin/users/**" method="POST"

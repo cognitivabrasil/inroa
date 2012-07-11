@@ -394,6 +394,7 @@ src/src/test/java/metadata/conversor/MockTwo.java -text
 src/src/test/java/metadata/conversor/RuleTest.java -text
 src/src/test/java/metadata/lom1.xml -text
 src/src/test/java/metadata/lume1.xml -text
+src/src/test/java/metadata/lume_erro_null_documento.xml -text
 src/src/test/java/metadata/missing.xml -text
 src/src/test/java/metadata/oai_cannot_disseminate.xml -text
 src/src/test/java/metadata/oai_dc.xml -text

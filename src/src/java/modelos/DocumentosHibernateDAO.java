@@ -19,6 +19,8 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private TokensDao tokenDao;
     private static Logger log = Logger.getLogger(DocumentosHibernateDAO.class.getName());
 
     /*
@@ -126,6 +128,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
             throw new RuntimeException(e);
 
         }
+
+        log.debug("Tokenizando o documento");
+        tokenDao.saveTokens(doc);
     }
 
     /**
@@ -142,7 +147,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 						add(Restrictions.eq("obaaEntry", doc.getObaaEntry())).
 						uniqueResult();
 			}
-			else if(doc.getRepositorio() != null) {
+			else if(doc.getRepositorioSubFed() != null) {
 				d = (DocumentoReal) getSession().createCriteria(DocumentoReal.class).
 						add(Restrictions.eq("repositorioSubFed", doc.getRepositorioSubFed())).
 						add(Restrictions.eq("obaaEntry", doc.getObaaEntry())).
