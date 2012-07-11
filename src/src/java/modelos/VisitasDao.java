@@ -1,6 +1,5 @@
 package modelos;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,9 +21,10 @@ public interface VisitasDao {
     /**
      * Calculate the number of visits in a month
      * @param month number of the month in a year
+     * @param year the year in 4 digits in a gregorian calendar
      * @return 
      */
-    public int visitsInAMonth(int month);
+    public int visitsInAMonth(int month, int year);
     /**
      * Calculate the number of visits in a year
      * @param year the year in 4 digits in a gregorian calendar

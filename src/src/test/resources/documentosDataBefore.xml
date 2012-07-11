@@ -81,7 +81,20 @@ and open the template in the editor.
     <stopwords id="11" stopword="enquanto" />
     <stopwords id="12" stopword="ela" />
 
-   <visitas id="1" horario="2012-07-10 10:04:47" /> 
-   <visitas id="2" horario="2012-07-09 12:06:01" /> 
+    <visitas id="1" horario="2012-01-10 10:04:47" /> 
+    <visitas id="2" horario="2012-01-09 12:06:01" /> 
+    <visitas id="3" horario="2012-02-09 12:06:01" /> 
+    <visitas id="4" horario="2012-03-09 12:06:01" /> 
+    <visitas id="5" horario="2012-03-09 12:06:01" /> 
+    <visitas id="6" horario="2012-04-09 12:06:01" /> 
+    <visitas id="7" horario="2012-06-09 12:06:01" /> 
+    <visitas id="8" horario="2012-07-10 10:04:47" /> 
+    <visitas id="9" horario="2012-07-09 12:06:01" /> 
+    <visitas id="10" horario="2012-10-09 12:06:01" /> 
+    <visitas id="11" horario="2012-12-09 12:06:01" /> 
+    <visitas id="12" horario="2012-12-09 12:06:01" /> 
+    <visitas id="13" horario="2012-12-09 12:06:01" /> 
+    
+   
 
 </dataset>

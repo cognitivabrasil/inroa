@@ -95,7 +95,28 @@ public class StatisticsIT extends AbstractDaoTest {
     }
     
     @Test 
-    public void testVisits() {
-        assertEquals(2, v.visitsInAMonth(7));
+    public void testVisitsInAMonth() {
+        assertEquals(2, v.visitsInAMonth(7, 2012));
+        assertEquals(3, v.visitsInAMonth(12, 2012));
+    }
+    
+    @Test 
+    public void testVisitsInAYear() {
+        
+        List confirmation = new ArrayList<Integer>();
+        confirmation.add(2);
+        confirmation.add(1);
+        confirmation.add(2);
+        confirmation.add(1);
+        confirmation.add(0);
+        confirmation.add(1);
+        confirmation.add(2);
+        confirmation.add(0);
+        confirmation.add(0);
+        confirmation.add(1);
+        confirmation.add(0);
+        confirmation.add(3);
+        
+        assertEquals(confirmation, v.visitsInAYear(2012));
     }
 }

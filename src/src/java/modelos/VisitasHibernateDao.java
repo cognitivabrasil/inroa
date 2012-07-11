@@ -1,5 +1,6 @@
 package modelos;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.dao.support.DataAccessUtils;
 
 /**
  *
@@ -17,16 +17,18 @@ public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements
 
 
     @Override
-    public int visitsInAMonth(int month) {
+    public int visitsInAMonth(int month, int year) {
 
 
         month--;
         Calendar from = Calendar.getInstance();
         Calendar until = Calendar.getInstance();
 
+        from.set(Calendar.YEAR, year);
         from.set(Calendar.MONTH, month);
         from.set(Calendar.DAY_OF_MONTH, 1);
 
+        until.set(Calendar.YEAR, year);
         until.set(Calendar.MONTH, ++month);
         until.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -53,11 +55,13 @@ public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements
 
     @Override
     public List<Integer> visitsInAYear(int year) {
-        return null;
-    }
-
-    public static void main(String[] args) {
-        VisitasHibernateDao run = new VisitasHibernateDao();
-        run.visitsInAMonth(4);
+      
+        List output = new ArrayList();
+        
+        for (int i=1; i<=12; i++){
+            output.add(visitsInAMonth(i, year));
+        }
+        
+        return output;
     }
 }
