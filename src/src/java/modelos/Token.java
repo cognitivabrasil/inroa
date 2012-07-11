@@ -10,6 +10,10 @@ public class Token {
 	private String token;
 	private Integer field;
 	
+        public Token(){
+            
+        }
+
 	public Token(String t, DocumentoReal documentoReal, int i) {
 		token = t;
 		field = i;

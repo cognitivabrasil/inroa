@@ -29,7 +29,7 @@ body
     width: 735px;
     margin-left: auto;
     margin-right: auto;
-    
+
 }
 
 #bodyLetraMaior{
@@ -274,7 +274,7 @@ img{
     padding-right:5%;
     font-size:105%;
     font-weight:bold;
-    
+
 }
 
 .editar a{
@@ -342,7 +342,7 @@ a:hover{
     font-family: verdana;
 }
 .Mapeamento .ValueErro{
-    
+
     color:red;
     font-weight:bold;
 }
@@ -356,7 +356,7 @@ a:hover{
     text-align: center;
     color: red;
     font-weight: bold;
-    }
+}
 .LinhaEntrada .Comentario{
     margin:0 0 5px 42%;
     font-size: 80%;
@@ -385,10 +385,10 @@ a:hover{
     float:left;
 }
 .LinhaEntrada .Value .bordaVerde{
-   border: 2px solid #09c812;
+    border: 2px solid #09c812;
 }
 .LinhaEntrada .Value .bordaVermelha{
-   border: 2px solid red;
+    border: 2px solid red;
 }
 
 .LinhaEntrada .ValueIndex{
@@ -756,7 +756,7 @@ td{vertical-align:top;}
 
 .tableSubfed{
     border-color: red;
-    
+
 }
 .tableSubfed th{
     background-color: #AEC9E3;
@@ -863,3 +863,16 @@ td{vertical-align:top;}
 .margin-top{margin-top: 2%;}
 
 .sucesso{color: #007a00; font-weight: bold}
+
+.infoDetalhada .title{text-decoration: underline; font-size:120%;}
+.infoDetalhada li{margin-top: 1%;}
+.infoDetalhada strong{margin-right: 1%;}
+.infoDetalhada .nome{
+    float: left;
+    text-align:left;
+    font-weight: bold;
+    margin-right: 1%;
+}
+.infoDetalhada .valor{
+    margin:0% 0% 1% 12%;
+}
