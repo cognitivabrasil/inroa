@@ -20,7 +20,7 @@
 
             $(document).ready(function(){
 
-            var plot1 = jQuery.jqplot ('chart1', [${arrayJs}], 
+            var plot1 = jQuery.jqplot ('chart1', [${numObjects}], 
                 { 
                     title: {
                             text: 'Quantidade de objetos',
@@ -44,7 +44,8 @@
 
         <script>      
             $(document).ready(function(){
-                var plot2 = $.jqplot ('chart2', [[3,7,9,1,4,6,8,2,5,6,12,8]], {                    
+                alert (${visitasTotal})
+                var plot2 = $.jqplot ('chart2', [${visitasTotal}], {                    
                     title: 'Número de Visitas',
                     axesDefaults: {
                         labelRenderer: $.jqplot.CanvasAxisLabelRenderer

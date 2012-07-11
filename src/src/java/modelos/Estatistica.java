@@ -8,10 +8,14 @@ import java.util.List;
  */
 public class Estatistica {
 
-    public String fromListToJsList(List <SubNodo> list) {
+    /**
+     *
+     * @param list the List to be converted
+     * @return
+     */
+    public String convertNodoList(List<SubNodo> list) {
 
-        
-        String jsList = "[ ";        
+        String jsList = "[ ";
 
         if (list == null) {
             return "";
@@ -21,15 +25,39 @@ public class Estatistica {
 
         for (int i = 0; i < size; i++) {
             SubNodo nodo = list.get(i);
-                        
-            if (i==size-1){
-                jsList += "[ '"+nodo.getNome()+"', "+nodo.getSize()+" ]";                                
+
+            if (i == size - 1) {
+                jsList += "[ '" + nodo.getNome() + "', " + nodo.getSize() + " ]";
             } else {
-                jsList += "[ '"+nodo.getNome()+"', "+nodo.getSize()+" ], ";
+                jsList += "[ '" + nodo.getNome() + "', " + nodo.getSize() + " ], ";
             }
         }
-                        
+
         jsList += " ]";
+
+        return jsList;
+    }
+
+    public String convertIntList(List<Integer> list) {
+        String jsList = "[";
+
+        if (list == null) {
+            return "";
+        }
+
+        int size = list.size();
+
+        for (int i = 0; i < size; i++) {
+            Integer n = list.get(i);
+
+            if (i == size - 1) {
+                jsList += n;
+            } else {
+                jsList += n + ", ";
+            }
+        }
+
+        jsList += "]";
 
         return jsList;
     }

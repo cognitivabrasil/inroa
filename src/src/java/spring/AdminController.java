@@ -1,6 +1,7 @@
 package spring;
 
 import ferramentaBusca.indexador.Indexador;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -40,7 +41,11 @@ public final class AdminController {
     private UsuarioDAO userDao;
     @Autowired
     private Indexador indexador;
-    @Autowired private ServerInfo serverInfo;
+    @Autowired 
+    private ServerInfo serverInfo;
+    
+    @Autowired
+    private VisitasDao visitasDao;
 
     static Logger log = Logger.getLogger(AdminController.class);
 
@@ -200,10 +205,13 @@ public final class AdminController {
         
         List repList = repDao.getAll();        
         Estatistica e = new Estatistica();
-        model.addAttribute("arrayJs", e.fromListToJsList(repList));
+        model.addAttribute("numObjects", e.convertNodoList(repList));
+        
+        Calendar c = Calendar.getInstance();
+        List visitsList = visitasDao.visitsInAYear(c.get(Calendar.YEAR));
+        model.addAttribute("visitasTotal", e.convertIntList(visitsList));       
         
         
-        //Lista de Federações
 
         return "admin/statistics";
     }

@@ -16,7 +16,7 @@ import org.hibernate.criterion.Restrictions;
 public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements VisitasDao {
 
 
-    @Override
+     @Override    
     public int visitsInAMonth(int month, int year) {
 
 
@@ -33,9 +33,6 @@ public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements
         until.set(Calendar.DAY_OF_MONTH, 1);
 
         until.add(Calendar.DAY_OF_MONTH, -1);
-
-        //System.out.println(from.get(Calendar.DAY_OF_MONTH));
-        //System.out.println(until.get(Calendar.DAY_OF_MONTH));
 
         Date fromDate = from.getTime();
         Date untilDate = until.getTime();

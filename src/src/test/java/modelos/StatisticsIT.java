@@ -71,7 +71,27 @@ public class StatisticsIT extends AbstractDaoTest {
     }
 
     @Test
-    public void testfromListToJsList() {
+    public void testConvertIntList(){
+        List confirmation = new ArrayList<Integer>();
+        confirmation.add(2);
+        confirmation.add(1);
+        confirmation.add(2);
+        confirmation.add(1);
+        confirmation.add(0);
+        confirmation.add(1);
+        confirmation.add(2);
+        confirmation.add(0);
+        confirmation.add(0);
+        confirmation.add(1);
+        confirmation.add(0);
+        confirmation.add(3);
+        
+        Estatistica e = new Estatistica();
+        
+        assertEquals("[2, 1, 2, 1, 0, 1, 2, 0, 0, 1, 0, 3]", e.convertIntList(confirmation));
+    }
+    @Test
+    public void testConvertNodoList() {
         
         List<SubNodo> repList = new ArrayList<SubNodo>();
         
@@ -90,8 +110,10 @@ public class StatisticsIT extends AbstractDaoTest {
         repList.add(r2);
         
         Estatistica run = new Estatistica();
-        String teste = run.fromListToJsList(repList);
-        System.out.println(teste);
+        String teste = run.convertNodoList(repList);
+        //System.out.println(teste);
+        
+        assertEquals("[ [ 'teste', 321 ], [ 'teste2', 321 ] ]", teste);
     }
     
     @Test 
@@ -116,7 +138,7 @@ public class StatisticsIT extends AbstractDaoTest {
         confirmation.add(1);
         confirmation.add(0);
         confirmation.add(3);
-        
+                
         assertEquals(confirmation, v.visitsInAYear(2012));
     }
 }
