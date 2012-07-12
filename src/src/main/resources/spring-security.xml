@@ -31,22 +31,18 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 			'PERM_CHANGE_DATABASE',
 			'PERM_VIEW_STATISTICS' )" />
 
-        <intercept-url pattern="/admin/repositories/*/update*"
-                       method="POST" access="hasRole('PERM_UPDATE')" />
         <intercept-url pattern="/admin/repositories/**" method="POST"
                        access="hasRole('PERM_MANAGE_REP')" />
 
         <intercept-url pattern="/admin/repositories/*/update*"
                        method="POST" access="hasRole('PERM_UPDATE')" />
-        <intercept-url pattern="/admin/repositories/update*"
-                       method="POST" access="hasRole('PERM_UPDATE')" />
+
         <intercept-url pattern="/admin/repositories/**" method="POST"
                        access="hasRole('PERM_MANAGE_REP')" />
 			
         <intercept-url pattern="/admin/federations/*/update*"
                        method="POST" access="hasRole('PERM_UPDATE')" />
-        <intercept-url pattern="/admin/federations/update*"
-                       method="POST" access="hasRole('PERM_UPDATE')" />
+
         <intercept-url pattern="/admin/federations/**" method="POST"
                        access="hasRole('PERM_MANAGE_REP')" />
                        
