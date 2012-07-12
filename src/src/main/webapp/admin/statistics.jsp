@@ -103,15 +103,12 @@
         
         <div id="chart3" style="height:350px; width:500px;"></div>
 
-        <table>
-            10 Consultas mais realizadas
-        </table>
             
         <table>
             10 Objetos mais acessados
         </table>
         <p>
-            Relação consultas/visita: 1
+            Relação acesso a objetos/visita: 1
         </p>
         
     </body>
