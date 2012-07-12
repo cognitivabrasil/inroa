@@ -13,7 +13,6 @@ import java.util.Date;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import metadata.XSLTUtil;
 import modelos.DocumentosDAO;
 import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
@@ -21,6 +20,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cognitivabrasil.obaa.OaiOBAA;
+import feb.metadata.XSLTUtil;
 
 /**
  * Import the OBAA xml file to OBAA object and saves in database. Only for

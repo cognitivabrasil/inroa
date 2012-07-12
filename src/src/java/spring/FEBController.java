@@ -1,6 +1,7 @@
 package spring;
 
-import ferramentaBusca.Recuperador;
+import feb.ferramentaBusca.Recuperador;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;

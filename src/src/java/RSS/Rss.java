@@ -4,7 +4,8 @@
  */
 package RSS;
 
-import ferramentaBusca.Recuperador;
+import feb.ferramentaBusca.Recuperador;
+
 import java.sql.*;
 import java.io.*;
 import java.util.*;

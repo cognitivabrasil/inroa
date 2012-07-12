@@ -1,6 +1,7 @@
 package robo.atualiza.importaOAI;
 
-import ferramentaBusca.indexador.Indexador;
+import feb.ferramentaBusca.indexador.Indexador;
+
 import java.io.File;
 import java.util.ArrayList;
 import modelos.DocumentosDAO;

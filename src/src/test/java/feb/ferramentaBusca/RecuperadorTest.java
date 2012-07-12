@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ferramentaBusca;
+package feb.ferramentaBusca;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+
+import feb.ferramentaBusca.Recuperador;
 
 /**
  *

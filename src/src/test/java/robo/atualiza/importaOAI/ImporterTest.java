@@ -41,7 +41,7 @@ public class ImporterTest {
 	 */
 	@Test
 	public void testImportDC() throws IOException {
-		String inputXmlFile = "src/test/java/metadata/oai_dc.xml"; // input xml
+		String inputXmlFile = "src/test/java/feb/metadata/oai_dc.xml"; // input xml
 		String inputXsltFile = "src/xslt/dc2obaa_full.xsl"; // input xsl
 		String xslt = FileUtils.readFileToString(new File(inputXsltFile));
 		

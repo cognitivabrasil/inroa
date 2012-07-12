@@ -1,6 +1,7 @@
-package robo.main;
+package feb.robo.main;
 
-import ferramentaBusca.indexador.Indexador;
+import feb.ferramentaBusca.indexador.Indexador;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.log4j.Logger;

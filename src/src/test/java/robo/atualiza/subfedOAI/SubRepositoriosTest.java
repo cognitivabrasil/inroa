@@ -28,7 +28,7 @@ public class SubRepositoriosTest {
     
     @Test
     public void testParserXML() throws ParserConfigurationException, IOException, SAXException{
-        String fileXML = "src/test/java/metadata/oai_subRepositorios.xml";
+        String fileXML = "src/test/java/feb/metadata/oai_subRepositorios.xml";
         File arquivoXML = new File(fileXML);
         ParserListSets parserListSets = new ParserListSets();
         Set<String> listaSubrep = parserListSets.parser(arquivoXML);

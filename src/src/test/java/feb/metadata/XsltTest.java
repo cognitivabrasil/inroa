@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package metadata;
+package feb.metadata;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
@@ -35,7 +35,7 @@ public class XsltTest {
 	
 	@Before
 	public void setUp() {
- 		String foo_xml = "src/test/java/metadata/oai_dc.xml"; //input xml
+ 		String foo_xml = "src/test/java/feb/metadata/oai_dc.xml"; //input xml
 		String foo_xsl = "src/xslt/dc2obaa_full.xsl"; //input xsl
 
 		try {

@@ -15,7 +15,7 @@ public class OaiOBAATest {
 	@Test
 	public void testSetSpec() throws FileNotFoundException {
 		OaiOBAA l = OaiOBAA
-				.fromFilename("./src/test/java/metadata/oai_obaa.xml");
+				.fromFilename("./src/test/java/feb/metadata/oai_obaa.xml");
 
 		Header h = l.getHeader(0);
 
@@ -37,7 +37,7 @@ public class OaiOBAATest {
 	public void testDetectOAIError() throws FileNotFoundException {
 		OaiOBAA l;
 		try {
-			l = OaiOBAA.fromFilename("./src/test/java/metadata/oai_error.xml");
+			l = OaiOBAA.fromFilename("./src/test/java/feb/metadata/oai_error.xml");
 		} catch (OaiException e) {
 			assertEquals("badArgument", e.getName());
 			return;
@@ -57,7 +57,7 @@ public class OaiOBAATest {
 		OaiOBAA l;
 		try {
 			l = OaiOBAA
-					.fromFilename("./src/test/java/metadata/oai_cannot_disseminate.xml");
+					.fromFilename("./src/test/java/feb/metadata/oai_cannot_disseminate.xml");
 		} catch (OaiCannotDisseminateFormatException e) {
 			assert ("cannotDisseminateFormat".equals(e.getName()));
 			return;
@@ -77,7 +77,7 @@ public class OaiOBAATest {
 	public void testDetectOAINoRecords() throws FileNotFoundException {
 
 		OaiOBAA l = OaiOBAA
-				.fromFilename("./src/test/java/metadata/oai_norecords.xml");
+				.fromFilename("./src/test/java/feb/metadata/oai_norecords.xml");
 		assertEquals(l.getSize(), 0);
 
 	}
@@ -92,7 +92,7 @@ public class OaiOBAATest {
 	public void testDetectOAINoRecords2() throws FileNotFoundException {
 		try {
 			OaiOBAA l = OaiOBAA
-					.fromFilename("./src/test/java/metadata/oai_norecords2.xml");
+					.fromFilename("./src/test/java/feb/metadata/oai_norecords2.xml");
 			assertEquals(l.getSize(), 0);
 		} catch (OaiParseErrorException e) {
 			return;

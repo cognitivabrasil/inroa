@@ -2,7 +2,7 @@
  * o pacote indexador correspoonde as classes que fazem a preparaç&atilde;o dos
  * dados
  */
-package ferramentaBusca.indexador;
+package feb.ferramentaBusca.indexador;
 
 import java.util.Set;
 import modelos.*;

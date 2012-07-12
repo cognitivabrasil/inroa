@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package metadata;
+package feb.metadata;
 
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
@@ -42,7 +42,7 @@ public class XsltDC2ObaaTest {
 	
 	@Before
 	public void setUp() {
- 		String foo_xml = "src/test/java/metadata/lume1.xml"; //input xml
+ 		String foo_xml = "src/test/java/feb/metadata/lume1.xml"; //input xml
 		String foo_xsl = "src/xslt/dc2obaa_full.xsl"; //input xsl
 
 		try {

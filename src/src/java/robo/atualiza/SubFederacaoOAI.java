@@ -4,7 +4,8 @@
  */
 package robo.atualiza;
 
-import ferramentaBusca.indexador.Indexador;
+import feb.ferramentaBusca.indexador.Indexador;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;

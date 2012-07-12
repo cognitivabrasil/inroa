@@ -1,4 +1,4 @@
-package ferramentaAdministrativa.validarOAI;
+package feb.ferramentaAdministrativa.validarOAI;
 
 import ORG.oclc.oai.harvester2.verb.Identify;
 import java.io.BufferedWriter;

@@ -41,7 +41,7 @@ public class LumeXmlIT extends AbstractDaoTest {
 
 	@Test
 	public void importLume() throws IOException {
-        String inputXmlFile = "src/test/java/metadata/lume_erro_null_documento.xml";
+        String inputXmlFile = "src/test/java/feb/metadata/lume_erro_null_documento.xml";
 		String inputXsltFile = "src/xslt/dc2obaa_full.xsl"; // input xsl
 		String xslt = FileUtils.readFileToString(new File(inputXsltFile));
 		

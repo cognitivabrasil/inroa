@@ -48,7 +48,7 @@ public class OBAATest {
 	
 	@Before
 	public void setUp() throws FileNotFoundException{
-		l = OBAA.fromFilename("./src/test/java/metadata/obaa1.xml");
+		l = OBAA.fromFilename("./src/test/java/feb/metadata/obaa1.xml");
 	}
 	
 	@After
@@ -88,7 +88,7 @@ public class OBAATest {
 	public void testTitleFromReader() throws FileNotFoundException {
 		// TODO review the generated test code and remove the default call to fail.
 
-		l = OBAA.fromReader(new FileReader("./src/test/java/metadata/obaa1.xml"));
+		l = OBAA.fromReader(new FileReader("./src/test/java/feb/metadata/obaa1.xml"));
 		assert(!(l.getGeneral() == null));
 		assertThat(l.getTitles(), hasItems("Título 1"));
 	}
@@ -97,7 +97,7 @@ public class OBAATest {
 	public void testTitleFromString() throws IOException {
 		// TODO review the generated test code and remove the default call to fail.
 
-		String xml = FileUtils.readFileToString(new File("./src/test/java/metadata/obaa1.xml"));
+		String xml = FileUtils.readFileToString(new File("./src/test/java/feb/metadata/obaa1.xml"));
 		l = OBAA.fromString(xml);
 		assert(!(l.getGeneral() == null));
 		assertThat(l.getTitles(), hasItems("Título 1"));

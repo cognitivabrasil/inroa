@@ -1,6 +1,7 @@
 package spring;
 
-import ferramentaBusca.indexador.Indexador;
+import feb.ferramentaBusca.indexador.Indexador;
+
 import java.util.Calendar;
 import java.util.List;
 import javax.servlet.ServletContext;

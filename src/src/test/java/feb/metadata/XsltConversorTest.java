@@ -1,10 +1,12 @@
-package metadata;
+package feb.metadata;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import metadata.XsltConversor;
 
 import org.junit.Test;
 
@@ -46,7 +48,7 @@ public class XsltConversorTest {
 	 */
 	@Test
 	public void testToObaa() throws IOException {
-		String inputXmlFile = "src/test/java/metadata/oai_dc.xml"; // input xml
+		String inputXmlFile = "src/test/java/feb/metadata/oai_dc.xml"; // input xml
 		String inputXsltFile = "src/xslt/dc2obaa_full.xsl"; // input xsl
 		String xslt = readFileAsString(inputXsltFile);
 		String xml = readFileAsString(inputXmlFile);

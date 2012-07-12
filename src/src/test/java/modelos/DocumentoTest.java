@@ -14,7 +14,7 @@ public class DocumentoTest {
 	public void testXmlDeserialization() throws IOException {
 		DocumentoReal d = new DocumentoReal();
 		
-		String obaaXml = FileUtils.readFileToString(new File("src/test/java/metadata/obaa1.xml"));
+		String obaaXml = FileUtils.readFileToString(new File("src/test/java/feb/metadata/obaa1.xml"));
 		
 		d.setObaaXml(obaaXml);
 		

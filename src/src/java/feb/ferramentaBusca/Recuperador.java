@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ferramentaBusca;
+package feb.ferramentaBusca;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
