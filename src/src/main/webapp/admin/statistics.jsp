@@ -46,7 +46,7 @@
             $(document).ready(function(){
                 alert (${visitasTotal})
                 var plot2 = $.jqplot ('chart2', [${visitasTotal}], {                    
-                    title: 'Número de Visitas',
+                    title: 'Número de Visitantes',
                     axesDefaults: {
                         labelRenderer: $.jqplot.CanvasAxisLabelRenderer
                     },
