@@ -4,7 +4,14 @@
 <param-name>contextConfigLocation</param-name>
 <param-value>classpath:applicationContext.xml, classpath:spring-security.xml </param-value>
 </context-param>
-    
+<!--     	<context-param> -->
+<!-- 		<param-name>log4jConfigLocation</param-name> -->
+<!-- 		<param-value>/WEB-INF/log4j.xml</param-value> -->
+<!-- 	</context-param> -->
+
+<!-- 	<listener> -->
+<!-- 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> -->
+<!-- 	</listener> -->
     <listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener
@@ -40,14 +47,7 @@ org.springframework.web.filter.DelegatingFilterProxy
     </servlet-mapping>
  
 
-	<context-param>
-		<param-name>log4jConfigLocation</param-name>
-		<param-value>/WEB-INF/log4j.xml</param-value>
-	</context-param>
 
-	<listener>
-		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
 
     
     <!-- Servlet definitions for the servlets that make up

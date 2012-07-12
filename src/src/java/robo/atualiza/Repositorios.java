@@ -4,7 +4,7 @@
  */
 package robo.atualiza;
 
-import Exception.RepositoriosException;
+import feb.exceptions.RepositoriosException;
 import ferramentaBusca.indexador.Indexador;
 import java.io.File;
 import java.io.FileNotFoundException;
