@@ -5,12 +5,12 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:mvc="http://www.springframework.org/schema/mvc"
  xmlns:context="http://www.springframework.org/schema/context"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
-http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
-  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+http://www.springframework.org/schema/beans/feb.spring-beans-3.1.xsd 
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/feb.spring-mvc-3.1.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/feb.spring-context-3.1.xsd">
 
  
-    <context:component-scan base-package="spring"/>
+    <context:component-scan base-package="feb.spring"/>
     
  
     <mvc:resources mapping="/css/**" location="/css/" />
@@ -23,7 +23,7 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
   
 
 <!--<bean name="/feb/*"
-class="spring.FEBController"/>-->
+class="feb.spring.FEBController"/>-->
 
 <!-- TODO: Use properties
     TODO: Encrypt password

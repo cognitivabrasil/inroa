@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package RSS;
+package feb.RSS;
 
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
@@ -186,7 +186,7 @@ public class Rss {
                         item.appendChild(tag);
 
                     } catch (SQLException e) {
-                        System.out.println("FEB: RSS - Nao foi possivel recuperar as informacoes da base de dados" + e);
+                        System.out.println("FEB: feb.RSS - Nao foi possivel recuperar as informacoes da base de dados" + e);
                     }
                 }
 
@@ -206,13 +206,13 @@ public class Rss {
             con.close(); //fecha a conexao com a base de dados
 
         } catch (DOMException e) {
-            System.out.print("FEB: Erro gerado pelo DOM para a geração de um RSS\n" + e);
+            System.out.print("FEB: Erro gerado pelo DOM para a geração de um feb.RSS\n" + e);
         } catch (SQLException e) {
-            System.out.print("FEB: Erro na busca SQL para a geração do RSS\n" + e);
+            System.out.print("FEB: Erro na busca SQL para a geração do feb.RSS\n" + e);
         } catch (TransformerException e) {
-            System.out.print("FEB: Erro com o Transformer para a geração do RSS\n" + e);
+            System.out.print("FEB: Erro com o Transformer para a geração do feb.RSS\n" + e);
         } catch (Exception e) {
-            System.out.print("FEB: Erro na geração do RSS:" + e);
+            System.out.print("FEB: Erro na geração do feb.RSS:" + e);
             e.printStackTrace();
         }
         return xml;

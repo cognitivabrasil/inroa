@@ -10,6 +10,7 @@ import feb.exceptions.RepositoriosException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.harvesterOAI.Harvester;
 import feb.robo.atualiza.importaOAI.XMLtoDB;
+import feb.spring.ApplicationContextProvider;
 import feb.util.Informacoes;
 import feb.util.Operacoes;
 
@@ -29,7 +30,6 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
-import spring.ApplicationContextProvider;
 
 /**
  *

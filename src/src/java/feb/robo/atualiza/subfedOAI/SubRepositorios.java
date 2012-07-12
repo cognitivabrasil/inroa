@@ -8,9 +8,9 @@ import org.springframework.context.ApplicationContext;
 
 import feb.data.entities.SubFederacao;
 import feb.data.interfaces.SubFederacaoDAO;
+import feb.spring.ApplicationContextProvider;
 import feb.util.Informacoes;
 import feb.util.Operacoes;
-import spring.ApplicationContextProvider;
 
 /**
  *

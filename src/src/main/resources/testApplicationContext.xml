@@ -16,14 +16,14 @@ http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
  
    
     <!-- TODO: use inversion of control instead of this !-->
-    <bean id="applicationContextProvider" class="spring.ApplicationContextProvider"></bean>
+    <bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"></bean>
     
 
 <tx:annotation-driven/>
 
 
 <!--<bean name="/feb/*"
-class="spring.FEBController"/>-->
+class="feb.spring.FEBController"/>-->
 
 <!-- TODO: Use properties
     TODO: Encrypt password

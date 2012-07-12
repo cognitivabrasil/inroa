@@ -8,6 +8,7 @@ import feb.data.entities.SubFederacao;
 import feb.data.interfaces.DocumentosDAO;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.harvesterOAI.Harvester;
+import feb.spring.ApplicationContextProvider;
 import feb.util.Informacoes;
 import feb.util.Operacoes;
 
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
-import spring.ApplicationContextProvider;
 
 /**
  *

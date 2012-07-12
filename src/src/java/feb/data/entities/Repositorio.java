@@ -12,8 +12,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.transaction.annotation.Transactional;
 
+import feb.spring.ApplicationContextProvider;
 import feb.util.Operacoes;
-import spring.ApplicationContextProvider;
 
 /**
  *

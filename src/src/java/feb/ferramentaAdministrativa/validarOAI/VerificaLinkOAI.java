@@ -36,7 +36,7 @@ public class VerificaLinkOAI extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        //TODO: tem mudar isso aqui para o Controller do spring. Mas nao sei como fazer o spring retornar um texto e nao uma pagina
+        //TODO: tem mudar isso aqui para o Controller do feb.spring. Mas nao sei como fazer o feb.spring retornar um texto e nao uma pagina
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String query = request.getQueryString();

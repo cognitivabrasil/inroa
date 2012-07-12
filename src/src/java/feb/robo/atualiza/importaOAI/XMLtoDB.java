@@ -4,13 +4,13 @@ import feb.data.entities.Repositorio;
 import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.ferramentaBusca.indexador.Indexador;
+import feb.spring.ApplicationContextProvider;
 
 import java.io.File;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
-import spring.ApplicationContextProvider;
 
 /*
  * To change this template, choose Tools | Templates and open the template in

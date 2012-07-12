@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package spring;
+package feb.spring.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,7 @@ import feb.data.entities.Repositorio;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.robo.atualiza.Repositorios;
-import spring.validador.RepositorioValidator;
+import feb.spring.validador.RepositorioValidator;
 
 /**
  * Controller for the repositories.

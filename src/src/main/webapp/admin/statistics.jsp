@@ -5,17 +5,17 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="feb.spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
     <head>     
         <link rel="StyleSheet"
-              href='<spring:url value="/css/jquery.jqplot.min.css" htmlEscape="true" />'
+              href='<feb.spring:url value="/css/jquery.jqplot.min.css" htmlEscape="true" />'
               type="text/css">
 
-        <script language="javascript" type="text/javascript" src='<spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
-        <script language="javascript" type="text/javascript" src='<spring:url value="/scripts/jquery.jqplot.min.js" htmlEscape="true" />'></script>
-        <script type="text/javascript" src='<spring:url value="/scripts/jqplot.pieRenderer.min.js" htmlEscape="true" />'></script>        
+        <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
+        <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery.jqplot.min.js" htmlEscape="true" />'></script>
+        <script type="text/javascript" src='<feb.spring:url value="/scripts/jqplot.pieRenderer.min.js" htmlEscape="true" />'></script>        
         <script class="code" type="text/javascript">
 
             $(document).ready(function(){

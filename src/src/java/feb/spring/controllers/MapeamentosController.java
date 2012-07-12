@@ -1,5 +1,5 @@
 
-package spring;
+package feb.spring.controllers;
 
 import java.security.Principal;
 

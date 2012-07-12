@@ -10,6 +10,7 @@ import feb.data.interfaces.SubFederacaoDAO;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.subfedOAI.Objetos;
 import feb.robo.atualiza.subfedOAI.SubRepositorios;
+import feb.spring.ApplicationContextProvider;
 import feb.util.Informacoes;
 
 import java.io.FileNotFoundException;
@@ -24,7 +25,6 @@ import org.hibernate.HibernateException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
-import spring.ApplicationContextProvider;
 
 /**
  *

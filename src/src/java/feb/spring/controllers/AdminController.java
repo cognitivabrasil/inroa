@@ -1,4 +1,4 @@
-package spring;
+package feb.spring.controllers;
 
 import feb.data.entities.Estatistica;
 import feb.data.entities.PadraoMetadados;
@@ -11,6 +11,10 @@ import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.UsuarioDAO;
 import feb.data.interfaces.VisitasDao;
 import feb.ferramentaBusca.indexador.Indexador;
+import feb.spring.ServerInfo;
+import feb.spring.validador.InfoBDValidator;
+import feb.spring.validador.PadraoValidator;
+import feb.spring.validador.SubFederacaoValidador;
 
 import java.util.Calendar;
 import java.util.List;
@@ -23,9 +27,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import spring.validador.InfoBDValidator;
-import spring.validador.PadraoValidator;
-import spring.validador.SubFederacaoValidador;
 
 /**
  * Controller para ferramenta administrativa
@@ -175,7 +176,7 @@ public final class AdminController {
                 try {
                     userModel.setPassword(novaSenha);
                     userDao.save(userModel);
-                    //TODO: Quando passar para o spring security modificar a forma de deslogado o usuario aqui
+                    //TODO: Quando passar para o feb.spring security modificar a forma de deslogado o usuario aqui
                     session.removeAttribute("usuario");//remove o usuario da sessao para que tenha que digitar a nova senha
                     return "redirect:fechaRecarrega";
                 } catch (Exception e) {

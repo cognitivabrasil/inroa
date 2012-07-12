@@ -11,7 +11,8 @@ import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
-import spring.ApplicationContextProvider;
+
+import feb.spring.ApplicationContextProvider;
 
 /**
  *
@@ -127,7 +128,7 @@ public class Usuario implements UserDetails {
      * Authenticates this user
      * @param password Cleartext password
      * @return true if password matches the user, false otherwise
-     * @deprecated authentication should be done by spring security
+     * @deprecated authentication should be done by feb.spring security
      */
     @Deprecated
     public boolean authenticate(String password) {

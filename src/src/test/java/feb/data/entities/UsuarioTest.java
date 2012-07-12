@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  * @author paulo
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:spring-security.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:feb.spring-security.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class UsuarioTest {
 

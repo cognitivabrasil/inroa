@@ -14,8 +14,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 
 import feb.data.interfaces.StopWordsDao;
+import feb.spring.ApplicationContextProvider;
 import feb.util.Operacoes;
-import spring.ApplicationContextProvider;
 
 /**
  *

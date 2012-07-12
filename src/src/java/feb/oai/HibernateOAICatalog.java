@@ -44,8 +44,8 @@ import org.springframework.context.ApplicationContext;
 
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Repositorio;
+import feb.spring.ApplicationContextProvider;
 
-import spring.ApplicationContextProvider;
 
 /**
  * DummyOAICatalog is an example of how to implement the AbstractCatalog

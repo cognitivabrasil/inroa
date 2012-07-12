@@ -159,7 +159,7 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
     }
 
     /* This is needed to get over AbstractTransactionalJUnit4SpringContextTests limitations
-     * TODO: find a more elegant and generic solution to integrate spring and DbUnit, maybe with annotations?
+     * TODO: find a more elegant and generic solution to integrate feb.spring and DbUnit, maybe with annotations?
      */
     @AfterTransaction
     public void testSaveAndUpdate2() throws Exception {

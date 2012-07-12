@@ -1,4 +1,4 @@
-package spring;
+package feb.spring.controllers;
 
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
@@ -10,6 +10,8 @@ import feb.data.interfaces.UsuarioDAO;
 import feb.data.interfaces.VisitasDao;
 import feb.ferramentaBusca.Recuperador;
 import feb.robo.atualiza.importaOAI.XMLtoDB;
+import feb.spring.ServerInfo;
+import feb.spring.validador.BuscaValidator;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -18,14 +20,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelos.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import spring.validador.BuscaValidator;
 
 /**
  * Controller geral para o FEB

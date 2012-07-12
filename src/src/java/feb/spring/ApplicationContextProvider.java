@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package spring;
+package feb.spring;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

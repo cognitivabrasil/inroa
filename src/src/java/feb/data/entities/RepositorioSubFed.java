@@ -7,7 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.dao.support.DataAccessUtils;
-import spring.ApplicationContextProvider;
+
+import feb.spring.ApplicationContextProvider;
 
 /**
  *

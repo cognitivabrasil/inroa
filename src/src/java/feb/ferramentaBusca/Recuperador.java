@@ -15,7 +15,7 @@ import org.springframework.context.ApplicationContext;
 
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
-import spring.ApplicationContextProvider;
+import feb.spring.ApplicationContextProvider;
 
 /**
  * Recuperador por similaridade
@@ -50,7 +50,7 @@ public class Recuperador {
 
         
         if (consulta.isRss()) {
-            //TODO: P: Fazer RSS para autor? M: Sim
+            //TODO: P: Fazer feb.RSS para autor? M: Sim
             sqlOrdenacao = "') GROUP BY d.id, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
         } else {
 

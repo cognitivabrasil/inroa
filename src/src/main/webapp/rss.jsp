@@ -1,4 +1,4 @@
-<%@page import="RSS.Rss"%>
+<%@page import="feb.RSS.Rss"%>
 <%@page import="java.util.ArrayList"%>
 <%--
     Document   : rss

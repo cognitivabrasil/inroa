@@ -14,7 +14,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 
 	<!-- TODO: use inversion of control instead of this ! -->
-	<bean id="applicationContextProvider" class="spring.ApplicationContextProvider"></bean>
+	<bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"></bean>
 
 
 	<!-- TODO: Use properties TODO: Encrypt password <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 

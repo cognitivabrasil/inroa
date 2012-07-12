@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package spring.validador;
+package feb.spring.validador;
 
 import java.net.MalformedURLException;
 import java.net.URL;

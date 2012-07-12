@@ -6,7 +6,7 @@ Author     : Marcos Nunes
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="feb.spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
@@ -20,14 +20,14 @@ Author     : Marcos Nunes
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>FEB - Ferramenta Administrativa</title>
 <link rel="StyleSheet"
-	href="<spring:url value="/css/padrao.css" htmlEscape="true" />"
+	href="<feb.spring:url value="/css/padrao.css" htmlEscape="true" />"
 	type="text/css">
 <link rel="shortcut icon" type="image/x-icon"
-	href="<spring:url value="/imagens/favicon.ico" htmlEscape="true" />">
+	href="<feb.spring:url value="/imagens/favicon.ico" htmlEscape="true" />">
 <script language="JavaScript" type="text/javascript"
-	src="<spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>
+	src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>
 <script language="JavaScript" type="text/javascript"
-	src="<spring:url value="/scripts/funcoesMapeamento.js" htmlEscape="true" />"></script>
+	src="<feb.spring:url value="/scripts/funcoesMapeamento.js" htmlEscape="true" />"></script>
 
 </head>
 <body>
@@ -135,7 +135,7 @@ Author     : Marcos Nunes
 						<a title="Adicionar novo reposit&oacute;rio"
 							onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 							<img
-							src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+							src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 							border="0" width="24" height="24" alt="Visualizar" align="middle">
 						</a>
 					</security:authorize></td>
@@ -156,7 +156,7 @@ Author     : Marcos Nunes
 
 							<a style="text-decoration: none" title="Atualizar todos"
 								onclick="javaScript:atualizaRepAjax(0, document.getElementById('textResultTodos'));"><img
-								src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+								src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
 								border="0" width="24" height="24" alt="Visualizar"
 								align="middle"> Atualizar todos agora</a>
 						</security:authorize>
@@ -211,7 +211,7 @@ Author     : Marcos Nunes
 				<td><a title="Adicionar novo padr&atilde;o de metadados"
 					onclick="NewWindow('./padraoMetadados/addPadrao','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 						<img
-						src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+						src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 						border="0" width="24" height="24" alt="Visualizar" align="middle">
 				</a></td>
 				<td colspan="2" class="left bold" style="font-size: 110%">
@@ -269,7 +269,7 @@ Author     : Marcos Nunes
 				<td><a title="Adicionar novo padr&atilde;o de metadados"
 					onclick="NewWindow('./padraoMetadados/addPadrao','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 						<img
-						src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+						src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 						border="0" width="24" height="24" alt="Visualizar" align="middle">
 				</a></td>
 				<td colspan="2" class="left bold" style="font-size: 110%">
@@ -322,7 +322,7 @@ Author     : Marcos Nunes
 									<a title='Atualizar agora'
 										onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">
 										<img
-										src="<spring:url value="/imagens/erro_sincronizar.png" htmlEscape="true" />"
+										src="<feb.spring:url value="/imagens/erro_sincronizar.png" htmlEscape="true" />"
 										border="0" width="24" height="24" alt="Visualizar"
 										align="middle">
 									</a>
@@ -337,7 +337,7 @@ Author     : Marcos Nunes
 										onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">
 
 										<img
-										src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+										src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
 										border="0" width="24" height="24" alt="Visualizar"
 										align="middle">
 									</a>
@@ -358,7 +358,7 @@ Author     : Marcos Nunes
 						<a title="Adicionar nova subfedera&ccedil;&atilde;o"
 							onclick="NewWindow('${newFederationUrl}','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 							<img
-							src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+							src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 							border="0" width="24" height="24" alt="Visualizar" align="middle">
 						</a>
 					</security:authorize></td>
@@ -376,7 +376,7 @@ Author     : Marcos Nunes
 						<div id="textResultSF">
 							<a style="text-decoration: none" title="Atualizar todas"
 								onclick="javaScript:atualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img
-								src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+								src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
 								border="0" width="24" height="24" alt="Visualizar"
 								align="middle"> Atualizar todas agora</a>
 						</div>
@@ -424,7 +424,7 @@ Author     : Marcos Nunes
 				<td><a title="Adicionar novo usuário"
 					onclick="NewWindow('./users/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 						<img
-						src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+						src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 						border="0" width="24" height="24" alt="Visualizar" align="middle">
 				</a></td>
 				<td colspan="2" class="left bold" style="font-size: 110%">
@@ -443,7 +443,7 @@ Author     : Marcos Nunes
 
 				<td><h1>&nbsp;&nbsp;</h1></td>
 				<td><img
-					src="<spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
+					src="<feb.spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
 					border="0" width="32" height="32" alt="Laudar" align="middle">
 				</td>
 				<td>&nbsp;Visualizar / Editar</td>
@@ -451,7 +451,7 @@ Author     : Marcos Nunes
 				<td><h1>&nbsp;&nbsp;</h1></td>
 
 				<td><img
-					src="<spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
+					src="<feb.spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
 					border="0" width="24" height="24" alt="Visualizar" align="middle">
 				</td>
 				<td>&nbsp;Remover</td>
@@ -459,7 +459,7 @@ Author     : Marcos Nunes
 				<td><h1>&nbsp;&nbsp;</h1></td>
 
 				<td><img
-					src="<spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+					src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
 					border="0" width="24" height="24" alt="Visualizar" align="middle">
 				</td>
 				<td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
@@ -467,7 +467,7 @@ Author     : Marcos Nunes
 				<td><h1>&nbsp;&nbsp;</h1></td>
 
 				<td><img
-					src="<spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+					src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 					border="0" width="24" height="24" alt="Visualizar" align="middle">
 				</td>
 				<td>&nbsp;Adicionar</td>
