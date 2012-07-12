@@ -61,7 +61,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<bean id="TokensDAO" class="feb.data.daos.TokensHibernateDao">
 	</bean>
 
-	<bean id="Indexador" class="ferramentaBusca.indexador.Indexador">
+	<bean id="Indexador" class="feb.ferramentaBusca.indexador.Indexador">
 	</bean>
 
         <bean id="StopWord" class="feb.data.daos.StopWordHibernateDao" />
@@ -71,7 +71,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<context:annotation-config />
 	<!--Inicio Inicializar o Robo -->
 
-	<bean id="robo" class="robo.main.Robo" />        
+	<bean id="robo" class="feb.robo.main.Robo" />        
 
 	<bean id="jobDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
