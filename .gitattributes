@@ -216,9 +216,6 @@ src/src/java/ferramentaBusca/indexador/package.html -text
 src/src/java/ferramentaBusca/package.html -text
 src/src/java/metadata/XSLTUtil.java -text
 src/src/java/metadata/XsltConversorDefault.java -text
-src/src/java/metadata/conversor/Conversor.java -text
-src/src/java/metadata/conversor/Rule.java -text
-src/src/java/metadata/conversor/package-info.java -text
 src/src/java/modelos/AbstractHibernateDAO.java -text
 src/src/java/modelos/Autor.java -text
 src/src/java/modelos/Consulta.java -text
@@ -393,10 +390,6 @@ src/src/test/java/metadata/XsltLom2ObaaTest.java -text
 src/src/test/java/metadata/XsltTest.java -text
 src/src/test/java/metadata/cesta1.xml -text
 src/src/test/java/metadata/cesta_complete.xml -text
-src/src/test/java/metadata/conversor/ConversorTest.java -text
-src/src/test/java/metadata/conversor/MockOne.java -text
-src/src/test/java/metadata/conversor/MockTwo.java -text
-src/src/test/java/metadata/conversor/RuleTest.java -text
 src/src/test/java/metadata/lom1.xml -text
 src/src/test/java/metadata/lume1.xml -text
 src/src/test/java/metadata/lume_erro_null_documento.xml -text
