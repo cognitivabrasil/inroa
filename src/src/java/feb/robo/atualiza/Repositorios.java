@@ -2,12 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robo.atualiza;
+package feb.robo.atualiza;
 
 import feb.data.entities.Repositorio;
 import feb.data.interfaces.RepositoryDAO;
 import feb.exceptions.RepositoriosException;
 import feb.ferramentaBusca.indexador.Indexador;
+import feb.robo.atualiza.harvesterOAI.Harvester;
+import feb.robo.atualiza.importaOAI.XMLtoDB;
+import feb.util.Informacoes;
+import feb.util.Operacoes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,10 +29,6 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
-import robo.atualiza.harvesterOAI.Harvester;
-import robo.atualiza.importaOAI.XMLtoDB;
-import robo.util.Informacoes;
-import robo.util.Operacoes;
 import spring.ApplicationContextProvider;
 
 /**

@@ -1,14 +1,14 @@
 package feb.robo.main;
 
 import feb.ferramentaBusca.indexador.Indexador;
+import feb.robo.atualiza.Repositorios;
+import feb.robo.atualiza.SubFederacaoOAI;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import robo.atualiza.Repositorios;
-import robo.atualiza.SubFederacaoOAI;
 
 /**
  * Ferramenta de Sincronismo (Robô)

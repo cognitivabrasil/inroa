@@ -1,4 +1,4 @@
-package robo.atualiza.importaOAI;
+package feb.robo.atualiza.importaOAI;
 
 /**
  * Classe auxiliar que armazena informações dos metadados do padrão dublin core.

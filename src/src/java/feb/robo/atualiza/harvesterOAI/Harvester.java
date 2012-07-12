@@ -1,4 +1,4 @@
-package robo.atualiza.harvesterOAI;
+package feb.robo.atualiza.harvesterOAI;
 
 import ORG.oclc.oai.harvester2.verb.ListRecords;
 import java.io.BufferedWriter;
@@ -10,7 +10,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import feb.data.entities.Repositorio;
-import robo.util.Operacoes;
+import feb.util.Operacoes;
 
 //import util.*;
 

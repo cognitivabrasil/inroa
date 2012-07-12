@@ -22,8 +22,8 @@ import feb.data.entities.Repositorio;
 import feb.data.interfaces.MapeamentoDAO;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
+import feb.robo.atualiza.importaOAI.Importer;
 
-import robo.atualiza.importaOAI.Importer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")

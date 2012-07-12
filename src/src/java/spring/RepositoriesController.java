@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import feb.data.entities.Repositorio;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
-import robo.atualiza.Repositorios;
+import feb.robo.atualiza.Repositorios;
 import spring.validador.RepositorioValidator;
 
 /**

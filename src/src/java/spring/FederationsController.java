@@ -19,7 +19,7 @@ import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.UsuarioDAO;
-import robo.atualiza.SubFederacaoOAI;
+import feb.robo.atualiza.SubFederacaoOAI;
 import spring.validador.SubFederacaoValidador;
 
 /**

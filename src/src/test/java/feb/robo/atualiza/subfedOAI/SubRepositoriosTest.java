@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robo.atualiza.subfedOAI;
+package feb.robo.atualiza.subfedOAI;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,8 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.xml.sax.SAXException;
+
+import feb.robo.atualiza.subfedOAI.ParserListSets;
 import static org.junit.Assert.assertEquals;
 
 /**

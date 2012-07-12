@@ -11,7 +11,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.transaction.annotation.Transactional;
-import robo.util.Operacoes;
+
+import feb.util.Operacoes;
 import spring.ApplicationContextProvider;
 
 /**

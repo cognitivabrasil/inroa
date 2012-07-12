@@ -10,7 +10,7 @@ Author     : Marcos Nunes
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 
-<%@page import="robo.util.Operacoes"%>
+<%@page import="feb.util.Operacoes"%>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

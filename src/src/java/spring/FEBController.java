@@ -9,6 +9,7 @@ import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.UsuarioDAO;
 import feb.data.interfaces.VisitasDao;
 import feb.ferramentaBusca.Recuperador;
+import feb.robo.atualiza.importaOAI.XMLtoDB;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import robo.atualiza.importaOAI.XMLtoDB;
 import spring.validador.BuscaValidator;
 
 /**

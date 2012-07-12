@@ -2,20 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robo.atualiza.subfedOAI;
+package feb.robo.atualiza.subfedOAI;
 
 import feb.data.entities.SubFederacao;
 import feb.data.interfaces.DocumentosDAO;
 import feb.ferramentaBusca.indexador.Indexador;
+import feb.robo.atualiza.harvesterOAI.Harvester;
+import feb.util.Informacoes;
+import feb.util.Operacoes;
 
 import java.io.File;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
-import robo.atualiza.harvesterOAI.Harvester;
-import robo.util.Informacoes;
-import robo.util.Operacoes;
 import spring.ApplicationContextProvider;
 
 /**

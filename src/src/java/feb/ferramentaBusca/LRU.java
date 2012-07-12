@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import feb.data.entities.DocumentoReal;
-import robo.util.Operacoes;
+import feb.util.Operacoes;
 
 /**
  *

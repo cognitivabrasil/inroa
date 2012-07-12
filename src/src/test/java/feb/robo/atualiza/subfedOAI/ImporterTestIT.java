@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robo.atualiza.subfedOAI;
+package feb.robo.atualiza.subfedOAI;
 
 import cognitivabrasil.obaa.OaiOBAA;
 import org.hibernate.SessionFactory;
@@ -21,6 +21,7 @@ import feb.data.daos.AbstractDaoTest;
 import feb.data.entities.SubFederacao;
 import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.SubFederacaoDAO;
+import feb.robo.atualiza.subfedOAI.Importer;
 
 /**
  *

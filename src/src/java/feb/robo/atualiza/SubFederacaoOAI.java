@@ -2,12 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robo.atualiza;
+package feb.robo.atualiza;
 
 import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.ferramentaBusca.indexador.Indexador;
+import feb.robo.atualiza.subfedOAI.Objetos;
+import feb.robo.atualiza.subfedOAI.SubRepositorios;
+import feb.util.Informacoes;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -21,9 +24,6 @@ import org.hibernate.HibernateException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
-import robo.atualiza.subfedOAI.Objetos;
-import robo.atualiza.subfedOAI.SubRepositorios;
-import robo.util.Informacoes;
 import spring.ApplicationContextProvider;
 
 /**

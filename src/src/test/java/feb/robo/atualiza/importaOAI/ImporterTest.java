@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package robo.atualiza.importaOAI;
+package feb.robo.atualiza.importaOAI;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
@@ -26,6 +26,7 @@ import feb.data.entities.Mapeamento;
 import feb.data.entities.Repositorio;
 import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.RepositoryDAO;
+import feb.robo.atualiza.importaOAI.Importer;
 
 /**
  *

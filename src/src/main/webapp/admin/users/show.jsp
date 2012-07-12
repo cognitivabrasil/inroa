@@ -26,7 +26,7 @@
 </head>
 
 <body>
-	<jsp:useBean id="operacoesBean" class="robo.util.Operacoes"
+	<jsp:useBean id="operacoesBean" class="feb.util.Operacoes"
 		scope="page" />
 
 	<div id="page">

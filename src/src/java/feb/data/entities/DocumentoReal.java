@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationContextException;
 
 import feb.data.interfaces.DocumentoFebInterface;
 import feb.data.interfaces.StopWordsDao;
-import robo.util.Operacoes;
+import feb.util.Operacoes;
 import spring.ApplicationContextProvider;
 
 /**
