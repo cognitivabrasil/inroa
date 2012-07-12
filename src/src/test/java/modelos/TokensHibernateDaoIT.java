@@ -22,6 +22,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import feb.data.entities.DocumentoReal;
+
 /**
  * 
  * @author marcos

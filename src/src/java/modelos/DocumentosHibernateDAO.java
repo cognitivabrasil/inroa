@@ -9,6 +9,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import feb.data.entities.DocumentoReal;
+import feb.data.entities.Objeto;
+import feb.data.entities.Repositorio;
+import feb.data.entities.RepositorioSubFed;
+import feb.data.entities.SubFederacao;
+import feb.data.entities.SubNodo;
+
 /**
  * The Class DocumentosHibernateDAO.
  *

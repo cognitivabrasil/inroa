@@ -2,11 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.entities;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import modelos.StopWordsDao;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;

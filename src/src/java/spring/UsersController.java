@@ -15,7 +15,6 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import modelos.Usuario;
 import modelos.UsuarioDAO;
 
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +31,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import feb.data.entities.Usuario;
 
 class UserPasswordDto {
 	private String username;

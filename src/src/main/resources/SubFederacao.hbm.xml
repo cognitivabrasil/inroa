@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="modelos.SubFederacao" table="dados_subfederacoes">
+	<class name="feb.data.entities.SubFederacao" table="dados_subfederacoes">
 		<meta attribute="class-description">
 
 		</meta>
@@ -22,7 +22,7 @@
 		<set name="repositorios" table="repositorios_subfed" cascade="all"
 			inverse="true">
 			<key column="id_subfed" />
-			<one-to-many class="modelos.RepositorioSubFed" />
+			<one-to-many class="feb.data.entities.RepositorioSubFed" />
 		</set>
 
 	</class>

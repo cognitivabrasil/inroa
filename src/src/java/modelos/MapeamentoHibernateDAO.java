@@ -4,6 +4,8 @@
  */
 package modelos;
 
+import feb.data.entities.Mapeamento;
+
 
 /**
  *

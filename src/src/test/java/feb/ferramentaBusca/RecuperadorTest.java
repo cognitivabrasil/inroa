@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import modelos.Consulta;
 import static org.junit.Assert.assertEquals;
 import org.junit.*;
 import org.junit.runner.RunWith;
@@ -17,6 +16,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+import feb.data.entities.Consulta;
 import feb.ferramentaBusca.Recuperador;
 
 /**

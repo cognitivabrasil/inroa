@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import feb.data.entities.Visita;
+
 /**
  *
  * @author cei

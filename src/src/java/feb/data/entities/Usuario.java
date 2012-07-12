@@ -1,4 +1,4 @@
-package modelos;
+package feb.data.entities;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -89,14 +89,14 @@ public class Usuario implements UserDetails {
     /**
      * @return the passwordMd5
      */
-    protected String getPasswordMd5() {
+    public String getPasswordMd5() {
         return passwordMd5;
     }
 
     /**
      * @param passwordMd5 the passwordMd5 to set
      */
-    protected void setPasswordMd5(String passwordMd5) {
+    public void setPasswordMd5(String passwordMd5) {
         this.passwordMd5 = passwordMd5;
     }
 

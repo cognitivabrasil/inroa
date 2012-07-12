@@ -3,7 +3,6 @@ package spring;
 
 import java.security.Principal;
 
-import modelos.Mapeamento;
 import modelos.MapeamentoDAO;
 
 import org.apache.log4j.Logger;
@@ -13,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import feb.data.entities.Mapeamento;
 
 
 /**

@@ -4,6 +4,7 @@
  */
 package robo.atualiza;
 
+import feb.data.entities.Repositorio;
 import feb.exceptions.RepositoriosException;
 import feb.ferramentaBusca.indexador.Indexador;
 
@@ -19,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
-import modelos.Repositorio;
 import modelos.RepositoryDAO;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;

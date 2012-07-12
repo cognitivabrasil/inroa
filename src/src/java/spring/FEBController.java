@@ -1,5 +1,8 @@
 package spring;
 
+import feb.data.entities.Consulta;
+import feb.data.entities.DocumentoReal;
+import feb.data.entities.Visita;
 import feb.ferramentaBusca.Recuperador;
 
 import java.io.UnsupportedEncodingException;

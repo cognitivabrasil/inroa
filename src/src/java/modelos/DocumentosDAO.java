@@ -2,6 +2,10 @@ package modelos;
 
 import cognitivabrasil.obaa.OBAA;
 import java.util.List;
+
+import feb.data.entities.DocumentoReal;
+import feb.data.entities.SubFederacao;
+import feb.data.entities.SubNodo;
 import metadata.Header;
 
 // TODO: Auto-generated Javadoc

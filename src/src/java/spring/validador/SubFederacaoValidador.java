@@ -6,11 +6,12 @@ package spring.validador;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import modelos.SubFederacao;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import feb.data.entities.SubFederacao;
 
 /**
  *

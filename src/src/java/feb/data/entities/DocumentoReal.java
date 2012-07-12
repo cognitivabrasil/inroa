@@ -1,9 +1,13 @@
-package modelos;
+package feb.data.entities;
 
 import ORG.oclc.oai.models.HibernateOaiDocument;
 import cognitivabrasil.obaa.LifeCycle.Contribute;
 import cognitivabrasil.obaa.OBAA;
 import java.util.*;
+
+import modelos.DocumentoFebInterface;
+import modelos.StopWordsDao;
+
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;

@@ -34,6 +34,8 @@ import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import feb.data.entities.Usuario;
+
 /**
  * Integration tests of the UsuarioHibernateDao
  *

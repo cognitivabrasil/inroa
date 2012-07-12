@@ -1,4 +1,4 @@
-package modelos;
+package feb.data.entities;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -7,6 +7,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+
+import feb.data.entities.RepositorioSubFed;
+import feb.data.entities.SubFederacao;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
  

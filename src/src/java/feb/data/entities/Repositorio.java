@@ -1,5 +1,5 @@
 // Generated 20/07/2011 15:25:15 by Hibernate Tools 3.2.0.b9
-package modelos;
+package feb.data.entities;
 
 import java.util.*;
 import org.apache.commons.lang3.StringUtils;

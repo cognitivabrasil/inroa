@@ -8,12 +8,13 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import modelos.Consulta;
-import modelos.DocumentoReal;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
+
+import feb.data.entities.Consulta;
+import feb.data.entities.DocumentoReal;
 import spring.ApplicationContextProvider;
 
 /**

@@ -2,6 +2,8 @@ package modelos;
 
 import java.util.List;
 
+import feb.data.entities.Visita;
+
 /**
  *
  * @author cei

@@ -14,12 +14,12 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import modelos.DocumentosDAO;
-import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cognitivabrasil.obaa.OaiOBAA;
+import feb.data.entities.SubFederacao;
 import feb.metadata.XSLTUtil;
 
 /**

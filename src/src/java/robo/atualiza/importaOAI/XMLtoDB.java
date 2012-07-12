@@ -1,11 +1,11 @@
 package robo.atualiza.importaOAI;
 
+import feb.data.entities.Repositorio;
 import feb.ferramentaBusca.indexador.Indexador;
 
 import java.io.File;
 import java.util.ArrayList;
 import modelos.DocumentosDAO;
-import modelos.Repositorio;
 import modelos.RepositoryDAO;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;

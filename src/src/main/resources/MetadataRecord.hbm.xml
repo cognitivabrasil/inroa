@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="modelos.PadraoMetadados" table="padraometadados">
+  <class name="feb.data.entities.PadraoMetadados" table="padraometadados">
         <id column="id" name="id" type="int">
             <generator class="sequence">
                 <param name="sequence">padraometadados_id_seq</param>
@@ -14,14 +14,14 @@
     
     <set name="mapeamentos" table="mapeamentos">
       <key column="padrao_id"/>
-      <one-to-many class="modelos.Mapeamento"/>
+      <one-to-many class="feb.data.entities.Mapeamento"/>
     </set>
 
     
     <!--
     <set name="repositorios" table="repositorios">
       <key column="padrao_metadados"/>
-      <one-to-many class="modelos.Repositorio"/>
+      <one-to-many class="feb.data.entities.Repositorio"/>
     </set>
     -->
   </class>

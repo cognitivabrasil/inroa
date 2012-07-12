@@ -7,8 +7,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Set;
-import modelos.Repositorio;
 import org.apache.log4j.Logger;
+
+import feb.data.entities.Repositorio;
 import robo.util.Operacoes;
 
 //import util.*;

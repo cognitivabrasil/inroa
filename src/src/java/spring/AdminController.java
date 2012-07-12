@@ -1,5 +1,9 @@
 package spring;
 
+import feb.data.entities.Estatistica;
+import feb.data.entities.PadraoMetadados;
+import feb.data.entities.Repositorio;
+import feb.data.entities.Usuario;
 import feb.ferramentaBusca.indexador.Indexador;
 
 import java.util.Calendar;

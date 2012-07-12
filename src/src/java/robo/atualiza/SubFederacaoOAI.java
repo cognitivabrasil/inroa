@@ -4,6 +4,8 @@
  */
 package robo.atualiza;
 
+import feb.data.entities.RepositorioSubFed;
+import feb.data.entities.SubFederacao;
 import feb.ferramentaBusca.indexador.Indexador;
 
 import java.io.FileNotFoundException;
@@ -13,8 +15,6 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
-import modelos.RepositorioSubFed;
-import modelos.SubFederacao;
 import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;

@@ -31,6 +31,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import org.springframework.test.context.transaction.AfterTransaction;
 
+import feb.data.entities.Mapeamento;
+import feb.data.entities.PadraoMetadados;
+
 /**
  *
  * @author paulo

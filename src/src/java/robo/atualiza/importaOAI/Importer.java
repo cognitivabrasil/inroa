@@ -7,9 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import metadata.XsltConversor;
 import modelos.DocumentosDAO;
-import modelos.Repositorio;
 import modelos.RepositoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import feb.data.entities.Repositorio;
 
 // TODO: Auto-generated Javadoc
 public class Importer {

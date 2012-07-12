@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="modelos.Mapeamento" table="mapeamentos">
+  <class name="feb.data.entities.Mapeamento" table="mapeamentos">
         <id column="id" name="id" type="int">
             <generator class="sequence">
                 <param name="sequence">mapeamentos_id_seq</param>
@@ -10,7 +10,7 @@
     <property name="description" type="string" column="descricao"/>
     <property name="name" type="string" column="nome"/>
     <property name="xslt" type="string" />
-    <many-to-one class="modelos.PadraoMetadados" column="padrao_id" name="padraoMetadados"/>
+    <many-to-one class="feb.data.entities.PadraoMetadados" column="padrao_id" name="padraoMetadados"/>
     
     
   </class>

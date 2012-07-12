@@ -27,6 +27,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import feb.data.entities.DocumentoReal;
+import feb.data.entities.Objeto;
+import feb.data.entities.Repositorio;
+
 /**
  * Integration tests of the UsuarioHibernateDao
  *

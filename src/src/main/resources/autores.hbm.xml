@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="modelos.Autor" table="autores">    
+    <class name="feb.data.entities.Autor" table="autores">    
     
         <id column="id" name="id" type="int">
             <generator class="sequence">
@@ -9,7 +9,7 @@
             </generator>
         </id>
         <property column="nome" name="nome" type="string"/>        
-        <many-to-one class="modelos.DocumentoReal" column="documento" name="doc"/>
+        <many-to-one class="feb.data.entities.DocumentoReal" column="documento" name="doc"/>
         
     </class>
 </hibernate-mapping>

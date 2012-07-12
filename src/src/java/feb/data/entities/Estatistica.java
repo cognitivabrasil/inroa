@@ -1,4 +1,4 @@
-package modelos;
+package feb.data.entities;
 
 import java.util.List;
 

@@ -7,6 +7,8 @@ package modelos;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import feb.data.entities.Repositorio;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class RepositoryHibernateDAO.

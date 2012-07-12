@@ -6,11 +6,12 @@ package spring.validador;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import modelos.Repositorio;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import feb.data.entities.Repositorio;
 
 /**
  * Respons&aacute;vel por validar os dados submetidos para um Repositorio

@@ -1,4 +1,4 @@
-package modelos;
+package feb.data.entities;
 
 public class Token {
 	public static int TITLE = 1;

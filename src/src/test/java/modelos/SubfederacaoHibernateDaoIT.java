@@ -28,6 +28,9 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import feb.data.entities.RepositorioSubFed;
+import feb.data.entities.SubFederacao;
+
 /**
  *
  * @author paulo

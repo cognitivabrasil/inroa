@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="modelos.Repositorio" table="repositorios">
+    <class name="feb.data.entities.Repositorio" table="repositorios">
         <meta attribute="class-description"> 
    
         </meta>
@@ -19,13 +19,13 @@
         <property column="periodicidade_horas" name="periodicidadeAtualizacao" type="integer"/>
         <property column="set" name="colecoesInternal" type="string"/>
         <property column="data_xml" name="dataOrigem" type="timestamp"/>
-        <many-to-one class="modelos.PadraoMetadados" column="padrao_metadados" name="padraoMetadados"/>
-        <many-to-one class="modelos.Mapeamento" column="mapeamento_id" name="mapeamento"/>
+        <many-to-one class="feb.data.entities.PadraoMetadados" column="padrao_metadados" name="padraoMetadados"/>
+        <many-to-one class="feb.data.entities.Mapeamento" column="mapeamento_id" name="mapeamento"/>
 
     
         <set name="documentos" table="documentos" cascade="all-delete-orphan">
             <key column="id_repositorio"/>
-            <one-to-many class="modelos.DocumentoReal"/>
+            <one-to-many class="feb.data.entities.DocumentoReal"/>
         </set>
     </class>
 </hibernate-mapping>

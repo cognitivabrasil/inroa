@@ -1,4 +1,4 @@
-package modelos;
+package feb.data.entities;
 
 import cognitivabrasil.obaa.OBAA;
 import java.io.File;
@@ -7,6 +7,8 @@ import org.apache.commons.io.FileUtils;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import org.junit.Test;
+
+import feb.data.entities.DocumentoReal;
 
 public class DocumentoTest {
 

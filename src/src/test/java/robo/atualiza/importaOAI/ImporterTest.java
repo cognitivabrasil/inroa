@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import modelos.DocumentosDAO;
-import modelos.Mapeamento;
-import modelos.Repositorio;
 import modelos.RepositoryDAO;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
@@ -25,6 +23,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+
+import feb.data.entities.Mapeamento;
+import feb.data.entities.Repositorio;
 
 /**
  *

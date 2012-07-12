@@ -9,7 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import modelos.DocumentoReal;
+
+import feb.data.entities.DocumentoReal;
 import robo.util.Operacoes;
 
 /**

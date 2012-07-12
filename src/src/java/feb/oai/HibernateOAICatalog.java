@@ -29,11 +29,9 @@ import ORG.oclc.oai.server.verb.CannotDisseminateFormatException;
 import ORG.oclc.oai.server.verb.IdDoesNotExistException;
 import ORG.oclc.oai.server.verb.NoMetadataFormatsException;
 import ORG.oclc.oai.util.OAIUtil;
-import modelos.Repositorio;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import modelos.DocumentoReal;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -43,6 +41,9 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+
+import feb.data.entities.DocumentoReal;
+import feb.data.entities.Repositorio;
 
 import spring.ApplicationContextProvider;
 
@@ -105,7 +106,7 @@ public class HibernateOAICatalog extends AbstractHibernateOAICatalog {
 	@Override
 	public Class<? extends HibernateOaiDocument> getHibernateClass() {
 		// TODO Auto-generated method stub
-		return modelos.DocumentoReal.class;
+		return feb.data.entities.DocumentoReal.class;
 	}
 
 	@Override

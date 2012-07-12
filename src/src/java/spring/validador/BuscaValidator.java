@@ -4,11 +4,12 @@
  */
 package spring.validador;
 
-import modelos.Consulta;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import feb.data.entities.Consulta;
 
 /**
  * Respons&aacute;vel por validar os dados submetidos para uma busca

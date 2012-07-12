@@ -6,13 +6,14 @@ package spring.validador;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import modelos.PadraoMetadados;
 import modelos.PadraoMetadadosDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import feb.data.entities.PadraoMetadados;
 
 /**
  *

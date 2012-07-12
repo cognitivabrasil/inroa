@@ -11,6 +11,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import feb.data.entities.DocumentoReal;
+import feb.data.entities.Repositorio;
+import feb.data.entities.RepositorioSubFed;
+import feb.data.entities.SubFederacao;
+
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
  * dados para preparaç&atilde;o da posterior recuperaç&atilde;o de informações

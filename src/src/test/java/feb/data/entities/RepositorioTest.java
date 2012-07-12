@@ -2,11 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.entities;
 
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
+
+import feb.data.entities.Repositorio;
 import static org.junit.Assert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;

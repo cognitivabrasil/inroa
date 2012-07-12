@@ -5,10 +5,8 @@ import java.io.IOException;
 
 import modelos.AbstractDaoTest;
 import modelos.DocumentosHibernateDAO;
-import modelos.Mapeamento;
 import modelos.MapeamentoDAO;
 import modelos.PadraoMetadadosDAO;
-import modelos.Repositorio;
 import modelos.RepositoryDAO;
 
 import org.apache.commons.io.FileUtils;
@@ -21,6 +19,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import feb.data.entities.Mapeamento;
+import feb.data.entities.Repositorio;
 
 import robo.atualiza.importaOAI.Importer;
 

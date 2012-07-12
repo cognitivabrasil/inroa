@@ -4,6 +4,8 @@
  */
 package RSS;
 
+import feb.data.entities.Consulta;
+import feb.data.entities.DocumentoReal;
 import feb.ferramentaBusca.Recuperador;
 
 import java.sql.*;
@@ -14,8 +16,6 @@ import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
-import modelos.Consulta;
-import modelos.DocumentoReal;
 
 /**
  *
