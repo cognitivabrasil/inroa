@@ -24,8 +24,7 @@ import ptstemmer.exceptions.PTStemmerException;
 public class Operacoes {
 	private static Logger log = Logger.getLogger(Operacoes.class);
 
-	private Operacoes() {
-	}
+	public Operacoes() { } // public para o Spring
 
 	/**
 	 * Testa se a data recebida é newDate(0) ou se j&aacute; foi alterada.
