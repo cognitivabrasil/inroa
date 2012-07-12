@@ -42,16 +42,8 @@ public class ServerInfo {
 			version = atts.getValue("Implementation-Version");
 			build = atts.getValue("Implementation-Build");
 
-			System.out.println("Version: "
-					+ atts.getValue("Implementation-Version"));
-			System.out.println("Build: "
-					+ atts.getValue("Implementation-Build"));
-			System.out.println("Manifest Version: "
-					+ atts.getValue("Manifest-Version"));
-			System.out.println("Built-By: " + atts.getValue("Built-By"));
-
 		} catch (IOException e) {
-			logger.error("Cannot read MANIFEST", e);
+			logger.error("Cannot read MANIFEST, you probably are running this from a NetBeans (i.e, not in a WAR). If this error occurs on a deployed WAR, it is a bug.");
 		}
 
 	}
