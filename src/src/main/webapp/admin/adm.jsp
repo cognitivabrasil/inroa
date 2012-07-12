@@ -267,15 +267,15 @@ Author     : Marcos Nunes
 
 			<tr class='center'>
 				<td><a title="Adicionar novo padr&atilde;o de metadados"
-					onclick="NewWindow('./padraoMetadados/addPadrao','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					onclick="NewWindow('./mapeamentos/new','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 						<img
 						src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 						border="0" width="24" height="24" alt="Visualizar" align="middle">
 				</a></td>
 				<td colspan="2" class="left bold" style="font-size: 110%">
 					&nbsp;&nbsp; <a
-					onclick="NewWindow('./padraoMetadados/addPadrao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-						Adicionar novo padr&atilde;o </a>
+					onclick="NewWindow('./mapeamentos/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+						Adicionar novo mapeamento </a>
 				</td>
 				<td><div id='msgerro' class='textoErro left'></div></td>
 			</tr>

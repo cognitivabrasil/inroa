@@ -5,6 +5,19 @@
 package feb.util;
 
 import java.io.File;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.sax.SAXTransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+
+import org.xml.sax.InputSource;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +37,8 @@ import ptstemmer.exceptions.PTStemmerException;
 public class Operacoes {
 	private static Logger log = Logger.getLogger(Operacoes.class);
 
-	public Operacoes() { } // public para o Spring
+	public Operacoes() {
+	} // public para o Spring
 
 	/**
 	 * Testa se a data recebida é newDate(0) ou se j&aacute; foi alterada.
@@ -44,6 +58,31 @@ public class Operacoes {
 			return dataTeste.after(horaBase);
 		}
 	}
+
+	public static String formatXml(String xml) {
+		try {
+			Transformer serializer = SAXTransformerFactory.newInstance()
+					.newTransformer();
+			serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+			// serializer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+			// "yes");
+			serializer.setOutputProperty(
+					"{http://xml.apache.org/xslt}indent-amount", "2");
+			// serializer.setOutputProperty("{http://xml.customer.org/xslt}indent-amount",
+			// "2");
+			Source xmlSource = new SAXSource(new InputSource(
+					new ByteArrayInputStream(xml.getBytes())));
+			StreamResult res = new StreamResult(new ByteArrayOutputStream());
+			serializer.transform(xmlSource, res);
+			return new String(
+					((ByteArrayOutputStream) res.getOutputStream())
+							.toByteArray());
+		} catch (Exception e) {
+			// TODO log error
+			return xml;
+		}
+	}
+
 
 	/**
 	 * Substitui letras acentudas por letras sem acentos (remove acentos das
