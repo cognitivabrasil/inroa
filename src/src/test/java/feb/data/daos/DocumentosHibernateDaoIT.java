@@ -1,4 +1,4 @@
-package modelos;
+package feb.data.daos;
 
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
@@ -27,6 +27,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import feb.data.daos.DocumentosHibernateDAO;
+import feb.data.daos.RepositoryHibernateDAO;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Objeto;
 import feb.data.entities.Repositorio;

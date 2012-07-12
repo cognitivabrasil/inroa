@@ -4,6 +4,12 @@ import feb.data.entities.Estatistica;
 import feb.data.entities.PadraoMetadados;
 import feb.data.entities.Repositorio;
 import feb.data.entities.Usuario;
+import feb.data.interfaces.MapeamentoDAO;
+import feb.data.interfaces.PadraoMetadadosDAO;
+import feb.data.interfaces.RepositoryDAO;
+import feb.data.interfaces.SubFederacaoDAO;
+import feb.data.interfaces.UsuarioDAO;
+import feb.data.interfaces.VisitasDao;
 import feb.ferramentaBusca.indexador.Indexador;
 
 import java.util.Calendar;

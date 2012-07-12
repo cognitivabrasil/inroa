@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.interfaces;
 
 import java.util.List;
 

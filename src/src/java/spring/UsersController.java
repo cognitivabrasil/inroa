@@ -15,7 +15,6 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import modelos.UsuarioDAO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -33,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import feb.data.entities.Usuario;
+import feb.data.interfaces.UsuarioDAO;
 
 class UserPasswordDto {
 	private String username;

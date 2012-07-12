@@ -3,6 +3,11 @@ package spring;
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Visita;
+import feb.data.interfaces.DocumentosDAO;
+import feb.data.interfaces.RepositoryDAO;
+import feb.data.interfaces.SubFederacaoDAO;
+import feb.data.interfaces.UsuarioDAO;
+import feb.data.interfaces.VisitasDao;
 import feb.ferramentaBusca.Recuperador;
 
 import java.io.UnsupportedEncodingException;

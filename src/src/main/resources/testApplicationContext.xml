@@ -44,7 +44,7 @@ p:password="${dataSource.password}" /> -->
           p:password="feb@RNP" />
 
        <bean id="documentosDAO"
-      class="modelos.DocumentosHibernateDAO"
+      class="feb.data.daos.DocumentosHibernateDAO"
     />
     
     <bean id="sessionFactory"
@@ -61,33 +61,33 @@ p:password="${dataSource.password}" /> -->
     <tx:annotation-driven/>
 
     <bean id="repositoryDAO"
-       class="modelos.RepositoryHibernateDAO">
+       class="feb.data.daos.RepositoryHibernateDAO">
 </bean>
 
     <bean id="subFederationDAO"
-       class="modelos.SubFederacaoHibernateDAO">
+       class="feb.data.daos.SubFederacaoHibernateDAO">
     </bean>
  
     <bean id="PadraoMetadadosDAO"
-        class="modelos.PadraoMetadadosHibernateDAO">
+        class="feb.data.daos.PadraoMetadadosHibernateDAO">
     </bean>
     
     <bean id="MapeamentoDAO"
-        class="modelos.MapeamentoHibernateDAO">
+        class="feb.data.daos.MapeamentoHibernateDAO">
     </bean>
  
     <bean id="UsuarioDAO"
-        class="modelos.UsuarioHibernateDAO">
+        class="feb.data.daos.UsuarioHibernateDAO">
 <!--         <property name="sessionFactory" ref="sessionFactory"/> -->
     </bean>
 
     <bean id="TokensDAO"
-        class="modelos.TokensHibernateDao">
+        class="feb.data.daos.TokensHibernateDao">
     </bean>
 
-    <bean id="StopWord" class="modelos.StopWordHibernateDao"></bean>
+    <bean id="StopWord" class="feb.data.daos.StopWordHibernateDao"></bean>
     
-    <bean id="visitasDao" class="modelos.VisitasHibernateDao" />
+    <bean id="visitasDao" class="feb.data.daos.VisitasHibernateDao" />
     
      <context:annotation-config/>
 

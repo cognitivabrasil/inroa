@@ -15,6 +15,10 @@ import feb.data.entities.DocumentoReal;
 import feb.data.entities.Repositorio;
 import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
+import feb.data.interfaces.DocumentosDAO;
+import feb.data.interfaces.RepositoryDAO;
+import feb.data.interfaces.SubFederacaoDAO;
+import feb.data.interfaces.TokensDao;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de

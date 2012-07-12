@@ -3,11 +3,6 @@ package functionaltests;
 import java.io.File;
 import java.io.IOException;
 
-import modelos.AbstractDaoTest;
-import modelos.DocumentosHibernateDAO;
-import modelos.MapeamentoDAO;
-import modelos.PadraoMetadadosDAO;
-import modelos.RepositoryDAO;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -20,8 +15,13 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import feb.data.daos.AbstractDaoTest;
+import feb.data.daos.DocumentosHibernateDAO;
 import feb.data.entities.Mapeamento;
 import feb.data.entities.Repositorio;
+import feb.data.interfaces.MapeamentoDAO;
+import feb.data.interfaces.PadraoMetadadosDAO;
+import feb.data.interfaces.RepositoryDAO;
 
 import robo.atualiza.importaOAI.Importer;
 

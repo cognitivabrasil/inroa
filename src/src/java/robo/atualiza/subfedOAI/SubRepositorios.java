@@ -3,11 +3,11 @@ package robo.atualiza.subfedOAI;
 import ORG.oclc.oai.harvester2.verb.ListSets;
 import java.io.*;
 import java.util.Set;
-import modelos.SubFederacaoDAO;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
 import feb.data.entities.SubFederacao;
+import feb.data.interfaces.SubFederacaoDAO;
 import robo.util.Informacoes;
 import robo.util.Operacoes;
 import spring.ApplicationContextProvider;

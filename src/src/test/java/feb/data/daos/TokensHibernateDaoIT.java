@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.daos;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,6 +22,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import feb.data.daos.DocumentosHibernateDAO;
+import feb.data.daos.TokensHibernateDao;
 import feb.data.entities.DocumentoReal;
 
 /**

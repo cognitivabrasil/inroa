@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.daos;
 
 import java.util.List;
 import org.dbunit.Assertion;
@@ -20,6 +20,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import feb.data.daos.PadraoMetadadosHibernateDAO;
 import feb.data.entities.PadraoMetadados;
 
 

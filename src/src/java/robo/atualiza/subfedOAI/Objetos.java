@@ -5,11 +5,11 @@
 package robo.atualiza.subfedOAI;
 
 import feb.data.entities.SubFederacao;
+import feb.data.interfaces.DocumentosDAO;
 import feb.ferramentaBusca.indexador.Indexador;
 
 import java.io.File;
 import java.util.ArrayList;
-import modelos.DocumentosDAO;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;

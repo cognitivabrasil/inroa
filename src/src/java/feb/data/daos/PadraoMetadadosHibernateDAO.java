@@ -2,12 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.daos;
+
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import feb.data.entities.PadraoMetadados;
+import feb.data.interfaces.PadraoMetadadosDAO;
 
 
 /**

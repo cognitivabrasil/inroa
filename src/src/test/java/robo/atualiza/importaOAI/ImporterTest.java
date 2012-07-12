@@ -9,8 +9,6 @@ import cognitivabrasil.obaa.OaiOBAA;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import modelos.DocumentosDAO;
-import modelos.RepositoryDAO;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
@@ -26,6 +24,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import feb.data.entities.Mapeamento;
 import feb.data.entities.Repositorio;
+import feb.data.interfaces.DocumentosDAO;
+import feb.data.interfaces.RepositoryDAO;
 
 /**
  *

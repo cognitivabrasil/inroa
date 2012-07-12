@@ -1,15 +1,18 @@
-package modelos;
+package feb.data.daos;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import feb.data.entities.Visita;
+import feb.data.interfaces.VisitasDao;
 
 /**
  *

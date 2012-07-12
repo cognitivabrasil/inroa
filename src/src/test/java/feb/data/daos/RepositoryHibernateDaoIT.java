@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.daos;
 
 import java.util.List;
 import org.dbunit.Assertion;
@@ -23,8 +23,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import org.springframework.test.context.transaction.AfterTransaction;
 
+import feb.data.daos.DocumentosHibernateDAO;
+import feb.data.daos.RepositoryHibernateDAO;
 import feb.data.entities.PadraoMetadados;
 import feb.data.entities.Repositorio;
+import feb.data.interfaces.MapeamentoDAO;
 
 /**
  *

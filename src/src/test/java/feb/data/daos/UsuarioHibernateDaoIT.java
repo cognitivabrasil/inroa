@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.daos;
 
 import static org.hamcrest.Matchers.*;
 import java.io.File;
@@ -35,6 +35,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import feb.data.entities.Usuario;
+import feb.data.interfaces.UsuarioDAO;
 
 /**
  * Integration tests of the UsuarioHibernateDao

@@ -1,4 +1,4 @@
-package modelos;
+package feb.data.interfaces;
 
 /**
  * Data Access Object for FEB Tokens

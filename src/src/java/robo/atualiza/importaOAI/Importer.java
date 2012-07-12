@@ -6,11 +6,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import metadata.XsltConversor;
-import modelos.DocumentosDAO;
-import modelos.RepositoryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import feb.data.entities.Repositorio;
+import feb.data.interfaces.DocumentosDAO;
+import feb.data.interfaces.RepositoryDAO;
 
 // TODO: Auto-generated Javadoc
 public class Importer {

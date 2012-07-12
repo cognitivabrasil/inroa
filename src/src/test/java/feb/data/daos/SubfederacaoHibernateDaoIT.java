@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelos;
+package feb.data.daos;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -28,8 +28,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import feb.data.daos.SubFederacaoHibernateDAO;
 import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
+import feb.data.interfaces.DocumentosDAO;
 
 /**
  *

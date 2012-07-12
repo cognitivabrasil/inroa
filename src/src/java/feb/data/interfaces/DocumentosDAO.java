@@ -1,4 +1,4 @@
-package modelos;
+package feb.data.interfaces;
 
 import cognitivabrasil.obaa.OBAA;
 import java.util.List;

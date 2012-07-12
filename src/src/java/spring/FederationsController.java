@@ -14,6 +14,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import feb.data.entities.SubFederacao;
+import feb.data.interfaces.MapeamentoDAO;
+import feb.data.interfaces.PadraoMetadadosDAO;
+import feb.data.interfaces.RepositoryDAO;
+import feb.data.interfaces.SubFederacaoDAO;
+import feb.data.interfaces.UsuarioDAO;
 import robo.atualiza.SubFederacaoOAI;
 import spring.validador.SubFederacaoValidador;
 

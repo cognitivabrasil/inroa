@@ -8,11 +8,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import modelos.StopWordsDao;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
+
+import feb.data.interfaces.StopWordsDao;
 import robo.util.Operacoes;
 import spring.ApplicationContextProvider;
 

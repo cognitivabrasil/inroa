@@ -1,8 +1,9 @@
-package modelos;
+package feb.data.daos;
 
 import cognitivabrasil.obaa.OBAA;
 import java.util.List;
 import metadata.Header;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +16,8 @@ import feb.data.entities.Repositorio;
 import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
 import feb.data.entities.SubNodo;
+import feb.data.interfaces.DocumentosDAO;
+import feb.data.interfaces.TokensDao;
 
 /**
  * The Class DocumentosHibernateDAO.
