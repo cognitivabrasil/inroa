@@ -378,9 +378,9 @@
 		</dependency>
 		<!-- OAI-PMH harvester -->
 		<dependency>
-			<groupId>org.dspace</groupId>
-			<artifactId>oclc-harvester2</artifactId>
-			<version>0.1.12</version>
+			<groupId>cognitivabrasil</groupId>
+			<artifactId>harvester2</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

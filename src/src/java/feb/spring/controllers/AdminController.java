@@ -12,7 +12,6 @@ import feb.data.interfaces.UsuarioDAO;
 import feb.data.interfaces.VisitasDao;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.spring.ServerInfo;
-import feb.spring.validador.InfoBDValidator;
 import feb.spring.validador.PadraoValidator;
 import feb.spring.validador.SubFederacaoValidador;
 
@@ -20,7 +19,6 @@ import java.util.Calendar;
 import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import modelos.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

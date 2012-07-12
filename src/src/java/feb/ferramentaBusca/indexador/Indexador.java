@@ -5,7 +5,6 @@
 package feb.ferramentaBusca.indexador;
 
 import java.util.Set;
-import modelos.*;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
