@@ -270,9 +270,6 @@ src/src/java/feb/robo/main/package.html -text
 src/src/java/feb/util/Informacoes.java -text
 src/src/java/feb/util/Operacoes.java -text
 src/src/java/feb/util/package.html -text
-src/src/java/postgres/SingletonConfig.java -text
-src/src/java/postgres/package.html -text
-src/src/java/postgres/teste.java -text
 src/src/java/spring/AdminController.java -text
 src/src/java/spring/ApplicationContextProvider.java -text
 src/src/java/spring/FEBController.java -text

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import postgres.SingletonConfig;
 
 /**
  *
@@ -17,7 +16,7 @@ import postgres.SingletonConfig;
 @Component
 public class InfoBDValidator implements Validator {
     public boolean supports(Class clazz) {
-        return SingletonConfig.class.isAssignableFrom(clazz);
+        return false;
     }
     
     public void validate(Object target, Errors errors) {
@@ -28,12 +27,6 @@ public class InfoBDValidator implements Validator {
                 "required.descricao", "É necessário informar o nome da base.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "IP",
                 "required.IP", "É necessário informar o ip.");
-
-        SingletonConfig subfed = (SingletonConfig) target;
-        
-        if(subfed.getPorta() == null || subfed.getPorta() <=0){
-            errors.rejectValue("porta","invalid.porta", "Deve ser informada uma porta válida.");
-        }
         
 
     }
