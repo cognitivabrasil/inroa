@@ -36,7 +36,7 @@ public class LRU {
 
     public LRU(ArrayList<String> consulta, Connection con) {
 
-        this.consulta = Operacoes.arrayListToString(consulta);
+        this.consulta = Operacoes.listToString(consulta);
         this.con = con;
         this.resultadoAntigo = "";
         this.resultado = new ArrayList<DocumentoReal>();

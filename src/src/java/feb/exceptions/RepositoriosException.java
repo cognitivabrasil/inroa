@@ -4,15 +4,13 @@
  */
 package feb.exceptions;
 
-import java.util.ArrayList;
 
 /**
  *
  * @author Marcos Nunes
  */
 public class RepositoriosException extends Exception {
-
-    /**
+	/**
      * Creates a new instance of
      * <code>RepositoriosException</code> without detail message.
      */
