@@ -319,7 +319,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         OBAA obaa = this.metadata;
 
         // Ensure removal of all objects
-        objetos.removeAll(objetos);
+        objetos.clear();
         assert (objetos.isEmpty());
 
         // Then, add them again
