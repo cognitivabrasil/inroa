@@ -96,7 +96,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         DocumentoReal d = instance.get(1);
 
         assertEquals("oai:cesta2.cinted.ufrgs.br:123456789/57", d.getObaaEntry());
-        assertEquals("Cesta", d.getRepositorio().getNome());
+        assertEquals("Cesta", d.getRepositorio().getName());
     }
 
     @Test

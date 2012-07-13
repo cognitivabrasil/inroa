@@ -25,7 +25,7 @@ public class RepositorioTest {
     @Test
     public void testToString() {
         Repositorio instance = new Repositorio();
-        instance.setNome("Teste");
+        instance.setName("Teste");
         
         assertThat(instance.toString(), containsString("Teste"));
     }
@@ -96,17 +96,17 @@ public class RepositorioTest {
         
         r1.setId(1);
         
-        r1.setNome("Jorge");
+        r1.setName("Jorge");
         r1.setUrl("bla");
         
         Repositorio r2 = new Repositorio();
         
-        r2.setNome("Paulo");
+        r2.setName("Paulo");
         r2.setNamespace("obaa");
         
         r1.merge(r2);
         
-        assertEquals("Paulo", r1.getNome());
+        assertEquals("Paulo", r1.getName());
         assertEquals("bla", r1.getUrl());
         assertEquals("obaa", r1.getNamespace());
     }
@@ -117,13 +117,13 @@ public class RepositorioTest {
         
         r1.setId(1);
         
-        r1.setNome("Jorge");
+        r1.setName("Jorge");
         r1.setUrl("bla");
         
         Repositorio r2 = new Repositorio();
         
         r2.setId(3);
-        r2.setNome("Paulo");
+        r2.setName("Paulo");
         r2.setNamespace("obaa");
         
          r1.merge(r2);

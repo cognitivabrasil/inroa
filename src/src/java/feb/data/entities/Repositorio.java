@@ -26,7 +26,7 @@ public class Repositorio implements java.io.Serializable, SubNodo {
     static Logger log = Logger.getLogger(Repositorio.class.getName());
     private static final long serialVersionUID = 1011292251690153763L;
     private Integer id;
-    private String nome;
+    private String name;
     private String descricao;
     private String url;
     private String metadataPrefix;
@@ -50,7 +50,7 @@ public class Repositorio implements java.io.Serializable, SubNodo {
         // sessionFactory = ctx.getBean(SessionFactory.class);
         // }
         id = null;
-        nome = "";
+        name = "";
         descricao = "";
         url = "";
         metadataPrefix = "";
@@ -72,18 +72,35 @@ public class Repositorio implements java.io.Serializable, SubNodo {
     }
 
     /**
-     * @return the nome
+     * @return the name
+     * @deprecated Use {@link getName}
      */
-    @Override
+    @Deprecated
     public String getNome() {
-        return nome;
+        return name;
     }
 
     /**
-     * @param nome the nome to set
+     * @param name the name to set
+     * @deprecated Use {@link setName}
      */
+    @Deprecated
     public void setNome(String nome) {
-        this.nome = nome;
+        this.name = nome;
+    }
+    /**
+     * @return the name
+     */
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String nome) {
+        this.name = nome;
     }
 
     /**
@@ -116,7 +133,7 @@ public class Repositorio implements java.io.Serializable, SubNodo {
 
     @Override
     public String toString() {
-        return getNome();
+        return getName();
     }
 
     /**
@@ -363,8 +380,8 @@ public class Repositorio implements java.io.Serializable, SubNodo {
         if (notBlank(r2.getNamespace())) {
             setNamespace(r2.getNamespace());
         }
-        if (notBlank(r2.getNome())) {
-            setNome(r2.getNome());
+        if (notBlank(r2.getName())) {
+            setName(r2.getName());
         }
         if (notBlank(r2.getUrl())) {
             setUrl(r2.getUrl());

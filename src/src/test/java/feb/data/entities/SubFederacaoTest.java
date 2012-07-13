@@ -91,7 +91,7 @@ public class SubFederacaoTest {
 
         r1.merge(r2);
 
-        assertEquals("Paulo", r1.getNome());
+        assertEquals("Paulo", r1.getName());
         assertEquals("bla", r1.getUrl());
     }
     
@@ -103,15 +103,15 @@ public class SubFederacaoTest {
         
         Set<RepositorioSubFed> listSubRep = new HashSet<RepositorioSubFed>();
         RepositorioSubFed rsf = new RepositorioSubFed();
-        rsf.setNome("marcos");
+        rsf.setName("marcos");
         listSubRep.add(rsf);
         
         rsf = new RepositorioSubFed();
-        rsf.setNome("jorge");
+        rsf.setName("jorge");
         listSubRep.add(rsf);
         
         rsf = new RepositorioSubFed();
-        rsf.setNome("nunes");
+        rsf.setName("nunes");
         listSubRep.add(rsf);
         
         SubFederacao r1 = new SubFederacao();
@@ -126,15 +126,15 @@ public class SubFederacaoTest {
        Set<RepositorioSubFed> correto = new HashSet<RepositorioSubFed>();
        
         rsf = new RepositorioSubFed();
-        rsf.setNome("marcos");
+        rsf.setName("marcos");
         correto.add(rsf);
         
         rsf = new RepositorioSubFed();
-        rsf.setNome("jorge");
+        rsf.setName("jorge");
         correto.add(rsf);
         
         rsf = new RepositorioSubFed();
-        rsf.setNome("preto");
+        rsf.setName("preto");
         correto.add(rsf);
         
         assertEquals(correto, r1.getRepositorios());

@@ -51,7 +51,7 @@
 	<div id="page">
 
 		<div class="subTitulo-center">&nbsp;Editanto
-			subfedera&ccedil;&atilde;o ${subDAO.nome}</div>
+			subfedera&ccedil;&atilde;o ${subDAO.name}</div>
 		<div class="subtitulo">Informa&ccedil;&otilde;es sobre a
 			subfedera&ccedil;&atilde;o</div>
 		<div class="EspacoAntes">&nbsp;</div>
@@ -63,10 +63,10 @@
 				<!--Aqui o script colocara a mensagem de erro, se ocorrer-->
 			</div>
 			<div class="LinhaEntrada">
-				<form:errors path="nome" cssClass="ValueErro" />
+				<form:errors path="name" cssClass="ValueErro" />
 				<div class="Label">Nome:</div>
 				<div class="Value">
-					<form:input path="nome" maxlength="45"
+					<form:input path="name" maxlength="45"
 						onFocus="this.className='inputSelecionado'"
 						onBlur="this.className=''" />
 				</div>

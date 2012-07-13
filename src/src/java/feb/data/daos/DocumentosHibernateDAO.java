@@ -105,7 +105,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
             log.debug("Armazenando objeto do tipo RepositorioSubFed");
             RepositorioSubFed repSubFed = this.federation.getRepositoryByName(h.getSetSpec().get(0));
             if (repSubFed == null) {
-                throw new IllegalStateException("The repository '" + h.getSetSpec().get(0) + "' doesn't exists in the federation '" + this.federation.getNome() + "'");
+                throw new IllegalStateException("The repository '" + h.getSetSpec().get(0) + "' doesn't exists in the federation '" + this.federation.getName() + "'");
             } else {
                 doc.setRepositorioSubFed(repSubFed); //pega o nome do repositorio do cabeçalho e busca o objeto pelo nome inserindo no doc.
             }

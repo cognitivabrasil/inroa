@@ -19,7 +19,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
     private static final long serialVersionUID = 7452479917517752879L;
     private Integer id;
-    private String nome;
+    private String name;
     private String descricao;
     private String url;
     private Date ultimaAtualizacao;
@@ -30,7 +30,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
     public SubFederacao() {
         this.id = null;
-        this.nome = "";
+        this.name = "";
         this.descricao = "";
         this.url = "";
         this.ultimaAtualizacao = null;
@@ -75,13 +75,31 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
         this.id = id;
     }
 
-    @Override
+    /**
+     * @param nome
+     * @deprecated use {@link getName()}
+     */
+    @Deprecated
     public String getNome() {
-        return nome;
+        return name;
     }
 
+    /**
+     * @param nome
+     * @deprecated use {@link setName()}
+     */
+    @Deprecated
     public void setNome(String nome) {
-        this.nome = nome;
+        this.name = nome;
+    }
+    
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String nome) {
+        this.name = nome;
     }
 
     public Date getUltimaAtualizacao() {
@@ -155,8 +173,8 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
         if (notBlank(r2.getDescricao())) {
             setDescricao(r2.getDescricao());
         }
-        if (notBlank(r2.getNome())) {
-            setNome(r2.getNome());
+        if (notBlank(r2.getName())) {
+            setNome(r2.getName());
         }
         if (notBlank(r2.getUrl())) {
             setUrl(r2.getUrl());
@@ -167,7 +185,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
     @Override
     public String toString() {
-        return new ToStringCreator(this).append("id", this.getId()).append("nome", this.getNome()).append("descrição", this.getDescricao()).append("url", this.getUrl()).append("última atualização", this.getUltimaAtualizacao()).toString();
+        return new ToStringCreator(this).append("id", this.getId()).append("name", this.getName()).append("descrição", this.getDescricao()).append("url", this.getUrl()).append("última atualização", this.getUltimaAtualizacao()).toString();
     }
 
     /**
@@ -209,7 +227,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
      * reposit&oacute;rios da subfedera&ccedil;&atilde;o
      *
      * @param subFed objeto federa&ccedil;&atilde;o
-     * @param listaSubRep ArrayList de Strings contento o nome dos
+     * @param listaSubRep ArrayList de Strings contento o name dos
      * reposit&oacute;rios da subfedera&ccedil;&atilde;o
      * @throws Exception
      */
@@ -221,7 +239,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
         for (String nomeSubRep : listaSubRep) {
             RepositorioSubFed repTest = new RepositorioSubFed();
             repTest.setSubFederacao(this);
-            repTest.setNome(nomeSubRep);
+            repTest.setName(nomeSubRep);
 
             if (!repSubFed.contains(repTest)) { //se nao tiver na base o repositorio, adiciona.
                 repSubFed.add(repTest);
@@ -230,7 +248,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
         Set<RepositorioSubFed> newListRepositories = new HashSet<RepositorioSubFed>();
         for (RepositorioSubFed repTest : repSubFed) {
-            if (listaSubRep.contains(repTest.getNome())) { //se tiver na base algum repositorio que nao esteja na lista, remove.
+            if (listaSubRep.contains(repTest.getName())) { //se tiver na base algum repositorio que nao esteja na lista, remove.
                 newListRepositories.add(repTest);
             }
         }
@@ -239,7 +257,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
     public RepositorioSubFed getRepositoryByName(String nome) {
         for (RepositorioSubFed repSub : getRepositorios()) {
-            if (repSub.getNome().equals(nome)) {
+            if (repSub.getName().equals(nome)) {
                 return repSub;
             }
         }

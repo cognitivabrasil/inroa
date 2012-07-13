@@ -255,11 +255,11 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
      */
     public String getNomeRep() {
         if (repositorio != null) {
-            return repositorio.getNome();
+            return repositorio.getName();
         } else {
             return "Subfedera&ccedil;&atilde;o "
-                    + repositorioSubFed.getSubFederacao().getNome()
-                    + " / " + repositorioSubFed.getNome();
+                    + repositorioSubFed.getSubFederacao().getName()
+                    + " / " + repositorioSubFed.getName();
         }
     }
 
@@ -420,9 +420,9 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     public Collection<String> getSets() {
         Collection<String> c = new HashSet<String>();
         if (getRepositorio() != null) {
-            c.add(getRepositorio().getNome());
+            c.add(getRepositorio().getName());
         } else {
-            c.add(getRepositorioSubFed().getNome());
+            c.add(getRepositorioSubFed().getName());
         }
         return c;
     }

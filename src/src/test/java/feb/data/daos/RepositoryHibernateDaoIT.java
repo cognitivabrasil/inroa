@@ -62,7 +62,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         int id = 1;
         Repositorio cesta = instance.get(id);
 
-        assertEquals("Cesta", cesta.getNome());
+        assertEquals("Cesta", cesta.getName());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         int id = 1;
         Repositorio cesta = instance.get(id);
 
-        assertEquals("Cesta", cesta.getNome());
+        assertEquals("Cesta", cesta.getName());
         assertEquals(4, (int) cesta.getSize());
     }
 
@@ -90,7 +90,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         List<Repositorio> l = instance.getAll();
         Repositorio cesta = l.get(0);
 
-        assertEquals("Cesta", cesta.getNome());
+        assertEquals("Cesta", cesta.getName());
         assertEquals("dfsd", cesta.getDescricao());
         assertEquals("http://cesta2.cinted.ufrgs.br/oai/request", cesta.getUrl());
         assertEquals("lom", cesta.getNamespace());
@@ -175,7 +175,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     public void testSave() {
         Repositorio r = new Repositorio();
 
-        r.setNome("Novo");
+        r.setName("Novo");
         r.setNamespace("obaa");
         r.setUrl("http://url");
         r.setMapeamento(mapDao.get(1));
@@ -184,7 +184,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
         Repositorio r2 = instance.get(1);
 
-        r2.setNome("Jorjao");
+        r2.setName("Jorjao");
 
         instance.save(r2);
 

@@ -33,7 +33,7 @@
             <form name="removerFederacao" method="post">
                 <div class="LinhaEntrada">
                     <div class="Tab">
-                        Deseja realmente remover a Subfedera&ccedil;&atilde;o <b>${federation.nome}</b> ?
+                        Deseja realmente remover a Subfedera&ccedil;&atilde;o <b>${federation.name}</b> ?
                     </div>
                     <BR>
                 </div>

@@ -60,7 +60,7 @@ public class Objetos {
 
                 //efetua o Harvester e grava os xmls na pasta temporaria
                 Harvester harvesterOAI = new Harvester();
-                ArrayList<String> caminhosXML = harvesterOAI.coletaXML_ListRecords(endereco, subFed.getDataXML(), subFed.getNome(), caminhoDiretorioTemporario, "obaa", null);
+                ArrayList<String> caminhosXML = harvesterOAI.coletaXML_ListRecords(endereco, subFed.getDataXML(), subFed.getName(), caminhoDiretorioTemporario, "obaa", null);
 
                 //efetua o parser do xml e insere os documentos na base            
                 if (!caminhosXML.isEmpty()) {
@@ -90,7 +90,7 @@ public class Objetos {
                     }
                 }
 
-                log.info("Objetos da subfederacao " + subFed.getNome() + " atualizados!");
+                log.info("Objetos da subfederacao " + subFed.getName() + " atualizados!");
 
             } else {
                 log.error("O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");

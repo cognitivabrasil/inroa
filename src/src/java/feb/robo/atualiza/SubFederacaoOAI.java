@@ -62,7 +62,7 @@ public class SubFederacaoOAI {
                     boolean atualizadoTemp = false;
 
                     if ((subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null)) {
-                        log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
+                        log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getName().toUpperCase());
 
                         for (RepositorioSubFed r : subFed.getRepositorios()) {
                             r.dellAllDocs();
@@ -71,7 +71,7 @@ public class SubFederacaoOAI {
                     }
 
                     if (subFed.getUrl().isEmpty()) { //testa se a string url esta vazia.
-                        log.error("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
+                        log.error("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getName());
                     } else {
 
                         Long inicio = System.currentTimeMillis();
@@ -89,7 +89,7 @@ public class SubFederacaoOAI {
                              */
                         }
                         Long fim = System.currentTimeMillis();
-                        log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
+                        log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getName());
                     }
 
                     if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
@@ -129,7 +129,7 @@ public class SubFederacaoOAI {
             log.fatal("Could not get AppContext bean!");
             throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
-            log.info("FEB: Atualizando subfederacao: " + subFed.getNome());//imprime o nome do repositorio
+            log.info("FEB: Atualizando subfederacao: " + subFed.getName());//imprime o nome do repositorio
 
             try {
                 Informacoes info = new Informacoes();
@@ -222,7 +222,7 @@ public class SubFederacaoOAI {
 
             if (subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null) {
 
-                log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getNome().toUpperCase());
+                log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getName().toUpperCase());
 
                 for (RepositorioSubFed r : subFed.getRepositorios()) {
                     r.dellAllDocs();
@@ -232,13 +232,13 @@ public class SubFederacaoOAI {
 
             String url = subFed.getUrl();
             if (url.isEmpty()) { //testa se a string url esta vazia.
-                log.error("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getNome());
+                log.error("FEB ERRO: Nao existe uma url associada ao repositorio " + subFed.getName());
             } else {
 
                 Long inicio = System.currentTimeMillis();
                 atualizaSubFedOAI(subFed, indexar);
                 Long fim = System.currentTimeMillis();
-                log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getNome());
+                log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getName());
             }
             indexar.populateR1();
         }

@@ -27,9 +27,9 @@ public class Estatistica {
             SubNodo nodo = list.get(i);
 
             if (i == size - 1) {
-                jsList += "[ '" + nodo.getNome() + "', " + nodo.getSize() + " ]";
+                jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ]";
             } else {
-                jsList += "[ '" + nodo.getNome() + "', " + nodo.getSize() + " ], ";
+                jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ], ";
             }
         }
 

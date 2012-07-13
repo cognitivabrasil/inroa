@@ -5,9 +5,13 @@
 package feb.data.daos;
 
 
+import java.util.List;
+
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import feb.data.entities.Mapeamento;
 import feb.data.entities.PadraoMetadados;
 import feb.data.interfaces.PadraoMetadadosDAO;
 
@@ -16,10 +20,8 @@ import feb.data.interfaces.PadraoMetadadosDAO;
  *
  * @author paulo
  */
-public class PadraoMetadadosHibernateDAO extends AbstractHibernateDAO<PadraoMetadados> implements PadraoMetadadosDAO {
+public class PadraoMetadadosHibernateDAO extends AbstractNamedHibernateDAO<PadraoMetadados>  implements PadraoMetadadosDAO {
 
-    public PadraoMetadados get(String name){        
-        Session s = this.sessionFactory.getCurrentSession();
-        return (PadraoMetadados) s.createCriteria(PadraoMetadados.class).add(Restrictions.eq("nome", name)).uniqueResult();
-    }
+
+    
 }

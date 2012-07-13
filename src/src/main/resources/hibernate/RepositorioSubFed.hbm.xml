@@ -7,7 +7,7 @@
                 <param name="sequence">repositorios_subfed_id_seq</param>
             </generator>  
         </id>
-        <property name="nome" not-null="true" type="string"/>
+        <property name="name" column="nome" not-null="true" type="string"/>
         
         <many-to-one class="feb.data.entities.SubFederacao" column="id_subfed" name="subFederacao" not-null="true"/>    
         

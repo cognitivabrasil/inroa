@@ -127,9 +127,9 @@ public class Repositorios {
                             }
                             repDao.save(rep);
                         } catch (Exception e) {
-                            erros.add(rep.getNome());
+                            erros.add(rep.getName());
                             log.error("FEB ERRO: Erro ao atualizar o repositorio "
-                                    + rep.getNome(), e);
+                                    + rep.getName(), e);
                         }
                     }
                 }
@@ -164,37 +164,37 @@ public class Repositorios {
         int updated = 0;
 
         try {
-            log.info("FEB: (" + dataFormat.format(new Date()) + ") Atualizando repositorio: " + rep.getNome());// imprime o nome do repositorio
+            log.info("FEB: (" + dataFormat.format(new Date()) + ") Atualizando repositorio: " + rep.getName());// imprime o nome do repositorio
 
             Set<String> set = rep.getColecoes();
             if (set == null || set.isEmpty()) {
                 set = null;
             }
             if (rep.getUrl().isEmpty()) { // testa se a string url esta vazia.
-                log.error("FEB: Nao existe uma url associada ao repositorio " + rep.getNome());
+                log.error("FEB: Nao existe uma url associada ao repositorio " + rep.getName());
                 throw new MalformedURLException(
-                        "Nao existe uma url associada ao repositorio " + rep.getNome());
+                        "Nao existe uma url associada ao repositorio " + rep.getName());
 
             } else {// repositorio possui url para atualizacao
 
                 Date data_ultima_atualizacao = rep.getUltimaAtualizacao();
 
                 log.info("\t FEB: Ultima Atualizacao: " + data_ultima_atualizacao
-                        + " nome do rep: " + rep.getNome());
+                        + " nome do rep: " + rep.getName());
 
                 // se a data da ultima atualização for inferior a 01/01/1000
                 // apaga todos as informacoes do repositorio
                 if ((data_ultima_atualizacao == null && rep.getDataOrigem() == null)
                         || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(rep.getDataOrigem()))) {
                     log.info("FEB: Deletando todos os documentos do repositório: "
-                            + rep.getNome().toUpperCase());
+                            + rep.getName().toUpperCase());
                     try {
                         int result = rep.dellAllDocs();
                         log.info("FEB: " + result + " documentos deletados.");
 
                     } catch (Exception e) {
                         log.error("Erro ao deletar os objetos do repositorio "
-                                + rep.getNome() + ".", e);
+                                + rep.getName() + ".", e);
                     }
                 }
 
@@ -218,7 +218,7 @@ public class Repositorios {
                     // efetua o Harvester e grava os xmls na pasta temporaria
 
                     // coletando xmls
-                    ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(rep.getUrl(), Operacoes.formatDateOAIPMH(rep.getDataOrigem()), rep.getNome(), caminhoDiretorioTemporario, rep.getMetadataPrefix(), set); // chama o
+                    ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(rep.getUrl(), Operacoes.formatDateOAIPMH(rep.getDataOrigem()), rep.getName(), caminhoDiretorioTemporario, rep.getMetadataPrefix(), set); // chama o
                     // metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
 
                     // leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados

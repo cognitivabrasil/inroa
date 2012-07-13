@@ -10,7 +10,7 @@
 				<param name="sequence">dados_subfederacoes_id_seq</param>
 			</generator>
 		</id>
-		<property name="nome" not-null="true" type="string" />
+		<property name="name" column="nome" not-null="true" type="string" />
 		<property name="descricao" type="string" />
 		<property column="data_ultima_atualizacao" name="ultimaAtualizacao"
 			type="timestamp" />
@@ -20,7 +20,7 @@
 
 
 		<set name="repositorios" table="repositorios_subfed" cascade="all"
-			inverse="true">
+			inverse="true" order-by="name asc">
 			<key column="id_subfed" />
 			<one-to-many class="feb.data.entities.RepositorioSubFed" />
 		</set>

@@ -63,14 +63,14 @@ public class Indexador {
     public void indexarTodosRepositorios() {
 
         for (Repositorio rep : repDao.getAll()) {
-            log.info("Indexando repositorio " + rep.getNome());
+            log.info("Indexando repositorio " + rep.getName());
             indexaDocumentos(rep.getDocumentos());
         }
 
         for (SubFederacao subFed : subFedDao.getAll()) {
-            log.info("Indexando a federação " + subFed.getNome());
+            log.info("Indexando a federação " + subFed.getName());
             for (RepositorioSubFed repS : subFed.getRepositorios()) {
-                log.info("Indexando Federação: " + subFed.getNome() + " Repositório: " + repS.getNome());
+                log.info("Indexando Federação: " + subFed.getName() + " Repositório: " + repS.getName());
                 indexaDocumentos(repS.getDocumentos());
             }
         }

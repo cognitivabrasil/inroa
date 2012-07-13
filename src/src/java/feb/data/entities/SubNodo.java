@@ -6,6 +6,7 @@ package feb.data.entities;
  */
 public interface SubNodo {    
     
-    public String getNome ();
+    public String getName ();
     public Integer getSize ();
+    
 }

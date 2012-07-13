@@ -5,12 +5,16 @@
 package feb.data.daos;
 
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.hibernate.criterion.Order;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import feb.data.entities.Mapeamento;
 import feb.data.entities.Usuario;
 import feb.data.interfaces.UsuarioDAO;
 
@@ -59,4 +63,11 @@ public class UsuarioHibernateDAO extends AbstractHibernateDAO<Usuario> implement
         }
         return d;
     }
+    
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Usuario> getAll() {
+		return this.sessionFactory.getCurrentSession().createCriteria(Usuario.class).addOrder(Order.asc("login").ignoreCase())
+				.list();
+	}
 }

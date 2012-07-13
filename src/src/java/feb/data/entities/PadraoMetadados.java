@@ -16,7 +16,7 @@ public class PadraoMetadados implements java.io.Serializable {
 
 	private static final long serialVersionUID = -8862349037606469252L;
 	private Integer id;
-    private String nome;
+    private String name;
     private String metadataPrefix;
     private String namespace;
     private Set<Mapeamento> mapeamentos;
@@ -24,7 +24,7 @@ public class PadraoMetadados implements java.io.Serializable {
 
     public PadraoMetadados() {
         id = 0;
-        nome = "";
+        name = "";
         metadataPrefix = "";
         namespace = "";
         mapeamentos = new HashSet<Mapeamento>();
@@ -44,7 +44,7 @@ public class PadraoMetadados implements java.io.Serializable {
      */
     @Deprecated
     public String getNome() {
-        return nome;
+        return name;
     }
 
     /**
@@ -53,15 +53,15 @@ public class PadraoMetadados implements java.io.Serializable {
      */
     @Deprecated
     public void setNome(String nome) {
-        this.nome = nome;
+        this.name = nome;
     }
     
     public String getName() {
-        return nome;
+        return name;
     }
 
     public void setName(String nome) {
-        this.nome = nome;
+        this.name = nome;
     }
    
     /**

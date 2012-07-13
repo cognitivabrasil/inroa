@@ -74,7 +74,7 @@ public final class FederationsController {
             return "admin/federations/new";
         } else {
             try {
-                if (subDao.get(subfed.getNome()) != null) {
+                if (subDao.get(subfed.getName()) != null) {
                     model.addAttribute("erro", "Já existe um federação cadastrada com esse nome!");
                     return "admin/federations/new";
                 } else {

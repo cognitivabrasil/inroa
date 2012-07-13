@@ -72,10 +72,10 @@ public class HibernateOAICatalog extends AbstractHibernateOAICatalog {
 			StringBuffer s = new StringBuffer(200);
 			s.append("<set>\n");
 			s.append("<setSpec>");
-			s.append(r.getNome());
+			s.append(r.getName());
 			s.append("</setSpec>\n");
 			s.append("<setName>");
-			s.append(r.getNome());
+			s.append(r.getName());
 			s.append("</setName>\n");
 			s.append("</set>\n");
 			sets.add(s.toString());

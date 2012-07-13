@@ -5,9 +5,14 @@
 package feb.data.daos;
 
 
+import java.util.List;
+
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import feb.data.entities.Mapeamento;
+import feb.data.entities.PadraoMetadados;
 import feb.data.entities.Repositorio;
 import feb.data.interfaces.RepositoryDAO;
 
@@ -17,15 +22,9 @@ import feb.data.interfaces.RepositoryDAO;
  *
  * @author paulo
  */
-public class RepositoryHibernateDAO extends AbstractHibernateDAO<Repositorio> implements RepositoryDAO {
+public class RepositoryHibernateDAO extends AbstractNamedHibernateDAO<Repositorio> implements RepositoryDAO {
  
-	@Override
-    public Repositorio get(String name) {
-        Session s = this.sessionFactory.getCurrentSession();
-        return (Repositorio)s.createCriteria(Repositorio.class).
-        		add(Restrictions.eq("nome", name).ignoreCase()).uniqueResult();
-    }
-    
+
 
     @Override
     public void updateNotBlank(Repositorio r2) {

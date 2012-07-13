@@ -103,14 +103,14 @@ public class StatisticsIT extends AbstractDaoTest {
         
         Repositorio r = mock(Repositorio.class);
 
-        when(r.getNome()).thenReturn("teste");
+        when(r.getName()).thenReturn("teste");
         when(r.getSize()).thenReturn(321);        
         
         repList.add(r);
 
         Repositorio r2 = mock(Repositorio.class);
 
-        when(r2.getNome()).thenReturn("teste2");
+        when(r2.getName()).thenReturn("teste2");
         when(r2.getSize()).thenReturn(321);    
         
         repList.add(r2);

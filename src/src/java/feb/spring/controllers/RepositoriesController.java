@@ -76,7 +76,7 @@ public final class RepositoriesController {
             model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
             return "admin/repositories/new";
         } else {
-            if (repDao.get(rep.getNome()) != null) { //se retornar algo é porque já existe um repositorio com esse nome
+            if (repDao.get(rep.getName()) != null) { //se retornar algo é porque já existe um repositorio com esse nome
                 result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); //nao esta dentro da classe validator pq só executa isso quando for um repositorio novo, quando editar não.
 
                 model.addAttribute("mapSelecionado", rep.getMapeamento().getId());

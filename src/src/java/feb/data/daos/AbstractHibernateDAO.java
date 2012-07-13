@@ -26,7 +26,7 @@ public abstract class AbstractHibernateDAO<T> {
 	SessionFactory sessionFactory;
 	
 	/** The type. */
-	private Class<T> type;
+	Class<T> type;
 
 	/**
 	 * Instantiates a new abstract HibernateDAO. 

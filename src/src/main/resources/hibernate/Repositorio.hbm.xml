@@ -10,7 +10,7 @@
                 <param name="sequence">repositorios_id_seq</param>
             </generator>  
         </id>
-        <property name="nome" not-null="true" type="string"/>
+        <property name="name" column="nome" not-null="true" type="string"/>
         <property name="descricao" type="string"/>
         <property column="url_or_ip" name="url" not-null="true" type="string"/>
         <property column="metadata_prefix" name="metadataPrefix" not-null="true" type="string"/>

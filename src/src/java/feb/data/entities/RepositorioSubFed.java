@@ -17,7 +17,7 @@ import feb.spring.ApplicationContextProvider;
 public class RepositorioSubFed implements SubNodo{
 
     private int id;
-    private String nome;
+    private String name;
     private SubFederacao subFederacao;
     private Set<DocumentoReal> documentos;
     SessionFactory sessionFactory;
@@ -30,12 +30,12 @@ public class RepositorioSubFed implements SubNodo{
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String nome) {
+        this.name = nome;
     }
 
     public SubFederacao getSubFederacao() {
@@ -106,19 +106,19 @@ public class RepositorioSubFed implements SubNodo{
         if(rsf == null || !rsf.getClass().equals(RepositorioSubFed.class))
             return false;
         else {
-        	return this.getNome().equals( ((RepositorioSubFed)rsf).getNome());
+        	return this.getName().equals( ((RepositorioSubFed)rsf).getName());
         }
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + (this.nome != null ? this.nome.hashCode() : 0);
+        hash = 53 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
     
     @Override
     public String toString() {
-        return new ToStringCreator(this).append("id", this.getId()).append("nome", this.getNome()).toString();
+        return new ToStringCreator(this).append("id", this.getId()).append("nome", this.getName()).toString();
     }    
 }

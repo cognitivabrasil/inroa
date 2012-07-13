@@ -38,7 +38,7 @@
 
 
 		<div class="subtitulo">Informa&ccedil;&otilde;es sobre as
-			subfedera&ccedil;&otilde;es ${federation.nome}</div>
+			subfedera&ccedil;&otilde;es ${federation.name}</div>
 
 		<security:authorize access="hasRole('PERM_MANAGE_REP')">
 			<div class="editar">
@@ -48,7 +48,7 @@
 
 		<div class="LinhaEntrada">
 			<div class="Label">Nome:</div>
-			<div class="Value">&nbsp;${federation.nome}</div>
+			<div class="Value">&nbsp;${federation.name}</div>
 		</div>
 		<div class="LinhaEntrada">
 			<div class="Label">Descri&ccedil;&atilde;o:</div>
@@ -104,7 +104,7 @@
 			<c:forEach var="rep" items="${federation.repositorios}"
 				varStatus="status">
 				<tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
-					<td>${rep.nome}</td>
+					<td>${rep.name}</td>
 					<td align='center'>${rep.size}</td>
 				</tr>
 			</c:forEach>
