@@ -126,7 +126,7 @@ public class Recuperador {
                 String consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
                         + " WHERE r1w.documento_id=d.id "
                         + " AND (r1w.token=";
-
+                
                 for (int i = 0; i < tokensConsulta.size(); i++) {
                     String token = tokensConsulta.get(i);
                     if (i == tokensConsulta.size() - 1) {
@@ -144,6 +144,11 @@ public class Recuperador {
                     + " WHERE r1w.documento_id=d.id "
                     + " AND (r1w.token=";
 
+            
+            if (tokensConsulta.isEmpty()){
+                    consultaSql += "'"+ finalSQL;
+                }
+            
             for (int i = 0; i < tokensConsulta.size(); i++) {
                 String token = tokensConsulta.get(i);
                 if (i == tokensConsulta.size() - 1) {
