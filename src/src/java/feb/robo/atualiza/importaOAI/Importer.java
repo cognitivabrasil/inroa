@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import metadata.XsltConversor;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import feb.data.entities.Repositorio;
@@ -14,10 +16,12 @@ import feb.data.interfaces.RepositoryDAO;
 
 // TODO: Auto-generated Javadoc
 public class Importer {
-	XsltConversor conversor;
-	Repositorio rep;
-	File inputXmlFile;
-	OaiOBAA oai;
+	Logger logger = Logger.getLogger(Importer.class);
+	
+	private XsltConversor conversor;
+	private Repositorio rep;
+	private File inputXmlFile;
+	private OaiOBAA oai;
 	
 	@Autowired
 	private DocumentosDAO docDao;
@@ -61,45 +65,32 @@ public class Importer {
 		
 		docDao.setRepository(rep);
 		for(int i = 0; i < oai.getSize(); i++) {
-			System.out.print("Trying to get: ");
-			System.out.println(i);
+			logger.debug("Trying to get: " + new Integer(i).toString());
 			
-//			try {
-//				oai.getMetadata(i).getGeneral().getIdentifier().getEntry();
-//			}
-//			catch(NullPointerException e) {
-//				System.err.println("Elemento " + new Integer(i).toString()
-//						+ " gera nullPointer ao tentar pegar o OBAAEntry,"
-//						+ "provavelmente erro no repositório remoto ou no mapeamento");
-//				continue;
-//			}
-			
+
 			try {
+				logger.debug(oai.getHeader(i));
 				oai.getHeader(i).setDatestamp(new Date()); // set date to current date (instead of the
 									// repository date
 				
 				docDao.save(oai.getMetadata(i), oai.getHeader(i));
 			}
 			catch(NullPointerException e) {
-				System.err.println("NullPointer ao tentar inserir elemento " + new Integer(i).toString()
-						+ "");
+				logger.error("NullPointer ao tentar inserir elemento " + new Integer(i).toString(), e);
 			}
 			
 		}
 		
 		
 		// TODO: move the conversion to and from String of the date to OaiOBAA class
-		System.out.println(oai.getResponseDate());
 		Date d;
 		try {
 			d = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(oai.getResponseDate());
-			
-			System.out.println("Date: " + d.toString());
 			rep.setDataOrigemTemp(d);
 			repDao.save(rep);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			System.err.println("Error in parsing date from OaiPMH, probably malformed XML.");
+			logger.error("Error in parsing date from OaiPMH, probably malformed XML.");
 		}
 
 		

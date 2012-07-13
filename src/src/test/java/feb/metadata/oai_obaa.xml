@@ -107,4 +107,5 @@
       <obaa:location>http://hdl.handle.net/123456789/17</obaa:location>
    </obaa:technical>
 </obaa:obaa></metadata></record>
+<resumptionToken expirationDate="2012-07-13T19:52:38Z">0001-01-01T00:00:00Z/9999-12-31T23:59:59Z//lom/100</resumptionToken>
 </ListRecords></OAI-PMH>
