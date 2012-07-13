@@ -1,10 +1,8 @@
-
 package feb.spring.controllers;
 
 import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,7 @@ import feb.data.entities.Repositorio;
 import feb.data.interfaces.MapeamentoDAO;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.spring.dtos.MapeamentoDto;
-
+import feb.spring.validador.MapeamentoValidator;
 
 /**
  * Controller for users.
@@ -32,10 +30,12 @@ import feb.spring.dtos.MapeamentoDto;
 @Controller("mapeamentos")
 @RequestMapping("/admin/mapeamentos/*")
 public final class MapeamentosController {
-	@Autowired 	private MapeamentoDAO mapDao;
-	@Autowired 	private PadraoMetadadosDAO padraoDao;
+	@Autowired
+	private MapeamentoDAO mapDao;
+	@Autowired
+	private PadraoMetadadosDAO padraoDao;
+	@Autowired private MapeamentoValidator validator;
 
-	
 	private static Logger log = Logger.getLogger(MapeamentosController.class);
 
 	/**
@@ -46,27 +46,30 @@ public final class MapeamentosController {
 
 	/**
 	 * Shows details of the user.
-	 *
-	 * @param id the user id
+	 * 
+	 * @param id
+	 *            the user id
 	 */
 	@RequestMapping("/{id}")
 	public String userShow(@PathVariable Integer id, Model model) {
 		model.addAttribute("mapeamento", mapDao.get(id));
 		return "admin/mapeamentos/show";
 	}
-	
+
 	/**
 	 * Returns a map ready to be used on a SpringForm select.
+	 * 
 	 * @param m
 	 * @return the map
 	 */
-	private Map<Integer,String> getMetadataListForSelect(PadraoMetadadosDAO pDao) {
+	private Map<Integer, String> getMetadataListForSelect(
+			PadraoMetadadosDAO pDao) {
 		Map<Integer, String> hash = new LinkedHashMap<Integer, String>();
-		
-		for(PadraoMetadados m : pDao.getAll()) {
+
+		for (PadraoMetadados m : pDao.getAll()) {
 			hash.put(m.getId(), m.getName());
 		}
-		
+
 		return hash;
 	}
 
@@ -79,29 +82,44 @@ public final class MapeamentosController {
 		model.addAttribute("metadataList", getMetadataListForSelect(padraoDao));
 		return "admin/mapeamentos/form";
 	}
-	
-	@RequestMapping(value = {"/new", "/{id}/edit"}, method = RequestMethod.POST)
-	public String userNewShow2(Model model,  @ModelAttribute("mapeamento") MapeamentoDto map,
-      BindingResult result) {
-		map.transform();
-		model.addAttribute("mapeamento", map);
-		model.addAttribute("metadataList", getMetadataListForSelect(padraoDao));
-		return "admin/mapeamentos/form";
+
+	@RequestMapping(value = { "/new", "/{id}/edit" }, method = RequestMethod.POST)
+	public String userNewShow2(Model model,
+			@ModelAttribute("mapeamento") MapeamentoDto map,
+			BindingResult result) {
+		
+		validator.validate(map, result);
+		
+
+		if (result.hasErrors()) {
+			model.addAttribute("mapeamento", map);
+			model.addAttribute("metadataList",
+					getMetadataListForSelect(padraoDao));
+			return "admin/mapeamentos/form";
+		} else {
+			map.transform();
+			Mapeamento m = map.createMapeamento(padraoDao);
+			mapDao.save(m);
+			return "redirect:/admin/fechaRecarrega";
+
+		}
 	}
-	
+
+
 	@RequestMapping(value = "/passwd", method = RequestMethod.GET)
 	public String passwdShow(Model model, Principal principal) {
 		UserPasswordDto u = new UserPasswordDto();
 		u.setUsername(principal.getName());
 		model.addAttribute("user", u);
-		
+
 		return "admin/mapeamentos/passwd";
 	}
-	
+
 	/**
 	 * Shows edit user form.
-	 *
-	 * @param id the user id
+	 * 
+	 * @param id
+	 *            the user id
 	 */
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
 	public String userEditShow(@PathVariable Integer id, Model model) {
@@ -111,5 +129,5 @@ public final class MapeamentosController {
 
 		return "admin/mapeamentos/form";
 	}
-	
+
 }

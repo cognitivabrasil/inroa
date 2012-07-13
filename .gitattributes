@@ -282,6 +282,7 @@ src/src/java/feb/spring/controllers/UsersController.java -text
 src/src/java/feb/spring/dtos/MapeamentoDto.java -text
 src/src/java/feb/spring/validador/BuscaValidator.java -text
 src/src/java/feb/spring/validador/InfoBDValidator.java -text
+src/src/java/feb/spring/validador/MapeamentoValidator.java -text
 src/src/java/feb/spring/validador/PadraoValidator.java -text
 src/src/java/feb/spring/validador/RepositorioValidator.java -text
 src/src/java/feb/spring/validador/SubFederacaoValidador.java -text
@@ -326,15 +327,12 @@ src/src/main/webapp/admin/mapeamentos/listaMapeamentoPadraoSelecionado.jsp -text
 src/src/main/webapp/admin/mapeamentos/show.jsp -text
 src/src/main/webapp/admin/padraoMetadados/addPadrao.jsp -text
 src/src/main/webapp/admin/padraoMetadados/editaPadrao.jsp -text
-src/src/main/webapp/admin/padraoMetadados/padraoMetadados.jsp -text
-src/src/main/webapp/admin/padraoMetadados/respostaAjaxPadrao.jsp -text
 src/src/main/webapp/admin/recalcularIndice.jsp -text
 src/src/main/webapp/admin/repositories/confirmDelete.jsp -text
 src/src/main/webapp/admin/repositories/edit.jsp -text
 src/src/main/webapp/admin/repositories/new.jsp -text
 src/src/main/webapp/admin/repositories/show.jsp -text
 src/src/main/webapp/admin/statistics.jsp -text
-src/src/main/webapp/admin/testePaginacao.jsp -text
 src/src/main/webapp/admin/users/confirmDelete.jsp -text
 src/src/main/webapp/admin/users/form.jsp -text
 src/src/main/webapp/admin/users/passwd.jsp -text

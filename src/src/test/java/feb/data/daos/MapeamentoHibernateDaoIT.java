@@ -63,6 +63,12 @@ public class MapeamentoHibernateDaoIT extends AbstractDaoTest {
     }
     
     @Test
+    public void exists() {
+    	assertThat(instance.exists("Padrao2"), is(true));
+    	assertThat(instance.exists("lom8"), is(false));
+    }
+    
+    @Test
     public void testDelete() {
         Mapeamento m = instance.get(2);
         

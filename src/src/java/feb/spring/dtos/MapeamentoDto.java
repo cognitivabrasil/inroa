@@ -5,9 +5,9 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import metadata.XsltConversor;
-import cognitivabrasil.obaa.OaiException;
 import cognitivabrasil.obaa.OaiOBAA;
 import feb.data.entities.Mapeamento;
+import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.metadata.XSLTUtil;
 
 public class MapeamentoDto {
@@ -17,6 +17,10 @@ public class MapeamentoDto {
 	private String xslt;
 	private String name;
 	private String description;
+	private String preview;
+	private String submit;
+	private boolean failed;
+
 	private Integer padraoMetadados;
 
 	public MapeamentoDto() {
@@ -29,6 +33,18 @@ public class MapeamentoDto {
 		description = m.getDescription();
 		if (m.getPadraoMetadados() != null) {
 			padraoMetadados = m.getPadraoMetadados().getId();
+		}
+	}
+
+	/**
+	 * 
+	 * @return true if this object should be created, false, otherwise
+	 */
+	public boolean create() {
+		if (submit == null || submit.isEmpty() || failed) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 
@@ -96,16 +112,47 @@ public class MapeamentoDto {
 	}
 
 	public void transform() {
-		if (!(xml == null || xml.isEmpty())) {
-			try {
-				XsltConversor conv = new XsltConversor(xslt);
+		try {
+			XsltConversor conv = new XsltConversor(xslt);
+			if (!(xml == null || xml.isEmpty())) {
+
 				xmlObaa = XSLTUtil.formatXml(conv.toObaa(xml));
 				OaiOBAA.fromString(xmlObaa);
-			} catch (RuntimeException e) {
-				xmlObaa = e.getMessage() + "\n" + getStackTrace(e);
+
+			} else {
+				xmlObaa = "Nenhum XML original informado";
 			}
-		} else {
-			xmlObaa = "Nenhum XML original informado";
+		} catch (RuntimeException e) {
+			xmlObaa = e.getMessage() + "\n" + getStackTrace(e);
+			failed = true;
 		}
+
+	}
+
+	public Mapeamento createMapeamento(PadraoMetadadosDAO padraoDao) {
+		Mapeamento m = new Mapeamento();
+		m.setId(id);
+		m.setPadraoMetadados(padraoDao.get(padraoMetadados));
+		m.setName(name);
+		m.setDescription(description);
+		m.setXslt(xslt);
+
+		return m;
+	}
+
+	public String getPreview() {
+		return preview;
+	}
+
+	public void setPreview(String preview) {
+		this.preview = preview;
+	}
+
+	public String getSubmit() {
+		return submit;
+	}
+
+	public void setSubmit(String submit) {
+		this.submit = submit;
 	}
 }
