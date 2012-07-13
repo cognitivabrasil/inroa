@@ -92,26 +92,35 @@
                     <obaa:interactionType>objeto-sujeito</obaa:interactionType>
                 </obaa:interaction>
                 
-		</obaa:educational>
+	</obaa:educational>
 	<obaa:rights>
 		<obaa:cost>Nao</obaa:cost>
-		<obaa:copyright>Nao</obaa:copyright>
+		<obaa:copyrightAndOtherRestrictions>Nao</obaa:copyrightAndOtherRestrictions>
 		<description>http://creativecommons.org/licenses/by-sa/3.0/br/</description>
 	</obaa:rights>
         
 	<obaa:relation>
 		<obaa:kind>ispartof</obaa:kind>
-		<obaa:resource> RECURSO 1</obaa:resource>
+		<obaa:resource> 
+			<obaa:identifier>1</obaa:identifier>
+			<obaa:description>RECURSO 1</obaa:description>
+		</obaa:resource>
         </obaa:relation>
         
 	<obaa:relation>
 		<obaa:kind>isversionof</obaa:kind>
-		<obaa:resource> RECURSO 2</obaa:resource>
+		<obaa:resource> 
+			<obaa:identifier>2</obaa:identifier>
+			<obaa:description>RECURSO 2</obaa:description>
+		</obaa:resource>
         </obaa:relation>
         
 	<obaa:relation>
 		<obaa:kind>isreplacedby</obaa:kind>
-		<obaa:resource> RECURSO 3</obaa:resource>
+		<obaa:resource> 
+			<obaa:identifier>3</obaa:identifier>
+			<obaa:description>RECURSO 3</obaa:description>
+		</obaa:resource>
 	</obaa:relation>
         
         <obaa:segmentInformationTable>

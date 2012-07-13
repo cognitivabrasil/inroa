@@ -865,7 +865,7 @@ td{vertical-align:top;}
 .sucesso{color: #007a00; font-weight: bold}
 
 .infoDetalhada .title{text-decoration: underline; font-size:120%;}
-.infoDetalhada li{margin-top: 1%;}
+.infoDetalhada li{margin-top: 1%; clear: both;}
 .infoDetalhada strong{margin-right: 1%;}
 .infoDetalhada .nome{
     float: left;

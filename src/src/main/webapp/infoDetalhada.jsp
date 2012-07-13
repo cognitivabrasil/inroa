@@ -49,7 +49,7 @@ modelo de tópico:
 <%@page import="cognitivabrasil.obaa.OBAA"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="feb.spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -311,13 +311,13 @@ modelo de tópico:
                                             <c:if test="${!empty service.type}">
                                                 <li><div class="nome">Tipo:</div><div class="valor">${service.type}</div></li>
                                             </c:if>
-                 <%--                           <c:if test="${!empty service.provides}">
-                                                <li><div class="nome">Fornece:</div><div class="valor">${service.service.provides}</div></li>
-                                            </c:if>
-                                            <c:if test="${!empty service.essential}">
-                                                <li><div class="nome">Essencial:</div><div class="valor">${service.essential}</div></li>
-                                            </c:if>
-                 --%>
+                                            <%--                           <c:if test="${!empty service.provides}">
+                                                                           <li><div class="nome">Fornece:</div><div class="valor">${service.provides}</div></li>
+                                                                       </c:if>
+                                                                       <c:if test="${!empty service.essential}">
+                                                                           <li><div class="nome">Essencial:</div><div class="valor">${service.essential}</div></li>
+                                                                       </c:if>
+                                            --%>
                                             <c:forEach var="protocol" items="${service.protocol}">
                                                 <li><div class="nome">Protocolo:</div><div class="valor">${service.protocol}</div></li>
                                             </c:forEach>
@@ -359,10 +359,88 @@ modelo de tópico:
                             </ul> <!--/technical-->
                         </li><!--/technical-->
                     </c:if> <!--/technical-->
-                    <%--
-                        OBAA x = new OBAA();
-                        x.getTechnical().getService().get(0).getDetails().get(0).getDetails()
-                    --%>
+
+                    <c:if test="${!empty metadata.educational}">
+                        <li><span class="title">Educacional</span>
+                            <ul>
+                                <c:if test="${!empty metadata.educational.interactivityType}">
+                                    <li><div class="nome">Tipo de interação:</div><div class="valor">${metadata.educational.interactivityType}</div></li>
+                                </c:if>
+
+                                <c:forEach var="learningResourceType" items="${metadata.educational.learningResourceTypes}">
+                                    <li><div class="nome">Tipo de recurso:</div><div class="valor">${learningResourceType}</div></li>
+                                </c:forEach>
+
+                                <c:if test="${!empty metadata.educational.interactivityLevel}">
+                                    <li><div class="nome">Nível de interatividade:</div><div class="valor">${metadata.educational.interactivityLevel}</div></li>
+                                </c:if>
+
+                                <c:if test="${!empty metadata.educational.semanticDensity}">
+                                    <li><div class="nome">Densidade Semântica:</div><div class="valor">${metadata.educational.semanticDensity}</div></li>
+                                </c:if>
+
+                                <c:forEach var="intendedEndUserRole" items="${metadata.educational.intendedEndUserRoles}">
+                                    <li><div class="nome">Desenvolvido para:</div><div class="valor">${intendedEndUserRole}</div></li>
+                                </c:forEach>
+
+                                <c:forEach var="context" items="${metadata.educational.contexts}">
+                                    <li><div class="nome">Contexto:</div><div class="valor">${context}</div></li>
+                                </c:forEach>
+
+                                <c:forEach var="typicalAgeRange" items="${metadata.educational.typicalAgeRanges}">
+                                    <li><div class="nome">Faixa etária:</div><div class="valor">${typicalAgeRange}</div></li>
+                                </c:forEach>
+
+                                <c:if test="${!empty metadata.educational.difficulty}">
+                                    <li><div class="nome">Dificuldade:</div><div class="valor">${metadata.educational.difficulty}</div></li>
+                                </c:if>
+
+                                <c:if test="${!empty metadata.educational.typicalLearningTime}">
+                                    <li><div class="nome">Tempo típico de aprendizagem:</div><div class="valor">${metadata.educational.typicalLearningTime}</div></li>
+                                </c:if>
+
+                                <c:forEach var="description" items="${metadata.educational.descriptions}">
+                                    <li><div class="nome">Descrição:</div><div class="valor">${description}</div></li>
+                                </c:forEach>
+
+                                <c:forEach var="language" items="${metadata.educational.languages}">
+                                    <li><div class="nome">Idioma:</div><div class="valor">${language}</div></li>
+                                </c:forEach>
+
+                                <c:if test="${!empty metadata.educational.learningContentType.text}">
+                                    <li><div class="nome">Tipo do conte&uacute;do:</div><div class="valor">${metadata.educational.learningContentType}</div></li>
+                                </c:if>
+                                    
+                                <c:if test="${!empty metadata.educational.interaction}">
+                                      <li>
+                                          <span class="title">Intera&ccedil;&atilde;o</span>
+                                          <ul>
+                                              <c:if test="${!empty metadata.educational.interaction.interactionType}">
+                                                  <li><div class="nome">Tipo de intera&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.interaction.interactionType}</div></li>
+                                              </c:if>
+                                              <c:if test="${!empty metadata.educational.interaction.perception}">
+                                                  <li><div class="nome">Percep&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.perception}</div></li>
+                                              </c:if>
+                                              <c:if test="${!empty metadata.educational.interaction.synchronism}">
+                                                  <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.synchronism}</div></li>
+                                              </c:if>
+                                              <c:if test="${!empty metadata.educational.interaction.coPresence}">
+                                                  <li><div class="nome">Co-presen&ccedil;a:</div><div class="valor">${metadata.educational.coPresence}</div></li>
+                                              </c:if>
+                                              <c:if test="${!empty metadata.educational.interaction.reciprocity}">
+                                                  <li><div class="nome">Reciprocidade:</div><div class="valor">${metadata.educational.reciprocity}</div></li>
+                                              </c:if>
+                                          </ul>
+                                      </li>
+                                </c:if>
+
+                                <c:forEach var="didaticStrategy" items="${metadata.educational.didaticStrategy}">
+                                    <li><div class="nome">Estratégias Didáticas:</div><div class="valor">${didaticStrategy}</div></li>
+                                </c:forEach>
+
+                            </ul> <!--/educational-->
+                        </li> <!--/educational-->
+                    </c:if> <!--/educational-->
 
                     <c:if test="${!empty metadata.rights}">
                         <li><span class="title">Direitos</span>
@@ -382,55 +460,26 @@ modelo de tópico:
                         </li> <!--/RIGHTS-->
                     </c:if> <!--/RIGHTS-->
 
-                    <c:if test="${!empty metadata.educational}">
-                        <li><span class="title">Educacional</span>
+                    <c:if test="${!empty metadata.relations}">
+                        <li><span class="title">Rela&ccedil;&atilde;o</span>
                             <ul>
-                                <c:if test="${!empty metadata.educational.interactivityType}">
-                                    <li><div class="nome">Tipo de interação:</div><div class="valor">${metadata.educational.interactivityType}</div></li>
+                                <c:if test="${!empty metadata.relations.kind}">
+                                    <li><div class="nome">Tipo:</div><div class="valor">${metadata.relations.kind}</div></li>
                                 </c:if>
 
-                                <c:if test="${!empty metadata.educational.interactivityLevel}">
-                                    <li><div class="nome">Nível de interatividade:</div><div class="valor">${metadata.educational.interactivityLevel}</div></li>
-                                </c:if>
+                                <%--                                <c:forEach var="resource" items="${metadata.relations.resource}">
+                                                                    <li><div class="nome">Estratégias Didáticas:</div><div class="valor">${didaticStrategy}</div></li>
+                                                                </c:forEach>
+                                --%>
+                            </ul> <!--/RELATION-->
+                        </li> <!--/RELATION-->
+                    </c:if> <!--/RELATION-->
 
-                                <c:if test="${!empty metadata.educational.semanticDensity}">
-                                    <li><div class="nome">Densidade Semântica:</div><div class="valor">${metadata.educational.semanticDensity}</div></li>
-                                </c:if>
 
-                                <c:if test="${!empty metadata.educational.difficulty}">
-                                    <li><div class="nome">Dificuldade:</div><div class="valor">${metadata.educational.difficulty}</div></li>
-                                </c:if>
-
-                                <c:if test="${!empty metadata.educational.typicalLearningTime}">
-                                    <li><div class="nome">Tempo típico de aprendizagem:</div><div class="valor">${metadata.educational.typicalLearningTime}</div></li>
-                                </c:if>
-
-                                <c:forEach var="intendedEndUserRole" items="${metadata.educational.intendedEndUserRoles}">
-                                    <li><div class="nome">Desenvolvido para:</div><div class="valor">${intendedEndUserRole}</div></li>
-                                </c:forEach>
-
-                                <c:forEach var="learningResourceType" items="${metadata.educational.learningResourceTypes}">
-                                    <li><div class="nome">Tipo de recurso:</div><div class="valor">${learningResourceType}</div></li>
-                                </c:forEach>
-
-                                <c:forEach var="typicalAgeRange" items="${metadata.educational.typicalAgeRanges}">
-                                    <li><div class="nome">Faixa etária:</div><div class="valor">${typicalAgeRange}</div></li>
-                                </c:forEach>
-
-                                <c:forEach var="description" items="${metadata.educational.descriptions}">
-                                    <li><div class="nome">Descrição:</div><div class="valor">${description}</div></li>
-                                </c:forEach>
-
-                                <c:forEach var="language" items="${metadata.educational.languages}">
-                                    <li><div class="nome">Idioma:</div><div class="valor">${language}</div></li>
-                                </c:forEach>
-
-                                <c:forEach var="context" items="${metadata.educational.contexts}">
-                                    <li><div class="nome">Contexto:</div><div class="valor">${context}</div></li>
-                                </c:forEach>
-                            </ul> <!--/educational-->
-                        </li> <!--/educational-->
-                    </c:if> <!--/educational-->
+                    <%--
+                        OBAA x = new OBAA();
+                        x.getEducational().getInteraction().getInteractionType();
+                    --%>
 
                 </ul>
             </c:if>

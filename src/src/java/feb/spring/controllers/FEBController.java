@@ -56,28 +56,28 @@ public final class FEBController {
     }
 
     @RequestMapping("/")
-    public String inicio(Model model, HttpServletResponse response, @CookieValue(value="feb.cookie", required=false) String cookie) {
+    public String inicio(Model model, HttpServletResponse response, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         return index(model, response, cookie);
     }
 
     @RequestMapping("/index.*")
-    public String indexJSP(Model model, HttpServletResponse response, @CookieValue(value="feb.cookie", required=false) String cookie) {
+    public String indexJSP(Model model, HttpServletResponse response, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         return index(model, response, cookie);
     }
 
     @RequestMapping("/index")
-    public String index(Model model, HttpServletResponse response, @CookieValue(value="feb.cookie", required=false) String cookie) {
-        
+    public String index(Model model, HttpServletResponse response, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+
         model.addAttribute("buscaModel", new Consulta());
-        
-        if (cookie == null) {            
-            Visita newVisitor = new Visita();                                   
+
+        if (cookie == null) {
+            Visita newVisitor = new Visita();
             visDao.save(newVisitor);
             Integer id = newVisitor.getId();
             Cookie cookieNew = new Cookie("feb.cookie", id.toString());
-            response.addCookie(cookieNew);            
-        } 
-        
+            response.addCookie(cookieNew);
+        }
+
         return "index";
     }
 
@@ -100,7 +100,13 @@ public final class FEBController {
     public String infoDetalhada(@PathVariable Integer id, Model model) {
         DocumentoReal d = docDao.get(id);
         model.addAttribute("obaaEntry", d.getObaaEntry());
-        model.addAttribute("title", d.getTitles().get(0));
+        List<String> titles = d.getTitles();
+        String title = "Título não informado";
+        if (!titles.isEmpty()) {
+            title = titles.get(0);
+        }
+
+        model.addAttribute("title", title);
         model.addAttribute("metadata", d.getMetadata());
         return "infoDetalhada";
     }
