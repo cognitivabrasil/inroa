@@ -168,7 +168,6 @@ modelo de tópico:
                     <c:if test="${!empty metadata.lifeCycle}">
                         <li><span class="title">Ciclo de Vida</span>
                             <ul>
-
                                 <c:if test="${!empty metadata.lifeCycle.version}">
                                     <li><div class="nome">Versão:</div><div class="valor">${metadata.lifeCycle.version}</div></li>
                                 </c:if>
@@ -244,10 +243,11 @@ modelo de tópico:
                                 <c:if test="${!empty metadata.technical.otherPlatformRequirements}">
                                     <li><div class="nome">Outros requisitos da plataforma:</div><div class="valor">${metadata.technical.otherPlatformRequirements}</div></li>
                                 </c:if>
-                                <c:if test="${!empty metadata.technical.duration.duration}">
-                                    <li><div class="nome">Dura&ccedil;&atilde;o:</div><div class="valor">${metadata.technical.duration.duration}</div></li>
+                                <c:if test="${!empty metadata.technical.duration.text}">
+                                    <li><div class="nome">Dura&ccedil;&atilde;o:</div><div class="valor">${metadata.technical.duration}</div></li>
                                 </c:if>
-                                <c:forEach var="var" items="${metadata.technical.supportedPlatforms.supportedPlatform}">
+
+                                <c:forEach var="var" items="${metadata.technical.supportedPlatforms}">
                                     <li><div class="nome">Plataforma suportada:</div><div class="valor">${var}</div></li>
                                 </c:forEach>
 
@@ -311,13 +311,13 @@ modelo de tópico:
                                             <c:if test="${!empty service.type}">
                                                 <li><div class="nome">Tipo:</div><div class="valor">${service.type}</div></li>
                                             </c:if>
-                                            <%--                           <c:if test="${!empty service.provides}">
-                                                                           <li><div class="nome">Fornece:</div><div class="valor">${service.provides}</div></li>
-                                                                       </c:if>
-                                                                       <c:if test="${!empty service.essential}">
-                                                                           <li><div class="nome">Essencial:</div><div class="valor">${service.essential}</div></li>
-                                                                       </c:if>
-                                            --%>
+                                            <c:if test="${!empty service.provides}">
+                                                <li><div class="nome">Fornece:</div><div class="valor">${service.provides}</div></li>
+                                            </c:if>
+                                            <c:if test="${!empty service.essential}">
+                                                <li><div class="nome">Essencial:</div><div class="valor">${service.essential}</div></li>
+                                            </c:if>
+
                                             <c:forEach var="protocol" items="${service.protocol}">
                                                 <li><div class="nome">Protocolo:</div><div class="valor">${service.protocol}</div></li>
                                             </c:forEach>
@@ -410,28 +410,28 @@ modelo de tópico:
                                 <c:if test="${!empty metadata.educational.learningContentType.text}">
                                     <li><div class="nome">Tipo do conte&uacute;do:</div><div class="valor">${metadata.educational.learningContentType}</div></li>
                                 </c:if>
-                                    
+
                                 <c:if test="${!empty metadata.educational.interaction}">
-                                      <li>
-                                          <span class="title">Intera&ccedil;&atilde;o</span>
-                                          <ul>
-                                              <c:if test="${!empty metadata.educational.interaction.interactionType}">
-                                                  <li><div class="nome">Tipo de intera&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.interaction.interactionType}</div></li>
-                                              </c:if>
-                                              <c:if test="${!empty metadata.educational.interaction.perception}">
-                                                  <li><div class="nome">Percep&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.perception}</div></li>
-                                              </c:if>
-                                              <c:if test="${!empty metadata.educational.interaction.synchronism}">
-                                                  <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.synchronism}</div></li>
-                                              </c:if>
-                                              <c:if test="${!empty metadata.educational.interaction.coPresence}">
-                                                  <li><div class="nome">Co-presen&ccedil;a:</div><div class="valor">${metadata.educational.coPresence}</div></li>
-                                              </c:if>
-                                              <c:if test="${!empty metadata.educational.interaction.reciprocity}">
-                                                  <li><div class="nome">Reciprocidade:</div><div class="valor">${metadata.educational.reciprocity}</div></li>
-                                              </c:if>
-                                          </ul>
-                                      </li>
+                                    <li>
+                                        <span class="title">Intera&ccedil;&atilde;o</span>
+                                        <ul>
+                                            <c:if test="${!empty metadata.educational.interaction.interactionType.text}">
+                                                <li><div class="nome">Tipo de intera&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.interaction.interactionType}</div></li>
+                                            </c:if>
+                                            <c:if test="${!empty metadata.educational.interaction.perception.text}">
+                                                <li><div class="nome">Percep&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.interaction.perception}</div></li>
+                                            </c:if>
+                                            <c:if test="${!empty metadata.educational.interaction.synchronism.text}">
+                                                <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.interaction.synchronism}</div></li>
+                                            </c:if>
+                                            <c:if test="${!empty metadata.educational.interaction.coPresence.text}">
+                                                <li><div class="nome">Co-presen&ccedil;a:</div><div class="valor">${metadata.educational.interaction.coPresence}</div></li>
+                                            </c:if>
+                                            <c:if test="${!empty metadata.educational.interaction.reciprocity.text}">
+                                                <li><div class="nome">Reciprocidade:</div><div class="valor">${metadata.educational.interaction.reciprocity}</div></li>
+                                            </c:if>
+                                        </ul>
+                                    </li>
                                 </c:if>
 
                                 <c:forEach var="didaticStrategy" items="${metadata.educational.didaticStrategy}">
@@ -448,38 +448,46 @@ modelo de tópico:
                                 <c:if test="${!empty metadata.rights.cost}">
                                     <li><div class="nome">Custo:</div><div class="valor">${metadata.rights.cost}</div></li>
                                 </c:if>
-
                                 <c:if test="${!empty metadata.rights.copyright}">
                                     <li><div class="nome">Direito autoral:</div><div class="valor">${metadata.rights.copyright}</div></li>
                                 </c:if>
-
                                 <c:if test="${!empty metadata.rights.description}">
                                     <li><div class="nome">Descrição:</div><div class="valor">${metadata.rights.description}</div></li>
                                 </c:if>
                             </ul> <!--/RIGHTS-->
                         </li> <!--/RIGHTS-->
                     </c:if> <!--/RIGHTS-->
-
-                    <c:if test="${!empty metadata.relations}">
-                        <li><span class="title">Rela&ccedil;&atilde;o</span>
+                    <c:forEach var="relations" items="${metadata.relations}">
+                        <li>
+                            <span class="title">Rela&ccedil;&atilde;o</span>
                             <ul>
-                                <c:if test="${!empty metadata.relations.kind}">
-                                    <li><div class="nome">Tipo:</div><div class="valor">${metadata.relations.kind}</div></li>
+                                <c:if test="${!empty relations.kind}">
+                                    <li><div class="nome">Tipo:</div><div class="valor">${relations.kind}</div></li>
                                 </c:if>
 
-                                <%--                                <c:forEach var="resource" items="${metadata.relations.resource}">
-                                                                    <li><div class="nome">Estratégias Didáticas:</div><div class="valor">${didaticStrategy}</div></li>
-                                                                </c:forEach>
-                                --%>
+                                <c:if test="${!empty relations.resource}">
+                                    <li>
+                                        <span class="title">Recurso</span>
+                                        <ul>
+                                            <c:forEach var="identifier" items="${relations.resource.identifier}">
+                                                <li>
+                                                    <span class="title">Identificador</span>
+                                                    <ul>
+                                                        <c:if test="${!empty identifier.entry}">
+                                                            <li><div class="nome">Identificador:</div><div class="valor">${identifier.entry}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty identifier.catalog}">
+                                                            <li><div class="nome">Cat&aacute;logo:</div><div class="valor">${identifier.catalog}</div></li>
+                                                        </c:if>
+                                                    </ul>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </li>
+                                </c:if>
                             </ul> <!--/RELATION-->
                         </li> <!--/RELATION-->
-                    </c:if> <!--/RELATION-->
-
-
-                    <%--
-                        OBAA x = new OBAA();
-                        x.getEducational().getInteraction().getInteractionType();
-                    --%>
+                    </c:forEach> <!--/RELATION-->
 
                 </ul>
             </c:if>

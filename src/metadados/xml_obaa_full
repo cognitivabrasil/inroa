@@ -89,9 +89,13 @@
 		<obaa:language>pt_BR</obaa:language>
 		<obaa:language>en</obaa:language>
                 <obaa:interaction>
-                    <obaa:interactionType>objeto-sujeito</obaa:interactionType>
+			<obaa:interactionType>objeto-sujeito</obaa:interactionType>
+			<obaa:perception>visual</obaa:perception>
+			<obaa:synchronism>synchronism</obaa:synchronism>
+			<obaa:coPresence>coPresence</obaa:coPresence>
+			<obaa:reciprocity>reciprocity</obaa:reciprocity>
                 </obaa:interaction>
-                
+<!--                <obaa:didaticStrategy>Problem Solving</obaa:didaticStrategy>-->
 	</obaa:educational>
 	<obaa:rights>
 		<obaa:cost>Nao</obaa:cost>
@@ -102,7 +106,10 @@
 	<obaa:relation>
 		<obaa:kind>ispartof</obaa:kind>
 		<obaa:resource> 
-			<obaa:identifier>1</obaa:identifier>
+			<obaa:identifier>
+				<obaa:catalog>DOI</obaa:catalog>
+				<obaa:entry>1325486532</obaa:entry>
+			</obaa:identifier>
 			<obaa:description>RECURSO 1</obaa:description>
 		</obaa:resource>
         </obaa:relation>
@@ -110,15 +117,22 @@
 	<obaa:relation>
 		<obaa:kind>isversionof</obaa:kind>
 		<obaa:resource> 
-			<obaa:identifier>2</obaa:identifier>
+			<obaa:identifier>
+				<obaa:catalog>URI</obaa:catalog>
+				<obaa:entry>http://www.marcos.com.br</obaa:entry>
+			</obaa:identifier>
 			<obaa:description>RECURSO 2</obaa:description>
+			<obaa:description>resource 2</obaa:description>
 		</obaa:resource>
         </obaa:relation>
         
 	<obaa:relation>
 		<obaa:kind>isreplacedby</obaa:kind>
 		<obaa:resource> 
-			<obaa:identifier>3</obaa:identifier>
+			<obaa:identifier>
+				<obaa:catalog>catalog</obaa:catalog>
+				<obaa:entry>Entry do recurso 3</obaa:entry>
+			</obaa:identifier>
 			<obaa:description>RECURSO 3</obaa:description>
 		</obaa:resource>
 	</obaa:relation>
