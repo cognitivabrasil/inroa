@@ -193,7 +193,6 @@ src/debian/prerm.ex -text
 src/debian/rules -text
 src/debian/source/format -text
 src/debian/watch.ex -text
-src/metadados/xml_obaa_full.xml -text
 src/nb-configuration.xml -text
 src/nbactions.xml -text
 src/pom.xml -text
