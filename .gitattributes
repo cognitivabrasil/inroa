@@ -205,6 +205,7 @@ src/sql/data.sql -text
 src/sql/schema.sql -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/feb/data/daos/AbstractHibernateDAO.java -text
+src/src/java/feb/data/daos/AbstractNamedHibernateDAO.java -text
 src/src/java/feb/data/daos/DocumentosHibernateDAO.java -text
 src/src/java/feb/data/daos/MapeamentoHibernateDAO.java -text
 src/src/java/feb/data/daos/PadraoMetadadosHibernateDAO.java -text
