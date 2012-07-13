@@ -205,7 +205,6 @@ src/sql/current_old.sql -text
 src/sql/data.sql -text
 src/sql/schema.sql -text
 src/src/conf/MANIFEST.MF -text
-src/src/java/feb/RSS/Rss.java -text
 src/src/java/feb/data/daos/AbstractHibernateDAO.java -text
 src/src/java/feb/data/daos/DocumentosHibernateDAO.java -text
 src/src/java/feb/data/daos/MapeamentoHibernateDAO.java -text
@@ -365,7 +364,6 @@ src/src/main/webapp/index2.jsp -text
 src/src/main/webapp/infoDetalhada.jsp -text
 src/src/main/webapp/login.jsp -text
 src/src/main/webapp/main-servlet.xml -text
-src/src/main/webapp/rss.jsp -text
 src/src/main/webapp/scripts/codemirror/LICENSE -text
 src/src/main/webapp/scripts/codemirror/README.md -text
 src/src/main/webapp/scripts/codemirror/index.html -text
