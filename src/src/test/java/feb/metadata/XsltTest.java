@@ -39,7 +39,7 @@ public class XsltTest {
 		String foo_xsl = "src/xslt/dc2obaa_full.xsl"; //input xsl
 
 		try {
-        		String s = XSLTUtil.transform(foo_xml, foo_xsl);
+        		String s = XSLTUtil.transformFilename(foo_xml, foo_xsl);
 			oai = OaiOBAA.fromString(s);
  		} catch (Exception ex) {
       			XSLTUtil.handleException(ex);

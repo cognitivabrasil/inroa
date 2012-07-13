@@ -46,7 +46,7 @@ public class XsltDC2ObaaTest {
 		String foo_xsl = "src/xslt/dc2obaa_full.xsl"; //input xsl
 
 		try {
-        		String s = XSLTUtil.transform(foo_xml, foo_xsl);
+        		String s = XSLTUtil.transformFilename(foo_xml, foo_xsl);
         		PrintWriter out = new PrintWriter("dc2obaa.xml");
         		out.print(s);
         		out.close();

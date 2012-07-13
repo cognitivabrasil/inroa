@@ -6,6 +6,8 @@ package feb.metadata;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -57,8 +59,17 @@ public class XSLTUtil {
             System.err.println("EXCEPTION: " + ex);     	
 }
 
-	public static String transform (String sourceID, String xslID) throws TransformerConfigurationException, TransformerException {
-		return transformString(sourceID, xslID);
+	/** 
+	 * Transforms from filenames
+	 * @param sourceXml xml filename do be transformed
+	 * @param xslt stylesheet that does the transformation
+	 * @return transformed XML
+	 * @throws TransformerConfigurationException
+	 * @throws TransformerException
+	 * @throws FileNotFoundException 
+	 */
+	public static String transformFilename (String sourceXml, String xslt) throws TransformerConfigurationException, TransformerException, FileNotFoundException {
+		return transform(new FileInputStream(new File(sourceXml)), new FileInputStream(new File(xslt)));
 	}
         
         public static String transformString (String sourceID, String xslID)
