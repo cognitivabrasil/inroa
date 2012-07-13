@@ -454,9 +454,9 @@ modelo de tópico:
                                 <c:if test="${!empty metadata.rights.description}">
                                     <li><div class="nome">Descrição:</div><div class="valor">${metadata.rights.description}</div></li>
                                 </c:if>
-                            </ul> <!--/RIGHTS-->
-                        </li> <!--/RIGHTS-->
-                    </c:if> <!--/RIGHTS-->
+                            </ul> <!--/rights-->
+                        </li> <!--/rights-->
+                    </c:if> <!--/rights-->
                     <c:forEach var="relations" items="${metadata.relations}">
                         <li>
                             <span class="title">Rela&ccedil;&atilde;o</span>
@@ -464,20 +464,23 @@ modelo de tópico:
                                 <c:if test="${!empty relations.kind}">
                                     <li><div class="nome">Tipo:</div><div class="valor">${relations.kind}</div></li>
                                 </c:if>
-
                                 <c:if test="${!empty relations.resource}">
                                     <li>
                                         <span class="title">Recurso</span>
                                         <ul>
+                                            <c:forEach var="var" items="${relations.resource.description}">
+                                                <li><div class="nome">Descri&ccedil;&atilde;o:</div><div class="valor">${var}</div></li>
+                                            </c:forEach>
+
                                             <c:forEach var="identifier" items="${relations.resource.identifier}">
                                                 <li>
                                                     <span class="title">Identificador</span>
                                                     <ul>
-                                                        <c:if test="${!empty identifier.entry}">
-                                                            <li><div class="nome">Identificador:</div><div class="valor">${identifier.entry}</div></li>
-                                                        </c:if>
                                                         <c:if test="${!empty identifier.catalog}">
                                                             <li><div class="nome">Cat&aacute;logo:</div><div class="valor">${identifier.catalog}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty identifier.entry}">
+                                                            <li><div class="nome">Identificador:</div><div class="valor">${identifier.entry}</div></li>
                                                         </c:if>
                                                     </ul>
                                                 </li>
@@ -485,10 +488,25 @@ modelo de tópico:
                                         </ul>
                                     </li>
                                 </c:if>
-                            </ul> <!--/RELATION-->
-                        </li> <!--/RELATION-->
-                    </c:forEach> <!--/RELATION-->
+                            </ul> <!--/relations-->
+                        </li> <!--/relations-->
+                    </c:forEach> <!--/relations-->
 
+                    <c:forEach var="annotation" items="${metadata.annotations}">
+                        <li>
+                            <span class="title">Anota&ccedil;&otilde;es</span>
+                            <ul>
+                                <c:if test="${!empty annotation.entity}">
+                                    <li><div class="nome">Entidade:</div><div class="valor">${annotation.entity}</div></li>
+                                </c:if>
+                            </ul> <!--/annotations-->
+                        </li> <!--/annotations-->
+                    </c:forEach> <!--/annotations-->
+
+                    <%
+                      //  OBAA x = new OBAA();
+                      //  x.getAnnotations().get(0).getEntity()
+                    %>
                 </ul>
             </c:if>
 

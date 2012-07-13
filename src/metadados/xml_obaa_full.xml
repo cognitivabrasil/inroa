@@ -136,7 +136,13 @@
 			<obaa:description>RECURSO 3</obaa:description>
 		</obaa:resource>
 	</obaa:relation>
-        
+
+        <obaa:annotation>
+            <obaa:entity> vcard qualquer</obaa:entity>
+            <obaa:date>2012-07-13</obaa:date>
+            <obaa:description>descrição da anotação</obaa:description>
+        </obaa:annotation>
+
         <obaa:segmentInformationTable>
             
 		<obaa:segmentList>
