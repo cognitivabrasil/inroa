@@ -260,10 +260,7 @@ src/src/java/feb/robo/atualiza/Repositorios.java -text
 src/src/java/feb/robo/atualiza/SubFederacaoOAI.java -text
 src/src/java/feb/robo/atualiza/harvesterOAI/Harvester.java -text
 src/src/java/feb/robo/atualiza/harvesterOAI/package.html -text
-src/src/java/feb/robo/atualiza/importaOAI/DadosObjetos.java -text
-src/src/java/feb/robo/atualiza/importaOAI/Header.java -text
 src/src/java/feb/robo/atualiza/importaOAI/Importer.java -text
-src/src/java/feb/robo/atualiza/importaOAI/OAI_Interface.java -text
 src/src/java/feb/robo/atualiza/importaOAI/XMLtoDB.java -text
 src/src/java/feb/robo/atualiza/subfedOAI/Importer.java -text
 src/src/java/feb/robo/atualiza/subfedOAI/Objetos.java -text
