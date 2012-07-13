@@ -869,7 +869,7 @@ td{vertical-align:top;}
     margin-top: 1%;
     clear: both;
 }
-.infoDetalhada ul{background-color: #ededed;}
+.infoDetalhada ul{background-color: #f1f1f1;}
 .infoDetalhada strong{margin-right: 1%;}
 .infoDetalhada .nome{
     float: left;
