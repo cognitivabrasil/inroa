@@ -499,14 +499,53 @@ modelo de tópico:
                                 <c:if test="${!empty annotation.entity}">
                                     <li><div class="nome">Entidade:</div><div class="valor">${annotation.entity}</div></li>
                                 </c:if>
+                                <c:if test="${!empty annotation.date}">
+                                    <li><div class="nome">Data:</div><div class="valor">${annotation.date}</div></li>
+                                </c:if>
+                                <c:if test="${!empty annotation.description}">
+                                    <li><div class="nome">Descri&ccedil;&atilde;o:</div><div class="valor">${annotation.description}</div></li>
+                                </c:if>
                             </ul> <!--/annotations-->
                         </li> <!--/annotations-->
                     </c:forEach> <!--/annotations-->
 
-                    <%
-                      //  OBAA x = new OBAA();
-                      //  x.getAnnotations().get(0).getEntity()
-                    %>
+                    <c:forEach var="classification" items="${metadata.classifications}">
+                        <li>
+                            <span class="title">Classifica&ccedil;&atilde;o</span>
+                            <ul>
+                                <c:if test="${!empty classification.purpose}">
+                                    <li><div class="nome">Prop&oacute;sito:</div><div class="valor">${classification.purpose}</div></li>
+                                </c:if>
+                                <c:forEach var="var" items="${classification.taxonPath}">
+                                    <c:if test="${!empty var.source}">
+                                        <li><div class="nome">Fonte:</div><div class="valor">${var.source}</div></li>
+                                    </c:if>
+                                    <c:forEach var="taxons" items="${classification.taxonPath.taxons}">
+                                        <li>
+                                            <span class="title">Taxonomia</span>
+                                            <ul>
+                                                <c:if test="${!empty taxons.id}">
+                                                    <li><div class="nome">Id:</div><div class="valor">${taxons.id}</div></li>
+                                                </c:if>
+                                                <c:if test="${!empty taxons.entry}">
+                                                    <li><div class="nome">Label:</div><div class="valor">${taxons.entry}</div></li>
+                                                </c:if>
+                                            </ul>
+                                        </li>
+                                    </c:forEach>
+
+                                </c:forEach>
+                                <c:if test="${!empty classification.description}">
+                                    <li><div class="nome">Descri&ccedil;&atilde;o:</div><div class="valor">${classification.description}</div></li>
+                                </c:if>
+                                <c:forEach var="var" items="${classification.keywords}">
+                                    <li><div class="nome">Palavra-chave:</div><div class="valor">${var}</div></li>
+                                </c:forEach>
+                            </ul> <!--/Classification-->
+                        </li> <!--/Classification-->
+                    </c:forEach> <!--/Classification-->
+
+                    <%   //                     OBAA x = new OBAA(); x.getClassifications().get(0).get                   %>
                 </ul>
             </c:if>
 

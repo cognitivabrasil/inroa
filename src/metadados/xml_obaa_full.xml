@@ -143,7 +143,26 @@
         <obaa:description>descrição da anotação</obaa:description>
     </obaa:annotation>
 
-    <obaa:segmentInformationTable>
+        <obaa:classification>
+            <obaa:purpose> proposta de x</obaa:purpose>
+            <obaa:taxonPath>
+                <obaa:source>ACM</obaa:source>
+                <obaa:taxon>
+                    <obaa:id>30</obaa:id>
+                    <obaa:entry>Physics</obaa:entry>
+                </obaa:taxon>
+                <obaa:taxon>
+                    <obaa:id>31</obaa:id>
+                    <obaa:entry>Diagnostics</obaa:entry>
+                </obaa:taxon>
+                <obaa:description> O peso da bola</obaa:description>
+                <obaa:keyword>peso</obaa:keyword>
+                <obaa:keyword>bola</obaa:keyword>
+
+            </obaa:taxonPath>
+        </obaa:classification>
+
+        <obaa:segmentInformationTable>
             
         <obaa:segmentList>
             <segmentInformation>
@@ -169,4 +188,3 @@
 		
     </obaa:segmentInformationTable>
 </obaa:obaa>
-
