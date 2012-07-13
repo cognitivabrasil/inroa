@@ -12,37 +12,19 @@
 package feb.oai;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Properties;
-import java.util.StringTokenizer;
-import java.util.Vector;
-
-import ORG.oclc.oai.models.HibernateOaiDocument;
-import ORG.oclc.oai.server.catalog.AbstractCatalog;
-import ORG.oclc.oai.server.catalog.AbstractHibernateOAICatalog;
-import ORG.oclc.oai.server.verb.BadResumptionTokenException;
-import ORG.oclc.oai.server.verb.CannotDisseminateFormatException;
-import ORG.oclc.oai.server.verb.IdDoesNotExistException;
-import ORG.oclc.oai.server.verb.NoMetadataFormatsException;
-import ORG.oclc.oai.util.OAIUtil;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
-import feb.data.entities.DocumentoReal;
+import ORG.oclc.oai.models.HibernateOaiDocument;
+import ORG.oclc.oai.server.catalog.AbstractHibernateOAICatalog;
 import feb.data.entities.Repositorio;
 import feb.spring.ApplicationContextProvider;
 

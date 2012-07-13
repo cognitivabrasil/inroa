@@ -5,22 +5,23 @@
 package feb.data.daos;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+
 import javax.sql.DataSource;
+
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.dbunit.database.DatabaseConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.SortedTable;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 
 /**
  * This class serves as base class for the DaoTests.
@@ -48,9 +49,12 @@ public abstract class AbstractDaoTest extends AbstractTransactionalJUnit4SpringC
 
     /**
      * Runs before each test, inserts data set into database
+     * @throws Exception 
+     * @throws SQLException 
+     * @throws DatabaseUnitException 
      */
     @Before
-    public void init() throws Exception {
+    public void init() throws DatabaseUnitException, SQLException, Exception {
         // Insere os dados no banco de dados
         DatabaseOperation.CLEAN_INSERT.execute(getConnection(), getBeforeDataSet());
     }
@@ -74,8 +78,10 @@ public abstract class AbstractDaoTest extends AbstractTransactionalJUnit4SpringC
     /**
      * 
      * @return Data befora
+     * @throws IOException 
+     * @throws DataSetException 
      */
-    protected IDataSet getBeforeDataSet() throws Exception {
+    protected IDataSet getBeforeDataSet() throws DataSetException, IOException  {
         File file = new File("src/test/resources/documentosDataBefore.xml");
         return new FlatXmlDataSet(file);
     }
@@ -83,8 +89,10 @@ public abstract class AbstractDaoTest extends AbstractTransactionalJUnit4SpringC
     /**
      * 
      * @return Data after changes
+     * @throws IOException 
+     * @throws DataSetException 
      */
-    protected IDataSet getAfterDataSet() throws Exception {
+    protected IDataSet getAfterDataSet() throws DataSetException, IOException {
         File file = new File("src/test/resources/documentosDataAfter.xml");
         return new FlatXmlDataSet(file);
     }

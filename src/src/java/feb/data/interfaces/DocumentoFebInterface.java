@@ -20,7 +20,7 @@ public interface DocumentoFebInterface {
      * @return List of titles associated to this Document.
      * @throws RuntimeException if the object has a DELETED state
      */
-    public List<String> getTitles();
+    List<String> getTitles();
     
     /**
      * 
@@ -28,30 +28,30 @@ public interface DocumentoFebInterface {
      * @throws RuntimeException if the object has a DELETED state
 
      */
-    public List<String> getKeywords();
+    List<String> getKeywords();
     
     /**
      * 
      * @return List of descriptions associated to this Document.
      * @throws RuntimeException if the object has a DELETED state
      */
-    public List<String> getDescriptions();
+    List<String> getDescriptions();
     
     /**
      * 
      * @return Date of the last modification
      */
-    public Date getTimestamp();
+    Date getTimestamp();
     
     /**
      * 
      * @return Unique identifier of this object (obaa_entry)
      */
-    public String getObaaEntry();
+    String getObaaEntry();
     
     /**
      * 
      * @return True if this document is deleted, false otherwise.
      */
-    public boolean isDeleted();
+    boolean isDeleted();
 }

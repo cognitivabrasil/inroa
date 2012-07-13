@@ -65,7 +65,7 @@ public class Importer {
 		
 		docDao.setRepository(rep);
 		for(int i = 0; i < oai.getSize(); i++) {
-			logger.debug("Trying to get: " + new Integer(i).toString());
+			logger.debug("Trying to get: " + i);
 			
 
 			try {
@@ -76,7 +76,7 @@ public class Importer {
 				docDao.save(oai.getMetadata(i), oai.getHeader(i));
 			}
 			catch(NullPointerException e) {
-				logger.error("NullPointer ao tentar inserir elemento " + new Integer(i).toString(), e);
+				logger.error("NullPointer ao tentar inserir elemento " + i, e);
 			}
 			
 		}

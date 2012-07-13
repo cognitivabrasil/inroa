@@ -13,17 +13,17 @@ public interface VisitasDocumentosDao {
      *
      * @return All visits' timestamp
      */
-    public List<VisitasDocumentos> getAll();
+    List<VisitasDocumentos> getAll();
 
     /**
      * Register a visit on the database
      */
-    public void save(VisitasDocumentos v);
+    void save(VisitasDocumentos v);
     
     /**
      * Get the Visita of an id.
      * @param id
      * @return
      */
-    public VisitasDocumentos get(int id);
+    VisitasDocumentos get(int id);
 }
