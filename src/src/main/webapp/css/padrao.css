@@ -863,9 +863,13 @@ td{vertical-align:top;}
 .margin-top{margin-top: 2%;}
 
 .sucesso{color: #007a00; font-weight: bold}
-
+.infoDetalhada {margin-bottom: 2%;}
 .infoDetalhada .title{text-decoration: underline; font-size:120%;}
-.infoDetalhada li{margin-top: 1%; clear: both;}
+.infoDetalhada li{
+    margin-top: 1%;
+    clear: both;
+}
+.infoDetalhada ul{background-color: #ededed;}
 .infoDetalhada strong{margin-right: 1%;}
 .infoDetalhada .nome{
     float: left;
