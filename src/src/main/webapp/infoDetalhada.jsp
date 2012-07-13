@@ -257,7 +257,7 @@ modelo de tópico:
                                             <c:if test="${!empty platformSpecificFeature.platformType}">
                                                 <li><div class="nome">Tipo de plataforma:</div><div class="valor">${platformSpecificFeature.platformType}</div></li>
                                             </c:if>
-                                            <c:forEach var="format" items="${platformSpecificFeature.SpecificFormats}">
+                                            <c:forEach var="format" items="${platformSpecificFeature.specificFormats}">
                                                 <li><div class="nome">Formato espec&iacute;fico:</div><div class="valor">${format}</div></li>
                                             </c:forEach>
                                             <c:if test="${!empty platformSpecificFeature.specificSize}">
@@ -270,13 +270,13 @@ modelo de tópico:
                                             <c:forEach var="specificRequirements" items="${platformSpecificFeature.specificRequirements}">
                                                 <li><span class="title">Requisitos espec&iacute;ficos</span>
                                                     <ul>
-                                                        <c:forEach var="specificOrComposite" items="${specificRequirements.specificOrComposite}">
+                                                        <c:forEach var="specificOrComposite" items="${specificRequirements.specificOrComposites}">
                                                             <li><span class="title">Specific or Composite</span>
                                                                 <ul>
                                                                     <c:if test="${!empty specificOrComposite.specificType}">
                                                                         <li><div class="nome">Tipo:</div><div class="valor">${specificOrComposite.specificType}</div></li>
                                                                     </c:if>
-                                                                    <c:if test="${!empty specificOrComposite.name}">
+                                                                    <c:if test="${!empty specificOrComposite.specificName}">
                                                                         <li><div class="nome">Nome:</div><div class="valor">${specificOrComposite.specificName}</div></li>
                                                                     </c:if>
                                                                     <c:if test="${!empty specificOrComposite.specificMinimumVersion}">
@@ -520,7 +520,7 @@ modelo de tópico:
                                     <c:if test="${!empty var.source}">
                                         <li><div class="nome">Fonte:</div><div class="valor">${var.source}</div></li>
                                     </c:if>
-                                    <c:forEach var="taxons" items="${classification.taxonPath.taxons}">
+                                    <c:forEach var="taxons" items="${var.taxons}">
                                         <li>
                                             <span class="title">Taxonomia</span>
                                             <ul>
@@ -545,7 +545,8 @@ modelo de tópico:
                         </li> <!--/Classification-->
                     </c:forEach> <!--/Classification-->
 
-                    <%   //                     OBAA x = new OBAA(); x.getClassifications().get(0).get                   %>
+
+                    <%                       //OBAA x = new OBAA(); x.getClassifications().get(0).getTaxonPath().get(0).getTaxons();                  %>
                 </ul>
             </c:if>
 

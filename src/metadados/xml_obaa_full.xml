@@ -105,7 +105,7 @@
         
     <obaa:relation>
         <obaa:kind>ispartof</obaa:kind>
-        <obaa:resource> 
+        <obaa:resource>
             <obaa:identifier>
                 <obaa:catalog>DOI</obaa:catalog>
                 <obaa:entry>1325486532</obaa:entry>
@@ -116,7 +116,7 @@
         
     <obaa:relation>
         <obaa:kind>isversionof</obaa:kind>
-        <obaa:resource> 
+        <obaa:resource>
             <obaa:identifier>
                 <obaa:catalog>URI</obaa:catalog>
                 <obaa:entry>http://www.marcos.com.br</obaa:entry>
@@ -128,7 +128,7 @@
         
     <obaa:relation>
         <obaa:kind>isreplacedby</obaa:kind>
-        <obaa:resource> 
+        <obaa:resource>
             <obaa:identifier>
                 <obaa:catalog>catalog</obaa:catalog>
                 <obaa:entry>Entry do recurso 3</obaa:entry>
@@ -143,26 +143,26 @@
         <obaa:description>descrição da anotação</obaa:description>
     </obaa:annotation>
 
-        <obaa:classification>
-            <obaa:purpose> proposta de x</obaa:purpose>
-            <obaa:taxonPath>
-                <obaa:source>ACM</obaa:source>
-                <obaa:taxon>
-                    <obaa:id>30</obaa:id>
-                    <obaa:entry>Physics</obaa:entry>
-                </obaa:taxon>
-                <obaa:taxon>
-                    <obaa:id>31</obaa:id>
-                    <obaa:entry>Diagnostics</obaa:entry>
-                </obaa:taxon>
-                <obaa:description> O peso da bola</obaa:description>
-                <obaa:keyword>peso</obaa:keyword>
-                <obaa:keyword>bola</obaa:keyword>
+    <obaa:classification>
+        <obaa:purpose> proposta de x</obaa:purpose>
+        <obaa:taxonPath>
+            <obaa:source>ACM</obaa:source>
+            <obaa:taxon>
+                <obaa:id>30</obaa:id>
+                <obaa:entry>Physics</obaa:entry>
+            </obaa:taxon>
+            <obaa:taxon>
+                <obaa:id>31</obaa:id>
+                <obaa:entry>Diagnostics</obaa:entry>
+            </obaa:taxon>
+        </obaa:taxonPath>
+        <obaa:description> O peso da bola</obaa:description>
+        <obaa:keyword>peso</obaa:keyword>
+        <obaa:keyword>bola</obaa:keyword>
 
-            </obaa:taxonPath>
-        </obaa:classification>
+    </obaa:classification>
 
-        <obaa:segmentInformationTable>
+    <obaa:segmentInformationTable>
             
         <obaa:segmentList>
             <segmentInformation>
@@ -184,7 +184,7 @@
                 <start>1 min</start>
                 <end>2 min</end>
             </segmentInformation>
-        </obaa:segmentList>                
+        </obaa:segmentList>
 		
     </obaa:segmentInformationTable>
 </obaa:obaa>
