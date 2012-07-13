@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import feb.data.entities.Mapeamento;
 import feb.data.entities.PadraoMetadados;
-import feb.data.entities.Repositorio;
 import feb.data.interfaces.MapeamentoDAO;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.spring.dtos.MapeamentoDto;

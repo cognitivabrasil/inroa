@@ -38,7 +38,7 @@ import org.xml.sax.SAXException;
 public class Repositorios {
 
     private SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-    static Logger log = Logger.getLogger(Repositorios.class);
+    private static Logger log = Logger.getLogger(Repositorios.class);
 
     /**
      * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o
@@ -287,21 +287,18 @@ public class Repositorios {
                 log.error(msgOAI + msg
                         + " - The repository does not support sets.\n");
             } else {
-                log.error("\nFEB ERRO: Problema ao fazer o parse do arquivo. ",
+                log.error("Problema ao fazer o parse do arquivo. ",
                         e);
             }
             throw e;
         } catch (FileNotFoundException e) {
-            System.err.println("\nFEB ERRO: nao foi possivel coletar os dados de: "
-                    + e.toString() + "\n");
+            log.error("Nao foi possivel coletar os dados: ", e);
             throw e;
         } catch (IOException e) {
-            log.error("\nFEB ERRO: Nao foi possivel coletar ou ler o XML em: "
-                    + this.getClass() + ".", e);
+            log.error("Nao foi possivel coletar ou ler o XML em: ", e);
             throw e;
         } catch (Exception e) {
             log.error("\nFEB ERRO ao efetuar o Harvester.", e);
-            e.printStackTrace();
             throw e;
         }
         return -1;
