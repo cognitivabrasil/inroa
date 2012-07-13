@@ -62,8 +62,8 @@
             <obaa:specificLocation>http://portalobaa.org</obaa:specificLocation>
             <obaa:specificRequirement>
                 <obaa:specificOrComposite>
-                    <obaa:specificType>navegador</obaa:specificType>
-                    <obaa:specificName>mozilla-Firefox</obaa:specificName>
+                    <obaa:specificType>browser</obaa:specificType>
+                    <obaa:specificName>mozillaFirefox</obaa:specificName>
                     <obaa:specificMinimumVersion>1.0</obaa:specificMinimumVersion>
                     <obaa:specificMaximumVersion>3.0</obaa:specificMaximumVersion>
                 </obaa:specificOrComposite>
