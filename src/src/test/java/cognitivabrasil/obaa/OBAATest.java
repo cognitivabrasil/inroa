@@ -279,7 +279,7 @@ public class OBAATest {
 	public void testOBAA_Educational_LearningResourceTypes() throws FileNotFoundException {
 		assert(!(l.getEducational() == null));
 		assert(!(l.getEducational().getLearningResourceTypes() == null));
-		assertThat(l.getEducational().getLearningResourceTypes(), hasItems("Simulação", "Experimento"));
+		assertThat(l.getEducational().getLearningResourceTypesString(), hasItems("Simulação", "Experimento"));
 	}
 	
 	@Test

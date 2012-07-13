@@ -101,7 +101,7 @@ public class XsltFeb2ToFeb3Test {
 	@Test
 	public void learningResourceType() {
 		OBAA l = oai.getMetadata(0);
-		assertThat(l.getEducational().getLearningResourceTypes(), hasItems("Dissertação"));
+		assertThat(l.getEducational().getLearningResourceTypesString(), hasItems("Dissertação"));
 	}
 	
 	@Test 
