@@ -17,12 +17,21 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
 		<include.tests>nothing-to-include</include.tests>
+		<config.skiptests>false</config.skiptests>
+
 	</properties>
 	<profiles>
 		<profile>
 			<id>sonar</id>
 			<properties>
 				<include.tests>**/*IT.java</include.tests>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>fast</id>
+			<properties>
+				<config.skiptests>true</config.skiptests>
 			</properties>
 		</profile>
 	</profiles>
@@ -493,7 +502,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<configuration>
-                                    <skipTests>false</skipTests>
+					<skipTests>${config.skiptests}</skipTests>
 					<excludes>
 						<exclude>${include.tests}</exclude>
 					</excludes>
@@ -535,7 +544,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.12</version>
 				<configuration>
-					<skipTests>false</skipTests>
+					<skipTests>${config.skiptests}</skipTests>
 					<includes>
 						<include>**/Test*.java</include>
 						<include>**/*Test.java</include>
