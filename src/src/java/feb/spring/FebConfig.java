@@ -26,16 +26,19 @@ import org.springframework.beans.factory.annotation.Autowired;
  * it will use those in the Properties. The password will be saved 
  * ENCRYPTED in the file.
  * 
+ * To save the file, you have to make sure that the destination folder is
+ * writable by the Servlet container.
+ * 
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
  *
  */
 public class FebConfig {
-	Logger logger = Logger.getLogger(FebConfig.class);
+	private Logger logger = Logger.getLogger(FebConfig.class);
 	
 	private StringEncryptor encryptor;
 	
-	Properties properties;
-	File file;
+	private Properties properties;
+	private File file;
 	
 	private String host;
 	private Integer port;
@@ -97,7 +100,7 @@ public class FebConfig {
 			InputStream s = new FileInputStream(file);
 			p.load(s);
 			properties = p;
-
+			s.close();
 		} catch (IOException e) {
 			logger.warn("Config file is missing, using defaults");
 		}

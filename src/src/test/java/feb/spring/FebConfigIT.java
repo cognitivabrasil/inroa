@@ -29,15 +29,15 @@ import feb.spring.FebConfig;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class FebConfigIT {
-	@Autowired StringEncryptor stringEncryptor;	
+	@Autowired private StringEncryptor stringEncryptor;	
 	
 	private FebConfig c;
 	private Properties defaultProperties;
 	
 	private FebConfig initFebConfig() {
-		FebConfig c = new FebConfig();
-		c.setEncryptor(stringEncryptor);
-		return c;
+		FebConfig conf = new FebConfig();
+		conf.setEncryptor(stringEncryptor);
+		return conf;
 	}
 	
 	@Before
