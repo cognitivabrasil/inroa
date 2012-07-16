@@ -545,8 +545,85 @@ modelo de tópico:
                         </li> <!--/Classification-->
                     </c:forEach> <!--/Classification-->
 
+                    <c:if test="${!empty metadata.accessibility.resourceDescription}">
+                        <li><span class="title">Acessibilidade</span>
+                            <ul>
+                                <li><span class="title">Descrição dos recursos</span>
+                                    <ul>
+                                        <c:if test="${!empty metadata.accessibility.resourceDescription.primary}">
+                                            <li><span class="title">Principal</span>
+                                                <ul>
+                                                    <c:if test="${!empty metadata.accessibility.resourceDescription.primary.hasVisual}">
+                                                        <li><div class="nome">&Eacute; visual:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.visual}</div></li>
+                                                    </c:if>
+                                                    <c:if test="${!empty metadata.accessibility.resourceDescription.primary.hasAuditory}">
+                                                        <li><div class="nome">&Eacute; auditivo:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.auditory}</div></li>
+                                                    </c:if>
+                                                    <c:if test="${!empty metadata.accessibility.resourceDescription.primary.hasText}">
+                                                        <li><div class="nome">&Eacute; textual:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.text}</div></li>
+                                                    </c:if>
+                                                    <c:if test="${!empty metadata.accessibility.resourceDescription.primary.hasTactile}">
+                                                        <li><div class="nome">&Eacute; t&aacute;til:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.tactile}</div></li>
+                                                    </c:if>
+                                                    <c:forEach var="earlStatement" items="${metadata.accessibility.resourceDescription.primary.earlStatement}">
+                                                        <li>
+                                                            <span class="title">Declara&ccedil;&atilde;o em EARL</span>
+                                                            <ul>
+                                                                <c:if test="${!empty earlStatement.displayTransformability}">
+                                                                    <li><div class="nome">Transformabilidade: </div><div class="valor">${earlStatement.displayTransformability}</div></li>
+                                                                </c:if>
+                                                                <c:if test="${!empty earlStatement.controlFlexibility}">
+                                                                    <li><div class="nome">Controle e flexibilidade:</div><div class="valor">${earlStatement.controlFlexibility}</div></li>
+                                                                </c:if>
+                                                            </ul>
+                                                        </li>
+                                                    </c:forEach>
 
-                    <%                       //OBAA x = new OBAA(); x.getClassifications().get(0).getTaxonPath().get(0).getTaxons();                  %>
+                                                    <c:forEach var="equivalentResource" items="${metadata.accessibility.resourceDescription.primary.equivalentResource}">
+                                                        <li><div class="nome">Recurso equivalente:</div><div class="valor">${equivalentResource}</div></li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </li>
+
+                                        </c:if>
+<%--
+                                        <c:forEach var="equivalent" items="${metadata.accessibility.resourceDescription.equivalent}">
+                                            <li>
+                                                <span class="title">Equivalente</span>
+                                                <ul>
+                                                    <c:if test="${!empty equivalent.primaryResource}">
+                                                        <li><div class="nome">Recurso principal:</div><div class="valor">${equivalent.primaryResource}</div></li>
+                                                    </c:if>
+                                                    <c:forEach var="primaryFile" items="${equivalent.primaryFile}">
+                                                        <li><div class="nome">Arquivo principal:</div><div class="valor">${primaryFile}</div></li>
+                                                    </c:forEach>
+                                                    <c:if test="${!empty equivalent.supplementary}">
+                                                        <li><div class="nome">Suplementar:</div><div class="valor">${equivalent.supplementary}</div></li>
+                                                    </c:if>
+                                                    <c:forEach var="xx" items="${var.xx}">
+                                                        <li>
+                                                            <span class="title">xx</span>
+                                                            <ul>
+                                                                <c:if test="${!empty xx}">
+                                                                    <li><div class="nome">xx:</div><div class="valor">${xx}</div></li>
+                                                                </c:if>
+                                                            </ul>
+                                                        </li>
+                                                    </c:forEach>
+
+
+                                                </ul>
+                                            </li>
+                                        </c:forEach>
+                                            --%>
+                                    </ul>
+                                </li>
+                            </ul> <!--/Accessibility-->
+                        </li> <!--/Accessibility-->
+                    </c:if> <!--/Accessibility-->
+
+                    <%  //OBAA x = new OBAA(); x.getAccessibility().getResourceDescription().getEquivalent().get(0).getSupplementary()
+                    %>
                 </ul>
             </c:if>
 
