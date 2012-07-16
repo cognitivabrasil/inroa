@@ -4,23 +4,23 @@
  */
 package feb.metadata;
 
-import java.io.FileWriter;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.fail;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
-import cognitivabrasil.obaa.OBAA;
-import cognitivabrasil.obaa.OaiOBAA;
-import java.io.File;
-
-import org.hamcrest.core.IsNull;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.fail;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.OaiOBAA;
 
 /**
  *
@@ -65,7 +65,7 @@ public class XsltDC2ObaaTest {
 		OBAA l = oai.getMetadata(5);
 		assert(!(l.getTechnical() == null));
 		assert(!(l.getTechnical().getLocation() == null));
-		assertThat(l.getTechnical().getLocation().get(0).getText(), 
+		assertThat(l.getTechnical().getLocation().get(0), 
 				equalTo("http://hdl.handle.net/10183/399"));
 		
 	}
