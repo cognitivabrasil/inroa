@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
+	       xmlns:util="http://www.springframework.org/schema/util"
+	
+	xmlns:encryption="http://www.jasypt.org/schema/encryption"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
   http://www.springframework.org/schema/tx
-http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd">
 
  
    
@@ -21,19 +23,27 @@ http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 <tx:annotation-driven/>
 
+<encryption:string-encryptor id="myEncryptor"
+		password="feb@RNP" pool-size="5" />
 
-<!--<bean name="/feb/*"
-class="feb.spring.FEBController"/>-->
+<!--   <encryption:encryptable-properties id="myProperties" encryptor="myEncryptor" location="file:///etc/feb/feb.properties"  -->
+<!--   /> -->
+  
+<!--   in case the user does not specify a properties file -->
+  		<util:properties id="defaultProperties">
+<prop key="Postgres.username">feb</prop>
+<prop key="Postgres.password">feb@RNP</prop>
+<prop key="Postgres.database">federacao</prop>
+<prop key="Postgres.host">127.0.0.1</prop>
+<prop key="Postgres.port">5432</prop>
 
-<!-- TODO: Use properties
-    TODO: Encrypt password
-    <bean id="dataSource"
-class="org.apache.commons.dbcp.BasicDataSource"
-destroy-method="close"
-p:driverClassName="${dataSource.driverClassName}"
-p:url="${dataSource.url}"
-p:username="${dataSource.username}"
-p:password="${dataSource.password}" /> -->
+</util:properties>
+		
+  
+  	<bean id="febConfig" class="feb.spring.FebConfig">
+		<property name="file"><value>classpath:feb.properties</value></property>
+		<property name="defaultProperties" ref="defaultProperties"/>
+		</bean>
 
     <bean id="dataSource"
           class="org.apache.commons.dbcp.BasicDataSource"
