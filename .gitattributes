@@ -268,6 +268,7 @@ src/src/java/feb/robo/atualiza/subfedOAI/SubRepositorios.java -text
 src/src/java/feb/robo/main/Robo.java -text
 src/src/java/feb/robo/main/package.html -text
 src/src/java/feb/spring/ApplicationContextProvider.java -text
+src/src/java/feb/spring/FebConfig.java -text
 src/src/java/feb/spring/ServerInfo.java -text
 src/src/java/feb/spring/controllers/AdminController.java -text
 src/src/java/feb/spring/controllers/FEBController.java -text
@@ -455,6 +456,7 @@ src/src/test/java/feb/metadata/teste1.xml -text
 src/src/test/java/feb/robo/atualiza/importaOAI/ImporterTest.java -text
 src/src/test/java/feb/robo/atualiza/subfedOAI/ImporterTestIT.java -text
 src/src/test/java/feb/robo/atualiza/subfedOAI/SubRepositoriosTest.java -text
+src/src/test/java/feb/spring/FebConfigIT.java -text
 src/src/test/java/functionaltests/LumeXmlIT.java -text
 src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text

@@ -3,14 +3,17 @@
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
+	       xmlns:util="http://www.springframework.org/schema/util"
+	
+	xmlns:encryption="http://www.jasypt.org/schema/encryption"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
   http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
-http://www.springframework.org/schema/security
-http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd">
 
 
 	<!-- TODO: use inversion of control instead of this ! -->
@@ -22,14 +25,39 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 		p:url="${dataSource.url}" p:username="${dataSource.username}" p:password="${dataSource.password}" 
 		/> -->
 
+	<encryption:string-encryptor id="myEncryptor"
+		password="feb@RNP" pool-size="5" />
+
+<!--   <encryption:encryptable-properties id="myProperties" encryptor="myEncryptor" location="file:///etc/feb/feb.properties"  -->
+<!--   /> -->
+  
+<!--   in case the user does not specify a properties file -->
+  		<util:properties id="defaultProperties">
+<prop key="Postgres.username">feb</prop>
+<prop key="Postgres.password">feb@RNP</prop>
+<prop key="Postgres.database">federacao</prop>
+<prop key="Postgres.host">127.0.0.1</prop>
+<prop key="Postgres.port">5432</prop>
+
+</util:properties>
+		
+  
+  	<bean id="febConfig" class="feb.spring.FebConfig">
+		<property name="file"><value>file:///etc/feb/feb.properties</value></property>
+		<property name="defaultProperties" ref="defaultProperties"/>
+		</bean>
+		
+
+	
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="org.postgresql.Driver"
-		p:url="jdbc:postgresql://127.0.0.1:5432/federacao" p:username="feb"
-		p:password="feb@RNP" />
+		p:url="jdbc:postgresql://#{febConfig.host}:#{febConfig.port}/#{febConfig.database}"
+		p:username="#{febConfig.username}" p:password="#{febConfig.password}" />
 
 	<bean id="documentosDAO" class="feb.data.daos.DocumentosHibernateDAO" />
-        
-        <bean id="sessionFactory"
+
+	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
@@ -64,14 +92,16 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<bean id="Indexador" class="feb.ferramentaBusca.indexador.Indexador">
 	</bean>
 
-        <bean id="StopWord" class="feb.data.daos.StopWordHibernateDao" />
-        
-        <bean id="visitasDao" class="feb.data.daos.VisitasHibernateDao" />
-        
+	<bean id="StopWord" class="feb.data.daos.StopWordHibernateDao" />
+
+	<bean id="visitasDao" class="feb.data.daos.VisitasHibernateDao" />
+	
+
+
 	<context:annotation-config />
 	<!--Inicio Inicializar o Robo -->
 
-	<bean id="robo" class="feb.robo.main.Robo" />        
+	<bean id="robo" class="feb.robo.main.Robo" />
 
 	<bean id="jobDetail"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
