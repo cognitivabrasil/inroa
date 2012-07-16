@@ -319,6 +319,7 @@ src/src/main/webapp/admin/federations/confirmDelete.jsp -text
 src/src/main/webapp/admin/federations/edit.jsp -text
 src/src/main/webapp/admin/federations/new.jsp -text
 src/src/main/webapp/admin/federations/show.jsp -text
+src/src/main/webapp/admin/mapeamentos/confirmDelete.jsp -text
 src/src/main/webapp/admin/mapeamentos/form.jsp -text
 src/src/main/webapp/admin/mapeamentos/listaMapeamentoPadraoSelecionado.jsp -text
 src/src/main/webapp/admin/mapeamentos/show.jsp -text

@@ -249,9 +249,9 @@ Author     : Marcos Nunes
 				<td><security:authorize
 						access="hasRole('PERM_MANAGE_METADATA')">
 						<input type="button" class="botaoExcluir"
-							title="Excluir padr&atilde;o de metadados" name="excluir"
-							id="excluirPadrao"
-							onclick="confirmaDelPadrao(${mapeamento.id},'msgerro','padroes',this.parentNode.parentNode.rowIndex);" />
+							title="Excluir Subfedera&ccedil;&atilde;o" name="excluir"
+							id="excluirSubfed"
+							onclick="NewWindow('./mapeamentos/${mapeamento.id}/delete','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 					</security:authorize> &nbsp; <input type="button" class="botaoEditar"
 					title="Editar / Visualizar" name="editar" id="editarPadrao"
 					onclick="NewWindow('./mapeamentos/${mapeamento.id}','editaMapeamento','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />

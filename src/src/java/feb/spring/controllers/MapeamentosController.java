@@ -1,6 +1,5 @@
 package feb.spring.controllers;
 
-import java.security.Principal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -50,7 +49,7 @@ public final class MapeamentosController {
 	 *            the user id
 	 */
 	@RequestMapping("/{id}")
-	public String userShow(@PathVariable Integer id, Model model) {
+	public String mapeamentoShow(@PathVariable Integer id, Model model) {
 		model.addAttribute("mapeamento", mapDao.get(id));
 		return "admin/mapeamentos/show";
 	}
@@ -76,14 +75,17 @@ public final class MapeamentosController {
 	 * Shows new user forme.
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String userNewShow(Model model) {
+	public String mapeamentoNewShow(Model model) {
 		model.addAttribute("mapeamento", new MapeamentoDto(new Mapeamento()));
 		model.addAttribute("metadataList", getMetadataListForSelect(padraoDao));
 		return "admin/mapeamentos/form";
 	}
 
+	/**
+	 * Recebe os dados do formulário e mostra um XML transformado, ou salva o mapeamento.
+	 */
 	@RequestMapping(value = { "/new", "/{id}/edit" }, method = RequestMethod.POST)
-	public String userNewShow2(Model model,
+	public String mapeamentoEdit(Model model,
 			@ModelAttribute("mapeamento") MapeamentoDto map,
 			BindingResult result) {
 		
@@ -105,15 +107,6 @@ public final class MapeamentosController {
 	}
 
 
-	@RequestMapping(value = "/passwd", method = RequestMethod.GET)
-	public String passwdShow(Model model, Principal principal) {
-		UserPasswordDto u = new UserPasswordDto();
-		u.setUsername(principal.getName());
-		model.addAttribute("user", u);
-
-		return "admin/mapeamentos/passwd";
-	}
-
 	/**
 	 * Shows edit user form.
 	 * 
@@ -128,5 +121,25 @@ public final class MapeamentosController {
 
 		return "admin/mapeamentos/form";
 	}
+	
+
+    @RequestMapping(value="/{id}/delete", method = RequestMethod.POST)
+    public String deleteDo(
+    		@PathVariable Integer id,
+    		Model model) {
+            Mapeamento map = new Mapeamento();
+            map.setId(id);
+            mapDao.delete(map);
+            return "redirect:/admin/fechaRecarrega";
+    }
+    
+    @RequestMapping(value="/{id}/delete", method = RequestMethod.GET)
+    public String deleteShow(
+    		@PathVariable Integer id,
+            Model model) {
+            model.addAttribute("mapeamento", mapDao.get(id));
+            return "admin/mapeamentos/confirmDelete";
+    }
+
 
 }
