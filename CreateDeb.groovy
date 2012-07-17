@@ -5,7 +5,7 @@ p.load(new FileInputStream(new File("/var/lib/jenkins/buildnumber.properties")))
 
 def pom = new XmlSlurper().parse(new File("src/pom.xml"))
 
-String version = pom.version
+String version = (pom.version as String).replaceAll(/-SNAPSHOT/, "")
 
 def binding = ['feb' : [
 	'version' : version ],
