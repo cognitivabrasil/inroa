@@ -15,7 +15,6 @@ dh_installdebconf
 dh_installemacsen
 dh_installifupdown
 dh_installinfo
-dh_pysupport
 dh_installinit
 dh_installmenu
 dh_installmime
@@ -38,10 +37,8 @@ dh_usrlocal
 dh_link
 dh_compress
 dh_fixperms
-dh_strip
-dh_makeshlibs
-dh_shlibdeps
 dh_installdeb
 dh_gencontrol
 dh_md5sums
+dh_builddeb
 dh_builddeb

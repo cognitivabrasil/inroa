@@ -1,0 +1,4 @@
+ln -s src feb-${feb.version}
+tar -cvzf feb_${feb.version}.orig.tar.gz feb-${feb.version}/*
+cd feb-${feb.version}
+dpkg-buildpackage
