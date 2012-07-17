@@ -17,6 +17,6 @@ else
 	sudo -u postgres dropdb federacao >> /tmp/instalacao_feb.log;
 fi
 
-sudo -u postgres psql -f /tmp/FEB/schema.sql >> /tmp/instalacao_feb.log;
-sudo -u postgres psql federacao -f /tmp/FEB/data.sql >> /tmp/instalacao_feb.log;
+sudo -u postgres psql -f /usr/share/FEB/schema.sql >> /tmp/instalacao_feb.log;
+sudo -u postgres psql federacao -f /usr/share/FEB/data.sql >> /tmp/instalacao_feb.log;
 
