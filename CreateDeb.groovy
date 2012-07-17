@@ -17,7 +17,7 @@ def binding = ['feb' : [
 ]
 
 p.setProperty(version, ((p.getProperty(version, "1") as Integer) + 1) as String)
-p.store(new FileOutputStream(new File("buildnumber.properties")), null)
+p.store(new FileOutputStream(new File("/var/lib/jenkins/buildnumber.properties")), null)
 
 
 def filePattern = ~/(.*)\.template$/  
