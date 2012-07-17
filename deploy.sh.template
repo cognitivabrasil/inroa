@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cp feb_${feb.version}-ubuntu-${build.number} /var/www/ppa/
+cp feb_${feb.version}-ubuntu${build.number}_all.deb /var/www/ppa/
 cd /var/www/ppa
 dpkg-scanpackages -a i386 . /dev/null | gzip -9c > dists/precise/main/binary-i386/Packages.gz
 dpkg-scanpackages -a amd64 . /dev/null | gzip -9c > dists/precise/main/binary-amd64/Packages.gz

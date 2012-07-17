@@ -18,5 +18,5 @@ else
 fi
 
 sudo -u postgres psql -f /tmp/FEB/schema.sql >> /tmp/instalacao_feb.log;
-sudo -u postgres psql federacao -f /tmp/FEB/schema.sql >> /tmp/instalacao_feb.log;
+sudo -u postgres psql federacao -f /tmp/FEB/data.sql >> /tmp/instalacao_feb.log;
 
