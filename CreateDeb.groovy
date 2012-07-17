@@ -1,7 +1,7 @@
 import groovy.text.SimpleTemplateEngine
 
 Properties p = new Properties()
-p.load(new FileInputStream(new File("/var/jenkins/buildnumber.properties")))
+p.load(new FileInputStream(new File("/var/lib/jenkins/buildnumber.properties")))
 
 def pom = new XmlSlurper().parse(new File("src/pom.xml"))
 
