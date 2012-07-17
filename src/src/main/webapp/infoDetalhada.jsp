@@ -407,7 +407,7 @@ modelo de tópico:
                                     <li><div class="nome">Idioma:</div><div class="valor">${language}</div></li>
                                 </c:forEach>
 
-                                <c:if test="${!empty metadata.educational.learningContentType.text}">
+                                <c:if test="${!empty metadata.educational.learningContentType}">
                                     <li><div class="nome">Tipo do conte&uacute;do:</div><div class="valor">${metadata.educational.learningContentType}</div></li>
                                 </c:if>
 
@@ -415,13 +415,13 @@ modelo de tópico:
                                     <li>
                                         <span class="title">Intera&ccedil;&atilde;o</span>
                                         <ul>
-                                            <c:if test="${!empty metadata.educational.interaction.interactionType.text}">
+                                            <c:if test="${!empty metadata.educational.interaction.interactionType}">
                                                 <li><div class="nome">Tipo de intera&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.interaction.interactionType}</div></li>
                                             </c:if>
-                                            <c:if test="${!empty metadata.educational.interaction.perception.text}">
+                                            <c:if test="${!empty metadata.educational.interaction.perception}">
                                                 <li><div class="nome">Percep&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.interaction.perception}</div></li>
                                             </c:if>
-                                            <c:if test="${!empty metadata.educational.interaction.synchronism.text}">
+                                            <c:if test="${!empty metadata.educational.interaction.synchronism}">
                                                 <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.interaction.synchronism}</div></li>
                                             </c:if>
                                             <c:if test="${!empty metadata.educational.interaction.coPresence.text}">
@@ -464,7 +464,7 @@ modelo de tópico:
                                 <c:if test="${!empty relations.kind}">
                                     <li><div class="nome">Tipo:</div><div class="valor">${relations.kind}</div></li>
                                 </c:if>
-                                <c:if test="${!empty relations.resource}">
+                                <c:if test="${!empty relations.resource.description or !empty relations.resource.identifier}">
                                     <li>
                                         <span class="title">Recurso</span>
                                         <ul>
@@ -554,16 +554,16 @@ modelo de tópico:
                                             <li><span class="title">Principal</span>
                                                 <ul>
                                                     <c:if test="${!empty metadata.accessibility.resourceDescription.primary.hasVisual}">
-                                                        <li><div class="nome">&Eacute; visual:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.visual}</div></li>
+                                                        <li><div class="nome">&Eacute; visual:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.hasVisual}</div></li>
                                                     </c:if>
                                                     <c:if test="${!empty metadata.accessibility.resourceDescription.primary.hasAuditory}">
-                                                        <li><div class="nome">&Eacute; auditivo:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.auditory}</div></li>
+                                                        <li><div class="nome">&Eacute; auditivo:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.hasAuditory}</div></li>
                                                     </c:if>
                                                     <c:if test="${!empty metadata.accessibility.resourceDescription.primary.hasText}">
-                                                        <li><div class="nome">&Eacute; textual:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.text}</div></li>
+                                                        <li><div class="nome">&Eacute; textual:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.hasText}</div></li>
                                                     </c:if>
                                                     <c:if test="${!empty metadata.accessibility.resourceDescription.primary.hasTactile}">
-                                                        <li><div class="nome">&Eacute; t&aacute;til:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.tactile}</div></li>
+                                                        <li><div class="nome">&Eacute; t&aacute;til:</div><div class="valor">${metadata.accessibility.resourceDescription.primary.hasTactile}</div></li>
                                                     </c:if>
                                                     <c:forEach var="earlStatement" items="${metadata.accessibility.resourceDescription.primary.earlStatement}">
                                                         <li>
@@ -586,7 +586,7 @@ modelo de tópico:
                                             </li>
 
                                         </c:if>
-<%--
+
                                         <c:forEach var="equivalent" items="${metadata.accessibility.resourceDescription.equivalent}">
                                             <li>
                                                 <span class="title">Equivalente</span>
@@ -600,30 +600,183 @@ modelo de tópico:
                                                     <c:if test="${!empty equivalent.supplementary}">
                                                         <li><div class="nome">Suplementar:</div><div class="valor">${equivalent.supplementary}</div></li>
                                                     </c:if>
-                                                    <c:forEach var="xx" items="${var.xx}">
+                                                    <c:if test="${!empty equivalent.content}">
                                                         <li>
-                                                            <span class="title">xx</span>
+                                                            <span class="title">Conteúdo</span>
                                                             <ul>
-                                                                <c:if test="${!empty xx}">
-                                                                    <li><div class="nome">xx:</div><div class="valor">${xx}</div></li>
+                                                                <c:if test="${!empty equivalent.content.alternativesToVisual}">
+                                                                    <li>
+                                                                        <span class="title">Alternativa para o visual</span>
+                                                                        <ul>
+                                                                            <c:forEach var="audioDescription" items="${equivalent.content.alternativesToVisual.audioDescription}">
+                                                                                <li><div class="nome">Descri&ccedil;&atilde;o do audio:</div><div class="valor">${audioDescription}</div></li>
+                                                                            </c:forEach>
+                                                                            <c:if test="${!empty equivalent.content.alternativesToVisual.altTextLang}">
+                                                                                <li><div class="nome">Idioma alternativo do texto:</div><div class="valor">${equivalent.content.alternativesToVisual.altTextLang}</div></li>
+                                                                            </c:if>
+                                                                            <c:if test="${!empty equivalent.content.alternativesToVisual.longDescriptionLang}">
+                                                                                <li><div class="nome">Idioma da descri&ccedil;&atilde;o:</div><div class="valor">${equivalent.content.alternativesToVisual.longDescriptionLang}</div></li>
+                                                                            </c:if>
+                                                                            <c:forEach var="colorAvoidance" items="${equivalent.content.alternativesToVisual.colorAvoidance}">
+                                                                                <li><div class="nome">Descri&ccedil;&atilde;o de cores:</div><div class="valor">${colorAvoidance}</div></li>
+                                                                            </c:forEach>
+                                                                        </ul>
+                                                                    </li>
                                                                 </c:if>
+
+                                                                <c:if test="${!empty equivalent.content.alternativesToText}">
+                                                                    <li>
+                                                                        <span class="title">Alternativa ao texto</span>
+                                                                        <ul>
+                                                                            <c:if test="${!empty equivalent.content.alternativesToText.graphicAlternative}">
+                                                                                <li><div class="nome">Tem alternativa gr&aacute;fica:</div><div class="valor">${equivalent.content.alternativesToText.graphicAlternative}</div></li>
+                                                                            </c:if>
+                                                                            <c:forEach var="signLanguage" items="${equivalent.content.alternativesToText.signLanguage}">
+                                                                                <li><div class="nome">Linguagem de sinal:</div><div class="valor">${signLanguage}</div></li>
+                                                                            </c:forEach>
+                                                                        </ul>
+                                                                    </li>
+                                                                </c:if>
+
+                                                                <c:if test="${!empty equivalent.content.alternativesToAuditory}">
+                                                                    <li>
+                                                                        <span class="title">Alternativa &agrave; audi&ccedil;&atilde;o</span>
+                                                                        <ul>
+                                                                            <c:forEach var="captionType" items="${equivalent.content.alternativesToAuditory.captionType}">
+                                                                                <li>
+                                                                                    <span class="title">Legenda</span>
+                                                                                    <ul>
+                                                                                        <c:if test="${!empty captionType.language}">
+                                                                                            <li><div class="nome">Idioma:</div><div class="valor">${captionType.language}</div></li>
+                                                                                        </c:if>
+                                                                                        <c:if test="${!empty captionType.verbatim}">
+                                                                                            <li><div class="nome">Texto original:</div><div class="valor">${captionType.verbatim}</div></li>
+                                                                                        </c:if>
+                                                                                        <c:if test="${!empty captionType.reducedReadingLevel}">
+                                                                                            <li><div class="nome">Texto reduzido:</div><div class="valor">${captionType.reducedReadingLevel}</div></li>
+                                                                                        </c:if>
+                                                                                        <c:if test="${!empty captionType.reducedSpeed}">
+
+                                                                                            <c:if test="${!empty captionType.reducedSpeed.reducedSpeed}">
+                                                                                                <li><div class="nome">Velocidade reduzida:</div><div class="valor">${captionType.reducedSpeed.reducedSpeed}</div></li>
+                                                                                            </c:if>
+                                                                                            <c:if test="${!empty captionType.reducedSpeed.captionRate}">
+                                                                                                <li><div class="nome">Velocidade:</div><div class="valor">${captionType.reducedSpeed.captionRate}</div></li>
+                                                                                            </c:if>
+                                                                                        </c:if>
+                                                                                        <c:if test="${!empty captionType.enhancedCaption}">
+                                                                                            <li><div class="nome">Texto aumentado:</div><div class="valor">${captionType.enhancedCaption}</div></li>
+                                                                                        </c:if>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </c:forEach>
+                                                                            <c:forEach var="signLanguage" items="${equivalent.content.alternativesToAuditory.signLanguage}">
+                                                                                <li><div class="nome">Linguagem de sinal:</div><div class="valor">${signLanguage}</div></li>
+                                                                            </c:forEach>
+                                                                        </ul>
+                                                                    </li>
+                                                                </c:if>
+
+                                                                <c:forEach var="learnerScaffold" items="${equivalent.content.learnerScaffold}">
+                                                                    <li><div class="nome">Ferramenta learnerScaffold:</div><div class="valor">${learnerScaffold}</div></li>
+                                                                </c:forEach>
                                                             </ul>
                                                         </li>
-                                                    </c:forEach>
+                                                    </c:if>
 
 
                                                 </ul>
                                             </li>
                                         </c:forEach>
-                                            --%>
+
                                     </ul>
                                 </li>
                             </ul> <!--/Accessibility-->
                         </li> <!--/Accessibility-->
                     </c:if> <!--/Accessibility-->
 
-                    <%  //OBAA x = new OBAA(); x.getAccessibility().getResourceDescription().getEquivalent().get(0).getSupplementary()
-                    %>
+                    <c:forEach var="segmentsInformationTable" items="${metadata.segmentsInformationTable}">
+                        <li>
+                            <span class="title">Informa&ccedil;&otilde;es de segmenta&ccedil;&atilde;o</span>
+                            <ul>
+                                <c:forEach var="segmentList" items="${segmentsInformationTable.segmentList}">
+                                    <li>
+                                        <span class="title">Conjunto de informa&ccedil;&otilde;es de segmentos</span>
+                                        <ul>
+                                            <c:forEach var="segmentInformation" items="${segmentList.segmentInformation}">
+                                                <li>
+                                                    <span class="title">Informa&ccedil;&otilde;es</span>
+                                                    <ul>
+                                                        <c:if test="${!empty segmentInformation.identifier}">
+                                                            <li><div class="nome">Identificador:</div><div class="valor">${segmentInformation.identifier}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty segmentInformation.title}">
+                                                            <li><div class="nome">T&iacute;tulo:</div><div class="valor">${segmentInformation.title}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty segmentInformation.description}">
+                                                            <li><div class="nome">Descri&ccedil;&atilde;o:</div><div class="valor">${segmentInformation.description}</div></li>
+                                                        </c:if>
+                                                        <c:forEach var="keyword" items="${segmentInformation.keywords}">
+                                                            <li><div class="nome">Palavra-chave:</div><div class="valor">${keyword}</div></li>
+                                                        </c:forEach>
+                                                        <c:if test="${!empty segmentInformation.segmentMediaType}">
+                                                            <li><div class="nome">Tipo de m&iacutedia:</div><div class="valor">${segmentInformation.segmentMediaType}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty segmentInformation.start}">
+                                                            <li><div class="nome">In&iacute;cio:</div><div class="valor">${segmentInformation.start}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty segmentInformation.end}">
+                                                            <li><div class="nome">Fim:</div><div class="valor">${segmentInformation.end}</div></li>
+                                                        </c:if>
+                                                    </ul>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${!empty segmentsInformationTable.segmentGroupList.segmentGroupInformation}">
+                                    <li>
+                                        <span class="title">Grupos de segmento</span>
+                                        <ul>
+                                            <c:forEach var="segmentGroupInformation" items="${segmentsInformationTable.segmentGroupList.segmentGroupInformation}">
+                                                <li>
+                                                    <span class="title">Informa&ccedil;&otilde;es</span>
+                                                    <ul>
+                                                        <c:if test="${!empty segmentGroupInformation.identifier}">
+                                                            <li><div class="nome">Identificador:</div><div class="valor">${segmentGroupInformation.identifier}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty segmentGroupInformation.groupType}">
+                                                            <li><div class="nome">Tipo de agrupamento:</div><div class="valor">${segmentGroupInformation.groupType}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty segmentGroupInformation.title}">
+                                                            <li><div class="nome">T&iacute;tulo do segmento:</div><div class="valor">${segmentGroupInformation.title}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty segmentGroupInformation.description}">
+                                                            <li><div class="nome">Descri&ccedil;&atilde;o do conte&uacute;do do segmento:</div><div class="valor">${segmentGroupInformation.description}</div></li>
+                                                        </c:if>
+                                                        <c:forEach var="keyword" items="${segmentGroupInformation.keywords}">
+                                                            <li><div class="nome">Palavra-chave:</div><div class="valor">${keyword}</div></li>
+                                                        </c:forEach>
+                                                        <c:if test="${!empty segmentGroupInformation.segments}">
+                                                            <li>
+                                                                <span class="title">Segmentos que fazem parte do grupo</span>
+                                                                <ul>
+                                                                    <c:forEach var="identifier" items="${segmentGroupInformation.segments.identifier}">
+                                                                        <li><div class="nome">C&oacute;digo identificador:</div><div class="valor">${identifier}</div></li>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </li>
+                                                        </c:if>
+                                                    </ul>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                    </li>
+                                </c:if>
+                            </ul> <!--/segmentsInformationTable-->
+                        </li> <!--/segmentsInformationTable-->
+                    </c:forEach> <!--/segmentsInformationTable-->
+
                 </ul>
             </c:if>
 
