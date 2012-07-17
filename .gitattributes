@@ -1,5 +1,7 @@
 * text=auto !eol
+/CreateDeb.groovy -text
 /create-deb.sh.template -text
+/deploy.sh.template -text
 docs/README -text
 docs/env_dev.txt -text
 docs/env_exec.txt -text
@@ -150,6 +152,7 @@ docs/javadoc/robo/util/package-use.html -text
 docs/javadoc/serialized-form.html -text
 docs/javadoc/stylesheet.css -text
 docs/release_notes.txt -text
+/publish_ppa.sh -text
 src/Makefile.template -text
 src/README.txt -text
 src/build.xml -text
@@ -167,7 +170,7 @@ src/debian/README.Debian -text
 src/debian/README.source -text
 src/debian/changelog.template -text
 src/debian/compat -text
-src/debian/control -text
+src/debian/control.template -text
 src/debian/copyright -text
 src/debian/docs -text
 src/debian/emacsen-install.ex -text

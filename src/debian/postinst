@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#testa se a pasta webapps do 
-#####configuração postgres
 sudo service postgresql restart > instalacao_feb.log;
 
 db=$(sudo -u postgres psql --list | grep federacao);	#db sera "" se não houver uma base de dados federacao
@@ -12,13 +10,13 @@ if [ "$db" = "" ]; then
 	if [ "$user" != "" ]; then	#testa se existe o usuario feb
 		echo "User already exists" 
 	else
-		sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'" >> instalacao_feb.log;
+		sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'" >> /tmp/instalacao_feb.log;
 	fi
-	sudo -u postgres createdb -O feb federacao >> instalacao_feb.log;
-	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_estrutura.sql >> instalacao_feb.log;
-	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_dados.sql >> instalacao_feb.log;
 else
-	echo "Base já existe, atualizando estrutura."
-	sudo -u postgres psql federacao -f /usr/share/FEB/FEB_1.9.sql >> instalacao_feb.log;
+	echo "Base antiga existe, apagando..."
+	sudo -u postgres dropdb federacao >> /tmp/instalacao_feb.log;
 fi
+
+sudo -u postgres psql -f /tmp/FEB/schema.sql >> /tmp/instalacao_feb.log;
+sudo -u postgres psql federacao -f /tmp/FEB/schema.sql >> /tmp/instalacao_feb.log;
 
