@@ -3,16 +3,11 @@ package feb.spring.controllers;
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Visita;
-import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.RepositoryDAO;
-import feb.data.interfaces.SubFederacaoDAO;
-import feb.data.interfaces.UsuarioDAO;
-import feb.data.interfaces.VisitasDao;
+import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
 import feb.robo.atualiza.importaOAI.XMLtoDB;
 import feb.spring.ServerInfo;
 import feb.spring.validador.BuscaValidator;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
@@ -49,7 +44,7 @@ public final class FEBController {
     @Autowired
     private VisitasDao visDao;
     private BuscaValidator buscaValidator;
-    Logger log = Logger.getLogger(FEBController.class);
+    private final Logger log = Logger.getLogger(FEBController.class);
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
@@ -108,6 +103,11 @@ public final class FEBController {
     @RequestMapping("/objetos/{id}")
     public String infoDetalhada(@PathVariable Integer id, Model model) {
         DocumentoReal d = docDao.get(id);
+        if(d == null){
+            log.warn("O id "+id+" solicitado não existe!");
+            return "redirect:/";
+        }
+        else{
         model.addAttribute("obaaEntry", d.getObaaEntry());
         List<String> titles = d.getTitles();
         String title = "Título não informado";
@@ -118,6 +118,7 @@ public final class FEBController {
         model.addAttribute("title", title);
         model.addAttribute("metadata", d.getMetadata());
         return "infoDetalhada";
+    }
     }
 
     @RequestMapping("/consulta")
