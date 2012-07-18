@@ -1,4 +1,5 @@
 <%--
+@author Marcos Nunes <marcosn@gmail.com>
 
 modelo de tópico:
 
@@ -243,7 +244,7 @@ modelo de tópico:
                                 <c:if test="${!empty metadata.technical.otherPlatformRequirements}">
                                     <li><div class="nome">Outros requisitos da plataforma:</div><div class="valor">${metadata.technical.otherPlatformRequirements}</div></li>
                                 </c:if>
-                                <c:if test="${!empty metadata.technical.duration.text}">
+                                <c:if test="${!empty metadata.technical.duration}">
                                     <li><div class="nome">Dura&ccedil;&atilde;o:</div><div class="valor">${metadata.technical.duration}</div></li>
                                 </c:if>
 
@@ -424,10 +425,10 @@ modelo de tópico:
                                             <c:if test="${!empty metadata.educational.interaction.synchronism}">
                                                 <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.interaction.synchronism}</div></li>
                                             </c:if>
-                                            <c:if test="${!empty metadata.educational.interaction.coPresence.text}">
+                                            <c:if test="${!empty metadata.educational.interaction.coPresence}">
                                                 <li><div class="nome">Co-presen&ccedil;a:</div><div class="valor">${metadata.educational.interaction.coPresence}</div></li>
                                             </c:if>
-                                            <c:if test="${!empty metadata.educational.interaction.reciprocity.text}">
+                                            <c:if test="${!empty metadata.educational.interaction.reciprocity}">
                                                 <li><div class="nome">Reciprocidade:</div><div class="valor">${metadata.educational.interaction.reciprocity}</div></li>
                                             </c:if>
                                         </ul>

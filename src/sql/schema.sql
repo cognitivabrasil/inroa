@@ -1,6 +1,3 @@
---criar o usuario feb
-CREATE USER feb WITH PASSWORD 'feb@RNP';
-
 --
 -- PostgreSQL database dump
 --
