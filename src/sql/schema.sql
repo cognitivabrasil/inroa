@@ -596,6 +596,49 @@ ALTER TABLE visitas
   OWNER TO feb;
 COMMENT ON TABLE visitas IS 'contador de visitas do FEB';
 
+-- Table: documentos_visitas
+
+-- DROP TABLE documentos_visitas;
+
+CREATE TABLE documentos_visitas
+(
+  documento integer NOT NULL,
+  visita integer NOT NULL,
+  id serial NOT NULL,
+  CONSTRAINT pki_documentos_visitas PRIMARY KEY (id ),
+  CONSTRAINT fki_documento FOREIGN KEY (documento)
+      REFERENCES documentos (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fki_visitas FOREIGN KEY (visita)
+      REFERENCES visitas (id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE documentos_visitas
+  OWNER TO feb;
+COMMENT ON TABLE documentos_visitas
+  IS 'tabela n x n de documentos por visitas';
+
+-- Index: fki_fki_documento
+
+-- DROP INDEX fki_fki_documento;
+
+CREATE INDEX fki_documento
+  ON documentos_visitas
+  USING btree
+  (documento );
+
+-- Index: fki_fki_visitas
+
+-- DROP INDEX fki_fki_visitas;
+
+CREATE INDEX fki_visitas
+  ON documentos_visitas
+  USING btree
+  (visita );
+
 -- Sequence: visitas_id_seq
 
 CREATE SEQUENCE visitas_id_seq
