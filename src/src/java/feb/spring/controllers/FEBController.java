@@ -90,6 +90,15 @@ public final class FEBController {
     }
 
     /**
+     * Se o usuário tentar a cessar /feb/objetos ele redireciona para o index
+     * @return redireciona para o /
+     */
+    @RequestMapping("/objetos")
+    public String objetos() {
+        return "redirect:/";
+    }
+
+    /**
      * This method renders the object specified by the ID.
      *
      * @param id the id

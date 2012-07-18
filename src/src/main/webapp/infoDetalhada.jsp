@@ -206,8 +206,9 @@ modelo de tópico:
                                 <c:forEach var="format" items="${metadata.technical.format}">
                                     <li><div class="nome">Formato:</div><div class="valor">${format}</div></li>
                                 </c:forEach>
-
-                                <li><div class="nome">Tamanho:</div><div class="valor">${metadata.technical.size}</div></li>
+                                <c:if test="${!empty metadata.technical.size}">
+                                    <li><div class="nome">Tamanho:</div><div class="valor">${metadata.technical.size}</div></li>
+                                </c:if>
 
                                 <c:forEach var="location" items="${metadata.technical.location}">
                                     <li><div class="nome">Localiza&ccedil;&atilde;o:</div><div class="valor"><a href="${location}" target="_blank">${location}</a></div></li>
@@ -320,24 +321,11 @@ modelo de tópico:
                                             </c:if>
 
                                             <c:forEach var="protocol" items="${service.protocol}">
-                                                <li><div class="nome">Protocolo:</div><div class="valor">${service.protocol}</div></li>
-                                            </c:forEach>
-
-                                            <c:forEach var="ontology" items="${service.ontology}">
-                                                <li><span class="title">Ontologia</span>
-                                                    <ul>
-                                                        <c:if test="${!empty ontology.language}">
-                                                            <li><div class="nome">Linguagem:</div><div class="valor">${ontology.language}</div></li>
-                                                        </c:if>
-                                                        <c:if test="${!empty ontology.location}">
-                                                            <li><div class="nome">Localiza&ccedil;&atilde;o:</div><div class="valor">${ontology.location}</div></li>
-                                                        </c:if>
-                                                    </ul>
-                                                </li>
+                                                <li><div class="nome">Protocolo:</div><div class="valor">${protocol}</div></li>
                                             </c:forEach>
 
                                             <c:forEach var="language" items="${service.language}">
-                                                <li><div class="nome">Linguagem:</div><div class="valor">${service.language}</div></li>
+                                                <li><div class="nome">Linguagem:</div><div class="valor">${language}</div></li>
                                             </c:forEach>
 
                                             <c:forEach var="details" items="${service.details}">
@@ -347,7 +335,24 @@ modelo de tópico:
                                                             <li><div class="nome">Descri&ccedil;&atilde;o:</div><div class="valor">${details.details}</div></li>
                                                         </c:if>
                                                         <c:if test="${!empty details.serviceLocation}">
-                                                            <li><div class="nome">Localiza&ccedil;&atilde;o do servi&ccedil;o:</div><div class="valor">${details.serviceLocation}</div></li>
+                                                            <li><div class="nome">Localiza&ccedil;&atilde;o:</div><div class="valor">${details.serviceLocation}</div></li>
+                                                        </c:if>
+                                                    </ul>
+                                                </li>
+                                            </c:forEach>
+
+
+                                            <c:forEach var="ontology" items="${service.ontology}">
+                                                <li><span class="title">Ontologia</span>
+                                                    <ul>
+                                                        <c:if test="${!empty ontology.name}">
+                                                            <li><div class="nome">Nome:</div><div class="valor">${ontology.name}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty ontology.language}">
+                                                            <li><div class="nome">Linguagem:</div><div class="valor">${ontology.language}</div></li>
+                                                        </c:if>
+                                                        <c:if test="${!empty ontology.location}">
+                                                            <li><div class="nome">Localiza&ccedil;&atilde;o:</div><div class="valor">${ontology.location}</div></li>
                                                         </c:if>
                                                     </ul>
                                                 </li>
@@ -411,7 +416,6 @@ modelo de tópico:
                                 <c:if test="${!empty metadata.educational.learningContentType}">
                                     <li><div class="nome">Tipo do conte&uacute;do:</div><div class="valor">${metadata.educational.learningContentType}</div></li>
                                 </c:if>
-
                                 <c:if test="${!empty metadata.educational.interaction}">
                                     <li>
                                         <span class="title">Intera&ccedil;&atilde;o</span>
@@ -442,7 +446,7 @@ modelo de tópico:
                             </ul> <!--/educational-->
                         </li> <!--/educational-->
                     </c:if> <!--/educational-->
-
+                    
                     <c:if test="${!empty metadata.rights}">
                         <li><span class="title">Direitos</span>
                             <ul>
