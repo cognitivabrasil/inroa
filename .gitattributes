@@ -191,6 +191,7 @@ src/debian/postinst -text
 src/debian/postinst.ex -text
 src/debian/postrm -text
 src/debian/postrm.ex -text
+src/debian/preinst -text
 src/debian/preinst.ex -text
 src/debian/prerm.ex -text
 src/debian/rules -text
