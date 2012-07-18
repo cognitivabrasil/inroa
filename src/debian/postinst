@@ -11,6 +11,7 @@ case "$1" in
 	if [ -z "$2" ]; then
 		echo "New installation"
 		echo "Creating user"
+		sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'" >> instalacao_feb.log;
 		
 		echo "Creating database schema..."
 		sudo -u postgres psql -f /usr/share/FEB/schema.sql >> /tmp/instalacao_feb.log;
