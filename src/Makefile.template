@@ -1,7 +1,8 @@
 all: target/feb.war
 
 install: target/feb.war
-	mkdir -p ${DESTDIR}/usr/share/FEB && mkdir -p ${DESTDIR}/var/lib/${tomcat}/webapps && install target/feb.war ${DESTDIR}/var/lib/${tomcat}/webapps && mkdir -p ${DESTDIR}/usr/share/FEB && install sql/*.sql ${DESTDIR}/usr/share/FEB
+	mkdir -p ${DESTDIR}/usr/share/FEB && mkdir -p ${DESTDIR}/var/lib/${tomcat}/webapps && install target/feb.war ${DESTDIR}/var/lib/${tomcat}/webapps && mkdir -p ${DESTDIR}/usr/share/FEB && install sql/*.sql ${DESTDIR}/usr/share/FEB && mkdir -p ${DESTDIR}/etc/feb && cp src/main/resources/feb.properties ${DESTDIR}/etc/feb
+
 
 target/feb.war:
 	mvn -Pfast install
