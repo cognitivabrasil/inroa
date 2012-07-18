@@ -19,14 +19,17 @@ public class InfoBDValidator implements Validator {
         return false;
     }
     
+    @Override
     public void validate(Object target, Errors errors) {
         
-        ValidationUtils.rejectIfEmpty(errors, "usuario",
+        ValidationUtils.rejectIfEmpty(errors, "username",
                 "required.usuario", "É necessário informar um usuário.");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "base",
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "database",
                 "required.descricao", "É necessário informar o nome da base.");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "IP",
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "host",
                 "required.IP", "É necessário informar o ip.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "port",
+                "required.IP", "É necessário informar a porta.");
         
 
     }

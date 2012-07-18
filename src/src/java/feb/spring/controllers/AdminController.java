@@ -9,9 +9,12 @@ import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.UsuarioDAO;
 import feb.ferramentaBusca.indexador.Indexador;
+import feb.spring.FebConfig;
 import feb.spring.ServerInfo;
+import feb.spring.validador.InfoBDValidator;
 import feb.spring.validador.PadraoValidator;
 import feb.spring.validador.SubFederacaoValidador;
+import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -46,9 +49,10 @@ public final class AdminController {
     private UsuarioDAO userDao;
     @Autowired
     private Indexador indexador;
-    @Autowired 
+    @Autowired
     private ServerInfo serverInfo;
-    
+    @Autowired
+    private FebConfig conf;
     static Logger log = Logger.getLogger(AdminController.class);
 
     public AdminController() {
@@ -112,15 +116,47 @@ public final class AdminController {
         return "redirect:/";
     }
 
-    @RequestMapping("/salvaSenhaBD")
-    @ResponseBody
-    public String salvaSenhaDB(
- //           @ModelAttribute("conf") SingletonConfig conf,
-            @RequestParam(value = "confirmacaoSenhaBD", required = false) String confSenha,
+    @RequestMapping(value = "/alterDB", method = RequestMethod.GET)
+    public String showAlterDB(Model model) {
+        model.addAttribute("conf", conf);
+        return "admin/alterDB";
+    }
+
+    @RequestMapping(value = "/alterDB", method = RequestMethod.POST)
+    public String saveDB(
+            @ModelAttribute("conf") FebConfig febConf,
+            @RequestParam(required = false) String passConf,
             BindingResult result,
             Model model) {
-    	//TODO: Implementar
-    	return "Not implemented.";
+        boolean senhaDiferentes = false;
+        InfoBDValidator infoBDVal = new InfoBDValidator();
+        infoBDVal.validate(febConf, result);
+        try {
+            if (!febConf.getPassword().equals(passConf)) { //testa se as senhas informadas sao iguais (confirmacao da senha).
+                model.addAttribute("erro", "Senhas não correspondem.");
+                senhaDiferentes = true;
+            }
+
+            if (result.hasErrors() || senhaDiferentes) {
+                model.addAttribute("conf", febConf);
+                return "admin/alterDB";
+            } else {
+                try{
+                    febConf.save();
+                    return "redirect:fechaRecarrega";
+                }catch(IOException i){
+                    log.error("Erro ao alterar as informações da base de dados.", i);
+                    model.addAttribute("conf", febConf);
+                    model.addAttribute("erro", "Não foi possível escrever as configurações no arquivo: /etc/feb/feb.properties \n Possivelmente os usuário do tomcat não tem permissão de escrita nesse diretório." );
+                    return "admin/alterDB";
+                }
+            }
+        } catch (Exception e) {
+            log.error("Erro ao alterar as informações da base de dados.", e);
+            model.addAttribute("conf", febConf);
+            model.addAttribute("erro", "Ocorreu um erro. Exception: " + e.toString());
+            return "admin/alterDB";
+        }
     }
 
     @RequestMapping("confirmaRecalcularIndice")
@@ -154,7 +190,7 @@ public final class AdminController {
         String user = (String) session.getAttribute("usuario"); //pega o nome do usuario da sessao
 
         if (!novaSenha.equals(confimaSenha)) {//testa se a nova senha e a confirmacao estao iguais
-            model.addAttribute("erroSenhaConf", "Senhas não correspondem.");
+            model.addAttribute("errorPassConf", "Senhas não correspondem.");
             model.addAttribute("login", user);
             return "admin/alterarSenhaAdm";
         } else {
@@ -179,15 +215,13 @@ public final class AdminController {
         }
     }
 
-
-
     /**
      * Fecha a pop-up e recarrega a janela principal
      *
      * @return admin/fechaRecarrega.jsp
      */
     @RequestMapping("fechaRecarrega")
-    public String fechaRecarrega(){
+    public String fechaRecarrega() {
         return "admin/fechaRecarrega";
     }
 

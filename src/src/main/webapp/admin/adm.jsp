@@ -54,7 +54,7 @@ Author     : Marcos Nunes
 
 			<security:authorize access="hasRole('PERM_CHANGE_DATABASE')">
 				<td width="13%"><a href=""
-					onclick="javascript:NewWindow('alterarSenhaBD','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar
+					onclick="javascript:NewWindow('alterDB','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar
 						Base de Dados</a></td>
 			</security:authorize>
 

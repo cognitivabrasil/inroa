@@ -20,7 +20,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <logout logout-success-url="/" />
 
         <intercept-url pattern="/admin/statistics/objUser/**" method="POST"
-               access="permitAll" />
+                       access="permitAll" />
                
 		<!-- allow any user to view (GET) the pages. Changes should only be effected 
 			with POST requests -->
@@ -33,6 +33,9 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 			'PERM_MANAGE_MAPPINGS',
 			'PERM_CHANGE_DATABASE',
 			'PERM_VIEW_STATISTICS' )" />
+
+        <intercept-url pattern="/admin/alterDB" method="POST"
+                                       access="hasRole('PERM_CHANGE_DATABASE')" />
 
         <intercept-url pattern="/admin/repositories/**" method="POST"
                        access="hasRole('PERM_MANAGE_REP')" />

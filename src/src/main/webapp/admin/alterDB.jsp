@@ -1,5 +1,5 @@
 <%-- 
-    Document   : alterarSenhaBD
+    Document   : alterDB
     Created on : 08/12/2011, 17:30:21
     Author     : Marcos
 --%>
@@ -31,54 +31,57 @@
                 ${erro}
             </div>
 
-            <form:form method="post" modelAttribute="conf" action="salvaSenhaBD" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
+            <form:form method="POST" modelAttribute="conf" action="alterDB" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="LinhaEntrada">
-                    <form:errors path="base" cssClass="ValueErro" />
+                    <form:errors path="database" cssClass="ValueErro" />
                     <label class="Label">Base de dados: </label>                    
                     <div class="Value">
-                        <form:input path="base" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="database" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
                 <div class="LinhaEntrada">
-                    <form:errors path="IP" cssClass="ValueErro" />
-                    <label class="Label">IP: </label>
+                    <form:errors path="host" cssClass="ValueErro" />
+                    <label class="Label">Host: </label>
                     <div class="Value">
-                        <form:input path="IP" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="host" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
-                    <form:errors path="porta" cssClass="ValueErro" />
+                    <form:errors path="port" cssClass="ValueErro" />
                     <label class="Label">Porta: </label>
                     <div class="Value">
-                        <form:input path="porta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onkeypress ="return ( isNumber(event) );" />
+                        <form:input path="port" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onkeypress ="return ( isNumber(event) );" />
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
-                    <form:errors path="usuario" cssClass="ValueErro" />
+                    <form:errors path="username" cssClass="ValueErro" />
                     <label class="Label">Usu&aacute;rio:</label>
                     <div class="Value">
-                        <form:input path="usuario" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="username" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
                     </div>
                 </div>
 
-                <div class="LinhaEntrada">
+                <div class="LinhaEntrada" id="divSenha">
+                    <form:errors path="password" cssClass="ValueErro" />
                     <div class="Label">Senha: </div>                    
-                    <div class="Value" id="divSenha">
+                    <div class="Value">
                         <input type="button" value="Alterar senha" onclick="javaScript:exibeDivSenha(document.getElementById('divSenha'), document.getElementById('divRepSenha'))">
-                        <form:hidden path="senhaCriptografada" />
                     </div>
                 </div>
                 <div class="hidden" id="divRepSenha">
-                    <div class="ValueErro">${erroSenhaConf}</div>
+                    <div class="Label">Senha: </div>
+                    <div class="Value">
+                        <form:password path="password" maxlength="20" />
+                    </div>
+                    <div class="ValueErro">${errorPassConf}</div>
                     <div class="Label">Repita a senha: </div>
                     <div class="Value">
-                        <input name="confirmacaoSenhaBD" type="password" id="confsenhabd" value="${conf.senhaCriptografada}">
+                        <input name="passConf" type="password" id="confsenhabd">
                     </div>
                 </div>
-
 
                 <div class="LinhaEntrada">
                     <div class="Buttons">

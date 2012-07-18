@@ -319,7 +319,7 @@ src/src/main/webapp/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
 src/src/main/webapp/WEB-INF/main-servlet.xml -text
 src/src/main/webapp/WEB-INF/web.xml -text
 src/src/main/webapp/admin/adm.jsp -text
-src/src/main/webapp/admin/alterarSenhaBD.jsp -text
+src/src/main/webapp/admin/alterDB.jsp -text
 src/src/main/webapp/admin/erroBase.jsp -text
 src/src/main/webapp/admin/fechaRecarrega.jsp -text
 src/src/main/webapp/admin/federations/confirmDelete.jsp -text

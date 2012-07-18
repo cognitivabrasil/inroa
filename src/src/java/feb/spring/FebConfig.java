@@ -70,6 +70,9 @@ public class FebConfig {
 	 * @throws IOException
 	 */
 	public void save() throws IOException {
+            if(file == null){
+                throw new IOException("Provavelmente o diretório não existe");
+            }
 		Writer w = new FileWriter(file);
 		save(w);
 	}

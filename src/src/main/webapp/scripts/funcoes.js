@@ -313,7 +313,7 @@ function verificaMapOnLoad (idPadraoSelecionado, mapeamentoSelecionado, idResult
  */
 function exibeDivSenha(idSenha, idRepSenha)
 {
-    idSenha.innerHTML='<input name="senhaCriptografada" type="password" id="senhabd">';
+    idSenha.className='hidden';
     idRepSenha.className='LinhaEntrada';
     document.getElementById("confsenhabd").value="";
 }
