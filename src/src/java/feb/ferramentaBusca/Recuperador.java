@@ -72,7 +72,7 @@ public class Recuperador {
         if (consulta.getRepositorios().isEmpty()) {
             if (consulta.getFederacoes().isEmpty()) {
                 if (consulta.getRepSubfed().isEmpty()) {        
-                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, consulta.hasAuthor());                    
+                        consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, consulta.hasAuthor());
                 } else {
                     consultaSql = busca_subRep(tokensConsulta, consulta, sqlOrdenacao); //busca no subrepositorio
                 }

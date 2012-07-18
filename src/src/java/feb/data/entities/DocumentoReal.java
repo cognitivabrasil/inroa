@@ -14,6 +14,10 @@ import feb.data.interfaces.DocumentoFebInterface;
 import feb.data.interfaces.StopWordsDao;
 import feb.spring.ApplicationContextProvider;
 import feb.util.Operacoes;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.dao.support.DataAccessUtils;
 
 /**
  *
@@ -25,8 +29,8 @@ import feb.util.Operacoes;
  *
  */
 public class DocumentoReal implements java.io.Serializable, DocumentoFebInterface, HibernateOaiDocument {
-    static Logger log = Logger.getLogger(DocumentoReal.class);
 
+    static Logger log = Logger.getLogger(DocumentoReal.class);
     private static final long serialVersionUID = 61217365141633065L;
     private int id;
     private String obaaEntry;
@@ -43,6 +47,8 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     List<String> titleTokens;
     List<String> keywordTokens;
     List<String> descriptionTokens;
+    private Session session;
+    private SessionFactory sessionFactory;    
 
     public DocumentoReal() {
         obaaEntry = "";
@@ -69,10 +75,18 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         autores.add(a);
     }
 
-    public void addDescription(String title) {
+    public void addDescription(String description) {
         Objeto o = new Objeto();
         o.setAtributo("obaaDescription");
-        o.setValor(title);
+        o.setValor(description);
+        o.setDocumento(this);
+        objetos.add(o);
+    }
+
+    public void addLocation(String location) {
+        Objeto o = new Objeto();
+        o.setAtributo("obaaLocation");
+        o.setValor(location);
         o.setDocumento(this);
         objetos.add(o);
     }
@@ -89,7 +103,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         return this.id;
     }
 
-    protected void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -155,7 +169,6 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         this.language = language;
     }
 
-
     /**
      * @return the excluido
      */
@@ -184,7 +197,6 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         }
         return l;
     }
-
 
     @Override
     public List<String> getTitles() {
@@ -335,6 +347,10 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
             this.addDescription(d);
         }
 
+        for (String l : obaa.getTechnical().getLocation()) {
+            this.addLocation(l);
+        }
+
         if (obaa.getLifeCycle() != null) {
             for (Contribute c : obaa.getLifeCycle().getContribute()) {
                 for (String e : c.getEntities()) {
@@ -380,22 +396,23 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     }
 
     /**
-     * Generates {@link Token}s from titles, keywords and descriptions and adds them to the object.
-     * 
+     * Generates {@link Token}s from titles, keywords and descriptions and adds
+     * them to the object.
+     *
      * First, it clears existing tokens.
      */
     public void generateTokens() {
-    	tokens.clear();
-    	for(String t : getTitlesTokenized()) {
-    		tokens.add(new Token(t, this, Token.TITLE));
-    	}
+        tokens.clear();
+        for (String t : getTitlesTokenized()) {
+            tokens.add(new Token(t, this, Token.TITLE));
+        }
 
-    	for(String t : getKeywordsTokenized()) {
-    		tokens.add(new Token(t, this, Token.KEYWORD));
-    	}
-    	for(String t : getDescriptionsTokenized()) {
-    		tokens.add(new Token(t, this, Token.DESCRIPTION));
-    	}
+        for (String t : getKeywordsTokenized()) {
+            tokens.add(new Token(t, this, Token.KEYWORD));
+        }
+        for (String t : getDescriptionsTokenized()) {
+            tokens.add(new Token(t, this, Token.DESCRIPTION));
+        }
     }
 
     public boolean isIndexEmpty() {
@@ -428,7 +445,7 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
     }
 
     private List<String> getStopWords() {
-    	// TODO: this is ugly...
+        // TODO: this is ugly...
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.fatal("Could not get AppContext bean!");
@@ -440,11 +457,52 @@ public class DocumentoReal implements java.io.Serializable, DocumentoFebInterfac
         }
     }
 
-	public void setTokens(Set<Token> tokens) {
-		this.tokens = tokens;
-	}
+    public void setTokens(Set<Token> tokens) {
+        this.tokens = tokens;
+    }
 
-	public Set<Token> getTokens() {
-		return tokens;
-	}
+    public Set<Token> getTokens() {
+        return tokens;
+    }
+
+    public String getFirstTitle() {
+        return (getTitles().get(0));
+    }
+    
+    public Integer getAcessos(){
+        
+        return DataAccessUtils.intResult(getSession().createQuery(
+                "SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal as d WHERE dv.documento=d.id AND d=:doc")
+                .setParameter("doc", this).list());
+    }
+    
+    private Session getSession() {
+        if (session == null) {
+            try {
+                session = getSessionFactory().getCurrentSession();
+            } catch (HibernateException e) {
+                log.warn("Could not getCurrentSession()!", e);
+                session = getSessionFactory().openSession();
+            }
+        }
+        return session;
+    }
+    
+    
+    /**
+     * @return the sessionFactory
+     */
+    public SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+            if (ctx != null) {
+                // TODO:
+                sessionFactory = ctx.getBean(SessionFactory.class);
+            } else {
+                throw new IllegalStateException(
+                        "FEB ERRO: Could not get Application context");
+            }
+        }
+        return sessionFactory;
+    }
 }

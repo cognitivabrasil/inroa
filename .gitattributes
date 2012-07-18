@@ -212,6 +212,7 @@ src/src/conf/MANIFEST.MF -text
 src/src/java/feb/data/daos/AbstractHibernateDAO.java -text
 src/src/java/feb/data/daos/AbstractNamedHibernateDAO.java -text
 src/src/java/feb/data/daos/DocumentosHibernateDAO.java -text
+src/src/java/feb/data/daos/DocumentosVisitasHibernateDao.java -text
 src/src/java/feb/data/daos/MapeamentoHibernateDAO.java -text
 src/src/java/feb/data/daos/PadraoMetadadosHibernateDAO.java -text
 src/src/java/feb/data/daos/RepositoryHibernateDAO.java -text
@@ -219,11 +220,11 @@ src/src/java/feb/data/daos/StopWordHibernateDao.java -text
 src/src/java/feb/data/daos/SubFederacaoHibernateDAO.java -text
 src/src/java/feb/data/daos/TokensHibernateDao.java -text
 src/src/java/feb/data/daos/UsuarioHibernateDAO.java -text
-src/src/java/feb/data/daos/VisitasDocumentosHibernateDao.java -text
 src/src/java/feb/data/daos/VisitasHibernateDao.java -text
 src/src/java/feb/data/entities/Autor.java -text
 src/src/java/feb/data/entities/Consulta.java -text
 src/src/java/feb/data/entities/DocumentoReal.java -text
+src/src/java/feb/data/entities/DocumentosVisitas.java -text
 src/src/java/feb/data/entities/Estatistica.java -text
 src/src/java/feb/data/entities/Mapeamento.java -text
 src/src/java/feb/data/entities/Objeto.java -text
@@ -237,9 +238,9 @@ src/src/java/feb/data/entities/SubNodo.java -text
 src/src/java/feb/data/entities/Token.java -text
 src/src/java/feb/data/entities/Usuario.java -text
 src/src/java/feb/data/entities/Visita.java -text
-src/src/java/feb/data/entities/VisitasDocumentos.java -text
 src/src/java/feb/data/interfaces/DocumentoFebInterface.java -text
 src/src/java/feb/data/interfaces/DocumentosDAO.java -text
+src/src/java/feb/data/interfaces/DocumentosVisitasDao.java -text
 src/src/java/feb/data/interfaces/MapeamentoDAO.java -text
 src/src/java/feb/data/interfaces/PadraoMetadadosDAO.java -text
 src/src/java/feb/data/interfaces/RepositoryDAO.java -text
@@ -248,7 +249,6 @@ src/src/java/feb/data/interfaces/SubFederacaoDAO.java -text
 src/src/java/feb/data/interfaces/TokensDao.java -text
 src/src/java/feb/data/interfaces/UsuarioDAO.java -text
 src/src/java/feb/data/interfaces/VisitasDao.java -text
-src/src/java/feb/data/interfaces/VisitasDocumentosDao.java -text
 src/src/java/feb/exceptions/RepositoriosException.java -text
 src/src/java/feb/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text
 src/src/java/feb/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
@@ -280,6 +280,7 @@ src/src/java/feb/spring/controllers/FEBController.java -text
 src/src/java/feb/spring/controllers/FederationsController.java -text
 src/src/java/feb/spring/controllers/MapeamentosController.java -text
 src/src/java/feb/spring/controllers/RepositoriesController.java -text
+src/src/java/feb/spring/controllers/StatisticsController.java -text
 src/src/java/feb/spring/controllers/UsersController.java -text
 src/src/java/feb/spring/dtos/MapeamentoDto.java -text
 src/src/java/feb/spring/validador/BuscaValidator.java -text
@@ -298,6 +299,7 @@ src/src/main/resources/feb2to3.xsl -text
 src/src/main/resources/hibernate.cfg.xml -text
 src/src/main/resources/hibernate/Autores.hbm.xml -text
 src/src/main/resources/hibernate/Documentos.hbm.xml -text
+src/src/main/resources/hibernate/DocumentosVisitas.hbm.xml -text
 src/src/main/resources/hibernate/Mapping.hbm.xml -text
 src/src/main/resources/hibernate/MetadataRecord.hbm.xml -text
 src/src/main/resources/hibernate/Objeto.hbm.xml -text

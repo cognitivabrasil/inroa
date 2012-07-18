@@ -1,6 +1,5 @@
 package feb.spring.controllers;
 
-import feb.data.entities.Estatistica;
 import feb.data.entities.PadraoMetadados;
 import feb.data.entities.Repositorio;
 import feb.data.entities.Usuario;
@@ -9,14 +8,11 @@ import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.UsuarioDAO;
-import feb.data.interfaces.VisitasDao;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.spring.ServerInfo;
 import feb.spring.validador.PadraoValidator;
 import feb.spring.validador.SubFederacaoValidador;
 
-import java.util.Calendar;
-import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
@@ -53,9 +49,6 @@ public final class AdminController {
     @Autowired 
     private ServerInfo serverInfo;
     
-    @Autowired
-    private VisitasDao visitasDao;
-
     static Logger log = Logger.getLogger(AdminController.class);
 
     public AdminController() {
@@ -186,21 +179,7 @@ public final class AdminController {
         }
     }
 
-    @RequestMapping(value = "/statistics", method = RequestMethod.GET)
-    public String statistics(Model model) {
-        
-        List repList = repDao.getAll();        
-        Estatistica e = new Estatistica();
-        model.addAttribute("numObjects", e.convertNodoList(repList));
-        
-        Calendar c = Calendar.getInstance();
-        List visitsList = visitasDao.visitsInAYear(c.get(Calendar.YEAR));
-        model.addAttribute("visitasTotal", e.convertIntList(visitsList));       
-        
-        
 
-        return "admin/statistics";
-    }
 
     /**
      * Fecha a pop-up e recarrega a janela principal

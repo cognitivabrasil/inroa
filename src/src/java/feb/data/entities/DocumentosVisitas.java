@@ -4,12 +4,12 @@ package feb.data.entities;
  *
  * @author Luiz H. L. Rossi <lh.rossi@cognitivabrasil.com>
  */
-public class VisitasDocumentos {
+public class DocumentosVisitas {
     private int id;
     private DocumentoReal documento;
     private Visita visita;
 
-    public VisitasDocumentos() {
+    public DocumentosVisitas() {
     }
 
     public DocumentoReal getDocumento() {

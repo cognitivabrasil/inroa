@@ -19,6 +19,9 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <remember-me />
         <logout logout-success-url="/" />
 
+        <intercept-url pattern="/admin/statistics/objUser/**" method="POST"
+               access="permitAll" />
+               
 		<!-- allow any user to view (GET) the pages. Changes should only be effected 
 			with POST requests -->
         <intercept-url pattern="/admin/**" method="GET"
@@ -44,7 +47,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
                        access="hasRole('PERM_MANAGE_REP')" />
                        
         <intercept-url pattern="/admin/efetuaRecalculoIndice" method="POST"
-                                      access="hasRole('PERM_UPDATE')" />
+                       access="hasRole('PERM_UPDATE')" />
 
         <intercept-url pattern="/admin/mapeamentos/**" method="POST"
                        access="hasRole('PERM_MANAGE_MAPPINGS')" />
@@ -52,7 +55,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
         <intercept-url pattern="/admin/users/**" method="POST"
                        access="hasRole('PERM_MANAGE_USERS')" />
-
+                       
 		<!-- deny all access not explicitly given -->
         <intercept-url pattern="/admin/**" access="denyAll" />
 

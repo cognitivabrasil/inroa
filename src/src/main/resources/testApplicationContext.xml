@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
-	       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:util="http://www.springframework.org/schema/util"
 	
 	xmlns:encryption="http://www.jasypt.org/schema/encryption"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
@@ -21,29 +21,31 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
     <bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"></bean>
     
 
-<tx:annotation-driven/>
+    <tx:annotation-driven/>
 
-<encryption:string-encryptor id="myEncryptor"
-		password="feb@RNP" pool-size="5" />
+    <encryption:string-encryptor id="myEncryptor"
+                             password="feb@RNP" pool-size="5" />
 
 <!--   <encryption:encryptable-properties id="myProperties" encryptor="myEncryptor" location="file:///etc/feb/feb.properties"  -->
 <!--   /> -->
   
 <!--   in case the user does not specify a properties file -->
-  		<util:properties id="defaultProperties">
-<prop key="Postgres.username">feb</prop>
-<prop key="Postgres.password">feb@RNP</prop>
-<prop key="Postgres.database">federacao</prop>
-<prop key="Postgres.host">127.0.0.1</prop>
-<prop key="Postgres.port">5432</prop>
+    <util:properties id="defaultProperties">
+        <prop key="Postgres.username">feb</prop>
+        <prop key="Postgres.password">feb@RNP</prop>
+        <prop key="Postgres.database">federacao</prop>
+        <prop key="Postgres.host">127.0.0.1</prop>
+        <prop key="Postgres.port">5432</prop>
 
-</util:properties>
+    </util:properties>
 		
   
-  	<bean id="febConfig" class="feb.spring.FebConfig">
-		<property name="file"><value>classpath:feb.properties</value></property>
-		<property name="defaultProperties" ref="defaultProperties"/>
-		</bean>
+    <bean id="febConfig" class="feb.spring.FebConfig">
+        <property name="file">
+            <value>classpath:feb.properties</value>
+        </property>
+        <property name="defaultProperties" ref="defaultProperties"/>
+    </bean>
 
     <bean id="dataSource"
           class="org.apache.commons.dbcp.BasicDataSource"
@@ -53,53 +55,56 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
           p:username="feb"
           p:password="feb@RNP" />
 
-       <bean id="documentosDAO"
-      class="feb.data.daos.DocumentosHibernateDAO"
+    <bean id="documentosDAO"
+             class="feb.data.daos.DocumentosHibernateDAO"
     />
     
     <bean id="sessionFactory"
-      class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:hibernate.cfg.xml" />
     </bean>
 
 
     <bean id="transactionManager"
-      class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     <tx:annotation-driven/>
 
     <bean id="repositoryDAO"
-       class="feb.data.daos.RepositoryHibernateDAO">
-</bean>
+          class="feb.data.daos.RepositoryHibernateDAO">
+    </bean>
 
     <bean id="subFederationDAO"
-       class="feb.data.daos.SubFederacaoHibernateDAO">
+          class="feb.data.daos.SubFederacaoHibernateDAO">
     </bean>
  
     <bean id="PadraoMetadadosDAO"
-        class="feb.data.daos.PadraoMetadadosHibernateDAO">
+          class="feb.data.daos.PadraoMetadadosHibernateDAO">
     </bean>
     
     <bean id="MapeamentoDAO"
-        class="feb.data.daos.MapeamentoHibernateDAO">
+          class="feb.data.daos.MapeamentoHibernateDAO">
     </bean>
  
     <bean id="UsuarioDAO"
-        class="feb.data.daos.UsuarioHibernateDAO">
+          class="feb.data.daos.UsuarioHibernateDAO">
 <!--         <property name="sessionFactory" ref="sessionFactory"/> -->
     </bean>
 
     <bean id="TokensDAO"
-        class="feb.data.daos.TokensHibernateDao">
+          class="feb.data.daos.TokensHibernateDao">
     </bean>
 
     <bean id="StopWord" class="feb.data.daos.StopWordHibernateDao"></bean>
     
     <bean id="visitasDao" class="feb.data.daos.VisitasHibernateDao" />
     
-     <context:annotation-config/>
+    <bean id="DocumentosVisitasDao" 
+          class="feb.data.daos.DocumentosVisitasHibernateDao" />
+    
+    <context:annotation-config/>
 
  
 </beans>

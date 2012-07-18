@@ -143,7 +143,7 @@ public final class FEBController {
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                System.err.println("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "
+                System.err.println("FEB ERRO: Erro ao efetuar a consulta na base de dados. Exception: "
                         + e.toString());
                 return "index";
             }

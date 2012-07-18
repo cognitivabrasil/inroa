@@ -9,15 +9,20 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
+<%@ taglib prefix="feb.spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
+     <script language="JavaScript" type="text/javascript"
+	src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
+        
     </head>
     <body id="body">
         <%
@@ -27,10 +32,10 @@
 
 
         <jsp:include page="cabecalho.jsp">
-                <jsp:param value="Resultado da Pesquisa" name="titulo" />
-                <jsp:param value="7%" name="tamanho" />
-            </jsp:include>
-        
+            <jsp:param value="Resultado da Pesquisa" name="titulo" />
+            <jsp:param value="7%" name="tamanho" />
+        </jsp:include>
+
 
         <div id="page-sub-header">
             <a href="index">Efetuar nova consulta</a>
@@ -64,7 +69,7 @@
                         <center>
 
                             <pg:pager
-                            items="${BuscaModel.sizeResult}"
+                                items="${BuscaModel.sizeResult}"
                                 url="consulta"
                                 index="center"
                                 maxPageItems="${BuscaModel.limit}"
@@ -77,7 +82,7 @@
                                 <pg:param name="federacoes"/>
                                 <pg:param name="repSubfed"/>
                                 <pg:param name="autor"/>
-                                
+
 
                                 <%-- keep track of preference --%>
                                 <pg:param name="style"/>
@@ -110,7 +115,6 @@
                                                 </div>
                                             </c:forEach>
 
-
                                             <c:forEach var="resumo" items="${doc.shortDescriptions}">
                                                 <div class="atributo">${resumo}</div>
                                             </c:forEach>
@@ -118,7 +122,7 @@
                                             <c:if test="${!empty doc.location}">
                                                 <div class="atributo"> Localiza&ccedil;&atilde;o:
                                                     <c:forEach var="localizacao" items="${doc.location}">
-                                                        <div class="atributo"><a href="${localizacao}" target="_new">${localizacao}</a></div>
+                                                        <div class="atributo"><a href="${localizacao}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao}</a></div>
                                                     </c:forEach>
                                                 </div>
                                             </c:if>

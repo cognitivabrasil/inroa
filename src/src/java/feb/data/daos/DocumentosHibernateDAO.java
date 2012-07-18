@@ -18,6 +18,9 @@ import feb.data.entities.SubFederacao;
 import feb.data.entities.SubNodo;
 import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.TokensDao;
+import java.lang.String;
+import org.hibernate.Criteria;
+import org.springframework.dao.support.DataAccessUtils;
 
 /**
  * The Class DocumentosHibernateDAO.
@@ -41,6 +44,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
     /**
      * Gets a List of Documents by obaa entry.
+     *
      * @param e the ObaaEntry
      * @return List of documentos with this obaaEntry
      */
@@ -76,8 +80,8 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
     @Override
     public void deleteByObaaEntry(String e) {
-        DocumentoReal d = getByObaaEntry(e); 
-        if(d!= null) {
+        DocumentoReal d = getByObaaEntry(e);
+        if (d != null) {
             delete(d);
         }
     }
@@ -94,9 +98,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
      */
     @Override
     public void save(OBAA obaa, Header h) throws IllegalStateException {
-    	
-    	DocumentoReal doc = new DocumentoReal();
-        		doc.setDeleted(false);
+
+        DocumentoReal doc = new DocumentoReal();
+        doc.setDeleted(false);
         log.trace("Going to create documento " + h.getIdentifier());
 
         if ((getRepository() == null) && (this.federation == null)) {
@@ -117,9 +121,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
         doc.setObaaEntry(h.getIdentifier());
         doc.setTimestamp(h.getTimestamp());
-        
+
         deleteWithoutId(doc);
-        
+
 
         if (h.isDeleted()) {
             doc.setDeleted(true);
@@ -145,33 +149,33 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
     /**
      * Deletes a DocumentReal by obaaEntry and (sub)rep id.
-     * 
-     * This used because of the very unfortunate fact that obaaEntries may not be unique.
+     *
+     * This used because of the very unfortunate fact that obaaEntries may not
+     * be unique.
+     *
      * @param doc
      */
     private void deleteWithoutId(DocumentoReal doc) {
-			DocumentoReal d;
-			if(doc.getRepositorio() != null) {
-				d = (DocumentoReal) getSession().createCriteria(DocumentoReal.class).
-						add(Restrictions.eq("repositorio", doc.getRepositorio())).
-						add(Restrictions.eq("obaaEntry", doc.getObaaEntry())).
-						uniqueResult();
-			}
-			else if(doc.getRepositorioSubFed() != null) {
-				d = (DocumentoReal) getSession().createCriteria(DocumentoReal.class).
-						add(Restrictions.eq("repositorioSubFed", doc.getRepositorioSubFed())).
-						add(Restrictions.eq("obaaEntry", doc.getObaaEntry())).
-						uniqueResult();
-			}
-			else {
-				return;
-			}
-			if(d != null) {
-				delete(d);
-			}
-	}
+        DocumentoReal d;
+        if (doc.getRepositorio() != null) {
+            d = (DocumentoReal) getSession().createCriteria(DocumentoReal.class).
+                    add(Restrictions.eq("repositorio", doc.getRepositorio())).
+                    add(Restrictions.eq("obaaEntry", doc.getObaaEntry())).
+                    uniqueResult();
+        } else if (doc.getRepositorioSubFed() != null) {
+            d = (DocumentoReal) getSession().createCriteria(DocumentoReal.class).
+                    add(Restrictions.eq("repositorioSubFed", doc.getRepositorioSubFed())).
+                    add(Restrictions.eq("obaaEntry", doc.getObaaEntry())).
+                    uniqueResult();
+        } else {
+            return;
+        }
+        if (d != null) {
+            delete(d);
+        }
+    }
 
-	@Override
+    @Override
     public SubNodo getRepository() {
         return repository;
     }
@@ -204,7 +208,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     }
 
     @Override
-    public List<DocumentoReal> getwithoutToken(){
+    public List<DocumentoReal> getwithoutToken() {
         //retorna todos documentos que nao possuem r1tokens preenchido
         String sql = "SELECT d.* FROM documentos d LEFT JOIN r1tokens r1t ON r1t.documento_id = d.id WHERE r1t.documento_id IS NULL AND d.deleted = FALSE";
 

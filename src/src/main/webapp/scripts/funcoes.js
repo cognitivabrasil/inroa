@@ -388,6 +388,15 @@ function recalcularIndice(destino, form){
     
 }
 
+function objectAcessCounter(id){
+    
+    var ajax = openAjax(); // Start Ajax.
+    var link = rootUrl + "/admin/statistics/objUser?id="+id;    
+    ajax.open("POST", link, true);
+    ajax.send(null); // submete
+    
+}
+
 function paranaodarerro(){
 //alguns navegadores excluem a ultima funcao.
 }
