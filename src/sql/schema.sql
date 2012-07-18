@@ -30,7 +30,8 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
-CREATE PROCEDURAL LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
 
 
 ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
