@@ -35,8 +35,35 @@ case "$1" in
 		fi
 	fi
 
-sudo service postgresql restart > instalacao_feb.log;
+	if [ -f /etc/tomcat7/server.xml ]; then
+		TOMCAT_CONFIG=/etc/tomcat7/server.xml
+	else
+		TOMCAT_CONFIG=/etc/tomcat6/server.xml
+	fi
 
+	# removing old configuration to avoid duplicate lines
+	sed -i '/dded by FEB/d' /etc/apache2/sites-enabled/000-default
+	sed -i '/JkMount \/feb/d' /etc/apache2/sites-enabled/000-default
+	sed -i '/dded by FEB/d' ${TOMCAT_CONFIG}
+	sed -i '/<Connector port="8009" protocol="AJP\/1.3"/d' ${TOMCAT_CONFIG}
+	
+	# adding new configuration
+	echo "Configurando na porta 80..."
+	cp /usr/share/FEB/workers.properties /etc/libapache2-mod-jk/workers.properties
+	sed -i '/<\/VirtualHost/ i\
+# added by FEB\
+ JkMount /feb* worker1' /etc/apache2/sites-enabled/000-default
+	sed -i '/<Service name="Catalina">/ a\
+# added by FEB \
+<Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />' ${TOMCAT_CONFIG}
+
+	sudo service postgresql restart > instalacao_feb.log;
+	if [ -f /etc/init.d/tomcat7 ]; then
+		sudo /etc/init.d/tomcat7 restart
+	else
+		sudo /etc/init.d/tomcat6 restart
+	fi
+	sudo /etc/init.d/apache2 restart 
 ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)

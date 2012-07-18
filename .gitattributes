@@ -157,6 +157,7 @@ src/Makefile.template -text
 src/README.txt -text
 src/build.xml -text
 src/config/sun-checks.xml -text
+src/config/workers.properties -text
 src/configure -text
 src/cucumber/README -text
 src/cucumber/features/admin.feature -text

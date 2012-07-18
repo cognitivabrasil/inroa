@@ -17,10 +17,20 @@ set -e
 #          <overwriter-version>
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
+	if [ -f /etc/tomcat7/server.xml ]; then
+		TOMCAT_CONFIG=/etc/tomcat7/server.xml
+	else
+		TOMCAT_CONFIG=/etc/tomcat6/server.xml
+	fi
 
 
 case "$1" in
     purge|remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+	# removing old configuration to avoid duplicate lines
+	sed -i '/added by FEB/d' /etc/apache2/sites-enabled/000-default
+	sed -i '/JkMount \/feb/d' /etc/apache2/sites-enabled/000-default
+	sed -i '/added by FEB/d' ${TOMCAT_CONFIG}
+	sed -i '/<Connector port="8009" protocol="AJP\/1.3"/d' ${TOMCAT_CONFIG}
     ;;
 
     *)
