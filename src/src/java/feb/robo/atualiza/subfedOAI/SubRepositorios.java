@@ -29,7 +29,7 @@ public class SubRepositorios {
      * @param subFed objeto federa&ccedil;&atilde;o
      * @throws Exception
      */
-    public void atualizaSubRepositorios(String enderecoOAI, SubFederacao subFed) throws Exception {
+    public void atualizaSubRepositorios(SubFederacao subFed) throws Exception {
         log.debug("Atualizando os subrepositorios");
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
@@ -42,7 +42,7 @@ public class SubRepositorios {
             File caminhoTeste = Operacoes.testaDiretorioTemp(caminhoDiretorioTemporario);
             if (caminhoTeste.isDirectory()) {//efetua o Harvester e grava os xmls na pasta temporaria
 
-                String caminhoArquivoXML = coletaXML_ListSets(enderecoOAI, subFed.getName(), caminhoDiretorioTemporario); //coleta o xml por OAI-PMH
+                String caminhoArquivoXML = coletaXML_ListSets(subFed.getUrlOAIPMH(), subFed.getName(), caminhoDiretorioTemporario); //coleta o xml por OAI-PMH
 
                 ParserListSets parserListSets = new ParserListSets();
                 File arquivoXML = new File(caminhoArquivoXML);

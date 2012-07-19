@@ -11,7 +11,6 @@ import feb.robo.atualiza.harvesterOAI.Harvester;
 import feb.spring.ApplicationContextProvider;
 import feb.util.Informacoes;
 import feb.util.Operacoes;
-
 import java.io.File;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
@@ -42,7 +41,7 @@ public class Objetos {
      * os dados para o indice durante a atualiza&ccidil;&atilde;o dos metadados
      * @throws Exception
      */
-    public void atualizaObjetosSubFed(String endereco, SubFederacao subFed, Indexador indexar) throws Exception {
+    public void atualizaObjetosSubFed(SubFederacao subFed, Indexador indexar) throws Exception {
         Logger log = Logger.getLogger(this.getClass().getName());
 
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
@@ -60,7 +59,7 @@ public class Objetos {
 
                 //efetua o Harvester e grava os xmls na pasta temporaria
                 Harvester harvesterOAI = new Harvester();
-                ArrayList<String> caminhosXML = harvesterOAI.coletaXML_ListRecords(endereco, subFed.getDataXML(), subFed.getName(), caminhoDiretorioTemporario, "obaa", null);
+                ArrayList<String> caminhosXML = harvesterOAI.coletaXML_ListRecords(subFed.getUrlOAIPMH(), subFed.getDataXML(), subFed.getName(), caminhoDiretorioTemporario, "obaa", null);
 
                 //efetua o parser do xml e insere os documentos na base            
                 if (!caminhosXML.isEmpty()) {

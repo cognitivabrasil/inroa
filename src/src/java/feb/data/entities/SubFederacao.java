@@ -97,7 +97,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     public void setNome(String nome) {
         this.name = nome;
     }
-    
+
     @Override
     public String getName() {
         return name;
@@ -136,6 +136,18 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getUrlOAIPMH() {
+        String oai = url;
+        if (!oai.endsWith("/")) { //se a url não terminar com barra concatena a barra
+            oai += "/";
+        }
+        if (version.equals("2.1")) {
+            return oai + "OAIHandler";
+        } else {
+            return oai + "oai";
+        }
     }
 
     public Set<RepositorioSubFed> getRepositorios() {
@@ -275,13 +287,13 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
         return null;
     }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setVersion(String version) {
+        this.version = version;
+    }
         
         private SessionFactory getSessionFactory() {
         if (sessionFactory == null) {

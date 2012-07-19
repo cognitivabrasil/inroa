@@ -11,8 +11,6 @@ import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.subfedOAI.Objetos;
 import feb.robo.atualiza.subfedOAI.SubRepositorios;
 import feb.spring.ApplicationContextProvider;
-import feb.util.Informacoes;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -132,20 +130,15 @@ public class SubFederacaoOAI {
             log.info("FEB: Atualizando subfederacao: " + subFed.getName());//imprime o nome do repositorio
 
             try {
-                Informacoes info = new Informacoes();
-                String url = subFed.getUrl();
-                if (url.endsWith("/")) { //se a url terminar com / concatena o endereço do oai-pmh sem a barra
-                    url += info.getOaiPMH();
-                } else {
-                    url += "/" + info.getOaiPMH();
-                }
+                String url = subFed.getUrlOAIPMH();
+                
                 //atualizar repositorios da subfederacao
                 SubRepositorios subRep = new SubRepositorios();
-                subRep.atualizaSubRepositorios(url, subFed);
+                subRep.atualizaSubRepositorios(subFed);
 
                 //atualizar objetos da subfederacao
                 Objetos obj = new Objetos();
-                obj.atualizaObjetosSubFed(url, subFed, indexar);
+                obj.atualizaObjetosSubFed(subFed, indexar);
 
 
                 subFed.setUltimaAtualizacao(new Date());

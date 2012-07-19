@@ -210,7 +210,6 @@ public class OBAATest {
 		catch(IllegalArgumentException e) { 
 			// thats what we expected
 		}
-
 	}
 	
 	@Test
