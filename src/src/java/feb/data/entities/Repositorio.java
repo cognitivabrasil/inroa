@@ -147,6 +147,12 @@ public class Repositorio implements java.io.Serializable, SubNodo {
         return DataAccessUtils.intResult(getSession().createQuery(
                 "select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").setParameter("rep", this).setParameter("deleted", false).list());
     }
+        
+    @Override
+    public Integer getVisits() {
+        return DataAccessUtils.intResult(getSession().createQuery(
+                "SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorio= :rep").setParameter("rep", this).list());
+    }
 
     /**
      * Delete all DocumentoReal from this Repositorio

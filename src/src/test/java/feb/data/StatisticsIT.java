@@ -120,7 +120,7 @@ public class StatisticsIT extends AbstractDaoTest {
         repList.add(r2);
         
         Estatistica run = new Estatistica();
-        String teste = run.convertNodoList(repList);
+        String teste = run.convertNodoList(repList, "size");
         //System.out.println(teste);
         
         assertEquals("[ [ 'teste', 321 ], [ 'teste2', 321 ] ]", teste);

@@ -3,6 +3,7 @@ package feb.spring.controllers;
 import feb.data.entities.*;
 import feb.data.interfaces.DocumentosVisitasDao;
 import feb.data.interfaces.RepositoryDAO;
+import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.VisitasDao;
 import java.util.Calendar;
 import java.util.List;
@@ -32,21 +33,34 @@ public final class StatisticsController {
     private VisitasDao visitasDao;
     @Autowired
     private DocumentosVisitasDao docVisDao;
+    @Autowired
+    private SubFederacaoDAO fedDao;
 
     @RequestMapping("/")
     public String statistics(Model model) {
 
         List repList = repDao.getAll();
         Estatistica e = new Estatistica();
-        model.addAttribute("numObjects", e.convertNodoList(repList));
+        
+        model.addAttribute("repAcessos", e.convertNodoList(repList, "visits"));
+        model.addAttribute("repObjects", e.convertNodoList(repList, "size"));
+        model.addAttribute("repositorios", repList);
 
+        
         Calendar c = Calendar.getInstance();
         List visitsList = visitasDao.visitsInAYear(c.get(Calendar.YEAR));
         model.addAttribute("visitasTotal", e.convertIntList(visitsList));
-        
-        List <DocumentoReal> docsMaisAcessados = docVisDao.getTop(10);
-        model.addAttribute("docsMaisAcessados", docsMaisAcessados);
 
+        List<DocumentoReal> docsMaisAcessados = docVisDao.getTop(10);
+        model.addAttribute("docsMaisAcessados", docsMaisAcessados);
+        
+        
+        
+        List fedList = fedDao.getAll();        
+        model.addAttribute("fedAcessos", e.convertNodoList(fedList, "visits"));
+        model.addAttribute("fedObjects", e.convertNodoList(fedList, "size"));
+        model.addAttribute("federacoes", fedList);
+        
         return "admin/statistics";
     }
 
@@ -55,15 +69,13 @@ public final class StatisticsController {
             @RequestParam(required = true) int id,
             @CookieValue(value = "feb.cookie", required = true) String cookie) {
 
-        System.out.println("PARAMETROS: " + id + " " + cookie);
 
         DocumentosVisitas docVis = new DocumentosVisitas();
-
-        docVis.setDocumento((DocumentoReal) getSession().load(DocumentoReal.class, id));        
+        docVis.setDocumento((DocumentoReal) getSession().load(DocumentoReal.class, id));
         docVis.setVisita((Visita) getSession().load(Visita.class, Integer.parseInt(cookie)));
-        
+
         docVisDao.save(docVis);
-        
+
     }
 
     /**

@@ -11,9 +11,11 @@ public class Estatistica {
     /**
      *
      * @param list the List to be converted
+     * @param tipo is size if you want the repositories number of objects is
+     * visits if you want the repositories access
      * @return
      */
-    public String convertNodoList(List<SubNodo> list) {
+    public String convertNodoList(List<SubNodo> list, String tipo) {
 
         String jsList = "[ ";
 
@@ -26,10 +28,18 @@ public class Estatistica {
         for (int i = 0; i < size; i++) {
             SubNodo nodo = list.get(i);
 
-            if (i == size - 1) {
-                jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ]";
-            } else {
-                jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ], ";
+            if (tipo.equals("size")) {
+                if (i == size - 1) {
+                    jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ]";
+                } else {
+                    jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ], ";
+                }
+            } else if (tipo.equals("visits")) {
+                if (i == size - 1) {
+                    jsList += "[ '" + nodo.getName() + "', " + nodo.getVisits() + " ]";
+                } else {
+                    jsList += "[ '" + nodo.getName() + "', " + nodo.getVisits() + " ], ";
+                }
             }
         }
 

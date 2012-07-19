@@ -18,37 +18,61 @@
 
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery.jqplot.min.js" htmlEscape="true" />'></script>
-        <script type="text/javascript" src='<feb.spring:url value="/scripts/jqplot.pieRenderer.min.js" htmlEscape="true" />'></script>        
-        <script class="code" type="text/javascript">
+        <script type="text/javascript" src='<feb.spring:url value="/scripts/jqplot.pieRenderer.min.js" htmlEscape="true" />'></script>
 
-            $(document).ready(function(){
-
-                var plot1 = jQuery.jqplot ('chart1', [${numObjects}], 
-                { 
-                    title: {
-                        text: 'Quantidade de objetos',
-                        show: true
-                    },                
-                    seriesDefaults: {
-                        // Make this a pie chart.
-                        renderer: jQuery.jqplot.PieRenderer, 
-                        rendererOptions: {
-                            // Put data labels on the pie slices.
-                            // By default, labels show the percentage of the slice.
-                            showDataLabels: true,
-                            dataLabels: 'value'
-                        }
-                    }, 
-                    legend: { show:true, location: 'e' }
-                }
-            );
-            });
-        </script>      
-
-        <script>      
+        <script>
             $(document).ready(function(){                
+                if(${empty federacoes}) {                    
+                    $('.feds').hide();                    
+                } else {
+                    var plot5 = jQuery.jqplot ('chart5', [${fedObjects}], 
+                    { 
+                    
+                        title: {
+                            text: 'Quantidade de objetos',
+                            show: true
+                        },                
+                        seriesDefaults: {
+                            // Make this a pie chart.
+                            renderer: jQuery.jqplot.PieRenderer, 
+                            rendererOptions: {
+                                // Put data labels on the pie slices.
+                                // By default, labels show the percentage of the slice.
+                                showDataLabels: true,
+                                dataLabels: 'value'
+                            }
+                        }, 
+                        legend: { show:true, location: 'e' }
+                    }
+                );
+                }
+                
+                if(${empty repositorios}) {                   
+                    $('.reps').hide();
+                } else {
+                    var plot1 = jQuery.jqplot ('chart1', [${repObjects}], 
+                    { 
+                        title: {
+                            text: 'Quantidade de objetos: Reposit&oacute;rios',
+                            show: true
+                        },                
+                        seriesDefaults: {
+                            // Make this a pie chart.
+                            renderer: jQuery.jqplot.PieRenderer, 
+                            rendererOptions: {
+                                // Put data labels on the pie slices.
+                                // By default, labels show the percentage of the slice.
+                                showDataLabels: true,
+                                dataLabels: 'value'
+                            }
+                        }, 
+                        legend: { show:true, location: 'e' }
+                    }
+                );
+                } 
+                         
                 var plot2 = $.jqplot ('chart2', [${visitasTotal}], {                    
-                    title: 'Número de Visitantes',
+                    title: 'N&uacute;mero de Visitantes',
                     axesDefaults: {
                         labelRenderer: $.jqplot.CanvasAxisLabelRenderer
                     },
@@ -58,24 +82,15 @@
                             pad: 0
                         },
                         yaxis: {
-                            label: "Visitas"
+                            label: "Visitantes"
                         }
                     }
                 });
-            });
-        </script>   
-
-        <script>
-            $(document).ready(function(){
-                var data = [
                 
-                    [<% out.print("'UFRGS'");%>, 18],['MEC', 12], ['local', 8], 
-                    ['UFMA', 23],['Fiocruz', 3], ['UFES', 14], ['UFSCAR', 8], ['IFSul', 4]
-                ];
-                var plot3 = jQuery.jqplot ('chart3', [data], 
+                var plot3 = jQuery.jqplot ('chart3', [${repAcessos}], 
                 { 
                     title: {
-                        text: 'Quantidade de acessos: Federações',
+                        text: 'Quantidade de acessos: Reposit&oacute;rios',
                         show: true
                     },                
                     seriesDefaults: {
@@ -91,26 +106,59 @@
                     legend: { show:true, location: 'e' }
                 }
             );
-            });   
-            
+                
+                var plot4 = jQuery.jqplot ('chart4', [${fedAcessos}], 
+                { 
+                    title: {
+                        text: 'Quantidade de acessos: Federa&ccedil;&otilde;es',
+                        show: true
+                    },                
+                    seriesDefaults: {
+                        // Make this a pie chart.
+                        renderer: jQuery.jqplot.PieRenderer, 
+                        rendererOptions: {
+                            // Put data labels on the pie slices.
+                            // By default, labels show the percentage of the slice.
+                            showDataLabels: true,
+                            dataLabels: 'value'
+                        }
+                    }, 
+                    legend: { show:true, location: 'e' }
+                }
+            );                
+            }); //$(document).ready(function()            
         </script>
-
     </head>
 
 
     <body>   
-        <div id="chart1" style="height:350px; width:500px;"></div>  
 
-        <div id="chart2" style="height:350px; width:500px;"></div>
+        <table class="reps">
+            <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
+            <c:forEach var="reps" items="${repositorios}" varStatus="status">
+                <tr><td>${reps.name}</td><td>${reps.size}</td></tr>                
+            </c:forEach>
+        </table>
+        <div class="reps" id="chart1" style="height:350px; width:500px;"></div>          
+        <div class="reps" id="chart3" style="height:350px; width:500px;"></div>
 
-        <div id="chart3" style="height:350px; width:500px;"></div>
+        <table class="feds">
+            <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
+            <c:forEach var="feds" items="${federacoes}" varStatus="status">
+                <tr><td>${feds.name}</td><td>${feds.size}</td></tr>                
+            </c:forEach>
+        </table>
+        <div class="feds" id="chart5" style="height:350px; width:500px;"></div>
+        
+        <div class="feds" id="chart4" style="height:350px; width:500px;"></div>
 
-
-        <table>
+        <div class="acessos" id="chart2" style="height:350px; width:500px;"></div>
+ 
+        <table class="acessos">
             <caption>10 Objetos mais acessados</caption>            
-            <tr><th> Titulo do Objeto</th><th>N&uacute;mero de acessos</th></tr>
+            <tr><th> T&iacute;tulo do Objeto</th><th>N&uacute;mero de acessos</th><th>Reposit&oacute;rio</th></tr>
             <c:forEach var="objs" items="${docsMaisAcessados}" varStatus="status">
-                <tr><td>${objs.firstTitle}</td><td>${objs.acessos}</td></tr>                
+                <tr><td>${objs.firstTitle}</td><td>${objs.acessos}</td><td>${objs.repositorio}</td></tr>                
             </c:forEach>
         </table>
 

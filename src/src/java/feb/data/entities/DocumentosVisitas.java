@@ -5,10 +5,11 @@ package feb.data.entities;
  * @author Luiz H. L. Rossi <lh.rossi@cognitivabrasil.com>
  */
 public class DocumentosVisitas {
+
     private int id;
     private DocumentoReal documento;
-    private Visita visita;
-
+    private Visita visita;    
+       
     public DocumentosVisitas() {
     }
 
@@ -34,6 +35,6 @@ public class DocumentosVisitas {
 
     public void setVisita(Visita visita) {
         this.visita = visita;
-    }    
-    
+    }
+
 }

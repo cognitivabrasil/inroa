@@ -2,6 +2,7 @@ package feb.spring.controllers;
 
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
+import feb.data.entities.DocumentosVisitas;
 import feb.data.entities.Visita;
 import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +35,8 @@ import org.springframework.web.bind.annotation.*;
 public final class FEBController {
 
     @Autowired
+    private SessionFactory sessionFactory;
+    @Autowired
     ServerInfo serverInfo;
     @Autowired
     private UsuarioDAO userDao;
@@ -43,6 +48,8 @@ public final class FEBController {
     private DocumentosDAO docDao;
     @Autowired
     private VisitasDao visDao;
+    @Autowired
+    private DocumentosVisitasDao docVisDao;
     private BuscaValidator buscaValidator;
     private final Logger log = Logger.getLogger(FEBController.class);
 
@@ -86,6 +93,7 @@ public final class FEBController {
 
     /**
      * Se o usuário tentar a cessar /feb/objetos ele redireciona para o index
+     *
      * @return redireciona para o /
      */
     @RequestMapping("/objetos")
@@ -101,24 +109,29 @@ public final class FEBController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, Model model) {
+    public String infoDetalhada(@PathVariable Integer id, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         DocumentoReal d = docDao.get(id);
-        if(d == null){
-            log.warn("O id "+id+" solicitado não existe!");
+        if (d == null) {
+            log.warn("O id " + id + " solicitado não existe!");
             return "redirect:/";
-        }
-        else{
-        model.addAttribute("obaaEntry", d.getObaaEntry());
-        List<String> titles = d.getTitles();
-        String title = "Título não informado";
-        if (!titles.isEmpty()) {
-            title = titles.get(0);
-        }
+        } else {
+            model.addAttribute("obaaEntry", d.getObaaEntry());
+            List<String> titles = d.getTitles();
+            String title = "Título não informado";
+            if (!titles.isEmpty()) {
+                title = titles.get(0);
+            }
 
-        model.addAttribute("title", title);
-        model.addAttribute("metadata", d.getMetadata());
-        return "infoDetalhada";
-    }
+            DocumentosVisitas docVis = new DocumentosVisitas();
+            docVis.setDocumento(d);
+            docVis.setVisita((Visita) getSession().load(Visita.class, Integer.parseInt(cookie)));
+
+            docVisDao.save(docVis);
+
+            model.addAttribute("title", title);
+            model.addAttribute("metadata", d.getMetadata());
+            return "infoDetalhada";
+        }
     }
 
     @RequestMapping("/consulta")
@@ -303,5 +316,14 @@ public final class FEBController {
                     + "<error code=\"UnsupportedEncoding\">Unsupported Encoding to UTF-8. Error: " + u + "</error></FEB>";
             return error;
         }
+    }
+
+    /**
+     * Gets the session.
+     *
+     * @return the session
+     */
+    private Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 }

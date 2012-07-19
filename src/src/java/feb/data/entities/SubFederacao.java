@@ -4,12 +4,16 @@
  */
 package feb.data.entities;
 
+import feb.spring.ApplicationContextProvider;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.core.style.ToStringCreator;
 
 import feb.util.Operacoes;
+import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.dao.support.DataAccessUtils;
 
 /**
  *
@@ -27,6 +31,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     private String version;
     private String dataXMLTemp;
     private Set<RepositorioSubFed> repositorios;
+    SessionFactory sessionFactory;
 
     public SubFederacao() {
         this.id = null;
@@ -208,6 +213,12 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     public Integer getSize() {
         return ((Integer) getSizeDoc());
     }
+    
+    @Override
+    public Integer getVisits() {
+        return DataAccessUtils.intResult(getSessionFactory().getCurrentSession().
+                createQuery("SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorioSubFed = :rep;").setParameter("rep", this).list());
+    }
 
     /**
      * Test if federation is outdated.
@@ -271,4 +282,17 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
 	public void setVersion(String version) {
 		this.version = version;
 	}
+        
+        private SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+            if (ctx != null) {
+                //TODO:
+                sessionFactory = ctx.getBean(SessionFactory.class);
+            } else {
+                throw new IllegalStateException("Could not get Application context");
+            }
+        }
+        return sessionFactory;
+    }
 }
