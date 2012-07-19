@@ -204,10 +204,40 @@ img{
     font-weight: bold;
 }
 
-.zebraHover
+#estatisticas .reps
 {
+    float: left;  
+    width: 500px;
+    border: 3px #AEC9E3 solid;
+    padding: 10px;
+    margin: 10px;
+}
+
+.estatisticasTitulo
+{
+    text-align:center;
+    font-size: 110%;
+    color: black;
     font-weight: bold;
-     background-color:#AEC9E3;
+    padding: 2px;
+}
+
+#estatisticas .feds
+{
+    float: right;  
+    width: 500px;
+    border: 3px #AEC9E3 solid;
+    padding: 10px;
+    margin: 10px;    
+}
+
+#estatisticas .acessos
+{
+    float: top;    
+}
+.zebraEven
+{
+    background-color:#D7EBFF;
 }
 
 .barra-escura{
@@ -523,7 +553,7 @@ td{vertical-align:top;}
 
 .minitable
 {
-    width: 50%;
+    width: 45%;
 }
 
 .minitable .col2

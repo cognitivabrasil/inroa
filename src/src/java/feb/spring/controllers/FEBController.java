@@ -72,12 +72,8 @@ public final class FEBController {
 
         model.addAttribute("buscaModel", new Consulta());
 
-        if (cookie == null) {
-            Visita newVisitor = new Visita();
-            visDao.save(newVisitor);
-            Integer id = newVisitor.getId();
-            Cookie cookieNew = new Cookie("feb.cookie", id.toString());
-            response.addCookie(cookieNew);
+        if (!existingCookie(cookie)) {
+            response.addCookie(createCookie());
         }
 
         return "index";
@@ -109,7 +105,7 @@ public final class FEBController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         DocumentoReal d = docDao.get(id);
         if (d == null) {
             log.warn("O id " + id + " solicitado não existe!");
@@ -122,10 +118,16 @@ public final class FEBController {
                 title = titles.get(0);
             }
 
+            if (!existingCookie(cookie)) {                
+                Cookie newVisitor = createCookie();
+                response.addCookie(newVisitor);                
+                cookie = newVisitor.getValue();
+            }
+
             DocumentosVisitas docVis = new DocumentosVisitas();
             docVis.setDocumento(d);
+            
             docVis.setVisita((Visita) getSession().load(Visita.class, Integer.parseInt(cookie)));
-
             docVisDao.save(docVis);
 
             model.addAttribute("title", title);
@@ -325,5 +327,31 @@ public final class FEBController {
      */
     private Session getSession() {
         return sessionFactory.getCurrentSession();
+    }
+
+    private Cookie createCookie() {
+        Visita newVisitor = new Visita();
+        visDao.save(newVisitor);
+        Integer id = newVisitor.getId();
+        
+        Cookie newCookie = new Cookie("feb.cookie", id.toString());
+        newCookie.setMaxAge(5*60*1000);
+        
+        return (newCookie);
+    }
+
+    private boolean existingCookie(String cookie) {
+
+        if (cookie == null) {
+            return false;
+        } else {
+            Visita chkVisitor = visDao.get(Integer.parseInt(cookie));
+            if (chkVisitor == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
     }
 }

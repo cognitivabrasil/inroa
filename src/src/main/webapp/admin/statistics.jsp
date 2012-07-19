@@ -144,38 +144,51 @@
             <jsp:param value="7%" name="tamanho" />
         </jsp:include>
 
-        <div class="minitable">
-            <table class="reps repositorios-table zebraTable">
-                <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
-                <c:forEach var="reps" items="${repositorios}" varStatus="status">
-                    <tr><td>${reps.name}</td><td class="col2">${reps.size}</td></tr>                
-                </c:forEach>
-            </table>
+        <div id="estatisticas">
+            <div class="acessos">
+                <table class="repositorios-table zebraTable">
+                       <caption class="estatisticasTitulo">10 Objetos mais acessados</caption>            
+                    <tr><th> T&iacute;tulo do Objeto</th><th>N&uacute;mero de acessos</th><th>Reposit&oacute;rio</th></tr>
+                    <c:forEach var="objs" items="${docsMaisAcessados}" varStatus="status">
+                        <tr><td>${objs.firstTitle}</td><td>${objs.acessos}</td><td>${objs.repositorio}</td></tr>                
+                    </c:forEach>
+                </table>
+                <div id="chart2" style="height:350px;"></div>
+            </div>
+
+            <div id="repositorios" class="reps minitable">
+                <div class="estatisticasTitulo">Repositórios</div>
+                <table class="repositorios-table zebraTable">
+                    <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
+                    <c:forEach var="reps" items="${repositorios}" varStatus="status">
+                        <tr><td>${reps.name}</td><td class="col2">${reps.size}</td></tr>                
+                    </c:forEach>
+                </table>
+                <div id="chart1" style="height:350px;"></div>
+                <div id="chart3" style="height:350px;"></div>
+            </div>
+
+
+
+
+            <div id="federacoes" class="feds minitable">
+                <div class="estatisticasTitulo">Federações</div>
+                <table class="repositorios-table zebraTable">
+                    <tr><th> Federa&ccedil;&atilde;o</th><th>N&uacute;mero de objetos</th></tr>            
+                    <c:forEach var="feds" items="${federacoes}" varStatus="status">
+                        <tr><td>${feds.name}</td><td>${feds.size}</td></tr>                
+                    </c:forEach>
+                </table>
+                <div id="chart5" style="height:350px;"></div>
+                <div id="chart4" style="height:350px;"></div>
+            </div>
+
+
+
+
+
+
         </div>
-
-        <div class="reps" id="chart1" style="height:350px; width:500px;"></div>          
-        <div class="reps" id="chart3" style="height:350px; width:500px;"></div>
-        
-        <div class="minitable">
-            <table class="feds repositorios-table zebraTable">
-                <tr><th> Federa&ccedil;&atilde;o</th><th>N&uacute;mero de objetos</th></tr>            
-                <c:forEach var="feds" items="${federacoes}" varStatus="status">
-                    <tr><td>${feds.name}</td><td>${feds.size}</td></tr>                
-                </c:forEach>
-            </table>
-        </div>
-        <div class="feds minitable" id="chart5" style="height:350px;"></div>
-        <div class="feds" id="chart4" style="height:350px; width:500px;"></div>
-
-        <div class="acessos" id="chart2" style="height:350px; width:500px;"></div>
-
-        <table class="acessos repositorios-table zebraTable">
-            <caption>10 Objetos mais acessados</caption>            
-            <tr><th> T&iacute;tulo do Objeto</th><th>N&uacute;mero de acessos</th><th>Reposit&oacute;rio</th></tr>
-            <c:forEach var="objs" items="${docsMaisAcessados}" varStatus="status">
-                <tr><td>${objs.firstTitle}</td><td>${objs.acessos}</td><td>${objs.repositorio}</td></tr>                
-            </c:forEach>
-        </table>
 
     </body>
 

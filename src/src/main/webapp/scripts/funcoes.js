@@ -393,7 +393,8 @@ function objectAcessCounter(id){
     var ajax = openAjax(); // Start Ajax.
     var link = rootUrl + "/admin/statistics/objUser?id="+id;    
     ajax.open("POST", link, true);
-    ajax.send(null); // submete
+    // ao que parece não precisa disso
+   // ajax.send(null); // submete
     
 }
 
