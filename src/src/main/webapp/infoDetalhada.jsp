@@ -426,11 +426,11 @@ modelo de tópico:
                                             <c:if test="${!empty metadata.educational.interaction.perception}">
                                                 <li><div class="nome">Percep&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.interaction.perception}</div></li>
                                             </c:if>
-                                            <c:if test="${!empty metadata.educational.interaction.synchronism}">
-                                                <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.interaction.synchronism}</div></li>
+                                            <c:if test="${!empty metadata.educational.interaction.synchronismTxt}">
+                                                <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.interaction.synchronismTxt}</div></li>
                                             </c:if>
-                                            <c:if test="${!empty metadata.educational.interaction.coPresence}">
-                                                <li><div class="nome">Co-presen&ccedil;a:</div><div class="valor">${metadata.educational.interaction.coPresence}</div></li>
+                                            <c:if test="${!empty metadata.educational.interaction.coPresenceTxt}">
+                                                <li><div class="nome">Co-presen&ccedil;a:</div><div class="valor">${metadata.educational.interaction.coPresenceTxt}</div></li>
                                             </c:if>
                                             <c:if test="${!empty metadata.educational.interaction.reciprocity}">
                                                 <li><div class="nome">Reciprocidade:</div><div class="valor">${metadata.educational.interaction.reciprocity}</div></li>
@@ -602,8 +602,8 @@ modelo de tópico:
                                                     <c:forEach var="primaryFile" items="${equivalent.primaryFile}">
                                                         <li><div class="nome">Arquivo principal:</div><div class="valor">${primaryFile}</div></li>
                                                     </c:forEach>
-                                                    <c:if test="${!empty equivalent.supplementary}">
-                                                        <li><div class="nome">Suplementar:</div><div class="valor">${equivalent.supplementary}</div></li>
+                                                    <c:if test="${!empty equivalent.supplementaryTxt}">
+                                                        <li><div class="nome">Suplementar:</div><div class="valor">${equivalent.supplementaryTxt}</div></li>
                                                     </c:if>
                                                     <c:if test="${!empty equivalent.content}">
                                                         <li>
@@ -633,8 +633,8 @@ modelo de tópico:
                                                                     <li>
                                                                         <span class="title">Alternativa ao texto</span>
                                                                         <ul>
-                                                                            <c:if test="${!empty equivalent.content.alternativesToText.graphicAlternative}">
-                                                                                <li><div class="nome">Tem alternativa gr&aacute;fica:</div><div class="valor">${equivalent.content.alternativesToText.graphicAlternative}</div></li>
+                                                                            <c:if test="${!empty equivalent.content.alternativesToText.graphicAlternativeTxt}">
+                                                                                <li><div class="nome">Tem alternativa gr&aacute;fica:</div><div class="valor">${equivalent.content.alternativesToText.graphicAlternativeTxt}</div></li>
                                                                             </c:if>
                                                                             <c:forEach var="signLanguage" items="${equivalent.content.alternativesToText.signLanguage}">
                                                                                 <li><div class="nome">Linguagem de sinal:</div><div class="valor">${signLanguage}</div></li>
@@ -654,23 +654,23 @@ modelo de tópico:
                                                                                         <c:if test="${!empty captionType.language}">
                                                                                             <li><div class="nome">Idioma:</div><div class="valor">${captionType.language}</div></li>
                                                                                         </c:if>
-                                                                                        <c:if test="${!empty captionType.verbatim}">
-                                                                                            <li><div class="nome">Texto original:</div><div class="valor">${captionType.verbatim}</div></li>
+                                                                                        <c:if test="${!empty captionType.verbatimTxt}">
+                                                                                            <li><div class="nome">Texto original:</div><div class="valor">${captionType.verbatimTxt}</div></li>
                                                                                         </c:if>
-                                                                                        <c:if test="${!empty captionType.reducedReadingLevel}">
-                                                                                            <li><div class="nome">Texto reduzido:</div><div class="valor">${captionType.reducedReadingLevel}</div></li>
+                                                                                        <c:if test="${!empty captionType.reducedReadingLevelTxt}">
+                                                                                            <li><div class="nome">Texto reduzido:</div><div class="valor">${captionType.reducedReadingLevelTxt}</div></li>
                                                                                         </c:if>
                                                                                         <c:if test="${!empty captionType.reducedSpeed}">
 
-                                                                                            <c:if test="${!empty captionType.reducedSpeed.reducedSpeed}">
-                                                                                                <li><div class="nome">Velocidade reduzida:</div><div class="valor">${captionType.reducedSpeed.reducedSpeed}</div></li>
+                                                                                            <c:if test="${!empty captionType.reducedSpeed.reducedSpeedTxt}">
+                                                                                                <li><div class="nome">Velocidade reduzida:</div><div class="valor">${captionType.reducedSpeed.reducedSpeedTxt}</div></li>
                                                                                             </c:if>
                                                                                             <c:if test="${!empty captionType.reducedSpeed.captionRate}">
                                                                                                 <li><div class="nome">Velocidade:</div><div class="valor">${captionType.reducedSpeed.captionRate}</div></li>
                                                                                             </c:if>
                                                                                         </c:if>
-                                                                                        <c:if test="${!empty captionType.enhancedCaption}">
-                                                                                            <li><div class="nome">Texto aumentado:</div><div class="valor">${captionType.enhancedCaption}</div></li>
+                                                                                        <c:if test="${!empty captionType.enhancedCaptionTxt}">
+                                                                                            <li><div class="nome">Texto aumentado:</div><div class="valor">${captionType.enhancedCaptionTxt}</div></li>
                                                                                         </c:if>
                                                                                     </ul>
                                                                                 </li>
