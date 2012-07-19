@@ -4,6 +4,7 @@
     Author     : Marcos
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,22 +17,17 @@
         <link rel="StyleSheet" media="screen" href="../css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="../scripts/validatejs.js"></script>
         <script type="text/javascript" src="../scripts/funcoes.js"></script>
-        <script type="text/javascript">
-            var myForm = new Validate();
-            myForm.addRules({id:'senhabd', to:'confsenhabd', option:'isEqual',error:'* As senhas digitadas n&atilde;o est&atilde;o iguais!'});
-        </script>
     </head>
     <body>
 
         <div id="page">            
             <div class="subTitulo-center">&nbsp;Informa&ccedil;&otilde;es do Banco de Dados</div>
-            <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer--></div>
             <div class="EspacoAntes">&nbsp;</div>
-            <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
-                ${erro}
-            </div>
+            <c:if test="${!empty erro}">
+                <div class="DivErro" id="MensagemErro">${erro}</div>
+            </c:if>
 
-            <form:form method="POST" modelAttribute="conf" action="alterDB" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
+            <form:form method="POST" modelAttribute="conf" action="alterDB" acceptCharset="utf-8">
 
                 <div class="LinhaEntrada">
                     <form:errors path="database" cssClass="ValueErro" />
