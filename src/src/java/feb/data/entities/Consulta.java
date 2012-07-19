@@ -1,5 +1,7 @@
 package feb.data.entities;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +14,8 @@ import org.springframework.context.ApplicationContextException;
 import feb.data.interfaces.StopWordsDao;
 import feb.spring.ApplicationContextProvider;
 import feb.util.Operacoes;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 
 /**
  *
@@ -151,5 +155,30 @@ public class Consulta {
 
     public void setSizeResult(int sizeResult) {
         this.sizeResult = sizeResult;
+    }
+    
+    /**
+     * @return the consulta params in an URL encoded form
+     */
+    public String getUrlEncoded() {
+    	try {
+			String encoded = "consulta=" + URLEncoder.encode(consulta,"UTF-8");
+			if(isNotBlank(autor)) { encoded += "&autor=" + URLEncoder.encode(autor,"UTF-8"); }
+			
+			for(Integer i : repositorios) {
+				encoded += "&repositorios=" + URLEncoder.encode(i.toString(),"UTF-8");
+			}
+			for(Integer i : federacoes) {
+				encoded += "&federacoes=" + URLEncoder.encode(i.toString(),"UTF-8");
+			}
+			for(Integer i : repositorios) {
+				encoded += "&repositorios=" + URLEncoder.encode(i.toString(),"UTF-8");
+			}
+			
+			return encoded;
+		} catch (UnsupportedEncodingException e) {
+			// UTF 8 is always supported
+			throw new RuntimeException("FATAL", e);
+		}
     }
 }

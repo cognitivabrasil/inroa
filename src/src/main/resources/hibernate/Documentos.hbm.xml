@@ -17,13 +17,13 @@
 
         <property name="timestamp" type="timestamp" />
         <set name="objetos" cascade="all-delete-orphan" table="objetos"
-                     inverse="true">
+                     inverse="true" order-by="atributo,valor asc">
             <key column="documento" />
             <one-to-many class="feb.data.entities.Objeto" />
         </set>
         <property name="deleted" type="boolean" />
 
-        <set name="autores" cascade="all-delete-orphan" table="autores"
+        <set name="autores" cascade="all-delete-orphan" table="autores" order-by="nome asc"
                      inverse="true">
             <key column="documento" />
             <one-to-many class="feb.data.entities.Autor" />

@@ -10,7 +10,6 @@
         </generator>    </id>
     <property name="atributo" not-null="true" type="string"/>
     <property name="valor" type="string">
-      <meta attribute="field-description">When the track was created</meta>
     </property>
     
     <many-to-one name="documento" class="feb.data.entities.DocumentoReal" fetch="select">

@@ -524,4 +524,5 @@ public class DocumentoReal implements java.io.Serializable,
 		}
 		return sessionFactory;
 	}
+
 }
