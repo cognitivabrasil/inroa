@@ -647,13 +647,6 @@ CREATE INDEX fki_documento ON documentos_visitas USING btree (documento);
 
 CREATE INDEX fki_visitas ON documentos_visitas USING btree (visita);
 
-
-ALTER TABLE ONLY documentos_visitas
-    ADD CONSTRAINT fki_documento FOREIGN KEY (documento) REFERENCES documentos(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-ALTER TABLE ONLY documentos_visitas
-    ADD CONSTRAINT fki_visitas FOREIGN KEY (visita) REFERENCES visitas(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
 --
 -- TOC entry 183 (class 1259 OID 16528)
 -- Dependencies: 6 182
@@ -751,6 +744,13 @@ ALTER TABLE ONLY consultas
 
 ALTER TABLE ONLY documentos
     ADD CONSTRAINT documentos_pkey PRIMARY KEY (id);
+
+
+ALTER TABLE ONLY documentos_visitas
+    ADD CONSTRAINT fki_documento FOREIGN KEY (documento) REFERENCES documentos(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY documentos_visitas
+    ADD CONSTRAINT fki_visitas FOREIGN KEY (visita) REFERENCES visitas(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -861,14 +861,6 @@ ALTER TABLE ONLY repositorios
 
 ALTER TABLE ONLY usuarios
     ADD CONSTRAINT usuarios_pkey PRIMARY KEY (id);
-
-
--- Constraint: visitas_pki
-
--- ALTER TABLE visitas DROP CONSTRAINT visitas_pki;
-
-ALTER TABLE visitas
-  ADD CONSTRAINT visitas_pki PRIMARY KEY(id);
 
 --
 -- TOC entry 2065 (class 1259 OID 18018)
