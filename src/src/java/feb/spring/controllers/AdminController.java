@@ -142,7 +142,8 @@ public final class AdminController {
                 return "admin/alterDB";
             } else {
                 try{
-                    febConf.save();
+                	conf.updateFrom(febConf);
+                    conf.save();
                     return "redirect:fechaRecarrega";
                 }catch(IOException i){
                     log.error("Erro ao alterar as informações da base de dados.", i);

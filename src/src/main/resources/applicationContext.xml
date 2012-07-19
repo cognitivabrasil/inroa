@@ -43,8 +43,8 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 		
   
     <bean id="febConfig" class="feb.spring.FebConfig">
-        <property name="file">
-            <value>file:///etc/feb/feb.properties</value>
+        <property name="filename">
+            <value>/etc/feb/feb.properties</value>
         </property>
         <property name="defaultProperties" ref="defaultProperties"/>
     </bean>

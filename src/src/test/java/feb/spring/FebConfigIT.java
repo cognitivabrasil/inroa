@@ -147,4 +147,36 @@ public class FebConfigIT {
 		f.delete();
 	}
 	
+	@Test
+	public void filenameNonExisting() throws IOException {
+		// first, save a file
+				File f = new File("/tmp/feb.properties");
+				if(f.exists()) {
+					f.delete();
+				}
+				
+				assertFalse(f.exists());
+				
+				c.setFilename("/tmp/feb.properties");
+				c.setDefaultProperties(defaultProperties);
+				c.postConstruct();
+				
+				c.save();
+	}
+	
+	@Test
+	public void update() {
+		c.setFile(new File("src/main/resources/feb.properties"));
+		c.setDefaultProperties(new Properties());
+		c.postConstruct();
+		
+		FebConfig other = new FebConfig();
+		other.setFilename("/tmp/bbbbfeb.properties");
+		other.setPort(234);
+		
+		c.updateFrom(other);
+		assertThat(c.getPort(), equalTo(234));
+		assertThat(c.getPassword(), equalTo("feb@RNP"));
+	}
+	
 }
