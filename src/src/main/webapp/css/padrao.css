@@ -113,8 +113,6 @@ img{
     background-color:#AEC9E3;
 }
 
-
-
 .resultadoConsulta{
 
     font-family:Verdana, Arial, Helvetica, sans-serif;
@@ -197,6 +195,19 @@ img{
 {
     width: 95%;
     padding: 5px;
+}
+
+#paginaAdministrativa caption
+{
+    font-size: 123%;
+    color: black;
+    font-weight: bold;
+}
+
+.zebraHover
+{
+    font-weight: bold;
+     background-color:#AEC9E3;
 }
 
 .barra-escura{
@@ -509,6 +520,17 @@ td{vertical-align:top;}
 .repositorios-table td{
     vertical-align: middle;
 }
+
+.minitable
+{
+    width: 50%;
+}
+
+.minitable .col2
+{
+    width: 25%;
+}
+
 .mapeamentos-table
 {
     width: 100%;

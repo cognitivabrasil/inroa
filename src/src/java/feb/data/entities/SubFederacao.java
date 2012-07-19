@@ -229,7 +229,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     @Override
     public Integer getVisits() {
         return DataAccessUtils.intResult(getSessionFactory().getCurrentSession().
-                createQuery("SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorioSubFed = :rep;").setParameter("rep", this).list());
+                createQuery("SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorioSubFed.subFederacao = :rep").setParameter("rep", this).list());
     }
 
     /**

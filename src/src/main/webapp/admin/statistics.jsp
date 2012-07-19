@@ -9,7 +9,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
-    <head>    
+    <head>  
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>FEB - Estatísticas de Uso</title>
+        <link rel="StyleSheet"
+              href="<feb.spring:url value="/css/padrao.css" htmlEscape="true" />"
+              type="text/css">
         <link rel="shortcut icon" type="image/x-icon"
               href="<feb.spring:url value="/imagens/favicon.ico" htmlEscape="true" />">
         <link rel="StyleSheet"
@@ -19,6 +24,7 @@
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery.jqplot.min.js" htmlEscape="true" />'></script>
         <script type="text/javascript" src='<feb.spring:url value="/scripts/jqplot.pieRenderer.min.js" htmlEscape="true" />'></script>
+        <script type="text/javascript" src='<feb.spring:url value="/scripts/zebraScript.js" htmlEscape="true" />'></script>
 
         <script>
             $(document).ready(function(){                
@@ -131,30 +137,39 @@
     </head>
 
 
-    <body>   
+    <body>  
 
-        <table class="reps">
-            <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
-            <c:forEach var="reps" items="${repositorios}" varStatus="status">
-                <tr><td>${reps.name}</td><td>${reps.size}</td></tr>                
-            </c:forEach>
-        </table>
+        <jsp:include page="../cabecalho.jsp">
+            <jsp:param value="Ferramenta Administrativa" name="titulo" />
+            <jsp:param value="7%" name="tamanho" />
+        </jsp:include>
+
+        <div class="minitable">
+            <table class="reps repositorios-table zebraTable">
+                <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
+                <c:forEach var="reps" items="${repositorios}" varStatus="status">
+                    <tr><td>${reps.name}</td><td class="col2">${reps.size}</td></tr>                
+                </c:forEach>
+            </table>
+        </div>
+
         <div class="reps" id="chart1" style="height:350px; width:500px;"></div>          
         <div class="reps" id="chart3" style="height:350px; width:500px;"></div>
-
-        <table class="feds">
-            <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
-            <c:forEach var="feds" items="${federacoes}" varStatus="status">
-                <tr><td>${feds.name}</td><td>${feds.size}</td></tr>                
-            </c:forEach>
-        </table>
-        <div class="feds" id="chart5" style="height:350px; width:500px;"></div>
         
+        <div class="minitable">
+            <table class="feds repositorios-table zebraTable">
+                <tr><th> Federa&ccedil;&atilde;o</th><th>N&uacute;mero de objetos</th></tr>            
+                <c:forEach var="feds" items="${federacoes}" varStatus="status">
+                    <tr><td>${feds.name}</td><td>${feds.size}</td></tr>                
+                </c:forEach>
+            </table>
+        </div>
+        <div class="feds minitable" id="chart5" style="height:350px;"></div>
         <div class="feds" id="chart4" style="height:350px; width:500px;"></div>
 
         <div class="acessos" id="chart2" style="height:350px; width:500px;"></div>
- 
-        <table class="acessos">
+
+        <table class="acessos repositorios-table zebraTable">
             <caption>10 Objetos mais acessados</caption>            
             <tr><th> T&iacute;tulo do Objeto</th><th>N&uacute;mero de acessos</th><th>Reposit&oacute;rio</th></tr>
             <c:forEach var="objs" items="${docsMaisAcessados}" varStatus="status">

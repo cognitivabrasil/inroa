@@ -30,7 +30,7 @@ Author     : Marcos Nunes
 	src="<feb.spring:url value="/scripts/funcoesMapeamento.js" htmlEscape="true" />"></script>
 
 </head>
-<body>
+<body id="paginaAdministrativa">
 
 
 	<jsp:include page="../cabecalho.jsp">
@@ -67,8 +67,7 @@ Author     : Marcos Nunes
 	<div class="versao">Vers&atilde;o ${versao}</div>
 	<table class='repositorios-table' cellpadding=3>
 		<tr>
-			<th colspan=4><font size="3%" color=black>Lista de
-					Reposit&oacute;rios Cadastrados na Federa&ccedil;&atilde;o</font></th>
+			<caption>Lista de Reposit&oacute;rios Cadastrados na Federa&ccedil;&atilde;o</caption>
 		</tr>
 
 		<tr style="background-color: #AEC9E3">
@@ -170,8 +169,7 @@ Author     : Marcos Nunes
 
 	<table class='repositorios-table' id='padroes' cellpadding=3>
 		<tr>
-			<th colspan=4><font size="3%" color=black>Lista de
-					Padr&atilde;o de metadados</font></th>
+			<caption>Lista de Padr&atilde;o de Metadados</caption>
 		</tr>
 
 		<tr style="background-color: #AEC9E3">
@@ -229,7 +227,7 @@ Author     : Marcos Nunes
 
 	<table class='repositorios-table' id='padroes' cellpadding=3>
 		<tr>
-			<th colspan=4><font size="3%" color=black>Lista de Mapeamentos</font></th>
+			<caption>Lista de Mapeamentos</caption>
 		</tr>
 
 		<tr style="background-color: #AEC9E3">
@@ -286,8 +284,7 @@ Author     : Marcos Nunes
 
 	<table class='repositorios-table' cellpadding=3>
 		<tr>
-			<th colspan=4><font size="3%" color=black>Lista de
-					Subfedera&ccedil;&otilde;es cadastradas</font></th>
+			<caption>Lista de Subfedera&ccedil;&otilde;es cadastradas</caption>
 		</tr>
 
 		<tr style="background-color: #AEC9E3">
@@ -388,8 +385,7 @@ Author     : Marcos Nunes
 
 	<table class='repositorios-table' cellpadding=3>
 		<tr>
-			<th colspan=4><font size="3%" color=black>Lista de
-					Usuários</font></th>
+			<caption>Lista de Usuários</caption>
 		</tr>
 
 		<tr style="background-color: #AEC9E3">

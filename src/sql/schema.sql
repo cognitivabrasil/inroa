@@ -584,73 +584,202 @@ CREATE TABLE usuarios (
 
 ALTER TABLE public.usuarios OWNER TO feb;
 
+--
+-- TOC entry 193 (class 1259 OID 31271)
+-- Dependencies: 6
+-- Name: documentos_visitas; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
+--
 
--- Table: visitas
-
-CREATE TABLE visitas (
-  id integer NOT NULL,
-  horario timestamp without time zone
+CREATE TABLE documentos_visitas (
+    documento integer NOT NULL,
+    visita integer NOT NULL,
+    id integer NOT NULL
 );
 
-ALTER TABLE visitas
-  OWNER TO feb;
-COMMENT ON TABLE visitas IS 'contador de visitas do FEB';
 
--- Table: documentos_visitas
+ALTER TABLE public.documentos_visitas OWNER TO feb;
 
--- DROP TABLE documentos_visitas;
+--
+-- TOC entry 2009 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: TABLE documentos_visitas; Type: COMMENT; Schema: public; Owner: feb
+--
 
-CREATE TABLE documentos_visitas
-(
-  documento integer NOT NULL,
-  visita integer NOT NULL,
-  id serial NOT NULL,
-  CONSTRAINT pki_documentos_visitas PRIMARY KEY (id ),
-  CONSTRAINT fki_documento FOREIGN KEY (documento)
-      REFERENCES documentos (id) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT fki_visitas FOREIGN KEY (visita)
-      REFERENCES visitas (id) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE CASCADE
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE documentos_visitas
-  OWNER TO feb;
-COMMENT ON TABLE documentos_visitas
-  IS 'tabela n x n de documentos por visitas';
+COMMENT ON TABLE documentos_visitas IS 'tabela n x n de documentos por visitas';
 
--- Index: fki_fki_documento
 
--- DROP INDEX fki_fki_documento;
+--
+-- TOC entry 194 (class 1259 OID 31289)
+-- Dependencies: 6 193
+-- Name: documentos_visitas_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
+--
 
-CREATE INDEX fki_documento
-  ON documentos_visitas
-  USING btree
-  (documento );
-
--- Index: fki_fki_visitas
-
--- DROP INDEX fki_fki_visitas;
-
-CREATE INDEX fki_visitas
-  ON documentos_visitas
-  USING btree
-  (visita );
-
--- Sequence: visitas_id_seq
-
-CREATE SEQUENCE visitas_id_seq
-    START WITH 100
+CREATE SEQUENCE documentos_visitas_id_seq
+    START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public.visitas_id_seq OWNER TO feb;
+
+ALTER TABLE public.documentos_visitas_id_seq OWNER TO feb;
 
 --
+-- TOC entry 2010 (class 0 OID 0)
+-- Dependencies: 194
+-- Name: documentos_visitas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
+--
+
+ALTER SEQUENCE documentos_visitas_id_seq OWNED BY documentos_visitas.id;
+
+
+--
+-- TOC entry 190 (class 1259 OID 31176)
+-- Dependencies: 6
+-- Name: visitas; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
+--
+
+CREATE TABLE visitas (
+    id integer NOT NULL,
+    horario timestamp without time zone
+);
+
+
+ALTER TABLE public.visitas OWNER TO feb;
+
+--
+-- TOC entry 2011 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: TABLE visitas; Type: COMMENT; Schema: public; Owner: feb
+--
+
+COMMENT ON TABLE visitas IS 'contador de visitas do FEB';
+
+
+--
+-- TOC entry 1990 (class 2604 OID 31184)
+-- Dependencies: 169 168
+-- Name: id; Type: DEFAULT; Schema: public; Owner: feb
+--
+
+ALTER TABLE ONLY documentos ALTER COLUMN id SET DEFAULT nextval('documentos_id_seq'::regclass);
+
+
+--
+-- TOC entry 1991 (class 2604 OID 31291)
+-- Dependencies: 194 193
+-- Name: id; Type: DEFAULT; Schema: public; Owner: feb
+--
+
+ALTER TABLE ONLY documentos_visitas ALTER COLUMN id SET DEFAULT nextval('documentos_visitas_id_seq'::regclass);
+
+
+--
+-- TOC entry 1993 (class 2606 OID 31192)
+-- Dependencies: 168 168
+-- Name: documentos_pkey; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
+--
+
+ALTER TABLE ONLY documentos
+    ADD CONSTRAINT documentos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2000 (class 2606 OID 31299)
+-- Dependencies: 193 193
+-- Name: pki_documentos_visitas; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
+--
+
+ALTER TABLE ONLY documentos_visitas
+    ADD CONSTRAINT pki_documentos_visitas PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1996 (class 2606 OID 31216)
+-- Dependencies: 190 190
+-- Name: visitas_pki; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
+--
+
+ALTER TABLE ONLY visitas
+    ADD CONSTRAINT visitas_pki PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1997 (class 1259 OID 31279)
+-- Dependencies: 193
+-- Name: fki_fki_documento; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
+--
+
+CREATE INDEX fki_fki_documento ON documentos_visitas USING btree (documento);
+
+
+--
+-- TOC entry 1998 (class 1259 OID 31285)
+-- Dependencies: 193
+-- Name: fki_fki_visitas; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
+--
+
+CREATE INDEX fki_fki_visitas ON documentos_visitas USING btree (visita);
+
+
+--
+-- TOC entry 1994 (class 1259 OID 31223)
+-- Dependencies: 168
+-- Name: fki_repositorio; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
+--
+
+CREATE INDEX fki_repositorio ON documentos USING btree (id_repositorio);
+
+
+--
+-- TOC entry 2001 (class 2606 OID 31229)
+-- Dependencies: 168 184
+-- Name: excluidos; Type: FK CONSTRAINT; Schema: public; Owner: feb
+--
+
+ALTER TABLE ONLY documentos
+    ADD CONSTRAINT excluidos FOREIGN KEY (id_repositorio) REFERENCES repositorios(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2004 (class 2606 OID 31274)
+-- Dependencies: 1992 168 193
+-- Name: fki_documento; Type: FK CONSTRAINT; Schema: public; Owner: feb
+--
+
+ALTER TABLE ONLY documentos_visitas
+    ADD CONSTRAINT fki_documento FOREIGN KEY (documento) REFERENCES documentos(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2005 (class 2606 OID 31280)
+-- Dependencies: 1995 193 190
+-- Name: fki_visitas; Type: FK CONSTRAINT; Schema: public; Owner: feb
+--
+
+ALTER TABLE ONLY documentos_visitas
+    ADD CONSTRAINT fki_visitas FOREIGN KEY (visita) REFERENCES visitas(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2002 (class 2606 OID 31254)
+-- Dependencies: 184 168
+-- Name: repositorio; Type: FK CONSTRAINT; Schema: public; Owner: feb
+--
+
+ALTER TABLE ONLY documentos
+    ADD CONSTRAINT repositorio FOREIGN KEY (id_repositorio) REFERENCES repositorios(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2003 (class 2606 OID 31259)
+-- Dependencies: 186 168
+-- Name: repositorio_subfed; Type: FK CONSTRAINT; Schema: public; Owner: feb
+--
+
+ALTER TABLE ONLY documentos
+    ADD CONSTRAINT repositorio_subfed FOREIGN KEY (id_rep_subfed) REFERENCES repositorios_subfed(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
 -- TOC entry 183 (class 1259 OID 16528)
 -- Dependencies: 6 182
 -- Name: usuarios_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
