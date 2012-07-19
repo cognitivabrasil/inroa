@@ -363,6 +363,8 @@ src/src/main/webapp/imagens/ajax-loader.gif -text
 src/src/main/webapp/imagens/atom.gif -text
 src/src/main/webapp/imagens/erro_sincronizar.png -text
 src/src/main/webapp/imagens/favicon.ico -text
+src/src/main/webapp/imagens/feed-icon-14x14.png -text
+src/src/main/webapp/imagens/feed-icon-28x28.png -text
 src/src/main/webapp/imagens/ferramenta_32x32.png -text
 src/src/main/webapp/imagens/gerarRss.png -text
 src/src/main/webapp/imagens/ico24_deletar.gif -text

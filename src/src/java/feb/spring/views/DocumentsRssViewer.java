@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.feed.AbstractRssFeedView;
 
 import com.sun.syndication.feed.rss.Channel;
 import com.sun.syndication.feed.rss.Content;
+import com.sun.syndication.feed.rss.Image;
 import com.sun.syndication.feed.rss.Item;
 
 import feb.data.entities.Autor;
@@ -19,22 +20,24 @@ import feb.data.entities.DocumentoReal;
 
 public class DocumentsRssViewer extends AbstractRssFeedView {
 	
-	private static String getDocLink(DocumentoReal d, HttpServletRequest req) {
-		 	String scheme = req.getScheme();             // http
-		    String serverName = req.getServerName();     // hostname.com
-		    int serverPort = req.getServerPort();        // 80
-		    String contextPath = req.getContextPath();   // /mywebapp
-		    StringBuffer url =  new StringBuffer();
-		    url.append(scheme).append("://").append(serverName);
+	private static String getBaseUrl(HttpServletRequest req) {
+	 	String scheme = req.getScheme();             // http
+	    String serverName = req.getServerName();     // hostname.com
+	    int serverPort = req.getServerPort();        // 80
+	    String contextPath = req.getContextPath();   // /mywebapp
+	    StringBuffer url =  new StringBuffer();
+	    url.append(scheme).append("://").append(serverName);
 
-		    if ((serverPort != 80) && (serverPort != 443)) {
-		        url.append(":").append(serverPort);
-		    }
+	    if ((serverPort != 80) && (serverPort != 443)) {
+	        url.append(":").append(serverPort);
+	    }
 
-		    url.append(contextPath);  
-		    url.append("/objetos/" + d.getId());
-		    
-		    return url.toString();
+	    url.append(contextPath);  
+	    return url.toString();
+	}
+	
+	private static String getDocLink(DocumentoReal d, HttpServletRequest req) {		    
+		    return getBaseUrl(req) + "/objetos/" + d.getId();
 	}
 
 	@Override
@@ -44,6 +47,10 @@ public class DocumentsRssViewer extends AbstractRssFeedView {
 		feed.setTitle("Feb Feed");
 		feed.setDescription("Objetos de Aprendizagem");
 		feed.setLink("http://feb.rnp.br");
+		Image img = new Image();
+		img.setUrl(getBaseUrl(request) + "/imagens/favicon.ico");
+		img.setTitle("FEB Logo");
+		feed.setImage(img);
 
 		super.buildFeedMetadata(model, feed, request);
 	}

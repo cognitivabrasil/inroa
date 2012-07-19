@@ -43,7 +43,8 @@
         <div class="cabecalhoConsulta">
             <div class="esquerda">
             	<c:url var="rsslink" value="rss/feed?${BuscaModel.urlEncoded}"/>
-            	<a href="${rsslink}">RSS</a>
+            	<c:url var="rssImg" value="/imagens/feed-icon-14x14.png"/>
+            	<a href="${rsslink}"><img src="${rssImg}" alt="RSS"/></a>
                 <c:if test="${!empty BuscaModel.consulta}"> &nbsp;Consulta efetuada <i>"<strong>${BuscaModel.consulta}</strong>"</i></c:if>
                 <c:if test="${!empty BuscaModel.autor}"> &nbsp;Autor: <i>"<strong>${BuscaModel.autor}</strong>"</i></c:if>
             </div>
