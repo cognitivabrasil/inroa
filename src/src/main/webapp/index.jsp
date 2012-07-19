@@ -74,9 +74,6 @@
         </div>
         <div>
             <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
-            <div  class="rss">
-                <a class="linkRSS" onclick= "geraRss()" title="feb.RSS da busca"><img src="imagens/rss_300x300.png" width="3%" alt="rsslogo" onclick= "geraRss()"/> </a>
-            </div>
         </div>
         <%@include file="googleAnalytics"%>
     </body>

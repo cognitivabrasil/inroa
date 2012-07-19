@@ -23,37 +23,6 @@
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
         <script language="JavaScript" type="text/javascript">
-            function geraRss() {
-                var consulta = document.getElementById("consulta").value;
-                var repositorios = document.getElementsByName("repositorios");
-                var idSubfed1 = document.getElementsByName("federacoes");
-                var idSubRep1 = document.getElementsByName("repSubfed");
-
-                var idRepLocal = "";
-                var idSubfed = "";
-                var idSubRep = "";                
-
-                //Contatenar resultados dos repositorios locais
-                for (var i=0;i<repositorios.length;i = i+1){
-                    if (repositorios[i].checked == true){
-                        idRepLocal +="&repositorios="+repositorios[i].value;
-                    }
-                }
-                //concatenar resultados das subfederacoes
-                for (var i=0;i<idSubfed1.length;i = i+1){
-                    if (idSubfed1[i].checked == true){
-                        idSubfed +="&federacoes="+idSubfed1[i].value;
-                    }
-                }
-                //concatenar resultados dos repositorios das subfederacoes
-                for (var i=0;i<idSubRep1.length;i = i+1){
-                    if (idSubRep1[i].checked == true){
-                        idSubRep +="&repSubfed="+idSubRep1[i].value;
-                    }
-                }
-                
-                window.location='rss.jsp?consulta='+consulta+idRepLocal+idSubfed+idSubRep;
-            }
             function ocultar(id, idLink){
                 var valor = document.getElementById(idLink);
                 valor.innerHTML="+";
@@ -163,9 +132,6 @@
         </div>
         <div>
             <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
-            <div  class="rss">
-                <a class="linkRSS" onclick= "geraRss()" title="feb.RSS da busca"><img src="imagens/rss_300x300.png" width="3%" alt="rsslogo" onclick= "geraRss()"/> </a>
-            </div>
         </div>
         <%@include file="googleAnalytics"%>
     </body>
