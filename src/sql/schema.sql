@@ -598,57 +598,61 @@ COMMENT ON TABLE visitas IS 'contador de visitas do FEB';
 
 -- Table: documentos_visitas
 
--- DROP TABLE documentos_visitas;
-
-CREATE TABLE documentos_visitas
-(
-  documento integer NOT NULL,
-  visita integer NOT NULL,
-  id serial NOT NULL,
-  CONSTRAINT pki_documentos_visitas PRIMARY KEY (id ),
-  CONSTRAINT fki_documento FOREIGN KEY (documento)
-      REFERENCES documentos (id) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT fki_visitas FOREIGN KEY (visita)
-      REFERENCES visitas (id) MATCH SIMPLE
-      ON UPDATE CASCADE ON DELETE CASCADE
-)
-WITH (
-  OIDS=FALSE
+CREATE TABLE documentos_visitas (
+    documento integer NOT NULL,
+    visita integer NOT NULL,
+    id integer NOT NULL
 );
-ALTER TABLE documentos_visitas
-  OWNER TO feb;
-COMMENT ON TABLE documentos_visitas
-  IS 'tabela n x n de documentos por visitas';
 
--- Index: fki_fki_documento
+ALTER TABLE public.documentos_visitas OWNER TO feb;
 
--- DROP INDEX fki_fki_documento;
+COMMENT ON TABLE documentos_visitas IS 'tabela n x n de documentos por visitas';
 
-CREATE INDEX fki_documento
-  ON documentos_visitas
-  USING btree
-  (documento );
 
--- Index: fki_fki_visitas
-
--- DROP INDEX fki_fki_visitas;
-
-CREATE INDEX fki_visitas
-  ON documentos_visitas
-  USING btree
-  (visita );
-
--- Sequence: visitas_id_seq
-
-CREATE SEQUENCE visitas_id_seq
-    START WITH 100
+CREATE SEQUENCE documentos_visitas_id_seq
+    START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public.visitas_id_seq OWNER TO feb;
+ALTER TABLE public.documentos_visitas_id_seq OWNER TO feb;
+
+ALTER SEQUENCE documentos_visitas_id_seq OWNED BY documentos_visitas.id;
+
+--
+-- TOC entry 190 (class 1259 OID 31176)
+-- Dependencies: 6
+-- Name: visitas; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
+--
+
+CREATE TABLE visitas (
+    id integer NOT NULL,
+    horario timestamp without time zone
+);
+
+ALTER TABLE public.visitas OWNER TO feb;
+
+COMMENT ON TABLE visitas IS 'contador de visitas do FEB';
+
+ALTER TABLE ONLY documentos_visitas ALTER COLUMN id SET DEFAULT nextval('documentos_visitas_id_seq'::regclass);
+
+ALTER TABLE ONLY documentos_visitas
+    ADD CONSTRAINT pki_documentos_visitas PRIMARY KEY (id);
+
+ALTER TABLE ONLY visitas
+    ADD CONSTRAINT visitas_pki PRIMARY KEY (id);
+
+CREATE INDEX fki_documento ON documentos_visitas USING btree (documento);
+
+CREATE INDEX fki_visitas ON documentos_visitas USING btree (visita);
+
+
+ALTER TABLE ONLY documentos_visitas
+    ADD CONSTRAINT fki_documento FOREIGN KEY (documento) REFERENCES documentos(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY documentos_visitas
+    ADD CONSTRAINT fki_visitas FOREIGN KEY (visita) REFERENCES visitas(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 --
 -- TOC entry 183 (class 1259 OID 16528)
