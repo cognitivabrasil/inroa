@@ -280,6 +280,7 @@ src/src/java/feb/spring/controllers/FEBController.java -text
 src/src/java/feb/spring/controllers/FederationsController.java -text
 src/src/java/feb/spring/controllers/MapeamentosController.java -text
 src/src/java/feb/spring/controllers/RepositoriesController.java -text
+src/src/java/feb/spring/controllers/RssController.java -text
 src/src/java/feb/spring/controllers/StatisticsController.java -text
 src/src/java/feb/spring/controllers/UsersController.java -text
 src/src/java/feb/spring/dtos/MapeamentoDto.java -text
@@ -289,6 +290,7 @@ src/src/java/feb/spring/validador/MapeamentoValidator.java -text
 src/src/java/feb/spring/validador/PadraoValidator.java -text
 src/src/java/feb/spring/validador/RepositorioValidator.java -text
 src/src/java/feb/spring/validador/SubFederacaoValidador.java -text
+src/src/java/feb/spring/views/DocumentsRssViewer.java -text
 src/src/java/feb/util/Informacoes.java -text
 src/src/java/feb/util/Operacoes.java -text
 src/src/java/feb/util/package.html -text
@@ -358,6 +360,7 @@ src/src/main/webapp/imagens/Logo_UFRGS.jpg -text
 src/src/main/webapp/imagens/Thumbs.db -text
 src/src/main/webapp/imagens/add-24x24.png -text
 src/src/main/webapp/imagens/ajax-loader.gif -text
+src/src/main/webapp/imagens/atom.gif -text
 src/src/main/webapp/imagens/erro_sincronizar.png -text
 src/src/main/webapp/imagens/favicon.ico -text
 src/src/main/webapp/imagens/ferramenta_32x32.png -text
