@@ -332,8 +332,8 @@ src/src/main/webapp/admin/mapeamentos/confirmDelete.jsp -text
 src/src/main/webapp/admin/mapeamentos/form.jsp -text
 src/src/main/webapp/admin/mapeamentos/listaMapeamentoPadraoSelecionado.jsp -text
 src/src/main/webapp/admin/mapeamentos/show.jsp -text
-src/src/main/webapp/admin/padraoMetadados/addPadrao.jsp -text
-src/src/main/webapp/admin/padraoMetadados/editaPadrao.jsp -text
+src/src/main/webapp/admin/metadataStandard/addPadrao.jsp -text
+src/src/main/webapp/admin/metadataStandard/show.jsp -text
 src/src/main/webapp/admin/recalcularIndice.jsp -text
 src/src/main/webapp/admin/repositories/confirmDelete.jsp -text
 src/src/main/webapp/admin/repositories/edit.jsp -text

@@ -20,7 +20,7 @@
 
         <div id="page">
 
-            <form:form method="post" modelAttribute="padraoModel" action="salvaPadrao">
+            <form:form method="post" modelAttribute="padraoModel" action="salvarPadrao">
                 <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o / Visualiza&ccedil;&atilde;o de mapeamentos cadastrados</div>
                 <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
                 <div class="EspacoAntes">&nbsp;</div>

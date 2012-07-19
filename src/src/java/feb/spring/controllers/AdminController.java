@@ -74,14 +74,14 @@ public final class AdminController {
         return admin(model);
     }
 
-    @RequestMapping("padraoMetadados/addPadrao")
+    @RequestMapping("metadataStandard/addPadrao")
     public String cadastraPadrao(Model model) {
         model.addAttribute("padraoModel", new PadraoMetadados());
-        return "admin/padraoMetadados/addPadrao";
+        return "admin/metadataStandard/addPadrao";
     }
 
-    @RequestMapping("padraoMetadados/salvaPadrao")
-    public String salvaPadrao(
+    @RequestMapping("metadataStandard/salvarPadrao")
+    public String salvarPadrao(
             @ModelAttribute("padraoModel") PadraoMetadados padrao,
             BindingResult result,
             Model model) {
@@ -89,26 +89,32 @@ public final class AdminController {
         padraoVal.validate(padrao, result);
         if (result.hasErrors()) {
             model.addAttribute("padraoModel", padrao);
-            return "admin/padraoMetadados/addPadrao";
+            return "admin/metadataStandard/addPadrao";
         } else {
-            if (padraoDao.get(padrao.getNome()) != null) {
+            if (padraoDao.get(padrao.getName()) != null) {
                 result.rejectValue("nome", "invalid.nome", "Já existe um padrão cadastrado com esse nome.");
                 model.addAttribute("padraoModel", padrao);
-                return "admin/padraoMetadados/addPadrao";
+                return "admin/metadataStandard/addPadrao";
             }
             padraoDao.save(padrao);
             return "redirect:/admin/fechaRecarrega";
         }
     }
 
-    @RequestMapping("padraoMetadados/editaPadrao")
-    public String editaPadrao(
-            @RequestParam int id,
-            Model model) {
+    @RequestMapping(value = "metadataStandard/{id}", method = RequestMethod.GET)
+    public String exibePadrao(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("padrao", padraoDao.get(id));
-
-        return "admin/padraoMetadados/editaPadrao";
+        return "admin/metadataStandard/show";
     }
+
+//    @RequestMapping("metadataStandard/editaPadrao")
+//    public String editaPadrao(
+//            @RequestParam int id,
+//            Model model) {
+//        model.addAttribute("padrao", padraoDao.get(id));
+//
+//        return "admin/metadataStandard/editaPadrao";
+//    }
 
     @RequestMapping("/sair")
     public String sair(Model model, HttpSession session) {

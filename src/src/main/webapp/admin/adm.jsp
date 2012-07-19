@@ -186,15 +186,17 @@ Author     : Marcos Nunes
 			<tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
 
 
-				<td><security:authorize
-						access="hasRole('PERM_MANAGE_METADATA')">
+				<td>
+                                    <security:authorize	access="hasRole('PERM_MANAGE_METADATA')">
 						<input type="button" class="botaoExcluir"
 							title="Excluir padr&atilde;o de metadados" name="excluir"
 							id="excluirPadrao"
 							onclick="confirmaDelPadrao(${padraoMet.id},'msgerro','padroes',this.parentNode.parentNode.rowIndex);" />
-					</security:authorize> &nbsp; <input type="button" class="botaoEditar"
+					</security:authorize> 
+                                                &nbsp;
+                                        <input type="button" class="botaoEditar"
 					title="Editar / Visualizar" name="editar" id="editarPadrao"
-					onclick="NewWindow('./padraoMetadados/editaPadrao?id=${padraoMet.id}','editaPadrao','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
+					onclick="NewWindow('./metadataStandard/${padraoMet.id}','editaPadrao','750','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
 				</td>
 				<td>${padraoMet.nome}</td>
 				<td>${padraoMet.metadataPrefix}</td>
