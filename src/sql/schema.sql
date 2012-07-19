@@ -608,6 +608,13 @@ ALTER TABLE public.documentos_visitas OWNER TO feb;
 
 COMMENT ON TABLE documentos_visitas IS 'tabela n x n de documentos por visitas';
 
+CREATE SEQUENCE visitas_id_seq
+    START WITH 100
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    CYCLE;
 
 CREATE SEQUENCE documentos_visitas_id_seq
     START WITH 1
@@ -619,21 +626,6 @@ CREATE SEQUENCE documentos_visitas_id_seq
 ALTER TABLE public.documentos_visitas_id_seq OWNER TO feb;
 
 ALTER SEQUENCE documentos_visitas_id_seq OWNED BY documentos_visitas.id;
-
---
--- TOC entry 190 (class 1259 OID 31176)
--- Dependencies: 6
--- Name: visitas; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE visitas (
-    id integer NOT NULL,
-    horario timestamp without time zone
-);
-
-ALTER TABLE public.visitas OWNER TO feb;
-
-COMMENT ON TABLE visitas IS 'contador de visitas do FEB';
 
 ALTER TABLE ONLY documentos_visitas ALTER COLUMN id SET DEFAULT nextval('documentos_visitas_id_seq'::regclass);
 
