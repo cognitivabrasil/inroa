@@ -616,6 +616,8 @@ CREATE SEQUENCE visitas_id_seq
     CACHE 1
     CYCLE;
 
+ALTER TABLE public.visitas_id_seq OWNER TO feb;
+
 CREATE SEQUENCE documentos_visitas_id_seq
     START WITH 1
     INCREMENT BY 1
