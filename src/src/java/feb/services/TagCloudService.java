@@ -28,12 +28,4 @@ public interface TagCloudService {
 	 */
 	public Double getTotalWeight();
 	
-	/**
-	 * Utility method to generate the Map as a JavaScript object.
-	 * 
-	 * See {@link getTagCloud()}
-	 * @return a String that can be instantiated as a JavaScript object (map).
-	 */
-	public String getTagCloudAsJs();
-	
 }

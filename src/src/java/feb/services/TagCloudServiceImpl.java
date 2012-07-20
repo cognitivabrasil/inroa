@@ -61,11 +61,6 @@ public class TagCloudServiceImpl implements TagCloudService {
 		return t;
 	}
 
-	@Override
-	public String getTagCloudAsJs() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public int getMaxSize() {
 		return size;

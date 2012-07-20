@@ -130,6 +130,14 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
     </bean>
 	<!--Fim Inicializar o Robo -->
 
+	<bean id="SearchesDao" class="feb.data.daos.SearchesJdbcDao">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="tagService" class="feb.services.TagCloudServiceImpl">
+		<property name="days" value="7"/>
+		<property name="maxSize" value="50"/>
+	</bean>
 	
 
 </beans>

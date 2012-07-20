@@ -11,6 +11,7 @@ import feb.spring.ServerInfo;
 import feb.spring.validador.BuscaValidator;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +53,8 @@ public final class FEBController {
     private DocumentosVisitasDao docVisDao;
     private BuscaValidator buscaValidator;
     private final Logger log = Logger.getLogger(FEBController.class);
+	@Autowired 
+    private SearchesDao searchesDao;
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
@@ -155,6 +158,11 @@ public final class FEBController {
                 Recuperador rec = new Recuperador();
                 List<DocumentoReal> docs = rec.busca(consulta);
                 model.addAttribute("documentos", docs);
+                
+                if(offset == null) {
+                	searchesDao.save(consulta.getConsulta(), new Date());
+                }
+                
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",

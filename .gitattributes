@@ -434,6 +434,7 @@ src/src/test/java/feb/data/daos/DocumentosHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/MapeamentoHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/PadraoMetadadosHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/RepositoryHibernateDaoIT.java -text
+src/src/test/java/feb/data/daos/SearchesJdbcIT.java -text
 src/src/test/java/feb/data/daos/SubfederacaoHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/TokensHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/UsuarioHibernateDaoIT.java -text
