@@ -232,6 +232,7 @@ src/src/java/feb/data/entities/PadraoMetadados.java -text
 src/src/java/feb/data/entities/Repositorio.java -text
 src/src/java/feb/data/entities/RepositorioSubFed.java -text
 src/src/java/feb/data/entities/ResultadoConsulta.java -text
+src/src/java/feb/data/entities/Search.java -text
 src/src/java/feb/data/entities/StopWords.java -text
 src/src/java/feb/data/entities/SubFederacao.java -text
 src/src/java/feb/data/entities/SubNodo.java -text
@@ -244,6 +245,7 @@ src/src/java/feb/data/interfaces/DocumentosVisitasDao.java -text
 src/src/java/feb/data/interfaces/MapeamentoDAO.java -text
 src/src/java/feb/data/interfaces/PadraoMetadadosDAO.java -text
 src/src/java/feb/data/interfaces/RepositoryDAO.java -text
+src/src/java/feb/data/interfaces/SearchesDao.java -text
 src/src/java/feb/data/interfaces/StopWordsDao.java -text
 src/src/java/feb/data/interfaces/SubFederacaoDAO.java -text
 src/src/java/feb/data/interfaces/TokensDao.java -text
@@ -272,6 +274,8 @@ src/src/java/feb/robo/atualiza/subfedOAI/ParserListSets.java -text
 src/src/java/feb/robo/atualiza/subfedOAI/SubRepositorios.java -text
 src/src/java/feb/robo/main/Robo.java -text
 src/src/java/feb/robo/main/package.html -text
+src/src/java/feb/services/TagCloudService.java -text
+src/src/java/feb/services/TagCloudServiceImpl.java -text
 src/src/java/feb/spring/ApplicationContextProvider.java -text
 src/src/java/feb/spring/FebConfig.java -text
 src/src/java/feb/spring/ServerInfo.java -text
