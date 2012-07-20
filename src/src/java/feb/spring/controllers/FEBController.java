@@ -191,6 +191,9 @@ public final class FEBController {
                 Recuperador rec = new Recuperador();
                 List<DocumentoReal> docs = rec.busca(consulta);
                 model.addAttribute("documentos", docs);
+                if(offset == null) {
+                	searchesDao.save(consulta.getConsulta(), new Date());
+                }
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",

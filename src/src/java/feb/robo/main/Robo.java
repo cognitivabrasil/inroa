@@ -1,5 +1,6 @@
 package feb.robo.main;
 
+import feb.data.interfaces.SearchesDao;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.Repositorios;
 import feb.robo.atualiza.SubFederacaoOAI;
@@ -19,6 +20,8 @@ public class Robo {
 
     @Autowired
     Indexador indexar;
+    
+    @Autowired private SearchesDao searchesDao;
 
     /**
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma
@@ -60,6 +63,10 @@ public class Robo {
         } else {
             log.info("FEB: NAO existe atualizaçoes para os repositorios! " + dataFormat.format(new Date()));
         }
+        
+        log.info("FEB: limpando visitas antigas...");
+        searchesDao.cleanup();
+        
         Long finalRobo = System.currentTimeMillis();
         Long tempoTotal = (finalRobo - inicioRobo) / 1000;
         log.debug("Levou " + tempoTotal + " segundos todo o processo do Robo");
