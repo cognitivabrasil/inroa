@@ -165,8 +165,7 @@ public final class RepositoriesController {
     public String deleteDo(
     		@PathVariable Integer id,
     		Model model) {
-            Repositorio rep = new Repositorio();
-            rep.setId(id);
+            Repositorio rep = repDao.get(id);
             repDao.delete(rep);
             return "redirect:/admin/fechaRecarrega";
     }
