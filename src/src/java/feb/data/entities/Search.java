@@ -3,25 +3,16 @@ package feb.data.entities;
 import java.util.Date;
 
 public class Search {
-	private Integer id;
 	private String text;
-	private Date timestamp;
+	private Integer times;
 	
 	public Search() {
 		
 	}
 
-	public Search(String string, Date time) {
+	public Search(String string, Integer times) {
 		text = string;
-		timestamp = time;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+		this.setCount(times);
 	}
 
 	public String getText() {
@@ -32,13 +23,12 @@ public class Search {
 		this.text = text;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
+	public Integer getCount() {
+		return times;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setCount(Integer times) {
+		this.times = times;
 	}
-	
 	
 }

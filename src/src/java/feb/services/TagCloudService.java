@@ -3,6 +3,13 @@ package feb.services;
 import java.util.Map;
 
 
+/**
+ * Tag cloud interface.
+ * 
+ * Configuration is implementation dependant.
+ * @author paulo
+ *
+ */
 public interface TagCloudService {
 
 	/**
@@ -19,7 +26,7 @@ public interface TagCloudService {
 	 * Returns the sum of the weights that this tag cloud would have.
 	 * @return sum of the weights
 	 */
-	public Float getTotalWeight();
+	public Double getTotalWeight();
 	
 	/**
 	 * Utility method to generate the Map as a JavaScript object.

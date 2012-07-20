@@ -997,6 +997,9 @@ ALTER TABLE ONLY documentos
 
 ALTER TABLE ONLY repositorios_subfed
     ADD CONSTRAINT subfed FOREIGN KEY (id_subfed) REFERENCES dados_subfederacoes(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ 
+CREATE TABLE searches (text TEXT, time timestamp);
+ALTER TABLE searches OWNER TO feb;
 
 
 --
