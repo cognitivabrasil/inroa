@@ -348,8 +348,9 @@ function excluirPadrao(id, idResultado, idTabela, linha)
     
     var ajax = openAjax(); // Inicia o Ajax.
     
-    
-    ajax.open("POST", "excluirPadrao?id="+id, true);
+    var url = rootUrl+"/admin/metadataStandard/"+id+"/delete";
+    alert(url);
+    ajax.open("POST", url, true);
                        
     exibeResultado.innerHTML = "Aguarde...";
     ajax.onreadystatechange = function()
@@ -365,12 +366,12 @@ function excluirPadrao(id, idResultado, idTabela, linha)
                 }else{
                     if(parseInt(resultado)>0){
                         exibeResultado.innerHTML = "Exclu&iacute;do com sucesso.";
-                        removeLinha(idTabela, linha);
                     }
                     else{
                         exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
                     }
-                }                    
+                }
+                removeLinha(idTabela, linha);
             }
             else
             {

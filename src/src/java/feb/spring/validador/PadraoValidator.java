@@ -4,12 +4,11 @@
  */
 package feb.spring.validador;
 
+import feb.data.entities.PadraoMetadados;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import feb.data.entities.PadraoMetadados;
 
 /**
  *
@@ -19,20 +18,20 @@ import feb.data.entities.PadraoMetadados;
 public class PadraoValidator implements Validator {
 
 
+    @Override
     public boolean supports(Class clazz) {
         return PadraoMetadados.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
 
-        ValidationUtils.rejectIfEmpty(errors, "nome",
-                "required.nome", "É necessário informar um nome.");
+        ValidationUtils.rejectIfEmpty(errors, "name",
+                "required.name", "É necessário informar um nome.");
         ValidationUtils.rejectIfEmpty(errors, "metadataPrefix",
                 "required.metadataPrefix", "É necessário informar um metadataPrefix.");
         ValidationUtils.rejectIfEmpty(errors, "namespace",
                 "required.namespace", "É necessário informar um namespace.");
-        ValidationUtils.rejectIfEmpty(errors, "atributos",
-                "required.atributos", "É necessário informar os atributos.");
 
     }
 }

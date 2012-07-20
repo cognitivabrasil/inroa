@@ -196,7 +196,7 @@ Author     : Marcos Nunes
                                                 &nbsp;
                                         <input type="button" class="botaoEditar"
 					title="Editar / Visualizar" name="editar" id="editarPadrao"
-					onclick="NewWindow('./metadataStandard/${padraoMet.id}','editaPadrao','750','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
+					onclick="NewWindow('./metadataStandard/${padraoMet.id}','editaPadrao','650','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
 				</td>
 				<td>${padraoMet.nome}</td>
 				<td>${padraoMet.metadataPrefix}</td>
@@ -209,14 +209,14 @@ Author     : Marcos Nunes
 
 			<tr class='center'>
 				<td><a title="Adicionar novo padr&atilde;o de metadados"
-					onclick="NewWindow('./padraoMetadados/addPadrao','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					onclick="NewWindow('./metadataStandard/new','new','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 						<img
 						src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 						border="0" width="24" height="24" alt="Visualizar" align="middle">
 				</a></td>
 				<td colspan="2" class="left bold" style="font-size: 110%">
 					&nbsp;&nbsp; <a
-					onclick="NewWindow('./padraoMetadados/addPadrao','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					onclick="NewWindow('./metadataStandard/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 						Adicionar novo padr&atilde;o </a>
 				</td>
 				<td><div id='msgerro' class='textoErro left'></div></td>
@@ -267,7 +267,7 @@ Author     : Marcos Nunes
 
 			<tr class='center'>
 				<td><a title="Adicionar novo padr&atilde;o de metadados"
-					onclick="NewWindow('./mapeamentos/new','addPadrao','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+					onclick="NewWindow('./mapeamentos/new','new','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
 						<img
 						src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
 						border="0" width="24" height="24" alt="Visualizar" align="middle">

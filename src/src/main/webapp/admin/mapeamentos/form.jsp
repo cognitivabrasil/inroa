@@ -82,7 +82,7 @@ Primeira etapa do cadastro de um repositorio
 				<div class="Label">Padrão de metadados:</div>
 				<div class="Value">
 					<form:select path="padraoMetadados">
-						<form:option value="-1" label="--- Select ---" />
+						<form:option value="-1" label="--- Selecione ---" />
 						<form:options items="${metadataList}" />
 					</form:select>
 				</div>

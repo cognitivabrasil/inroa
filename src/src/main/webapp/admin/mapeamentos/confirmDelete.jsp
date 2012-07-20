@@ -30,7 +30,7 @@
             <div class="subTitulo-center">&nbsp;Ferramenta para remo&ccedil;&atilde;o de mapeamento</div>
             <div class="EspacoAntes">&nbsp;</div>
 
-            <form name="removerFederacao" method="post">
+            <form name="removerMapeamento" method="post">
                 <div class="LinhaEntrada">
                     <div class="Tab">
                         Deseja realmente remover o mapeamento <b>${mapeamento.name}</b> ?

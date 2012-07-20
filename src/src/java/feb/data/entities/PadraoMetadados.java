@@ -4,18 +4,20 @@
  */
 package feb.data.entities;
 
-import java.util.*;
-
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  *
- * @author Marcos Nunes
+ * @author Marcos Nunes <marcosn@gmail.com>
  */
 public class PadraoMetadados implements java.io.Serializable {
 
-	private static final long serialVersionUID = -8862349037606469252L;
-	private Integer id;
+    private static final long serialVersionUID = -8862349037606469252L;
+    private Integer id;
     private String name;
     private String metadataPrefix;
     private String namespace;
@@ -39,7 +41,7 @@ public class PadraoMetadados implements java.io.Serializable {
     }
 
     /**
-     * 
+     *
      * @deprecated use @{link getName()} instead.
      */
     @Deprecated
@@ -48,14 +50,14 @@ public class PadraoMetadados implements java.io.Serializable {
     }
 
     /**
-     * 
+     *
      * @deprecated use @{link setName()} instead.
      */
     @Deprecated
     public void setNome(String nome) {
         this.name = nome;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -63,7 +65,7 @@ public class PadraoMetadados implements java.io.Serializable {
     public void setName(String nome) {
         this.name = nome;
     }
-   
+
     /**
      * @return the metadataPrefix
      */
@@ -107,9 +109,10 @@ public class PadraoMetadados implements java.io.Serializable {
     public void setAtributos(String atributos) {
         this.atributos = atributos;
     }
-    
+
     /**
-     *  Separa os atributos da string e coloca em um Set usando o delimitador ";"
+     * Separa os atributos da string e coloca em um Set usando o delimitador ";"
+     *
      * @return Set<String> contendo todos os atributos.
      */
     public Set<String> getAtributosList() {
@@ -119,7 +122,7 @@ public class PadraoMetadados implements java.io.Serializable {
             return new HashSet<String>(Arrays.asList(atributos.split(";")));
         }
     }
-    
+
     public void setAtributosList(Collection<String> c) {
         if (c.isEmpty()) {
             this.atributos = "";
@@ -127,11 +130,9 @@ public class PadraoMetadados implements java.io.Serializable {
             this.atributos = StringUtils.join(c, ";");
         }
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return getNome();
     }
-
-
 }

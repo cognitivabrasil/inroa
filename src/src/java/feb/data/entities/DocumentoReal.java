@@ -3,19 +3,17 @@ package feb.data.entities;
 import ORG.oclc.oai.models.HibernateOaiDocument;
 import cognitivabrasil.obaa.LifeCycle.Contribute;
 import cognitivabrasil.obaa.OBAA;
-import java.util.*;
-
-import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextException;
-
 import feb.data.interfaces.DocumentoFebInterface;
 import feb.data.interfaces.StopWordsDao;
 import feb.spring.ApplicationContextProvider;
 import feb.util.Operacoes;
+import java.util.*;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextException;
 import org.springframework.dao.support.DataAccessUtils;
 
 /**

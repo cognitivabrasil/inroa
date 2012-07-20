@@ -283,6 +283,7 @@ src/src/java/feb/spring/controllers/AdminController.java -text
 src/src/java/feb/spring/controllers/FEBController.java -text
 src/src/java/feb/spring/controllers/FederationsController.java -text
 src/src/java/feb/spring/controllers/MapeamentosController.java -text
+src/src/java/feb/spring/controllers/MetadataStandardController.java -text
 src/src/java/feb/spring/controllers/RepositoriesController.java -text
 src/src/java/feb/spring/controllers/RssController.java -text
 src/src/java/feb/spring/controllers/StatisticsController.java -text
@@ -336,7 +337,7 @@ src/src/main/webapp/admin/mapeamentos/confirmDelete.jsp -text
 src/src/main/webapp/admin/mapeamentos/form.jsp -text
 src/src/main/webapp/admin/mapeamentos/listaMapeamentoPadraoSelecionado.jsp -text
 src/src/main/webapp/admin/mapeamentos/show.jsp -text
-src/src/main/webapp/admin/metadataStandard/addPadrao.jsp -text
+src/src/main/webapp/admin/metadataStandard/new.jsp -text
 src/src/main/webapp/admin/metadataStandard/show.jsp -text
 src/src/main/webapp/admin/recalcularIndice.jsp -text
 src/src/main/webapp/admin/repositories/confirmDelete.jsp -text
