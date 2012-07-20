@@ -957,3 +957,9 @@ td{vertical-align:top;}
 .infoDetalhada .valor{
     margin:0% 0% 1% 12%;
 }
+#tagcloud{
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    text-align: center;
+}

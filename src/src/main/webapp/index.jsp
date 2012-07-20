@@ -71,10 +71,18 @@
                 <a href="./index2">Busca Avan&ccedil;ada</a>
             </div>
 
+            <div>
+                <jsp:include page="tagCloud.jsp">
+                    <jsp:param value="${termos}" name="termos" />
+                </jsp:include>
+            </div> 
+
         </div>
         <div>
             <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
         </div>
+
+
         <%@include file="googleAnalytics"%>
     </body>
 </html>

@@ -7,12 +7,15 @@ import feb.data.entities.Visita;
 import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
 import feb.robo.atualiza.importaOAI.XMLtoDB;
+import feb.services.TagCloudService;
 import feb.spring.ServerInfo;
 import feb.spring.validador.BuscaValidator;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,8 +56,10 @@ public final class FEBController {
     private DocumentosVisitasDao docVisDao;
     private BuscaValidator buscaValidator;
     private final Logger log = Logger.getLogger(FEBController.class);
-	@Autowired 
+    @Autowired
     private SearchesDao searchesDao;
+    @Autowired
+    private TagCloudService tagCloud;
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
@@ -74,6 +79,10 @@ public final class FEBController {
     public String index(Model model, HttpServletResponse response, @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("buscaModel", new Consulta());
+
+        Map <String, Double> termos = tagCloud.getTagCloud();
+
+        model.addAttribute("termos", termos);
 
         if (!existingCookie(cookie)) {
             response.addCookie(createCookie());
@@ -121,15 +130,15 @@ public final class FEBController {
                 title = titles.get(0);
             }
 
-            if (!existingCookie(cookie)) {                
+            if (!existingCookie(cookie)) {
                 Cookie newVisitor = createCookie();
-                response.addCookie(newVisitor);                
+                response.addCookie(newVisitor);
                 cookie = newVisitor.getValue();
             }
 
             DocumentosVisitas docVis = new DocumentosVisitas();
             docVis.setDocumento(d);
-            
+
             docVis.setVisita((Visita) getSession().load(Visita.class, Integer.parseInt(cookie)));
             docVisDao.save(docVis);
 
@@ -158,11 +167,11 @@ public final class FEBController {
                 Recuperador rec = new Recuperador();
                 List<DocumentoReal> docs = rec.busca(consulta);
                 model.addAttribute("documentos", docs);
-                
-                if(offset == null) {
-                	searchesDao.save(consulta.getConsulta(), new Date());
+
+                if (offset == null) {
+                    searchesDao.save(consulta.getConsulta(), new Date());
                 }
-                
+
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",
@@ -342,10 +351,10 @@ public final class FEBController {
         Visita newVisitor = new Visita();
         visDao.save(newVisitor);
         Integer id = newVisitor.getId();
-        
+
         Cookie newCookie = new Cookie("feb.cookie", id.toString());
-        newCookie.setMaxAge(5*60*1000);
-        
+        newCookie.setMaxAge(5 * 60 * 1000);
+
         return (newCookie);
     }
 
