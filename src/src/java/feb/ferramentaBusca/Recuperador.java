@@ -24,6 +24,8 @@ import feb.spring.ApplicationContextProvider;
  */
 public class Recuperador {
 	static Logger log = Logger.getLogger(Recuperador.class.getName());
+        
+        private static int rssSizeLimit = 100;
 
 
     public Recuperador() {
@@ -50,8 +52,20 @@ public class Recuperador {
 
         
         if (consulta.isRss()) {
-            //TODO: P: Fazer feb.RSS para autor? M: Sim
-            sqlOrdenacao = "') GROUP BY d.id, timestamp HAVING SUM(r1w.weight)>= 0.2*" + tokensConsulta.size() + " ORDER BY timestamp DESC;";
+            
+            if (consulta.hasAuthor()) {
+
+                if (consulta.getConsulta().isEmpty()) {
+                    //COM autor, SEM termo de busca
+                    sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome ORDER BY timestamp DESC LIMIT "+rssSizeLimit;
+                } else {
+                    //COM autor, COM termo de busca
+                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, a.nome HAVING SUM(r1w.weight)>= 0.1*"+tokensConsulta.size()+" ORDER BY timestamp DESC LIMIT "+rssSizeLimit;
+                }
+            } else {
+                  sqlOrdenacao = "') GROUP BY d.id, timestamp HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT "+rssSizeLimit;
+            }
+           
         } else {
 
             if (consulta.hasAuthor()) {

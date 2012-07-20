@@ -930,16 +930,6 @@ ALTER TABLE ONLY r1tokens
 
 
 --
--- TOC entry 2085 (class 2606 OID 18201)
--- Dependencies: 164 2075 184
--- Name: excluidos; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY documentos
-    ADD CONSTRAINT excluidos FOREIGN KEY (id_repositorio) REFERENCES repositorios(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- TOC entry 2092 (class 2606 OID 20204)
 -- Dependencies: 2055 164 187
 -- Name: fki_documentos; Type: FK CONSTRAINT; Schema: public; Owner: feb

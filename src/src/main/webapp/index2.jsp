@@ -85,7 +85,7 @@
                                 <c:forEach var="repSubFed" items="${subFed.repositorios}" varStatus="i">
                                     <div class='Int'>&nbsp;&nbsp;&nbsp;
                                         <input value='${repSubFed.id}' type=checkbox id="${repSubFed.id}" name="repSubfed">
-                                        ${fn:toUpperCase(repSubFed.nome)}
+                                        ${fn:toUpperCase(repSubFed.name)}
                                     </div>
                                 </c:forEach>                        
                             </div>

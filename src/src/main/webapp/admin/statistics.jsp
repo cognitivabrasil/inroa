@@ -28,8 +28,38 @@
 
         <script>
             $(document).ready(function(){                
-                if(${empty federacoes}) {                    
-                    $('.feds').hide();                    
+                
+                
+                if(${empty repositorios}) { 
+                   
+                    $('.repsGrande').hide();                                        
+                    
+                } else {
+                    var plot1 = jQuery.jqplot ('chart1', [${repObjects}], 
+                    { 
+                        title: {
+                            text: 'Quantidade de objetos: Reposit&oacute;rios',
+                            show: true
+                        },                
+                        seriesDefaults: {
+                            // Make this a pie chart.
+                            renderer: jQuery.jqplot.PieRenderer, 
+                            rendererOptions: {
+                                // Put data labels on the pie slices.
+                                // By default, labels show the percentage of the slice.
+                                showDataLabels: true,
+                                dataLabels: 'value'
+                            }
+                        }, 
+                        legend: { show:true, location: 'e' }
+                    }
+                );
+                }                
+                     
+                if(${empty federacoes}) {  
+                    
+                    $('.fedsGrande').hide();                    
+                    
                 } else {
                     var plot5 = jQuery.jqplot ('chart5', [${fedObjects}], 
                     { 
@@ -53,30 +83,6 @@
                 );
                 }
                 
-                if(${empty repositorios}) {                   
-                    $('.reps').hide();
-                } else {
-                    var plot1 = jQuery.jqplot ('chart1', [${repObjects}], 
-                    { 
-                        title: {
-                            text: 'Quantidade de objetos: Reposit&oacute;rios',
-                            show: true
-                        },                
-                        seriesDefaults: {
-                            // Make this a pie chart.
-                            renderer: jQuery.jqplot.PieRenderer, 
-                            rendererOptions: {
-                                // Put data labels on the pie slices.
-                                // By default, labels show the percentage of the slice.
-                                showDataLabels: true,
-                                dataLabels: 'value'
-                            }
-                        }, 
-                        legend: { show:true, location: 'e' }
-                    }
-                );
-                } 
-                         
                 var plot2 = $.jqplot ('chart2', [${visitasTotal}], {                    
                     title: 'N&uacute;mero de Visitantes',
                     axesDefaults: {
@@ -146,17 +152,17 @@
 
         <div id="estatisticas">
             <div class="acessos">
-                <table class="repositorios-table zebraTable">
-                       <caption class="estatisticasTitulo">10 Objetos mais acessados</caption>            
+                <table class="repositorios-table zebraTable acessos">
+                    <caption class="estatisticasTitulo">10 Objetos mais acessados</caption>            
                     <tr><th> T&iacute;tulo do Objeto</th><th>N&uacute;mero de acessos</th><th>Reposit&oacute;rio</th></tr>
                     <c:forEach var="objs" items="${docsMaisAcessados}" varStatus="status">
                         <tr><td>${objs.firstTitle}</td><td>${objs.acessos}</td><td>${objs.repositorio}</td></tr>                
                     </c:forEach>
                 </table>
-                <div id="chart2" style="height:350px;"></div>
+                <div id="chart2" widith="100%" style="height:350px;"></div>
             </div>
 
-            <div id="repositorios" class="reps minitable">
+            <div class="repsGrande">
                 <div class="estatisticasTitulo">Repositórios</div>
                 <table class="repositorios-table zebraTable">
                     <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
@@ -171,12 +177,12 @@
 
 
 
-            <div id="federacoes" class="feds minitable">
+            <div class="fedsGrande">
                 <div class="estatisticasTitulo">Federações</div>
                 <table class="repositorios-table zebraTable">
                     <tr><th> Federa&ccedil;&atilde;o</th><th>N&uacute;mero de objetos</th></tr>            
                     <c:forEach var="feds" items="${federacoes}" varStatus="status">
-                        <tr><td>${feds.name}</td><td>${feds.size}</td></tr>                
+                        <tr><td>${feds.name}</td><td class="col2">${feds.size}</td></tr>                
                     </c:forEach>
                 </table>
                 <div id="chart5" style="height:350px;"></div>

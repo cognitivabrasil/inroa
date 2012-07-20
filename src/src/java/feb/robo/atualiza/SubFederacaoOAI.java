@@ -129,8 +129,7 @@ public class SubFederacaoOAI {
         } else {
             log.info("FEB: Atualizando subfederacao: " + subFed.getName());//imprime o nome do repositorio
 
-            try {
-                String url = subFed.getUrlOAIPMH();
+            try {                
                 
                 //atualizar repositorios da subfederacao
                 SubRepositorios subRep = new SubRepositorios();

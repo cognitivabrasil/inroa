@@ -190,7 +190,7 @@ function updateSubnodeAjax(link, showResults)
 {
     var ajax = openAjax(); // Start Ajax.
 
-    ajax.open("POST", link, true);
+    ajax.open("POST", link, true);    
     showResults.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
     ajax.onreadystatechange = function()
     {
