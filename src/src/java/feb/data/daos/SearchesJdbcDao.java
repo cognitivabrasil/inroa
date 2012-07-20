@@ -2,6 +2,7 @@ package feb.data.daos;
 
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +25,20 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
 
 	@Override
 	public void cleanup() {
-		// TODO Auto-generated method stub
+		String sql = "DELETE FROM searches WHERE time < ?";
 		
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONTH, -1);
+		Date d = c.getTime();
+		
+		try {
+			getJdbcTemplate().update(sql,
+				new Object[] { d },
+				new int[] {  Types.TIMESTAMP });
+		} 
+		catch(DataAccessException e) {
+			logger.error("Error while trying to cleanup", e);
+		}
 	}
 
 
