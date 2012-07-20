@@ -182,9 +182,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
     @Override
     public void setRepository(SubNodo repository) {
-        if (repository == null) {
-            throw new IllegalArgumentException("called setRepository() with a null argument.");
-        }
+//        if (repository == null) {
+//            throw new IllegalArgumentException("called setRepository() with a null argument.");
+//        }
         this.repository = repository;
     }
 

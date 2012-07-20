@@ -24,7 +24,10 @@ import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.robo.atualiza.importaOAI.Importer;
 
-
+/**
+ * 
+ * @author marcos
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })

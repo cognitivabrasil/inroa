@@ -41,12 +41,9 @@ import feb.data.interfaces.MapeamentoDAO;
 public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
-    RepositoryHibernateDAO instance;
-    
-    
+    RepositoryHibernateDAO repDao;
     @Autowired
     DocumentosHibernateDAO docDao;
-    
     @Autowired
     MapeamentoDAO mapDao;
 
@@ -60,7 +57,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     public void testGet() {
         System.out.println("get");
         int id = 1;
-        Repositorio cesta = instance.get(id);
+        Repositorio cesta = repDao.get(id);
 
         assertEquals("Cesta", cesta.getName());
     }
@@ -68,7 +65,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     @Test
     public void testSize() {
         int id = 1;
-        Repositorio cesta = instance.get(id);
+        Repositorio cesta = repDao.get(id);
 
         assertEquals("Cesta", cesta.getName());
         assertEquals(4, (int) cesta.getSize());
@@ -81,13 +78,13 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     public void testGetAll() {
         System.out.println("getAll");
         List expResult = null;
-        List result = instance.getAll();
-        assertEquals(3, result.size());
+        List result = repDao.getAll();
+        assertEquals(4, result.size());
     }
 
     @Test
     public void testRepository() {
-        List<Repositorio> l = instance.getAll();
+        List<Repositorio> l = repDao.getAll();
         Repositorio cesta = l.get(0);
 
         assertEquals("Cesta", cesta.getName());
@@ -98,48 +95,49 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testDelete() {
-        Repositorio cesta = instance.get(1);
+        Repositorio cesta = repDao.get(1);
+        List<Repositorio> l1 = repDao.getAll();
+        int sizeBefore = l1.size();
+        repDao.delete(cesta);
 
-        instance.delete(cesta);
-
-        List<Repositorio> l = instance.getAll();
-        assertEquals(2, l.size());
+        List<Repositorio> l2 = repDao.getAll();
+        int sizeAfter = l2.size();
+        assertEquals(sizeBefore-1, sizeAfter);
 
     }
-    
+
     @Test
     public void testDeleteRemovesDocumentos() {
-        Repositorio cesta = instance.get(1);
-        
+        Repositorio cesta = repDao.get(1);
+
         int sizeCesta = cesta.getDocumentos().size();
         int sizeAllBefore = docDao.getAll().size();
         int sizeAfter = sizeAllBefore - sizeCesta;
 
-        instance.delete(cesta);        
+        repDao.delete(cesta);
 
         assertEquals("Size of Cesta before", 5, sizeCesta);
         assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());
     }
-    
+
     @Test
     public void testDellAllDocs() {
-        Repositorio cesta = instance.get(1);
-        
+        Repositorio cesta = repDao.get(1);
+
         int sizeCesta = cesta.getDocumentos().size();
         int sizeAllBefore = docDao.getAll().size();
         int sizeAfter = sizeAllBefore - sizeCesta;
 
-        cesta.dellAllDocs();        
+        cesta.dellAllDocs();
 
         assertEquals("Size of Cesta before", 5, sizeCesta);
         assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());
     }
-   
 
     @Test
     public void testGetMetadataRecord() {
         int id = 1;
-        Repositorio cesta = instance.get(id);
+        Repositorio cesta = repDao.get(id);
 
         PadraoMetadados p = cesta.getPadraoMetadados();
         assertEquals("lom", p.getNome());
@@ -147,7 +145,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void getByNameExists() {
-        Repositorio cesta = instance.get("Cesta");
+        Repositorio cesta = repDao.get("Cesta");
 
         assertThat(cesta, is(notNullValue()));
         assertEquals(1, (int) cesta.getId());
@@ -155,7 +153,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void getByNameCaseInsensitive() {
-        Repositorio cesta = instance.get("cEsTa");
+        Repositorio cesta = repDao.get("cEsTa");
 
         assertThat(cesta, is(notNullValue()));
         assertEquals(1, (int) cesta.getId());
@@ -163,7 +161,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void getByNameNoSuchRep() {
-        Repositorio cesta = instance.get("Cesdsfdsffsdta");
+        Repositorio cesta = repDao.get("Cesdsfdsffsdta");
 
         assertThat(cesta, is(nullValue()));
     }
@@ -180,16 +178,17 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         r.setUrl("http://url");
         r.setMapeamento(mapDao.get(1));
 
-        instance.save(r);
+        repDao.save(r);
 
-        Repositorio r2 = instance.get(1);
+        Repositorio r2 = repDao.get(1);
 
         r2.setName("Jorjao");
 
-        instance.save(r2);
+        repDao.save(r2);
 
         updated = true;
     }
+
     @AfterTransaction
     public void testSaveAndUpdate2() throws Exception {
         if (updated) {

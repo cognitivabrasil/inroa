@@ -23,34 +23,47 @@
 		padrao_id="1" />
 
 
+ <repositorios id="1" nome="Cesta" descricao="dfsd"
+                  url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request"
+                  periodicidade_horas="24"
+                  metadata_prefix="lom"
+                  padrao_metadados="1"
+                  mapeamento_id="1"
+                  name_space="lom" />
+    <repositorios id="2" nome="Teste2" descricao="dfsd" url_or_ip="http://"
+                  periodicidade_horas="24"
+                  padrao_metadados="1"
+                  mapeamento_id="1"
+                  metadata_prefix="lom"
+                  name_space="lom" />
+    <repositorios id="3" nome="Teste3" descricao="dfsd" url_or_ip="http://"
+                  periodicidade_horas="24"
+                  padrao_metadados="1"
+                  mapeamento_id="1"
+                  metadata_prefix="lom"
+                  name_space="lom" />
+    <repositorios id="4" nome="marcos" descricao="x" url_or_ip="htttp://x"
+                  periodicidade_horas="24"
+                  padrao_metadados="1"
+                  mapeamento_id="1"
+                  metadata_prefix="obaa"
+                  name_space="obaa" />
 
-	<repositorios id="1" nome="Cesta" descricao="dfsd"
-		url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request"
-		periodicidade_horas="24" metadata_prefix="lom" padrao_metadados="1"
-		mapeamento_id="1" name_space="lom" />
-	<repositorios id="2" nome="Teste2" descricao="dfsd"
-		url_or_ip="http://" periodicidade_horas="24" padrao_metadados="1"
-		mapeamento_id="1" metadata_prefix="lom" name_space="lom" />
-	<repositorios id="3" nome="Teste3" descricao="dfsd"
-		url_or_ip="http://" periodicidade_horas="24" padrao_metadados="1"
-		mapeamento_id="1" metadata_prefix="lom" name_space="lom" />
 
+    <dados_subfederacoes id="1" nome="UFRGS" url="http://" data_xml="2012-03-09 07:51:22.48377"
+                         data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+                         descricao="Bla"/>
+    <dados_subfederacoes id="2" nome="Ble" url="http://" data_xml="2012-03-09 07:51:22.48377"
+                         data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+                         descricao="Bla"/>
+    <dados_subfederacoes id="3" nome="Bla" url="http://" data_xml="2012-03-09 07:51:22.48377"
+                         data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+                         descricao="Bla"/>
+    <dados_subfederacoes id="4" nome="marcos" url="http://" data_xml="2012-03-09 07:51:22.48377"
+                         data_ultima_atualizacao="2012-03-09 07:51:22.48377"
+                         descricao="Bla"/>
 
-	<dados_subfederacoes id="1" nome="UFRGS" url="http://"
-		data_xml="2012-03-09 07:51:22.48377" data_ultima_atualizacao="2012-03-09 07:51:22.48377"
-		descricao="Bla" />
-	<dados_subfederacoes id="2" nome="Ble" url="http://"
-		data_xml="2012-03-09 07:51:22.48377" data_ultima_atualizacao="2012-03-09 07:51:22.48377"
-		descricao="Bla" />
-	<dados_subfederacoes id="3" nome="Bla" url="http://"
-		data_xml="2012-03-09 07:51:22.48377" data_ultima_atualizacao="2012-03-09 07:51:22.48377"
-		descricao="Bla" />
-
-	<repositorios_subfed id="1" nome="RepUfrgs1"
-		id_subfed="1" />
-
-
-
+    <repositorios_subfed id="1" nome="RepUfrgs1" id_subfed="1"/>
 
 	<documentos id="1" obaa_entry="oai:cesta2.cinted.ufrgs.br:123456789/57"
 		id_repositorio="1" id_rep_subfed="1" timestamp="2012-03-09 07:51:22.48377"
@@ -119,10 +132,6 @@
 	<searches text="teste" time="2012-07-09 12:06:06" />
 	<searches text="bla" time="2012-06-29 12:06:01" />
 	<searches text="jorjao" time="2011-12-09 12:06:01" />
-
-
-
-
-
+       
 
 </dataset>

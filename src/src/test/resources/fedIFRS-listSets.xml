@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"><responseDate>2012-07-20T17:14:52Z</responseDate><request verb="ListSets">http://repositorio.canoas.ifrs.edu.br/feb/OAIHandler</request><ListSets><set>
+<setSpec>IFRS Canoas</setSpec>
+<setName>IFRS Canoas</setName>
+</set>
+</ListSets></OAI-PMH>

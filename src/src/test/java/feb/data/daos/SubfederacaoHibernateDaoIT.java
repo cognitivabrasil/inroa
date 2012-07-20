@@ -75,7 +75,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
     public void testGetAll() {
         System.out.println("getAll");;
         List result = instance.getAll();
-        assertEquals(3, result.size());
+        assertEquals(4, result.size());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         
 
         List<SubFederacao> l = instance.getAll();
-        assertEquals(2, l.size());
+        assertEquals(3, l.size());
 
 
     }
@@ -178,7 +178,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         assertThat(fTeste, is(notNullValue()));
         assertEquals("Nova", fTeste.getName());
 
-        assertEquals("Nr correto de Subfederacoes apos adicao", 4, instance.getAll().size());
+        assertEquals("Nr correto de Subfederacoes apos adicao", 5, instance.getAll().size());
         System.out.println("Repositorios: "+fTeste.getRepositorios());
         SubFederacao f2 = instance.get(3);
         f2.setNome("Jorjao");

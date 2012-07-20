@@ -16,6 +16,8 @@ src/nb-configuration.xml
 src/nbactions-somente[!!-~]execussão.xml
 src/nbproject
 src/profiles.xml
+src/sql/.create.sh.swp
+src/sql/.schema.sql.swp
 src/src/main/resources/.Repositorio.hbm.xml.swp
 src/src/main/webapp/META-INF
 src/src/main/webapp/WEB-INF

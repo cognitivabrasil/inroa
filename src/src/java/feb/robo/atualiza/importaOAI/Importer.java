@@ -96,6 +96,7 @@ public class Importer {
 		
 		
 		docDao.flush();
+                docDao.setRepository(null);
 		
 		return oai.getSize();
 

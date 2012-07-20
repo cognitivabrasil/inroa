@@ -73,7 +73,7 @@ Primeira etapa do cadastro de um repositorio
 				<div class="Label">Tipo de usuário:</div>
 				<div class="Value">
 					<form:select path="role">
-   <form:option value="NONE" label="--- Select ---"/>
+   <form:option value="NONE" label="--- Selecione ---"/>
    <form:options items="${roleList}" />
 </form:select>
 				</div>

@@ -92,7 +92,9 @@ public class Importer {
 				log.debug("Saving object: " + oai.getHeader(i).getIdentifier());
 
 				oai.getHeader(i).setDatestamp(new Date());
+
 				docDao.save(oai.getMetadata(i), oai.getHeader(i));
+
 			} catch (NullPointerException e) {
 				log.error("NullPointer ao tentar inserir elemento "
 						+ new Integer(i).toString(), e);
@@ -101,6 +103,7 @@ public class Importer {
 
 		docDao.flush();
 		subFed.setDataXMLTemp(oai.getResponseDate());
+                docDao.setFederation(null);
 
 	}
 
@@ -122,7 +125,7 @@ public class Importer {
 	 * @param documentDao
 	 *            the DocumentDAO to set
 	 */
-	void setDocDao(DocumentosDAO documentDao) {
+	public void setDocDao(DocumentosDAO documentDao) {
 		this.docDao = documentDao;
 	}
 

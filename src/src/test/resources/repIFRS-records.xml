@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"><responseDate>2012-07-20T17:09:42Z</responseDate><request metadataPrefix="obaa" verb="ListRecords">http://repositorio.canoas.ifrs.edu.br/repositorio/oai</request><ListRecords>
+<record><header><identifier>http://repositorio.canoas.ifrs.edu.br:80/repositorio/documents/101</identifier><datestamp>2012-07-11T18:01:25Z</datestamp><setSpec>notImplemented</setSpec></header><metadata><obaa:obaa xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/obaav1.0/lom.xsd" xmlns:obaa="http://ltsc.ieee.org/xsd/LOM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <obaa:general>
+      <obaa:title>A Ela</obaa:title>
+      <obaa:keyword>Poema</obaa:keyword>
+      <obaa:description>Poema narrado A Ela de Machado de Assis</obaa:description>
+      <obaa:identifier>
+         <catalog>URI</catalog>
+         <entry>http://repositorio.canoas.ifrs.edu.br:80/repositorio/documents/101</entry>
+      </obaa:identifier>
+      <obaa:language>pt-BR</obaa:language>
+      <obaa:structure></obaa:structure>
+   </obaa:general>
+   <obaa:lifeCycle>
+      <version>1.0</version>
+      <contribute>
+         <obaa:entity>Julia</obaa:entity>
+         <obaa:entity>Ana Paula Scariot</obaa:entity>
+         <obaa:role>author</obaa:role>
+         <date>30-04-2012</date>
+      </contribute>
+   </obaa:lifeCycle>
+   <obaa:educational>
+      <obaa:learningResourceType>narrative_text</obaa:learningResourceType>
+   </obaa:educational>
+   <obaa:technical>
+      <obaa:location>http://repositorio.canoas.ifrs.edu.br/repositorio/documents/101</obaa:location>
+      <obaa:location>http://repositorio.canoas.ifrs.edu.br:80/repositorio/documents/101</obaa:location>
+   </obaa:technical>
+</obaa:obaa></metadata></record>
+<record><header><identifier>http://repositorio.canoas.ifrs.edu.br:80/repositorio/documents/102</identifier><datestamp>2012-07-06T10:29:38Z</datestamp><setSpec>notImplemented</setSpec></header><metadata><obaa:obaa xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/obaav1.0/lom.xsd" xmlns:obaa="http://ltsc.ieee.org/xsd/LOM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+   <obaa:general>
+      <obaa:title>INOVAÇÃO NO ENSINO DE SOCIOLOGIA COM A UTILIZAÇÃO DE OBJETOS DE APRENDIZAGEM</obaa:title>
+      <obaa:keyword>Objetos de aprendizagem, Sociologia, Informática</obaa:keyword>
+      <obaa:description>Resumo publicado em evento</obaa:description>
+      <obaa:identifier>
+         <catalog>URI</catalog>
+         <entry>http://repositorio.canoas.ifrs.edu.br:80/repositorio/documents/102</entry>
+      </obaa:identifier>
+      <obaa:language>Português</obaa:language>
+      <obaa:structure>atomic</obaa:structure>
+   </obaa:general>
+   <obaa:lifeCycle>
+      <version>Finalizado</version>
+      <contribute>
+         <obaa:entity>Patrícia Nogueira Hübler</obaa:entity>
+         <obaa:entity>Claudio Antonio Cardoso Leite</obaa:entity>
+         <obaa:role></obaa:role>
+         <date>06/06/2012</date>
+      </contribute>
+   </obaa:lifeCycle>
+   <obaa:educational>
+      <obaa:interactivityType>expositive</obaa:interactivityType>
+      <obaa:intendedEndUserRole>teacher</obaa:intendedEndUserRole>
+      <obaa:intendedEndUserRole>learner</obaa:intendedEndUserRole>
+      <obaa:learningResourceType>narrative_text</obaa:learningResourceType>
+   </obaa:educational>
+   <obaa:technical>
+      <obaa:location>http://repositorio.canoas.ifrs.edu.br/repositorio/documents/102</obaa:location>
+      <obaa:location>http://repositorio.canoas.ifrs.edu.br:80/repositorio/documents/102</obaa:location>
+   </obaa:technical>
+</obaa:obaa></metadata></record>
+</ListRecords></OAI-PMH>

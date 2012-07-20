@@ -472,10 +472,15 @@ src/src/test/java/feb/robo/atualiza/subfedOAI/SubRepositoriosTest.java -text
 src/src/test/java/feb/services/TagCloudImplTest.java -text
 src/src/test/java/feb/spring/FebConfigIT.java -text
 src/src/test/java/functionaltests/LumeXmlIT.java -text
+src/src/test/java/functionaltests/updateRepAndFed.java -text
 src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text
+src/src/test/resources/fedIFRS-listSets.xml -text
+src/src/test/resources/fedIFRS-records.xml -text
 src/src/test/resources/oai-feb2.1.xml -text
+src/src/test/resources/repIFRS-records.xml -text
 src/src/xslt/dc2obaa.xsl -text
 src/src/xslt/dc2obaa_full.xsl -text
 src/src/xslt/do.sh -text
 src/src/xslt/lom2obaa_full.xsl -text
+src/src/xslt/obaa2obaa.xsl -text

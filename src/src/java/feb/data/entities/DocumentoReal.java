@@ -458,7 +458,7 @@ public class DocumentoReal implements java.io.Serializable,
 	}
 
 	private List<String> getStopWords() {
-		// TODO: this is ugly...
+		// TODO: this is ugly... see how to do not using getApplicationContext()
 		ApplicationContext ctx = ApplicationContextProvider
 				.getApplicationContext();
 		if (ctx == null) {
