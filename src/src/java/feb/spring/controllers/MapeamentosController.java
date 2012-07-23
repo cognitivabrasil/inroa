@@ -132,8 +132,7 @@ public final class MapeamentosController {
     public String deleteDo(
             @PathVariable Integer id,
             Model model) {
-        Mapeamento map = new Mapeamento();
-        map.setId(id);
+        Mapeamento map = mapDao.get(id);
         mapDao.delete(map);
         return "redirect:/admin/fechaRecarrega";
     }

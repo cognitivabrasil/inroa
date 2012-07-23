@@ -11,6 +11,9 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 import org.jboss.logging.Logger;
@@ -43,7 +46,7 @@ public class FebConfig {
 
 	private String host;
 	private Integer port;
-	private String password;
+	private transient String password;
 	private String username;
 	private String database;
 	private String filename;
@@ -195,5 +198,10 @@ public class FebConfig {
 		setPort(febConf.getPort());
 		setHost(febConf.getHost());	
 	}
+	
+    @Override
+    public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
+    }
 
 }

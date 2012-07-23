@@ -23,6 +23,11 @@ import feb.data.interfaces.SubFederacaoDAO;
 
 public class SubFederacaoHibernateDAO extends AbstractNamedHibernateDAO<SubFederacao> implements SubFederacaoDAO {
 
+    public SubFederacaoHibernateDAO() {
+    	setClazz(SubFederacao.class);
+    }
+    
+	
     public void updateNotBlank(SubFederacao r2) {
         if (r2.getId() == null) {
             throw new IllegalArgumentException("Cant update a new SubFederation, save it instead");

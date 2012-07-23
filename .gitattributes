@@ -235,6 +235,7 @@ src/src/java/feb/data/entities/Visita.java -text
 src/src/java/feb/data/interfaces/DocumentoFebInterface.java -text
 src/src/java/feb/data/interfaces/DocumentosDAO.java -text
 src/src/java/feb/data/interfaces/DocumentosVisitasDao.java -text
+src/src/java/feb/data/interfaces/FebDomainObject.java -text
 src/src/java/feb/data/interfaces/MapeamentoDAO.java -text
 src/src/java/feb/data/interfaces/PadraoMetadadosDAO.java -text
 src/src/java/feb/data/interfaces/RepositoryDAO.java -text
@@ -269,9 +270,12 @@ src/src/java/feb/robo/main/Robo.java -text
 src/src/java/feb/robo/main/package.html -text
 src/src/java/feb/services/TagCloudService.java -text
 src/src/java/feb/services/TagCloudServiceImpl.java -text
+src/src/java/feb/services/UserActionLogger.java -text
+src/src/java/feb/services/UserActionLoggerImpl.java -text
 src/src/java/feb/spring/ApplicationContextProvider.java -text
 src/src/java/feb/spring/FebConfig.java -text
 src/src/java/feb/spring/ServerInfo.java -text
+src/src/java/feb/spring/aspects/FebLoggerAspect.java -text
 src/src/java/feb/spring/controllers/AdminController.java -text
 src/src/java/feb/spring/controllers/FEBController.java -text
 src/src/java/feb/spring/controllers/FederationsController.java -text

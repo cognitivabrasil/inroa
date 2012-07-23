@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import feb.data.entities.PadraoMetadados;
 import feb.data.entities.Visita;
 import feb.data.interfaces.VisitasDao;
 
@@ -20,6 +21,11 @@ import feb.data.interfaces.VisitasDao;
  */
 public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements VisitasDao {
 
+    public VisitasHibernateDao() {
+    	setClazz(Visita.class);
+    }
+    
+	
     @Override
     public int visitsInAMonth(int month, int year) {
 

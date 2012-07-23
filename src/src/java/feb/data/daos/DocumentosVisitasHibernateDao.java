@@ -18,6 +18,10 @@ public class DocumentosVisitasHibernateDao extends AbstractHibernateDAO<Document
 
     @Autowired
     private DocumentosDAO docDao;
+    
+    public DocumentosVisitasHibernateDao() {
+    	setClazz(DocumentosVisitas.class);
+    }
 
     @Override
     public DocumentosVisitas get(int id) {

@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
-import feb.data.entities.Mapeamento;
 import feb.data.entities.Usuario;
 import feb.data.interfaces.UsuarioDAO;
 
@@ -26,6 +25,11 @@ public class UsuarioHibernateDAO extends AbstractHibernateDAO<Usuario> implement
 
     private static Logger log = Logger.getLogger(UsuarioHibernateDAO.class.getName());
 
+    public UsuarioHibernateDAO() {
+    	setClazz(Usuario.class);
+    }
+    
+    
     @Override
     public Usuario authenticate(String login, String password) {
 

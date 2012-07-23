@@ -94,8 +94,7 @@ public final class MetadataStandardController {
     String deleteMetadata(
             @PathVariable Integer id,
             Model model) {
-        PadraoMetadados padrao = new PadraoMetadados();
-        padrao.setId(id);
+        PadraoMetadados padrao = padraoDao.get(id);
         try {
             padraoDao.delete(padrao);
             return "Exclu&iacute;do com sucesso!";

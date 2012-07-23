@@ -44,6 +44,7 @@ public final class FederationsController {
     ServletContext servletContext;
     @Autowired
     private UsuarioDAO userDao;
+    @Autowired SubFederacaoOAI subFed;
     Logger  log = Logger.getLogger(FederationsController.class);
 
 
@@ -135,8 +136,7 @@ public final class FederationsController {
     public String deleteDo(
             @PathVariable("id") Integer id,
             Model model) {
-            SubFederacao subFed = new SubFederacao();
-            subFed.setId(id);
+            SubFederacao subFed = subDao.get(id);
             subDao.delete(subFed);
             return "redirect:/admin/fechaRecarrega";
     }
@@ -149,7 +149,6 @@ public final class FederationsController {
     String atualizaFedAjax(@PathVariable("id") Integer id,
             @RequestParam boolean apagar) {
         log.info("FEB: Solicitacao de atualizacao pela Ferramenta Administrativa...");
-        SubFederacaoOAI subFed = new SubFederacaoOAI();
         
         try {
             if (id > 0) {

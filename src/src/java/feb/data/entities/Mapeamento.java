@@ -4,6 +4,10 @@
  */
 package feb.data.entities;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import feb.data.interfaces.FebDomainObject;
 import metadata.MetadataConversorInterface;
 
 /**
@@ -11,7 +15,7 @@ import metadata.MetadataConversorInterface;
  * @author paulo
  * 
  */
-public class Mapeamento implements MetadataConversorInterface {
+public class Mapeamento implements MetadataConversorInterface, FebDomainObject {
     private Integer id;
     private String description;
     private String name;
@@ -80,6 +84,16 @@ public class Mapeamento implements MetadataConversorInterface {
     public String toObaa(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    @Override
+    public String toString() {
+    	return getName() + "(" + getId() + ")";
+    }
+
+	@Override
+	public String toStringDetailed() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
+	}
 
     
 }

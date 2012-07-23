@@ -9,12 +9,16 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import feb.data.interfaces.FebDomainObject;
 
 /**
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  */
-public class PadraoMetadados implements java.io.Serializable {
+public class PadraoMetadados implements java.io.Serializable, FebDomainObject {
 
     private static final long serialVersionUID = -8862349037606469252L;
     private Integer id;
@@ -22,7 +26,7 @@ public class PadraoMetadados implements java.io.Serializable {
     private String metadataPrefix;
     private String namespace;
     private Set<Mapeamento> mapeamentos;
-    private String atributos;
+    private transient String atributos;
 
     public PadraoMetadados() {
         id = 0;
@@ -133,6 +137,11 @@ public class PadraoMetadados implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return getNome();
+    	return getName() + "(" + getId() + ")";
     }
+
+	@Override
+	public String toStringDetailed() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
+	}
 }

@@ -23,5 +23,8 @@ import feb.data.interfaces.PadraoMetadadosDAO;
 public class PadraoMetadadosHibernateDAO extends AbstractNamedHibernateDAO<PadraoMetadados>  implements PadraoMetadadosDAO {
 
 
+    public PadraoMetadadosHibernateDAO() {
+    	setClazz(PadraoMetadados.class);
+    }
     
 }

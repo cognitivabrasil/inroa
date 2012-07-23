@@ -4,6 +4,7 @@
  */
 package feb.data.entities;
 
+import feb.data.interfaces.FebDomainObject;
 import feb.spring.ApplicationContextProvider;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,6 +12,9 @@ import java.util.Set;
 import org.springframework.core.style.ToStringCreator;
 
 import feb.util.Operacoes;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
@@ -19,7 +23,7 @@ import org.springframework.dao.support.DataAccessUtils;
  *
  * @author Marcos Nunes
  */
-public class SubFederacao implements java.io.Serializable, SubNodo {
+public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObject {
 
     private static final long serialVersionUID = 7452479917517752879L;
     private Integer id;
@@ -31,7 +35,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
     private String version;
     private String dataXMLTemp;
     private Set<RepositorioSubFed> repositorios;
-    SessionFactory sessionFactory;
+    private transient SessionFactory sessionFactory;
 
     public SubFederacao() {
         this.id = null;
@@ -307,4 +311,9 @@ public class SubFederacao implements java.io.Serializable, SubNodo {
         }
         return sessionFactory;
     }
+
+		@Override
+		public String toStringDetailed() {
+			return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
+		}
 }

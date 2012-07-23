@@ -21,6 +21,9 @@ public class Robo {
     @Autowired
     Indexador indexar;
     
+    @Autowired private Repositorios repositorio;
+    @Autowired private SubFederacaoOAI subFed;
+    
     @Autowired private SearchesDao searchesDao;
 
     /**
@@ -47,11 +50,9 @@ public class Robo {
         boolean subFedAtualizada = false;
 
 //TESTA/ATUALIZA SUBFEDERACAO
-        SubFederacaoOAI subFed = new SubFederacaoOAI();
         subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);
 
 //TESTA REPOSITORIO
-        Repositorios repositorio = new Repositorios();
         repAtualizado = repositorio.testa_atualizar_repositorio(indexar);
 
 

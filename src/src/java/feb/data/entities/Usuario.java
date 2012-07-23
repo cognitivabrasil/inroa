@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -12,6 +14,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import feb.data.interfaces.FebDomainObject;
 import feb.spring.ApplicationContextProvider;
 
 /**
@@ -33,7 +36,7 @@ import feb.spring.ApplicationContextProvider;
  *
  * @author paulo
  */
-public class Usuario implements UserDetails {
+public class Usuario implements UserDetails, FebDomainObject {
     private static final long serialVersionUID = -2896658180312977640L;
     private Integer id;
     private String login;
@@ -235,6 +238,16 @@ public class Usuario implements UserDetails {
 	 */
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+    @Override
+    public String toString() {
+    	return getUsername() + "(" + getId() + ")";
+    }
+
+	@Override
+	public String toStringDetailed() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
 	}
 
 }

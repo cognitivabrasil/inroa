@@ -3,6 +3,8 @@ package feb.data.entities;
 
 import java.util.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -12,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.transaction.annotation.Transactional;
 
+import feb.data.interfaces.FebDomainObject;
 import feb.spring.ApplicationContextProvider;
 import feb.util.Operacoes;
 
@@ -21,7 +24,7 @@ import feb.util.Operacoes;
  *
  */
 @Transactional
-public class Repositorio implements java.io.Serializable, SubNodo {
+public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObject {
 
     static Logger log = Logger.getLogger(Repositorio.class.getName());
     private static final long serialVersionUID = 1011292251690153763L;
@@ -30,15 +33,15 @@ public class Repositorio implements java.io.Serializable, SubNodo {
     private String descricao;
     private String url;
     private String metadataPrefix;
-    private Set<DocumentoReal> documentos;
+    private transient Set<DocumentoReal> documentos;
     private Date ultimaAtualizacao;
     private String namespace;
     private Integer periodicidadeAtualizacao;
     private String colecoesInternal;
     private PadraoMetadados padraoMetadados;
     private Mapeamento mapeamento;
-    private SessionFactory sessionFactory;
-    private Session session;
+    private transient SessionFactory sessionFactory;
+    private transient Session session;
     private Date dataOrigem;
     private Date dataOrigemTemp;
 
@@ -466,4 +469,11 @@ public class Repositorio implements java.io.Serializable, SubNodo {
     private void setSession(Session session) {
         this.session = session;
     }
+
+	
+		@Override
+		public String toStringDetailed() {
+			return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
+		}
+	
 }

@@ -30,6 +30,7 @@ public final class RepositoriesController {
     @Autowired
     private PadraoMetadadosDAO padraoDao;
     private RepositorioValidator repValidator = new RepositorioValidator();
+    @Autowired private Repositorios atualizadorRep;
    
     /**
      * Shows the details of the repository.
@@ -76,16 +77,16 @@ public final class RepositoriesController {
             model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
             return "admin/repositories/new";
         } else {
-            if (repDao.get(rep.getName()) != null) { //se retornar algo é porque já existe um repositorio com esse nome
-                result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); //nao esta dentro da classe validator pq só executa isso quando for um repositorio novo, quando editar não.
+            if (repDao.get(rep.getName()) != null) { //se retornar algo é porque já existe um atualizadorRep com esse nome
+                result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); //nao esta dentro da classe validator pq só executa isso quando for um atualizadorRep novo, quando editar não.
 
                 model.addAttribute("mapSelecionado", rep.getMapeamento().getId());
                 model.addAttribute("repModel", rep);
                 model.addAttribute("padraoMetadadosDAO", padraoDao);
                 model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
                 return "admin/repositories/new";
-            } else { //se retornar null é porque nao tem nenhum repositorio com esse nome
-                repDao.save(rep); //salva o novo repositorio return
+            } else { //se retornar null é porque nao tem nenhum atualizadorRep com esse nome
+                repDao.save(rep); //salva o novo atualizadorRep return
                 return "redirect:/admin/fechaRecarrega";
             }
         }
@@ -146,12 +147,11 @@ public final class RepositoriesController {
     		@PathVariable Integer id,
             @RequestParam boolean apagar) {
 
-        Repositorios repositorio = new Repositorios();
         try {
-            repositorio.atualizaFerramentaAdm(id, apagar);
+            atualizadorRep.atualizaFerramentaAdm(id, apagar);
             return "1";
         } catch (Exception e) {
-            return "Ocorreu um erro ao atualizar o repositorio. Exception: " + e.toString();
+            return "Ocorreu um erro ao atualizar o atualizadorRep. Exception: " + e.toString();
         }
     }
 

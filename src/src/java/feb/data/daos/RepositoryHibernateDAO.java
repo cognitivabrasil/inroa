@@ -24,7 +24,10 @@ import feb.data.interfaces.RepositoryDAO;
  */
 public class RepositoryHibernateDAO extends AbstractNamedHibernateDAO<Repositorio> implements RepositoryDAO {
  
-
+    public RepositoryHibernateDAO() {
+    	setClazz(Repositorio.class);
+    }
+    
 
     @Override
     public void updateNotBlank(Repositorio r2) {

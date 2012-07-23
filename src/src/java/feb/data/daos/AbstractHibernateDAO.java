@@ -5,6 +5,7 @@
 package feb.data.daos;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * The Class AbstractHibernateDAO.
  * 
  * Use it to create concrete DAO classes.
- *
- * @param <T> the generic type
+ * 
+ * @param <T>
+ *            the generic type
  * @author Paulo Schreiner <paulo@jorjao81.com>
  */
 public abstract class AbstractHibernateDAO<T> {
@@ -24,25 +26,29 @@ public abstract class AbstractHibernateDAO<T> {
 	/** The session factory. */
 	@Autowired
 	SessionFactory sessionFactory;
-	
+
 	/** The type. */
 	Class<T> type;
 
 	/**
-	 * Instantiates a new abstract HibernateDAO. 
-	 * We need to store the class type, so we can execute Hibernate
-	 * Queries for the correct entity, so we do it here.
+	 * Instantiates a new abstract HibernateDAO. We need to store the class
+	 * type, so we can execute Hibernate Queries for the correct entity, so we
+	 * do it here.
 	 */
 	@SuppressWarnings("unchecked")
 	public AbstractHibernateDAO() {
-		this.type = (Class<T>) ((ParameterizedType) getClass()
-				.getGenericSuperclass()).getActualTypeArguments()[0];
+		
 	}
+	
+	  public void setClazz( final Class< T > clazzToSet ){
+	      type = clazzToSet;
+	   }
 
 	/**
 	 * Gets an entity by ID.
-	 *
-	 * @param id the id
+	 * 
+	 * @param id
+	 *            the id
 	 * @return the entity of type T with the specified id.
 	 */
 	@SuppressWarnings("unchecked")
@@ -52,8 +58,9 @@ public abstract class AbstractHibernateDAO<T> {
 
 	/**
 	 * Delete an entity from the database.
-	 *
-	 * @param item the item do be deleted
+	 * 
+	 * @param item
+	 *            the item do be deleted
 	 */
 	public void delete(T item) {
 		this.sessionFactory.getCurrentSession().delete(item);
@@ -63,11 +70,12 @@ public abstract class AbstractHibernateDAO<T> {
 
 	/**
 	 * Persists the entity to the database. If it already exists, it updates it.
-	 *
-	 * @param item the item do be saved
+	 * 
+	 * @param item
+	 *            the item do be saved
 	 */
 	public void save(T item) {
-		Logger  log = Logger.getLogger(type.getName());
+		Logger log = Logger.getLogger(type.getName());
 		log.info("Saving..." + item.toString());
 
 		this.sessionFactory.getCurrentSession().saveOrUpdate(item);
@@ -76,7 +84,7 @@ public abstract class AbstractHibernateDAO<T> {
 
 	/**
 	 * Gets all entities of type T. Use with care for big collections.
-	 *
+	 * 
 	 * @return list of all the entities of type T
 	 */
 	@SuppressWarnings("unchecked")
