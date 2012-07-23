@@ -60,6 +60,11 @@ img{
     border: 2px solid #AEC9E3;
     background-color:white;
 }
+#page-index
+{
+    padding: 10px;
+    background-color:white;
+}
 
 #body
 {
@@ -465,9 +470,6 @@ a:hover{
 .LinhaEntrada .ValueIndex{
     margin:0 0 5px 41%;
 }
-.LinhaEntrada .ValueIndex .Interno{
-    margin:0 0 3px 6%;
-}
 .LinhaEntrada .ValueErro{
     margin:0 0 20px 41%;
     color:red;
@@ -685,6 +687,15 @@ td{vertical-align:top;}
     border:0px;
     cursor:pointer;
 }
+.botaoLupa {
+    background-color: transparent;
+    background-image:url(/feb/imagens/lupa-26x24.png);
+    height: 24px;
+    width: 26px;
+    border:0px;
+    cursor:pointer;
+    vertical-align: middle;
+}
 .BotaoFechar{
     text-align:center;
     margin-top:2%;
@@ -808,12 +819,13 @@ td{vertical-align:top;}
 }
 
 .copyRight{
-    font-size: 70%;
-    padding-left:2%;
-    text-align: left;
+    font-size: 80%;
+    text-align: right;
     color: #585858;
     vertical-align: middle;
-    float:left;
+    float:right;
+    margin-right: 1%;
+    margin-top: 0.5%;
 }
 .rss{
     margin-top: 2px;
@@ -958,8 +970,55 @@ td{vertical-align:top;}
     margin:0% 0% 1% 12%;
 }
 #tagcloud{
-    margin-top: 2%;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-top: 8%;
+    margin-left: 5%;
+    margin-right: 5%;
     text-align: center;
+}
+
+#index{
+    margin-top: 5%;
+    text-align: center;
+}
+#index .logo{
+    width: 10%;
+}
+#index .logoBusca a{
+    text-decoration:none;
+    color:white;
+}
+#index input[type=text]{border-color: #006699}
+.busca{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 1%;
+}
+.busca input[type=text]{width:50%;}
+.busca .ValueErro{
+    color:red;
+    font-weight:bold;
+}
+
+.barra-superior
+{
+    font-size: 100%;
+    text-align:left;
+    font-weight: bold;
+    padding-left: 10px;
+    background-color: #006699;
+    color:white;
+    font-family:"Zurich Ex BT", "arial", "sans-serif";
+    padding: 0.5%;
+}
+.barra-superior span{margin-left: 1%;}
+.barra-superior span a{color:white; text-decoration: none;}
+.barra-superior span a:hover{color:#b1b1b1;text-decoration:none; font-size:100%;}
+
+.ondeBuscar{text-align: center; font-size: 110%;}
+.ondeBuscar .Interno{
+    margin:0 0 3px 9%;
+}
+.autor{
+    margin-top: 1%;
 }

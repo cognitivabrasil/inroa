@@ -136,7 +136,7 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 	
 	<bean id="tagService" class="feb.services.TagCloudServiceImpl">
 		<property name="days" value="7"/>
-		<property name="maxSize" value="50"/>
+		<property name="maxSize" value="30"/>
 	</bean>
 	
 

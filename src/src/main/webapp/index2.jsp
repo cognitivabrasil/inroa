@@ -21,55 +21,35 @@
         <title>GT-FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
-        <script language="JavaScript" type="text/javascript">
-            function ocultar(id, idLink){
-                var valor = document.getElementById(idLink);
-                valor.innerHTML="+";
-                valor.onclick=function(){tornarVisivel(idLink,id, "Interno")};
-                var obj = document.getElementById(id);
-                obj.className='hidden';
-            }
-            function tornarVisivel(idLink, id, css){
-                var valor = document.getElementById(idLink);
-                valor.innerHTML="-";
-                valor.onclick=function(){ocultar(id, idLink)};
-                var obj = document.getElementById(id);
-                obj.className=css;
-            }
-
-        </script>
+        <script language="JavaScript" type="text/javascript" src="scripts/index.js"></script>
 
     </head>
     <body id="bodyMenor">
-        <!-- incluir um arquivo %@ include file="top.html" %> -->
+
         <div id="page">
 
             <jsp:include page="cabecalho.jsp">
-                <jsp:param value="Consulta de Objetos Educacionais" name="titulo" />
+                <jsp:param value="Consulta de Objetos Educacionais / Busca Avan&ccedil;ada" name="titulo" />
             </jsp:include>
-            
+
             <div class="linkCantoDireito"><a href="./admin/"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
             <div class="Espaco">&nbsp;</div>
-            
-            
+
+
             <form:form method="get" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">    
                 <div class="EspacoAntes">&nbsp;</div>
                 <c:if test="${!empty erro}">
                     <div class="DivErro" id="MensagemErro">${erro}</div>
                 </c:if>
-                    
-                <div class="LinhaEntrada">                    
-                    <div class="Label">
-                        
-                    </div>
+
+                <div class="ondeBuscar">
 
                     <c:forEach var="rep" items="${repDAO.all}" varStatus="i">
 
                         <c:if test="${i.index==0}"><div class='ValueIndex'>- Reposit&oacute;rios</div></c:if>
 
-                            <div class='ValueIndex'>&nbsp;&nbsp;&nbsp;
-                                <input value='${rep.id}' type=checkbox id="${rep.id}" name="repositorios"> ${fn:toUpperCase(rep.nome)}                                
+                        <div class='repositorios'>&nbsp;&nbsp;&nbsp;
+                            <input value='${rep.id}' type=checkbox id="${rep.id}" name="repositorios"> ${fn:toUpperCase(rep.nome)}
                         </div>                           
 
                     </c:forEach>
@@ -77,7 +57,7 @@
                     <c:forEach var="subFed" items="${subDAO.all}" varStatus="i">
 
                         <c:if test="${i.index==0}"><div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div></c:if>
-                        <div class='ValueIndex'>&nbsp;&nbsp;&nbsp;
+                        <div class='federacoes'>&nbsp;&nbsp;&nbsp;
                             <a id='link${subFed.id}' class='linkRepSubfeb' onclick='tornarVisivel("link${subFed.id}","listaRep${subFed.id}", "Interno");'>+</a>
                             <input value='${subFed.id}' type=checkbox id="${subFed.id}" name="federacoes"> ${fn:toUpperCase(subFed.nome)}
                             <div id='listaRep${subFed.id}' class='hidden'>
@@ -108,8 +88,8 @@
                         <div class="Value">
                             <input type="text" name="consulta" id="consulta" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
                         </div>
-                        </div>
-                        <div class="LinhaEntrada">
+                    </div>
+                    <div class="LinhaEntrada">
                         <div class="Label">
                             Autor:
                         </div>

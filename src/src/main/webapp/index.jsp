@@ -9,6 +9,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<c:url var="images" value="/imagens" />
+<c:url var="logoReduzido" value="/imagens/Logo FEB_reduzido.png" />
+<c:url var="index" value="/" />
+<c:url var="adm" value="/admin" />
 
 <%
     request.setCharacterEncoding("UTF-8");
@@ -22,53 +26,38 @@
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="JavaScript" type="text/javascript" src="scripts/rss.js"></script>
-
-
     </head>      
 
-    <body id="bodyMenor">
+    <body>
+        <jsp:include page="barraSuperior.jsp" />
 
-        <div id="page">
+        <div id="page-index">
 
+            
+            <c:if test="${!empty erro}">
+                <div class="DivErro" id="MensagemErro">${erro}</div>
+            </c:if>
 
-            <jsp:include page="cabecalho.jsp">
-                <jsp:param value="Consulta de Objetos Educacionais" name="titulo" />
-            </jsp:include>
+            <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">
+                <div id="index">
 
-            <div>
-                <div class="linkCantoEsquerdo"> <a href="http://feb.ufrgs.br/feb"><img src="imagens/Logo FEB_reduzido_45x32.png" alt="Logo FEB_reduzido" title="Buscar na Confederação"/>  Confederação</a></div>
-                <div class="linkCantoDireito"><a href="./admin/" title="Ferramenta Administrativa"><img src="imagens/ferramenta_32x32.png" alt="Ferramenta Administrativa"></a></div>
-            </div>
-            <div class="Espaco">&nbsp;</div>
-
-            <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">   
-
-                <div class="clear"> </div>
-                <div class="EspacoAntes">&nbsp;</div>
-
-                <c:if test="${!empty erro}">
-                    <div class="DivErro" id="MensagemErro">${erro}</div>
-                </c:if>
-
-                <div class="LinhaEntrada">                    
-                    <form:errors path="consulta" cssClass="ValueErro" />
-                    <div class="Label">
-                        Texto para a busca:
-                    </div>
-                    <div class="Value">
-                        <form:input path="consulta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
+                    <a href="${index}">
+                        <img src="${logoReduzido}" alt="Logo FEB_reduzido" class="logo"/>
+                    </a>
 
                     <div class="clear"> </div>
-                </div>
-                <div class="LinhaEntrada">
-                    <div class="btConsultar">
-                        <input class="BOTAO" type="submit" value="Consultar"/>
+                    <div class="EspacoAntes">&nbsp;</div>
+
+
+                    <div class="busca">
+                        <div><form:errors path="consulta" cssClass="ValueErro" /></div>
+                        <form:input path="consulta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <input class="botaoLupa" type="submit" value=""/>
                     </div>
                 </div>
             </form:form>
             <div ALIGN="CENTER">
-                <a href="./index2">Busca Avan&ccedil;ada</a>
+                <a href="./buscaAvancada">Busca Avan&ccedil;ada</a>
             </div>
 
             <div>
@@ -77,9 +66,6 @@
                 </jsp:include>
             </div> 
 
-        </div>
-        <div>
-            <div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
         </div>
 
 

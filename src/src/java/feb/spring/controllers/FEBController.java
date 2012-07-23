@@ -91,12 +91,12 @@ public final class FEBController {
         return "index";
     }
 
-    @RequestMapping("/index2")
-    public String index2(Model model) {
+    @RequestMapping("/buscaAvancada")
+    public String buscaAvancada(Model model) {
 
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
-        return "index2";
+        return "buscaAvancada";
     }
 
     /**
@@ -194,7 +194,7 @@ public final class FEBController {
         if (result.hasErrors()) {
             model.addAttribute("repDAO", repDao);
             model.addAttribute("subDAO", subDao);
-            return "index2";
+            return "buscaAvancada";
         } else {
             try {
                 Recuperador rec = new Recuperador();
@@ -207,7 +207,7 @@ public final class FEBController {
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
                 System.err.println("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "
                         + e.toString());
-                return "index2";
+                return "buscaAvancada";
             }
         }
     }

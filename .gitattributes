@@ -342,6 +342,8 @@ src/src/main/webapp/admin/users/confirmDelete.jsp -text
 src/src/main/webapp/admin/users/form.jsp -text
 src/src/main/webapp/admin/users/passwd.jsp -text
 src/src/main/webapp/admin/users/show.jsp -text
+src/src/main/webapp/barraSuperior.jsp -text
+src/src/main/webapp/buscaAvancada.jsp -text
 src/src/main/webapp/cabecalho.jsp -text
 src/src/main/webapp/consulta.jsp -text
 src/src/main/webapp/css/jquery.jqplot.min.css -text
@@ -372,7 +374,9 @@ src/src/main/webapp/imagens/ferramenta_32x32.png -text
 src/src/main/webapp/imagens/gerarRss.png -text
 src/src/main/webapp/imagens/ico24_deletar.gif -text
 src/src/main/webapp/imagens/ico24_salvar.gif -text
-src/src/main/webapp/imagens/lupa.png -text
+src/src/main/webapp/imagens/lupa-26x24.png -text
+src/src/main/webapp/imagens/lupa1.png -text
+src/src/main/webapp/imagens/lupa2.png -text
 src/src/main/webapp/imagens/rnp_logo.jpg -text
 src/src/main/webapp/imagens/rss_300x300.png -text
 src/src/main/webapp/imagens/sincronizar.png -text
@@ -423,6 +427,7 @@ src/src/main/webapp/scripts/codemirror/theme/xq-dark.css -text
 src/src/main/webapp/scripts/funcoes.js -text
 src/src/main/webapp/scripts/funcoesMapeamento.js -text
 src/src/main/webapp/scripts/funcoesPadrao.js -text
+src/src/main/webapp/scripts/index.js -text
 src/src/main/webapp/scripts/jqplot.pieRenderer.min.js -text
 src/src/main/webapp/scripts/jquery-1.7.2.js -text
 src/src/main/webapp/scripts/jquery-ui-1.8.21.tabs.custom.min.js -text
