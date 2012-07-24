@@ -15,15 +15,11 @@
         <title>FEB - Ferramenta Administrativa</title>
 <c:url var="favicon" value="/imagens/favicon.ico" />
 <c:url var="css" value="/css/padrao.css" />
-<c:url var="validateJs" value="/scripts/validatejs.js" />
-<c:url var="funcoesJs" value="/scripts/funcoes.js" />
 
-<c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
 
 <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
 <link rel="StyleSheet" href="${css}" type="text/css" />
-<script type="text/javascript" src="${validateJs }"></script>
-<script type="text/javascript" src="${funcoesJs }"></script>
+
     </head>
     <body>
         <div id="page">

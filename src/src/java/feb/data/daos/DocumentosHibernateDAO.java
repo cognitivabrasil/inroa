@@ -131,6 +131,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
         } else {
             doc.setMetadata(obaa);
         }
+        
+        log.debug("Tokenizando o documento");
+        doc.generateTokens();
 
         try {
             getSession().save(doc);
@@ -143,8 +146,6 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
         }
 
-        log.debug("Tokenizando o documento");
-        doc.generateTokens();
     }
 
     /**

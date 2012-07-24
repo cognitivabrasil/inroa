@@ -15,6 +15,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.util.StopWatch;
 
 /**
  * 
@@ -414,6 +415,8 @@ public class DocumentoReal implements java.io.Serializable,
 	 * First, it clears existing tokens.
 	 */
 	public void generateTokens() {
+            StopWatch stop = new StopWatch();
+            stop.start();
 		tokens.clear();
 		for (String t : getTitlesTokenized()) {
 			tokens.add(new Token(t, this, Token.TITLE));
@@ -425,6 +428,8 @@ public class DocumentoReal implements java.io.Serializable,
 		for (String t : getDescriptionsTokenized()) {
 			tokens.add(new Token(t, this, Token.DESCRIPTION));
 		}
+                stop.stop();
+                log.info("Generate tokens levou: " + stop.getTotalTimeSeconds());
 	}
 
 	public boolean isIndexEmpty() {

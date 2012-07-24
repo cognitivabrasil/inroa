@@ -30,9 +30,7 @@ Author     : Marcos Nunes
               href="<feb.spring:url value="/imagens/favicon.ico" htmlEscape="true" />">
 
         <script language="JavaScript" type="text/javascript"
-        src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>
-        <script language="JavaScript" type="text/javascript"
-        src="<feb.spring:url value="/scripts/funcoesMapeamento.js" htmlEscape="true" />"></script>        
+        src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>        
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
         <script type="text/javascript" src='<feb.spring:url value="/scripts/jquery-ui-1.8.21.tabs.custom.min.js" htmlEscape="true" />'></script>
         <script language="JavaScript" type="text/javascript"

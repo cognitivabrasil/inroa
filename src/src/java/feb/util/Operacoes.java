@@ -87,16 +87,7 @@ public class Operacoes {
      * @return texto sem acentos e apenas com letras e n&uacute;meros.
      */
     public static String removeAcentuacao(String texto) {
-        return texto.toLowerCase()
-                .replaceAll("á|à|â|ã|ä", "a")
-                .replaceAll("é|è|ê|ë", "e")
-                .replaceAll("í|ì|î|ï", "i")
-                .replaceAll("ó|ò|ô|õ|ö", "o")
-                .replaceAll("ú|ù|û|ü", "u")
-                .replaceAll("ç", "c")
-                .replaceAll("ñ", "n")
-                .replaceAll("\\W", " ")
-                .trim();
+        return texto.toLowerCase().replaceAll("á|à|â|ã|ä", "a").replaceAll("é|è|ê|ë", "e").replaceAll("í|ì|î|ï", "i").replaceAll("ó|ò|ô|õ|ö", "o").replaceAll("ú|ù|û|ü", "u").replaceAll("ç", "c").replaceAll("ñ", "n").replaceAll("\\W", " ").trim();
     }
 
     /**
@@ -273,6 +264,7 @@ public class Operacoes {
 
     /**
      * Testa se a String recebida por par&acirc;metro &eacute; uma url
+     *
      * @param url String que ser&aacute; testada;
      * @return true se for um url v&aacute;lida e false caso negativo
      */
@@ -288,5 +280,38 @@ public class Operacoes {
             }
         }
     }
-    
+
+    /**
+     * Recebe um n&uacute;mero de milisegundos e retorna formatado em hh:mm:ss
+     * @param timeMillis long com os milisegundos
+     * @return String no formato hh:mm:ss
+     */
+    public static String formatTimeMillis(long timeMillis) {
+        double x = timeMillis;
+        double y = 1000 * 60 * 60;
+        double horasDouble = x / y;
+
+        int numero_de_horas = (int) horasDouble;
+        double fracionaria = horasDouble - numero_de_horas;
+
+        double minutosDouble = fracionaria * 60;
+        int numero_de_minutos = (int) minutosDouble;
+
+        double fracionaria_segundos = minutosDouble - numero_de_minutos;
+        int numero_de_segundos = (int) (60 * fracionaria_segundos);
+
+        String horas = String.valueOf(numero_de_horas);
+        String minutos = String.valueOf(numero_de_minutos);
+        String segundos = String.valueOf(numero_de_segundos);
+        if (numero_de_horas < 10) {
+            horas = "0" + numero_de_horas;
+        }
+        if (numero_de_minutos < 10) {
+            minutos = "0" + numero_de_minutos;
+        }
+        if (numero_de_segundos < 10) {
+            segundos = "0" + numero_de_segundos;
+        }
+        return horas + ":" + minutos + ":" + segundos;
+    }
 }

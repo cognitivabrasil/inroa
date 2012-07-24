@@ -244,7 +244,7 @@ function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
         var ajax = openAjax(); // Inicia o Ajax.
 
         ajax.open("GET", rootUrl+"/admin/VerificaLinkOAI?"+link, true);
-        divErro.innerHTML = "<img src='/feb/imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
+        divErro.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
         ajax.onreadystatechange = function()
         {
             if(ajax.readyState == 4) // Quando estiver tudo pronto.
@@ -384,7 +384,7 @@ function excluirPadrao(id, idResultado, idTabela, linha)
 
 function recalcularIndice(destino, form){
     destinodoc = document.getElementById(destino);
-    destinodoc.innerHTML = "<center><img src='./feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;
+    destinodoc.innerHTML = "<center><img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;
     form.className="hidden";
     
 }

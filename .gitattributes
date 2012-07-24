@@ -495,7 +495,14 @@ src/src/test/java/feb/robo/atualiza/subfedOAI/SubRepositoriosTest.java -text
 src/src/test/java/feb/services/TagCloudImplTest.java -text
 src/src/test/java/feb/spring/FebConfigIT.java -text
 src/src/test/java/functionaltests/LumeXmlIT.java -text
+src/src/test/java/functionaltests/PerformanceTest.java -text
 src/src/test/java/functionaltests/updateRepAndFed.java -text
+src/src/test/resources/FEB-fiocruz2.xml -text
+src/src/test/resources/FEB-fiocruz3.xml -text
+src/src/test/resources/FEB-fiocruz4.xml -text
+src/src/test/resources/FEB-fiocruz5.xml -text
+src/src/test/resources/FEB-fiocruz6.xml -text
+src/src/test/resources/Fiocruz-listSets.xml -text
 src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text
 src/src/test/resources/fedIFRS-listSets.xml -text
