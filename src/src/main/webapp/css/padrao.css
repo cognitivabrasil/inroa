@@ -358,8 +358,7 @@ img{
 }
 
 a:hover{
-    text-decoration:underline;
-    font-size:110%;
+    text-decoration:underline;    
 }
 
 .sair{

@@ -378,11 +378,6 @@ src/src/main/webapp/css/images/ui-icons_454545_256x240.png -text
 src/src/main/webapp/css/images/ui-icons_888888_256x240.png -text
 src/src/main/webapp/css/images/ui-icons_cd0a0a_256x240.png -text
 src/src/main/webapp/css/jquery.jqplot.min.css -text
-src/src/main/webapp/css/jquery.ui.all.css -text
-src/src/main/webapp/css/jquery.ui.base.css -text
-src/src/main/webapp/css/jquery.ui.core.css -text
-src/src/main/webapp/css/jquery.ui.tabs.css -text
-src/src/main/webapp/css/jquery.ui.theme.css -text
 src/src/main/webapp/css/padrao.css -text
 src/src/main/webapp/css/shCore.css -text
 src/src/main/webapp/css/shCoreDefault.css -text
