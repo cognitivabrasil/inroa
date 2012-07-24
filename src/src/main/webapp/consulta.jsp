@@ -45,8 +45,8 @@
             	<c:url var="rsslink" value="rss/feed?${BuscaModel.urlEncoded}"/>
             	<c:url var="rssImg" value="/imagens/feed-icon-14x14.png"/>
             	<a href="${rsslink}"><img src="${rssImg}" alt="RSS"/></a>
-                <c:if test="${!empty BuscaModel.consulta}"> &nbsp;Consulta efetuada <i>"<strong>${BuscaModel.consulta}</strong>"</i></c:if>
-                <c:if test="${!empty BuscaModel.autor}"> &nbsp;Autor: <i>"<strong>${BuscaModel.autor}</strong>"</i></c:if>
+                <c:if test="${!empty BuscaModel.consulta}"> &nbsp;Consulta efetuada <i>"<strong><c:out value="${BuscaModel.consulta}"/></strong>"</i></c:if>
+                <c:if test="${!empty BuscaModel.autor}"> &nbsp;Autor: <i>"<strong><c:out value="${BuscaModel.autor}"/></strong>"</i></c:if>
             </div>
             <div class="direita">
                 Total de <strong>${BuscaModel.sizeResult}</strong> objeto(s) encontrado(s)&nbsp;
