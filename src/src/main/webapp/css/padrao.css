@@ -443,6 +443,11 @@ a:hover{
     text-align:right;
     width:40%;
 }
+.LinhaEntrada .LabelLeft{
+    float:left;
+    text-align:left;
+    width:40%;
+}
 
 .LinhaEntrada .Value{
     margin:0 0 15px 41%;
@@ -469,6 +474,13 @@ a:hover{
 
 .LinhaEntrada .ValueIndex{
     margin:0 0 5px 41%;
+}
+.LinhaEntrada .ValueTree{
+    margin:0 0 5px 41%;
+    text-align: left;
+}
+.LinhaEntrada .ValueTree .Interno{
+    margin:0 0 3px 6%;
 }
 .LinhaEntrada .ValueErro{
     margin:0 0 20px 41%;
@@ -1015,10 +1027,14 @@ td{vertical-align:top;}
 .barra-superior span a{color:white; text-decoration: none;}
 .barra-superior span a:hover{color:#b1b1b1;text-decoration:none; font-size:100%;}
 
-.ondeBuscar{text-align: center; font-size: 110%;}
-.ondeBuscar .Interno{
-    margin:0 0 3px 9%;
+#buscaAvancada{
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1%;
+    padding-left: 1%;
+    width: 50%;
+    border: 2px solid #AEC9E3;
+    color: #414042;
+    text-align: left;
 }
-.autor{
-    margin-top: 1%;
-}
+#buscaAvancada input[type=text]{width:98%;}

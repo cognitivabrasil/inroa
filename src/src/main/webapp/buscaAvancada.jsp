@@ -13,7 +13,7 @@
 <c:url var="images" value="/imagens" />
 <c:url var="logoReduzido" value="/imagens/Logo FEB_reduzido.png" />
 <c:url var="index" value="/" />
-<c:url var="adm" value="/admin" />
+
 
 <%
     request.setCharacterEncoding("UTF-8");
@@ -31,7 +31,7 @@
 
     <body>
         <jsp:include page="barraSuperior.jsp" />
-        
+
         <div id="page-index">
 
             <c:if test="${!empty erro}">
@@ -47,52 +47,70 @@
                     <div class="clear"> </div>
                     <div class="EspacoAntes">&nbsp;</div>
 
-                    <div class="busca">
-                        <div><form:errors path="consulta" cssClass="ValueErro" /></div>
-                        <input type="text" name="consulta" id="consulta" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
-                        <input class="botaoLupa" type="submit" value=""/>
-                    </div>
-                        <div class="autor">
-                        <span>Autor:</span><span><input type="text" name="autor" id="autor" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/></span>
-                    </div>
 
-                    <div class="ondeBuscar">
+                    <div id="buscaAvancada">
 
-                        <c:forEach var="rep" items="${repDAO.all}" varStatus="i">
-                            <c:if test="${i.index==0}"><div class='ValueIndex'>- Reposit&oacute;rios</div></c:if>
-
-                            <div class='repositorios'>&nbsp;&nbsp;&nbsp;
-                                <input value='${rep.id}' type=checkbox id="${rep.id}" name="repositorios"> ${fn:toUpperCase(rep.nome)}
+                        <div class="LinhaEntrada">
+                            <form:errors path="consulta" cssClass="ValueErro" />
+                            <div class="LabelLeft">
+                                <b>Texto</b> para a busca
                             </div>
-                        </c:forEach>
+                            <div class="Value">
+                                <input type="text" name="consulta" id="consulta" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                            </div>
+                        </div>
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Pesquisar objetos <b>de autoria</b> de
+                            </div>
+                            <div class="Value">
+                                <input type="text" name="autor" id="autor" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                            </div>
+                        </div>
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Local para a busca
+                            </div>
 
-                        <c:forEach var="subFed" items="${subDAO.all}" varStatus="i">
-                            <c:if test="${i.index==0}"><div class='ValueIndex'>- Subfedera&ccedil;&otilde;es</div></c:if>
-                            <div class='federacoes'>&nbsp;&nbsp;&nbsp;
-                                <a id='link${subFed.id}' class='linkRepSubfeb' onclick='tornarVisivel("link${subFed.id}","listaRep${subFed.id}", "Interno");'>+</a>
-                                <input value='${subFed.id}' type=checkbox id="${subFed.id}" name="federacoes"> ${fn:toUpperCase(subFed.nome)}
-                                <div id='listaRep${subFed.id}' class='hidden'>
+                            <c:forEach var="rep" items="${repDAO.all}" varStatus="i">
 
-                                    <c:forEach var="repSubFed" items="${subFed.repositorios}" varStatus="i">
-                                        <div class='Int'>&nbsp;&nbsp;&nbsp;
-                                            <input value='${repSubFed.id}' type=checkbox id="${repSubFed.id}" name="repSubfed">
-                                            ${fn:toUpperCase(repSubFed.name)}
-                                        </div>
-                                    </c:forEach>
+                                <c:if test="${i.index==0}"><div class='ValueTree'>- Reposit&oacute;rios</div></c:if>
+
+                                <div class='ValueTree'>&nbsp;&nbsp;&nbsp;
+                                    <input value='${rep.id}' type=checkbox id="${rep.id}" name="repositorios"> ${fn:toUpperCase(rep.nome)}
                                 </div>
+
+                            </c:forEach>
+
+                            <c:forEach var="subFed" items="${subDAO.all}" varStatus="i">
+
+                                <c:if test="${i.index==0}"><div class='ValueTree'>- Subfedera&ccedil;&otilde;es</div></c:if>
+                                <div class='ValueTree'>&nbsp;&nbsp;&nbsp;
+                                    <a id='link${subFed.id}' class='linkRepSubfeb' onclick='tornarVisivel("link${subFed.id}","listaRep${subFed.id}", "Interno");'>+</a>
+                                    <input value='${subFed.id}' type=checkbox id="${subFed.id}" name="federacoes"> ${fn:toUpperCase(subFed.nome)}
+                                    <div id='listaRep${subFed.id}' class='hidden'>
+
+                                        <c:forEach var="repSubFed" items="${subFed.repositorios}" varStatus="i">
+                                            <div class='Int'>&nbsp;&nbsp;&nbsp;
+                                                <input value='${repSubFed.id}' type=checkbox id="${repSubFed.id}" name="repSubfed">
+                                                ${fn:toUpperCase(repSubFed.name)}
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+
+                            </c:forEach>
+                        </div>
+
+                        <div class="LinhaEntrada">
+                            <div class="Buttons">
+                                <input class="BOTAO" type="submit" value="Consultar"/>
                             </div>
-                        </c:forEach>
-                    </div>
-
-
-                    <div class="LinhaEntrada">
-                        <div class="Buttons">
-                            <input class="BOTAO" type="submit" value="Consultar" ALIGN="CENTER"/>
                         </div>
                     </div>
 
-                    <div ALIGN="CENTER">
-                        <a href="index">Retornar a busca padr&atilde;o</a>
+                    <div>
+                        <a href="${index}">Retornar a busca padr&atilde;o</a>
                     </div>
                 </div>
             </form:form>
