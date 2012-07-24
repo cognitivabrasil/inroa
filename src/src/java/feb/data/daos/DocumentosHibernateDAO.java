@@ -199,7 +199,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
      *
      * @return the session
      */
-    private Session getSession() {
+    public Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 

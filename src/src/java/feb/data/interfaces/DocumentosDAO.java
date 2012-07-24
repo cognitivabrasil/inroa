@@ -3,6 +3,8 @@ package feb.data.interfaces;
 import cognitivabrasil.obaa.OBAA;
 import java.util.List;
 
+import org.hibernate.Session;
+
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.SubFederacao;
 import feb.data.entities.SubNodo;
@@ -97,5 +99,7 @@ public interface DocumentosDAO {
      * Documents that have not been tokenized.
      * @return List of documents without tokens.
      */
-    List<DocumentoReal> getwithoutToken();  
+    List<DocumentoReal> getwithoutToken();
+
+	Session getSession();  
 }

@@ -20,6 +20,7 @@ import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StopWatch;
 import org.xml.sax.SAXException;
 import static org.junit.Assert.assertEquals;
 
@@ -42,6 +44,7 @@ import static org.junit.Assert.assertEquals;
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
 public class PerformanceTest extends AbstractDaoTest {
+	Logger log = Logger.getLogger(PerformanceTest.class);
 
     @Autowired
     RepositoryDAO repDao;
@@ -85,8 +88,10 @@ public class PerformanceTest extends AbstractDaoTest {
 
         subDao.save(subFed);
 
+        
         for (String caminho : caminhosXML) {
-
+        	StopWatch stop = new StopWatch();
+        	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
             System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
@@ -95,6 +100,10 @@ public class PerformanceTest extends AbstractDaoTest {
             imp.setDocDao(docDao);
             imp.setSubFed(subFed);
             imp.update();
+            
+            stop.stop();
+            System.out.println("XML " + stop.prettyPrint());
+            
 
         }
 
