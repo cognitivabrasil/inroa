@@ -19,8 +19,11 @@ Author     : Marcos Nunes
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
+        <!--        <link rel="StyleSheet"
+                      href="<feb.spring:url value="/css/jquery.ui.all.css" htmlEscape="true" />"
+                      type="text/css">-->
         <link rel="StyleSheet"
-              href="<feb.spring:url value="/css/jquery.ui.all.css" htmlEscape="true" />"
+              href="<feb.spring:url value="/css/Theme/jquery-ui-1.8.22.custom.css" htmlEscape="true" />"
               type="text/css">
         <link rel="StyleSheet"
               href="<feb.spring:url value="/css/padrao.css" htmlEscape="true" />"
@@ -32,9 +35,43 @@ Author     : Marcos Nunes
         <script language="JavaScript" type="text/javascript"
         src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>        
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
-        <script type="text/javascript" src='<feb.spring:url value="/scripts/jquery-ui-1.8.21.tabs.custom.min.js" htmlEscape="true" />'></script>
+        <script type="text/javascript" src='<feb.spring:url value="/scripts/jquery-ui-1.8.22.custom.min.js" htmlEscape="true" />'></script>
+        <script language="JavaScript" type="text/javascript"
+        src="<feb.spring:url value="/scripts/jquery.cookie.js" htmlEscape="true" />"></script>
         <script language="JavaScript" type="text/javascript"
         src="<feb.spring:url value="/scripts/tabsNavigator.js" htmlEscape="true" />"></script>
+
+        <script>
+            $(function() {
+                $( "#recalculo" ).button({
+                    
+                    icons: {
+                        primary: "ui-icon-arrowrefresh-1-n"
+                    }
+                })
+                
+                $( "#alterarSenha" ).button({
+                    
+                    icons: {
+                        primary: "ui-icon-key"
+                    }
+                })
+                
+                $( "#alterarBase" ).button({
+                    
+                    icons: {
+                        primary: "ui-icon-suitcase"
+                    }
+                })
+                
+                $( "#sair" ).button({
+                    
+                    icons: {
+                        primary: "ui-icon-close"
+                    }
+                })
+            });
+        </script>
 
     </head>
     <body id="paginaAdministrativa">
@@ -45,19 +82,24 @@ Author     : Marcos Nunes
             <jsp:param value="7%" name="tamanho" />
         </jsp:include>
 
-        <div class="versao">Vers&atilde;o ${versao}</div>
+
+        <c:url var="logoutUrl" value="/j_spring_security_logout" />
+        <div class="sair">
+            <button type="button" id="sair" onclick="location.href='${logoutUrl}'">Sair</button>
+        </div>
         <div id="tabs">
             <ul>
-                <li><a href="#tabs-1">Reposit&oacute;rios</a></li>
-                <li><a href="#tabs-2">Federa&ccedil;&otilde;es</a></li>
+                <li><a href="#tabs-1">Reposit&oacute;rios e Federa&ccedil;&otilde;es</a></li>                
                 <li><a href="#tabs-3">Metadados</a></li>
-                <li><a href="#tabs-4">Usu&aacute;rios</a></li>
-                <li><a href="#tabs-5">Estat&iacute;sticas</a></li>
+                <li><a href="#tabs-4">Ger&ecirc;ncia</a></li>
+                <li><a href="<feb.spring:url value="/admin/statistics/" htmlEscape="true" />">Estat&iacute;sticas</a></li>
+
+
             </ul>
             <div id="tabs-1">
                 <table class='repositorios-table' cellpadding=3>
                     <tr>
-                    <caption>Lista de Reposit&oacute;rios Cadastrados na Federa&ccedil;&atilde;o</caption>
+                    <caption>Reposit&oacute;rios Cadastrados na Federa&ccedil;&atilde;o</caption>
                     </tr>
 
                     <tr style="background-color: #AEC9E3">
@@ -154,11 +196,10 @@ Author     : Marcos Nunes
                         </tr>
                     </security:authorize>
                 </table>
-            </div>
-            <div id="tabs-2">
+
                 <table class='repositorios-table' cellpadding=3>
                     <tr>
-                    <caption>Lista de Subfedera&ccedil;&otilde;es cadastradas</caption>
+                    <caption>Federa&ccedil;&otilde;es Cadastradas</caption>
                     </tr>
 
                     <tr style="background-color: #AEC9E3">
@@ -255,12 +296,52 @@ Author     : Marcos Nunes
                         </tr>
                     </security:authorize>
                 </table>
+
+                <div id='infoIcones'>
+                    <table border="0">
+                        <tr>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
+                                    border="0" width="32" height="32" alt="Laudar" align="middle">
+                            </td>
+                            <td>&nbsp;Visualizar / Editar</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Remover</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Adicionar</td>
+
+                        </tr>
+                    </table>
+                </div>
             </div>
+
             <div id="tabs-3">
                 <!--Insere codigo que lista os padroes de metadados-->
                 <table class='repositorios-table' id='padroes' cellpadding=3>
                     <tr>
-                    <caption>Lista de Padr&atilde;o de Metadados</caption>
+                    <caption>Padr&atilde;o de Metadados Cadastrados</caption>
                     </tr>
 
                     <tr style="background-color: #AEC9E3">
@@ -320,7 +401,7 @@ Author     : Marcos Nunes
 
                 <table class='repositorios-table' id='padroes' cellpadding=3>
                     <tr>
-                    <caption>Lista de Mapeamentos</caption>
+                    <caption>Mapeamentos Cadastrados</caption>
                     </tr>
 
                     <tr style="background-color: #AEC9E3">
@@ -373,11 +454,68 @@ Author     : Marcos Nunes
                     </security:authorize>
                 </table>
                 <!--Fim codigo que lista os mapeamentos-->
+
+                <div id='infoIcones'>
+                    <table border="0">
+                        <tr>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
+                                    border="0" width="32" height="32" alt="Laudar" align="middle">
+                            </td>
+                            <td>&nbsp;Visualizar / Editar</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Remover</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Adicionar</td>
+
+                        </tr>
+                    </table>
+                </div>
             </div>    
             <div id="tabs-4">
+
+                <div class="versao">Vers&atilde;o ${versao}</div>
+
+                <security:authorize access="hasRole('PERM_UPDATE')">
+
+                    <button id="recalculo" onclick="javascript:NewWindow('confirmaRecalcularIndice','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                        Recalcular o &Iacute;ndice</button>
+                    </security:authorize>
+
+                <button id="alterarSenha" onclick="javascript:NewWindow('./users/passwd','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">
+                    Alterar Senha </button>
+
+                <security:authorize access="hasRole('PERM_CHANGE_DATABASE')">
+                    <button id="alterarBase" onclick="javascript:NewWindow('alterDB','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">
+                        Alterar Base de Dados</button>
+                    </security:authorize>
+
+
                 <table class='repositorios-table' cellpadding=3>
                     <tr>
-                    <caption>Lista de Usuários</caption>
+                    <caption>Usu&aacute;rios</caption>
                     </tr>
 
                     <tr style="background-color: #AEC9E3">
@@ -424,77 +562,51 @@ Author     : Marcos Nunes
                         </tr>
                     </security:authorize>
                 </table>
-            </div>
-            <div id="tabs-5">
 
+                <div id='infoIcones'>
+                    <table border="0">
+                        <tr>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
+                                    border="0" width="32" height="32" alt="Laudar" align="middle">
+                            </td>
+                            <td>&nbsp;Visualizar / Editar</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Remover</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
+
+                            <td><h1>&nbsp;&nbsp;</h1></td>
+
+                            <td><img
+                                    src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
+                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            </td>
+                            <td>&nbsp;Adicionar</td>
+
+                        </tr>
+                    </table>
+                </div>
             </div>
+
         </div>
 
-        <table class="cabecalhoAdm">
-            <tr>
-                <security:authorize access="hasRole('PERM_UPDATE')">
-
-                    <td width="10%"><a
-                            onclick="javascript:NewWindow('confirmaRecalcularIndice','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">Recalcular
-                            o &Iacute;ndice</a></td>
-                        </security:authorize>
-
-                <td width="10%"><a href=""
-                                   onclick="javascript:NewWindow('./users/passwd','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar
-                        Senha</a></td>
-
-                <security:authorize access="hasRole('PERM_CHANGE_DATABASE')">
-                    <td width="13%"><a href=""
-                                       onclick="javascript:NewWindow('alterDB','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">Alterar
-                            Base de Dados</a></td>
-                        </security:authorize>
-
-                <c:url var="logoutUrl" value="/j_spring_security_logout" />
-
-                <td class="sair" width=7%><a href="${logoutUrl}">Sair</a></td>
-            </tr>
-        </table>
         <div class="mensagemAdm">${mensagem}</div>
 
-
-        <div id='infoIcones'>
-            <table border="0">
-                <tr>
-
-                    <td><h1>&nbsp;&nbsp;</h1></td>
-                    <td><img
-                            src="<feb.spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
-                            border="0" width="32" height="32" alt="Laudar" align="middle">
-                    </td>
-                    <td>&nbsp;Visualizar / Editar</td>
-
-                    <td><h1>&nbsp;&nbsp;</h1></td>
-
-                    <td><img
-                            src="<feb.spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
-                            border="0" width="24" height="24" alt="Visualizar" align="middle">
-                    </td>
-                    <td>&nbsp;Remover</td>
-
-                    <td><h1>&nbsp;&nbsp;</h1></td>
-
-                    <td><img
-                            src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
-                            border="0" width="24" height="24" alt="Visualizar" align="middle">
-                    </td>
-                    <td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
-
-                    <td><h1>&nbsp;&nbsp;</h1></td>
-
-                    <td><img
-                            src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                            border="0" width="24" height="24" alt="Visualizar" align="middle">
-                    </td>
-                    <td>&nbsp;Adicionar</td>
-
-                </tr>
-            </table>
-        </div>
 
         <%@include file="../googleAnalytics"%>
     </BODY>

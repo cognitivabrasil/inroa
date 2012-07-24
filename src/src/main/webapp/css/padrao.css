@@ -53,7 +53,6 @@ img{
     vertical-align:middle;
     border: none;
 }
-
 #page
 {
     padding: 10px;
@@ -362,18 +361,11 @@ a:hover{
     text-decoration:underline;
     font-size:110%;
 }
-.cabecalhoAdm{
-    width:100%;
-    border: none;
-    background: #AEC9E3;
-}
-.cabecalhoAdm td{
-    border: 2px solid white;
-    vertical-align: middle;
-    text-align: center;
-}
-.cabecalhoAdm .sair{
+
+.sair{
+    text-align: right;
     font-weight: bold;
+    margin-bottom: 1%;
 }
 .cabecalhoAdm a{
     text-decoration:underline;

@@ -20,7 +20,7 @@
         <link rel="StyleSheet"
               href='<feb.spring:url value="/css/jquery.jqplot.min.css" htmlEscape="true" />'
               type="text/css">
-
+        
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery.jqplot.min.js" htmlEscape="true" />'></script>
         <script type="text/javascript" src='<feb.spring:url value="/scripts/jqplot.pieRenderer.min.js" htmlEscape="true" />'></script>
@@ -144,13 +144,7 @@
 
 
     <body>  
-
-        <jsp:include page="../cabecalho.jsp">
-            <jsp:param value="Ferramenta Administrativa" name="titulo" />
-            <jsp:param value="7%" name="tamanho" />
-        </jsp:include>
-
-        <div id="estatisticas">
+       <div id="estatisticas">
             <div class="acessos">
                 <table class="repositorios-table zebraTable acessos">
                     <caption class="estatisticasTitulo">10 Objetos mais acessados</caption>            
