@@ -69,47 +69,47 @@ public class Importer {
 	/**
 	 * Updates the repository from the XML input file. This method dont'n save
 	 * the federation.
-	 * @throws FileNotFoundException 
-	 * @throws TransformerException 
-	 * @throws TransformerConfigurationException 
+	 * 
+	 * @throws FileNotFoundException
+	 * @throws TransformerException
+	 * @throws TransformerConfigurationException
 	 */
-	public void update() throws FileNotFoundException, TransformerConfigurationException, TransformerException {
+	public void update() throws FileNotFoundException,
+			TransformerConfigurationException, TransformerException {
 		assert (inputXmlFile != null);
-		
+
 		// if version 2.1, convert XML
-		if("2.1".equals(subFed.getVersion())) {
+		if ("2.1".equals(subFed.getVersion())) {
 			log.info("Version 2.1, going to convert XML...");
-			InputStream xsl = this.getClass().getResourceAsStream("/feb2to3.xsl"); //input xsl
-			String transformed = XSLTUtil.transform(new FileInputStream(inputXmlFile), xsl);
+			InputStream xsl = this.getClass().getResourceAsStream(
+					"/feb2to3.xsl"); // input xsl
+			String transformed = XSLTUtil.transform(new FileInputStream(
+					inputXmlFile), xsl);
 			oai = OaiOBAA.fromString(transformed);
-		}
-		else {
+		} else {
 			oai = OaiOBAA.fromFile(inputXmlFile);
 		}
-		
+
 		Session session = docDao.getSession();
-		
+
 		docDao.setFederation(subFed);
 
 		for (int i = 0; i < oai.getSize(); i++) {
-			try {
-				log.debug("Saving object: " + oai.getHeader(i).getIdentifier());
+			log.debug("Saving object: " + oai.getHeader(i).getIdentifier());
 
-				oai.getHeader(i).setDatestamp(new Date());
+			oai.getHeader(i).setDatestamp(new Date());
 
-				docDao.save(oai.getMetadata(i), oai.getHeader(i));
+			docDao.save(oai.getMetadata(i), oai.getHeader(i));
 
-			} catch (NullPointerException e) {
-				log.error("NullPointer ao tentar inserir elemento "
-						+ new Integer(i).toString(), e);
+			if (i % 10 == 0) {
+				session.flush();
+				session.clear();
 			}
-			session.flush();
-			session.clear();
 		}
 
 		docDao.flush();
 		subFed.setDataXMLTemp(oai.getResponseDate());
-                docDao.setFederation(null);
+		docDao.setFederation(null);
 
 	}
 
