@@ -28,4 +28,9 @@ public interface TagCloudService {
 	 */
 	public Double getTotalWeight();
 	
+	/**
+	 * Clears the tagcloud backend, so that it is blank.
+	 */
+	public void clear();
+	
 }

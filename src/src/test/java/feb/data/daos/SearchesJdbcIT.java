@@ -121,5 +121,14 @@ public class SearchesJdbcIT extends AbstractDaoTest {
 
 	}
 	
+	@Test
+	public void clear() {
+		sDao.deleteAll();
+		
+		List<Search> l = sDao.getSearches(10);
+		
+		assertThat(l.size(), equalTo(0));
+	}
+	
 	
 }

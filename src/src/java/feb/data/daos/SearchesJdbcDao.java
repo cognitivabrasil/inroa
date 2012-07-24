@@ -111,4 +111,10 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
 		
 	}
 
+
+	@Override
+	public void deleteAll() {
+		getJdbcTemplate().update("DELETE from searches");
+	}
+
 }

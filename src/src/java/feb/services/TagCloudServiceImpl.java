@@ -92,4 +92,9 @@ public class TagCloudServiceImpl implements TagCloudService {
 		return c.getTime();
 	}
 
+	@Override
+	public void clear() {
+		searches.deleteAll();
+	}
+
 }

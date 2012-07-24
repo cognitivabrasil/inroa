@@ -46,4 +46,10 @@ public interface SearchesDao {
 	 */
 	void save(String string, Date date);
 
+
+	/**
+	 * Deletes all entries.
+	 */
+	public void deleteAll();
+
 }
