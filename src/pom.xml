@@ -492,7 +492,7 @@
 							</goals>
 						</execution>
 					</executions>
-					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<scanIntervalSeconds>100000</scanIntervalSeconds>
 					<stopKey>foo</stopKey>
 					<stopPort>9998</stopPort>
 					<webAppConfig>
