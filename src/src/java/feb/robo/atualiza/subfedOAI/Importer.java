@@ -14,7 +14,9 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StopWatch;
 
 import cognitivabrasil.obaa.OaiOBAA;
 import feb.data.entities.SubFederacao;
@@ -85,6 +87,8 @@ public class Importer {
 			oai = OaiOBAA.fromFile(inputXmlFile);
 		}
 		
+		Session session = docDao.getSession();
+		
 		docDao.setFederation(subFed);
 
 		for (int i = 0; i < oai.getSize(); i++) {
@@ -99,6 +103,8 @@ public class Importer {
 				log.error("NullPointer ao tentar inserir elemento "
 						+ new Integer(i).toString(), e);
 			}
+			session.flush();
+			session.clear();
 		}
 
 		docDao.flush();
