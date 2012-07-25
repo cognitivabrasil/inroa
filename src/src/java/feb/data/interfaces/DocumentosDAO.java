@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 
 import feb.data.entities.DocumentoReal;
+import feb.data.entities.Repositorio;
 import feb.data.entities.SubFederacao;
 import feb.data.entities.SubNodo;
 import metadata.Header;
@@ -31,12 +32,22 @@ public interface DocumentosDAO {
 
     /**
      * Need to call flush on session after saving many documents.
-     * Need to set one repository or one federation before.
-     *
+     *      *
      * @param obaa the OBAA metadata
      * @param h the OAI PMH header
+     * @param r repository to save the document in
      */
-    void save(OBAA obaa, Header h);
+    void save(OBAA obaa, Header h, Repositorio r);
+    
+    /**
+     * Need to call flush on session after saving many documents.
+     *      *
+     * @param obaa the OBAA metadata
+     * @param h the OAI PMH header
+     * @param s federation to save the document in
+     */
+    void save(OBAA obaa, Header h, SubFederacao s);
+
 
     /**
      * Convenience method, will call flush on the current session.
@@ -59,12 +70,6 @@ public interface DocumentosDAO {
      */
     DocumentoReal get(int i);
 
-    /**
-     * Delete by obaa entry.
-     *
-     * @param e The obaaEntry
-     */
-    void deleteByObaaEntry(String e);
 
     /**
      * Delete a document.
@@ -73,26 +78,6 @@ public interface DocumentosDAO {
      */
     void delete(DocumentoReal d);
 
-    /**
-     * Gets the repository where saved documents will be inserted.
-     *
-     * @return the repository
-     */
-    SubNodo getRepository();
-
-    /**
-     * Sets the repository where saved documents will be inserted.
-     *
-     * @param r the new repository
-     */
-    void setRepository(SubNodo r);
-
-    /**
-     * Sets the federation where saved documents will be inserted.
-     *
-     * @param s the new federation
-     */
-    void setFederation(SubFederacao s);
 
     /**
      * Get document without tokens.

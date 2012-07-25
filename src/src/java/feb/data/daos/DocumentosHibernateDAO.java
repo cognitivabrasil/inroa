@@ -18,6 +18,8 @@ import feb.data.entities.SubFederacao;
 import feb.data.entities.SubNodo;
 import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.TokensDao;
+import feb.spring.controllers.FederationsController;
+
 import java.lang.String;
 import org.hibernate.Criteria;
 import org.springframework.dao.support.DataAccessUtils;
@@ -39,12 +41,6 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 	private TokensDao tokenDao;
 	private static Logger log = Logger.getLogger(DocumentosHibernateDAO.class
 			.getName());
-
-	/*
-	 * repository where new documents are going to be saved
-	 */
-	private SubNodo repository;
-	private SubFederacao federation;
 
 	/**
 	 * Gets a List of Documents by obaa entry.
@@ -87,133 +83,79 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 	}
 
 	@Override
-	@InsightOperation(label = "deleteByObaaEntry() in DocumentosHibernateDao")
-	@InsightEndPoint(label = "deleteByObaaEntry() in DocumentosHibernateDao")
-	public void deleteByObaaEntry(String e) {
-		DocumentoReal d = getByObaaEntry(e);
-		if (d != null) {
-			delete(d);
-		}
-	}
-
-	@Override
-	@InsightOperation(label = "delete() in DocumentosHibernateDao")
-	@InsightEndPoint(label = "delete() in DocumentosHibernateDao")
 	public void delete(DocumentoReal d) {
 		getSession().delete(d);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see modelos.DocumentosDAO#save(OBAA.OBAA, metadata.Header)
-	 */
 	@Override
-	@InsightOperation(label = "save() in DocumentosHibernateDao")
-	@InsightEndPoint(label = "save() in DocumentosHibernateDao")
-	public void save(OBAA obaa, Header h) throws IllegalStateException {
-
+	public void save(OBAA obaa, Header h, SubFederacao federation)
+			throws IllegalStateException {
 		DocumentoReal doc = new DocumentoReal();
-		doc.setDeleted(false);
 		log.trace("Going to create documento " + h.getIdentifier());
 
-		if ((getRepository() == null) && (this.federation == null)) {
-			throw new IllegalStateException(
-					"Have to set repository or federation before calling save.");
-		} else if (getRepository() == null) {
-			log.debug("Armazenando objeto do tipo RepositorioSubFed");
-			RepositorioSubFed repSubFed = this.federation.getRepositoryByName(h
-					.getSetSpec().get(0));
-			if (repSubFed == null) {
-				throw new IllegalStateException("The repository '"
-						+ h.getSetSpec().get(0)
-						+ "' doesn't exists in the federation '"
-						+ this.federation.getName() + "'");
-			} else {
-				doc.setRepositorioSubFed(repSubFed); // pega o nome do
-														// repositorio do
-														// cabeçalho e busca o
-														// objeto pelo nome
-														// inserindo no doc.
-			}
-		} else if (getRepository().getClass().equals(Repositorio.class)) {
-			log.debug("Armazenando objeto do tipo Repositorio");
-			Repositorio r = (Repositorio) getRepository();
-			doc.setRepositorio(r);
+		log.debug("Armazenando objeto do tipo RepositorioSubFed");
+		RepositorioSubFed repSubFed = federation.getRepositoryByName(h
+				.getSetSpec().get(0));
+		if (repSubFed == null) {
+			throw new IllegalStateException("The repository '"
+					+ h.getSetSpec().get(0)
+					+ "' doesn't exists in the federation '"
+					+ federation.getName() + "'");
 		}
 
-		doc.setObaaEntry(h.getIdentifier());
-		
-		DocumentoReal real = getWithoutId(doc);
+		doc.setRepositorioSubFed(repSubFed); // pega o nome do
+												// repositorio do
+												// cabeçalho e busca o
+												// objeto pelo nome
 
-		real.setTimestamp(h.getTimestamp());
+		save(obaa, h, doc);
 
-		if (h.isDeleted()) {
-			real.setDeleted(true);
-			real.setMetadata(null);
-			
-			try {
-				getSession().save(real);
-				real.deleteDependencies(); // deletes Objetos, Autores, Tokens
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				throw new RuntimeException(e);
+	}
 
-			}
-		} else {
-			real.setMetadata(obaa);
-			log.debug("Tokenizando o documento");
-			real.generateTokens();
-			
-			try {
-				getSession().save(real);
-//				for (Objeto o : doc.getObjetos()) {
-//					getSession().save(o);
-//				}
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-				throw new RuntimeException(e);
+	@Override
+	public void save(OBAA obaa, Header h, Repositorio r) {
+		DocumentoReal doc = new DocumentoReal();
+		log.trace("Going to create documento " + h.getIdentifier());
 
-			}
-		}
+		doc.setRepositorio(r);
 
-
-
-
-
+		save(obaa, h, doc);
 	}
 
 	/**
-	 * Deletes a DocumentReal by obaaEntry and (sub)rep id.
-	 * 
-	 * This used because of the very unfortunate fact that obaaEntries may not
-	 * be unique.
-	 * 
-	 * @param doc
+	 * Saves (updates) a document.
+	 * @param obaa OBAA object
+	 * @param h OAI-PMH header
+	 * @param doc a newly initialized DocumentoReal, should have either a Repsitory or a RepSubFed set.
 	 */
-	private void deleteWithoutId(DocumentoReal doc) {
-		DocumentoReal d;
-		if (doc.getRepositorio() != null) {
-			d = (DocumentoReal) getSession()
-					.createCriteria(DocumentoReal.class)
-					.add(Restrictions.eq("repositorio", doc.getRepositorio()))
-					.add(Restrictions.eq("obaaEntry", doc.getObaaEntry()))
-					.uniqueResult();
-		} else if (doc.getRepositorioSubFed() != null) {
-			d = (DocumentoReal) getSession()
-					.createCriteria(DocumentoReal.class)
-					.add(Restrictions.eq("repositorioSubFed",
-							doc.getRepositorioSubFed()))
-					.add(Restrictions.eq("obaaEntry", doc.getObaaEntry()))
-					.uniqueResult();
-		} else {
-			return;
-		}
-		if (d != null) {
-			delete(d);
+	private void save(OBAA obaa, Header h, DocumentoReal doc) {
+		doc.setDeleted(false);
+		doc.setObaaEntry(h.getIdentifier());
+		
+		DocumentoReal real = getWithoutId(doc);
+		real.setTimestamp(h.getTimestamp());
+
+		try {
+			if (h.isDeleted()) {
+				real.setDeleted(true);
+				real.setMetadata(null);
+
+				getSession().save(real);
+				real.deleteDependencies(); // deletes Objetos, Autores, Tokens
+
+			} else {
+				real.setMetadata(obaa);
+				log.debug("Tokenizando o documento");
+				real.generateTokens();
+
+				getSession().save(real);
+
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
 	}
-	
 
 	private DocumentoReal getWithoutId(DocumentoReal doc) {
 		DocumentoReal d;
@@ -235,29 +177,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 		}
 		if (d != null) {
 			return d;
-		}
-		else {
+		} else {
 			return doc;
 		}
-	}
-
-	@Override
-	public SubNodo getRepository() {
-		return repository;
-	}
-
-	@Override
-	public void setRepository(SubNodo repository) {
-		// if (repository == null) {
-		// throw new
-		// IllegalArgumentException("called setRepository() with a null argument.");
-		// }
-		this.repository = repository;
-	}
-
-	@Override
-	public void setFederation(SubFederacao federation) {
-		this.federation = federation;
 	}
 
 	/**

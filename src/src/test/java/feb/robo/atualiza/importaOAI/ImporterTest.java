@@ -27,6 +27,7 @@ import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import feb.data.entities.Mapeamento;
 import feb.data.entities.Repositorio;
+import feb.data.entities.SubNodo;
 import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.RepositoryDAO;
 
@@ -75,7 +76,7 @@ public class ImporterTest {
 		assertThat(obaa.getTitles(), hasItems("Taquaraço: 9 anos de glórias", "Taquaraço: 9 years of glory"));
 		
 		// Verify that save() was called twice on mocked docDao
-		verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class));	
+		verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));	
 
 	}
     

@@ -92,14 +92,12 @@ public class Importer {
 
 		Session session = docDao.getSession();
 
-		docDao.setFederation(subFed);
-
 		for (int i = 0; i < oai.getSize(); i++) {
 			log.debug("Saving object: " + oai.getHeader(i).getIdentifier());
 
 			oai.getHeader(i).setDatestamp(new Date());
 
-			docDao.save(oai.getMetadata(i), oai.getHeader(i));
+			docDao.save(oai.getMetadata(i), oai.getHeader(i), subFed);
 
 			if (i % 10 == 0) {
 				session.flush();
@@ -109,8 +107,6 @@ public class Importer {
 
 		docDao.flush();
 		subFed.setDataXMLTemp(oai.getResponseDate());
-		docDao.setFederation(null);
-
 	}
 
 	/**

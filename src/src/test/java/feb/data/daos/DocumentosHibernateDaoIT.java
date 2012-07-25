@@ -79,10 +79,9 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         when(h.getIdentifier()).thenReturn("obaa:identifier");
         
         Repositorio r = repDao.get(1);
-        instance.setRepository(r);
 
         try {
-        	instance.save(obaa, h);	
+        	instance.save(obaa, h, r);	
         	fail("Should throw IllegalStateException!");
         }
         	catch(IllegalStateException e) {
@@ -121,13 +120,6 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
     }
 
     @Test
-    public void testDeleteByObaaEntry() {
-        instance.deleteByObaaEntry("dois");
-
-        assertEquals(5, instance.getAll().size());
-    }
-
-    @Test
     public void testSave() {
         OBAA obaa = new OBAA();
         obaa.setGeneral(new General());
@@ -150,9 +142,8 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
     
         Repositorio r = repDao.get(1);
         assertThat(r, notNullValue());
-        instance.setRepository(r);
 
-        instance.save(obaa, h);
+        instance.save(obaa, h, r);
 
         DocumentoReal d = instance.get("obaa:identifier");
         assertThat(d, notNullValue());
@@ -180,12 +171,11 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         Header h = mock(Header.class);
         
         Repositorio r = repDao.get(1);
-        instance.setRepository(r);
 
         when(h.getTimestamp()).thenReturn(new Date());
         when(h.getIdentifier()).thenReturn("obaa:identifier");
 
-        instance.save(obaa, h);
+        instance.save(obaa, h, r);
 
         DocumentoReal d = instance.get("obaa:identifier");
         assertThat(d, notNullValue());
@@ -214,13 +204,12 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         Header h = mock(Header.class);
         
         Repositorio r = repDao.get(1);
-        instance.setRepository(r);
 
         when(h.getTimestamp()).thenReturn(new Date());
         when(h.getIdentifier()).thenReturn("dois"); // existing obaa entry
 
         int oldSize = instance.getAll().size();
-        instance.save(obaa, h);
+        instance.save(obaa, h, r);
 
         DocumentoReal d = instance.get("obaa:identifier");
        
@@ -284,20 +273,15 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         OBAA obaa = new OBAA();
         obaa.setGeneral(new General());
 
-
-
-
         Header h = mock(Header.class);
-
 
         when(h.getTimestamp()).thenReturn(new Date());
         when(h.getIdentifier()).thenReturn("dois");
         when(h.isDeleted()).thenReturn(true);
 
         Repositorio r = repDao.get(1);
-        instance.setRepository(r);
 
-        instance.save(obaa, h);
+        instance.save(obaa, h, r);
 
         DocumentoReal d = instance.get("dois");
         assertThat(d, notNullValue());

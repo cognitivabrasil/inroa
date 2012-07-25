@@ -63,7 +63,6 @@ public class Importer {
 		assert(inputXmlFile != null);
 		oai = OaiOBAA.fromString(conversor.toObaaFromFile(inputXmlFile));
 		
-		docDao.setRepository(rep);
 		for(int i = 0; i < oai.getSize(); i++) {
 			logger.debug("Trying to get: " + i);
 			
@@ -73,7 +72,7 @@ public class Importer {
 				oai.getHeader(i).setDatestamp(new Date()); // set date to current date (instead of the
 									// repository date
 				
-				docDao.save(oai.getMetadata(i), oai.getHeader(i));
+				docDao.save(oai.getMetadata(i), oai.getHeader(i), rep);
 			}
 			catch(NullPointerException e) {
 				logger.error("NullPointer ao tentar inserir elemento " + i, e);
@@ -96,7 +95,6 @@ public class Importer {
 		
 		
 		docDao.flush();
-                docDao.setRepository(null);
 		
 		return oai.getSize();
 
