@@ -8,6 +8,7 @@ import feb.data.interfaces.StopWordsDao;
 import feb.spring.ApplicationContextProvider;
 import feb.util.Operacoes;
 import java.util.*;
+
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -48,6 +49,8 @@ public class DocumentoReal implements java.io.Serializable,
 	List<String> descriptionTokens;
 	private Session session;
 	private SessionFactory sessionFactory;
+	private List<String> stopWords;
+	private static StopWordsDao stopWordDao;
 
 	public DocumentoReal() {
 		obaaEntry = "";
@@ -328,8 +331,13 @@ public class DocumentoReal implements java.io.Serializable,
 	 */
 	public void setMetadata(OBAA metadata) {
 		this.metadata = metadata;
-		updateIndexes();
-		setObaaXml(metadata.toXml());
+		if(metadata != null) {
+			updateIndexes();
+			setObaaXml(metadata.toXml());
+		}
+		else {
+			setObaaXml("");
+		}
 	}
 
 	/**
@@ -343,6 +351,7 @@ public class DocumentoReal implements java.io.Serializable,
 
 		// Ensure removal of all objects
 		objetos.clear();
+		autores.clear();
 		assert (objetos.isEmpty());
 
 		// Then, add them again
@@ -418,8 +427,8 @@ public class DocumentoReal implements java.io.Serializable,
 	 * First, it clears existing tokens.
 	 */
 	public void generateTokens() {
-            StopWatch stop = new StopWatch();
-            stop.start();
+		StopWatch stop = new StopWatch();
+		stop.start();
 		tokens.clear();
 		for (String t : getTitlesTokenized()) {
 			tokens.add(new Token(t, this, Token.TITLE));
@@ -431,8 +440,8 @@ public class DocumentoReal implements java.io.Serializable,
 		for (String t : getDescriptionsTokenized()) {
 			tokens.add(new Token(t, this, Token.DESCRIPTION));
 		}
-                stop.stop();
-                log.debug("Generate tokens levou: " + stop.getTotalTimeSeconds());
+		stop.stop();
+		log.debug("Generate tokens levou: " + stop.getTotalTimeSeconds());
 	}
 
 	public boolean isIndexEmpty() {
@@ -467,17 +476,22 @@ public class DocumentoReal implements java.io.Serializable,
 
 	private List<String> getStopWords() {
 		// TODO: this is ugly... see how to do not using getApplicationContext()
-		ApplicationContext ctx = ApplicationContextProvider
-				.getApplicationContext();
-		if (ctx == null) {
-			log.fatal("Could not get AppContext bean!");
-			throw new ApplicationContextException(
-					"Could not get AppContext bean!");
-		} else {
+		if (stopWords == null) {
+			if (stopWordDao == null) {
+				ApplicationContext ctx = ApplicationContextProvider
+						.getApplicationContext();
+				if (ctx == null) {
+					log.fatal("Could not get AppContext bean!");
+					throw new ApplicationContextException(
+							"Could not get AppContext bean!");
+				} else {
 
-			StopWordsDao stopWordDao = ctx.getBean(StopWordsDao.class);
-			return stopWordDao.getStopWords(this.language);
+					stopWordDao = ctx.getBean(StopWordsDao.class);
+				}
+			}
+			stopWords = stopWordDao.getStopWords(this.language);
 		}
+		return stopWords;
 	}
 
 	public void setTokens(Set<Token> tokens) {
@@ -529,6 +543,18 @@ public class DocumentoReal implements java.io.Serializable,
 			}
 		}
 		return sessionFactory;
+	}
+
+	/**
+	 * Fast method to delete the dependencies of the object.
+	 * 
+	 * Hibernate will be very slow to do this, bypass it.
+	 */
+	public void deleteDependencies() {
+		getSession().createSQLQuery("DELETE FROM objetos WHERE documento = ?").setInteger(0, this.getId()).executeUpdate();
+		getSession().createSQLQuery("DELETE FROM autores WHERE documento = ?").setInteger(0, this.getId()).executeUpdate();
+		getSession().createSQLQuery("DELETE FROM r1tokens WHERE documento_id = ?").setInteger(0, this.getId()).executeUpdate();
+
 	}
 
 }

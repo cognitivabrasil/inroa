@@ -256,6 +256,27 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(0));
 
     }
+    
+    @Test
+    public void addsObjects() {
+        Session s = sessionFactory.getCurrentSession();
+
+        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(6));
+
+        DocumentoReal doc = instance.get(1);
+        doc.getObjetos().clear();
+        
+        doc.addTitle("Teste");
+        doc.addTitle("Teste2");
+        doc.addKeyword("Teste2");
+
+
+                
+        s.flush();
+        
+        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(3));
+
+    }
 
 
     @Test

@@ -3,8 +3,9 @@
 <hibernate-mapping>
     <class name="feb.data.entities.DocumentoReal" table="documentos">
         <id column="id" name="id" type="int">
-            <generator class="sequence">
+            <generator class="seqhilo">
                 <param name="sequence">documentos_id_seq</param>
+                <param name="max-size">50</param>
             </generator>
         </id>
         <property column="obaa_entry" name="obaaEntry" not-null="true"

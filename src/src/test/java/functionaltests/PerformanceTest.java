@@ -25,6 +25,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -37,11 +38,11 @@ import org.xml.sax.SAXException;
  * @author marcos
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:testApplicationContext2.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
-public class PerformanceTest extends AbstractDaoTest {
+public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTests {
 	Logger log = Logger.getLogger(PerformanceTest.class);
 
     @Autowired
@@ -55,7 +56,8 @@ public class PerformanceTest extends AbstractDaoTest {
     @Autowired
     MapeamentoDAO mapDao;
 
-    @Test @Ignore
+    @Test
+    @Ignore
     public void perfomanceTest() throws IOException, ParserConfigurationException, SAXException, TransformerException {
         Long inicio = System.currentTimeMillis();
 
@@ -115,27 +117,22 @@ public class PerformanceTest extends AbstractDaoTest {
 
 
     }
+    
+    
 
     @Test
-    @Ignore
     @Transactional
+    @Ignore
     public void deleteTest() throws IOException, ParserConfigurationException, SAXException, TransformerException{
           Long inicio = System.currentTimeMillis();
 
         ArrayList<String> caminhosXML = new ArrayList<String>();
-        caminhosXML.add("src/test/resources/delete.xml");
-        caminhosXML.add("src/test/resources/delete2.xml");
+//        caminhosXML.add("tmp/deleted1.xml");
+        caminhosXML.add("tmp/FEB-ufrgs90.xml");
 
 
-        SubFederacao subFed = subDao.get("marcos");
+        SubFederacao subFed = subDao.get(100);
         subFed.setVersion("2.1");
-        RepositorioSubFed repSub = new RepositorioSubFed();
-        repSub.setName("LUME");
-        repSub.setSubFederacao(subFed);
-        Set<RepositorioSubFed> setRep = new HashSet<RepositorioSubFed>();
-        setRep.add(repSub);
-        subFed.setRepositorios(setRep);
-        subDao.save(subFed);
 
         System.out.println("repositorios: "+ subFed.getRepositorios());
 

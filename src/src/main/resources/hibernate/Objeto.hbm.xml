@@ -5,8 +5,9 @@
     <meta attribute="class-description"> 
     </meta>
  <id column="id" name="id" type="int">
-        <generator class="sequence">
+        <generator class="seqhilo">
                 <param name="sequence">objetos_id_seq</param>
+                <param name="max-size">200</param>
         </generator>    </id>
     <property name="atributo" not-null="true" type="string"/>
     <property name="valor" type="string">

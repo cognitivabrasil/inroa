@@ -4,8 +4,9 @@
     <class name="feb.data.entities.Autor" table="autores">    
     
         <id column="id" name="id" type="int">
-            <generator class="sequence">
+            <generator class="seqhilo">
                 <param name="sequence">autores_id_seq</param>
+                <param name="max-size">100</param>
             </generator>
         </id>
         <property column="nome" name="nome" type="string"/>        
