@@ -70,9 +70,75 @@ Author     : Marcos Nunes
                 })
             });
         </script>
+        <script type="text/javascript">
+            $(function() {
+
+                var $dialog = $( ".dialog-confirm" ).dialog({
+                    resizable: true,
+                    width:440,
+                    autoOpen: false,
+                    modal: true,
+                    buttons: {
+                        "Apagar": function() {
+                            jQuery.ajax($(this).data('url'), {
+                                dataType: 'text',
+                                type: 'post',
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    $( this ).dialog( "close" );
+                                    $("#textStatus").text(textStatus);
+                                    $("#errorThrown").text(errorThrown);
+                                    $("#dialog-error").dialog('open');
+                                },
+
+                                statusCode: {
+                                    200: function() {
+                                        $( this ).dialog("close");
+                                        location.reload();
+                                    }
+                                }
+                            });
+                            //mudar o texto
+                            $( ".dialog-confirm" ).html("Deletando... Por favor aguarde.<p class='textoErro'>Esta operação pode levar alguns minutos.</p>");
+                        },
+                        "Cancelar": function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                });
+
+                $( "#dialog-error" ).dialog({
+                    modal: true,
+                    autoOpen: false,
+                    buttons: {
+                        Ok: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    }
+                });
+
+                $('.delete_link').click(function(e) {
+                    e.preventDefault();
+                    $(".dialog-confirm")
+                    .data('url', $(this).attr('href')) // sends url to the dialog
+                    .dialog('open'); // opens the dialog
+                    $("#msgApagar").text($(this).attr('title'));
+                });
+
+            });
+        </script>
 
     </head>
     <body id="paginaAdministrativa">
+        <div class="dialog-confirm" title="Apagar?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                Deseja realmente <span id="msgApagar"></span>?</p>
+        </div>
+        <div class="ui-widget" id="dialog-error" title="Erro">
+            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+                <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                    <strong>Erro:</strong> <span id="errorThrown">.</p>
+            </div>
+        </div>
 
 
         <jsp:include page="../cabecalho.jsp">
@@ -112,15 +178,16 @@ Author     : Marcos Nunes
                         <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
 
                             <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
-
-                                    <input type="button" class="botaoExcluir"
-                                           title="Excluir reposit&oacute;rio" name="excluir" id="excluirRep"
-                                           onclick="NewWindow('repositories/${rep.id}/delete','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                    <c:url var="excluirRepositorio" value="/admin/repositories/${rep.id}/delete" />
+                                    <input type="button" class="botaoExcluir delete_link"
+                                           title="excluir reposit&oacute;rio ${rep.name}" name="excluirRep"
+                                           id="excluirPadrao" href="${excluirRepositorio}" />
+                                    
                                 </security:authorize> &nbsp; <input type="button" class="botaoEditar"
                                               title="Editar / Visualizar" name="editar" id="editarRep"
                                               onclick="NewWindow('repositories/${rep.id}','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                             </td>
-                            <td>${rep.nome}</td>
+                            <td>${rep.name}</td>
                             <td>${rep.descricao}</td>
                             <td><c:choose>
                                     <c:when test="${rep.isOutdated}">
@@ -358,11 +425,12 @@ Author     : Marcos Nunes
 
 
                             <td>
-                                <security:authorize	access="hasRole('PERM_MANAGE_METADATA')">
-                                    <input type="button" class="botaoExcluir"
-                                           title="Excluir padr&atilde;o de metadados" name="excluir"
-                                           id="excluirPadrao"
-                                           onclick="confirmaDelPadrao(${padraoMet.id},'msgerro','padroes',this.parentNode.parentNode.rowIndex);" />
+                                <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+                                    <c:url var="excluirPadrao" value="/admin/metadataStandard/${padraoMet.id}/delete" />
+                                    <input type="button" class="botaoExcluir delete_link"
+                                           title="excluir padr&atilde;o de metadados ${padraoMet.nome}" name="excluir"
+                                           id="excluirPadrao" href="${excluirPadrao}" />
+
                                 </security:authorize> 
                                 &nbsp;
                                 <input type="button" class="botaoEditar"
@@ -417,15 +485,17 @@ Author     : Marcos Nunes
                         <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
 
 
-                            <td><security:authorize
-                                    access="hasRole('PERM_MANAGE_METADATA')">
-                                    <input type="button" class="botaoExcluir"
-                                           title="Excluir Subfedera&ccedil;&atilde;o" name="excluir"
-                                           id="excluirSubfed"
-                                           onclick="NewWindow('./mapeamentos/${mapeamento.id}/delete','','500','200','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
-                                </security:authorize> &nbsp; <input type="button" class="botaoEditar"
-                                              title="Editar / Visualizar" name="editar" id="editarPadrao"
-                                              onclick="NewWindow('./mapeamentos/${mapeamento.id}','editaMapeamento','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
+                            <td>
+                                <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+                                    <c:url var="excluirMapeamento" value="/admin/mapeamentos/${mapeamento.id}/delete" />
+                                    <input type="button" class="botaoExcluir delete_link"
+                                           title="excluir o mapeamento ${mapeamento.name}"
+                                           name="excluirMap" id="excluirMap"
+                                           href="${excluirMapeamento}" />
+                                </security:authorize>
+                                    &nbsp; <input type="button" class="botaoEditar"
+                                              title="Editar / Visualizar" name="editar" id="editarMap"
+                                              onclick="NewWindow('./mapeamentos/${mapeamento.id}','editaMapeamento','total','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
                             </td>
                             <td>${mapeamento.name}</td>
                             <td>${mapeamento.description}</td>
@@ -438,14 +508,14 @@ Author     : Marcos Nunes
 
                         <tr class='center'>
                             <td><a title="Adicionar novo padr&atilde;o de metadados"
-                                   onclick="NewWindow('./mapeamentos/new','new','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                   onclick="NewWindow('./mapeamentos/new','new','total','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                                     <img
                                         src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                         border="0" width="24" height="24" alt="Visualizar" align="middle">
                                 </a></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <a
-                                    onclick="NewWindow('./mapeamentos/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                    onclick="NewWindow('./mapeamentos/new','Cadastro','total','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
                                     Adicionar novo mapeamento </a>
                             </td>
                             <td><div id='msgerro' class='textoErro left'></div></td>

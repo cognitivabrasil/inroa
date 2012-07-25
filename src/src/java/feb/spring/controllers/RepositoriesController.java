@@ -15,6 +15,7 @@ import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.robo.atualiza.Repositorios;
 import feb.spring.validador.RepositorioValidator;
+import org.apache.log4j.Logger;
 
 /**
  * Controller for the repositories.
@@ -31,6 +32,8 @@ public final class RepositoriesController {
     private PadraoMetadadosDAO padraoDao;
     private RepositorioValidator repValidator = new RepositorioValidator();
     @Autowired private Repositorios atualizadorRep;
+
+    Logger log = Logger.getLogger(RepositoriesController.class);
    
     /**
      * Shows the details of the repository.
@@ -166,21 +169,11 @@ public final class RepositoriesController {
     		@PathVariable Integer id,
     		Model model) {
             Repositorio rep = repDao.get(id);
+            log.info("Deletando o repositorio:" +rep.getName());
             repDao.delete(rep);
+            log.info("Repositorio deletado.");
             return "redirect:/admin/fechaRecarrega";
     }
-    
-    /**
-     * Shows a confirmation popup for the deletion.
-     *
-     * @param id the repository id
-     */
-    @RequestMapping(value="/{id}/delete", method = RequestMethod.GET)
-    public String deleteShow(
-    		@PathVariable Integer id,
-            Model model) {
-            model.addAttribute("rep", repDao.get(id));
-            return "admin/repositories/confirmDelete";
-    }
+   
 
   }

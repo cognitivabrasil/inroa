@@ -24,6 +24,7 @@ public class MapeamentoDto {
 	private Integer padraoMetadados;
 
 	public MapeamentoDto() {
+            failed = true;
 	}
 
 	public MapeamentoDto(Mapeamento m) {
@@ -34,6 +35,7 @@ public class MapeamentoDto {
 		if (m.getPadraoMetadados() != null) {
 			padraoMetadados = m.getPadraoMetadados().getId();
 		}
+                failed = true;
 	}
 
 	/**
@@ -118,13 +120,13 @@ public class MapeamentoDto {
 
 				xmlObaa = XSLTUtil.formatXml(conv.toObaa(xml));
 				OaiOBAA.fromString(xmlObaa);
+                                failed = false;
 
 			} else {
 				xmlObaa = "Nenhum XML original informado";
 			}
 		} catch (RuntimeException e) {
 			xmlObaa = e.getMessage() + "\n" + getStackTrace(e);
-			failed = true;
 		}
 
 	}
@@ -155,4 +157,9 @@ public class MapeamentoDto {
 	public void setSubmit(String submit) {
 		this.submit = submit;
 	}
+
+    public boolean isFailed() {
+        return failed;
+    }
+        
 }

@@ -18,6 +18,7 @@ import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.TokensDao;
+import feb.util.Operacoes;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
@@ -95,7 +96,8 @@ public class Indexador {
         }
 
         Long fim = System.currentTimeMillis();
-        log.debug("\n FEB: Levou " + ((fim - inicio) / 1000) + " segundos inserindo objetos.");
+        Long total = fim - inicio;
+        log.debug("\n FEB: Tento total para inserir objetos: " + Operacoes.formatTimeMillis(total));
 
     }
 
@@ -153,7 +155,8 @@ public class Indexador {
 //        apagarCalculosIndice(con);
 
         Long fim = System.currentTimeMillis();
-        log.info("indice recalculado. Levou " + ((fim - inicio) / 1000) + " segundos recalculando o indice.");
+        Long total = fim - inicio;
+        log.info("Tento total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));
     }
 
     /**

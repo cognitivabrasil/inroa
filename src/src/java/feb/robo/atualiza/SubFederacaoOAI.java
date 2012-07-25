@@ -11,6 +11,7 @@ import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.subfedOAI.Objetos;
 import feb.robo.atualiza.subfedOAI.SubRepositorios;
 import feb.spring.ApplicationContextProvider;
+import feb.util.Operacoes;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -87,7 +88,8 @@ public class SubFederacaoOAI {
                              */
                         }
                         Long fim = System.currentTimeMillis();
-                        log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getName());
+                        Long total = fim - inicio;
+                        log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName());
                     }
 
                     if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
@@ -129,8 +131,8 @@ public class SubFederacaoOAI {
         } else {
             log.info("FEB: Atualizando subfederacao: " + subFed.getName());//imprime o nome do repositorio
 
-            try {                
-                
+            try {
+
                 //atualizar repositorios da subfederacao
                 SubRepositorios subRep = new SubRepositorios();
                 subRep.atualizaSubRepositorios(subFed);
@@ -230,7 +232,8 @@ public class SubFederacaoOAI {
                 Long inicio = System.currentTimeMillis();
                 atualizaSubFedOAI(subFed, indexar);
                 Long fim = System.currentTimeMillis();
-                log.info("FEB: Levou: " + (fim - inicio) / 1000 + " segundos para atualizar a subfederacao: " + subFed.getName());
+                Long total = fim - inicio;
+                log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName());
             }
             indexar.populateR1();
         }

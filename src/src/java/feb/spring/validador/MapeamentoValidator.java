@@ -46,7 +46,8 @@ public class MapeamentoValidator implements Validator {
 		}
 		
 		m.transform();
-		if(!m.create()) {
+
+		if(m.isFailed()) {
 			errors.rejectValue("xslt", "xslt.invalid", "O XSLT é inválido.");
 		}
 	

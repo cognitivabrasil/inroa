@@ -83,6 +83,7 @@ public final class MapeamentosController {
         if (padrao != null) {
             mapDto.setPadraoMetadados(padrao);
         }
+        mapDto.setXmlObaa("Insira o XSLT e o XML de exemplo e clique no botão \"Testar o mapeamento\"!");
         model.addAttribute("mapeamento", mapDto);
         model.addAttribute("metadataList", getMetadataListForSelect(padraoDao));
         return "admin/mapeamentos/form";
@@ -129,19 +130,12 @@ public final class MapeamentosController {
     }
 
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    public String deleteDo(
+    public @ResponseBody
+            String deleteDo(
             @PathVariable Integer id,
             Model model) {
         Mapeamento map = mapDao.get(id);
         mapDao.delete(map);
-        return "redirect:/admin/fechaRecarrega";
-    }
-
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public String deleteShow(
-            @PathVariable Integer id,
-            Model model) {
-        model.addAttribute("mapeamento", mapDao.get(id));
-        return "admin/mapeamentos/confirmDelete";
+        return "Deletado com sucesso.";
     }
 }

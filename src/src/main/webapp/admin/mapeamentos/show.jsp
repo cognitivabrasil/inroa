@@ -63,11 +63,11 @@
 			</div>
 		</security:authorize>
 
-		<div class="LinhaEntrada">
+		<div class="formLeft">
 			<div class="Label">Nome do mapeamento:</div>
 			<div class="Value">&nbsp;${mapeamento.name}</div>
 		</div>
-		<div class="LinhaEntrada">
+		<div class="formLeft">
 			<div class="Label">Descri&ccedil;&atilde;o:</div>
 			<div class="Value">&nbsp;${mapeamento.description}</div>
 		</div>

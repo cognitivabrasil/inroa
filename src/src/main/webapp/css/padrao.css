@@ -503,6 +503,10 @@ a:hover{
     font-weight: bold;
     font-family: verdana;
 }
+.LinhaEntrada .Buttons input:disabled{
+    background-color: #dedede;
+    color: #575757;
+}
 .LinhaEntrada .OptionButtons{
     margin:0 0 10px 25px;
 }
@@ -515,8 +519,7 @@ a:hover{
     padding-bottom:5px;
 }
 
-.LinhaEntrada .Value input{width:50%; border-color: #006699}
-.LinhaEntrada .Value select{width:50%; border-color: #006699}
+.LinhaEntrada .Value input, select{width:50%; border-color: #006699}
 .LinhaEntrada .Value .disabled{
     background-color: #D7EBFF;
     border: 0px;
@@ -912,6 +915,7 @@ td{vertical-align:top;}
     text-align:left;
     margin-right:2%;
 }
+/*fim CSS feito para subtituir o LinhaEntrada. */
 
 .ApagaObjetos{
     margin-top: 2%;
@@ -1030,3 +1034,22 @@ td{vertical-align:top;}
     text-align: left;
 }
 #buscaAvancada input[type=text]{width:98%;}
+
+/*Usado no form do mapeamento*/
+.formLeft{margin-left: 6%; text-align: left;}
+.formLeft .Label{float:left; width:20%;}
+.formLeft .Value{margin:0 0 1.5% 10%;}
+.formLeft .Value input, select{width:30%; border-color: #006699}
+
+.xmlTitle{
+    font-size: 110%;
+    font-weight: bold;
+    color: black;
+    text-decoration: underline;
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 1%;
+}
+
+.CodeMirror {background: #f8f8f8;}
+/*Fim Usado no form do mapeamento*/
