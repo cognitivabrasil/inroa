@@ -317,6 +317,7 @@ src/src/main/resources/log4j.properties -text
 src/src/main/resources/manifest.mf -text
 src/src/main/resources/spring-security.xml -text
 src/src/main/resources/testApplicationContext.xml -text
+src/src/main/resources/testApplicationContext2.xml -text
 src/src/main/webapp/META-INF/context.xml -text
 src/src/main/webapp/WEB-INF/jsp/pager-taglib.tld -text
 src/src/main/webapp/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
