@@ -12,14 +12,14 @@
 <script language="javascript" type="text/javascript" src='<spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
 <script language="javascript" type="text/javascript" src='<spring:url value="/scripts/jquery.tagcloud.js" htmlEscape="true" />'></script>
 <script language="javascript" type="text/javascript" src='<spring:url value="/scripts/tagCloud.js" htmlEscape="true" />'></script>
-<c:url var="busca" value="/consulta" />
+
 
 
 
 
 <div id="tagcloud">
     <c:forEach var="consulta" items="${termos}" varStatus="key">
-    <spring:url var="buscaConsulta" value="${busca}?consulta=${consulta.key}" htmlEscape="true"/>
+    <spring:url var="buscaConsulta" value="/consulta?consulta=${consulta.key}" htmlEscape="true"/>
         <a href="${buscaConsulta}" rel="${consulta.value}"><c:out value="${consulta.key}"/></a>
 
     </c:forEach>

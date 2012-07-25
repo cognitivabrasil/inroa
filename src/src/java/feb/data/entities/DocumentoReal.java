@@ -273,11 +273,14 @@ public class DocumentoReal implements java.io.Serializable,
 	public String getNomeRep() {
 		if (repositorio != null) {
 			return repositorio.getName();
-		} else {
+		} else if (repositorioSubFed !=null) {
 			return "Subfedera&ccedil;&atilde;o "
 					+ repositorioSubFed.getSubFederacao().getName() + " / "
 					+ repositorioSubFed.getName();
-		}
+		} else {
+                    log.error("objeto: "+this.getFirstTitle()+"não possui repositório ou federação relacionado!");
+                    return "";
+                }
 	}
 
 	/**

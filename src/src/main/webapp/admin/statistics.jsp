@@ -148,9 +148,9 @@
             <div class="acessos">
                 <table class="repositorios-table zebraTable acessos">
                     <caption class="estatisticasTitulo">10 Objetos mais acessados</caption>            
-                    <tr><th> T&iacute;tulo do Objeto</th><th>N&uacute;mero de acessos</th><th>Reposit&oacute;rio</th></tr>
+                    <tr><th> T&iacute;tulo do Objeto</th><th>N&uacute;mero de acessos</th><th>Federa&ccedil;&atilde;o / Reposit&oacute;rio</th></tr>
                     <c:forEach var="objs" items="${docsMaisAcessados}" varStatus="status">
-                        <tr><td>${objs.firstTitle}</td><td>${objs.acessos}</td><td>${objs.repositorio}</td></tr>                
+                        <tr><td>${objs.firstTitle}</td><td>${objs.acessos}</td><td>${objs.nomeRep}</td></tr>                
                     </c:forEach>
                 </table>
                 <div id="chart2" widith="100%" style="height:350px;"></div>
