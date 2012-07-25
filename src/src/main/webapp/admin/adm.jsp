@@ -19,9 +19,7 @@ Author     : Marcos Nunes
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        <!--        <link rel="StyleSheet"
-                      href="<feb.spring:url value="/css/jquery.ui.all.css" htmlEscape="true" />"
-                      type="text/css">-->
+
         <link rel="StyleSheet"
               href="<feb.spring:url value="/css/Theme/jquery-ui-1.8.22.custom.css" htmlEscape="true" />"
               type="text/css">
