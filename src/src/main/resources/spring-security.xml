@@ -37,11 +37,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <intercept-url pattern="/admin/alterDB" method="POST"
                        access="hasRole('PERM_CHANGE_DATABASE')" />
 
-        <intercept-url pattern="/admin/repositories/**" method="POST"
-                       access="hasRole('PERM_MANAGE_REP')" />
-
         <intercept-url pattern="/admin/repositories/*/update*"
                        method="POST" access="hasRole('PERM_UPDATE')" />
+
+        <intercept-url pattern="/admin/repositories/**" method="POST"
+                       access="hasRole('PERM_MANAGE_REP')" />
 			
         <intercept-url pattern="/admin/federations/*/update*"
                        method="POST" access="hasRole('PERM_UPDATE')" />

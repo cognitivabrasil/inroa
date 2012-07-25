@@ -216,8 +216,13 @@ function updateSubnodeAjax(link, showResults)
             }
             else
             {
-                showResults.innerHTML = "Erro nas funções do Ajax";
-                showResults.className = "textoErro";
+                if(ajax.status == 403){
+                    showResults.innerHTML = "Você não tem permissão para executar essa operação.";
+                    showResults.className = "textoErro";
+                }else{
+                    showResults.innerHTML = "Erro nas funções do Ajax";
+                    showResults.className = "textoErro";
+                }
             }
         }
     }
@@ -394,8 +399,8 @@ function objectAcessCounter(id){
     var ajax = openAjax(); // Start Ajax.
     var link = rootUrl + "/admin/statistics/objUser?id="+id;    
     ajax.open("POST", link, true);
-    // ao que parece não precisa disso
-   // ajax.send(null); // submete
+// ao que parece não precisa disso
+// ajax.send(null); // submete
     
 }
 

@@ -129,9 +129,8 @@ Author     : Marcos Nunes
                                         <div id='textResult${param.id}' class="textoErro">
                                             &nbsp;
                                             ${rep.ultimaAtualizacaoFormatada}
-                                            &nbsp;
                                             <security:authorize access="hasRole('PERM_UPDATE')">
-
+                                                &nbsp;
                                                 <a title="Atualizar agora"
                                                    onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
 
@@ -145,11 +144,13 @@ Author     : Marcos Nunes
                                         <div class="Value" id="textResult${param.id}">
                                             &nbsp;
                                             ${rep.ultimaAtualizacaoFormatada}
-                                            &nbsp;&nbsp; <a title='Atualizar agora'
-                                                            onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
-                                                <img src='../imagens/sincronizar.png' border='0' width='24'
-                                                     height='24' alt='Atualizar' align='middle'>
-                                            </a>
+                                            <security:authorize access="hasRole('PERM_UPDATE')">
+                                                &nbsp;&nbsp; <a title='Atualizar agora'
+                                                                onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
+                                                    <img src='../imagens/sincronizar.png' border='0' width='24'
+                                                         height='24' alt='Atualizar' align='middle'>
+                                                </a>
+                                            </security:authorize>
                                         </div>
                                     </c:otherwise>
                                 </c:choose></td>
