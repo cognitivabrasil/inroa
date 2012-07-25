@@ -477,14 +477,6 @@ Author     : Marcos Nunes
                             <td><h1>&nbsp;&nbsp;</h1></td>
 
                             <td><img
-                                    src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
-                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
-                            </td>
-                            <td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
-
-                            <td><h1>&nbsp;&nbsp;</h1></td>
-
-                            <td><img
                                     src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
@@ -581,14 +573,6 @@ Author     : Marcos Nunes
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
                             <td>&nbsp;Remover</td>
-
-                            <td><h1>&nbsp;&nbsp;</h1></td>
-
-                            <td><img
-                                    src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
-                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
-                            </td>
-                            <td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
 

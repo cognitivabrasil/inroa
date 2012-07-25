@@ -429,7 +429,7 @@ public class DocumentoReal implements java.io.Serializable,
 			tokens.add(new Token(t, this, Token.DESCRIPTION));
 		}
                 stop.stop();
-                log.info("Generate tokens levou: " + stop.getTotalTimeSeconds());
+                log.debug("Generate tokens levou: " + stop.getTotalTimeSeconds());
 	}
 
 	public boolean isIndexEmpty() {

@@ -20,6 +20,7 @@ import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.UsuarioDAO;
 import feb.robo.atualiza.SubFederacaoOAI;
 import feb.spring.validador.SubFederacaoValidador;
+import java.net.ConnectException;
 
 /**
  * Controller para ferramenta administrativa
@@ -160,6 +161,9 @@ public final class FederationsController {
             }
 
             return "1";
+        } catch (ConnectException c) {
+            log.error("Erro ao coletar o xml por OAI-PMH", c);
+            return "Erro ao coletar o xml por OAI-PMH. " + c.toString();
         } catch (Exception e) {
             log.error("Erro ao atualizar uma subfederação",e);
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();

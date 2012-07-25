@@ -68,7 +68,7 @@ Primeira etapa do cadastro de um repositorio
 				reposit&oacute;rio</div>
 			<div class="LinhaEntrada">
 				<form:errors path="nome" cssClass="ValueErro" />
-				<div class="Label">Nome:</div>
+				<div class="Label">Nome/Sigla:</div>
 				<div class="Value">
 					<form:input path="nome" maxlength="45"
 						onFocus="this.className='inputSelecionado'"

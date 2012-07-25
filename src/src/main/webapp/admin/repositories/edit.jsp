@@ -56,7 +56,7 @@
                 <div class="LinhaEntrada">
                     <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Label">
-                        Nome:
+                        Nome/Sigla:
                     </div>
                     <div class="Value">
                         <form:input path="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
@@ -157,7 +157,7 @@
                 <input type="hidden" name="id" value="${idRep}"/>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
-                        <input type="button" value="&lArr; Voltar" onclick="location.href='./${repModel.id}'"/>
+                        <input type="button" value="&lArr; Voltar" onclick="javascript:history.go(-1);" />
                         <input type="submit" value="Gravar &rArr;" name="submit" />
 
                     </div>

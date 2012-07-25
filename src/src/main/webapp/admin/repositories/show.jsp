@@ -44,7 +44,7 @@
             </security:authorize>
 
             <div class="LinhaEntrada">
-                <div class="Label">Nome do reposit&oacute;rio:</div>
+                <div class="Label">Nome/Sigla:</div>
                 <div class="Value">&nbsp;${rep.nome}</div>
             </div>
             <div class="LinhaEntrada">

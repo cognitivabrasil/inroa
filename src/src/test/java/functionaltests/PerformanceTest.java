@@ -5,12 +5,9 @@
 package functionaltests;
 
 import feb.data.daos.AbstractDaoTest;
-import feb.data.entities.Mapeamento;
-import feb.data.entities.Repositorio;
 import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
 import feb.data.interfaces.*;
-import feb.robo.atualiza.importaOAI.Importer;
 import feb.robo.atualiza.subfedOAI.ParserListSets;
 import feb.util.Operacoes;
 import java.io.File;
@@ -19,8 +16,8 @@ import java.util.ArrayList;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +29,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 import org.xml.sax.SAXException;
-import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -63,10 +59,10 @@ public class PerformanceTest extends AbstractDaoTest {
 
         String xmlFedSets = "src/test/resources/Fiocruz-listSets.xml";
         ArrayList<String> caminhosXML = new ArrayList<String>();
-        caminhosXML.add("src/test/resources/FEB-fiocruz2.xml");
-        caminhosXML.add("src/test/resources/FEB-fiocruz3.xml");
-        caminhosXML.add("src/test/resources/FEB-fiocruz4.xml");
-        caminhosXML.add("src/test/resources/FEB-fiocruz5.xml");
+//        caminhosXML.add("src/test/resources/FEB-fiocruz2.xml");
+//        caminhosXML.add("src/test/resources/FEB-fiocruz3.xml");
+//        caminhosXML.add("src/test/resources/FEB-fiocruz4.xml");
+//        caminhosXML.add("src/test/resources/FEB-fiocruz5.xml");
         caminhosXML.add("src/test/resources/FEB-fiocruz6.xml");
 
         SubFederacao subFed = subDao.get("marcos");
