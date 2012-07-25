@@ -166,13 +166,13 @@ public class Recuperador {
             for (int i = 0; i < tokensConsulta.size(); i++) {
                 String token = tokensConsulta.get(i);
                 if (i == tokensConsulta.size() - 1) {
-                    consultaSql += "'" + token + finalSQL;
+                    consultaSql += "'" + token;
                 } else {
                     consultaSql += "'" + token + "' OR r1w.token=";
                 }
 
             }
-            return consultaSql;
+            return consultaSql+finalSQL;
         }
     }
 
@@ -182,7 +182,7 @@ public class Recuperador {
         String consultaSql = "";
         if (c.hasAuthor()) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
+                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE (";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
                         + " WHERE r1w.documento_id=d.id "
@@ -211,17 +211,18 @@ public class Recuperador {
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
         else
-            consultaSql += ")";
+            consultaSql += ") AND ";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
+                consultaSql += "'" + token;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
-        }
-        return consultaSql;
+        }        
+        
+        return (consultaSql+finalSQL);
         
     }
 
@@ -230,7 +231,7 @@ public class Recuperador {
         String consultaSql;
         if (c.hasAuthor()) {                    // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
+                consultaSql = "SELECT d.* FROM documentos d, autores a, repositorios_subfed rsf WHERE rsf.id=d.id_rep_subfed AND (";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
                         + " WHERE r1w.documento_id=d.id AND d.id_rep_subfed = rsf.id"
@@ -261,18 +262,18 @@ public class Recuperador {
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
         else
-            consultaSql += ")";
+            consultaSql += ") AND ";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
+                consultaSql += "'" + token;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
 
-        return consultaSql;
+        return consultaSql+finalSQL;
     }
 
     //repsubfed
@@ -281,7 +282,7 @@ public class Recuperador {
         String consultaSql = "";
         if (c.hasAuthor()) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
+                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE (";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
                         + " WHERE r1w.documento_id=d.id "
@@ -312,36 +313,36 @@ public class Recuperador {
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
         else
-            consultaSql += ")";
+            consultaSql += ") AND ";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
+                consultaSql += "'" + token;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
 
-        return consultaSql;
+        return consultaSql+finalSQL;
     }
 
     //replocal + subfed
     protected String busca_repLocal_subfed(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
 
-        String consultaSql = "";
+        String consultaSql;
         if (c.hasAuthor()) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
+                consultaSql = "SELECT d.* FROM documentos d, autores a, repositorios_subfed rsf WHERE (";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
-                + " WHERE r1w.documento_id=d.id AND ("
+                + " WHERE ("
                 + " (d.id_rep_subfed = rsf.id AND (";
             }
         } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf"
                 + " WHERE r1w.documento_id=d.id AND ("
-                + " (d.id_rep_subfed = rsf.id AND (";
+                + " (";
         }
         
         
@@ -362,7 +363,7 @@ public class Recuperador {
         Iterator<Integer> idsRepositorios = c.getRepositorios().iterator();
         addOr = false;
         
-        consultaSql += ")) OR (";
+        consultaSql += " AND rsf.id=d.id_rep_subfed) OR (";
         
         while (idsRepositorios.hasNext()){
             
@@ -379,19 +380,19 @@ public class Recuperador {
         if (!tokensConsulta.isEmpty())
             consultaSql += ")) AND (r1w.token=";
         else
-            consultaSql += ")";
+            consultaSql += ") AND ";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
+                consultaSql += "'" + token;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
 
 
-        return consultaSql;
+        return consultaSql+finalSQL;
     }
 
     //replocal + repsubfed
@@ -400,7 +401,7 @@ public class Recuperador {
         String consultaSql = "";
         if (c.hasAuthor()) {                    // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
+                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE (";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
                 + " WHERE r1w.documento_id=d.id"
@@ -435,19 +436,19 @@ public class Recuperador {
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
         else
-            consultaSql += ")";
+            consultaSql += ") AND ";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
+                consultaSql += "'" + token;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
 
 
-        return consultaSql;
+        return consultaSql+finalSQL;
     }
 
     //subfed + repsubfed
@@ -456,7 +457,7 @@ public class Recuperador {
         String consultaSql = "";
         if (c.hasAuthor()) {                   // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
+                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE (";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
                 + " WHERE r1w.documento_id=d.id AND d.id_rep_subfed = rsf.id"
@@ -492,18 +493,18 @@ public class Recuperador {
         if (!tokensConsulta.isEmpty())
             consultaSql += ") AND (r1w.token=";
         else
-            consultaSql += ")";
+            consultaSql += ") AND ";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
+                consultaSql += "'" + token;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
 
-        return consultaSql;
+        return consultaSql+finalSQL;
     }
 
     //replocal + subfed + repsubfed
@@ -512,7 +513,7 @@ public class Recuperador {
         String consultaSql = "";
         if (c.hasAuthor()) {                   // if is a author request
             if (tokensConsulta.isEmpty()) {
-                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE ";
+                consultaSql = "SELECT d.* FROM documentos d, autores a WHERE (";
             } else {
                 consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, repositorios_subfed rsf, autores a"
                 + " WHERE r1w.documento_id=d.id AND ("
@@ -563,17 +564,17 @@ public class Recuperador {
         if (!tokensConsulta.isEmpty())
             consultaSql += ")) AND (r1w.token=";
         else
-            consultaSql += ")";
+            consultaSql += ") AND ";
 
         for (int i = 0; i < tokensConsulta.size(); i++) {
             String token = tokensConsulta.get(i);
             if (i == tokensConsulta.size() - 1) {
-                consultaSql += "'" + token + finalSQL;
+                consultaSql += "'" + token;
             } else {
                 consultaSql += "'" + token + "' OR r1w.token=";
             }
         }
 
-        return consultaSql;
+        return consultaSql+finalSQL;
     }            
 }
