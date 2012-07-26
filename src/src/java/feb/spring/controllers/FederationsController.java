@@ -45,7 +45,7 @@ public final class FederationsController {
     ServletContext servletContext;
     @Autowired
     private UsuarioDAO userDao;
-    @Autowired SubFederacaoOAI subFed;
+    @Autowired SubFederacaoOAI subFedOAI;
     Logger  log = Logger.getLogger(FederationsController.class);
 
 
@@ -122,24 +122,14 @@ public final class FederationsController {
         }
     }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-    public String apagaFed(
-            @PathVariable("id") Integer id,
-            Model model) {
-
-
-            model.addAttribute("federation", subDao.get(id));
-            return "admin/federations/confirmDelete";
-     
-    }
-    
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    public String deleteDo(
-            @PathVariable("id") Integer id,
-            Model model) {
+    public @ResponseBody
+    String deleteDo(@PathVariable("id") Integer id, Model model) {
             SubFederacao subFed = subDao.get(id);
+            log.info("Deletando a federação: "+subFed.getName());
             subDao.delete(subFed);
-            return "redirect:/admin/fechaRecarrega";
+            log.info("Federação deletada com sucesso.");
+            return "ok";
     }
 
    
@@ -153,10 +143,10 @@ public final class FederationsController {
         
         try {
             if (id > 0) {
-                subFed.atualizaSubfedAdm(subDao.get(id), apagar);
+                subFedOAI.atualizaSubfedAdm(subDao.get(id), apagar);
             } else {
                 for (SubFederacao subFederacao : subDao.getAll()) {
-                    subFed.atualizaSubfedAdm(subFederacao, apagar);
+                    subFedOAI.atualizaSubfedAdm(subFederacao, apagar);
                 }
             }
 
@@ -169,5 +159,5 @@ public final class FederationsController {
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
         }
     }
-    //------FIM FUNCOES PARA AJAX------------
+    
 }

@@ -327,7 +327,6 @@ src/src/main/webapp/admin/adm.jsp -text
 src/src/main/webapp/admin/alterDB.jsp -text
 src/src/main/webapp/admin/erroBase.jsp -text
 src/src/main/webapp/admin/fechaRecarrega.jsp -text
-src/src/main/webapp/admin/federations/confirmDelete.jsp -text
 src/src/main/webapp/admin/federations/edit.jsp -text
 src/src/main/webapp/admin/federations/new.jsp -text
 src/src/main/webapp/admin/federations/show.jsp -text
@@ -341,7 +340,6 @@ src/src/main/webapp/admin/repositories/edit.jsp -text
 src/src/main/webapp/admin/repositories/new.jsp -text
 src/src/main/webapp/admin/repositories/show.jsp -text
 src/src/main/webapp/admin/statistics.jsp -text
-src/src/main/webapp/admin/users/confirmDelete.jsp -text
 src/src/main/webapp/admin/users/form.jsp -text
 src/src/main/webapp/admin/users/passwd.jsp -text
 src/src/main/webapp/admin/users/show.jsp -text

@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import feb.data.entities.Usuario;
 import feb.data.interfaces.UsuarioDAO;
+import org.springframework.web.bind.annotation.*;
 
 class UserPasswordDto {
 	private String username;
@@ -448,22 +449,12 @@ returns to main admin page otherwise
 	 * @throws RuntimeException if the user is the last one
 	 */
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-	public String userDeleteDo(@PathVariable Integer id, Model model) {
+	public @ResponseBody
+    String userDeleteDo(@PathVariable Integer id, Model model) {
 		if (userDao.getAll().size() == 1) {
 			throw new RuntimeException("Cannot delete last user");
 		}
 		userDao.delete(userDao.get(id));
-		return "redirect:/admin/fechaRecarrega";
-	}
-
-	/**
-	 * Asks for confirmation for the delete operation.
-	 *
-	 * @param id the user id
-	 */
-	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-	public String userDeleteShow(@PathVariable Integer id, Model model) {
-		model.addAttribute("user", userDao.get(id));
-		return "admin/users/confirmDelete";
+		return "ok";
 	}
 }

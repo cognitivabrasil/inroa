@@ -4,27 +4,15 @@
  */
 package cognitivabrasil.obaa;
 
-import metadata.Request;
-import metadata.Header;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.apache.commons.io.FileUtils;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-
-import cognitivabrasil.obaa.LifeCycle.LifeCycle;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+import org.junit.*;
 
 
 /**

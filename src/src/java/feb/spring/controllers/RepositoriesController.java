@@ -165,14 +165,15 @@ public final class RepositoriesController {
      * @param id the repository id
      */
     @RequestMapping(value="/{id}/delete", method = RequestMethod.POST)
-    public String deleteDo(
+    public @ResponseBody
+    String deleteDo(
     		@PathVariable Integer id,
     		Model model) {
             Repositorio rep = repDao.get(id);
             log.info("Deletando o repositorio:" +rep.getName());
             repDao.delete(rep);
             log.info("Repositorio deletado.");
-            return "redirect:/admin/fechaRecarrega";
+            return "ok";
     }
    
 
