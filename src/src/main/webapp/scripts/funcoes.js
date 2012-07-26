@@ -55,11 +55,12 @@ function NewTab(url){
  *Função que fecha a janela popup e regarrega a janela principal
  */
 function fechaRecarrega() {
+    
+    // dando um refresh na página principal
+    //    opener.location.reload();
+    window.opener.location.reload();
     // fechando a janela atual ( popup )
     window.close();
-    // dando um refresh na página principal
-//    opener.location.reload();
-    window.opener.document.location.reload();
 // fim da função
 }
 
