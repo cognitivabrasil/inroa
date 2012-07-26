@@ -1,31 +1,19 @@
 package feb.data.daos;
 
 import cognitivabrasil.obaa.OBAA;
+import feb.data.entities.DocumentoReal;
+import feb.data.entities.Repositorio;
+import feb.data.entities.RepositorioSubFed;
+import feb.data.entities.SubFederacao;
+import feb.data.interfaces.DocumentosDAO;
+import feb.data.interfaces.TokensDao;
 import java.util.List;
 import metadata.Header;
-
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import feb.data.entities.DocumentoReal;
-import feb.data.entities.Objeto;
-import feb.data.entities.Repositorio;
-import feb.data.entities.RepositorioSubFed;
-import feb.data.entities.SubFederacao;
-import feb.data.entities.SubNodo;
-import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.TokensDao;
-import feb.spring.controllers.FederationsController;
-
-import java.lang.String;
-import org.hibernate.Criteria;
-import org.springframework.dao.support.DataAccessUtils;
-
-import com.springsource.insight.annotation.InsightEndPoint;
-import com.springsource.insight.annotation.InsightOperation;
 
 /**
  * The Class DocumentosHibernateDAO.

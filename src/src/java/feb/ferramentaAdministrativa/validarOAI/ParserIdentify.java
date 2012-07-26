@@ -111,8 +111,7 @@ public class ParserIdentify extends DefaultHandler {
      */
     @Override
     public void characters(char[] ch, int start, int length) {
-        //System.out.print(String.copyValueOf(ch,start,length).trim());
-
+        
         valorAtual.append(ch, start, length);
 
     }

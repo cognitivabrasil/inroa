@@ -1,21 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package feb.spring.controllers;
 
+import feb.data.entities.Usuario;
+import feb.data.interfaces.UsuarioDAO;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.util.*;
 import javax.servlet.ServletContext;
-
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +29,7 @@ class UserPasswordDto {
 	private String password;
 	private String confirmPassword;
 	private String oldPassword;
+               
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
@@ -72,6 +62,7 @@ class UserPasswordDto {
 @Component
 class UserPasswordValidator implements Validator {
 	private Usuario user;
+        Logger log = Logger.getLogger(UserPasswordValidator.class);
 	
 	@Override
 	public boolean supports(Class clazz) {
@@ -86,7 +77,7 @@ class UserPasswordValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		UserPasswordDto u = (UserPasswordDto) target;
 				
-		System.out.println(user);
+		log.info(user);
 		if(!user.authenticate(u.getOldPassword())) {
 			errors.rejectValue("oldPassword", "password.incorrect", "Senha informada incorreta.");
 		}

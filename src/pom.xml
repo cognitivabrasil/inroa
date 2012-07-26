@@ -76,13 +76,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>com.springsource.insight</groupId>
-				<artifactId>insight-annotation</artifactId>
-				<version>1.5.0.RELEASE</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
 				<groupId>cognitivabrasil</groupId>
 				<artifactId>obaa</artifactId>
 				<version>1.0-SNAPSHOT</version>
