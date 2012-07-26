@@ -366,6 +366,7 @@ src/src/main/webapp/css/padrao.css -text
 src/src/main/webapp/css/shCore.css -text
 src/src/main/webapp/css/shCoreDefault.css -text
 src/src/main/webapp/css/shThemeDefault.css -text
+src/src/main/webapp/error.jsp -text
 src/src/main/webapp/googleAnalytics -text
 src/src/main/webapp/imagens/Lapiz-24x24.png -text
 src/src/main/webapp/imagens/Lapiz-32x32.png -text

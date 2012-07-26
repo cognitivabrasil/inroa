@@ -97,11 +97,23 @@ public final class MapeamentosController {
     public String mapeamentoEdit(Model model,
             @ModelAttribute("mapeamento") MapeamentoDto map,
             BindingResult result) {
+    	
+
+    	if (map == null || map.getPadraoMetadados() == null) {
+			model.addAttribute("message", "Ocorreu um erro com a sua requisição." +
+							"Uma causa possível é o XML de exemplo ser muito grande. " +
+							"Tente reduzir o número de elementos dentro do ListRecords.");
+			return "error";
+			
+		}
 
         validator.validate(map, result);
 
 
         if (result.hasErrors()) {
+        	if(map == null) { // form grande demais?
+        		map = new MapeamentoDto(new Mapeamento());
+        	}
             model.addAttribute("mapeamento", map);
             model.addAttribute("metadataList",
                     getMetadataListForSelect(padraoDao));
