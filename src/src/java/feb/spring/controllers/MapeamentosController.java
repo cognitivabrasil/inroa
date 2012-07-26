@@ -111,9 +111,6 @@ public final class MapeamentosController {
 
 
         if (result.hasErrors()) {
-        	if(map == null) { // form grande demais?
-        		map = new MapeamentoDto(new Mapeamento());
-        	}
             model.addAttribute("mapeamento", map);
             model.addAttribute("metadataList",
                     getMetadataListForSelect(padraoDao));
