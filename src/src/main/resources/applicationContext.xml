@@ -4,6 +4,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:task="http://www.springframework.org/schema/task"
 
 
 	xmlns:encryption="http://www.jasypt.org/schema/encryption"
@@ -13,6 +14,8 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
   http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/task
+http://www.springframework.org/schema/task/spring-task-3.1.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd 
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
 http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd">
@@ -109,27 +112,14 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 
 	<bean id="robo" class="feb.robo.main.Robo" />
 
-	<bean id="jobDetail"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="robo" />
-		<property name="targetMethod" value="testaUltimaImportacao" />
-		<property name="concurrent" value="false" />
-	</bean>
+	<task:scheduler id="myScheduler" pool-size="1" />
+
+	<task:scheduled-tasks scheduler="myScheduler">
+		<task:scheduled ref="robo" method="testaUltimaImportacao" 
+			cron="0 0 2 * * *" />
+	</task:scheduled-tasks>
 
 
-	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<property name="jobDetail" ref="jobDetail" />
-		<!-- run every morning at 2 AM -->
-		<property name="cronExpression" value="0 0 2 * * ?" />
-	</bean>
-
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<property name="triggers">
-			<list>
-				<ref bean="cronTrigger" />
-			</list>
-		</property>
-	</bean>
 	<!--Fim Inicializar o Robo -->
 
 	<bean id="SearchesDao" class="feb.data.daos.SearchesJdbcDao">
