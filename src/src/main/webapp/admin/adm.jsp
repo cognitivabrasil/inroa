@@ -187,7 +187,7 @@ Author     : Marcos Nunes
 
                             </security:authorize> &nbsp; <input type="button" class="botaoEditar"
                                           title="Editar / Visualizar" name="editar" id="editarRep"
-                                          onclick="NewWindow('repositories/${rep.id}','','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                          onclick="NewWindow('repositories/${rep.id}','','750','total');">
                         </td>
                         <td>${rep.name}</td>
                         <td>${rep.descricao}</td>
@@ -232,7 +232,7 @@ Author     : Marcos Nunes
                         <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
 
                                 <a title="Adicionar novo reposit&oacute;rio"
-                                   onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                   onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total');">
                                     <img
                                         src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                         border="0" width="24" height="24" alt="Visualizar" align="middle">
@@ -243,7 +243,7 @@ Author     : Marcos Nunes
                                 access="hasRole('PERM_MANAGE_REP')">
 
                                 <a
-                                    onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                    onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total');">
                                     Adicionar novo reposit&oacute;rio </a>
                                 </security:authorize>
 
@@ -288,7 +288,7 @@ Author     : Marcos Nunes
 
                             </security:authorize> &nbsp; <input type="button" class="botaoEditar"
                                           title="Editar / Visualizar" name="editar" id="editarSubfed"
-                                          onclick="NewWindow('./federations/${subfed.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                          onclick="NewWindow('./federations/${subfed.id}','','750','560');">
 
                         </td>
                         <td>${subfed.name}</td>
@@ -336,7 +336,7 @@ Author     : Marcos Nunes
                         <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
 
                                 <a title="Adicionar nova subfedera&ccedil;&atilde;o"
-                                   onclick="NewWindow('${newFederationUrl}','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                   onclick="NewWindow('${newFederationUrl}','Cadastro','750','650');">
                                     <img
                                         src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                         border="0" width="24" height="24" alt="Visualizar" align="middle">
@@ -347,7 +347,7 @@ Author     : Marcos Nunes
                                 access="hasRole('PERM_MANAGE_REP')">
 
                                 <a
-                                    onclick="NewWindow('${newFederationUrl}','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                    onclick="NewWindow('${newFederationUrl}','Cadastro','750','650');">
                                     Adicionar nova subfedera&ccedil;&atilde;o </a>
                                 </security:authorize>
                         </td>
@@ -437,7 +437,7 @@ Author     : Marcos Nunes
                             &nbsp;
                             <input type="button" class="botaoEditar"
                                    title="Editar / Visualizar" name="editar" id="editarPadrao"
-                                   onclick="NewWindow('./metadataStandard/${padraoMet.id}','editaPadrao','650','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
+                                   onclick="NewWindow('./metadataStandard/${padraoMet.id}','editaPadrao','650','400');" />
                         </td>
                         <td>${padraoMet.name}</td>
                         <td>${padraoMet.metadataPrefix}</td>
@@ -450,14 +450,14 @@ Author     : Marcos Nunes
 
                     <tr class='center'>
                         <td><a title="Adicionar novo padr&atilde;o de metadados"
-                               onclick="NewWindow('./metadataStandard/new','new','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                               onclick="NewWindow('./metadataStandard/new','new','750','650');">
                                 <img
                                     src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </a></td>
                         <td colspan="2" class="left bold" style="font-size: 110%">
                             &nbsp;&nbsp; <a
-                                onclick="NewWindow('./metadataStandard/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                onclick="NewWindow('./metadataStandard/new','Cadastro','750','650');">
                                 Adicionar novo padr&atilde;o </a>
                         </td>
                         <td><div id='msgerro' class='textoErro left'></div></td>
@@ -497,7 +497,7 @@ Author     : Marcos Nunes
                             </security:authorize>
                             &nbsp; <input type="button" class="botaoEditar"
                                           title="Editar / Visualizar" name="editar" id="editarMap"
-                                          onclick="NewWindow('./mapeamentos/${mapeamento.id}','editaMapeamento','total','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');" />
+                                          onclick="NewTab('./mapeamentos/${mapeamento.id}');" />
                         </td>
                         <td>${mapeamento.name}</td>
                         <td>${mapeamento.description}</td>
@@ -510,14 +510,14 @@ Author     : Marcos Nunes
 
                     <tr class='center'>
                         <td><a title="Adicionar novo padr&atilde;o de metadados"
-                               onclick="NewWindow('./mapeamentos/new','new','total','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                               onclick="NewTab('./mapeamentos/new');">
                                 <img
                                     src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </a></td>
                         <td colspan="2" class="left bold" style="font-size: 110%">
                             &nbsp;&nbsp; <a
-                                onclick="NewWindow('./mapeamentos/new','Cadastro','total','total','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                onclick="NewTab('./mapeamentos/new');">
                                 Adicionar novo mapeamento </a>
                         </td>
                         <td><div id='msgerro' class='textoErro left'></div></td>
@@ -563,15 +563,15 @@ Author     : Marcos Nunes
 
             <security:authorize access="hasRole('PERM_UPDATE')">
 
-                <button id="recalculo" onclick="javascript:NewWindow('confirmaRecalcularIndice','','500','240','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                <button id="recalculo" onclick="javascript:NewWindow('confirmaRecalcularIndice','','500','240');">
                     Recalcular o &Iacute;ndice</button>
                 </security:authorize>
 
-            <button id="alterarSenha" onclick="javascript:NewWindow('./users/passwd','','700','400','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">
+            <button id="alterarSenha" onclick="javascript:NewWindow('./users/passwd','','700','400');return false">
                 Alterar Senha </button>
 
             <security:authorize access="hasRole('PERM_CHANGE_DATABASE')">
-                <button id="alterarBase" onclick="javascript:NewWindow('alterDB','','650','500','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');return false">
+                <button id="alterarBase" onclick="javascript:NewWindow('alterDB','','650','500');return false">
                     Alterar Base de Dados</button>
                 </security:authorize>
 
@@ -598,7 +598,7 @@ Author     : Marcos Nunes
                                        name="excluirUsario" id="excluirUsario" href="${delUser}" />
                             </security:authorize> &nbsp; <input type="button" class="botaoEditar"
                                           title="Editar / Visualizar" name="editar" id="editarSubfed"
-                                          onclick="NewWindow('./users/${user.id}','','750','560','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                          onclick="NewWindow('./users/${user.id}','','750','560');">
 
                         </td>
                         <td>${user.username}</td>
@@ -611,14 +611,14 @@ Author     : Marcos Nunes
                 <security:authorize access="hasRole('PERM_MANAGE_USERS')">
                     <tr class='center'>
                         <td><a title="Adicionar novo usuário"
-                               onclick="NewWindow('./users/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                               onclick="NewWindow('./users/new','Cadastro','750','650');">
                                 <img
                                     src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </a></td>
                         <td colspan="2" class="left bold" style="font-size: 110%">
                             &nbsp;&nbsp; <a
-                                onclick="NewWindow('./users/new','Cadastro','750','650','scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no');">
+                                onclick="NewWindow('./users/new','Cadastro','750','650');">
                                 Adicionar novo usuário </a>
                         </td>
                         <td></td>

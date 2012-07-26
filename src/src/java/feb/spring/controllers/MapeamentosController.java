@@ -110,7 +110,7 @@ public final class MapeamentosController {
         validator.validate(map, result);
 
 
-        if (result.hasErrors()) {
+        if (result.hasErrors() || map.getSubmit()==null) {
             model.addAttribute("mapeamento", map);
             model.addAttribute("metadataList",
                     getMetadataListForSelect(padraoDao));

@@ -91,9 +91,9 @@ Primeira etapa do cadastro de um repositorio
 
                 <div class="xmlTitle">XSLT</div>
 
-                <form:textarea id="code" path="xslt" />
+                <form:textarea path="xslt" />
                 <script type="text/javascript">
-                    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                    var editor = CodeMirror.fromTextArea(document.getElementById("xslt"), {
                         mode: 'text/html',
 
                         //closeTagEnabled: false, // Set this option to disable tag closing behavior without having to remove the key bindings.
@@ -108,19 +108,12 @@ Primeira etapa do cadastro de um repositorio
                     });
                 
                 </script>
-                <!--                <script>
-                                    var editor = CodeMirror.fromTextArea(document
-                                    .getElementById("code"), {
-                                        mode : {name : "xml", alignCDATA : true},
-                                        lineNumbers : true
-                                    });
-                                </script>-->
 
                 <div class="xmlTitle">Exemplo de um XML do OAI-PMH</div>
-                <form:textarea id="xml" path="xml" />
+                <form:textarea path="xmlSample" />
                 <script>
                     var editor = CodeMirror.fromTextArea(document
-                    .getElementById("xml"), {
+                    .getElementById("xmlSample"), {
                         mode: 'text/html',
                         extraKeys: {
                             "'>'": function(cm) { cm.closeTag(cm, '>'); },
@@ -132,7 +125,7 @@ Primeira etapa do cadastro de um repositorio
                 </script>
 
                 <div class="xmlTitle">Xml OBAA transformado</div>
-                <form:textarea id="xmlObaa" path="xmlObaa" />
+                <form:textarea path="xmlObaa" />
                 <script>
                     var editor = CodeMirror.fromTextArea(document
                     .getElementById("xmlObaa"), {

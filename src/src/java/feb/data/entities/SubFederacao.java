@@ -254,7 +254,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
      * reposit&oacute;rios da subfedera&ccedil;&atilde;o
      *
      * @param subFed objeto federa&ccedil;&atilde;o
-     * @param listaSubRep ArrayList de Strings contento o name dos
+     * @param listaSubRep ArrayList de Strings contendo o nome dos
      * reposit&oacute;rios da subfedera&ccedil;&atilde;o
      * @throws Exception
      */

@@ -519,7 +519,7 @@ a:hover{
     padding-bottom:5px;
 }
 
-.LinhaEntrada .Value input, select{width:50%; border-color: #006699}
+.LinhaEntrada .Value input,.LinhaEntrada .Value select {width:50%; border-color: #006699}
 .LinhaEntrada .Value .disabled{
     background-color: #D7EBFF;
     border: 0px;
@@ -696,7 +696,7 @@ td{vertical-align:top;}
 }
 .botaoLupa {
     background-color: transparent;
-    background-image:url(/feb/imagens/lupa-26x24.png);
+    background-image:url(images/lupa-26x24.png);
     height: 24px;
     width: 26px;
     border:0px;
@@ -966,7 +966,7 @@ td{vertical-align:top;}
     margin-top: 1%;
     clear: both;
 }
-.infoDetalhada ul{background-color: #f1f1f1;}
+.infoDetalhada ul{background-color: #f1f1f1; list-style-type: none;}
 .infoDetalhada strong{margin-right: 1%;}
 .infoDetalhada .nome{
     float: left;

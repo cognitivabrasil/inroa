@@ -97,7 +97,7 @@ public class Indexador {
 
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
-        log.debug("\n FEB: Tento total para inserir objetos: " + Operacoes.formatTimeMillis(total));
+        log.debug("\n FEB: Tempo total para inserir objetos: " + Operacoes.formatTimeMillis(total));
 
     }
 
@@ -156,7 +156,7 @@ public class Indexador {
 
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
-        log.info("Tento total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));
+        log.info("Tempo total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));
     }
 
     /**

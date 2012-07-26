@@ -12,7 +12,7 @@ import feb.metadata.XSLTUtil;
 
 public class MapeamentoDto {
 	private Integer id;
-	private String xml;
+	private String xmlSample;
 	private String xmlObaa;
 	private String xslt;
 	private String name;
@@ -32,6 +32,7 @@ public class MapeamentoDto {
 		id = m.getId();
 		name = m.getName();
 		description = m.getDescription();
+                xmlSample = m.getXmlSample();
 		if (m.getPadraoMetadados() != null) {
 			padraoMetadados = m.getPadraoMetadados().getId();
 		}
@@ -50,12 +51,12 @@ public class MapeamentoDto {
 		}
 	}
 
-	public String getXml() {
-		return xml;
+	public String getXmlSample() {
+		return xmlSample;
 	}
 
-	public void setXml(String xml) {
-		this.xml = xml;
+	public void setXmlSample(String xmlSample) {
+		this.xmlSample = xmlSample;
 	}
 
 	public String getXmlObaa() {
@@ -116,9 +117,9 @@ public class MapeamentoDto {
 	public void transform() {
 		try {
 			XsltConversor conv = new XsltConversor(xslt);
-			if (!(xml == null || xml.isEmpty())) {
+			if (!(xmlSample == null || xmlSample.isEmpty())) {
 
-				xmlObaa = XSLTUtil.formatXml(conv.toObaa(xml));
+				xmlObaa = XSLTUtil.formatXml(conv.toObaa(xmlSample));
 				OaiOBAA.fromString(xmlObaa);
                                 failed = false;
 
@@ -138,6 +139,7 @@ public class MapeamentoDto {
 		m.setName(name);
 		m.setDescription(description);
 		m.setXslt(xslt);
+                m.setXmlSample(xmlSample);
 
 		return m;
 	}

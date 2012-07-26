@@ -268,6 +268,7 @@ CREATE TABLE mapeamentos (
     nome character varying(45) NOT NULL,
     descricao character varying(200) NOT NULL,
     xslt text NOT NULL,
+    xml_exemplo text,
     padrao_id integer NOT NULL
 );
 

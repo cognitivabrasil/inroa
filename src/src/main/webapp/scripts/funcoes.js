@@ -25,11 +25,11 @@ function MM_openBrWindow(theURL,winName,features) {
 * @param h		height, Altura. Se informar a string 'total' ao inves do numero, abre na altura maxima da tela.
 * @param features	String contendo as features. Nao colocar em features o height, width, top e left. Ex:scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no
 */
-function NewWindow(mypage,myname,w,h,features){
-
+function NewWindowFeatures(mypage,myname,w,h,features){
+    
     var larguraDisponivel = screen.availWidth-9;
     var alturaDisponivel = screen.availHeight-65;
-
+    
     if (h=='total'){
         h=alturaDisponivel;
     }
@@ -38,8 +38,17 @@ function NewWindow(mypage,myname,w,h,features){
     }
     LeftPosition = (larguraDisponivel) ? (larguraDisponivel-w)/2 : 0;
     TopPosition = (alturaDisponivel) ? (alturaDisponivel-h)/2 : 0;
-    settings ='height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+','+features;
-    win = window.open(mypage,myname,settings);
+    var settings ='height='+h+',width='+w+','+features;
+    window.open(mypage,myname,settings);
+}
+
+function NewWindow(mypage,myname,w,h){
+    var features = 'scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no';
+    NewWindowFeatures(mypage, myname, w, h, features)
+}
+
+function NewTab(url){
+    window.open(url,'_blank');
 }
 
 /**
@@ -49,7 +58,8 @@ function fechaRecarrega() {
     // fechando a janela atual ( popup )
     window.close();
     // dando um refresh na página principal
-    opener.location.href=opener.location.href;
+//    opener.location.reload();
+    window.opener.document.location.reload();
 // fim da função
 }
 
@@ -58,7 +68,7 @@ function fechaRecarrega() {
  */
 function recarrega() {
     // dando um refresh na página principal
-    opener.location.href=opener.location.href;
+    opener.location.reload();
 // fim da função
 }
 

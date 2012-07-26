@@ -21,6 +21,7 @@ public class Mapeamento implements MetadataConversorInterface, FebDomainObject {
     private String name;
     private String xslt;
     private PadraoMetadados padraoMetadados;
+    private String xmlSample;
 
     /**
      * @return the id
@@ -95,5 +96,12 @@ public class Mapeamento implements MetadataConversorInterface, FebDomainObject {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
 	}
 
-    
+    public String getXmlSample() {
+        return xmlSample;
+    }
+
+    public void setXmlSample(String xmlSample) {
+        this.xmlSample = xmlSample;
+    }
+
 }

@@ -76,7 +76,7 @@ public abstract class AbstractHibernateDAO<T> {
 	 */
 	public void save(T item) {
 		Logger log = Logger.getLogger(type.getName());
-		log.info("Saving..." + item.toString());
+		log.debug("Saving..." + item.toString());
 
 		this.sessionFactory.getCurrentSession().saveOrUpdate(item);
 		this.sessionFactory.getCurrentSession().flush();
