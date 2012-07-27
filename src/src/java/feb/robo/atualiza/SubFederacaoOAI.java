@@ -199,6 +199,7 @@ public class SubFederacaoOAI {
      *
      * @param idSub Id da subfedera&ccedil;&atilde;o na ser atualizada.
      * @return true se atualizou e false caso contr&aacute;rio.
+     * @throws Exception 
      */
     public void atualizaSubfedAdm(SubFederacao subFed, boolean apagar) throws Exception {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
@@ -208,6 +209,9 @@ public class SubFederacaoOAI {
         } else {
             Indexador indexar = ctx.getBean(Indexador.class);
 
+            // Don't really know why, but the following 2 lines solve FEB-219
+            subFed.setUltimaAtualizacao(subFed.getUltimaAtualizacao());
+            subFed.setDataXML(subFed.getDataXML());
             if (apagar) {
                 log.debug("Setar como null a data da última atualização e dataXML para que apague toda a base antes de atualizar.");
                 subFed.setUltimaAtualizacao(null);
