@@ -17,6 +17,8 @@
     <head>
      <script language="JavaScript" type="text/javascript"
 	src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>
+        <c:url var="root" value="/" />
+        <script>setRootUrl(${root});</script>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">

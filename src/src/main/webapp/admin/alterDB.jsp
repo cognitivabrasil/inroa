@@ -17,6 +17,8 @@
         <link rel="StyleSheet" media="screen" href="../css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="../scripts/validatejs.js"></script>
         <script type="text/javascript" src="../scripts/funcoes.js"></script>
+        <c:url var="root" value="/" />
+        <script>setRootUrl(${root});</script>
     </head>
     <body>
 

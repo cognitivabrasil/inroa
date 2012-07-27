@@ -16,15 +16,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>FEB - Ferramenta Administrativa</title>
-        
-        <c:url var="favicon" value="/imagens/favicon.ico" />
-<c:url var="css" value="/css/padrao.css" />
-<c:url var="validateJs" value="/scripts/validatejs.js" />
-<c:url var="funcoesJs" value="/scripts/funcoes.js" />
 
-<c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
+        <c:url var="favicon" value="/imagens/favicon.ico" />
+        <c:url var="css" value="/css/padrao.css" />
+        <c:url var="validateJs" value="/scripts/validatejs.js" />
+        <c:url var="funcoesJs" value="/scripts/funcoes.js" />
+
+        <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
         <link rel="StyleSheet" href="${css }" type="text/css"/>
         <script language="JavaScript" type="text/javascript" src="${funcoesJs }"></script>
+        <c:url var="root" value="/" />
+        <script>setRootUrl(${root});</script>
         <script language="JavaScript" type="text/javascript" src="${funcoesMapeamentoJs }"></script>
         <script type="text/javascript" src="${validateJs }"></script>
         <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
@@ -43,13 +45,14 @@
                 myForm.addRules({id:'namespace',option:'required',error:'* Deve ser informado o NameSpace!'});
                 myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
                 myForm.addRules({id:'periodicidadeAtualizacao',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
+                myForm.addRules({id : 'confereLinkOAI', option : 'required', error : '* A url informada n&atilde;o responde ao protocolo OAI-PMH!'});
             </script>
 
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.nome}</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
-            <div class="EspacoAntes">&nbsp;</div>
+            
             <form:form method="post" modelAttribute="repModel" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
-                
+
                 <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
                     <c:out value="${erro}"/>
                 </div>
@@ -59,7 +62,7 @@
                         Nome/Sigla:
                     </div>
                     <div class="Value">
-                        <form:input path="nome" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
+                        <form:input path="nome" maxlength="45" />                        
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -68,48 +71,7 @@
                         Descri&ccedil;&atilde;o:
                     </div>
                     <div class="Value">                        
-                        <form:input path="descricao" maxlength="455" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                </div>
-
-                <div class="LinhaEntrada">
-                    <form:errors path="padraoMetadados.id" cssClass="ValueErro" />
-                    <div class="Label">
-                        Padr&atilde;o de metadados utilizado:
-                    </div>
-                    <div class="Value">
-                        <select name="padraoMetadados.id" id="padraoMetadados.id" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" onChange="selecionaMapeamento('resultado', this.value, ${repModel.mapeamento.id});">
-                            <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
-                                <option value="${padraoMet.id}" ${padraoMet.id==repModel.padraoMetadados.id ? 'selected':''}> ${fn:toUpperCase(padraoMet.nome)}                           
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="LinhaEntrada">
-                    <form:errors path="mapeamento.id" cssClass="ValueErro" />
-                    <div class="Label">
-                        Tipo de mapeamento:
-                    </div>
-                    <div id="resultado">
-                        <c:forEach var="map" items="${repModel.padraoMetadados.mapeamentos}">
-                            <div class="ValueIndex"><input type="radio" ${map.id == repModel.mapeamento.id ? 'checked=true':''} id="mapeamento.id" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
-                        </c:forEach>
-
-                    </div>
-                </div>
-                    
-                <div class="LinhaEntrada">
-                    <div> &nbsp;</div>
-                    <form:errors path="metadataPrefix" cssClass="ValueErro" />
-                    <div class="Label">MetadataPrefix:</div>
-                    <div class="Value">
-                        <form:input path="metadataPrefix" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                    </div>
-                    <form:errors path="namespace" cssClass="ValueErro" />
-                    <div class="Label">NameSpace:</div>
-                    <div class="Value">
-                        <form:input path="namespace" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="descricao" maxlength="455" />
                     </div>
                 </div>
 
@@ -123,10 +85,10 @@
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="this.className='';verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))" />
+                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))" />
                         &nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
-                    <input type="hidden" id="confereLinkOAI" value="">
+                    <input type="hidden" id="confereLinkOAI" value="ok">
                 </div>
 
                 <div class="LinhaEntrada">
@@ -141,16 +103,58 @@
                         Cole&ccedil;&otilde;es ou Comunidades:
                     </div>
                     <div class="Value">
-                        <form:input path="colecoesString" maxlength="45" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
+                        <form:input path="colecoesString" maxlength="45" />
                     </div>
                 </div>
+
                 <div class="LinhaEntrada">
                     <form:errors path="periodicidadeAtualizacao" cssClass="ValueErro" />
                     <div class="Label">
                         Periodicidade de atualiza&ccedil;&atilde;o (em dias):
                     </div>
                     <div class="Value">
-                        <form:input path="periodicidadeAtualizacao" maxlength="3" onkeypress ="return ( isNumber(event) );" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
+                        <form:input path="periodicidadeAtualizacao" maxlength="3" onkeypress ="return ( isNumber(event) );" />
+                    </div>
+                </div>
+
+                <div class="LinhaEntrada">
+                    <form:errors path="padraoMetadados.id" cssClass="ValueErro" />
+                    <div class="Label">
+                        Padr&atilde;o de metadados utilizado:
+                    </div>
+                    <div class="Value">
+                        <select name="padraoMetadados.id" id="padraoMetadados.id" onChange="selecionaMapeamento('resultado', this.value, ${repModel.mapeamento.id});">
+                            <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
+                                <option value="${padraoMet.id}" ${padraoMet.id==repModel.padraoMetadados.id ? 'selected':''}> ${fn:toUpperCase(padraoMet.nome)}                           
+                                </c:forEach>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="LinhaEntrada">
+                    <form:errors path="mapeamento.id" cssClass="ValueErro" />
+                    <div class="Label">
+                        Tipo de mapeamento:
+                    </div>
+                    <div id="resultado">
+                        <c:forEach var="map" items="${repModel.padraoMetadados.mapeamentos}">
+                            <div class="ValueIndex"><input type="radio" ${map.id == repModel.mapeamento.id ? 'checked=true':''} id="mapeamento.id" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
+                            </c:forEach>
+
+                    </div>
+                </div>
+
+                <div class="LinhaEntrada">
+                    <div> &nbsp;</div>
+                    <form:errors path="metadataPrefix" cssClass="ValueErro" />
+                    <div class="Label">MetadataPrefix:</div>
+                    <div class="Value">
+                        <form:input path="metadataPrefix" maxlength="45" />
+                    </div>
+                    <form:errors path="namespace" cssClass="ValueErro" />
+                    <div class="Label">NameSpace:</div>
+                    <div class="Value">
+                        <form:input path="namespace" maxlength="45" />
                     </div>
                 </div>
 

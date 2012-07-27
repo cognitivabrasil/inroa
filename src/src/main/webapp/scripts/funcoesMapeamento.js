@@ -3,7 +3,6 @@
  *
  * Funcoes utilizadas pelo mapeamento dinamico
  */
-rootUrl='/feb';
 botao='';
 linhaComposto=0;
 

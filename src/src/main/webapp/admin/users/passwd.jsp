@@ -14,14 +14,12 @@
 <c:url var="favicon" value="/imagens/favicon.ico" />
 <c:url var="css" value="/css/padrao.css" />
 <c:url var="validateJs" value="/scripts/validatejs.js" />
-<c:url var="funcoesJs" value="/scripts/funcoes.js" />
 
 <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
 
 <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
 <link rel="StyleSheet" href="${css }" type="text/css" />
 <script type="text/javascript" src="${validateJs }"></script>
-<script type="text/javascript" src="${funcoesJs }"></script>
 
     </head>
     <body>
@@ -44,9 +42,7 @@
     				<form:errors path="oldPassword" cssClass="ValueErro" />
 				<div class="Label">Digite a senha atual:</div>
 				<div class="Value">
-					<form:password path="oldPassword" maxlength="45"
-						onFocus="this.className='inputSelecionado'"
-						onBlur="this.className=''" />
+					<form:password path="oldPassword" maxlength="45" />
 				</div>
                 </div>
                 <div class="LinhaEntrada">

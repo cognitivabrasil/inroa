@@ -3,7 +3,12 @@
 * email: marcosn@gmail.com
 */
 
-rootUrl='/feb';
+rootUrl='/feb/';
+
+function setRootUrl(url) {
+    alert(url);
+    rootUrl = url;
+}
 
 /**
 * Abre uma nova janela conforme par&acirc;metros recebidos
@@ -55,13 +60,10 @@ function NewTab(url){
  *Função que fecha a janela popup e regarrega a janela principal
  */
 function fechaRecarrega() {
-    
     // dando um refresh na página principal
-    //    opener.location.reload();
     window.opener.location.reload();
     // fechando a janela atual ( popup )
     window.close();
-// fim da função
 }
 
 /**
@@ -69,8 +71,7 @@ function fechaRecarrega() {
  */
 function recarrega() {
     // dando um refresh na página principal
-    opener.location.reload();
-// fim da função
+    window.opener.location.reload();
 }
 
 /**
@@ -152,7 +153,7 @@ function trim(str){
 */
 function atualizaRepAjax(id, exibeResultado)
 {
-    var link = rootUrl + "/admin/repositories/"+id+"/update?apagar=false";
+    var link = rootUrl + "admin/repositories/"+id+"/update?apagar=false";
     updateSubnodeAjax(link, exibeResultado);
 }
 
@@ -164,7 +165,7 @@ function atualizaRepAjax(id, exibeResultado)
 */
 function apagaAtualizaRepAjax(id, exibeResultado)
 {
-    var link = rootUrl + "/admin/repositories/"+id+"/update?apagar=true";
+    var link = rootUrl + "admin/repositories/"+id+"/update?apagar=true";
     updateSubnodeAjax(link, exibeResultado);
 }
 
@@ -175,7 +176,7 @@ function apagaAtualizaRepAjax(id, exibeResultado)
  * @param showResult div html where the status and results will be presented
  **/
 function deleteAndUpdateSubFedAjax(id, showResult){
-    var link = rootUrl + "/admin/federations/"+id+"/update?apagar=true";
+    var link = rootUrl + "admin/federations/"+id+"/update?apagar=true";
     updateSubnodeAjax(link, showResult);
 }
 
@@ -187,7 +188,7 @@ function deleteAndUpdateSubFedAjax(id, showResult){
 */
 function atualizaSubfedAjax(id, exibeResultado)
 {
-    var link = rootUrl + "/admin/federations/"+id+"/update?apagar=false";
+    var link = rootUrl + "admin/federations/"+id+"/update?apagar=false";
     updateSubnodeAjax(link, exibeResultado);
 }
 
@@ -202,7 +203,7 @@ function updateSubnodeAjax(link, showResults)
     var ajax = openAjax(); // Start Ajax.
 
     ajax.open("POST", link, true);    
-    showResults.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
+    showResults.innerHTML = "<img src='"+rootUrl+"imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
     ajax.onreadystatechange = function()
     {
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
@@ -258,9 +259,8 @@ function verificaLinkOAI(link, inputTexto, divErro, inputHidden)
         inputHidden.value='';   
     }else{
         var ajax = openAjax(); // Inicia o Ajax.
-
-        ajax.open("GET", rootUrl+"/admin/VerificaLinkOAI?"+link, true);
-        divErro.innerHTML = "<img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
+        ajax.open("GET", rootUrl+"admin/VerificaLinkOAI?"+link, true);
+        divErro.innerHTML = "<img src='"+rootUrl+"imagens/ajax-loader.gif' border='0' alt='Verificando' align='middle'>";
         ajax.onreadystatechange = function()
         {
             if(ajax.readyState == 4) // Quando estiver tudo pronto.
@@ -336,7 +336,7 @@ function exibeDivSenha(idSenha, idRepSenha)
 
 function recalcularIndice(destino, form){
     destinodoc = document.getElementById(destino);
-    destinodoc.innerHTML = "<center><img src='"+rootUrl+"/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;
+    destinodoc.innerHTML = "<center><img src='"+rootUrl+"imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;
     form.className="hidden";
     
 }
@@ -344,7 +344,7 @@ function recalcularIndice(destino, form){
 function objectAcessCounter(id){
     
     var ajax = openAjax(); // Start Ajax.
-    var link = rootUrl + "/admin/statistics/objUser?id="+id;    
+    var link = rootUrl + "admin/statistics/objUser?id="+id;    
     ajax.open("POST", link, true);
 // ao que parece não precisa disso
 // ajax.send(null); // submete

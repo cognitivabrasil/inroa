@@ -11,6 +11,7 @@ Author     : Marcos Nunes
            uri="http://www.springframework.org/security/tags"%>
 
 <%@page import="feb.util.Operacoes"%>
+<c:url var="root" value="/" />
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -31,7 +32,7 @@ Author     : Marcos Nunes
               href="<feb.spring:url value="/imagens/favicon.ico" htmlEscape="true" />">
 
         <script language="JavaScript" type="text/javascript"
-        src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>        
+        src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>
         <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
         <script type="text/javascript" src='<feb.spring:url value="/scripts/jquery-ui-1.8.22.custom.min.js" htmlEscape="true" />'></script>
         <script language="JavaScript" type="text/javascript"
@@ -40,6 +41,7 @@ Author     : Marcos Nunes
         src="<feb.spring:url value="/scripts/tabsNavigator.js" htmlEscape="true" />"></script>
 
         <script>
+            setRootUrl(${root});
             $(function() {
                 $( "#recalculo" ).button({
                     
@@ -187,7 +189,7 @@ Author     : Marcos Nunes
 
                             </security:authorize> &nbsp; <input type="button" class="botaoEditar"
                                           title="Editar / Visualizar" name="editar" id="editarRep"
-                                          onclick="NewWindow('repositories/${rep.id}','','750','total');">
+                                          onclick="NewWindow('repositories/${rep.id}','','850','total');">
                         </td>
                         <td>${rep.name}</td>
                         <td>${rep.descricao}</td>

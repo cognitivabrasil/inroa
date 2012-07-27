@@ -14,10 +14,8 @@
 <title>FEB - Página de Erro</title>
 <c:url var="css" value="/css/padrao.css" />
 <c:url var="favicon" value="/imagens/favicon.ico" />
-<c:url var="funcoes" value="/scripts/funcoes.js" />
 <link rel="StyleSheet" href="${css}" type="text/css">
 <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
-<script language="JavaScript" type="text/javascript" src="${funcoes}"></script>
 
  
 

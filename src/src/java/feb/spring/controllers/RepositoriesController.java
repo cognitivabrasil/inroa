@@ -42,9 +42,11 @@ public final class RepositoriesController {
      */
     @RequestMapping("/{id}")
     public String show(@PathVariable Integer id,
-            Model model) {
+            Model model,
+            @RequestParam(required=false, value="r") boolean recarregar) {
         model.addAttribute("rep", repDao.get(id));
         model.addAttribute("repId", id);
+        model.addAttribute("recarregar",recarregar);
         return "admin/repositories/show";
     }
 
@@ -133,7 +135,7 @@ public final class RepositoriesController {
             return "admin/repositories/edit";
         } else {
             repDao.updateNotBlank(rep);
-            return "redirect:/admin/repositories/" + id;
+            return "redirect:/admin/repositories/" + id+"?r=true";
         }
     }
     

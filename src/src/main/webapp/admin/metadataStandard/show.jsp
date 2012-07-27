@@ -24,6 +24,8 @@
         <link rel="StyleSheet" href="${css}" type="text/css">
         <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
         <script language="JavaScript" type="text/javascript" src="${funcoes}"></script>
+        <c:url var="root" value="/" />
+        <script>setRootUrl(${root});</script>
 
 
     </head>

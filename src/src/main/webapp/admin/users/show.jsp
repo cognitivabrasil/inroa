@@ -9,55 +9,57 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+           uri="http://www.springframework.org/security/tags"%>
 
 
 
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>FEB - Ferramenta Administrativa</title>
-<c:url var="css" value="/css/padrao.css" />
-<c:url var="favicon" value="/imagens/favicon.ico" />
-<c:url var="funcoes" value="/scripts/funcoes.js" />
-<link rel="StyleSheet" href="${css}" type="text/css">
-<link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
-<script language="JavaScript" type="text/javascript" src="${funcoes}"></script>
-</head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>FEB - Ferramenta Administrativa</title>
+        <c:url var="css" value="/css/padrao.css" />
+        <c:url var="favicon" value="/imagens/favicon.ico" />
+        <c:url var="funcoes" value="/scripts/funcoes.js" />
+        <link rel="StyleSheet" href="${css}" type="text/css">
+        <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
+        <script language="JavaScript" type="text/javascript" src="${funcoes}"></script>
+        <c:url var="root" value="/" />
+        <script>setRootUrl(${root});</script>
+    </head>
 
-<body>
-	<jsp:useBean id="operacoesBean" class="feb.util.Operacoes"
-		scope="page" />
+    <body>
+        <jsp:useBean id="operacoesBean" class="feb.util.Operacoes"
+                     scope="page" />
 
-	<div id="page">
+        <div id="page">
 
-		<div class="subTitulo-center">Edição / Visualização de Usuários
-			Cadastrados</div>
+            <div class="subTitulo-center">Edição / Visualização de Usuários
+                Cadastrados</div>
 
 
-		<div class="subtitulo">Informações sobre o usuario
-			${user.username}</div>
+            <div class="subtitulo">Informações sobre o usuario
+                ${user.username}</div>
 
-		<security:authorize access="hasRole('PERM_MANAGE_USERS')">
+            <security:authorize access="hasRole('PERM_MANAGE_USERS')">
 
-			<div class="editar">
-				<a href="./${user.id}/edit">Editar</a>
-			</div>
-		</security:authorize>
+                <div class="editar">
+                    <a href="./${user.id}/edit">Editar</a>
+                </div>
+            </security:authorize>
 
-		<div class="LinhaEntrada">
-			<div class="Label">Username:</div>
-			<div class="Value">&nbsp;${user.username}</div>
-		</div>
-		<div class="LinhaEntrada">
-			<div class="Label">Descri&ccedil;&atilde;o:</div>
-			<div class="Value">&nbsp;${user.description}</div>
-		</div>
-		<div class="LinhaEntrada">
-			<div class="Label">Perfil:</div>
-			<div class="Value">&nbsp;${user.role}</div>
-		</div>
+            <div class="LinhaEntrada">
+                <div class="Label">Username:</div>
+                <div class="Value">&nbsp;${user.username}</div>
+            </div>
+            <div class="LinhaEntrada">
+                <div class="Label">Descri&ccedil;&atilde;o:</div>
+                <div class="Value">&nbsp;${user.description}</div>
+            </div>
+            <div class="LinhaEntrada">
+                <div class="Label">Perfil:</div>
+                <div class="Value">&nbsp;${user.role}</div>
+            </div>
 
-		<%@include file="../../googleAnalytics"%>
-</body>
+            <%@include file="../../googleAnalytics"%>
+    </body>
 </html>

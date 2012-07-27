@@ -45,15 +45,13 @@ public class Robo {
 
         Long inicioRobo = System.currentTimeMillis();
 
-
-        boolean repAtualizado = false;
-        boolean subFedAtualizada = false;
+        
 
 //TESTA/ATUALIZA SUBFEDERACAO
-        subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);
+        boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);
 
 //TESTA REPOSITORIO
-        repAtualizado = repositorio.testa_atualizar_repositorio(indexar);
+        boolean repAtualizado = repositorio.testa_atualizar_repositorio(indexar);
 
 
 //TESTA SE PRECISA RECALCULA O INDICE

@@ -53,8 +53,10 @@ public final class FederationsController {
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String exibeFed(@PathVariable("id") Integer id, Model model) {
+    public String exibeFed(@PathVariable("id") Integer id, Model model,
+    @RequestParam(required=false, value="r") boolean recarregar) {
         model.addAttribute("federation", subDao.get(id));
+        model.addAttribute("recarregar",recarregar);
         return "admin/federations/show";
     }
 
@@ -113,7 +115,7 @@ public final class FederationsController {
                 return "admin/federations/edit";
             } else {
                 subDao.updateNotBlank(subfed); //Grava a subfederacao modificada no formulario
-                return "redirect:/admin/federations/" + id;
+                return "redirect:/admin/federations/" + id+"?r=true";
             }
         } catch (Exception e) {
             model.addAttribute("erro", "Ocorreu um erro. Exception: " + e);

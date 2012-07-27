@@ -15,6 +15,8 @@ root {
     display: block;
 }
 
+input[type=text]:focus,input[type=password]:focus,select:focus{background-color:#D7EBFF;font-weight:bold;}
+
 body
 {
     font-family: Tahoma,verdana, arial, sans;
@@ -442,7 +444,7 @@ a:hover{
 }
 
 .LinhaEntrada .Value{
-    margin:0 0 15px 41%;
+    margin:0 5px 15px 41%;
 }
 
 .LinhaEntrada .Value linha{
@@ -672,7 +674,7 @@ td{vertical-align:top;}
 
 .botaoEditar {
     background-color: transparent;
-    background-image:url(/feb/imagens/Lapiz-24x24.png);
+    background-image:url(images/Lapiz-24x24.png);
     height: 24px;
     width: 24px;
     border:0px;
@@ -680,7 +682,7 @@ td{vertical-align:top;}
 }
 .botaoExcluir {
     background-color: transparent;
-    background-image:url(/feb/imagens/ico24_deletar.gif);
+    background-image:url(images/ico24_deletar.gif);
     height: 21px;
     width: 22px;
     border:0px;
@@ -688,7 +690,7 @@ td{vertical-align:top;}
 }
 .botaoAdicionar {
     background-color: transparent;
-    background-image:url(/feb/imagens/add-24x24.png);
+    background-image:url(images/add-24x24.png);
     height: 24px;
     width: 24px;
     border:0px;

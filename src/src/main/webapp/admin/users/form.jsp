@@ -30,6 +30,8 @@ Primeira etapa do cadastro de um repositorio
         <link rel="StyleSheet" href="${css }" type="text/css" />
         <script type="text/javascript" src="${validateJs }"></script>
         <script type="text/javascript" src="${funcoesJs }"></script>
+        <c:url var="root" value="/" />
+        <script>setRootUrl(${root});</script>
 
 
     </head>
@@ -53,18 +55,14 @@ Primeira etapa do cadastro de um repositorio
                     <form:errors path="username" cssClass="ValueErro" />
                     <div class="Label">Nome:</div>
                     <div class="Value">
-                        <form:input path="username" maxlength="45"
-                                    onFocus="this.className='inputSelecionado'"
-                                    onBlur="this.className=''" />
+                        <form:input path="username" maxlength="45"/>
                     </div>
                 </div>
                 <div class="LinhaEntrada">
                     <form:errors path="description" cssClass="ValueErro" />
                     <div class="Label">Descri&ccedil;&atilde;o:</div>
                     <div class="Value">
-                        <form:input path="description" maxlength="55"
-                                    onFocus="this.className='inputSelecionado'"
-                                    onBlur="this.className=''" />
+                        <form:input path="description" maxlength="55" />
                     </div>
                 </div>
 
