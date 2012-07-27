@@ -170,7 +170,7 @@ xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
 </xsl:template>
 
 </xsl:stylesheet>
-', 2);
+','', 2);
 INSERT INTO mapeamentos VALUES (1, 'LOM padrão', 'Mapeamento LOM padrão', '<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -238,7 +238,7 @@ xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
 </xsl:template>
 
 </xsl:stylesheet>
-', 1);
+','', 1);
 
 INSERT INTO mapeamentos VALUES (3, 'OBAA Padrão', 'Mapeamento OBAA padrão',
 '<?xml version="1.0" encoding="UTF-8"?>
@@ -252,7 +252,7 @@ xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
   <xsl:copy>
     <xsl:apply-templates select="@*|node()"/>
   </xsl:copy>
-</xsl:template></xsl:stylesheet>', 3);
+</xsl:template></xsl:stylesheet>','', 3);
 
 
 --
