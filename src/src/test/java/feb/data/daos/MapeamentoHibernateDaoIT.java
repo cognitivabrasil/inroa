@@ -101,7 +101,7 @@ public class MapeamentoHibernateDaoIT extends AbstractDaoTest {
     public void testSaveAndUpdate2() throws Exception {
         if (updated) {
             updated = false;
-            String[] ignore = {"id", "padrao_id"};
+            String[] ignore = {"id", "padrao_id", "xml_exemplo"};
             String[] sort = {"nome"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("mapeamentos"), sort), new SortedTable(getConnection().createDataSet().getTable("mapeamentos"), sort), ignore);
 
