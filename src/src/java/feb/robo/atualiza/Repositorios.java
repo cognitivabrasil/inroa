@@ -10,10 +10,8 @@ import feb.exceptions.RepositoriosException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.harvesterOAI.Harvester;
 import feb.robo.atualiza.importaOAI.XMLtoDB;
-import feb.spring.ApplicationContextProvider;
 import feb.util.Informacoes;
 import feb.util.Operacoes;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,8 +26,6 @@ import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
 
 /**
@@ -51,8 +47,6 @@ public class Repositorios {
 	 * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o
 	 * m&etodo respons&aacute;vel por isso.
 	 * 
-	 * @param con
-	 *            Conex&atilde;o com a base de dados.
 	 * @param indexar
 	 *            Variavel do tipo Indexador. &Eacute; utilizada para passar os
 	 *            dados para o indice durante a atualiza&ccidil;&atilde;o dos
@@ -63,8 +57,8 @@ public class Repositorios {
 	public boolean testa_atualizar_repositorio(Indexador indexar) {
 		boolean atualizou = false;
 
-		Repositorio repositorio = new Repositorio();
-		List<Repositorio> listRep = repositorio.getOutDatedDocs();
+		
+		List<Repositorio> listRep = repDao.getOutDated();
 
 		for (Repositorio rep : listRep) { // percorre todos os repositorios que
 			// precisam ser atualizados
@@ -185,11 +179,7 @@ public class Repositorios {
 
 		try {
 			log.info("FEB: (" + dataFormat.format(new Date())
-					+ ") Atualizando repositorio: " + rep.getName());// imprime
-																		// o
-																		// nome
-																		// do
-																		// repositorio
+					+ ") Atualizando repositorio: " + rep.getName());// imprime o nome do repositorio
 
 			Set<String> set = rep.getColecoes();
 			if (set == null || set.isEmpty()) {

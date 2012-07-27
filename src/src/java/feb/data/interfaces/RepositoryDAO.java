@@ -61,4 +61,10 @@ public interface RepositoryDAO {
      * @throws IllegalArgumentException when r2 is null
      */
     void updateNotBlank(Repositorio r2);
+
+    /**
+     * Gets the repositories that are outdated.
+     * @return repositories that are outdated
+     */
+    public List<Repositorio> getOutDated();
 }

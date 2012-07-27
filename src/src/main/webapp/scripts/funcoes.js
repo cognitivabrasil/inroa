@@ -6,7 +6,6 @@
 rootUrl='/feb/';
 
 function setRootUrl(url) {
-    alert(url);
     rootUrl = url;
 }
 

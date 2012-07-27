@@ -4,6 +4,7 @@ import feb.data.interfaces.SearchesDao;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.Repositorios;
 import feb.robo.atualiza.SubFederacaoOAI;
+import feb.util.Operacoes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,8 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class Robo {
 
-    @Autowired
-    Indexador indexar;
+    @Autowired private Indexador indexar;
     
     @Autowired private Repositorios repositorio;
     @Autowired private SubFederacaoOAI subFed;
@@ -32,7 +32,6 @@ public class Robo {
      * est&atilde;o desatualizados, quando encontra algum, chama o m&eacute;todo
      * que atualiza o repositório.
      *
-     * @author Marcos Nunes
      */
     @Transactional
     public void testaUltimaImportacao() {
@@ -43,9 +42,7 @@ public class Robo {
         log.info(">>> FEB: iniciando o Robo. " + dataFormat.format(new Date()));
         log.info(">>>");
 
-        Long inicioRobo = System.currentTimeMillis();
-
-        
+        Long inicioRobo = System.currentTimeMillis();        
 
 //TESTA/ATUALIZA SUBFEDERACAO
         boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);
@@ -54,9 +51,8 @@ public class Robo {
         boolean repAtualizado = repositorio.testa_atualizar_repositorio(indexar);
 
 
-//TESTA SE PRECISA RECALCULA O INDICE
+//TESTA SE PRECISA RECALCULAR O INDICE
 
-//           if ((subFedAtualizada || repAtualizado) && nDocumentos!=selectNumeroDocumentos(con)) {
         if (subFedAtualizada || repAtualizado) {
             indexar.populateR1();
         } else {
@@ -68,6 +64,6 @@ public class Robo {
         
         Long finalRobo = System.currentTimeMillis();
         Long tempoTotal = (finalRobo - inicioRobo) / 1000;
-        log.debug("Levou " + tempoTotal + " segundos todo o processo do Robo");
+        log.info("Levou " + Operacoes.formatTimeMillis(tempoTotal) + " todo o processo do Robo");
     }
 }

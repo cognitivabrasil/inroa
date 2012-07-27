@@ -170,17 +170,6 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         return query.executeUpdate();
     }
 
-    public List<Repositorio> getOutDatedDocs() {
-        // TODO: Jorjão ve se tu consegue fazer isso com linguagem do hibernate.
-        // Nao tem que ficar em RepositoryHibernateDAO?
-        // o incremento de 4 horas é para descontar da periodicidade da ultima
-        // atualizacao. Pq se o robo rodou ontem as 02h e atualizou o
-        // repositorio as 02:10h hoje quando rodar novamente nao vai atualiza pq
-        // nao faz 24h ainda.
-        return getSession().createSQLQuery(
-                "SELECT * FROM repositorios r WHERE r.data_ultima_atualizacao <= ((now() - r.periodicidade_horas * INTERVAL '1 DAY') + INTERVAL '4 HOUR')").addEntity(Repositorio.class).list();
-    }
-
     /**
      * @param url the url to set
      */
