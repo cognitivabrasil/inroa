@@ -30,12 +30,9 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
+CREATE LANGUAGE plpgsql;
 
-CREATE OR REPLACE PROCEDURAL LANGUAGE plpgsql;
-
-
-ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
-
+ALTER LANGUAGE plpgsql OWNER TO postgres;
 --
 -- TOC entry 189 (class 3079 OID 11685)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 

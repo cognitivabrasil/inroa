@@ -80,6 +80,7 @@ public class XMLtoDB {
             RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
 
             for (int i = 0; i < caminhoXML.size(); i++) {
+                log.info("FEB: Lendo XML " + caminhoXML.get(i).substring(caminhoXML.get(i).lastIndexOf("/") + 1));
                 File arquivoXML = new File(caminhoXML.get(i));
                 if (arquivoXML.isFile() || arquivoXML.canRead()) {
                     Importer imp = new Importer();

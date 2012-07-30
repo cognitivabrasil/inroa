@@ -156,7 +156,7 @@ public final class RepositoriesController {
             atualizadorRep.atualizaFerramentaAdm(id, apagar);
             return "1";
         } catch (Exception e) {
-            return "Ocorreu um erro ao atualizar o atualizadorRep. Exception: " + e.toString();
+            return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
         }
     }
 

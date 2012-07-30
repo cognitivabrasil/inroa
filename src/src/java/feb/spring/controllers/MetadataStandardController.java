@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  */
-@Controller("metadata")
+@Controller("metadataStandard")
 @RequestMapping("/admin/metadataStandard/*")
 public final class MetadataStandardController {
 
