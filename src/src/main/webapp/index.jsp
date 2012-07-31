@@ -17,7 +17,6 @@
 <%
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
-
 %>
 <html>
     <head>
