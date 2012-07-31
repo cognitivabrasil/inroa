@@ -8,6 +8,8 @@ import java.util.Date;
 import metadata.XsltConversor;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import feb.data.entities.Repositorio;
@@ -63,6 +65,8 @@ public class Importer {
 		assert(inputXmlFile != null);
 		oai = OaiOBAA.fromString(conversor.toObaaFromFile(inputXmlFile));
 		
+		Session session = getSession();
+		
 		for(int i = 0; i < oai.getSize(); i++) {
 			logger.debug("Trying to get: " + i);
 			
@@ -76,6 +80,11 @@ public class Importer {
 			}
 			catch(NullPointerException e) {
 				logger.error("NullPointer ao tentar inserir elemento " + i, e);
+			}
+			
+			if(i % 20 == 0) {
+				session.flush();
+				session.clear();
 			}
 			
 		}
@@ -98,6 +107,10 @@ public class Importer {
 		
 		return oai.getSize();
 
+	}
+	
+	private Session getSession() {
+		return docDao.getSession();
 	}
 	
 	/**

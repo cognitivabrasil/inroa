@@ -11,11 +11,13 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
+import org.hibernate.Session;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -58,6 +60,9 @@ public class ImporterTest {
 		
 		DocumentosDAO docDao = mock(DocumentosDAO.class);
 		RepositoryDAO repDao = mock(RepositoryDAO.class);
+		Session s = mock(Session.class);
+		
+		when(docDao.getSession()).thenReturn(s);
 				
 		Importer imp = new Importer();
 		imp.setInputFile(new File(inputXmlFile));

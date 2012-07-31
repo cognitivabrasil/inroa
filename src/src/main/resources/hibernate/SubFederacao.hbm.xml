@@ -20,7 +20,7 @@
 
 
 		<set name="repositorios" table="repositorios_subfed" cascade="all"
-			inverse="true" order-by="name asc">
+			inverse="true" order-by="name asc" fetch="join">
 			<key column="id_subfed" />
 			<one-to-many class="feb.data.entities.RepositorioSubFed" />
 		</set>

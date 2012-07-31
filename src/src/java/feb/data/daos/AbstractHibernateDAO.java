@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -90,6 +91,7 @@ public abstract class AbstractHibernateDAO<T> {
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
 		return this.sessionFactory.getCurrentSession().createCriteria(type)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
 				.list();
 	}
 }

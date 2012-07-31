@@ -11,7 +11,7 @@
         
         <many-to-one class="feb.data.entities.SubFederacao" column="id_subfed" name="subFederacao" not-null="true"/>    
         
-        <set name="documentos" table="documentos" cascade="all">
+        <set name="documentos" table="documentos" cascade="all-delete-orphan" inverse="true">
             <key column="id_rep_subfed"/>
             <one-to-many class="feb.data.entities.DocumentoReal"/>
         </set>

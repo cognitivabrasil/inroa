@@ -377,6 +377,7 @@ public class DocumentoReal implements java.io.Serializable,
 		if (obaa.getLifeCycle() != null) {
 			for (Contribute c : obaa.getLifeCycle().getContribute()) {
 				for (String e : c.getEntities()) {
+					log.debug("e: " + e);
 					this.addAuthor(e.toLowerCase());
 				}
 			}

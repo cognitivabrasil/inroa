@@ -116,7 +116,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 	 * @param h OAI-PMH header
 	 * @param doc a newly initialized DocumentoReal, should have either a Repsitory or a RepSubFed set.
 	 */
-	private void save(OBAA obaa, Header h, DocumentoReal doc) {
+	public void save(OBAA obaa, Header h, DocumentoReal doc) {
 		doc.setDeleted(false);
 		doc.setObaaEntry(h.getIdentifier());
 		
@@ -176,7 +176,11 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 	 * @return the session
 	 */
 	public Session getSession() {
-		return sessionFactory.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
+		if(session == null) {
+			session = sessionFactory.openSession();
+		}
+		return session;
 	}
 
 	@Override
@@ -191,5 +195,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
 		return getSession().createSQLQuery(sql).addEntity(DocumentoReal.class)
 				.list();
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory2) {
+		this.sessionFactory = sessionFactory2;
 	}
 }

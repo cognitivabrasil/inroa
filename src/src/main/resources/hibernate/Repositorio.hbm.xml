@@ -23,7 +23,7 @@
         <many-to-one class="feb.data.entities.Mapeamento" column="mapeamento_id" name="mapeamento"/>
 
     
-        <set name="documentos" table="documentos" cascade="all-delete-orphan">
+        <set name="documentos" table="documentos" cascade="all-delete-orphan" inverse="true">
             <key column="id_repositorio"/>
             <one-to-many class="feb.data.entities.DocumentoReal"/>
         </set>

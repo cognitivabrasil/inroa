@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -171,15 +172,20 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         
         f.atualizaListaSubRepositorios(listaRep);
         
-        
+        assertThat(instance.getAll(), hasSize(4));
+
         instance.save(f);
 
         SubFederacao fTeste = instance.get("Nova");
         assertThat(fTeste, is(notNullValue()));
         assertEquals("Nova", fTeste.getName());
-
-        assertEquals("Nr correto de Subfederacoes apos adicao", 5, instance.getAll().size());
+       // assertThat(fTeste.getRepositorios(), hasSize(3));
+        
+        assertThat(instance.getAll(), hasSize(5));
+        
+        //assertEquals("Nr correto de Subfederacoes apos adicao", 5, instance.getAll().size());
         System.out.println("Repositorios: "+fTeste.getRepositorios());
+        
         SubFederacao f2 = instance.get(3);
         f2.setNome("Jorjao");
         f2.setUrl("http://jorjao");

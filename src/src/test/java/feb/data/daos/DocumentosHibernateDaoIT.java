@@ -3,8 +3,10 @@ package feb.data.daos;
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import metadata.Header;
@@ -32,6 +34,8 @@ import feb.data.daos.RepositoryHibernateDAO;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Objeto;
 import feb.data.entities.Repositorio;
+import feb.data.entities.RepositorioSubFed;
+import feb.data.entities.SubFederacao;
 
 /**
  * Integration tests of the UsuarioHibernateDao
@@ -50,6 +54,9 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
     
     @Autowired
     RepositoryHibernateDAO repDao;
+    
+    @Autowired
+    SubFederacaoHibernateDAO subDao;
     
     @Autowired SessionFactory sessionFactory;
 
@@ -264,6 +271,41 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         s.flush();
         
         assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(3));
+
+    }
+    
+    @Test
+    public void myTest() {
+        OBAA obaa = new OBAA();
+        obaa.setGeneral(new General());
+
+        obaa.getGeneral().addTitle("teste1");
+        obaa.getGeneral().addDescription("Bla bla");
+
+
+        Header h = mock(Header.class);
+        String[] s = { "RepUfrgs1" };
+        List<String> s2 = Arrays.asList(s);
+
+        when(h.getTimestamp()).thenReturn(new Date());
+        when(h.getIdentifier()).thenReturn("obaa:identifier");
+        when(h.getSetSpec()).thenReturn(s2);
+
+    
+        SubFederacao r = subDao.get(1);
+        
+        Session session = sessionFactory.getCurrentSession();
+        session.flush();
+        session.clear();
+        
+        assertThat(r, notNullValue());
+
+        instance.save(obaa, h, r);
+
+        DocumentoReal d = instance.get("obaa:identifier");
+        assertThat(d, notNullValue());
+        assertThat(d.getTitles(), hasItem("teste1"));
+        assertThat(d.getRepositorioSubFed(), notNullValue());
 
     }
 

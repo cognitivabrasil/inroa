@@ -2,6 +2,7 @@ package feb.data.daos;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -25,6 +26,7 @@ public abstract class AbstractNamedHibernateDAO<T> extends AbstractHibernateDAO<
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
 		return this.sessionFactory.getCurrentSession().createCriteria(type).addOrder(Order.asc("name").ignoreCase())
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) // this removes duplicate entities generate by fetch=join
 				.list();
 	}
 	
