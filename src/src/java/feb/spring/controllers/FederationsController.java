@@ -18,6 +18,8 @@ import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.UsuarioDAO;
+import feb.exceptions.FederationException;
+import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.SubFederacaoOAI;
 import feb.spring.validador.SubFederacaoValidador;
 import java.net.ConnectException;
@@ -39,7 +41,7 @@ public final class FederationsController {
     @Autowired
     private PadraoMetadadosDAO padraoDao;
     @Autowired
-    private MapeamentoDAO mapDao;
+    private Indexador indexar;
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
     @Autowired
     ServletContext servletContext;
@@ -145,19 +147,21 @@ public final class FederationsController {
         
         try {
             if (id > 0) {
-                subFedOAI.atualizaSubfedAdm(subDao.get(id), apagar);
+                subFedOAI.atualizaSubfedAdm(subDao.get(id), indexar, apagar);
             } else {
-                for (SubFederacao subFederacao : subDao.getAll()) {
-                    subFedOAI.atualizaSubfedAdm(subFederacao, apagar);
-                }
+                subFedOAI.atualizaSubfedAdm(subDao.getAll(), indexar, apagar);
             }
 
+            indexar.populateR1();
             return "1";
         } catch (ConnectException c) {
             log.error("Erro ao coletar o xml por OAI-PMH", c);
             return "Erro ao coletar o xml por OAI-PMH. " + c.toString();
+        } catch(FederationException f){
+            log.error("Erro ao atualizar alguma federação",f);
+            return f.toString();
         } catch (Exception e) {
-            log.error("Erro ao atualizar uma subfederação",e);
+            log.error("Erro ao atualizar uma federação",e);
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
         }
     }

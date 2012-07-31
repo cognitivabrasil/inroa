@@ -6,7 +6,7 @@ package feb.robo.atualiza;
 
 import feb.data.entities.Repositorio;
 import feb.data.interfaces.RepositoryDAO;
-import feb.exceptions.RepositoriosException;
+import feb.exceptions.RepositoryException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.harvesterOAI.Harvester;
 import feb.robo.atualiza.importaOAI.XMLtoDB;
@@ -99,7 +99,6 @@ public class Repositorios {
 
         boolean recalcularIndice = false;
 
-        // classe conectar
         ArrayList<String> erros = new ArrayList<String>();
 
         if (idRep > 0) { // atualizar um repositorio especifico ou
@@ -136,7 +135,7 @@ public class Repositorios {
             indexar.populateR1();
         }
         if (erros.size() > 0) {
-            throw new RepositoriosException(getMensagem(erros));
+            throw new RepositoryException(getMensagem(erros));
             // gera uma
             // exception
             // informando

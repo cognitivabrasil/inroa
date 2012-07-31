@@ -7,6 +7,7 @@ package feb.robo.atualiza;
 import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
 import feb.data.interfaces.SubFederacaoDAO;
+import feb.exceptions.FederationException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.subfedOAI.Objetos;
 import feb.robo.atualiza.subfedOAI.SubRepositorios;
@@ -16,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
@@ -199,15 +201,14 @@ public class SubFederacaoOAI {
      *
      * @param idSub Id da subfedera&ccedil;&atilde;o na ser atualizada.
      * @return true se atualizou e false caso contr&aacute;rio.
-     * @throws Exception 
+     * @throws Exception
      */
-    public void atualizaSubfedAdm(SubFederacao subFed, boolean apagar) throws Exception {
+    public void atualizaSubfedAdm(SubFederacao subFed, Indexador indexar, boolean apagar) throws Exception {
         ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
         if (ctx == null) {
             log.fatal("Could not get AppContext bean!");
             throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
-            Indexador indexar = ctx.getBean(Indexador.class);
 
             // Don't really know why, but the following 2 lines solve FEB-219
             subFed.setUltimaAtualizacao(subFed.getUltimaAtualizacao());
@@ -239,7 +240,42 @@ public class SubFederacaoOAI {
                 Long total = fim - inicio;
                 log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName());
             }
-            indexar.populateR1();
         }
+    }
+
+    public void atualizaSubfedAdm(List<SubFederacao> subFed, Indexador indexar, boolean apagar) throws FederationException {
+        ArrayList<String> erros = new ArrayList<String>();
+        for (SubFederacao subFederacao : subFed) {
+            try {
+                atualizaSubfedAdm(subFederacao, indexar, apagar);
+            } catch (Exception e) {
+                erros.add(subFederacao.getName());
+                log.error("FEB ERRO: Erro ao atualizar a federação: " + subFederacao.getName(), e);
+            }
+        }
+        if (erros.size() > 0) {
+            throw new FederationException(getMensagem(erros));
+        }
+    }
+
+    /**
+     * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome
+     * das federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
+     *
+     * @param nome ArrayList<String> contendo o nome das federa&ccedil;&otilde;es
+     * que n&atilde;o foram atualizadas.
+     * @return String com a mensagem de erro gerada.
+     */
+    public static String getMensagem(ArrayList<String> nome) {
+        String msg;
+        if (nome.size() > 0) {
+            msg = "Erro atualizar as federacoes: ";
+            for (String n : nome) {
+                msg += " " + n;
+            }
+        } else {
+            msg = "Erro ao atualizar a federacao " + nome.get(0);
+        }
+        return msg;
     }
 }

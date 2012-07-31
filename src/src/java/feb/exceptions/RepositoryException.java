@@ -9,12 +9,12 @@ package feb.exceptions;
  *
  * @author Marcos Nunes
  */
-public class RepositoriosException extends Exception {
+public class RepositoryException extends Exception {
 	/**
      * Creates a new instance of
      * <code>RepositoriosException</code> without detail message.
      */
-    public RepositoriosException() {
+    public RepositoryException() {
     }
 
     /**
@@ -23,7 +23,7 @@ public class RepositoriosException extends Exception {
      *
      * @param msg the detail message.
      */
-    public RepositoriosException(String msg) {
+    public RepositoryException(String msg) {
         super(msg);
     }
 

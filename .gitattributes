@@ -245,7 +245,8 @@ src/src/java/feb/data/interfaces/SubFederacaoDAO.java -text
 src/src/java/feb/data/interfaces/TokensDao.java -text
 src/src/java/feb/data/interfaces/UsuarioDAO.java -text
 src/src/java/feb/data/interfaces/VisitasDao.java -text
-src/src/java/feb/exceptions/RepositoriosException.java -text
+src/src/java/feb/exceptions/FederationException.java -text
+src/src/java/feb/exceptions/RepositoryException.java -text
 src/src/java/feb/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text
 src/src/java/feb/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
 src/src/java/feb/ferramentaBusca/LRU.java -text

@@ -127,7 +127,9 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 	</bean>
 
 	<bean id="tagService" class="feb.services.TagCloudServiceImpl">
-		<property name="days" value="7" />
+                <!--days = numero de dias que expira o termo de busca -->
+		<property name="days" value="15" />
+                <!--maxSize = numero de buscas da tagcloud -->
 		<property name="maxSize" value="30" />
 	</bean>
 
