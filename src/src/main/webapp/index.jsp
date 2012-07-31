@@ -13,6 +13,8 @@
 <c:url var="logoReduzido" value="/imagens/Logo FEB_reduzido.png" />
 <c:url var="index" value="/" />
 <c:url var="adm" value="/admin" />
+<c:url var="scripts" value="/scripts" />
+<c:url var="css" value="/css/padrao.css" />
 
 <%
     request.setCharacterEncoding("UTF-8");
@@ -22,9 +24,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>GT-FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
-        <link rel="StyleSheet" href="css/padrao.css" type="text/css">
-        <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <script language="JavaScript" type="text/javascript" src="scripts/rss.js"></script>
+        <link rel="StyleSheet" href="${css}" type="text/css">
+        <link href="${images}/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <script language="JavaScript" type="text/javascript" src="${scripts}/rss.js"></script>
+
     </head>      
 
     <body>

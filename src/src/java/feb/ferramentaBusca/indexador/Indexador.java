@@ -4,12 +4,6 @@
  */
 package feb.ferramentaBusca.indexador;
 
-import java.util.Set;
-import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Repositorio;
 import feb.data.entities.RepositorioSubFed;
@@ -17,8 +11,12 @@ import feb.data.entities.SubFederacao;
 import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
-import feb.data.interfaces.TokensDao;
 import feb.util.Operacoes;
+import java.util.Set;
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
@@ -32,9 +30,6 @@ public class Indexador {
     static Logger log = Logger.getLogger(Indexador.class);
     @Autowired
     private DocumentosDAO docDao;
-
-    @Autowired
-    private TokensDao tokenDao;
 
     @Autowired
     private RepositoryDAO repDao;
