@@ -38,8 +38,6 @@ public class Repositorios {
     private Indexador indexar;
     @Autowired
     private RepositoryDAO repDao;
-    private SimpleDateFormat dataFormat = new SimpleDateFormat(
-            "dd/MM/yyyy HH:mm:ss");
     private static Logger log = Logger.getLogger(Repositorios.class);
 
     /**
@@ -172,8 +170,7 @@ public class Repositorios {
         int updated = 0;
 
         try {
-            log.info("FEB: (" + dataFormat.format(new Date())
-                    + ") Atualizando repositorio: " + rep.getName());// imprime o nome do repositorio
+            log.info("FEB: Atualizando repositorio: " + rep.getName());// imprime o nome do repositorio
 
             Set<String> set = rep.getColecoes();
             if (set == null || set.isEmpty()) {

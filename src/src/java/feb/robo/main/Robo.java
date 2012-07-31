@@ -36,10 +36,9 @@ public class Robo {
     @Transactional
     public void testaUltimaImportacao() {
         Logger log = Logger.getLogger(Robo.class.getName());
-        SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
         log.info(">>>");
-        log.info(">>> FEB: iniciando o Robo. " + dataFormat.format(new Date()));
+        log.info(">>> FEB: iniciando o Robo.");
         log.info(">>>");
 
         Long inicioRobo = System.currentTimeMillis();        
@@ -56,7 +55,7 @@ public class Robo {
         if (subFedAtualizada || repAtualizado) {
             indexar.populateR1();
         } else {
-            log.info("FEB: NAO existe atualizaçoes para os repositorios! " + dataFormat.format(new Date()));
+            log.info("FEB: NAO existe atualizaçoes para os repositorios! ");
         }
         
         log.info("FEB: limpando visitas antigas...");
