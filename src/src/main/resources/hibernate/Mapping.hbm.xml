@@ -11,7 +11,7 @@
     <property name="name" type="string" column="nome"/>
     <property name="xslt" type="string" />
     <property name="xmlSample" column="xml_exemplo" type="string" />
-    <many-to-one class="feb.data.entities.PadraoMetadados" column="padrao_id" name="padraoMetadados"/>
+    <many-to-one class="feb.data.entities.PadraoMetadados" column="padrao_id" name="padraoMetadados" fetch="join"/>
     
     
   </class>

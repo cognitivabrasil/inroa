@@ -19,8 +19,8 @@
         <property column="periodicidade_horas" name="periodicidadeAtualizacao" type="integer"/>
         <property column="set" name="colecoesInternal" type="string"/>
         <property column="data_xml" name="dataOrigem" type="timestamp"/>
-        <many-to-one class="feb.data.entities.PadraoMetadados" column="padrao_metadados" name="padraoMetadados"/>
-        <many-to-one class="feb.data.entities.Mapeamento" column="mapeamento_id" name="mapeamento"/>
+        <many-to-one class="feb.data.entities.PadraoMetadados" column="padrao_metadados" name="padraoMetadados" fetch="join"/>
+        <many-to-one class="feb.data.entities.Mapeamento" column="mapeamento_id" name="mapeamento" fetch="join"/>
 
     
         <set name="documentos" table="documentos" cascade="all-delete-orphan" inverse="true">

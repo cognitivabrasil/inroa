@@ -25,7 +25,7 @@ public class PadraoMetadados implements java.io.Serializable, FebDomainObject {
     private String name;
     private String metadataPrefix;
     private String namespace;
-    private Set<Mapeamento> mapeamentos;
+    private transient Set<Mapeamento> mapeamentos;
     private transient String atributos;
 
     public PadraoMetadados() {
