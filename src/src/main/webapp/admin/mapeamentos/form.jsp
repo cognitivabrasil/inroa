@@ -125,7 +125,7 @@ Primeira etapa do cadastro de um repositorio
                         lineNumbers : true
                     });
                 </script>
-
+                <c:if test="${!empty mapeamento.xmlObaa}">
                 <div class="xmlTitle">Xml OBAA transformado</div>
                 <form:textarea path="xmlObaa" />
                 <script>
@@ -136,6 +136,7 @@ Primeira etapa do cadastro de um repositorio
                         readOnly:true
                     });
                 </script>
+                </c:if>
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="submit" value="Testar o mapeamento" name="preview" /></div>
