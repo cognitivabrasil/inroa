@@ -203,6 +203,7 @@ function updateSubnodeAjax(link, showResults)
 
     ajax.open("POST", link, true);    
     showResults.innerHTML = "<img src='"+rootUrl+"imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> Aguarde, atualizando...";
+    showResults.className="";
     ajax.onreadystatechange = function()
     {
         if(ajax.readyState == 4) // Quando estiver tudo pronto.
@@ -231,7 +232,7 @@ function updateSubnodeAjax(link, showResults)
                     showResults.innerHTML = "Você não tem permissão para executar essa operação.";
                     showResults.className = "textoErro";
                 }else{
-                    showResults.innerHTML = "Erro nas funções do Ajax";
+                    showResults.innerHTML = "Erro nas funções do Ajax. http status:"+ajax.status;
                     showResults.className = "textoErro";
                 }
             }
