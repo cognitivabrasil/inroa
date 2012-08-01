@@ -5,26 +5,29 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="feb.spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>  
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Estatísticas de Uso</title>
-        <link rel="StyleSheet"
-              href="<feb.spring:url value="/css/padrao.css" htmlEscape="true" />"
-              type="text/css">
-        <link rel="shortcut icon" type="image/x-icon"
-              href="<feb.spring:url value="/imagens/favicon.ico" htmlEscape="true" />">
-        <link rel="StyleSheet"
-              href='<feb.spring:url value="/css/jquery.jqplot.min.css" htmlEscape="true" />'
-              type="text/css">
+        <c:url var="favicon" value="/imagens/favicon.ico" />
+        <c:url var="css" value="/css/padrao.css" />
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <c:url var="jqplotcss" value="/css/jquery.jqplot.min.css" />
+        <c:url var="jqplotjs" value="/scripts/jquery.jqplot.min.js" />
+        <c:url var="pieRendererjs" value="/scripts/jqplot.pieRenderer.min.js" />
+        <c:url var="zebraScript" value="/scripts/zebraScript.js" />
+
+        <link rel="shortcut icon" type="image/x-icon" href="${favicon}"  />
+
+        <link rel="StyleSheet" media="screen" href="${css}" type="text/css"/>
+        <link rel="StyleSheet" href="${jqplotcss}"  type="text/css">
         
-        <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery-1.7.2.js" htmlEscape="true" />'></script>
-        <script language="javascript" type="text/javascript" src='<feb.spring:url value="/scripts/jquery.jqplot.min.js" htmlEscape="true" />'></script>
-        <script type="text/javascript" src='<feb.spring:url value="/scripts/jqplot.pieRenderer.min.js" htmlEscape="true" />'></script>
-        <script type="text/javascript" src='<feb.spring:url value="/scripts/zebraScript.js" htmlEscape="true" />'></script>
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
+        <script language="javascript" type="text/javascript" src="${jqplotjs}"></script>
+        <script language="javascript" type="text/javascript" src="${pieRendererjs}"></script>
+        <script language="javascript" type="text/javascript" src="${zebraScript}"></script>
 
         <script>
             $(document).ready(function(){                
@@ -142,7 +145,6 @@
         </script>
     </head>
 
-
     <body>  
        <div id="estatisticas">
             <div class="acessos">
@@ -169,8 +171,6 @@
             </div>
 
 
-
-
             <div class="fedsGrande">
                 <div class="estatisticasTitulo">Federações</div>
                 <table class="repositorios-table zebraTable">
@@ -183,13 +183,6 @@
                 <div id="chart4" style="height:350px;"></div>
             </div>
 
-
-
-
-
-
         </div>
-
     </body>
-
 </html>

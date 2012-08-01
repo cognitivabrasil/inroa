@@ -222,12 +222,12 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
             setDescricao(r2.getDescricao());
         }
         if (notBlank(r2.getName())) {
-            setNome(r2.getName());
+            setName(r2.getName());
         }
         if (notBlank(r2.getUrl())) {
             setUrl(r2.getUrl());
         }
-
+        setVersion(r2.getVersion());
 
     }
 
