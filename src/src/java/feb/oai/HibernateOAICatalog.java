@@ -62,14 +62,14 @@ public class HibernateOAICatalog extends AbstractHibernateOAICatalog {
 		/**********************************************************************
 		 * YOUR CODE GOES HERE */
 		
-		Session session = sessionFactory.getCurrentSession();
+		Session session = getSessionFactory().getCurrentSession();
 
 		Criteria criteria2 = session.createCriteria(Repositorio.class);
 		List<Repositorio> fromdb = criteria2.list();
 		List sets = new ArrayList();
 
 		for (Repositorio r : fromdb) {
-			StringBuffer s = new StringBuffer(200);
+			StringBuilder s = new StringBuilder(200);
 			s.append("<set>\n");
 			s.append("<setSpec>");
 			s.append(r.getName());
