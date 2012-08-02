@@ -62,7 +62,7 @@ public class Robo {
         searchesDao.cleanup();
         
         Long finalRobo = System.currentTimeMillis();
-        Long tempoTotal = (finalRobo - inicioRobo) / 1000;
+        Long tempoTotal = (finalRobo - inicioRobo);
         log.info("Levou " + Operacoes.formatTimeMillis(tempoTotal) + " todo o processo do Robo");
     }
 }

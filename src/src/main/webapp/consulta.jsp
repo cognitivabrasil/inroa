@@ -9,14 +9,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
-<%@ taglib prefix="feb.spring" uri="http://www.springframework.org/tags"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-     <script language="JavaScript" type="text/javascript"
-	src="<feb.spring:url value="/scripts/funcoes.js" htmlEscape="true" />"></script>
+        <c:url var="funcoesjs" value="/scripts/funcoes.js" />
+     <script language="JavaScript" type="text/javascript" src="${funcoesjs}"></script>
         <c:url var="root" value="/" />
         <script>setRootUrl(${root});</script>
         

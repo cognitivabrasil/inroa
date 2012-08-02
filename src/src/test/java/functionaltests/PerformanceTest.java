@@ -57,25 +57,25 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
     MapeamentoDAO mapDao;
 
     @Test
-    @Ignore
+    
     public void perfomanceTest() throws IOException, ParserConfigurationException, SAXException, TransformerException {
         Long inicio = System.currentTimeMillis();
 
         String xmlFedSets = "src/test/resources/Fiocruz-listSets.xml";
         ArrayList<String> caminhosXML = new ArrayList<String>();
         caminhosXML.add("src/test/resources/FEB-fiocruz2.xml");
-        caminhosXML.add("src/test/resources/FEB-fiocruz3.xml");
-        caminhosXML.add("src/test/resources/FEB-fiocruz4.xml");
-        caminhosXML.add("src/test/resources/FEB-fiocruz5.xml");
-        caminhosXML.add("src/test/resources/FEB-fiocruz6.xml");
+//        caminhosXML.add("src/test/resources/FEB-fiocruz3.xml");
+//        caminhosXML.add("src/test/resources/FEB-fiocruz4.xml");
+//        caminhosXML.add("src/test/resources/FEB-fiocruz5.xml");
+//        caminhosXML.add("src/test/resources/FEB-fiocruz6.xml");
 
-        SubFederacao subFed = subDao.get("marcos");
+        SubFederacao subFed = new SubFederacao();
         subFed.setVersion("2.1");
+        subFed.setName("performanceTest");
+        subFed.setDescricao("xx");
+        subFed.setUrl("http://");
         int before = docDao.getAll().size();
 
-        for (RepositorioSubFed r : subFed.getRepositorios()) {
-            r.dellAllDocs();
-        }
 
         ParserListSets parserListSets = new ParserListSets();
         File xmlFedSetsFile = new File(xmlFedSets);
@@ -115,6 +115,12 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
         Long tempoTotal = fim-inicio;
         System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
 
+         Long deletei = System.currentTimeMillis();
+        subDao.delete(subFed);
+        Long deletef = System.currentTimeMillis();
+        System.out.println("Tempo para deletar a federacao: " + Operacoes.formatTimeMillis(deletef-deletei));
+        assertEquals(before, docDao.getAll().size());
+        assertEquals(null, subDao.get("performanceTest"));
 
     }
     
@@ -123,7 +129,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
     @Test
     @Transactional
     @Ignore
-    public void deleteTest() throws IOException, ParserConfigurationException, SAXException, TransformerException{
+    public void XMLdeleteDocsTest() throws IOException, ParserConfigurationException, SAXException, TransformerException{
           Long inicio = System.currentTimeMillis();
 
         ArrayList<String> caminhosXML = new ArrayList<String>();

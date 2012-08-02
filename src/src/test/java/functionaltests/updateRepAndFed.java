@@ -81,11 +81,9 @@ public class updateRepAndFed extends AbstractDaoTest {
         imp.setRepDao(repDao);
         int updated = imp.update();
         assert (updated > 0);
-        System.out.println("Atualizou " + updated + " documentos");
         repDao.save(rep);
         int docSizeAfterRep = docDao.getAll().size();
         assertEquals("Size of Documents after updated Rep", docSize + 2, docSizeAfterRep);
-        System.out.println("doc after rep" + docSizeAfterRep);
         SubFederacao subFed = subDao.get("marcos");
 
         for (RepositorioSubFed r : subFed.getRepositorios()) {
@@ -112,7 +110,6 @@ public class updateRepAndFed extends AbstractDaoTest {
         subDao.save(subFed);
         int docSizeAfterSubFed = docDao.getAll().size();
         assertEquals("Size of Documents after updated Federation", docSizeAfterRep + 2, docSizeAfterSubFed);
-
 
     }
 }

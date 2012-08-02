@@ -223,6 +223,8 @@ public class DocumentoReal implements java.io.Serializable,
 		return getAttribute("obaaLocation");
 	}
 
+
+
 	public List<String> getDate() {
 		// TODO: fazer esse tratamento no mapeamento. Garantir que a data seja
 		// valida.
