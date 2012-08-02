@@ -60,7 +60,7 @@ public class Recuperador {
                     sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavra_chave, d.id_rep_subfed, d.deleted, d.obaaxml, a.nome HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
                 }
             } else {
-                sqlOrdenacao = "') GROUP BY d.id, timestamp HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
+                sqlOrdenacao = "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavras_chave, d.id_rep_subfed, deleted, obaaxml HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
             }
 
         } else {
