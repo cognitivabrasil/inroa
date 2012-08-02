@@ -3,12 +3,10 @@ package feb.data.daos;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.DocumentosVisitas;
 import feb.data.entities.Visita;
-import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.DocumentosVisitasDao;
-import java.util.*;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -16,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class DocumentosVisitasHibernateDao extends AbstractHibernateDAO<DocumentosVisitas> implements DocumentosVisitasDao {
 
-    @Autowired
-    private DocumentosDAO docDao;
     
     public DocumentosVisitasHibernateDao() {
     	setClazz(DocumentosVisitas.class);
