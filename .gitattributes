@@ -478,6 +478,7 @@ src/src/test/java/feb/data/entities/RepositorioTest.java -text
 src/src/test/java/feb/data/entities/SubFederacaoTest.java -text
 src/src/test/java/feb/data/entities/UsuarioTest.java -text
 src/src/test/java/feb/ferramentaBusca/RecuperadorTest.java -text
+src/src/test/java/feb/metadata/FEB-froac1.xml -text
 src/src/test/java/feb/metadata/XsltConversorTest.java -text
 src/src/test/java/feb/metadata/XsltDC2ObaaTest.java -text
 src/src/test/java/feb/metadata/XsltFeb2ToFeb3Test.java -text
