@@ -6,7 +6,7 @@
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.jdbc.batch_size">30</property>
     <property name="hibernate.connection.autocommit">true</property>
-    <property name="hibernate.show_sql">true</property>
+<!--     <property name="hibernate.show_sql">true</property> -->
     <mapping resource="hibernate/Mapping.hbm.xml"/>
     <mapping resource="hibernate/MetadataRecord.hbm.xml"/>
     <mapping resource="hibernate/Documentos.hbm.xml"/>
