@@ -246,6 +246,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
         DocumentoReal doc = instance.get(1);
         doc.getObjetos().clear();
+        s.save(doc);
                 
         s.flush();
         
@@ -267,7 +268,8 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         doc.addKeyword("Teste2");
 
 
-                
+        s.save(doc);
+        
         s.flush();
         
         assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(3));

@@ -17,20 +17,20 @@
                              name="repositorioSubFed" />
 
         <property name="timestamp" type="timestamp" />
-        <set name="objetos" cascade="all-delete-orphan" table="objetos"
+        <set name="objetos" cascade="save-update,delete-orphan" table="objetos"
                      inverse="true" order-by="atributo,valor asc">
             <key column="documento" />
             <one-to-many class="feb.data.entities.Objeto" />
         </set>
         <property name="deleted" type="boolean" />
 
-        <set name="autores" cascade="all-delete-orphan" table="autores" order-by="nome asc"
+        <set name="autores" cascade="save-update,delete-orphan" table="autores" order-by="nome asc"
                      inverse="true">
             <key column="documento" />
             <one-to-many class="feb.data.entities.Autor" />
         </set>
 
-        <set name="tokens" cascade="all-delete-orphan" table="r1tokens"
+        <set name="tokens" cascade="save-update" table="r1tokens"
                      inverse="true">
             <key column="documento_id" />
             <one-to-many class="feb.data.entities.Token" />
