@@ -13,11 +13,15 @@ import java.util.Date;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import metadata.Header;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.metamodel.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StopWatch;
 
+import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import feb.data.entities.SubFederacao;
 import feb.data.interfaces.DocumentosDAO;
@@ -93,11 +97,17 @@ public class Importer {
 		Session session = docDao.getSession();
 
 		for (int i = 0; i < oai.getSize(); i++) {
-			log.debug("Saving object: " + oai.getHeader(i).getIdentifier());
+			Header header = oai.getHeader(i);
+			OBAA obaa = oai.getMetadata(i);
+			log.debug("Saving object: " + header.getIdentifier());
 
-			oai.getHeader(i).setDatestamp(new Date());
-
-			docDao.save(oai.getMetadata(i), oai.getHeader(i), subFed);
+			header.setDatestamp(new Date());
+			if ((!header.isDeleted()) && obaa == null) {
+				log.error("Não foi possível carregar metadados do objeto " + i
+						+ ", provavelmente o XML está mal formado");
+			} else {
+				docDao.save(obaa, header, subFed);
+			}
 
 			if (i % 10 == 0) {
 				session.flush();

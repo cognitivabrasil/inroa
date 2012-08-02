@@ -6,6 +6,8 @@ package feb.metadata;
 
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import java.io.File;
@@ -41,7 +43,8 @@ public class XsltLom2ObaaTest {
 	}
 
 	@Before
-	public void setUp() throws TransformerConfigurationException, TransformerException, FileNotFoundException {
+	public void setUp() throws TransformerConfigurationException,
+			TransformerException, FileNotFoundException {
 		String foo_xml = "src/test/java/feb/metadata/oai_lom.xml"; // input xml
 		String foo_xsl = "src/xslt/lom2obaa_full.xsl"; // input xsl
 
@@ -144,6 +147,19 @@ public class XsltLom2ObaaTest {
 			File f = new File("out.xml");
 			f.delete();
 		}
+	}
+
+	@Test
+	public void froac() throws TransformerConfigurationException, TransformerException, IOException {
+		OaiOBAA fr;
+		System.out.println("ddfsfd");
+
+		String foo_xml = "src/test/java/feb/metadata/FEB-froac1.xml"; // input
+		// xml
+		String foo_xsl = "src/xslt/lom2obaa_full.xsl"; // input xsl
+
+			String s = XSLTUtil.transformFilename(foo_xml, foo_xsl);
+			fr = OaiOBAA.fromString(s);
 	}
 
 }

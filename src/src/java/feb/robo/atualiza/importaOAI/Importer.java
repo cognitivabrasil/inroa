@@ -1,10 +1,13 @@
 package feb.robo.atualiza.importaOAI;
 
+import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import metadata.Header;
 import metadata.XsltConversor;
 
 import org.apache.log4j.Logger;
@@ -72,11 +75,18 @@ public class Importer {
 			
 
 			try {
-				logger.debug(oai.getHeader(i));
-				oai.getHeader(i).setDatestamp(new Date()); // set date to current date (instead of the
+				Header header = oai.getHeader(i);
+				logger.debug(header);
+				header.setDatestamp(new Date()); // set date to current date (instead of the
 									// repository date
-				
-				docDao.save(oai.getMetadata(i), oai.getHeader(i), rep);
+				OBAA metadata = oai.getMetadata(i);
+
+				if((!header.isDeleted()) && metadata == null) {
+					logger.error("Não foi possível carregar metadados do objeto " + i + ", provavelmente o XML está mal formado");
+				}
+				else {
+					docDao.save(metadata, header, rep);
+				}
 			}
 			catch(NullPointerException e) {
 				logger.error("NullPointer ao tentar inserir elemento " + i, e);
