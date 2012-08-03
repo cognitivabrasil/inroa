@@ -19,7 +19,7 @@
 		<property name="version" type="string" />
 
 
-		<set name="repositorios" table="repositorios_subfed" cascade="all"
+		<set name="repositorios" table="repositorios_subfed" cascade="save-update"
 			inverse="true" order-by="name asc" fetch="join">
 			<key column="id_subfed" />
 			<one-to-many class="feb.data.entities.RepositorioSubFed" />

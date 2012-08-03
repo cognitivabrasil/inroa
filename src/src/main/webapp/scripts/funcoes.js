@@ -30,25 +30,58 @@ function MM_openBrWindow(theURL,winName,features) {
 * @param features	String contendo as features. Nao colocar em features o height, width, top e left. Ex:scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no
 */
 function NewWindowFeatures(mypage,myname,w,h,features){
-    
-    var larguraDisponivel = screen.availWidth-9;
-    var alturaDisponivel = screen.availHeight-65;
+    var newW = w + 100;
+    var newH = h + 100;
+    var left = (screen.width-newW)/2;
+    var top = (screen.height-newH)/2;
     
     if (h=='total'){
-        h=alturaDisponivel;
+        h=screen.availHeight-65;
     }
     if (w=='total'){
-        w=larguraDisponivel;
+        w=screen.availWidth-9;
     }
-    LeftPosition = (larguraDisponivel) ? (larguraDisponivel-w)/2 : 0;
-    TopPosition = (alturaDisponivel) ? (alturaDisponivel-h)/2 : 0;
-    var settings ='height='+h+',width='+w+','+features;
-    window.open(mypage,myname,settings);
+
+    var settings ='height='+h+',width='+w+',left='+left+',top='+top+features;
+    var newwindow = window.open(mypage,myname,settings);
+//    newwindow.resizeTo(newW, newH);
+
+    //posiciona o popup no centro da tela
+    newwindow.moveTo(left, top);
+    newwindow.focus();
 }
 
 function NewWindow(mypage,myname,w,h){
     var features = 'scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no';
     NewWindowFeatures(mypage, myname, w, h, features)
+}
+
+/**
+	* Abre popup centralizado.
+	* url - local da página pra exibição no popup
+	* w - width largura do popup
+	* h - height  altura do poup
+	*/
+function abrirPopup(url,w,h) {    
+    var newW = w + 100;
+    var newH = h + 100;
+    var left = (screen.width-newW)/2;
+    var top = (screen.height-newH)/2;
+    var features = 'scrollbars=yes,menubar=no,resizable=yes,toolbar=no,location=no,status=no';
+    var newwindow = window.open(url, 'FEB', 'width='+newW+',height='+newH+',left='+left+',top='+top+features);
+
+    if(w=='total'){
+        newW = screen.width;
+    }
+    if(h=='total'){
+        newH = screen.height;
+    }
+    newwindow.resizeTo(newW, newH);
+
+    //posiciona o popup no centro da tela
+    newwindow.moveTo(left, top);
+    newwindow.focus();
+    return false;
 }
 
 function NewTab(url){
@@ -335,8 +368,7 @@ function exibeDivSenha(idSenha, idRepSenha)
 }
 
 function recalcularIndice(destino, form){
-    destinodoc = document.getElementById(destino);
-    destinodoc.innerHTML = "<center><img src='"+rootUrl+"imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! <center>" ;
+    destino.className = "";
     form.className="hidden";
     
 }

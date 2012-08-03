@@ -6,5 +6,9 @@ package feb.data.interfaces;
  */
 public interface TokensDao {
 
+    /**
+     * Delete all tokens
+     */
+        public void clearTokens();
 
 }

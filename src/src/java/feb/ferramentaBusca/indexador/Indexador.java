@@ -30,13 +30,10 @@ public class Indexador {
     static Logger log = Logger.getLogger(Indexador.class);
     @Autowired
     private DocumentosDAO docDao;
-
     @Autowired
     private RepositoryDAO repDao;
-
     @Autowired
     private SubFederacaoDAO subFedDao;
-    
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -81,28 +78,17 @@ public class Indexador {
      * @param docs Conjunto de documentos que devem ser indexados.
      */
     public void indexaDocumentos(Set<DocumentoReal> docs) {
-
         Long inicio = System.currentTimeMillis();
-
         log.info("FEB: Inicio da indexacao...");
         //ateh aqui pegou todos os objetos que fazem parte do indice
         for (DocumentoReal doc : docs) {
-            addDocLimpantoTokens(doc);
+            doc.generateTokens();
         }
 
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
         log.debug("\n FEB: Tempo total para inserir objetos: " + Operacoes.formatTimeMillis(total));
 
-    }
-
-    /**
-     * M&eacute;todo que adiciona o documento doc na base de dados Postgres
-     *
-     * @param doc Documento a ser adicionado
-     */
-    public void addDocLimpantoTokens(DocumentoReal doc) {
-        doc.generateTokens();
     }
 
     /**
@@ -186,9 +172,10 @@ public class Indexador {
             if (doc.isIndexEmpty()) {
                 log.warn("FEB: Foi encontrado um documento sem nenhum atributo. \n obaaEntry: " + doc.getObaaEntry());
                 docDao.delete(doc);
-                log.warn("FEB: Documento deletado");                
+                log.warn("FEB: Documento deletado");
             } else {
                 doc.generateTokens();
+
             }
         }
     }

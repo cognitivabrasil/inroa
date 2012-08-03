@@ -210,8 +210,15 @@ modelo de tópico:
                                     <li><div class="nome">Tamanho:</div><div class="valor">${metadata.technical.size}</div></li>
                                 </c:if>
 
-                                <c:forEach var="location" items="${metadata.technical.location}">
-                                    <li><div class="nome">Localiza&ccedil;&atilde;o:</div><div class="valor"><a href="${location}" target="_blank">${location}</a></div></li>
+                                <c:forEach var="location" items="${metadata.technical.locationHttp}">
+                                    <li><div class="nome">Localiza&ccedil;&atilde;o:</div><div class="valor">
+                                            <c:choose>
+                                                <c:when test="${location.value}">
+                                                    <a href="${location.key}" target="_blank">${location.key}</a></div>
+                                                </c:when>
+                                                <c:otherwise>${location.key}</c:otherwise>
+                                            </c:choose>
+                                    </li>
                                 </c:forEach>
 
                                 <c:forEach var="requirement" items="${metadata.technical.requirement}">

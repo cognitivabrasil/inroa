@@ -224,3 +224,4 @@
 .syntaxhighlighter.printing .break, .syntaxhighlighter.printing .break a {
   color: black !important;
 }
+.command_help{visibility:hidden;background: none;}

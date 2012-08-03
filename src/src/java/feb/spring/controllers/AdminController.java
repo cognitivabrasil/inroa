@@ -7,6 +7,7 @@ import feb.data.interfaces.MapeamentoDAO;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
+import feb.data.interfaces.TokensDao;
 import feb.data.interfaces.UsuarioDAO;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.spring.FebConfig;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +55,7 @@ public final class AdminController {
     private ServerInfo serverInfo;
     @Autowired
     private FebConfig conf;
+    @Autowired TokensDao tokensDao;
     static Logger log = Logger.getLogger(AdminController.class);
 
     public AdminController() {
@@ -132,8 +135,10 @@ public final class AdminController {
     }
 
     @RequestMapping("efetuaRecalculoIndice")
+    @Transactional
     public String recalcularIndice(Model model) {
         log.info("Recalculando indice - Solicitação feita pela ferramenta administrativa.");
+        tokensDao.clearTokens();
         indexador.indexarTodosRepositorios();
         model.addAttribute("fim", "Índice recalculado com sucesso!");
         return "admin/recalcularIndice";

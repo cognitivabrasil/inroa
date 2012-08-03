@@ -26,7 +26,10 @@
 
             <c:choose>
                 <c:when test="${empty fim}">
-                    <div id="mensagem"></div>
+                    <div id="mensagem" class="hidden">
+                        <c:url var="ajaxLoader" value="/imagens/ajax-loader.gif" />
+                        <center><img src="${ajaxLoader}" border='0' alt='Atualizando' align='middle'> O &iacute;ndice est&aacute; sendo recalculado, por favor aguarde! </center>
+                    </div>
                     <div id="form">
                         <form action="efetuaRecalculoIndice" method="post">
                             <div class="LinhaEntrada">
@@ -38,7 +41,7 @@
                             <input type="hidden" name="submitted" value="true"/>
                             <div class="LinhaEntrada">
                                 <div class="Buttons">
-                                    <input type="submit" value="&nbsp;Sim&nbsp;" name="submit" onclick="recalcularIndice('mensagem', this.parentNode.parentNode.parentNode)" />
+                                    <input type="submit" value="&nbsp;Sim&nbsp;" name="submit" onclick="recalcularIndice(document.getElementById('mensagem'), this.parentNode.parentNode.parentNode)" />
                                     <input id="cancelar" onclick="javascript:window.close();" value="&nbsp;N&atilde;o&nbsp;" type="button" class="CancelButton"/>
                                 </div>
                             </div>

@@ -4,11 +4,9 @@
  */
 package feb.data.daos;
 
-
+import feb.data.interfaces.TokensDao;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import feb.data.interfaces.TokensDao;
 
 /**
  *
@@ -19,7 +17,12 @@ public class TokensHibernateDao implements TokensDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-	public void setSessionFactory(SessionFactory sessionFactory2) {
-		sessionFactory = sessionFactory2;		
-	}
+    public void setSessionFactory(SessionFactory sessionFactory2) {
+        sessionFactory = sessionFactory2;
+    }
+
+    @Override
+    public void clearTokens() {
+        sessionFactory.getCurrentSession().createSQLQuery("DELETE FROM r1tokens").executeUpdate();
+    }
 }

@@ -15,15 +15,15 @@
 <html>
     <head>
         <c:url var="funcoesjs" value="/scripts/funcoes.js" />
-     <script language="JavaScript" type="text/javascript" src="${funcoesjs}"></script>
+        <script language="JavaScript" type="text/javascript" src="${funcoesjs}"></script>
         <c:url var="root" value="/" />
         <script>setRootUrl(${root});</script>
-        
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
-        
+
     </head>
     <body id="body">
         <%
@@ -43,14 +43,14 @@
         </div>
         <div class="cabecalhoConsulta">
             <div class="esquerda">
-            	<c:url var="rsslink" value="rss/feed?${BuscaModel.urlEncoded}"/>
-            	<c:url var="rssImg" value="/imagens/feed-icon-14x14.png"/>
-            	<a href="${rsslink}"><img src="${rssImg}" alt="RSS"/></a>
+                <c:url var="rsslink" value="rss/feed?${BuscaModel.urlEncoded}"/>
+                <c:url var="rssImg" value="/imagens/feed-icon-14x14.png"/>
+                <a href="${rsslink}"><img src="${rssImg}" alt="RSS"/></a>
                 <c:if test="${!empty BuscaModel.consulta}"> &nbsp;Consulta efetuada <i>"<strong><c:out value="${BuscaModel.consulta}"/></strong>"</i></c:if>
                 <c:if test="${!empty BuscaModel.autor}"> &nbsp;Autor: <i>"<strong><c:out value="${BuscaModel.autor}"/></strong>"</i></c:if>
-            </div>
-            <div class="direita">
-                Total de <strong>${BuscaModel.sizeResult}</strong> objeto(s) encontrado(s)&nbsp;
+                </div>
+                <div class="direita">
+                    Total de <strong>${BuscaModel.sizeResult}</strong> objeto(s) encontrado(s)&nbsp;
             </div>
 
         </div>
@@ -124,6 +124,13 @@
                                             </c:forEach>
 
                                             <c:if test="${!empty doc.location}">
+                                                <div class="atributo"> Localiza&ccedil;&atilde;o:
+                                                    <c:forEach var="localizacao" items="${doc.locationHttp}">
+                                                        <c:if test="${localizacao.value}">
+                                                            <div class="atributo"><a href="${localizacao.key}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao.key}</a></div>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </div>
                                                 <div class="atributo"> Localiza&ccedil;&atilde;o:
                                                     <c:forEach var="localizacao" items="${doc.location}">
                                                         <div class="atributo"><a href="${localizacao}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao}</a></div>
