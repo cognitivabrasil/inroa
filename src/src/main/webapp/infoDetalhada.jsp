@@ -211,13 +211,15 @@ modelo de tópico:
                                 </c:if>
 
                                 <c:forEach var="location" items="${metadata.technical.locationHttp}">
-                                    <li><div class="nome">Localiza&ccedil;&atilde;o:</div><div class="valor">
+                                    <li><div class="nome">Localiza&ccedil;&atilde;o:</div>
+                                        <div class="valor">
                                             <c:choose>
                                                 <c:when test="${location.value}">
-                                                    <a href="${location.key}" target="_blank">${location.key}</a></div>
+                                                    <a href="${location.key}" target="_blank">${location.key}</a>
                                                 </c:when>
                                                 <c:otherwise>${location.key}</c:otherwise>
                                             </c:choose>
+                                        </div>
                                     </li>
                                 </c:forEach>
 
@@ -453,7 +455,7 @@ modelo de tópico:
                             </ul> <!--/educational-->
                         </li> <!--/educational-->
                     </c:if> <!--/educational-->
-                    
+
                     <c:if test="${!empty metadata.rights}">
                         <li><span class="title">Direitos</span>
                             <ul>

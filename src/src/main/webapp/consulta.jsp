@@ -131,11 +131,6 @@
                                                         </c:if>
                                                     </c:forEach>
                                                 </div>
-                                                <div class="atributo"> Localiza&ccedil;&atilde;o:
-                                                    <c:forEach var="localizacao" items="${doc.location}">
-                                                        <div class="atributo"><a href="${localizacao}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao}</a></div>
-                                                    </c:forEach>
-                                                </div>
                                             </c:if>
 
                                             <c:if test="${!empty doc.date}">

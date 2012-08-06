@@ -91,7 +91,7 @@ public class SubFederacaoOAI {
                         }
                         Long fim = System.currentTimeMillis();
                         Long total = fim - inicio;
-                        log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName());
+                        log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName()+"\n");
                     }
 
                     if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
@@ -238,7 +238,7 @@ public class SubFederacaoOAI {
                 atualizaSubFedOAI(subFed, indexar);
                 Long fim = System.currentTimeMillis();
                 Long total = fim - inicio;
-                log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName());
+                log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName()+"\n");
             }
         }
     }
