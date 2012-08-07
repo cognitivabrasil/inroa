@@ -161,5 +161,21 @@ public class XsltLom2ObaaTest {
 			String s = XSLTUtil.transformFilename(foo_xml, foo_xsl);
 			fr = OaiOBAA.fromString(s);
 	}
+	
+	@Test
+	public void educationalContext() throws TransformerConfigurationException, TransformerException, IOException {
+		OaiOBAA fr;
+
+		String foo_xml = "src/test/java/feb/metadata/educationalContext.xml"; // input
+		// xml
+		String foo_xsl = "src/xslt/lom2obaa_full.xsl"; // input xsl
+
+			String s = XSLTUtil.transformFilename(foo_xml, foo_xsl);
+			fr = OaiOBAA.fromString(s);
+		
+			assertThat(fr.getMetadata(0).getEducational().getContexts().get(0), equalTo("higher education"));
+			assertThat(fr.getMetadata(0).getTechnical().getOtherPlatformRequirements(), equalTo("any"));
+
+	}
 
 }

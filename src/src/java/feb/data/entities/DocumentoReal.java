@@ -49,7 +49,7 @@ public class DocumentoReal implements java.io.Serializable,
     List<String> descriptionTokens;
     private Session session;
     private SessionFactory sessionFactory;
-    private List<String> stopWords;
+    private static List<String> stopWords;
     private static StopWordsDao stopWordDao;
 
     public DocumentoReal() {

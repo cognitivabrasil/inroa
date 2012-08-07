@@ -61,7 +61,7 @@ public class RepositorioSubFed implements SubNodo{
                 createQuery("SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorioSubFed = :rep;").setParameter("rep", this).list());
     }
     
-    private SessionFactory getSessionFactory() {
+    SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
             if (ctx != null) {

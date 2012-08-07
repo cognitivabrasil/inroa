@@ -6,17 +6,23 @@ package feb.ferramentaBusca.indexador;
 
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Repositorio;
+import feb.data.entities.RepositorioPaginavel;
 import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
+import feb.data.entities.SubRepPaginavel;
 import feb.data.interfaces.DocumentosDAO;
+import feb.data.interfaces.Paginavel;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.util.Operacoes;
+
+import java.util.Collection;
 import java.util.Set;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StopWatch;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
@@ -54,17 +60,20 @@ public class Indexador {
      *
      */
     public void indexarTodosRepositorios() {
+    	Session session = getSession();
 
         for (Repositorio rep : repDao.getAll()) {
             log.info("Indexando repositorio " + rep.getName());
-            indexaDocumentos(rep.getDocumentos());
+            rep = (Repositorio) session.load(Repositorio.class, rep.getId());
+            indexaDocumentos(new RepositorioPaginavel(rep));
         }
 
         for (SubFederacao subFed : subFedDao.getAll()) {
             log.info("Indexando a federação " + subFed.getName());
             for (RepositorioSubFed repS : subFed.getRepositorios()) {
+            	repS = (RepositorioSubFed) session.load(RepositorioSubFed.class, repS.getId());
                 log.info("Indexando Federação: " + subFed.getName() + " Repositório: " + repS.getName());
-                indexaDocumentos(repS.getDocumentos());
+                indexaDocumentos(new SubRepPaginavel(repS));
             }
         }
 
@@ -77,17 +86,45 @@ public class Indexador {
      *
      * @param docs Conjunto de documentos que devem ser indexados.
      */
-    public void indexaDocumentos(Set<DocumentoReal> docs) {
+    public void indexaDocumentos(Paginavel<DocumentoReal> docs) {
         Long inicio = System.currentTimeMillis();
-        log.info("FEB: Inicio da indexacao...");
-        //ateh aqui pegou todos os objetos que fazem parte do indice
-        for (DocumentoReal doc : docs) {
-            doc.generateTokens();
+        double size = docs.size();
+        log.info("FEB: Inicio da indexacao... (" + size +")");
+        Session session = getSession();
+        int i = 0;
+      
+        for(Collection<DocumentoReal> d : docs) {
+        	log.debug("indexando " + d.size());
+            StopWatch t = new StopWatch();
+        	t.start("Indexando ");
+
+        	indexaDocumentos100(d);
+        	
+        	t.stop();
+        	i++;
+        	log.debug("Demorou " + t.getTotalTimeSeconds() + ", " + i/size + "%");
         }
 
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
         log.debug("\n FEB: Tempo total para inserir objetos: " + Operacoes.formatTimeMillis(total));
+
+    }
+    
+    public void indexaDocumentos100(Collection<DocumentoReal> docs) {
+        Long inicio = System.currentTimeMillis();
+        double size = docs.size();
+        Session session = getSession();
+
+        //ateh aqui pegou todos os objetos que fazem parte do indice
+        DocumentoReal d2;
+        for (DocumentoReal doc : docs) {
+
+            doc.generateTokens();
+                        
+        }
+    	
+
 
     }
 

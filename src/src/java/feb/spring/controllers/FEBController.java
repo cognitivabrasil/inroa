@@ -26,6 +26,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StopWatch;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -154,23 +155,32 @@ public final class FEBController {
             BindingResult result, Model model,
             @RequestParam(value = "pager.offset", required = false) Integer offset) {
         model.addAttribute("BuscaModel", consulta);
+        
+        StopWatch t = new StopWatch();
+
 
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
             return "index";
         } else {
             try {
+                t.start("consulta");
+            	
                 if (offset != null) {
                     consulta.setOffset(offset);
                 }
 
                 Recuperador rec = new Recuperador();
                 List<DocumentoReal> docs = rec.busca(consulta);
+                log.debug("Carregou " + docs.size() + " documentos.");
                 model.addAttribute("documentos", docs);
 
                 if (offset == null) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
+                
+                t.stop();
+                log.debug(t.prettyPrint());
 
                 return "consulta";
             } catch (Exception e) {

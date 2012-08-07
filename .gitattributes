@@ -223,12 +223,14 @@ src/src/java/feb/data/entities/Mapeamento.java -text
 src/src/java/feb/data/entities/Objeto.java -text
 src/src/java/feb/data/entities/PadraoMetadados.java -text
 src/src/java/feb/data/entities/Repositorio.java -text
+src/src/java/feb/data/entities/RepositorioPaginavel.java -text
 src/src/java/feb/data/entities/RepositorioSubFed.java -text
 src/src/java/feb/data/entities/ResultadoConsulta.java -text
 src/src/java/feb/data/entities/Search.java -text
 src/src/java/feb/data/entities/StopWords.java -text
 src/src/java/feb/data/entities/SubFederacao.java -text
 src/src/java/feb/data/entities/SubNodo.java -text
+src/src/java/feb/data/entities/SubRepPaginavel.java -text
 src/src/java/feb/data/entities/Token.java -text
 src/src/java/feb/data/entities/Usuario.java -text
 src/src/java/feb/data/entities/Visita.java -text
@@ -238,6 +240,7 @@ src/src/java/feb/data/interfaces/DocumentosVisitasDao.java -text
 src/src/java/feb/data/interfaces/FebDomainObject.java -text
 src/src/java/feb/data/interfaces/MapeamentoDAO.java -text
 src/src/java/feb/data/interfaces/PadraoMetadadosDAO.java -text
+src/src/java/feb/data/interfaces/Paginavel.java -text
 src/src/java/feb/data/interfaces/RepositoryDAO.java -text
 src/src/java/feb/data/interfaces/SearchesDao.java -text
 src/src/java/feb/data/interfaces/StopWordsDao.java -text
@@ -486,6 +489,7 @@ src/src/test/java/feb/metadata/XsltLom2ObaaTest.java -text
 src/src/test/java/feb/metadata/XsltTest.java -text
 src/src/test/java/feb/metadata/cesta1.xml -text
 src/src/test/java/feb/metadata/cesta_complete.xml -text
+src/src/test/java/feb/metadata/educationalContext.xml -text
 src/src/test/java/feb/metadata/lom1.xml -text
 src/src/test/java/feb/metadata/lume1.xml -text
 src/src/test/java/feb/metadata/lume_erro_null_documento.xml -text

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.StopWatch;
 
 /**
  * Recuperador por similaridade
@@ -109,15 +110,22 @@ public class Recuperador {
                 }
             }
         }
+        StopWatch t = new StopWatch();
 
+        t.start("QueryDocumentos");
         log.debug(consultaSql);
         docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
+        t.stop();
 
 
         consultaSql = consultaSql.replace("SELECT d.*", "SELECT COUNT(DISTINCT(d.id))");
 
+        t.start("QuerySize");
         consultaSql = consultaSql.substring(0, consultaSql.indexOf("GROUP"));        
         BigInteger nResult = (BigInteger) s.createSQLQuery(consultaSql).uniqueResult();
+        t.stop();
+        
+        log.debug(t.prettyPrint());
 
         consulta.setSizeResult(nResult.intValue());
 

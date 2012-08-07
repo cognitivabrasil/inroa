@@ -1,0 +1,106 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2012-08-02T19:29:08Z</responseDate>
+	<request identifier="oai:cesta2.cinted.ufrgs.br:123456789/159"
+		metadataPrefix="lom" verb="GetRecord">http://cesta2.cinted.ufrgs.br/oai/request</request>
+	<ListRecords>
+		<record>
+			<header>
+				<identifier>oai:cesta2.cinted.ufrgs.br:123456789/159</identifier>
+				<datestamp>2011-03-21T20:21:59Z</datestamp>
+				<setSpec>hdl_123456789_13</setSpec>
+			</header>
+			<metadata>
+				<lom:lom xmlns:lom="http://ltsc.ieee.org/xsd/LOM"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xsi:schemaLocation="http://ltsc.ieee.org/xsd/LOM http://ltsc.ieee.org/xsd/lomv1.0/lom.xsd">
+					<lom:general>
+						<lom:title>
+							EDUCAÇÃO A DISTÂNCIA
+						</lom:title>
+						<lom:description>
+							ESTE OBJETO EXPRESSA ALGUNS CONCEITOS VINCULADOS A EDUCAÇÃO A
+							DISTÂNCIA
+						</lom:description>
+						<lom:keyword>
+							EDUCAÇÃO A DISTÂNCIA
+						</lom:keyword>
+						<lom:aggregationLevel />
+					</lom:general>
+					<lom:lifeCycle>
+						<lom:version>
+							beta 1
+						</lom:version>
+						<lom:status>
+							draft
+						</lom:status>
+						<lom:contribute>
+							<lom:role>
+								author
+							</lom:role>
+							<lom:entity>Universidade do estado de Santa Catarina</lom:entity>
+						</lom:contribute>
+					</lom:lifeCycle>
+					<lom:technical>
+						<lom:format>text/html</lom:format>
+						<lom:size>629145.6</lom:size>
+						<lom:location>http://penta3.ufrgs.br/CAEF/PCNeducfisica/</lom:location>
+						<lom:location>
+http://cesta2.cinted.ufrgs.br/xmlui/handle/123456789/264
+</lom:location>
+						<lom:installationRemarks />
+						<lom:otherPlatformRequirements>any</lom:otherPlatformRequirements>
+					</lom:technical>
+					<lom:educational>
+						<lom:interactivityType>
+							expositive
+						</lom:interactivityType>
+						<lom:learningResourceType>
+							lecture
+						</lom:learningResourceType>
+						<lom:interactivityLevel>
+							low
+						</lom:interactivityLevel>
+						<lom:intendedEndUserRole>
+							techer
+						</lom:intendedEndUserRole>
+						<lom:context>
+							higher education
+						</lom:context>
+						<lom:description>
+							Este apresenta um material expositivo de conceitos vinculados a
+							educação a distãncia como a sua origem, vantagem e destavantagem
+							da EAD, o conceito de e-learning, de ambientes e-learning, entre
+							outros
+						</lom:description>
+					</lom:educational>
+					<lom:rights>
+						<lom:cost>
+							no
+						</lom:cost>
+						<lom:copyright>yes</lom:copyright>
+						<lom:description />
+					</lom:rights>
+					<lom:relation>
+						<lom:kind>
+							ispartof
+						</lom:kind>
+						<lom:resource />
+					</lom:relation>
+					<lom:relation>
+						<lom:kind>
+							isversionof
+						</lom:kind>
+						<lom:resource />
+					</lom:relation>
+					<lom:relation>
+						<lom:kind>
+							isreplacedby
+						</lom:kind>
+						<lom:resource />
+					</lom:relation>
+				</lom:lom>
+			</metadata>
+		</record>
+	</ListRecords>
+</OAI-PMH>
