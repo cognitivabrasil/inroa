@@ -11,12 +11,13 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.util.StopWatch;
 
 import feb.data.interfaces.Paginavel;
 
 class SubRepPaginator implements Iterator<List<DocumentoReal>> {
 	int current = 0;
-	int maxResults = 1000;
+	int maxResults = 100;
 	int total = 0;
 	RepositorioSubFed rep;
 	Session session;
@@ -39,14 +40,23 @@ class SubRepPaginator implements Iterator<List<DocumentoReal>> {
 
 	@Override
 	public List<DocumentoReal> next() {
+		StopWatch t = new StopWatch();
+		t.start("Pegando uma página");
+		
+		
 		Criteria c = session.createCriteria(DocumentoReal.class).add(Restrictions.eq("repositorioSubFed", rep)).
 				add(Restrictions.eq("deleted", false)).
 				addOrder(Order.asc("id")).
-				setFetchMode("tokens", FetchMode.JOIN).
+//				setFetchMode("tokens", FetchMode.JOIN).
 				setFetchMode("objetos", FetchMode.JOIN).
 				setFirstResult(current).setMaxResults(maxResults);
 		current = current + maxResults;
-		return c.list();
+		
+		List<DocumentoReal> l = c.list();
+		t.stop();
+		System.out.println(t.prettyPrint());
+		
+		return l;
 	}
 
 	@Override

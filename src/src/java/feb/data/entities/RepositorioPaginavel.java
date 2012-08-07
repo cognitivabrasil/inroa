@@ -17,7 +17,7 @@ import feb.data.interfaces.Paginavel;
 
 class RepositorioPaginator implements Iterator<List<DocumentoReal>> {
 	int current = 0;
-	int maxResults = 1000;
+	int maxResults = 100;
 	int total = 0;
 	Repositorio rep;
 	Session session;
@@ -44,7 +44,6 @@ class RepositorioPaginator implements Iterator<List<DocumentoReal>> {
 		
 		Criteria c = session.createCriteria(DocumentoReal.class).add(Restrictions.eq("repositorio", rep)).
 				add(Restrictions.eq("deleted", false)).
-				setFetchMode("tokens", FetchMode.JOIN).
 				setFetchMode("objetos", FetchMode.JOIN).
 				addOrder(Order.asc("id")).
 				setFirstResult(current).setMaxResults(maxResults);

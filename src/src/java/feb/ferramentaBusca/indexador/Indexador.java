@@ -14,6 +14,7 @@ import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.Paginavel;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
+import feb.data.interfaces.TokensDao;
 import feb.util.Operacoes;
 
 import java.util.Collection;
@@ -39,6 +40,8 @@ public class Indexador {
     @Autowired
     private RepositoryDAO repDao;
     @Autowired
+    private TokensDao tokenDao;
+    @Autowired
     private SubFederacaoDAO subFedDao;
     @Autowired
     private SessionFactory sessionFactory;
@@ -62,11 +65,11 @@ public class Indexador {
     public void indexarTodosRepositorios() {
     	Session session = getSession();
 
-        for (Repositorio rep : repDao.getAll()) {
-            log.info("Indexando repositorio " + rep.getName());
-            rep = (Repositorio) session.load(Repositorio.class, rep.getId());
-            indexaDocumentos(new RepositorioPaginavel(rep));
-        }
+//        for (Repositorio rep : repDao.getAll()) {
+//            log.info("Indexando repositorio " + rep.getName());
+//            rep = (Repositorio) session.load(Repositorio.class, rep.getId());
+//            indexaDocumentos(new RepositorioPaginavel(rep));
+//        }
 
         for (SubFederacao subFed : subFedDao.getAll()) {
             log.info("Indexando a federação " + subFed.getName());
@@ -121,10 +124,12 @@ public class Indexador {
         for (DocumentoReal doc : docs) {
 
             doc.generateTokens();
-                        
+//            tokenDao.save(doc.getTokens());          
         }
     	
 
+        session.flush();
+        session.clear();
 
     }
 
