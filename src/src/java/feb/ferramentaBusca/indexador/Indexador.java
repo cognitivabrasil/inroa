@@ -65,11 +65,11 @@ public class Indexador {
     public void indexarTodosRepositorios() {
     	Session session = getSession();
 
-//        for (Repositorio rep : repDao.getAll()) {
-//            log.info("Indexando repositorio " + rep.getName());
-//            rep = (Repositorio) session.load(Repositorio.class, rep.getId());
-//            indexaDocumentos(new RepositorioPaginavel(rep));
-//        }
+        for (Repositorio rep : repDao.getAll()) {
+            log.info("Indexando repositorio " + rep.getName());
+            rep = (Repositorio) session.load(Repositorio.class, rep.getId());
+            indexaDocumentos(new RepositorioPaginavel(rep));
+        }
 
         for (SubFederacao subFed : subFedDao.getAll()) {
             log.info("Indexando a federação " + subFed.getName());
