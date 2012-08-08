@@ -25,9 +25,9 @@ public class Autor {
     public void setNome(String nome) {
 
         if (nome.length() >= 1024) {
-            nome = nome.substring(0, 1023);
+            nome = nome.substring(0, 1000);
         }
-        this.nome = nome.substring(0, 1023);
+        this.nome = nome;
     }
 
     public int getId() {
