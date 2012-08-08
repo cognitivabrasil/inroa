@@ -1,11 +1,11 @@
 package feb.data.entities;
 
-
 /**
  *
  * @author cei
  */
 public class Autor {
+
     private int id;
     private String nome;
     private DocumentoReal doc;
@@ -23,7 +23,11 @@ public class Autor {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+
+        if (nome.length() >= 1024) {
+            nome = nome.substring(0, 1023);
+        }
+        this.nome = nome.substring(0, 1023);
     }
 
     public int getId() {
@@ -32,5 +36,5 @@ public class Autor {
 
     public void setId(int id) {
         this.id = id;
-    }    
+    }
 }
