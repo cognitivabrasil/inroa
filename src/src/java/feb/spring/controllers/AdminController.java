@@ -15,6 +15,7 @@ import feb.spring.ServerInfo;
 import feb.spring.validador.InfoBDValidator;
 import feb.spring.validador.PadraoValidator;
 import feb.spring.validador.SubFederacaoValidador;
+import feb.util.Operacoes;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
@@ -137,10 +138,13 @@ public final class AdminController {
     @RequestMapping("efetuaRecalculoIndice")
     @Transactional
     public String recalcularIndice(Model model) {
+        Long inicio = System.currentTimeMillis();
         log.info("Recalculando indice - Solicitação feita pela ferramenta administrativa.");
         tokensDao.clearTokens();
         indexador.indexarTodosRepositorios();
         model.addAttribute("fim", "Índice recalculado com sucesso!");
+        Long fim = System.currentTimeMillis();
+        log.debug("Tempo total para limpar e recalcular o indice: " + Operacoes.formatTimeMillis(fim-inicio));
         return "admin/recalcularIndice";
     }
 
