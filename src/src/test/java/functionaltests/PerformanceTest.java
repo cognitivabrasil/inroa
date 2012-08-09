@@ -47,7 +47,7 @@ import static org.junit.Assert.*;
  * @author marcos
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
@@ -68,6 +68,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
 
     @Test
     @Transactional
+    @Ignore
     public void perfomanceTest() throws IOException, ParserConfigurationException, SAXException, TransformerException {
         Long inicio = System.currentTimeMillis();
 
