@@ -435,11 +435,11 @@ modelo de tópico:
                                             <c:if test="${!empty metadata.educational.interaction.perception}">
                                                 <li><div class="nome">Percep&ccedil;&atilde;o:</div><div class="valor">${metadata.educational.interaction.perception}</div></li>
                                             </c:if>
-                                            <c:if test="${!empty metadata.educational.interaction.synchronismTxt}">
-                                                <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.interaction.synchronismTxt}</div></li>
+                                            <c:if test="${!empty metadata.educational.interaction.synchronism}">
+                                                <li><div class="nome">Sincronismo:</div><div class="valor">${metadata.educational.interaction.synchronism}</div></li>
                                             </c:if>
-                                            <c:if test="${!empty metadata.educational.interaction.coPresenceTxt}">
-                                                <li><div class="nome">Co-presen&ccedil;a:</div><div class="valor">${metadata.educational.interaction.coPresenceTxt}</div></li>
+                                            <c:if test="${!empty metadata.educational.interaction.coPresence}">
+                                                <li><div class="nome">Co-presen&ccedil;a:</div><div class="valor">${metadata.educational.interaction.coPresence}</div></li>
                                             </c:if>
                                             <c:if test="${!empty metadata.educational.interaction.reciprocity}">
                                                 <li><div class="nome">Reciprocidade:</div><div class="valor">${metadata.educational.interaction.reciprocity}</div></li>
