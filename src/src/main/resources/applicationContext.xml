@@ -115,10 +115,10 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 	<task:scheduler id="myScheduler" pool-size="1" />
 
 	<task:scheduled-tasks scheduler="myScheduler">
-<!-- 		<task:scheduled ref="robo" method="testaUltimaImportacao" -->
-<!-- 			cron="0 0 2 * * *" /> -->
 		<task:scheduled ref="robo" method="testaUltimaImportacao"
-			fixed-delay="10"/>
+			cron="0 0 2 * * *" />
+<!-- 		<task:scheduled ref="robo" method="testaUltimaImportacao" -->
+<!-- 			fixed-delay="10"/> -->
 	</task:scheduled-tasks>
 
 
