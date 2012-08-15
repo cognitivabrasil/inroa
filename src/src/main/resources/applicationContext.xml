@@ -4,7 +4,7 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
-xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:task="http://www.springframework.org/schema/task"
 
 
 	xmlns:encryption="http://www.jasypt.org/schema/encryption"
@@ -115,8 +115,10 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 	<task:scheduler id="myScheduler" pool-size="1" />
 
 	<task:scheduled-tasks scheduler="myScheduler">
-		<task:scheduled ref="robo" method="testaUltimaImportacao" 
-			cron="0 0 2 * * *" />
+<!-- 		<task:scheduled ref="robo" method="testaUltimaImportacao" -->
+<!-- 			cron="0 0 2 * * *" /> -->
+		<task:scheduled ref="robo" method="testaUltimaImportacao"
+			fixed-delay="10"/>
 	</task:scheduled-tasks>
 
 
@@ -127,9 +129,9 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 	</bean>
 
 	<bean id="tagService" class="feb.services.TagCloudServiceImpl">
-                <!--days = numero de dias que expira o termo de busca -->
+		<!--days = numero de dias que expira o termo de busca -->
 		<property name="days" value="15" />
-                <!--maxSize = numero de buscas da tagcloud -->
+		<!--maxSize = numero de buscas da tagcloud -->
 		<property name="maxSize" value="30" />
 	</bean>
 

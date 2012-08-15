@@ -59,7 +59,7 @@ public class Repositorios {
         for (Repositorio rep : listRep) { // percorre todos os repositorios que
             // precisam ser atualizados
             try {
-                if (atualizaRepositorio(rep, indexar) > 0) // chama o metodo que
+                if (atualizaRepositorio(repDao.get(rep.getId()), indexar) > 0) // chama o metodo que
                 // atualiza o
                 // repositorio
                 {
