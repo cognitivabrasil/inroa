@@ -140,7 +140,7 @@ Author     : Marcos Nunes
         <div class="ui-widget" id="dialog-error" title="Erro">
             <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
                 <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-                    <strong>Erro:</strong> <span id="errorThrown">.</p>
+                    <strong>Erro:</strong> <span id="errorThrown"></span>.</p>
             </div>
         </div>
 

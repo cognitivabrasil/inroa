@@ -58,10 +58,8 @@ public class Repositorios {
 
         for (Repositorio rep : listRep) { // percorre todos os repositorios que
             // precisam ser atualizados
-            try {
-                if (atualizaRepositorio(repDao.get(rep.getId()), indexar) > 0) // chama o metodo que
-                // atualiza o
-                // repositorio
+            try { // chama o metodo que atualiza o repositorio
+                if (atualizaRepositorio(repDao.get(rep.getId()), indexar) > 0) 
                 {
                     atualizou = true;
                 }
@@ -230,8 +228,7 @@ public class Repositorios {
                     // metodo que efetua o HarvesterVerb grava um xml em disco e
                     // retorna um arrayList com os caminhos para os XML
 
-                    // leXMLgravaBase: le do xml traduz para o padrao OBAA e
-                    // armazena na base de dados
+                    // leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados
                     updated = gravar.saveXML(caminhoXML, rep, indexar);
 
                 } else {
