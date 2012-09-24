@@ -40,7 +40,7 @@ Primeira etapa do cadastro de um repositorio
         <div id="page">
 
             <div class="subTitulo-center">&nbsp;Entre com as
-                informa&ccedil;&otilde;es para cadastrar um novo reposit&oacute;rio</div>
+                informa&ccedil;&otilde;es para cadastrar um novo usu&aacute;rio</div>
             <div class="EspacoAntes">&nbsp;</div>
             <form:form method="post" modelAttribute="userModel"
                        acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
@@ -50,17 +50,17 @@ Primeira etapa do cadastro de um repositorio
                     <c:out value="${erro}" />
                 </div>
                 <div class="subtitle">Informa&ccedil;&otilde;es gerais sobre o
-                    reposit&oacute;rio</div>
+                    usu&aacute;rio</div>
                 <div class="LinhaEntrada">
                     <form:errors path="username" cssClass="ValueErro" />
-                    <div class="Label">Nome:</div>
+                    <div class="Label">Login:</div>
                     <div class="Value">
                         <form:input path="username" maxlength="45"/>
                     </div>
                 </div>
                 <div class="LinhaEntrada">
                     <form:errors path="description" cssClass="ValueErro" />
-                    <div class="Label">Descri&ccedil;&atilde;o:</div>
+                    <div class="Label">Nome:</div>
                     <div class="Value">
                         <form:input path="description" maxlength="55" />
                     </div>
