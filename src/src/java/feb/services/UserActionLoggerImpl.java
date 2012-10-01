@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.hibernate.LazyInitializationException;
 
 import feb.data.entities.Usuario;
 import feb.data.interfaces.FebDomainObject;
@@ -37,12 +38,20 @@ public class UserActionLoggerImpl implements UserActionLogger {
 	@Override
 	public void log(Usuario user, FebDomainObject dom, String text) {
 		if (fw != null) {
+			String s = dom.toString();
+			try {
+				s = dom.toStringDetailed();
+			}
+			catch(LazyInitializationException e) {
+				logger.info("Got LazyInitializationException while trying to log an action");
+			}
+			
 			try {
 				fw.write("==========================\n");
 				fw.write("Usuario: " + user.getUsername() + "\n");
 				fw.write("Ação: " + text + "\n");
 				fw.write("Data: " + new Date() + "\n");
-				fw.write("Objeto: " + dom.toStringDetailed() + "\n");
+				fw.write("Objeto: " + s + "\n");
 				fw.flush();
 
 			} catch (IOException e) {
