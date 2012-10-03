@@ -23,6 +23,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="robots" content="nofollow">
         <title>GT-FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="${css}" type="text/css">
         <link href="${images}/favicon.ico" rel="shortcut icon" type="image/x-icon" />
