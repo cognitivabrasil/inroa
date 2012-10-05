@@ -81,7 +81,7 @@ public class Importer {
 				OBAA metadata = oai.getMetadata(i);
 
 				if((!header.isDeleted()) && metadata == null) {
-					logger.error("Não foi possível carregar metadados do objeto " + i + ", provavelmente o XML está mal formado");
+					logger.error("Não foi possível carregar metadados do objeto " + i + ", provavelmente o XML está mal formado");                                        
 				}
 				else {
 					docDao.save(metadata, header, rep);
