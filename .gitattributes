@@ -528,6 +528,8 @@ src/src/test/resources/documentosDataAfter.xml -text
 src/src/test/resources/documentosDataBefore.xml -text
 src/src/test/resources/fedIFRS-listSets.xml -text
 src/src/test/resources/fedIFRS-records.xml -text
+src/src/test/resources/froac.xml -text
+src/src/test/resources/froacLOM.xml -text
 src/src/test/resources/oai-feb2.1.xml -text
 src/src/test/resources/repIFRS-records.xml -text
 src/src/xslt/dc2obaa.xsl -text

@@ -72,7 +72,6 @@ public class Importer {
 		
 		for(int i = 0; i < oai.getSize(); i++) {
 			logger.debug("Trying to get: " + i);
-			
 
 			try {
 				Header header = oai.getHeader(i);

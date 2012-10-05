@@ -79,7 +79,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
 //        caminhosXML.add("src/test/resources/FEB-fiocruz4.xml");
 //        caminhosXML.add("src/test/resources/FEB-fiocruz5.xml");
         caminhosXML.add("src/test/resources/FEB-fiocruz6.xml");
-
+        
         SubFederacao subFed = new SubFederacao();
         subFed.setVersion("2.1");
         subFed.setName("performanceTest2");

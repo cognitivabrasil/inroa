@@ -84,6 +84,47 @@ public class ImporterTest {
 		verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));	
 
 	}
+        
+        @Test
+	public void testImportLOM() throws IOException {
+				String inputXmlFile = "src/test/resources/froacLOM.xml"; // input xml
+		String inputXsltFile = "src/xslt/lom2obaa_full.xsl"; // input xsl
+		String xslt = FileUtils.readFileToString(new File(inputXsltFile));
+		
+		Mapeamento m = new Mapeamento();
+		m.setXslt(xslt);
+		
+		Repositorio r = new Repositorio();
+		r.setMapeamento(m);
+		
+		DocumentosDAO docDao = mock(DocumentosDAO.class);
+		RepositoryDAO repDao = mock(RepositoryDAO.class);
+		Session s = mock(Session.class);
+		
+		when(docDao.getSession()).thenReturn(s);
+				
+		Importer imp = new Importer();
+		imp.setInputFile(new File(inputXmlFile));
+		imp.setRepositorio(r);
+		imp.setDocDao(docDao);
+		imp.setRepDao(repDao);
+		imp.update();
+		
+		OaiOBAA oai = imp.getOaiObaa();
+		
+                
+                assertEquals(93, oai.getSize());
+                
+		assertEquals("2012-10-03T20:09:26Z", oai.getResponseDate());
+		
+		OBAA obaa = oai.getMetadata(0);
+		
+		assertThat(obaa.getGeneral().getTitles(), hasItems("Imagen Arquitectura BDI"));
+		
+		// Verify that save() was called twice on mocked docDao
+		verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));	
+
+	}
     
 }
 
