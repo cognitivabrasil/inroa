@@ -42,7 +42,7 @@
 
 
             <div class="subtitulo">Informa&ccedil;&otilde;es sobre as
-                subfedera&ccedil;&otilde;es ${federation.name}</div>
+                federa&ccedil;&otilde;es ${federation.name}</div>
 
             <security:authorize access="hasRole('PERM_MANAGE_REP')">
                 <div class="editar">

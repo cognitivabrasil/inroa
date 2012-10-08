@@ -48,9 +48,9 @@
         <div id="page">
 
             <div class="subTitulo-center">&nbsp;Editanto
-                subfedera&ccedil;&atilde;o ${subDAO.name}</div>
+                federa&ccedil;&atilde;o ${subDAO.name}</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es sobre a
-                subfedera&ccedil;&atilde;o</div>
+                federa&ccedil;&atilde;o</div>
             <div class="EspacoAntes">&nbsp;</div>
 
             <form:form method="post" modelAttribute="federation"
