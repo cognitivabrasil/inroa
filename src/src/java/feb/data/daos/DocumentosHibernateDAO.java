@@ -42,12 +42,14 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
 
     }
 
+    @Override
     public Integer getSizeWithDeleted() {
         return DataAccessUtils.intResult(
                 getSession().
                 createQuery("select count(*) from DocumentoReal doc").list());
     }
 
+    @Override
     public Integer getSize() {
         return DataAccessUtils.intResult(
                 getSession().

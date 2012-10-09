@@ -13,6 +13,7 @@ import metadata.Header;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 import org.hibernate.Session;
@@ -278,6 +279,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
     
     @Test
     public void myTest() {
+        Integer initNumberDocs = instance.getSizeWithDeleted();
         OBAA obaa = new OBAA();
         obaa.setGeneral(new General());
 
@@ -304,10 +306,13 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
         instance.save(obaa, h, r);
 
+        Integer finalNumberDocs = instance.getSizeWithDeleted();
         DocumentoReal d = instance.get("obaa:identifier");
         assertThat(d, notNullValue());
         assertThat(d.getTitles(), hasItem("teste1"));
         assertThat(d.getRepositorioSubFed(), notNullValue());
+        
+        assertThat(initNumberDocs, not(equalTo(finalNumberDocs)));
 
     }
 
