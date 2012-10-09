@@ -336,7 +336,7 @@ Author     : Marcos Nunes
                         <c:url var="newFederationUrl" value="/admin/federations/new" />
                         <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
 
-                                <a title="Adicionar nova Federa&ccedil;&atilde;o"
+                                <a title="Adicionar nova federa&ccedil;&atilde;o"
                                    onclick="NewWindow('${newFederationUrl}','Cadastro','750','650');">
                                     <img
                                         src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
@@ -349,7 +349,7 @@ Author     : Marcos Nunes
 
                                 <a
                                     onclick="NewWindow('${newFederationUrl}','Cadastro','750','650');">
-                                    Adicionar nova Federa&ccedil;&atilde;o </a>
+                                    Adicionar nova federa&ccedil;&atilde;o </a>
                                 </security:authorize>
                         </td>
                         <td><security:authorize access="hasRole('PERM_UPDATE')">
@@ -585,8 +585,8 @@ Author     : Marcos Nunes
                 <tr style="background-color: #AEC9E3">
                     <th width="10%">Opera&ccedil;&otilde;es</th>
 
-                    <th width="20%">Nome</th>
-                    <th width="50%">Descri&ccedil;&atilde;o</th>
+                    <th width="20%">Login</th>
+                    <th width="50%">Nome</th>
                     <th width="20%">Perfil</th>
                 </tr>
 
