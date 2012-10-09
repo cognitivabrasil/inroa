@@ -31,23 +31,20 @@ public interface DocumentosDAO {
     DocumentoFebInterface get(String obaaEntry);
 
     /**
-     * Need to call flush on session after saving many documents.
-     *      *
-     * @param obaa the OBAA metadata
+     * Need to call flush on session after saving many documents. * @param obaa
+     * the OBAA metadata
      * @param h the OAI PMH header
      * @param r repository to save the document in
      */
     void save(OBAA obaa, Header h, Repositorio r);
-    
+
     /**
-     * Need to call flush on session after saving many documents.
-     *      *
-     * @param obaa the OBAA metadata
+     * Need to call flush on session after saving many documents. * @param obaa
+     * the OBAA metadata
      * @param h the OAI PMH header
      * @param s federation to save the document in
      */
     void save(OBAA obaa, Header h, SubFederacao s);
-
 
     /**
      * Convenience method, will call flush on the current session.
@@ -70,7 +67,6 @@ public interface DocumentosDAO {
      */
     DocumentoReal get(int i);
 
-
     /**
      * Delete a document.
      *
@@ -78,13 +74,24 @@ public interface DocumentosDAO {
      */
     void delete(DocumentoReal d);
 
-
     /**
-     * Get document without tokens.
-     * Documents that have not been tokenized.
+     * Get document without tokens. Documents that have not been tokenized.
+     *
      * @return List of documents without tokens.
      */
     List<DocumentoReal> getwithoutToken();
 
-	Session getSession();  
+    Session getSession();
+
+    /**
+     * Get the number of documents
+     * @return the total number of documents
+     */
+    Integer getSize();
+
+    /**
+     * Gets the number of documents including those deleted.
+     * @return number of documents
+     */
+    Integer getSizeWithDeleted();
 }

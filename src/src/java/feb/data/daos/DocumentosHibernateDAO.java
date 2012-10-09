@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 
 /**
  * The Class DocumentosHibernateDAO.
@@ -39,6 +40,19 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     private DocumentoReal getByObaaEntry(String e) {
         return (DocumentoReal) getSession().createCriteria(DocumentoReal.class).add(Restrictions.eq("obaaEntry", e)).uniqueResult();
 
+    }
+
+    public Integer getSizeWithDeleted() {
+        return DataAccessUtils.intResult(
+                getSession().
+                createQuery("select count(*) from DocumentoReal doc").list());
+    }
+
+    public Integer getSize() {
+        return DataAccessUtils.intResult(
+                getSession().
+                createQuery("select count(*) from DocumentoReal doc WHERE doc.deleted = :deleted").
+                setParameter("deleted", false).list());
     }
 
     /*

@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import feb.data.entities.SubFederacao;
+import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.MapeamentoDAO;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
@@ -39,7 +40,7 @@ public final class FederationsController {
     @Autowired
     private SubFederacaoDAO subDao;
     @Autowired
-    private PadraoMetadadosDAO padraoDao;
+    private DocumentosDAO docDao;
     @Autowired
     private Indexador indexar;
     private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
@@ -136,15 +137,12 @@ public final class FederationsController {
             return "ok";
     }
 
-   
-
-
     @RequestMapping(value="/{id}/update", method = RequestMethod.POST)
     public @ResponseBody
     String atualizaFedAjax(@PathVariable("id") Integer id,
             @RequestParam boolean apagar) {
         log.info("FEB: Solicitacao de atualizacao pela Ferramenta Administrativa...");
-        
+        Integer initNumberDocs = docDao.getSizeWithDeleted();
         try {
             if (id > 0) {
                 subFedOAI.atualizaSubfedAdm(subDao.get(id), indexar, apagar);
@@ -152,17 +150,22 @@ public final class FederationsController {
                 subFedOAI.atualizaSubfedAdm(subDao.getAll(), indexar, apagar);
             }
 
-            indexar.populateR1();
             return "1";
         } catch (ConnectException c) {
             log.error("Erro ao coletar o xml por OAI-PMH", c);
             return "Erro ao coletar o xml por OAI-PMH. " + c.toString();
         } catch(FederationException f){
-            log.error("Erro ao atualizar alguma federação",f);
+            log.error("Ocorreu algum erro atualizar.",f);
             return f.toString();
         } catch (Exception e) {
             log.error("Erro ao atualizar uma federação",e);
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
+        }finally{
+            Integer finalNumberDocs = docDao.getSizeWithDeleted();
+            if(finalNumberDocs != initNumberDocs){
+                log.info("Foram atualizados: "+(finalNumberDocs-initNumberDocs) +" documentos");
+                indexar.populateR1();
+            }
         }
     }
     

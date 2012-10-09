@@ -332,4 +332,16 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         assertEquals(d.isDeleted(), true);
 
     }
+
+    @Test
+    public void testGetSizeWhitDeleted(){
+        Integer total = instance.getSizeWithDeleted();
+        assertThat(total, equalTo(6));
+    }
+
+    @Test
+    public void testGetSize(){
+        Integer total = instance.getSize();
+        assertThat(total, equalTo(5));
+    }
 }
