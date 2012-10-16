@@ -303,7 +303,7 @@ public class Repositorios {
             log.error("Nao foi possivel coletar os dados: ", e);
             throw e;
         } catch (IOException e) {
-            log.error("Nao foi possivel coletar ou ler o XML em: ", e);
+            log.error("Nao foi possivel coletar (Possível erro de timeout) ou ler o XML em: ", e);
             throw e;
         } catch (Exception e) {
             log.error("\nFEB ERRO ao efetuar o Harvester.", e);
