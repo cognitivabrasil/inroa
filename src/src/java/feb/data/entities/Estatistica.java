@@ -17,7 +17,7 @@ public class Estatistica {
      */
     public String convertNodoList(List<SubNodo> list, String tipo) {
 
-        String jsList = "[ ";
+        StringBuilder builder = new StringBuilder("[ ");
 
         if (list == null) {
             return "";
@@ -30,22 +30,44 @@ public class Estatistica {
 
             if (tipo.equals("size")) {
                 if (i == size - 1) {
-                    jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ]";
+                    builder.append("[ '");
+                    builder.append(nodo.getName());
+                    builder.append("', ");
+                    builder.append(nodo.getSize());
+                    builder.append(" ]");
+                    //jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ]";
                 } else {
-                    jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ], ";
+                    builder.append("[ '");
+                    builder.append(nodo.getName());
+                    builder.append("', ");
+                    builder.append(nodo.getSize());
+                    builder.append(" ], ");
+                    
+                   // jsList += "[ '" + nodo.getName() + "', " + nodo.getSize() + " ], ";
                 }
             } else if (tipo.equals("visits")) {
                 if (i == size - 1) {
-                    jsList += "[ '" + nodo.getName() + "', " + nodo.getVisits() + " ]";
+                    builder.append("[ '");
+                    builder.append(nodo.getName());
+                    builder.append("', ");
+                    builder.append(nodo.getVisits());
+                    builder.append(" ]");
+                    
+                   // jsList += "[ '" + nodo.getName() + "', " + nodo.getVisits() + " ]";
                 } else {
-                    jsList += "[ '" + nodo.getName() + "', " + nodo.getVisits() + " ], ";
+                    builder.append("[ '");
+                    builder.append(nodo.getName());
+                    builder.append("', ");
+                    builder.append(nodo.getVisits());
+                    builder.append(" ], ");
+                    //jsList += "[ '" + nodo.getName() + "', " + nodo.getVisits() + " ], ";
                 }
             }
         }
 
-        jsList += " ]";
-
-        return jsList;
+        builder.append(" ]");
+        
+        return (builder.toString());
     }
 
     public String convertIntList(List<Integer> list) {
