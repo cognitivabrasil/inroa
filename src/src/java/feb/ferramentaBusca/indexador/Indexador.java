@@ -16,9 +16,7 @@ import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.TokensDao;
 import feb.util.Operacoes;
-
 import java.util.Collection;
-import java.util.Set;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -93,7 +91,6 @@ public class Indexador {
         Long inicio = System.currentTimeMillis();
         double size = docs.size();
         log.info("FEB: Inicio da indexacao... (" + size +")");
-        Session session = getSession();
         int i = 0;
       
         for(Collection<DocumentoReal> d : docs) {
@@ -115,18 +112,15 @@ public class Indexador {
     }
     
     public void indexaDocumentos100(Collection<DocumentoReal> docs) {
-        Long inicio = System.currentTimeMillis();
-        double size = docs.size();
+
         Session session = getSession();
 
         //ateh aqui pegou todos os objetos que fazem parte do indice
-        DocumentoReal d2;
         for (DocumentoReal doc : docs) {
 
             doc.generateTokens();
 //            tokenDao.save(doc.getTokens());          
-        }
-    	
+        }    	
 
         session.flush();
         session.clear();
