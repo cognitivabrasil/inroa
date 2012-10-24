@@ -30,8 +30,6 @@ public class PadraoValidator implements Validator {
                 "required.name", "É necessário informar um nome.");
         ValidationUtils.rejectIfEmpty(errors, "metadataPrefix",
                 "required.metadataPrefix", "É necessário informar um metadataPrefix.");
-        ValidationUtils.rejectIfEmpty(errors, "namespace",
-                "required.namespace", "É necessário informar um namespace.");
 
     }
 }

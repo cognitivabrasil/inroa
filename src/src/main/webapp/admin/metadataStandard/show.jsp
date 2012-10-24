@@ -58,7 +58,7 @@
                         nameSpace:
                     </div>
                     <div class="Valor" id="namespace">${padrao.namespace}</div>
-
+                    <div class="clear"></div>
                 </div>
             </form:form>
 

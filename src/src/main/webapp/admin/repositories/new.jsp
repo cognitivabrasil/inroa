@@ -45,7 +45,6 @@ Primeira etapa do cadastro de um repositorio
             myForm.addRules({id : 'periodicidadeAtualizacao', option : 'required', error : '* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
             myForm.addRules({id : 'mapeamento.id', option : 'required', error : '* Deve ser selecionado um mapeamento!'});
             myForm.addRules({id : 'metadataPrefix', option : 'required', error : '* Deve ser informado o MetadataPrefix!' });
-            myForm.addRules({id : 'namespace', option : 'required', error : '* Deve ser informado o NameSpace!'});
             myForm.addRules({id : 'confereLinkOAI', option : 'required', error : '* A url informada n&atilde;o responde ao protocolo OAI-PMH!'});
         </script>
 

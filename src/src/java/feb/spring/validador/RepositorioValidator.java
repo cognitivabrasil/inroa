@@ -4,14 +4,13 @@
  */
 package feb.spring.validador;
 
+import feb.data.entities.Repositorio;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import feb.data.entities.Repositorio;
 
 /**
  * Respons&aacute;vel por validar os dados submetidos para um Repositorio
@@ -33,8 +32,6 @@ public class RepositorioValidator implements Validator  {
                 "required.descricao", "É necessário informar uma descrição.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mapeamento.id",
                 "required.mapeamento.id", "É necessário informar um mapeamento.");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "namespace",
-                "required.namespace", "É necessário informar um namespace.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "metadataPrefix",
                 "required.metadataPrefix", "É necessário informar um metadataPrefix");
         
