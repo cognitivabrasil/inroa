@@ -23,7 +23,7 @@
 
         <link rel="StyleSheet" media="screen" href="${css}" type="text/css"/>
         <link rel="StyleSheet" href="${jqplotcss}"  type="text/css">
-        
+
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <script language="javascript" type="text/javascript" src="${jqplotjs}"></script>
         <script language="javascript" type="text/javascript" src="${pieRendererjs}"></script>
@@ -140,12 +140,20 @@
                     }, 
                     legend: { show:true, location: 'e' }
                 }
-            );                
-            }); //$(document).ready(function()            
+            );  
+                
+                               
+            }); //$(document).ready(function()   
+            
+            $(function() {
+
+                $('#loading').addClass("hidden");
+                // code here
+            }); 
         </script>
     </head>
 
-    <body>  
+    <body>          
        <div id="estatisticas">
             <div class="acessos">
                 <table class="repositorios-table zebraTable acessos">
