@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cp feb_${feb.version}-ubuntu${build.number}_all.deb /var/www/ppa/${ppaSuffix}
+cp feb_${feb.version}-ubuntu${build.number}_all.deb /var/www/ppa${ppaSuffix}
 cp src/feb-${feb.version}.tar.gz /var/www/dist/feb-${feb.fullVersion}-${nightly}.tar.gz
 cd /var/www/ppa${ppaSuffix}
 dpkg-scanpackages -a i386 . /dev/null | gzip -9c > dists/precise/main/binary-i386/Packages.gz
