@@ -1,5 +1,4 @@
 User-Agent: *
-Disallow: /consulta/
 Disallow: /admin/
 Disallow: /imagens/
 Disallow: /css/
