@@ -1000,6 +1000,38 @@ CREATE TABLE searches (text TEXT, time timestamp);
 ALTER TABLE searches OWNER TO feb;
 
 
+-----------------
+-- TRIGER PARA NOME DE AUTORES
+-----------------
+
+-- Function: author_length()
+-- DROP FUNCTION author_length();
+
+CREATE OR REPLACE FUNCTION author_length()
+RETURNS trigger AS
+$BODY$
+BEGIN
+IF length(NEW.nome) > 1000 THEN 
+NEW.nome := (substring(NEW.nome,0,1000));
+END IF;
+RETURN NEW;
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE
+COST 100;
+ALTER FUNCTION author_length()
+OWNER TO feb;
+
+
+-- Trigger: author_length on autores
+-- DROP TRIGGER author_length ON autores;
+
+CREATE TRIGGER author_length
+BEFORE INSERT
+ON autores
+FOR EACH ROW
+EXECUTE PROCEDURE author_length();
+
 --
 -- TOC entry 2097 (class 0 OID 0)
 -- Dependencies: 6
