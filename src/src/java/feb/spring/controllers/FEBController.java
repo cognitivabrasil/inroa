@@ -81,7 +81,7 @@ public final class FEBController {
 
         model.addAttribute("buscaModel", new Consulta());
 
-        Map <String, Double> termos = tagCloud.getTagCloud();
+        Map<String, Double> termos = tagCloud.getTagCloud();
 
         model.addAttribute("termos", termos);
 
@@ -155,7 +155,7 @@ public final class FEBController {
             BindingResult result, Model model,
             @RequestParam(value = "pager.offset", required = false) Integer offset) {
         model.addAttribute("BuscaModel", consulta);
-        
+
         StopWatch t = new StopWatch();
 
 
@@ -165,7 +165,7 @@ public final class FEBController {
         } else {
             try {
                 t.start("consulta");
-            	
+
                 if (offset != null) {
                     consulta.setOffset(offset);
                 }
@@ -178,16 +178,15 @@ public final class FEBController {
                 if (offset == null) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
-                
+
                 t.stop();
-                log.debug(t.prettyPrint());
+                log.trace(t.prettyPrint());
 
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                System.err.println("FEB ERRO: Erro ao efetuar a consulta na base de dados. Exception: "
-                        + e.toString());
+                log.error("FEB ERRO: Erro ao efetuar a consulta na base de dados. ", e);
                 return "index";
             }
         }

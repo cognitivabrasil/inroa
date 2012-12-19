@@ -125,7 +125,7 @@ public class Recuperador {
         BigInteger nResult = (BigInteger) s.createSQLQuery(consultaSql).uniqueResult();
         t.stop();
         
-        log.debug(t.prettyPrint());
+        log.trace(t.prettyPrint());
 
         consulta.setSizeResult(nResult.intValue());
 
