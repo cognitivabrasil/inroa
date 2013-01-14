@@ -13,7 +13,6 @@ import feb.spring.validador.BuscaValidator;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.Cookie;
@@ -155,17 +154,12 @@ public final class FEBController {
             BindingResult result, Model model,
             @RequestParam(value = "pager.offset", required = false) Integer offset) {
         model.addAttribute("BuscaModel", consulta);
-
-        StopWatch t = new StopWatch();
-
-
+        log.debug("IP: "+request.getRemoteAddr()+" / Consulta: "+consulta.getConsulta() + " / Browser type:"+request.getHeader("User-Agent"));
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
             return "index";
         } else {
             try {
-                t.start("consulta");
-
                 if (offset != null) {
                     consulta.setOffset(offset);
                 }
@@ -178,10 +172,7 @@ public final class FEBController {
                 if (offset == null) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
-
-                t.stop();
-                log.trace(t.prettyPrint());
-
+                
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",

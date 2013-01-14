@@ -64,7 +64,12 @@ public class Consulta {
     }
 
     public void setConsulta(String consulta) {
-        this.consulta = consulta;
+        try{
+        byte[] bytes = consulta.getBytes();
+        this.consulta = new String(bytes, "UTF-8");
+        } catch(UnsupportedEncodingException e){
+            log.error("Não foi possível codificar em utf-8 a string: "+consulta, e);
+        }
     }
 
     public String getAutor() {
