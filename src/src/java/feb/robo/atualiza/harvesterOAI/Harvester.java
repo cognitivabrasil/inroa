@@ -58,7 +58,7 @@ public class Harvester {
             }
         }
 
-        log.info("FEB: Arquivos XML foram gravados");
+        log.info("Arquivos XML foram gravados");
 
 
         return caminhosXML;

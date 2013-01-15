@@ -154,7 +154,9 @@ public final class FEBController {
             BindingResult result, Model model,
             @RequestParam(value = "pager.offset", required = false) Integer offset) {
         model.addAttribute("BuscaModel", consulta);
-        log.debug("IP: "+request.getRemoteAddr()+" / Consulta: "+consulta.getConsulta() + " / Browser type:"+request.getHeader("User-Agent"));
+        log.debug("\nIP: " + request.getRemoteAddr() + " / search: \"" + consulta.getConsulta() + "\"");
+        log.debug("User-Agent: " + request.getHeader("User-Agent"));
+        log.debug("Resultou em: "+consulta.getSizeResult()+" documentos.");
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
             return "index";
@@ -166,13 +168,13 @@ public final class FEBController {
 
                 Recuperador rec = new Recuperador();
                 List<DocumentoReal> docs = rec.busca(consulta);
-                log.debug("Carregou " + docs.size() + " documentos.");
+                log.trace("Carregou " + docs.size() + " documentos.");
                 model.addAttribute("documentos", docs);
 
                 if (offset == null) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
-                
+
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",

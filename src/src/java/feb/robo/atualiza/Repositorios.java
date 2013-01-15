@@ -76,7 +76,7 @@ public class Repositorios {
         }
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
-        log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar os repositórios");
+        log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar os repositórios");
         return atualizou;
     }
 
@@ -167,14 +167,14 @@ public class Repositorios {
         int updated = 0;
 
         try {
-            log.info("FEB: Atualizando repositorio: " + rep.getName());// imprime o nome do repositorio
+            log.info("Atualizando repositorio: " + rep.getName());// imprime o nome do repositorio
 
             Set<String> set = rep.getColecoes();
             if (set == null || set.isEmpty()) {
                 set = null;
             }
             if (rep.getUrl().isEmpty()) { // testa se a string url esta vazia.
-                log.error("FEB: Nao existe uma url associada ao repositorio "
+                log.error("Nao existe uma url associada ao repositorio "
                         + rep.getName());
                 throw new MalformedURLException(
                         "Nao existe uma url associada ao repositorio "
@@ -184,7 +184,7 @@ public class Repositorios {
 
                 Date data_ultima_atualizacao = rep.getUltimaAtualizacao();
 
-                log.info("\t FEB: Ultima Atualizacao: "
+                log.info("Ultima Atualizacao: "
                         + data_ultima_atualizacao + " nome do rep: "
                         + rep.getName());
 
@@ -192,11 +192,11 @@ public class Repositorios {
                 // apaga todos as informacoes do repositorio
                 if ((data_ultima_atualizacao == null && rep.getDataOrigem() == null)
                         || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(rep.getDataOrigem()))) {
-                    log.info("FEB: Deletando todos os documentos do repositório: "
+                    log.info("Deletando todos os documentos do repositório: "
                             + rep.getName().toUpperCase());
                     try {
                         int result = rep.dellAllDocs();
-                        log.info("FEB: " + result + " documentos deletados.");
+                        log.info("" + result + " documentos deletados.");
 
                     } catch (Exception e) {
                         log.error("Erro ao deletar os objetos do repositorio "
