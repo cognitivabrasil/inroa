@@ -152,10 +152,13 @@ public final class FEBController {
     public String consulta(HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
             BindingResult result, Model model,
-            @RequestParam(value = "pager.offset", required = false) Integer offset) {
+            @RequestParam(value = "pager.offset", required = false) Integer offset,
+            @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("BuscaModel", consulta);
-        log.debug("\nIP: " + request.getRemoteAddr() + " / search: \"" + consulta.getConsulta() + "\"");
+        log.debug("");
+        log.debug("IP: " + request.getRemoteAddr() + " / search: \"" + consulta.getConsulta() + "\" / Cookie: "+existingCookie(cookie));
         log.debug("User-Agent: " + request.getHeader("User-Agent"));
+        
         log.debug("Resultou em: "+consulta.getSizeResult()+" documentos.");
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
