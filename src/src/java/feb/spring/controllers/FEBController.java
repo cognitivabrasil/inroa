@@ -120,8 +120,9 @@ public final class FEBController {
     public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         DocumentoReal d = docDao.get(id);
         if (d == null) {
+            response.setStatus(404);
             log.warn("O id " + id + " solicitado não existe!");
-            return "redirect:/";
+            return "";
         } else {
             model.addAttribute("obaaEntry", d.getObaaEntry());
             List<String> titles = d.getTitles();

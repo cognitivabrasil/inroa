@@ -22,7 +22,7 @@
 </script>
 
 <div class="barra-superior">
-    <span id="confederacao"><a href="${confederacao}">Confederação</a></span>
+    <span id="confederacao"><a href="${confederacao}">Confedera&ccedil;&atilde;o</a></span>
     <span><a href="${adm}">Ferramenta Administrativa</a></span>
     <span><a href="http://feb.ufrgs.br">Portal do projeto</a></span>
 </div>
