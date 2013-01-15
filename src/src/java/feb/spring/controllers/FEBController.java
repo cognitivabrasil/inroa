@@ -19,13 +19,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StopWatch;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,17 +66,17 @@ public final class FEBController {
     }
 
     @RequestMapping("/")
-    public String inicio(Model model, HttpServletResponse response, @CookieValue(value = "feb.cookie", required = false) String cookie) {
-        return index(model, response, cookie);
+    public String inicio(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+        return index(model, response, request, cookie);
     }
 
     @RequestMapping("/index.*")
-    public String indexJSP(Model model, HttpServletResponse response, @CookieValue(value = "feb.cookie", required = false) String cookie) {
-        return index(model, response, cookie);
+    public String indexJSP(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+        return index(model, response, request, cookie);
     }
 
     @RequestMapping("/index")
-    public String index(Model model, HttpServletResponse response, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+    public String index(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("buscaModel", new Consulta());
 
@@ -84,18 +84,21 @@ public final class FEBController {
 
         model.addAttribute("termos", termos);
 
-        if (!existingCookie(cookie)) {
-            response.addCookie(createCookie());
+        if (StringUtils.isEmpty(cookie)) {
+            addCookie(response, request);
         }
 
         return "index";
     }
 
     @RequestMapping("/buscaAvancada")
-    public String buscaAvancada(Model model) {
+    public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
+        if (StringUtils.isEmpty(cookie)) {
+            addCookie(response, request);
+        }
         return "buscaAvancada";
     }
 
@@ -117,7 +120,7 @@ public final class FEBController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         DocumentoReal d = docDao.get(id);
         if (d == null) {
             response.setStatus(404);
@@ -131,9 +134,8 @@ public final class FEBController {
                 title = titles.get(0);
             }
 
-            if (!existingCookie(cookie)) {
-                Cookie newVisitor = createCookie();
-                response.addCookie(newVisitor);
+            if (!StringUtils.isEmpty(cookie)) {
+                Cookie newVisitor = addCookie(response, request);
                 cookie = newVisitor.getValue();
             }
 
@@ -157,10 +159,10 @@ public final class FEBController {
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("BuscaModel", consulta);
         log.debug("");
-        log.debug("IP: " + request.getRemoteAddr() + " / search: \"" + consulta.getConsulta() + "\" / Cookie: "+existingCookie(cookie));
+        log.debug("IP: " + request.getRemoteAddr() + " / search: \"" + consulta.getConsulta() + "\" / Cookie: " + !StringUtils.isEmpty(cookie));
         log.debug("User-Agent: " + request.getHeader("User-Agent"));
+
         
-        log.debug("Resultou em: "+consulta.getSizeResult()+" documentos.");
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
             return "index";
@@ -175,10 +177,10 @@ public final class FEBController {
                 log.trace("Carregou " + docs.size() + " documentos.");
                 model.addAttribute("documentos", docs);
 
-                if (offset == null) {
+                if (offset == null && !StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
-
+                log.debug("Resultou em: " + consulta.getSizeResult() + " documentos. Offset: "+consulta.getOffset());
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",
@@ -193,7 +195,8 @@ public final class FEBController {
     public String consultaAvancada(
             HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
-            BindingResult result, Model model) {
+            BindingResult result, Model model,
+            @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("BuscaModel", consulta);
 
         buscaValidator.validate(consulta, result);
@@ -206,7 +209,9 @@ public final class FEBController {
                 Recuperador rec = new Recuperador();
                 List<DocumentoReal> docs = rec.busca(consulta);
                 model.addAttribute("documentos", docs);
-                searchesDao.save(consulta.getConsulta(), new Date());
+                if (!StringUtils.isEmpty(cookie)) {
+                    searchesDao.save(consulta.getConsulta(), new Date());
+                }
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",
@@ -353,29 +358,17 @@ public final class FEBController {
         return sessionFactory.getCurrentSession();
     }
 
-    private Cookie createCookie() {
-        Visita newVisitor = new Visita();
-        visDao.save(newVisitor);
-        Integer id = newVisitor.getId();
+    private Cookie addCookie(HttpServletResponse response, HttpServletRequest request) {
 
-        Cookie newCookie = new Cookie("feb.cookie", id.toString());
-        newCookie.setMaxAge(5 * 60 * 1000);
-
-        return (newCookie);
-    }
-
-    private boolean existingCookie(String cookie) {
-
-        if (cookie == null) {
-            return false;
-        } else {
-            Visita chkVisitor = visDao.get(Integer.parseInt(cookie));
-            if (chkVisitor == null) {
-                return false;
-            } else {
-                return true;
-            }
+        Cookie newCookie = new Cookie("feb.cookie", request.getRemoteAddr());
+        newCookie.setMaxAge(300);
+        response.addCookie(newCookie);
+        Cookie[] testeCokies = request.getCookies();
+        if (testeCokies != null && testeCokies.length > 0) {
+            Visita newVisitor = new Visita();
+            visDao.save(newVisitor);
+            log.debug("Adicionou nova visita!");
         }
-
+        return newCookie;
     }
 }
