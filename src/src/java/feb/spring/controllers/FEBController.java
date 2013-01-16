@@ -134,16 +134,20 @@ public final class FEBController {
                 title = titles.get(0);
             }
 
-            if (!StringUtils.isEmpty(cookie)) {
-                Cookie newVisitor = addCookie(response, request);
-                cookie = newVisitor.getValue();
+            Cookie[] testeCokies = request.getCookies();
+            if (testeCokies != null && testeCokies.length > 0) {
+
+                if (!existingCookie(cookie)) {
+                    Cookie newVisitor = addCookie(response, request);
+                    cookie = newVisitor.getValue();
+                }
+
+                DocumentosVisitas docVis = new DocumentosVisitas();
+                docVis.setDocumento(d);
+
+                docVis.setVisita((Visita) getSession().load(Visita.class, Integer.parseInt(cookie)));
+                docVisDao.save(docVis);
             }
-
-            DocumentosVisitas docVis = new DocumentosVisitas();
-            docVis.setDocumento(d);
-
-            docVis.setVisita((Visita) getSession().load(Visita.class, Integer.parseInt(cookie)));
-            docVisDao.save(docVis);
 
             model.addAttribute("title", title);
             model.addAttribute("metadata", d.getMetadata());
@@ -162,7 +166,7 @@ public final class FEBController {
         log.debug("IP: " + request.getRemoteAddr() + " / search: \"" + consulta.getConsulta() + "\" / Cookie: " + !StringUtils.isEmpty(cookie));
         log.debug("User-Agent: " + request.getHeader("User-Agent"));
 
-        
+
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
             return "index";
@@ -180,7 +184,7 @@ public final class FEBController {
                 if (offset == null && !StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
-                log.debug("Resultou em: " + consulta.getSizeResult() + " documentos. Offset: "+consulta.getOffset());
+                log.debug("Resultou em: " + consulta.getSizeResult() + " documentos. Offset: " + consulta.getOffset());
                 return "consulta";
             } catch (Exception e) {
                 model.addAttribute("erro",
@@ -359,16 +363,33 @@ public final class FEBController {
     }
 
     private Cookie addCookie(HttpServletResponse response, HttpServletRequest request) {
-
-        Cookie newCookie = new Cookie("feb.cookie", request.getRemoteAddr());
-        newCookie.setMaxAge(300);
-        response.addCookie(newCookie);
+        Cookie newCookie = null;
         Cookie[] testeCokies = request.getCookies();
         if (testeCokies != null && testeCokies.length > 0) {
             Visita newVisitor = new Visita();
             visDao.save(newVisitor);
             log.debug("Adicionou nova visita!");
+            Integer id = newVisitor.getId();
+            newCookie = new Cookie("feb.cookie", id.toString());
+            newCookie.setMaxAge(300);
+            response.addCookie(newCookie);
+
         }
         return newCookie;
+    }
+
+    private boolean existingCookie(String cookie) {
+
+        if (StringUtils.isEmpty(cookie)) {
+            return false;
+        } else {
+            Visita chkVisitor = visDao.get(Integer.parseInt(cookie));
+            if (chkVisitor == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
     }
 }
