@@ -44,7 +44,7 @@ function NewWindowFeatures(mypage,myname,w,h,features){
 
     var settings ='height='+h+',width='+w+',left='+left+',top='+top+features;
     var newwindow = window.open(mypage,myname,settings);
-//    newwindow.resizeTo(newW, newH);
+    //    newwindow.resizeTo(newW, newH);
 
     //posiciona o popup no centro da tela
     newwindow.moveTo(left, top);
@@ -374,13 +374,11 @@ function recalcularIndice(destino, form){
 }
 
 function objectAcessCounter(id){
-    
-    var ajax = openAjax(); // Start Ajax.
-    var link = rootUrl + "admin/statistics/objUser?id="+id;    
-    ajax.open("POST", link, true);
-// ao que parece não precisa disso
-// ajax.send(null); // submete
-    
+    if (navigator.cookieEnabled){
+        var ajax = openAjax(); // Start Ajax.
+        var link = rootUrl + "admin/statistics/objUser?id="+id;    
+        ajax.open("POST", link, true);
+    }
 }
 
 function paranaodarerro(){
