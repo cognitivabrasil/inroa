@@ -48,7 +48,7 @@ public final class StatisticsController {
 
         
         Calendar c = Calendar.getInstance();
-        List visitsList = visitasDao.visitsInAYear(c.get(Calendar.YEAR));
+        List visitsList = visitasDao.visitsUpToAMonth(c.get(Calendar.MONTH), c.get(Calendar.YEAR));
         model.addAttribute("visitasTotal", e.convertIntList(visitsList));
 
         List<DocumentoReal> docsMaisAcessados = docVisDao.getTop(10);

@@ -37,7 +37,16 @@ public interface VisitasDao {
      * @return a list of 12 elements with the visits by month
      */
     public List<Integer> visitsInAYear(int year);
-
+    
+    /**
+     * Calculate the number of visits in the past 12 months up to the month in parameter
+     *
+     * @param month number of the month in a year
+     * @param year the year in 4 digits in a gregorian calendar
+     * @returna list of 12 elements with the visits by month
+     */
+    public List<Integer> visitsUpToAMonth(int month, int year);
+    
     /**
      * Get the Visita of an id.
      * @param id

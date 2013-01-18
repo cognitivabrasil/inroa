@@ -151,4 +151,37 @@ public class StatisticsIT extends AbstractDaoTest {
                 
         assertEquals(confirmation, v.visitsInAYear(2012));
     }
+    
+    @Test 
+    public void testVisitsUpToAMonth() {
+        
+        List confirmation = new ArrayList<Integer>();
+//        confirmation.add(2); //jan 12
+//        confirmation.add(1);
+//        confirmation.add(2);
+//        confirmation.add(1);
+//        confirmation.add(0);
+//        confirmation.add(1);
+//        confirmation.add(2);
+//        confirmation.add(0);
+        confirmation.add(0); //set 12
+        confirmation.add(1);
+        confirmation.add(0);
+        confirmation.add(3); //dez 12
+        
+        confirmation.add(2); //jan 13
+        confirmation.add(1);
+        confirmation.add(2);
+        confirmation.add(1);
+        confirmation.add(0);
+        confirmation.add(1);
+        confirmation.add(2);
+        confirmation.add(0); //ago 13
+//        confirmation.add(0);
+//        confirmation.add(1);
+//        confirmation.add(0);
+//        confirmation.add(3); //dez 13
+                
+        assertEquals(confirmation, v.visitsUpToAMonth(8, 2013));
+    }
 }
