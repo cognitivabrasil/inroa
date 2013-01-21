@@ -14,8 +14,11 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.util.StopWatch;
 
 import feb.data.interfaces.Paginavel;
+import org.apache.log4j.Logger;
 
 class RepositorioPaginator implements Iterator<List<DocumentoReal>> {
+    
+        static Logger log = Logger.getLogger(RepositorioPaginator.class.getName());
 	int current = 0;
 	int maxResults = 100;
 	int total = 0;
@@ -51,7 +54,7 @@ class RepositorioPaginator implements Iterator<List<DocumentoReal>> {
 		
 		List<DocumentoReal> l = c.list();
 		t.stop();
-		System.out.println(t.prettyPrint());
+                log.trace(t.prettyPrint());		
 		
 		return l;
 	}

@@ -41,8 +41,7 @@ public class XsltTest {
 		try {
         		String s = XSLTUtil.transformFilename(foo_xml, foo_xsl);
 			oai = OaiOBAA.fromString(s);
- 		} catch (Exception ex) {
-      			XSLTUtil.handleException(ex);
+ 		} catch (Exception ex) {      			
 			fail("Shoudln't throw exception");
  		}
 	}

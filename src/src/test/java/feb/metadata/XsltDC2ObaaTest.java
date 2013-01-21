@@ -51,8 +51,7 @@ public class XsltDC2ObaaTest {
         		out.print(s);
         		out.close();
 			oai = OaiOBAA.fromString(s);
- 		} catch (Exception ex) {
-      			XSLTUtil.handleException(ex);
+ 		} catch (Exception ex) {      			
 			fail("Shoudln't throw exception");
  		}
 	}

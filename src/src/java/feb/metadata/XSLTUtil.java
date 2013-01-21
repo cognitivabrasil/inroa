@@ -54,11 +54,6 @@ public class XSLTUtil {
         }
     }
 
-	public static void handleException(Exception ex) {
-
-            System.err.println("EXCEPTION: " + ex);     	
-}
-
 	/** 
 	 * Transforms from filenames
 	 * @param sourceXml xml filename do be transformed

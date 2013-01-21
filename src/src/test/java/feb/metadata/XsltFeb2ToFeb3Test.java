@@ -51,8 +51,7 @@ public class XsltFeb2ToFeb3Test {
         		String s = XSLTUtil.transform(xml, xsl);
 //        		System.out.println(s);
 			oai = OaiOBAA.fromString(s);
- 		} catch (Exception ex) {
-      			XSLTUtil.handleException(ex);
+ 		} catch (Exception ex) {      			
 			throw new RuntimeException(ex);
  		}
 	}
