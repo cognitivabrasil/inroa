@@ -252,7 +252,6 @@ src/src/java/feb/exceptions/FederationException.java -text
 src/src/java/feb/exceptions/RepositoryException.java -text
 src/src/java/feb/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text
 src/src/java/feb/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
-src/src/java/feb/ferramentaBusca/LRU.java -text
 src/src/java/feb/ferramentaBusca/Recuperador.java -text
 src/src/java/feb/ferramentaBusca/indexador/Indexador.java -text
 src/src/java/feb/ferramentaBusca/indexador/package.html -text
