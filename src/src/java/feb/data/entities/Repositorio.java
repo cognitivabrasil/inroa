@@ -44,6 +44,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     private transient Session session;
     private Date dataOrigem;
     private Date dataOrigemTemp;
+    private static final long MILLISECONDS_PER_DAY = 24L*3600*1000;
 
     public Repositorio() {
         // ApplicationContext ctx =
@@ -262,7 +263,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
             return null;
         } else {
             return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao
-                    * 24 * 60 * 60 * 1000); // soma a periodicidade
+                    * MILLISECONDS_PER_DAY); // soma a periodicidade
         }
     }
 
