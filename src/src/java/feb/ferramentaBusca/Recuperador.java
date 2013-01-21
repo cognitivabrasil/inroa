@@ -133,7 +133,7 @@ public class Recuperador {
     }
 
     //confederacao
-    protected String buscaConfederacao(ArrayList<String> tokensConsulta, String finalSQL, boolean autor) {
+    protected String buscaConfederacao(List<String> tokensConsulta, String finalSQL, boolean autor) {
 
         if (autor) {                        // if is a author request
             if (tokensConsulta.isEmpty()) {   // see if have a query                
@@ -181,7 +181,7 @@ public class Recuperador {
     }
 
     //replocal
-    protected String busca_repLocal(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
+    protected String busca_repLocal(List<String> tokensConsulta, Consulta c, String finalSQL) {
 
         String consultaSql = "";
         if (c.hasAuthor()) {                     // if is a author request
@@ -232,7 +232,7 @@ public class Recuperador {
     }
 
     //subfed
-    protected String busca_subfed(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
+    protected String busca_subfed(List<String> tokensConsulta, Consulta c, String finalSQL) {
         String consultaSql;
         if (c.hasAuthor()) {                    // if is a author request
             if (tokensConsulta.isEmpty()) {
@@ -283,7 +283,7 @@ public class Recuperador {
     }
 
     //repsubfed
-    protected String busca_subRep(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
+    protected String busca_subRep(List<String> tokensConsulta, Consulta c, String finalSQL) {
 
         String consultaSql = "";
         if (c.hasAuthor()) {                     // if is a author request
@@ -335,7 +335,7 @@ public class Recuperador {
     }
 
     //replocal + subfed
-    protected String busca_repLocal_subfed(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
+    protected String busca_repLocal_subfed(List<String> tokensConsulta, Consulta c, String finalSQL) {
 
         String consultaSql;
         if (c.hasAuthor()) {                     // if is a author request
@@ -404,7 +404,7 @@ public class Recuperador {
     }
 
     //replocal + repsubfed
-    protected String busca_repLocal_subrep(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
+    protected String busca_repLocal_subrep(List<String> tokensConsulta, Consulta c, String finalSQL) {
 
         String consultaSql;
         if (c.hasAuthor()) {                    // if is an author request
@@ -461,7 +461,7 @@ public class Recuperador {
     }
 
     //subfed + repsubfed
-    protected String busca_subfed_subrep(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
+    protected String busca_subfed_subrep(List<String> tokensConsulta, Consulta c, String finalSQL) {
 
         String consultaSql = "";
         if (c.hasAuthor()) {                   // if is a author request
@@ -518,7 +518,7 @@ public class Recuperador {
     }
 
     //replocal + subfed + repsubfed
-    protected String busca_repLocal_subfed_subrep(ArrayList<String> tokensConsulta, Consulta c, String finalSQL) {
+    protected String busca_repLocal_subfed_subrep(List<String> tokensConsulta, Consulta c, String finalSQL) {
 
         String consultaSql = "";
         if (c.hasAuthor()) {                   // if is a author request

@@ -8,6 +8,7 @@ import feb.spring.ApplicationContextProvider;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
@@ -64,7 +65,7 @@ public class XMLtoDB {
      *
      */
     public int saveXML(
-            ArrayList<String> caminhoXML,
+            List<String> caminhoXML,
             Repositorio r,
             Indexador indexar) throws Exception {
 
