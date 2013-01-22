@@ -155,7 +155,10 @@
 
     <body>          
        <div id="estatisticas">
-            <div class="acessos">
+           <div class="caixaAzul">
+               <span class="left bold">Número total de objetos:</span> ${totalObj}
+           </div>
+            <div class="caixaAzul">
                 <table class="repositorios-table zebraTable acessos">
                     <caption class="estatisticasTitulo">10 Objetos mais acessados</caption>            
                     <tr><th> T&iacute;tulo do Objeto</th><th>N&uacute;mero de acessos</th><th>Federa&ccedil;&atilde;o / Reposit&oacute;rio</th></tr>
@@ -166,7 +169,7 @@
                 <div id="chart2" widith="100%" style="height:350px;"></div>
             </div>
 
-            <div class="repsGrande">
+            <div class="repsGrande caixaAzul">
                 <div class="estatisticasTitulo">Repositórios</div>
                 <table class="repositorios-table zebraTable">
                     <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>            
@@ -179,7 +182,7 @@
             </div>
 
 
-            <div class="fedsGrande">
+            <div class="fedsGrande caixaAzul">
                 <div class="estatisticasTitulo">Federações</div>
                 <table class="repositorios-table zebraTable">
                     <tr><th> Federa&ccedil;&atilde;o</th><th>N&uacute;mero de objetos</th></tr>            

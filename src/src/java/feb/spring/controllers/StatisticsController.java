@@ -1,6 +1,7 @@
 package feb.spring.controllers;
 
 import feb.data.entities.*;
+import feb.data.interfaces.DocumentosDAO;
 import feb.data.interfaces.DocumentosVisitasDao;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
@@ -35,9 +36,13 @@ public final class StatisticsController {
     private DocumentosVisitasDao docVisDao;
     @Autowired
     private SubFederacaoDAO fedDao;
+    @Autowired
+    private DocumentosDAO docDao;
 
     @RequestMapping("/")
     public String statistics(Model model) {
+        
+        model.addAttribute("totalObj",docDao.getSize());
 
         List repList = repDao.getAll();
         Estatistica e = new Estatistica();
