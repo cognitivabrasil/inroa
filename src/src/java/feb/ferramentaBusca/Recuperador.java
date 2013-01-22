@@ -137,8 +137,8 @@ public class Recuperador {
 
         if (autor) {                        // if is a author request
             if (tokensConsulta.isEmpty()) {   // see if have a query                
-                String consultaSql = "SELECT d.* FROM documentos d, autores a WHERE " + finalSQL;
-                return consultaSql;
+                
+                return ("SELECT d.* FROM documentos d, autores a WHERE " + finalSQL);
 
             } else {
                 String consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
