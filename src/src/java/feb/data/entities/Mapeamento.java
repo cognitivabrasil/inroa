@@ -103,5 +103,14 @@ public class Mapeamento implements MetadataConversorInterface, FebDomainObject {
     public void setXmlSample(String xmlSample) {
         this.xmlSample = xmlSample;
     }
+    
+    /**
+     * Retorna um boolean informando se o mapeamento é interno ou não. 
+     * Se for um mapeamento interno ele não poderá ser editado pelo usuário.
+     * @return true se o mapeamento pode ser editado ou false caso contrário.
+     */
+    public boolean isEditable(){
+        return id==null || id>99;
+    }
 
 }

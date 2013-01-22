@@ -61,7 +61,13 @@
             <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
 
                 <div class="editar">
-                    <a href="./${mapeamento.id}/edit">Editar</a>
+                    <c:choose>
+                        <c:when test="${mapeamento.editable}">
+                            <a href="./${mapeamento.id}/edit">Editar</a>
+                        </c:when>
+                            <c:otherwise><span class="textoErro">N&atilde;o pode ser editado.</span></c:otherwise>
+                    </c:choose>
+                    
                 </div>
             </security:authorize>
 

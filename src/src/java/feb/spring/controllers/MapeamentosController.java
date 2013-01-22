@@ -19,6 +19,7 @@ import feb.data.interfaces.MapeamentoDAO;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.spring.dtos.MapeamentoDto;
 import feb.spring.validador.MapeamentoValidator;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -98,7 +99,6 @@ public final class MapeamentosController {
             @ModelAttribute("mapeamento") MapeamentoDto map,
             BindingResult result) {
     	
-
     	if (map == null || map.getPadraoMetadados() == null) {
 			model.addAttribute("message", "Ocorreu um erro com a sua requisição." +
 							"Uma causa possível é o XML de exemplo ser muito grande. " +
@@ -130,9 +130,14 @@ public final class MapeamentosController {
      * @param id the user id
      */
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-    public String userEditShow(@PathVariable Integer id, Model model) {
-
-        model.addAttribute("mapeamento", new MapeamentoDto(mapDao.get(id)));
+    public String userEditShow(@PathVariable Integer id, Model model, HttpServletResponse response) {
+        Mapeamento map = mapDao.get(id);
+        if(!map.isEditable()){
+            response.setStatus(401);
+            log.warn("Algum usuário tentou forçar a edição de um mapeamento interno.");
+            return "";
+        }
+        model.addAttribute("mapeamento", new MapeamentoDto(map));
         model.addAttribute("metadataList", getMetadataListForSelect(padraoDao));
 
         return "admin/mapeamentos/form";
