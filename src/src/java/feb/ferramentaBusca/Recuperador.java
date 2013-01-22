@@ -121,10 +121,10 @@ public class Recuperador {
         consultaSql = consultaSql.replace("SELECT d.*", "SELECT COUNT(DISTINCT(d.id))");
 
         t.start("QuerySize");
-        consultaSql = consultaSql.substring(0, consultaSql.indexOf("GROUP"));        
+        consultaSql = consultaSql.substring(0, consultaSql.indexOf("GROUP"));
         BigInteger nResult = (BigInteger) s.createSQLQuery(consultaSql).uniqueResult();
         t.stop();
-        
+
         log.trace(t.prettyPrint());
 
         consulta.setSizeResult(nResult.intValue());
@@ -135,48 +135,57 @@ public class Recuperador {
     //confederacao
     protected String buscaConfederacao(List<String> tokensConsulta, String finalSQL, boolean autor) {
 
+        StringBuilder consultaSql = new StringBuilder();
+        
         if (autor) {                        // if is a author request
             if (tokensConsulta.isEmpty()) {   // see if have a query                
-                
+
                 return ("SELECT d.* FROM documentos d, autores a WHERE " + finalSQL);
 
-            } else {
-                String consultaSql = "SELECT d.* FROM r1weights r1w, documentos d, autores a"
-                        + " WHERE r1w.documento_id=d.id "
-                        + " AND (r1w.token=";
+            } else {                
+
+                consultaSql.append("SELECT d.* FROM r1weights r1w, documentos d, autores a WHERE r1w.documento_id=d.id AND (r1w.token=");
 
                 for (int i = 0; i < tokensConsulta.size(); i++) {
-                    String token = tokensConsulta.get(i);
-                    if (i == tokensConsulta.size() - 1) {
-                        consultaSql += "'" + token;
-                    } else {
-                        consultaSql += "'" + token + "' OR r1w.token=";
-                    }
 
+                    String token = tokensConsulta.get(i);
+                    consultaSql.append("'");
+
+                    if (i == tokensConsulta.size() - 1) {
+                        consultaSql.append(token);
+                    } else {
+                        consultaSql.append(token);
+                        consultaSql.append("' OR r1w.token=");
+                    }
                 }
-                consultaSql += finalSQL;
-                return consultaSql;
+                consultaSql.append(finalSQL);
+
+                return (consultaSql.toString());
             }
         } else {
-            String consultaSql = "SELECT d.* FROM r1weights r1w, documentos d"
+            consultaSql.append("SELECT d.* FROM r1weights r1w, documentos d"
                     + " WHERE r1w.documento_id=d.id "
-                    + " AND (r1w.token=";
+                    + " AND (r1w.token=");
 
 
             if (tokensConsulta.isEmpty()) {
-                consultaSql += "'" + finalSQL;
+                consultaSql.append("'");
+                consultaSql.append(finalSQL);
             }
 
             for (int i = 0; i < tokensConsulta.size(); i++) {
                 String token = tokensConsulta.get(i);
                 if (i == tokensConsulta.size() - 1) {
-                    consultaSql += "'" + token;
+                    consultaSql.append("'");
+                    consultaSql.append(token);
                 } else {
-                    consultaSql += "'" + token + "' OR r1w.token=";
+                    consultaSql.append("'");
+                    consultaSql.append(token);
+                    consultaSql.append("' OR r1w.token=");
                 }
 
             }
-            return consultaSql + finalSQL;
+            return (consultaSql.append(finalSQL).toString());
         }
     }
 

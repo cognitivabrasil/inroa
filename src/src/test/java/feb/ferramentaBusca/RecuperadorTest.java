@@ -86,7 +86,7 @@ public class RecuperadorTest {
         tokensConsulta.add("educa");
         String sqlAutorComQuery = "') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Lília Ferreira Lobo')) DESC, SUM (weight) DESC;";
 
-        assertEquals("SELECT d.* FROM r1weights r1w, documentos d, autores a WHERE r1w.documento_id=d.id  AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Lília Ferreira Lobo')) DESC, SUM (weight) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorComQuery, true));
+        assertEquals("SELECT d.* FROM r1weights r1w, documentos d, autores a WHERE r1w.documento_id=d.id AND (r1w.token='educa') AND a.documento=d.id AND a.nome~@@'Lília Ferreira Lobo' GROUP BY d.id, a.nome ORDER BY (qgram(a.nome, 'Lília Ferreira Lobo')) DESC, SUM (weight) DESC;", r.buscaConfederacao(tokensConsulta, sqlAutorComQuery, true));
 
     }
 

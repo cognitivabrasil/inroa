@@ -17,15 +17,12 @@ import metadata.Header;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.metamodel.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StopWatch;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import feb.data.entities.SubFederacao;
 import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.SubFederacaoDAO;
 import feb.metadata.XSLTUtil;
 
 /**
