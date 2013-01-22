@@ -18,7 +18,13 @@
         <c:url var="favicon" value="/imagens/favicon.ico" />
         <c:url var="css" value="/css/padrao.css" />
         <c:url var="validateJs" value="/scripts/validatejs.js" />
+        <c:url var="root" value="/" />
+        <script>rootUrl = ${root};</script>
 
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
+        <c:url var="validateOAI" value="/scripts/validateOAI.js" />
+        <script type="text/javascript" src="${validateOAI}"></script>
 
         <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="${css }" type="text/css" />
@@ -45,6 +51,7 @@
     </head>
 
     <body>
+        <input type="hidden" id="federation" value="true" />
         <div id="page">
 
             <div class="subTitulo-center">&nbsp;Editanto
@@ -60,10 +67,10 @@
                     <!--Aqui o script colocara a mensagem de erro, se ocorrer-->
                 </div>
                 <div class="LinhaEntrada">
-                    <form:errors path="name" cssClass="ValueErro" />
+                    <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Label">Nome:</div>
                     <div class="Value">
-                        <form:input path="name" maxlength="45"
+                        <form:input path="nome" maxlength="45"
                                     onFocus="this.className='inputSelecionado'"
                                     onBlur="this.className=''" />
                     </div>
@@ -94,6 +101,8 @@
                         <form:input path="url" maxlength="200"
                                     onFocus="this.className='inputSelecionado'"
                                     onBlur="this.className=''" />
+                        &nbsp;
+                        <div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
                 </div>
                 <input type="hidden" name="id" value="${federation.id}" />

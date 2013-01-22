@@ -42,15 +42,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-<!--    <servlet>
-        <servlet-name>VerificaLinkOAI</servlet-name>
-        <servlet-class>feb.ferramentaAdministrativa.validarOAI.VerificaLinkOAI</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>VerificaLinkOAI</servlet-name>
-        <url-pattern>/admin/VerificaLinkOAI</url-pattern>
-    </servlet-mapping>-->
- 
 
     
     <!-- Servlet definitions for the servlets that make up
@@ -167,7 +158,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     
-<!--    <error-page>
+    <error-page>
         <error-code>404</error-code>
         <location>/errors/error404.jspx</location>
     </error-page>
@@ -175,5 +166,5 @@
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/errors/errorGeneric.jspx</location>
-    </error-page>-->
+    </error-page>
 </web-app>

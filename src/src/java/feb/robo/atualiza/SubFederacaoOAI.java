@@ -113,13 +113,7 @@ public class SubFederacaoOAI {
      * de exce&ccedil;&otilde;es do processo de harverter, parser e
      * inser&ccedil;&atilde;o na base.
      *
-     * @param idSubfed Id da subfedera&ccedil;&atilde;o.
-     * @param url Endere&ccedil;o http da subfedera&ccedil;&atilde;o que
-     * responde por OAI-PMH. Ex: http://feb.ufrgs.br/feb/OAIHander
-     * @param ultimaAtualizacao Data em que a subfedera&ccedil;&atilde;o sofreu
-     * a &uacute;ltima atualiza&ccedil;&atilde;o.
-     * @param nome Nome da subfedera&ccedil;&atilde;o.
-     * @param con Conex&atilde;o com a base de dados local.
+     * @param subFed classe da subfedera&ccedil;&atilde;o.
      * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar
      * os dados para o indice durante a atualiza&ccidil;&atilde;o dos metadados.
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi

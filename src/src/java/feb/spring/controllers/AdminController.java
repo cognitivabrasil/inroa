@@ -2,6 +2,7 @@ package feb.spring.controllers;
 
 import feb.data.entities.PadraoMetadados;
 import feb.data.entities.Repositorio;
+import feb.data.entities.SubFederacao;
 import feb.data.entities.Usuario;
 import feb.data.interfaces.MapeamentoDAO;
 import feb.data.interfaces.PadraoMetadadosDAO;
@@ -236,7 +237,14 @@ public final class AdminController {
     
     @RequestMapping("verificaLinkOAI")
     public @ResponseBody
-    String verifyOAI(@RequestParam(value = "link", required = true) String link) {
+    String verifyOAI(@RequestParam(value = "link", required = true) String link,
+                    @RequestParam boolean federation) {
+        if(federation){
+            SubFederacao fed = new SubFederacao();
+            fed.setUrl(link);
+            link = fed.getUrlOAIPMH();
+        }
+        System.out.println("\n\n\n link: "+link+"\n\n\n");
         return String.valueOf(VerificaLinkOAI.verificaLinkOAIPMH(link));
     }
     //------FIM FUNCOES PARA AJAX------------

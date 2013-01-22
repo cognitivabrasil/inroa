@@ -28,15 +28,7 @@ public class Objetos {
      * e o m&eacute;todo respons&aacute;vel por efetuar o parser nos xmls e inserir na
      * base de dados.
      *
-     * @param endereco endere&ccedil;o http da subfedera&ccedil;&atilde;o que
-     * responde por OAI-PMH. Ex: http://feb.ufrgs.br/feb/OAIHander
-     * @param dataInicial data em que a subfedera&ccedil;&atilde;o sofreu a
-     * &uacute;ltima atualiza&ccedil;&atilde;o
-     * @param nomeSubfed nome da subfedera&ccedil;&atilde;o
-     * @param metadataPrefix metadataPrefix da subfedera&ccedil;&atilde;o
-     * @param set nome do conjunto que restringir&aacute; a consulta. Nome de um
-     * reposit&oacute;rios da subfedera&ccedil;&atilde;o.
-     * @param con Conex&atilde;o com a base de dados local
+     * @param subfed classe da subfedera&ccedil;&atilde;o
      * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar
      * os dados para o indice durante a atualiza&ccidil;&atilde;o dos metadados
      * @throws Exception

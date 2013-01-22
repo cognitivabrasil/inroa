@@ -14,13 +14,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
+
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
+        <c:url var="validateOAI" value="/scripts/validateOAI.js" />
+        <script type="text/javascript" src="${validateOAI}"></script>
+
         <c:url var="favicon" value="/imagens/favicon.ico" />
         <c:url var="css" value="/css/padrao.css" />
         <c:url var="validateJs" value="/scripts/validatejs.js" />
         <c:url var="funcoesJs" value="/scripts/funcoes.js" />
 
         <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
-
+        
         <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="${css }" type="text/css" />
         <script type="text/javascript" src="${validateJs }"></script>
@@ -31,9 +37,9 @@
         <script type="text/javascript">
             var myForm = new Validate();
             myForm.addRules({
-                id : 'nome',
+                id : 'name',
                 option : 'required',
-                error : '* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'
+                error : '* Voc&ecirc; deve informar o nome da federa&ccedil;&atilde;o!'
             });
             myForm.addRules({
                 id : 'descricao',
@@ -49,6 +55,7 @@
         </script>
     </head>
     <body>
+        <input type="hidden" id="federation" value="true" />
         <div id="page">
 
             <div class="subTitulo-center">&nbsp;Entre com as
@@ -65,10 +72,10 @@
                        acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="LinhaEntrada">
-                    <form:errors path="name" cssClass="ValueErro" />
+                    <form:errors path="nome" cssClass="ValueErro" />
                     <div class="Label">Nome:</div>
                     <div class="Value">
-                        <form:input path="name" maxlength="45"
+                        <form:input path="nome" maxlength="45"
                                     onFocus="this.className='inputSelecionado'"
                                     onBlur="this.className=''" />
                     </div>
@@ -82,15 +89,7 @@
                                     onBlur="this.className=''" />
                     </div>
                 </div>
-                <div class="LinhaEntrada">
-                    <form:errors path="version" cssClass="ValueErro" />
-                    <div class="Label">Versão:</div>
-                    <div class="Value">
-                        <form:input path="version" maxlength="455"
-                                    onFocus="this.className='inputSelecionado'"
-                                    onBlur="this.className=''" />
-                    </div>
-                </div>
+                
                 <div class="LinhaEntrada">
                     <form:errors path="url" cssClass="ValueErro" />
                     <div class="Comentario">Ex: http://feb.ufrgs.br/feb</div>
@@ -99,6 +98,8 @@
                         <form:input path="url" maxlength="200"
                                     onFocus="this.className='inputSelecionado'"
                                     onBlur="this.className=''" />
+                        &nbsp;
+                        <div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
                 </div>
 
