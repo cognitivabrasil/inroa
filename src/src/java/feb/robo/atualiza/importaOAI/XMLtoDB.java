@@ -102,18 +102,4 @@ public class XMLtoDB {
             return updated;
         }
     }
-
-    public void testeLume(DocumentosDAO docDao, RepositoryDAO repDao) {
-        String inputXmlFile = "/home/marcos/NetBeansProjects/feb/src/test/java/metadata/lume_erro_null_documento.xml";
-
-
-        Repositorio r = repDao.get("LUME");
-
-        Importer imp = new Importer();
-        imp.setInputFile(new File(inputXmlFile));
-        imp.setRepositorio(r);
-        imp.setDocDao(docDao);
-        imp.setRepDao(repDao);
-        imp.update();
-    }
 }
