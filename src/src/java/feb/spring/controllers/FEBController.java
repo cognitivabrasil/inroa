@@ -5,6 +5,7 @@ import feb.data.entities.DocumentoReal;
 import feb.data.entities.DocumentosVisitas;
 import feb.data.entities.Visita;
 import feb.data.interfaces.*;
+import feb.ferramentaAdministrativa.validarOAI.VerificaLinkOAI;
 import feb.ferramentaBusca.Recuperador;
 import feb.robo.atualiza.importaOAI.XMLtoDB;
 import feb.services.TagCloudService;
@@ -261,12 +262,6 @@ public final class FEBController {
     public @ResponseBody
     String version() {
         return serverInfo.getFullVersion();
-    }
-
-    @RequestMapping(value = "teste", method = RequestMethod.GET)
-    public void testeLume() {
-        XMLtoDB test = new XMLtoDB();
-        test.testeLume(docDao, repDao);
     }
 
     /**

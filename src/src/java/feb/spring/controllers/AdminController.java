@@ -9,6 +9,7 @@ import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.TokensDao;
 import feb.data.interfaces.UsuarioDAO;
+import feb.ferramentaAdministrativa.validarOAI.VerificaLinkOAI;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.spring.FebConfig;
 import feb.spring.ServerInfo;
@@ -56,7 +57,8 @@ public final class AdminController {
     private ServerInfo serverInfo;
     @Autowired
     private FebConfig conf;
-    @Autowired TokensDao tokensDao;
+    @Autowired
+    TokensDao tokensDao;
     static Logger log = Logger.getLogger(AdminController.class);
 
     public AdminController() {
@@ -77,7 +79,6 @@ public final class AdminController {
     public String admin2(Model model) {
         return admin(model);
     }
-
 
     @RequestMapping("/sair")
     public String sair(Model model, HttpSession session) {
@@ -110,14 +111,14 @@ public final class AdminController {
                 model.addAttribute("conf", febConf);
                 return "admin/alterDB";
             } else {
-                try{
-                	conf.updateFrom(febConf);
+                try {
+                    conf.updateFrom(febConf);
                     conf.save();
                     return "redirect:fechaRecarrega";
-                }catch(IOException i){
+                } catch (IOException i) {
                     log.error("Erro ao alterar as informações da base de dados.", i);
                     model.addAttribute("conf", febConf);
-                    model.addAttribute("erro", "Não foi possível escrever as configurações no arquivo: /etc/feb/feb.properties \n Possivelmente os usuário do tomcat não tem permissão de escrita nesse diretório." );
+                    model.addAttribute("erro", "Não foi possível escrever as configurações no arquivo: /etc/feb/feb.properties \n Possivelmente os usuário do tomcat não tem permissão de escrita nesse diretório.");
                     return "admin/alterDB";
                 }
             }
@@ -144,7 +145,7 @@ public final class AdminController {
         indexador.indexarTodosRepositorios();
         model.addAttribute("fim", "Índice recalculado com sucesso!");
         Long fim = System.currentTimeMillis();
-        log.debug("Tempo total para limpar e recalcular o indice: " + Operacoes.formatTimeMillis(fim-inicio));
+        log.debug("Tempo total para limpar e recalcular o indice: " + Operacoes.formatTimeMillis(fim - inicio));
         return "admin/recalcularIndice";
     }
 
@@ -199,7 +200,7 @@ public final class AdminController {
     public String fechaRecarrega() {
         return "admin/fechaRecarrega";
     }
-
+    
     //------FUNCOES PARA AJAX------------
     @RequestMapping("/mapeamentos/listaMapeamentoPadraoSelecionado")
     public String listaMapSelecionadoAjax(
@@ -231,6 +232,12 @@ public final class AdminController {
         } catch (Exception e) {
             return "Ocorreu um erro ao excluir. Exception:" + e.toString();
         }
+    }
+    
+    @RequestMapping("verificaLinkOAI")
+    public @ResponseBody
+    String verifyOAI(@RequestParam(value = "link", required = true) String link) {
+        return String.valueOf(VerificaLinkOAI.verificaLinkOAIPMH(link));
     }
     //------FIM FUNCOES PARA AJAX------------
 }

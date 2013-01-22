@@ -463,6 +463,7 @@ src/src/main/webapp/scripts/shBrushXml.js -text
 src/src/main/webapp/scripts/shCore.js -text
 src/src/main/webapp/scripts/tabsNavigator.js -text
 src/src/main/webapp/scripts/tagCloud.js -text
+src/src/main/webapp/scripts/validateOAI.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/main/webapp/scripts/zebraScript.js -text
 src/src/main/webapp/tagCloud.jsp -text

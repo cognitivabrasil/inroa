@@ -24,12 +24,19 @@ Primeira etapa do cadastro de um repositorio
         <c:url var="validateJs" value="/scripts/validatejs.js" />
         <c:url var="funcoesJs" value="/scripts/funcoes.js" />
 
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
+        <c:url var="validateOAI" value="/scripts/validateOAI.js" />
+        <script type="text/javascript" src="${validateOAI}"></script>
+
+
         <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
 
         <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="${css }" type="text/css" />
         <script type="text/javascript" src="${validateJs }"></script>
         <script type="text/javascript" src="${funcoesJs }"></script>
+
         <c:url var="root" value="/" />
         <script>setRootUrl(${root});</script>
 
@@ -45,12 +52,12 @@ Primeira etapa do cadastro de um repositorio
             myForm.addRules({id : 'periodicidadeAtualizacao', option : 'required', error : '* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
             myForm.addRules({id : 'mapeamento.id', option : 'required', error : '* Deve ser selecionado um mapeamento!'});
             myForm.addRules({id : 'metadataPrefix', option : 'required', error : '* Deve ser informado o MetadataPrefix!' });
-            myForm.addRules({id : 'confereLinkOAI', option : 'required', error : '* A url informada n&atilde;o responde ao protocolo OAI-PMH!'});
+            myForm.addRules({id : 'url', option : 'required', error : '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
         </script>
 
     </head>
     <body
-        onload="verificaLinkOnLoad(document.getElementById('url'), document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI')); verificaMapOnLoad('${padraoSelecionado}', '${mapSelecionado}', 'resultado');">
+        onload="verificaMapOnLoad('${padraoSelecionado}', '${mapSelecionado}', 'resultado');">
 
         <div id="page">
 
@@ -87,14 +94,10 @@ Primeira etapa do cadastro de um repositorio
                     <form:errors path="url" cssClass="ValueErro" />
                     <div class="Label">URL que responde OAI-PMH:</div>
                     <div class="Value">
-                        <form:input path="url" maxlength="200"
-                                    
-                                    onBlur="this.className=''; verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))" />
+                        <form:input path="url" maxlength="200"/>
                         &nbsp;
                         <div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
-                    <input type="hidden" id="confereLinkOAI"
-                           value="${param.confereLinkOAI}">
                 </div>
 
                 <div class="LinhaEntrada">
@@ -114,8 +117,8 @@ Primeira etapa do cadastro de um repositorio
                     <div class="Label">Padr&atilde;o de metadados utilizado:</div>
                     <div class="Value">
                         <select name="padraoMetadados.id" id="padraoMetadados"
-                                
-                                
+
+
                                 onChange="selecionaMapeamento('resultado', this.value, 0);">
 
                             <c:if test="${empty padraoSelecionado || padraoSelecionado==0}">

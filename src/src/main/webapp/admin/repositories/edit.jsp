@@ -21,7 +21,12 @@
         <c:url var="css" value="/css/padrao.css" />
         <c:url var="validateJs" value="/scripts/validatejs.js" />
         <c:url var="funcoesJs" value="/scripts/funcoes.js" />
-
+        
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
+        <c:url var="validateOAI" value="/scripts/validateOAI.js" />
+        <script type="text/javascript" src="${validateOAI}"></script>
+        
         <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
         <link rel="StyleSheet" href="${css }" type="text/css"/>
         <script language="JavaScript" type="text/javascript" src="${funcoesJs }"></script>
@@ -44,7 +49,7 @@
                 myForm.addRules({id:'metadataPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
                 myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
                 myForm.addRules({id:'periodicidadeAtualizacao',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
-                myForm.addRules({id : 'confereLinkOAI', option : 'required', error : '* A url informada n&atilde;o responde ao protocolo OAI-PMH!'});
+                myForm.addRules({id : 'url', option : 'required', error : '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
             </script>
 
             <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.nome}</div>
@@ -84,10 +89,9 @@
                         URL que responde OAI-PMH:
                     </div>
                     <div class="Value">
-                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" onBlur="verificaLinkOAI(this.value, this, document.getElementById('resultadoTesteOAI'), document.getElementById('confereLinkOAI'))" />
+                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" />
                         &nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
-                    <input type="hidden" id="confereLinkOAI" value="ok">
                 </div>
 
                 <div class="LinhaEntrada">
