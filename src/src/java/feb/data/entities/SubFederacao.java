@@ -59,18 +59,23 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		if (this == obj) {
+                return true;
+            }
+		if (obj == null) {
+                return false;
+            }
+		if (getClass() != obj.getClass()) {
+                return false;
+            }
 		SubFederacao other = (SubFederacao) obj;
 		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
+			if (other.id != null) {
+                        return false;
+                    }
+		} else if (!id.equals(other.id)) {
+                return false;
+            }
 		return true;
 	}
 
@@ -201,9 +206,6 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
         return s != null && !(s.equals(""));
     }
 
-    private boolean notBlank(Set s) {
-        return s != null && !(s.isEmpty());
-    }
 
     /**
      * Updates the repository with the same with the data in r2 safely, ignoring

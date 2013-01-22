@@ -44,7 +44,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     private transient Session session;
     private Date dataOrigem;
     private Date dataOrigemTemp;
-    private static final long MILLISECONDS_PER_DAY = 24L*3600*1000;
+    private static final long MILLISECONDS_PER_DAY = 24L * 3600 * 1000;
 
     public Repositorio() {
         // ApplicationContext ctx =
@@ -92,6 +92,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     public void setNome(String nome) {
         this.name = nome;
     }
+
     /**
      * @return the name
      */
@@ -151,7 +152,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         return DataAccessUtils.intResult(getSession().createQuery(
                 "select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").setParameter("rep", this).setParameter("deleted", false).list());
     }
-        
+
     @Override
     public Integer getVisits() {
         return DataAccessUtils.intResult(getSession().createQuery(
@@ -201,7 +202,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
 
     public void setUltimaAtualizacao(Date ultimaAtualizacao) {
         this.ultimaAtualizacao = ultimaAtualizacao;
-        if(this.dataOrigemTemp!=null){
+        if (this.dataOrigemTemp != null) {
             this.dataOrigem = this.dataOrigemTemp;
         }
     }
@@ -240,7 +241,6 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         this.dataOrigemTemp = dataOrigemTemp;
     }
 
-
     public String getNamespace() {
         return namespace;
     }
@@ -274,7 +274,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
      * updated.
      */
     public boolean getIsOutdated() {
-        if (getProximaAtualizacao()==null || getProximaAtualizacao().before(new Date())) {
+        if (getProximaAtualizacao() == null || getProximaAtualizacao().before(new Date())) {
             return true;
         } else {
             return false;
@@ -453,17 +453,8 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         return session;
     }
 
-    /**
-     * @param session the session to set
-     */
-    private void setSession(Session session) {
-        this.session = session;
+    @Override
+    public String toStringDetailed() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
     }
-
-	
-		@Override
-		public String toStringDetailed() {
-			return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
-		}
-	
 }
