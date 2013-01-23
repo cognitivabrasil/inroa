@@ -7,7 +7,7 @@ $(function() {
     
         if(url != ""){
             var imgTrue = "<img class='imgchecklink' src='"+rootUrl+"imagens/check.png' border='0' alt='Link correto' align='middle'>";
-            var imgFalse = "<img src='"+rootUrl+"imagens/error.png' border='0' alt='Link quebrado' align='middle'>";
+            var imgFalse = "<img class='imgchecklink' src='"+rootUrl+"imagens/error.png' border='0' alt='Link quebrado' align='middle'>";
         
             $.getJSON(rootUrl+"/verificaURL?url="+url, "", function(resultado){
                 console.log("resultado: "+resultado);    
