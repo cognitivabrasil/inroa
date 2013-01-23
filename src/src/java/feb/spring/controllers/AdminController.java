@@ -244,7 +244,6 @@ public final class AdminController {
             fed.setUrl(link);
             link = fed.getUrlOAIPMH();
         }
-        System.out.println("\n\n\n link: "+link+"\n\n\n");
         return String.valueOf(VerificaLinkOAI.verificaLinkOAIPMH(link));
     }
     //------FIM FUNCOES PARA AJAX------------

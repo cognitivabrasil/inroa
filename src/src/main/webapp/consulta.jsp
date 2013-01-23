@@ -14,11 +14,18 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
+        <c:url var="validateURL" value="/scripts/testUrlActive.js" />
+        <script type="text/javascript" src="${validateURL}"></script>
+        
         <c:url var="funcoesjs" value="/scripts/funcoes.js" />
         <script language="JavaScript" type="text/javascript" src="${funcoesjs}"></script>
         <c:url var="root" value="/" />
         <script>setRootUrl(${root});</script>
-
+        
+        
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -127,7 +134,7 @@
                                                 <div class="atributo"> Localiza&ccedil;&atilde;o:
                                                     <c:forEach var="localizacao" items="${doc.locationHttp}">
                                                         <c:if test="${localizacao.value}">
-                                                            <div class="atributo"><a href="${localizacao.key}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao.key}</a></div>
+                                                            <div class="atributo"><a class="verifyUrl" href="${localizacao.key}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao.key}</a></div>
                                                         </c:if>
                                                     </c:forEach>
                                                 </div>

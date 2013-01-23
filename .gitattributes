@@ -386,7 +386,9 @@ src/src/main/webapp/imagens/Thumbs.db -text
 src/src/main/webapp/imagens/add-24x24.png -text
 src/src/main/webapp/imagens/ajax-loader.gif -text
 src/src/main/webapp/imagens/atom.gif -text
+src/src/main/webapp/imagens/check.png -text
 src/src/main/webapp/imagens/erro_sincronizar.png -text
+src/src/main/webapp/imagens/error.png -text
 src/src/main/webapp/imagens/favicon-old.ico -text
 src/src/main/webapp/imagens/favicon.ico -text
 src/src/main/webapp/imagens/feed-icon-14x14.png -text
@@ -463,6 +465,7 @@ src/src/main/webapp/scripts/shBrushXml.js -text
 src/src/main/webapp/scripts/shCore.js -text
 src/src/main/webapp/scripts/tabsNavigator.js -text
 src/src/main/webapp/scripts/tagCloud.js -text
+src/src/main/webapp/scripts/testUrlActive.js -text
 src/src/main/webapp/scripts/validateOAI.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/main/webapp/scripts/zebraScript.js -text

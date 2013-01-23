@@ -5,13 +5,16 @@ import feb.data.entities.DocumentoReal;
 import feb.data.entities.DocumentosVisitas;
 import feb.data.entities.Visita;
 import feb.data.interfaces.*;
-import feb.ferramentaAdministrativa.validarOAI.VerificaLinkOAI;
 import feb.ferramentaBusca.Recuperador;
-import feb.robo.atualiza.importaOAI.XMLtoDB;
 import feb.services.TagCloudService;
 import feb.spring.ServerInfo;
 import feb.spring.validador.BuscaValidator;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
@@ -345,6 +348,28 @@ public final class FEBController {
             String error = "<FEB>"
                     + "<error code=\"UnsupportedEncoding\">Unsupported Encoding to UTF-8. Error: " + u + "</error></FEB>";
             return error;
+        }
+    }
+
+    /**
+     * Verificador de URL, recebe como entrada uma url e retorna um boolean 
+     * informando se ela está ativa ou não.
+     * 
+     * @param url URL a ser testada, deve iniciar com http://
+     * @return true se a url estiver ativa e false caso contrário
+     */
+    @RequestMapping("verificaURL")
+    public @ResponseBody
+    String verifyURL(@RequestParam String url) {
+        try {
+            URL u = new URL(url);
+            HttpURLConnection huc = (HttpURLConnection) u.openConnection();
+            huc.setRequestMethod("GET");
+            huc.connect();
+            int code = huc.getResponseCode();
+            return String.valueOf(code >= 200 && code < 400);
+        } catch (IOException e) {
+            return "false";
         }
     }
 
