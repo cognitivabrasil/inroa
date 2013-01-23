@@ -163,10 +163,10 @@ Primeira etapa do cadastro de um repositorio
                 <div class="LinhaEntrada">
                     <div class="Buttons">
                         <input type="reset" value="Limpar" class="CancelButton"
-                               onclick="javascript:window.location.reload();" /> <input
-                               id="cancelar" onclick="javascript:window.close();"
-                               value="Cancelar" type="button" class="CancelButton" /> <input
-                               type="submit" value="Avan&ccedil;ar >" name="submit" />
+                               onclick="javascript:window.location.reload();" /> 
+                        <input id="cancelar" onclick="javascript:window.close();"
+                               value="Cancelar" type="button" class="CancelButton" /> 
+                        <input type="submit" value="Gravar &rArr;" name="submit" />
                     </div>
                 </div>
 

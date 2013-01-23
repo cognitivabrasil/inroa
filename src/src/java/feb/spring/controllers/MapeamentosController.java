@@ -1,5 +1,6 @@
 package feb.spring.controllers;
 
+import feb.data.daos.MapeamentoHibernateDAO;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("mapeamentos")
 @RequestMapping("/admin/mapeamentos/*")
-public final class MapeamentosController {
+public final class MapeamentosController extends AbstractDeletable<Mapeamento, MapeamentoHibernateDAO>{
 
     @Autowired
     private MapeamentoDAO mapDao;
@@ -143,13 +144,8 @@ public final class MapeamentosController {
         return "admin/mapeamentos/form";
     }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    public @ResponseBody
-            String deleteDo(
-            @PathVariable Integer id,
-            Model model) {
-        Mapeamento map = mapDao.get(id);
-        mapDao.delete(map);
-        return "Deletado com sucesso.";
+    @Override
+    public MapeamentoHibernateDAO getDAO() {
+        return (MapeamentoHibernateDAO) mapDao;
     }
 }

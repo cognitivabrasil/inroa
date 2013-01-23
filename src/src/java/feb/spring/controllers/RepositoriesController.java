@@ -4,6 +4,8 @@
  */
 package feb.spring.controllers;
 
+import feb.data.daos.AbstractHibernateDAO;
+import feb.data.daos.RepositoryHibernateDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +27,7 @@ import org.apache.log4j.Logger;
  */
 @Controller("repositories")
 @RequestMapping("/admin/repositories/*")
-public final class RepositoriesController {
+public final class RepositoriesController extends AbstractDeletable<Repositorio, RepositoryHibernateDAO> {
 
     @Autowired private RepositoryDAO repDao;
     @Autowired
@@ -160,23 +162,9 @@ public final class RepositoriesController {
         }
     }
 
-
-    /**
-     * Deletes a repository.
-     *
-     * @param id the repository id
-     */
-    @RequestMapping(value="/{id}/delete", method = RequestMethod.POST)
-    public @ResponseBody
-    String deleteDo(
-    		@PathVariable Integer id,
-    		Model model) {
-            Repositorio rep = repDao.get(id);
-            log.info("Deletando o repositorio:" +rep.getName());
-            repDao.delete(rep);
-            log.info("Repositorio deletado.");
-            return "ok";
-    }
-   
+    @Override
+    public RepositoryHibernateDAO getDAO() {
+        return (RepositoryHibernateDAO) repDao;
+    }   
 
   }

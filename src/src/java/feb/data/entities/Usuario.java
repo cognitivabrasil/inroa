@@ -250,4 +250,9 @@ public class Usuario implements UserDetails, FebDomainObject {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
 	}
 
+    @Override
+    public String getName() {
+        return getUsername();
+    }
+
 }

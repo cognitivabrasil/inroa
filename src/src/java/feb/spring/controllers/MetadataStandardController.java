@@ -4,6 +4,7 @@
  */
 package feb.spring.controllers;
 
+import feb.data.daos.PadraoMetadadosHibernateDAO;
 import feb.data.entities.Mapeamento;
 import feb.data.entities.PadraoMetadados;
 import feb.data.interfaces.PadraoMetadadosDAO;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("metadataStandard")
 @RequestMapping("/admin/metadataStandard/*")
-public final class MetadataStandardController {
+public final class MetadataStandardController extends AbstractDeletable<PadraoMetadados, PadraoMetadadosHibernateDAO> {
 
     @Autowired
     private PadraoMetadadosDAO padraoDao;
@@ -89,21 +90,9 @@ public final class MetadataStandardController {
         }
     }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    public @ResponseBody
-    String deleteMetadata(
-            @PathVariable Integer id,
-            Model model) {
-        PadraoMetadados padrao = padraoDao.get(id);
-        try {
-            padraoDao.delete(padrao);
-            return "Exclu&iacute;do com sucesso!";
-        }catch(StaleStateException s){
-            log.error("Erro ao excluir o padr&atilde;o de metadados."+id, s);
-            return "O padrão de metadados "+id+" informado não foi encontrado.";
-        } catch (Exception e) {
-            log.error("Erro ao excluir o padr&atilde;o de metadados."+id, e);
-            return "Ocorreu um erro ao deletar. Erro:" + e.getMessage();
-        }
+    @Override
+    public PadraoMetadadosHibernateDAO getDAO() {
+        return (PadraoMetadadosHibernateDAO) padraoDao;
     }
+
 }

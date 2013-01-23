@@ -279,6 +279,7 @@ src/src/java/feb/spring/ApplicationContextProvider.java -text
 src/src/java/feb/spring/FebConfig.java -text
 src/src/java/feb/spring/ServerInfo.java -text
 src/src/java/feb/spring/aspects/FebLoggerAspect.java -text
+src/src/java/feb/spring/controllers/AbstractDeletable.java -text
 src/src/java/feb/spring/controllers/AdminController.java -text
 src/src/java/feb/spring/controllers/FEBController.java -text
 src/src/java/feb/spring/controllers/FederationsController.java -text
@@ -407,6 +408,7 @@ src/src/main/webapp/infoDetalhada.jsp -text
 src/src/main/webapp/login.jsp -text
 src/src/main/webapp/main-servlet.xml -text
 src/src/main/webapp/robots.txt -text
+src/src/main/webapp/scripts/admin.js -text
 src/src/main/webapp/scripts/codemirror/LICENSE -text
 src/src/main/webapp/scripts/codemirror/README.md -text
 src/src/main/webapp/scripts/codemirror/index.html -text

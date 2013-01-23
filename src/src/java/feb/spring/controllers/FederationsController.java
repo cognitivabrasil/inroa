@@ -4,6 +4,15 @@
  */
 package feb.spring.controllers;
 
+import feb.data.daos.SubFederacaoHibernateDAO;
+import feb.data.entities.SubFederacao;
+import feb.data.interfaces.DocumentosDAO;
+import feb.data.interfaces.SubFederacaoDAO;
+import feb.exceptions.FederationException;
+import feb.ferramentaBusca.indexador.Indexador;
+import feb.robo.atualiza.SubFederacaoOAI;
+import feb.spring.validador.SubFederacaoValidador;
+import java.net.ConnectException;
 import javax.servlet.ServletContext;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import feb.data.entities.SubFederacao;
-import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.MapeamentoDAO;
-import feb.data.interfaces.PadraoMetadadosDAO;
-import feb.data.interfaces.RepositoryDAO;
-import feb.data.interfaces.SubFederacaoDAO;
-import feb.data.interfaces.UsuarioDAO;
-import feb.exceptions.FederationException;
-import feb.ferramentaBusca.indexador.Indexador;
-import feb.robo.atualiza.SubFederacaoOAI;
-import feb.spring.validador.SubFederacaoValidador;
-import java.net.ConnectException;
 
 /**
  * Controller para ferramenta administrativa
@@ -33,23 +29,20 @@ import java.net.ConnectException;
  */
 @Controller("federations")
 @RequestMapping("/admin/federations/*")
-public final class FederationsController {
+public final class FederationsController extends AbstractDeletable<SubFederacao, SubFederacaoHibernateDAO> {
 
-    @Autowired
-    private RepositoryDAO repDao;
     @Autowired
     private SubFederacaoDAO subDao;
     @Autowired
     private DocumentosDAO docDao;
     @Autowired
     private Indexador indexar;
-    private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
     @Autowired
     ServletContext servletContext;
-    @Autowired
-    private UsuarioDAO userDao;
     @Autowired SubFederacaoOAI subFedOAI;
-    Logger  log = Logger.getLogger(FederationsController.class);
+    
+    private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
+    Logger log = Logger.getLogger(FederationsController.class);
 
 
     public FederationsController() {
@@ -127,16 +120,6 @@ public final class FederationsController {
         }
     }
 
-    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
-    public @ResponseBody
-    String deleteDo(@PathVariable("id") Integer id, Model model) {
-            SubFederacao subFed = subDao.get(id);
-            log.info("Deletando a federação: "+subFed.getName());
-            subDao.delete(subFed);
-            log.info("Federação deletada com sucesso.");
-            return "ok";
-    }
-
     @RequestMapping(value="/{id}/update", method = RequestMethod.POST)
     public @ResponseBody
     String atualizaFedAjax(@PathVariable("id") Integer id,
@@ -167,6 +150,11 @@ public final class FederationsController {
                 indexar.populateR1();
             }
         }
+    }
+
+    @Override
+    public SubFederacaoHibernateDAO getDAO() {
+        return (SubFederacaoHibernateDAO) subDao;
     }
     
 }
