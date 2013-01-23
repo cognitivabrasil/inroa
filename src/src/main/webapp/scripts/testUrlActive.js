@@ -6,8 +6,8 @@ $(function() {
         var url = $this.attr('href');
     
         if(url != ""){
-            var imgTrue = "<img class='imgchecklink' src='"+rootUrl+"imagens/check.png' border='0' alt='Link correto' align='middle'>";
-            var imgFalse = "<img class='imgchecklink' src='"+rootUrl+"imagens/error.png' border='0' alt='Link quebrado' align='middle'>";
+            var imgTrue = "<img class='imgchecklink' src='"+rootUrl+"imagens/check.png' border='0' alt='Link correto' title='link ativo' align='middle'>";
+            var imgFalse = "<img class='imgchecklink' src='"+rootUrl+"imagens/error.png' border='0' alt='Link quebrado' title='link quebrado' align='middle'>";
         
             $.getJSON(rootUrl+"/verificaURL?url="+url, "", function(resultado){
                 console.log("resultado: "+resultado);    
