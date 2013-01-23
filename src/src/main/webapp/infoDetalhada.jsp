@@ -64,6 +64,13 @@ modelo de tópico:
         <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
         <link href="../imagens/favicon.ico" rel="shortcut icon"
               type="image/x-icon" />
+        <c:url var="root" value="/" />
+        <script>rootUrl = ${root};</script>
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
+        <c:url var="validateURL" value="/scripts/testUrlActive.js" />
+        <script type="text/javascript" src="${validateURL}"></script>
+        
         <script type="text/javascript"
                 src="https://apis.google.com/js/plusone.js">
                     {
@@ -119,19 +126,6 @@ modelo de tópico:
                         <li>
                             <span class="title">Informa&ccedil;&otilde;es Gerais</span>
                             <ul>
-                                <li><div class="nome">URL:</div>
-                                    <c:choose>
-                                        <c:when
-                                            test="${metadata.technical != null && metadata.technical.location != null}">
-                                            <div class="valor">
-                                                <a href="${metadata.technical.firstHttpLocation}" target="_blank">${metadata.technical.firstHttpLocation}</a>
-                                            </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div class="valor">Este objeto n&atilde;o possui URL associada!</div>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </li>
                                 <c:forEach var="title" items="${metadata.general.titles}">
                                     <li><div class="nome">Título:</div><div class="valor">${title}</div></li>
                                 </c:forEach>
@@ -215,7 +209,7 @@ modelo de tópico:
                                         <div class="valor">
                                             <c:choose>
                                                 <c:when test="${location.value}">
-                                                    <a href="${location.key}" target="_blank">${location.key}</a>
+                                                    <a class="verifyUrl" href="${location.key}" target="_blank">${location.key}</a>
                                                 </c:when>
                                                 <c:otherwise>${location.key}</c:otherwise>
                                             </c:choose>
