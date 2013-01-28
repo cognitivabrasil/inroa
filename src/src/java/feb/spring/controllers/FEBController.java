@@ -124,13 +124,18 @@ public final class FEBController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) 
+    throws IOException{
         DocumentoReal d = docDao.get(id);
         if (d == null) {
             response.setStatus(404);
             log.warn("O id " + id + " solicitado não existe!");
             return "";
-        } else {
+        } else if (d.isDeleted()) {
+            response.sendError(410, "O documento solicitado foi deletado.");
+//            response.setStatus(410);
+            return "empty";
+        }else {
             model.addAttribute("obaaEntry", d.getObaaEntry());
             List<String> titles = d.getTitles();
             String title = "Título não informado";
@@ -352,9 +357,9 @@ public final class FEBController {
     }
 
     /**
-     * Verificador de URL, recebe como entrada uma url e retorna um boolean 
+     * Verificador de URL, recebe como entrada uma url e retorna um boolean
      * informando se ela está ativa ou não.
-     * 
+     *
      * @param url URL a ser testada, deve iniciar com http://
      * @return true se a url estiver ativa e false caso contrário
      */

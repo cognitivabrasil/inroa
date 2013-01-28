@@ -164,6 +164,11 @@
     </error-page>
     
     <error-page>
+        <error-code>410</error-code>
+        <location>/errors/error410.jspx</location>
+    </error-page>
+    
+    <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/errors/errorGeneric.jspx</location>
     </error-page>
