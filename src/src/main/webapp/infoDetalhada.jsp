@@ -728,7 +728,7 @@ modelo de tópico:
                                                             <li><div class="nome">Palavra-chave:</div><div class="valor">${keyword}</div></li>
                                                         </c:forEach>
                                                         <c:if test="${!empty segmentInformation.segmentMediaType}">
-                                                            <li><div class="nome">Tipo de m&iacutedia:</div><div class="valor">${segmentInformation.segmentMediaType}</div></li>
+                                                            <li><div class="nome">Tipo de m&iacute;dia:</div><div class="valor">${segmentInformation.segmentMediaType}</div></li>
                                                         </c:if>
                                                         <c:if test="${!empty segmentInformation.start}">
                                                             <li><div class="nome">In&iacute;cio:</div><div class="valor">${segmentInformation.start}</div></li>
