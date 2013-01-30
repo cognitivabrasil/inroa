@@ -107,8 +107,8 @@ public class XsltFeb2ToFeb3Test {
 	public void format() {
 		OBAA l = oai.getMetadata(0);
 		boolean found = false;
-		for(cognitivabrasil.obaa.Technical.Format f : l.getTechnical().getFormat()) {
-			if("application/pdf".equals(f.getText())) {
+		for(String f : l.getTechnical().getFormat()) {
+			if("application/pdf".equals(f)) {
 				found = true;
 			}
 		}
