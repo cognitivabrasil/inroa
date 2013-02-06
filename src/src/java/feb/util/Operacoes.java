@@ -205,7 +205,7 @@ public class Operacoes {
     public static List<String> toStringList(List<? extends TextElement> elements) {
         List<String> s = new ArrayList<String>();
         for (TextElement e : elements) {
-            s.add(e.getText());
+            s.add(e.getTranslated());
         }
         return s;
     }

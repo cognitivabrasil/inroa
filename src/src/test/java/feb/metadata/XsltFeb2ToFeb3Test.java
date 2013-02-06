@@ -5,21 +5,18 @@
  */
 package feb.metadata;
 
-import java.io.FileWriter;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import cognitivabrasil.obaa.LifeCycle.Contribute;
 
-import java.io.File;
+import cognitivabrasil.obaa.LifeCycle.Role;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -120,7 +117,10 @@ public class XsltFeb2ToFeb3Test {
 		OBAA l = oai.getMetadata(1);
 		boolean found = false;
 		for(Contribute c : l.getLifeCycle().getContribute()) {
-			if("Caderno de farmácia".equals(c.getFirstEntity()) && "Publicador".equals(c.getRole())) {
+                    Role r = c.getRole();
+                    r.setCountry("BR");
+                    r.setLanguage("BR");
+			if("Caderno de farmácia".equals(c.getFirstEntity()) && "Publicador".equals(r.getTranslated())) {
 				found = true;
 			}
 		}
