@@ -202,13 +202,13 @@ public class OBAATest {
     @Test
     public void testOBAA_Rights_Cost() throws FileNotFoundException {
         assert (!(l.getRights() == null));
-        assertThat(l.getRights().getCost(), equalTo(false));
+        assertThat(l.getRights().getCost().getBoolean(), equalTo(false));
     }
 
     @Test
     public void testOBAA_Rights_Copyright() throws FileNotFoundException {
         assert (!(l.getRights() == null));
-        assertThat(l.getRights().getCopyright(), equalTo(false));
+        assertThat(l.getRights().getCopyright().getBoolean(), equalTo(false));
     }
 
     @Test
