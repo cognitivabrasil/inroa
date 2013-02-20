@@ -474,7 +474,6 @@ src/src/main/webapp/scripts/validateOAI.js -text
 src/src/main/webapp/scripts/validatejs.js -text
 src/src/main/webapp/scripts/zebraScript.js -text
 src/src/main/webapp/tagCloud.jsp -text
-src/src/test/java/cognitivabrasil/obaa/OBAATest.java -text
 src/src/test/java/cognitivabrasil/obaa/OaiOBAATest.java -text
 src/src/test/java/feb/data/StatisticsIT.java -text
 src/src/test/java/feb/data/daos/AbstractDaoTest.java -text
