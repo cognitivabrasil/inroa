@@ -6,6 +6,7 @@ package feb.data.daos;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -129,6 +130,16 @@ public class SearchesJdbcIT extends AbstractDaoTest {
 		
 		assertThat(l.size(), equalTo(0));
 	}
+        
+        @Test
+        public void delete(){
+            List<Search> l = sDao.getSearches(10);
+            int before = l.size();
+            System.out.println(before);
+            sDao.delete("teste");
+            
+            assertThat(sDao.getSearches(10), hasSize(before-1));
+        }
 	
 	
 }

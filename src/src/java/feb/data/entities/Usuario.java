@@ -31,6 +31,7 @@ import feb.spring.ApplicationContextProvider;
  *  PERM_MANAGE_MAPPINGS - Permission do add, change or update mappings
  *  PERM_CHANGE_DATABASE - Permission to change the database config
  *  PERM_VIEW_STATISTICS - Permission to view the statistics
+ *  PERM_MANAGE_STATISTICS - Permission to delete from statistics' data
  *  
  *  The main ADMIN user should have all the permissions.
  *

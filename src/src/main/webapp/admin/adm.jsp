@@ -353,7 +353,7 @@ Author     : Marcos Nunes
                 <!--Insere codigo que lista os padroes de metadados-->
                 <table class='repositorios-table' id='padroes' cellpadding=3>
                     <tr>
-                    <caption>Padr&atilde;o de Metadados Cadastrados</caption>
+                    <caption>Padr&otilde;es de Metadados Cadastrados</caption>
                     </tr>
 
                     <tr style="background-color: #AEC9E3">

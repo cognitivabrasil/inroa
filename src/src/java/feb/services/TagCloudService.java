@@ -16,11 +16,11 @@ public interface TagCloudService {
 	 * Calculates a tag cloud.
 	 * 
 	 * Generates a Map where the keys are the tags and the value is
-	 * a float representing the weight of this tag. The absolute value
-	 * of the Float is implementation dependent, the relative size is what matters.
+	 * a integer representing the weight of this tag. The absolute value
+	 * of the Integer is implementation dependent, the relative size is what matters.
 	 * @return the map
 	 */
-	public Map<String, Double> getTagCloud();
+	public Map<String, Integer> getTagCloud();
 	
 	/**
 	 * Returns the sum of the weights that this tag cloud would have.
@@ -32,5 +32,19 @@ public interface TagCloudService {
 	 * Clears the tagcloud backend, so that it is blank.
 	 */
 	public void clear();
+        
+        /**
+         * Sets the limit of results
+         * @param size number of results
+         */
+        void setMaxSize(int size);
+        
+        /**
+         * Returns the limit of results in the tag cloud.
+         * @return number of results
+         */
+        public int getMaxSize();
+        
+        public void delete(String tag);
 	
 }

@@ -32,7 +32,8 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 			'PERM_MANAGE_METADATA',
 			'PERM_MANAGE_MAPPINGS',
 			'PERM_CHANGE_DATABASE',
-			'PERM_VIEW_STATISTICS' )" />
+			'PERM_VIEW_STATISTICS',
+                        'PERM_MANAGE_STATISTICS' )" />
 
         <intercept-url pattern="/admin/alterDB" method="POST"
                        access="hasRole('PERM_CHANGE_DATABASE')" />
@@ -61,6 +62,9 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
         <intercept-url pattern="/admin/users/**" method="POST"
                        access="hasRole('PERM_MANAGE_USERS')" />
+        
+        <intercept-url pattern="/admin/statistics/**" method="POST"
+                       access="hasRole('PERM_MANAGE_STATISTICS')" />
                        
 		<!-- deny all access not explicitly given -->
         <intercept-url pattern="/admin/**" access="denyAll" />

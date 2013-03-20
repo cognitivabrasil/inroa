@@ -636,7 +636,7 @@ modelo de tópico:
                                                                     <li>
                                                                         <span class="title">Alternativa ao texto</span>
                                                                         <ul>
-                                                                            <c:if test="${!empty equivalent.content.alternativesToText.graphicAlternativeTxt}">
+                                                                            <c:if test="${!empty equivalent.content.alternativesToText.graphicAlternative.textPt}">
                                                                                 <li><div class="nome">Tem alternativa gr&aacute;fica:</div><div class="valor">${equivalent.content.alternativesToText.graphicAlternativeTxt}</div></li>
                                                                             </c:if>
                                                                             <c:forEach var="signLanguage" items="${equivalent.content.alternativesToText.signLanguage}">

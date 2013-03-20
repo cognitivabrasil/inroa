@@ -50,10 +50,10 @@ public class TagCloudImplTest {
 	@Test
 	public void getTagCloud() {
 		tagService.setMaxSize(3);
-		Map<String, Double> m = tagService.getTagCloud();
+		Map<String, Integer> m = tagService.getTagCloud();
 		
-		assertThat(m.get("jorjão"), closeTo(3, 0.1));
-		assertThat(m.get("teste"), closeTo(1, 0.1));
+		assertThat(m.get("jorjão"), equalTo(3));
+		assertThat(m.get("teste"), equalTo(1));
 		
 		assertThat(m.size(), equalTo(3));
 	}

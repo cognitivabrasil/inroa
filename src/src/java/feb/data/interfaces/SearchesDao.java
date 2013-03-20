@@ -1,9 +1,8 @@
 package feb.data.interfaces;
 
+import feb.data.entities.Search;
 import java.util.Date;
 import java.util.List;
-
-import feb.data.entities.Search;
 
 public interface SearchesDao {
 	
@@ -51,5 +50,10 @@ public interface SearchesDao {
 	 * Deletes all entries.
 	 */
 	public void deleteAll();
+        
+        /**
+         * Deletes a specific tag
+         */
+        public void delete(String tag);
 
 }

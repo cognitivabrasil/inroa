@@ -1,9 +1,5 @@
 package feb.spring.controllers;
 
-import feb.data.entities.DocumentoReal;
-import feb.data.entities.DocumentosVisitas;
-import feb.data.entities.Usuario;
-import feb.data.interfaces.UsuarioDAO;
 import java.security.Principal;
 import java.util.*;
 import javax.servlet.ServletContext;
@@ -23,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import feb.data.entities.Usuario;
-import feb.data.entities.Visita;
 import feb.data.interfaces.UsuarioDAO;
 import java.io.IOException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -243,12 +236,12 @@ class UserDto {
         roles.put(
                 "root",
                 Arrays.asList(StringUtils
-                .split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS",
+                .split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS,PERM_MANAGE_STATISTICS",
                 ',')));
         roles.put(
                 "admin",
                 Arrays.asList(StringUtils
-                .split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_VIEW_STATISTICS",
+                .split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_VIEW_STATISTICS,PERM_MANAGE_STATISTICS",
                 ',')));
         roles.put("update", Arrays.asList(StringUtils.split(
                 "PERM_UPDATE,PERM_VIEW_STATISTICS", ',')));

@@ -298,6 +298,7 @@ src/src/java/feb/spring/validador/RepositorioValidator.java -text
 src/src/java/feb/spring/validador/SubFederacaoValidador.java -text
 src/src/java/feb/spring/views/DocumentsRssViewer.java -text
 src/src/java/feb/util/Informacoes.java -text
+src/src/java/feb/util/Message.java -text
 src/src/java/feb/util/Operacoes.java -text
 src/src/java/feb/util/package.html -text
 src/src/main/resources/applicationContext.xml -text
@@ -467,6 +468,7 @@ src/src/main/webapp/scripts/jquery.ui.widget.min.js -text
 src/src/main/webapp/scripts/rss.js -text
 src/src/main/webapp/scripts/shBrushXml.js -text
 src/src/main/webapp/scripts/shCore.js -text
+src/src/main/webapp/scripts/statistics.js -text
 src/src/main/webapp/scripts/tabsNavigator.js -text
 src/src/main/webapp/scripts/tagCloud.js -text
 src/src/main/webapp/scripts/testUrlActive.js -text

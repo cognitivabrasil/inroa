@@ -83,8 +83,8 @@ public final class FEBController {
     public String index(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("buscaModel", new Consulta());
-
-        Map<String, Double> termos = tagCloud.getTagCloud();
+        tagCloud.setMaxSize(tagCloud.getMaxSize()+5); //adiciona 5 resultados a mais do que na tagcloud padrao
+        Map<String, Integer> termos = tagCloud.getTagCloud();
 
         model.addAttribute("termos", termos);
 

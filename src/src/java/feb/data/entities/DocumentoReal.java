@@ -501,6 +501,9 @@ public class DocumentoReal implements java.io.Serializable,
     }
 
     public String getFirstTitle() {
+        if(getTitles().isEmpty()){
+            return null; 
+        }
         return (getTitles().get(0));
     }
 

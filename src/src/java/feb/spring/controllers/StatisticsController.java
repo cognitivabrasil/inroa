@@ -6,17 +6,25 @@ import feb.data.interfaces.DocumentosVisitasDao;
 import feb.data.interfaces.RepositoryDAO;
 import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.VisitasDao;
+import feb.services.TagCloudService;
+import feb.util.Message;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -38,6 +46,10 @@ public final class StatisticsController {
     private SubFederacaoDAO fedDao;
     @Autowired
     private DocumentosDAO docDao;
+    @Autowired
+    private TagCloudService tagCloud;
+    
+    private static Logger log = Logger.getLogger(StatisticsController.class);
 
     @RequestMapping("/")
     public String statistics(Model model) {
@@ -66,6 +78,9 @@ public final class StatisticsController {
         model.addAttribute("fedObjects", e.convertNodoList(fedList, "size"));
         model.addAttribute("federacoes", fedList);
         
+        Map<String, Integer> termos = tagCloud.getTagCloud();
+        model.addAttribute("termosTagCloud", termos);
+        
         return "admin/statistics";
     }
 
@@ -81,6 +96,22 @@ public final class StatisticsController {
 
         docVisDao.save(docVis);
 
+    }
+
+    @RequestMapping(value = "/deletetag/{tag}", method = RequestMethod.POST)
+    @ResponseBody
+    public Message delete(@PathVariable("tag") String tag, RedirectAttributes redirectAttributes) {
+        Message msg;
+        try {            
+            tagCloud.delete(tag);
+            msg = new Message(Message.SUCCESS, "Tag: '"+tag+"' excluida com sucesso");
+            System.out.println("sucesso");
+        } catch (DataAccessException e) {
+            msg = new Message(Message.ERROR, "Erro ao excluir a tag: '"+tag+"'");
+            log.error("Erro ao excluir a tag: '"+tag+"'",e);
+            System.out.println("erro");
+        }
+        return msg;
     }
 
     /**

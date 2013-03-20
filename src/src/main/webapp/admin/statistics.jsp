@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
     <head>  
@@ -18,16 +19,23 @@
         <c:url var="jqplotjs" value="/scripts/jquery.jqplot.min.js" />
         <c:url var="pieRendererjs" value="/scripts/jqplot.pieRenderer.min.js" />
         <c:url var="zebraScript" value="/scripts/zebraScript.js" />
+        <c:url var="statistics" value="/scripts/statistics.js" />
+        <c:url var="uicss" value="/css/Theme/jquery-ui-1.8.22.custom.css" />
+        <c:url var="jqueryUi" value="/scripts/jquery-ui-1.8.22.custom.min.js" />
 
         <link rel="shortcut icon" type="image/x-icon" href="${favicon}"  />
 
         <link rel="StyleSheet" media="screen" href="${css}" type="text/css"/>
         <link rel="StyleSheet" href="${jqplotcss}"  type="text/css">
+        <link rel="StyleSheet" href="${uicss}" type="text/css" />
 
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
+        
         <script language="javascript" type="text/javascript" src="${jqplotjs}"></script>
         <script language="javascript" type="text/javascript" src="${pieRendererjs}"></script>
         <script language="javascript" type="text/javascript" src="${zebraScript}"></script>
+        <script language="javascript" type="text/javascript" src="${statistics}"></script>
+        <script type="text/javascript" src='${jqueryUi}'></script>
 
         <script>
             $(document).ready(function(){                
@@ -153,11 +161,43 @@
         </script>
     </head>
 
-    <body>          
-       <div id="estatisticas">
-           <div class="caixaAzul">
-               <span class="left bold">Número total de objetos:</span> ${totalObj}
-           </div>
+    <body> 
+        <div class="ui-widget hidden" id="dialog-error" title="Erro">
+            <div class="ui-state-error ui-corner-all">
+                <p>
+                    <span class="ui-icon ui-icon-alert"><jsp:text/></span>
+                    <strong>Erro: </strong> <span id="errorThrown"><jsp:text/></span>.
+                </p>
+            </div>
+        </div>
+                
+        <div id="estatisticas">
+            <div class="caixaAzul">
+                <span class="left bold">Número total de objetos:</span> ${totalObj}
+            </div>
+            <security:authorize access="hasRole('PERM_MANAGE_STATISTICS')">
+            <div class="caixaAzul">
+                <table class="repositorios-table zebraTable acessos">
+                    <caption class="estatisticasTitulo">Termos da <i>tag cloud</i></caption>            
+                    <tr><th>Termo</th><th>Quantidade de buscas</th><th>Deletar</th></tr>
+                    <c:url var="deleteTag" value="/admin/statistics/deletetag"/>
+                    <c:forEach var="termo" items="${termosTagCloud}">
+                        <tr>
+
+                            <td>${termo.key}</td>
+                            <td>${termo.value}</td>
+                            <td>
+                                <a class="deleteTag btSemTexto" href="${deleteTag}/${termo.key}">deletar</a>
+                            </td>
+                        </tr>                
+                    </c:forEach>
+                </table>
+                <c:url var="deleteAllTags" value="/admin/statistics/deletealltags"/>
+                <a class="deleteTag" href="${deleteAllTags}">Apagar todos os termos</a>
+
+            </div>
+                </security:authorize>
+
             <div class="caixaAzul">
                 <table class="repositorios-table zebraTable acessos">
                     <caption class="estatisticasTitulo">10 Objetos mais acessados</caption>            
