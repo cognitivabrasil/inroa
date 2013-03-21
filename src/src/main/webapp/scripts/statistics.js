@@ -41,8 +41,6 @@ $(function() {
             $("#dialog-error").dialog('open');
         });
 
-        $( ".dialog-confirm" ).siblings(".ui-dialog-buttonpane").hide();
-        $( ".dialog-confirm" ).html("<p> Excluindo... Por favor aguarde.</p>");
     });
     
     var rmLineTag = function(btClick){
