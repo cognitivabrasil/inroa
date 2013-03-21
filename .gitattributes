@@ -371,6 +371,11 @@ src/src/main/webapp/css/images/add-24x24.png -text
 src/src/main/webapp/css/images/ico24_deletar.gif -text
 src/src/main/webapp/css/images/lupa-26x24.png -text
 src/src/main/webapp/css/jquery.jqplot.min.css -text
+src/src/main/webapp/css/messages/error.png -text
+src/src/main/webapp/css/messages/info.png -text
+src/src/main/webapp/css/messages/messages.css -text
+src/src/main/webapp/css/messages/success.png -text
+src/src/main/webapp/css/messages/warning.png -text
 src/src/main/webapp/css/padrao.css -text
 src/src/main/webapp/css/shCore.css -text
 src/src/main/webapp/css/shCoreDefault.css -text

@@ -212,7 +212,7 @@ img{
 #estatisticas .caixaAzul
 {
     width: 1000px;
-    border: 3px #AEC9E3 solid;
+    border: 2px #AEC9E3 solid;
     padding: 10px;
     margin: 10px auto;
 }
@@ -539,8 +539,8 @@ td{vertical-align:top;}
 {
     width: 100%;
     padding: 2px;
-    border: 2px solid #AEC9E3;
-    margin-top:2%;
+    border-bottom: 2px solid #AEC9E3;
+    margin:10px 0;
 }
 .repositorios-table th{
     color: white;

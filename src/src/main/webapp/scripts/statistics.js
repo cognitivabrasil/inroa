@@ -22,8 +22,14 @@ $(function() {
                     $("#dialog-error").dialog('open');
                 }else{
                     //ação ao excluir
-                    console.log(unescape(resultado["message"]));
-                    unescape(resultado);
+                    if(_this.text() == "deletar"){
+                        rmLineTag(_this);
+                    }
+                    else{
+                        rmAllTags(_this);
+                    }
+                    $("#msgTagCloud").addClass(unescape(resultado["type"]))
+                    .text(unescape(resultado["message"]));
                 }
             }else{
                 $("#errorThrown").text("Não foi possível executar a operação!");
@@ -38,5 +44,15 @@ $(function() {
         $( ".dialog-confirm" ).siblings(".ui-dialog-buttonpane").hide();
         $( ".dialog-confirm" ).html("<p> Excluindo... Por favor aguarde.</p>");
     });
+    
+    var rmLineTag = function(btClick){
+        console.log("deletando a linha");
+        btClick.parents("tr").remove();
+    }
+    
+    var rmAllTags = function(btClick){
+        btClick.siblings("table").remove();
+        btClick.remove();
+    }
     
 });

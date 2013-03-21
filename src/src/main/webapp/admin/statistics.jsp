@@ -22,15 +22,17 @@
         <c:url var="statistics" value="/scripts/statistics.js" />
         <c:url var="uicss" value="/css/Theme/jquery-ui-1.8.22.custom.css" />
         <c:url var="jqueryUi" value="/scripts/jquery-ui-1.8.22.custom.min.js" />
+        <c:url var="messagecss" value="/css/messages/messages.css" />
 
         <link rel="shortcut icon" type="image/x-icon" href="${favicon}"  />
 
         <link rel="StyleSheet" media="screen" href="${css}" type="text/css"/>
         <link rel="StyleSheet" href="${jqplotcss}"  type="text/css">
         <link rel="StyleSheet" href="${uicss}" type="text/css" />
+        <link rel="StyleSheet" href="${messagecss}" type="text/css" />
 
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
-        
+
         <script language="javascript" type="text/javascript" src="${jqplotjs}"></script>
         <script language="javascript" type="text/javascript" src="${pieRendererjs}"></script>
         <script language="javascript" type="text/javascript" src="${zebraScript}"></script>
@@ -170,33 +172,39 @@
                 </p>
             </div>
         </div>
-                
+
         <div id="estatisticas">
             <div class="caixaAzul">
                 <span class="left bold">Número total de objetos:</span> ${totalObj}
             </div>
             <security:authorize access="hasRole('PERM_MANAGE_STATISTICS')">
-            <div class="caixaAzul">
-                <table class="repositorios-table zebraTable acessos">
-                    <caption class="estatisticasTitulo">Termos da <i>tag cloud</i></caption>            
-                    <tr><th>Termo</th><th>Quantidade de buscas</th><th>Deletar</th></tr>
-                    <c:url var="deleteTag" value="/admin/statistics/deletetag"/>
-                    <c:forEach var="termo" items="${termosTagCloud}">
-                        <tr>
+                <c:if test="${not empty termosTagCloud}">
 
-                            <td>${termo.key}</td>
-                            <td>${termo.value}</td>
-                            <td>
-                                <a class="deleteTag btSemTexto" href="${deleteTag}/${termo.key}">deletar</a>
-                            </td>
-                        </tr>                
-                    </c:forEach>
-                </table>
-                <c:url var="deleteAllTags" value="/admin/statistics/deletealltags"/>
-                <a class="deleteTag" href="${deleteAllTags}">Apagar todos os termos</a>
 
-            </div>
-                </security:authorize>
+                    <div class="caixaAzul">
+                        <div id="msgTagCloud"></div>
+
+                        <table class="repositorios-table zebraTable acessos">
+                            <caption class="estatisticasTitulo">Termos da <i>tag cloud</i></caption>            
+                            <tr><th>Termo</th><th>Quantidade de buscas</th><th>Deletar</th></tr>
+                            <c:url var="deleteTag" value="/admin/statistics/deletetag"/>
+                            <c:forEach var="termo" items="${termosTagCloud}">
+                                <tr>
+
+                                    <td>${termo.key}</td>
+                                    <td>${termo.value}</td>
+                                    <td>
+                                        <a class="deleteTag btSemTexto" href="${deleteTag}/${termo.key}">deletar</a>
+                                    </td>
+                                </tr>                
+                            </c:forEach>
+                        </table>
+                        <c:url var="deleteAllTags" value="/admin/statistics/deletealltags"/>
+                        <a class="deleteTag" href="${deleteAllTags}">Apagar todos os termos</a>
+
+                    </div>
+                </c:if>
+            </security:authorize>
 
             <div class="caixaAzul">
                 <table class="repositorios-table zebraTable acessos">

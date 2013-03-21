@@ -48,39 +48,38 @@ public final class StatisticsController {
     private DocumentosDAO docDao;
     @Autowired
     private TagCloudService tagCloud;
-    
     private static Logger log = Logger.getLogger(StatisticsController.class);
 
     @RequestMapping("/")
     public String statistics(Model model) {
-        
-        model.addAttribute("totalObj",docDao.getSize());
+
+        model.addAttribute("totalObj", docDao.getSize());
 
         List repList = repDao.getAll();
         Estatistica e = new Estatistica();
-        
+
         model.addAttribute("repAcessos", e.convertNodoList(repList, "visits"));
         model.addAttribute("repObjects", e.convertNodoList(repList, "size"));
         model.addAttribute("repositorios", repList);
 
-        
+
         Calendar c = Calendar.getInstance();
         List visitsList = visitasDao.visitsUpToAMonth(c.get(Calendar.MONTH), c.get(Calendar.YEAR));
         model.addAttribute("visitasTotal", e.convertIntList(visitsList));
 
         List<DocumentoReal> docsMaisAcessados = docVisDao.getTop(10);
         model.addAttribute("docsMaisAcessados", docsMaisAcessados);
-        
-        
-        
-        List fedList = fedDao.getAll();        
+
+
+
+        List fedList = fedDao.getAll();
         model.addAttribute("fedAcessos", e.convertNodoList(fedList, "visits"));
         model.addAttribute("fedObjects", e.convertNodoList(fedList, "size"));
         model.addAttribute("federacoes", fedList);
-        
+
         Map<String, Integer> termos = tagCloud.getTagCloud();
         model.addAttribute("termosTagCloud", termos);
-        
+
         return "admin/statistics";
     }
 
@@ -101,17 +100,26 @@ public final class StatisticsController {
     @RequestMapping(value = "/deletetag/{tag}", method = RequestMethod.POST)
     @ResponseBody
     public Message delete(@PathVariable("tag") String tag, RedirectAttributes redirectAttributes) {
-        Message msg;
-        try {            
+
+        try {
             tagCloud.delete(tag);
-            msg = new Message(Message.SUCCESS, "Tag: '"+tag+"' excluida com sucesso");
-            System.out.println("sucesso");
-        } catch (DataAccessException e) {
-            msg = new Message(Message.ERROR, "Erro ao excluir a tag: '"+tag+"'");
-            log.error("Erro ao excluir a tag: '"+tag+"'",e);
-            System.out.println("erro");
+            return new Message(Message.SUCCESS, "Termo: '" + tag + "' removido com sucesso da tag cloud");
+        } catch (Exception e) {
+            log.error("Erro ao excluir a tag cloud: '" + tag + "'", e);
+            return new Message(Message.ERROR, "Erro ao excluir o termo: '" + tag + "' da tag cloud");
         }
-        return msg;
+    }
+
+    @RequestMapping(value = "/deletealltags", method = RequestMethod.POST)
+    @ResponseBody
+    public Message deleteAll(RedirectAttributes redirectAttributes) {
+        try {
+            tagCloud.clear();
+            return new Message(Message.SUCCESS, "Todos os termos da tag cloud foram removidos com sucesso");
+        } catch (Exception e) {
+            log.error("Erro ao excluir todos os termos da tag cloud.", e);
+            return new Message(Message.ERROR, "Erro ao excluir todos os termos da tag cloud");
+        }
     }
 
     /**

@@ -1,21 +1,17 @@
 package feb.data.daos;
 
-import feb.data.entities.Mapeamento;
+import feb.data.entities.Search;
+import feb.data.interfaces.SearchesDao;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import feb.data.entities.Search;
-import feb.data.interfaces.SearchesDao;
-import org.hibernate.criterion.Restrictions;
 
 /**
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
@@ -23,7 +19,7 @@ import org.hibernate.criterion.Restrictions;
  */
 public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
 
-    Logger logger = Logger.getLogger(SearchesJdbcDao.class);
+    private Logger logger = Logger.getLogger(SearchesJdbcDao.class);
 
     @Override
     public void cleanup() {
