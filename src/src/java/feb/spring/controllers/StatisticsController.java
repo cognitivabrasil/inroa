@@ -8,7 +8,9 @@ import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.VisitasDao;
 import feb.services.TagCloudService;
 import feb.util.Message;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -61,10 +63,16 @@ public final class StatisticsController {
         model.addAttribute("repObjects", e.convertNodoList(repList, "size"));
         model.addAttribute("repositorios", repList);
 
-
+        int defaultMonth = 6;
         Calendar c = Calendar.getInstance();
-        List visitsList = visitasDao.visitsUpToAMonth(c.get(Calendar.MONTH), c.get(Calendar.YEAR));
+
+        List visitsList = visitasDao.visitsUpToAMonth(c.get(Calendar.MONTH), c.get(Calendar.YEAR), defaultMonth);
         model.addAttribute("visitasTotal", e.convertIntList(visitsList));
+        
+        SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy");
+        model.addAttribute("finalDate", sdformat.format(c.getTime()));
+        c.add(Calendar.MONTH, -defaultMonth);
+        model.addAttribute("initialDate", sdformat.format(c.getTime()));
 
         List<DocumentoReal> docsMaisAcessados = docVisDao.getTop(10);
         model.addAttribute("docsMaisAcessados", docsMaisAcessados);
@@ -81,6 +89,17 @@ public final class StatisticsController {
 
         return "admin/statistics";
     }
+    
+    @RequestMapping(value = "/updatevisits/{from}/{until}", method = RequestMethod.POST)
+    @ResponseBody
+    public Message updateVisits(@PathVariable("from") Date from, @PathVariable("until") Date until,RedirectAttributes redirectAttributes) {
+        //List<Integer> e = visitasDao.visitsToBetweenDates(null, null)
+        //return e.convertIntList(visitsList)
+        
+        System.out.println("\n de: "+from+" até: "+until);
+        return new Message(Message.SUCCESS, "[[1,1,2,3,5]]");
+    }
+    
 
     @RequestMapping(value = "/objUser", method = RequestMethod.POST)
     public void insertDocumentUser(
@@ -98,7 +117,7 @@ public final class StatisticsController {
 
     @RequestMapping(value = "/deletetag/{tag}", method = RequestMethod.POST)
     @ResponseBody
-    public Message delete(@PathVariable("tag") String tag, RedirectAttributes redirectAttributes) {
+    public Message deleteTag(@PathVariable("tag") String tag, RedirectAttributes redirectAttributes) {
 
         try {
             tagCloud.delete(tag);
@@ -111,7 +130,7 @@ public final class StatisticsController {
 
     @RequestMapping(value = "/deletealltags", method = RequestMethod.POST)
     @ResponseBody
-    public Message deleteAll(RedirectAttributes redirectAttributes) {
+    public Message deleteAllTags(RedirectAttributes redirectAttributes) {
         try {
             tagCloud.clear();
             return new Message(Message.SUCCESS, "Todos os termos da tag cloud foram removidos com sucesso");

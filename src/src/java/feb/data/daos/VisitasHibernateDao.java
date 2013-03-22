@@ -13,6 +13,8 @@ import org.hibernate.criterion.Restrictions;
 
 import feb.data.entities.Visita;
 import feb.data.interfaces.VisitasDao;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
 
 /**
  *
@@ -59,14 +61,13 @@ public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements
     }
     
     @Override
-    public List<Integer> visitsUpToAMonth(int month, int year) {
+    public List<Integer> visitsUpToAMonth(int month, int year, int numMonth) {
         
         List <Integer> output = new ArrayList();
-        List <Integer> unordered = new ArrayList();
         
-        for (int i = 0; i <= 11; i++) {            
+        for (int i = 1; i <= numMonth; i++) {            
             
-            unordered.add(visitsInAMonth(month, year));
+            output.add(visitsInAMonth(month, year));
             
             if (month == 1) {
                 month = 12;
@@ -77,11 +78,41 @@ public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements
             
         }
         
-        for (int i = 11; i >= 0; i--) {            
-            output.add(unordered.remove(i));            
-        }
+        Collections.reverse(output);
         
         return output;
+    }
+    
+    @Override
+    public List<Integer> visitsToBetweenDates(Date i, Date f){
+        Session s = this.sessionFactory.getCurrentSession();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd"); 
+        
+        String sql = "select qtd_visitas as qtd from"
+                + "  (select to_timestamp(universo_ano || '-' || universo_mes || '-01','yyyy-MM-dd') as datee, qtd_visitas from "
+                + "  ("
+                + "  select universo_ano , universo_mes , coalesce(qtd,null,0) as qtd_visitas from"
+                + " ("
+                + " select * from generate_series(2010,2030) as universo_ano"
+                + " join ("
+                + " select * from generate_series(1,12) as universo_mes"
+                + " ) tt on universo_ano > universo_mes"
+                + " ) universo"
+                + " left join "
+                + " ("
+                + " SELECT extract('month' from horario) as mes, "
+                + " extract('year' from horario) as ano , count(*) as qtd"
+                + " FROM visitas"
+                + " "
+                + " GROUP BY mes,ano"
+                + " ) tabela_quantidades"
+                + " ON universo_ano = ano AND universo_mes = mes"
+                + " ORDER BY universo_ano , universo_mes"
+                + " ) xx"
+                + " )xxx"
+                + " WHERE datee BETWEEN '"+formatter.format(i) +"' AND '"+formatter.format(f) +"'";
+        
+        return s.createSQLQuery(sql).list();
     }
     
     @Override

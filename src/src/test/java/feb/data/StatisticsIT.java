@@ -182,6 +182,6 @@ public class StatisticsIT extends AbstractDaoTest {
 //        confirmation.add(0);
 //        confirmation.add(3); //dez 13
                 
-        assertEquals(confirmation, v.visitsUpToAMonth(8, 2013));
+        assertEquals(confirmation, v.visitsUpToAMonth(8, 2013,12));
     }
 }

@@ -3,6 +3,7 @@ package feb.data.interfaces;
 import java.util.List;
 
 import feb.data.entities.Visita;
+import java.util.Date;
 
 /**
  *
@@ -43,9 +44,12 @@ public interface VisitasDao {
      *
      * @param month number of the month in a year
      * @param year the year in 4 digits in a gregorian calendar
-     * @returna list of 12 elements with the visits by month
+     * @param numMonth Number of months before you want to receive the result
+     * @returna list of numMonth elements with the number of visits by month
      */
-    public List<Integer> visitsUpToAMonth(int month, int year);
+    public List<Integer> visitsUpToAMonth(int month, int year, int numMonth);
+    
+    public List<Integer> visitsToBetweenDates(Date i, Date f);
     
     /**
      * Get the Visita of an id.

@@ -135,9 +135,9 @@
 	<visitas id="24" horario="2013-12-09 12:06:01" />
 	<visitas id="25" horario="2013-12-09 12:06:01" />
 	<visitas id="26" horario="2013-12-09 12:06:01" />
-        
-	
+        	
 	<documentos_visitas id="1" documento="2" visita="1"/>
+        <documentos_visitas id="2" documento="3" visita="3"/>
 	
 	<r1tokens id="1" documento_id="2" token="bla" field="3"/>
 

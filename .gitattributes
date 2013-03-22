@@ -456,6 +456,7 @@ src/src/main/webapp/scripts/codemirror/theme/night.css -text
 src/src/main/webapp/scripts/codemirror/theme/rubyblue.css -text
 src/src/main/webapp/scripts/codemirror/theme/vibrant-ink.css -text
 src/src/main/webapp/scripts/codemirror/theme/xq-dark.css -text
+src/src/main/webapp/scripts/formDate.js -text
 src/src/main/webapp/scripts/funcoes.js -text
 src/src/main/webapp/scripts/funcoesMapeamento.js -text
 src/src/main/webapp/scripts/funcoesPadrao.js -text
@@ -466,6 +467,7 @@ src/src/main/webapp/scripts/jquery-ui-1.8.22.custom.min.js -text
 src/src/main/webapp/scripts/jquery.awesomeCloud-0.2.min.js -text
 src/src/main/webapp/scripts/jquery.cookie.js -text
 src/src/main/webapp/scripts/jquery.jqplot.min.js -text
+src/src/main/webapp/scripts/jquery.maskedinput-1.3.min.js -text
 src/src/main/webapp/scripts/jquery.tagcloud.js -text
 src/src/main/webapp/scripts/jquery.ui.core.min.js -text
 src/src/main/webapp/scripts/jquery.ui.tabs.min.js -text
@@ -485,6 +487,7 @@ src/src/test/java/cognitivabrasil/obaa/OaiOBAATest.java -text
 src/src/test/java/feb/data/StatisticsIT.java -text
 src/src/test/java/feb/data/daos/AbstractDaoTest.java -text
 src/src/test/java/feb/data/daos/DocumentosHibernateDaoIT.java -text
+src/src/test/java/feb/data/daos/DocumentosVisitasHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/MapeamentoHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/PadraoMetadadosHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/RepositoryHibernateDaoIT.java -text

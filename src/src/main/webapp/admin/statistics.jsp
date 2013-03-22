@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+
 <!DOCTYPE html>
 <html>
     <head>  
@@ -22,7 +23,10 @@
         <c:url var="statistics" value="/scripts/statistics.js" />
         <c:url var="uicss" value="/css/Theme/jquery-ui-1.8.22.custom.css" />
         <c:url var="jqueryUi" value="/scripts/jquery-ui-1.8.22.custom.min.js" />
+        <c:url var="formDate" value="/scripts/formDate.js" />
         <c:url var="messagecss" value="/css/messages/messages.css" />
+        <c:url var="jquery_mask" value="/scripts/jquery.maskedinput-1.3.min.js" />
+    
 
         <link rel="shortcut icon" type="image/x-icon" href="${favicon}"  />
 
@@ -38,124 +42,30 @@
         <script language="javascript" type="text/javascript" src="${zebraScript}"></script>
         <script language="javascript" type="text/javascript" src="${statistics}"></script>
         <script type="text/javascript" src='${jqueryUi}'></script>
-
+        <script language="javascript" type="text/javascript" src="${formDate}"></script>
+        <script language="javascript" type="text/javascript"src="${jquery_mask}"></script>
+        <c:url value="/admin/statistics" var="statisticsUrlRoot" />
+        
         <script>
-            $(document).ready(function(){                
+            $(function() {
+                setStatisticsUrl('${statisticsUrlRoot}');
                 
-                
-                if(${empty repositorios}) { 
-                   
-                    $('.repsGrande').hide();                                        
-                    
+                if(${empty repositorios}) {                   
+                    $('.repsGrande').hide();                    
                 } else {
-                    var plot1 = jQuery.jqplot ('chart1', [${repObjects}], 
-                    { 
-                        title: {
-                            text: 'Quantidade de objetos: Reposit&oacute;rios',
-                            show: true
-                        },                
-                        seriesDefaults: {
-                            // Make this a pie chart.
-                            renderer: jQuery.jqplot.PieRenderer, 
-                            rendererOptions: {
-                                // Put data labels on the pie slices.
-                                // By default, labels show the percentage of the slice.
-                                showDataLabels: true,
-                                dataLabels: 'value'
-                            }
-                        }, 
-                        legend: { show:true, location: 'e' }
-                    }
-                );
+                    graficoPizza('chart1', [${repObjects}], "Quantidade de objetos: Reposit&oacute;rios");
                 }                
                      
-                if(${empty federacoes}) {  
-                    
+                if(${empty federacoes}) {                    
                     $('.fedsGrande').hide();                    
-                    
                 } else {
-                    var plot5 = jQuery.jqplot ('chart5', [${fedObjects}], 
-                    { 
-                    
-                        title: {
-                            text: 'Quantidade de objetos',
-                            show: true
-                        },                
-                        seriesDefaults: {
-                            // Make this a pie chart.
-                            renderer: jQuery.jqplot.PieRenderer, 
-                            rendererOptions: {
-                                // Put data labels on the pie slices.
-                                // By default, labels show the percentage of the slice.
-                                showDataLabels: true,
-                                dataLabels: 'value'
-                            }
-                        }, 
-                        legend: { show:true, location: 'e' }
-                    }
-                );
+                    graficoPizza('chart5', [${fedObjects}], "Quantidade de objetos");
                 }
                 
-                var plot2 = $.jqplot ('chart2', [${visitasTotal}], {                    
-                    title: 'N&uacute;mero de Visitantes',
-                    axesDefaults: {
-                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-                    },
-                    axes: {                    
-                        xaxis: {
-                            label: "Mês",
-                            pad: 0
-                        },
-                        yaxis: {
-                            label: "Visitantes"
-                        }
-                    }
-                });
-                
-                var plot3 = jQuery.jqplot ('chart3', [${repAcessos}], 
-                { 
-                    title: {
-                        text: 'Quantidade de acessos: Reposit&oacute;rios',
-                        show: true
-                    },                
-                    seriesDefaults: {
-                        // Make this a pie chart.
-                        renderer: jQuery.jqplot.PieRenderer, 
-                        rendererOptions: {
-                            // Put data labels on the pie slices.
-                            // By default, labels show the percentage of the slice.
-                            showDataLabels: true,
-                            dataLabels: 'value'
-                        }
-                    }, 
-                    legend: { show:true, location: 'e' }
-                }
-            );
-                
-                var plot4 = jQuery.jqplot ('chart4', [${fedAcessos}], 
-                { 
-                    title: {
-                        text: 'Quantidade de acessos: Federa&ccedil;&otilde;es',
-                        show: true
-                    },                
-                    seriesDefaults: {
-                        // Make this a pie chart.
-                        renderer: jQuery.jqplot.PieRenderer, 
-                        rendererOptions: {
-                            // Put data labels on the pie slices.
-                            // By default, labels show the percentage of the slice.
-                            showDataLabels: true,
-                            dataLabels: 'value'
-                        }
-                    }, 
-                    legend: { show:true, location: 'e' }
-                }
-            );  
-                
-                               
-            }); //$(document).ready(function()   
-            
-            $(function() {
+                graficoLinha('chart2', [${visitasTotal}], 'N&uacute;mero de Visitantes', 'Mês', 'Visitantes');
+                graficoPizza('chart3', [${repAcessos}], "Quantidade de acessos: Reposit&oacute;rios");
+                graficoPizza('chart4', [${fedAcessos}], "Quantidade de acessos: Federa&ccedil;&otilde;es");
+
 
                 $('#loading').addClass("hidden");
                 // code here
@@ -173,6 +83,7 @@
             </div>
         </div>
 
+                    ${visitasTotal} / ${repObjects}
         <div id="estatisticas">
             <div class="caixaAzul">
                 <span class="left bold">Número total de objetos:</span> ${totalObj}
@@ -214,6 +125,11 @@
                         <tr><td>${objs.firstTitle}</td><td>${objs.acessos}</td><td>${objs.nomeRep}</td></tr>                
                     </c:forEach>
                 </table>
+                <div id="msgVisitas" class="error hidden"></div>
+                De: <input id="fromDate" value="${initialDate}" class="dataMask ui-widget-content ui-corner-all datepickerFrom" />
+                Até: <input id="untilDate" value="${finalDate}" class="dataMask ui-widget-content ui-corner-all datepickerTo" />
+                <feb:springdate path="initialDate" label="Inicio" cssClass="datepickerFrom"/>
+                    <feb:springdate path="finalDate" label="Encerramento" cssClass="datepickerTo" />
                 <div id="chart2" widith="100%" style="height:350px;"></div>
             </div>
 
