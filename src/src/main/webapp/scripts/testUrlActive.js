@@ -9,8 +9,7 @@ $(function() {
             var imgTrue = "<img class='imgchecklink' src='"+rootUrl+"imagens/check.png' border='0' alt='Link correto' title='link ativo' align='middle'>";
             var imgFalse = "<img class='imgchecklink' src='"+rootUrl+"imagens/error.png' border='0' alt='Link quebrado' title='link quebrado' align='middle'>";
         
-            $.getJSON(rootUrl+"/verificaURL?url="+url, "", function(resultado){
-                console.log("resultado: "+resultado);    
+            $.getJSON(rootUrl+"/verificaURL?url="+url, "", function(resultado){   
                 if(resultado){
                     $this.parent("div").append(imgTrue);
                 }else{

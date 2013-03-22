@@ -83,7 +83,6 @@
             </div>
         </div>
 
-                    ${visitasTotal} / ${repObjects}
         <div id="estatisticas">
             <div class="caixaAzul">
                 <span class="left bold">Número total de objetos:</span> ${totalObj}

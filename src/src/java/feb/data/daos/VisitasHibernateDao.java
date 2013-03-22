@@ -112,7 +112,7 @@ public class VisitasHibernateDao extends AbstractHibernateDAO<Visita> implements
                 + " )xxx"
                 + " WHERE datee BETWEEN '"+formatter.format(i) +"' AND '"+formatter.format(f) +"'";
         
-        return s.createSQLQuery(sql).list();
+        return (List<Integer>)s.createSQLQuery(sql).list();
     }
     
     @Override

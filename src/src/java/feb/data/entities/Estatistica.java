@@ -80,7 +80,7 @@ public class Estatistica {
         int size = list.size();
 
         for (int i = 0; i < size; i++) {
-            Integer n = list.get(i);
+            Object n = list.get(i); //mudei para object porque o hibernate estava me retornando uma List<BigInteger> em um caso.
 
             if (i == size - 1) {
                 jsList += n;

@@ -8,11 +8,14 @@ import feb.data.interfaces.SubFederacaoDAO;
 import feb.data.interfaces.VisitasDao;
 import feb.services.TagCloudService;
 import feb.util.Message;
+import feb.util.Operacoes;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -68,7 +71,7 @@ public final class StatisticsController {
 
         List visitsList = visitasDao.visitsUpToAMonth(c.get(Calendar.MONTH), c.get(Calendar.YEAR), defaultMonth);
         model.addAttribute("visitasTotal", e.convertIntList(visitsList));
-        
+
         SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy");
         model.addAttribute("finalDate", sdformat.format(c.getTime()));
         c.add(Calendar.MONTH, -defaultMonth);
@@ -89,17 +92,31 @@ public final class StatisticsController {
 
         return "admin/statistics";
     }
-    
+
     @RequestMapping(value = "/updatevisits/{from}/{until}", method = RequestMethod.POST)
     @ResponseBody
-    public Message updateVisits(@PathVariable("from") Date from, @PathVariable("until") Date until,RedirectAttributes redirectAttributes) {
-        //List<Integer> e = visitasDao.visitsToBetweenDates(null, null)
-        //return e.convertIntList(visitsList)
+    public Message updateVisits(@PathVariable("from") String from, @PathVariable("until") String until, RedirectAttributes redirectAttributes) {
+        Date fromDate;
+        Date untilDate;
+        List<Integer> visitsList;
+        Estatistica e = new Estatistica();
+
+        try {
+            fromDate = Operacoes.stringToDate(from);
+            untilDate = Operacoes.stringToDate(until);
+        } catch (ParseException p) {
+            return new Message(Message.ERROR, "As datas informadas não estão no padrão dia/mes/ano");
+        }
+
+        try {            
+            visitsList = visitasDao.visitsToBetweenDates(fromDate, untilDate);
+        } catch (Exception ex) {
+            log.error("Erro ao consultar as visitas entre datas na base de dados", ex);
+            return new Message(Message.ERROR, "Ocorreu um erro ao efetuar a consulta das visitas entre as datas selecionadas");
+        }
         
-        System.out.println("\n de: "+from+" até: "+until);
-        return new Message(Message.SUCCESS, "[[1,1,2,3,5]]");
+        return new Message(Message.SUCCESS, e.convertIntList(visitsList));
     }
-    
 
     @RequestMapping(value = "/objUser", method = RequestMethod.POST)
     public void insertDocumentUser(

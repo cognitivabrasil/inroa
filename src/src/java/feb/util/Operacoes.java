@@ -9,6 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -283,6 +285,7 @@ public class Operacoes {
 
     /**
      * Recebe um n&uacute;mero de milisegundos e retorna formatado em hh:mm:ss
+     *
      * @param timeMillis long com os milisegundos
      * @return String no formato hh:mm:ss
      */
@@ -313,5 +316,33 @@ public class Operacoes {
             segundos = "0" + numero_de_segundos;
         }
         return horas + ":" + minutos + ":" + segundos;
+    }
+
+    /**
+     * Converte uma String para um objeto Date.
+     *
+     * @param data String no formato dd/MM/yyyy a ser formatada
+     * @return Date Objeto Date ou null caso receba uma String vazia ou nula
+     * @throws Exception Caso a String esteja no formato errado
+     */
+    public static Date stringToDate(String data) throws ParseException {
+        if (data == null || data.equals("")) {
+            return null;
+        }
+
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            date = (java.util.Date) formatter.parse(data);
+        } catch (ParseException e) {
+            try {
+                DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+                date = (java.util.Date) formatter.parse(data);
+            } catch (ParseException e2) {
+                throw e2;
+            }
+
+        }
+        return date;
     }
 }

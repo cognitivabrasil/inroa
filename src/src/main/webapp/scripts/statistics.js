@@ -2,6 +2,7 @@ var _titulo;
 var eixoX;
 var eixoY;
 var staticsUrl;
+var _id;
 
 $(function() {
     $(".btSemTexto").button({
@@ -61,20 +62,22 @@ $(function() {
 
     $(".dataMask").change(function() {
         //chamar a função por ajax para calcular os novos valores.
-        var from = $("#fromDate").val().replace("/","-");
-        var until = $("#untilDate").val().replace("/","-");
+        var from = $("#fromDate").val().replace(/\//g,'-');
+        var until = $("#untilDate").val().replace(/\//g,'-');
         
         var urlUpdate = staticsUrl+"/updatevisits/"+from+"/"+until;
         console.log(urlUpdate);
         
         $.post(urlUpdate,"",function(resultado){
-            console.log(unescape(resultado));
             if(resultado["type"]){
                 if(unescape(resultado["type"])=="error"){
                     //mensagem de erro
                 }else{
                     //ação ao excluir
-                    recarregarGraficoLinha(id, [unescape(resultado["message"])]);
+                    
+                    console.log("id: "+_id);
+                    var array = unescape(resultado["message"]);
+                    recarregarGraficoLinha(_id, [array]);
                 }
             }else{
                 //mensagem de erro
@@ -130,6 +133,7 @@ function graficoLinha(id, array, titulo, x, y){
     _titulo = titulo;
     eixoX = x;
     eixoY = y;
+    _id = id;
     $.jqplot (id, array, {                    
         title: titulo,
         axesDefaults: {
