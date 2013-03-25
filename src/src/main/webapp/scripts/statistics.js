@@ -58,9 +58,17 @@ $(function() {
         btClick.siblings("table").remove();
         btClick.remove();
     };
+    
+    $(".dataMask").keypress(function(e) {
+        if(e.which == 13) {
+            $(this).siblings(".dataMask").focus();
+        }
+        
+    });
 
 
     $(".dataMask").change(function() {
+        $('#msgVisitas:visible').hide();
         //chamar a função por ajax para calcular os novos valores.
         var from = $("#fromDate").val().replace(/\//g,'-');
         var until = $("#untilDate").val().replace(/\//g,'-');
@@ -71,12 +79,10 @@ $(function() {
         $.post(urlUpdate,"",function(resultado){
             if(resultado["type"]){
                 if(unescape(resultado["type"])=="error"){
-                    //mensagem de erro
+                    $("#msgVisitas").text(unescape(resultado["message"]).show('fast'));                    
                 }else{
                     //ação ao excluir
-                    
-                    console.log("id: "+_id);
-                    var array = unescape(resultado["message"]);
+                    var array = unescape(resultado["message"]).replace(/[\[\] ]/g,'').split(",");
                     recarregarGraficoLinha(_id, [array]);
                 }
             }else{

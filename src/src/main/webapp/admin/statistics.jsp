@@ -26,7 +26,7 @@
         <c:url var="formDate" value="/scripts/formDate.js" />
         <c:url var="messagecss" value="/css/messages/messages.css" />
         <c:url var="jquery_mask" value="/scripts/jquery.maskedinput-1.3.min.js" />
-    
+
 
         <link rel="shortcut icon" type="image/x-icon" href="${favicon}"  />
 
@@ -45,7 +45,7 @@
         <script language="javascript" type="text/javascript" src="${formDate}"></script>
         <script language="javascript" type="text/javascript"src="${jquery_mask}"></script>
         <c:url value="/admin/statistics" var="statisticsUrlRoot" />
-        
+
         <script>
             $(function() {
                 setStatisticsUrl('${statisticsUrlRoot}');
@@ -125,10 +125,10 @@
                     </c:forEach>
                 </table>
                 <div id="msgVisitas" class="error hidden"></div>
-                De: <input id="fromDate" value="${initialDate}" class="dataMask ui-widget-content ui-corner-all datepickerFrom" />
-                Até: <input id="untilDate" value="${finalDate}" class="dataMask ui-widget-content ui-corner-all datepickerTo" />
-                <feb:springdate path="initialDate" label="Inicio" cssClass="datepickerFrom"/>
-                    <feb:springdate path="finalDate" label="Encerramento" cssClass="datepickerTo" />
+                <div id="dateRange">
+                    <label>De: </label><input id="fromDate" value="${initialDate}" class="dataMask ui-widget-content ui-corner-all datepickerFrom" />
+                    <label>Até: </label><input id="untilDate" value="${finalDate}" class="dataMask ui-widget-content ui-corner-all datepickerTo" />
+                </div>
                 <div id="chart2" widith="100%" style="height:350px;"></div>
             </div>
 
