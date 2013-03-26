@@ -61,7 +61,6 @@ $(function() {
     });
                 
     $('#estatisticas a').click(function (e) {
-                    
         $("#loading").removeClass("hidden");
     });
                 

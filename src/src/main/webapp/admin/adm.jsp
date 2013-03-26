@@ -76,18 +76,7 @@ Author     : Marcos Nunes
     </head>
     <body id="paginaAdministrativa">
 
-        <div class="dialog-confirm" title="Apagar?">
-            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-                Deseja realmente <span id="msgApagar"></span>?</p>
-        </div>
-        <div class="ui-widget" id="dialog-error" title="Erro">
-            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
-                <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
-                    <strong>Erro:</strong> <span id="errorThrown"></span>.</p>
-            </div>
-        </div>
-
-
+        
         <jsp:include page="../cabecalho.jsp">
             <jsp:param value="Ferramenta Administrativa" name="titulo" />
             <jsp:param value="7%" name="tamanho" />
@@ -102,7 +91,8 @@ Author     : Marcos Nunes
                 <li><a href="#tabs-1">Reposit&oacute;rios e Federa&ccedil;&otilde;es</a></li>
                 <li><a href="#tabs-3">Metadados</a></li>
                 <li><a href="#tabs-4">Ger&ecirc;ncia</a></li>
-                <li id="estatisticas"><a href="<feb.spring:url value="/admin/statistics/" htmlEscape="true" />">Estat&iacute;sticas</a></li>
+                <c:url var="estatistics" value="/admin/statistics/" />
+                <li id="estatisticas"><a href="${estatistics}">Estat&iacute;sticas</a></li>
 
 
             </ul>
@@ -606,7 +596,17 @@ Author     : Marcos Nunes
 
         <div class="mensagemAdm">${mensagem}</div>
 
-
+        <div class="dialog-confirm" title="Apagar?">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                Deseja realmente <span id="msgApagar"></span>?</p>
+        </div>
+        <div class="ui-widget" id="dialog-error" title="Erro">
+            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+                <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                    <strong>Erro:</strong> <span id="errorThrown"></span>.</p>
+            </div>
+        </div>
+        
         <%@include file="../googleAnalytics"%>
     </BODY>
 </html>

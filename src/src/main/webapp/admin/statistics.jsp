@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -85,7 +86,7 @@
 
         <div id="estatisticas">
             <div class="caixaAzul">
-                <span class="left bold">Número total de objetos:</span> ${totalObj}
+                <span class="left bold">Número total de objetos:</span> <fmt:formatNumber value="${totalObj}" />
             </div>
             <security:authorize access="hasRole('PERM_MANAGE_STATISTICS')">
                 <c:if test="${not empty termosTagCloud}">
@@ -128,6 +129,7 @@
                 <div id="dateRange">
                     <label>De: </label><input id="fromDate" value="${initialDate}" class="dataMask ui-widget-content ui-corner-all datepickerFrom" />
                     <label>Até: </label><input id="untilDate" value="${finalDate}" class="dataMask ui-widget-content ui-corner-all datepickerTo" />
+                    <button id="updateGraph" class="btSemTexto">Atualizar</button>
                 </div>
                 <div id="chart2" widith="100%" style="height:350px;"></div>
             </div>
@@ -158,5 +160,6 @@
             </div>
 
         </div>
+        <div class="modal"></div>
     </body>
 </html>

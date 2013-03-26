@@ -115,7 +115,7 @@ public final class StatisticsController {
             return new Message(Message.ERROR, "Ocorreu um erro ao efetuar a consulta das visitas entre as datas selecionadas");
         }
         
-        return new Message(Message.SUCCESS, e.convertIntList(visitsList));
+        return new Message(Message.SUCCESS, visitsList.toString());
     }
 
     @RequestMapping(value = "/objUser", method = RequestMethod.POST)

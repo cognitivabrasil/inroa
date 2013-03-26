@@ -15,11 +15,9 @@ import feb.ferramentaBusca.indexador.Indexador;
 import feb.spring.FebConfig;
 import feb.spring.ServerInfo;
 import feb.spring.validador.InfoBDValidator;
-import feb.spring.validador.PadraoValidator;
 import feb.spring.validador.SubFederacaoValidador;
 import feb.util.Operacoes;
 import java.io.IOException;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;

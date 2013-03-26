@@ -302,7 +302,8 @@ public final class FEBController {
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) Integer offset) {
 
-
+        log.info("consulta feita no webservice: '"+query+"' autor: '"+ autor+"' limit: "+limit+" offset: "+offset);
+        
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                 + "<FEB>";
         try {

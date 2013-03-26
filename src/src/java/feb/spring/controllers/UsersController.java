@@ -1,8 +1,12 @@
 package feb.spring.controllers;
 
+import feb.data.entities.Usuario;
+import feb.data.interfaces.UsuarioDAO;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +17,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import feb.data.entities.Usuario;
-import feb.data.interfaces.UsuarioDAO;
-import java.io.IOException;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
 
 class UserPasswordDto {

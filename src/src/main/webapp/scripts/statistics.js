@@ -4,9 +4,28 @@ var eixoY;
 var staticsUrl;
 var _id;
 
+$("body").on({
+    // When ajaxStart is fired, add 'loading' to body class
+    ajaxStart: function() { 
+        $(this).addClass("loading");
+    },
+    // When ajaxStop is fired, rmeove 'loading' from body class
+    ajaxStop: function() { 
+        $(this).removeClass("loading");
+    }
+});
+
 $(function() {
+//    $('#estatisticas:visible').hide();
+    
     $(".btSemTexto").button({
         text: false
+    });
+    
+    $("#updateGraph").button({
+        icons: {
+            primary: "ui-icon-refresh"
+        }
     });
     
     $( ".deleteTag" ).button({
@@ -20,7 +39,6 @@ $(function() {
         _this = $(this);
         
         $.post(url,"",function(resultado){
-            console.log(unescape(resultado));
             if(resultado["type"]){
                 if(unescape(resultado["type"])=="error"){
                     $("#textStatus").text(unescape(resultado["type"]));
@@ -50,7 +68,6 @@ $(function() {
     });
     
     var rmLineTag = function(btClick){
-        console.log("deletando a linha");
         btClick.parents("tr").remove();
     };
     
@@ -74,23 +91,24 @@ $(function() {
         var until = $("#untilDate").val().replace(/\//g,'-');
         
         var urlUpdate = staticsUrl+"/updatevisits/"+from+"/"+until;
-        console.log(urlUpdate);
         
         $.post(urlUpdate,"",function(resultado){
             if(resultado["type"]){
                 if(unescape(resultado["type"])=="error"){
-                    $("#msgVisitas").text(unescape(resultado["message"]).show('fast'));                    
+                    $("#msgVisitas").text(unescape(resultado["message"]).show('fast'));
                 }else{
-                    //ação ao excluir
-                    var array = unescape(resultado["message"]).replace(/[\[\] ]/g,'').split(",");
-                    recarregarGraficoLinha(_id, [array]);
+                    recarregarGraficoLinha(resultado["message"]);
                 }
             }else{
-                //mensagem de erro
+                $("#msgVisitas").text("Ocorreu um erro ao realizar a consulta.").show('fast');
             }
         },"json")
-        .error(function() {
-            //mensagem de erro
+        .error(function(jqxhr) {
+            if(jqxhr.status == 403){
+                $("#msgVisitas").text("Você não possui permissão para executar esta operação!").show('fast');
+            }else{
+                $("#msgVisitas").text("Ocorreu um erro ao realizar a consulta.").show('fast');
+            }
         });
         
     });
@@ -101,14 +119,16 @@ function setStatisticsUrl(url){
 }
 
 
-function recarregarGraficoLinha(id, array, titulo){
+function recarregarGraficoLinha(arrayString, titulo){
+    var array = arrayString.replace(/[\[\] ]/g,'').split(",");
+    for(var i=0; i<array.length; i++) { array[i] = +array[i]; }//transforma um array de string em um array de int
     if(!titulo){
         titulo = _titulo;
     }
     
-    var idInterno = "#"+id;
+    var idInterno = "#"+_id;
     $(idInterno).empty();
-    graficoLinha(id, array, titulo, eixoX, eixoY);
+    graficoLinha(_id, [array], titulo, eixoX, eixoY);
 }
     
 function graficoPizza(id, array, titulo){
