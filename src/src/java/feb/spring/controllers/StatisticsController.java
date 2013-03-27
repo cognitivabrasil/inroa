@@ -70,7 +70,7 @@ public final class StatisticsController {
         Calendar c = Calendar.getInstance();
 
         List visitsList = visitasDao.visitsUpToAMonth(c.get(Calendar.MONTH), c.get(Calendar.YEAR), defaultMonth);
-        model.addAttribute("visitasTotal", e.convertIntList(visitsList));
+        model.addAttribute("visitasTotal", visitsList.toString());
 
         SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy");
         model.addAttribute("finalDate", sdformat.format(c.getTime()));
