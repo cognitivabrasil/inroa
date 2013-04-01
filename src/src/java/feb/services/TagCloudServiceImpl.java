@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import feb.data.entities.Search;
 import feb.data.interfaces.SearchesDao;
+import feb.spring.controllers.FEBController;
+import org.apache.log4j.Logger;
 
 /**
  * Tag cloud implementation with a fixed number of words.
@@ -22,6 +24,7 @@ public class TagCloudServiceImpl implements TagCloudService {
     private int size;
     SearchesDao searches;
     private int days;
+    private final Logger log = Logger.getLogger(TagCloudServiceImpl.class);
 
     @Autowired
     public void setSearches(SearchesDao s) {
@@ -34,6 +37,7 @@ public class TagCloudServiceImpl implements TagCloudService {
 
 
         List<Search> l = searches.getSearches(getMaxSize(), getDate());
+        log.trace("Tag cloud. Número de resultados: "+l.size()+" Número máximo permitido: "+getMaxSize());
         for (Search s : l) {
             m.put(s.getText(), s.getCount());
 

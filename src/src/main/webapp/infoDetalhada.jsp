@@ -256,7 +256,7 @@ modelo de tópico:
                                     <li><div class="nome">Plataforma suportada:</div><div class="valor">${var}</div></li>
                                 </c:forEach>
 
-                                <c:forEach var="platformSpecificFeature" items="${metadata.technical.platformSpecificFeature}">
+                                <c:forEach var="platformSpecificFeature" items="${metadata.technical.platformSpecificFeatures}">
                                     <li><span class="title">Caracter&iacute;stica espec&iacute;fica da plataforma</span>
                                         <ul>
                                             <c:if test="${!empty platformSpecificFeature.platformType}">
