@@ -44,9 +44,9 @@ public class DocumentoReal implements java.io.Serializable,
     private Set<Autor> autores;
     private Set<Token> tokens;
     private String language;
-    List<String> titleTokens;
-    List<String> keywordTokens;
-    List<String> descriptionTokens;
+    private List<String> titleTokens;
+    private List<String> keywordTokens;
+    private List<String> descriptionTokens;
     private Session session;
     private SessionFactory sessionFactory;
     private static List<String> stopWords;
