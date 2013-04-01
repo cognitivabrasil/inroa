@@ -1,17 +1,14 @@
 package feb.services;
 
+import feb.data.entities.Search;
+import feb.data.interfaces.SearchesDao;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import feb.data.entities.Search;
-import feb.data.interfaces.SearchesDao;
-import feb.spring.controllers.FEBController;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Tag cloud implementation with a fixed number of words.
