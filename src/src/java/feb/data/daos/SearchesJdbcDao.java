@@ -47,8 +47,9 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
      * @param limit
      * @return
      */
+    @Override
     public List<Search> getSearches(int limit) {
-        String sql = "SELECT text, COUNT(*) as count from searches GROUP BY text ORDER BY count DESC,text  LIMIT ?";
+        String sql = "SELECT text, COUNT(*) as count from searches GROUP BY text HAVING COUNT(*) > 1 ORDER BY count DESC,text  LIMIT ?";
         List<Search> customers = getJdbcTemplate().query(sql,
                 new Object[]{limit},
                 new int[]{Types.BIGINT},
@@ -59,7 +60,7 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
 
     @Override
     public List<Search> getSearches(Integer i, Date a) {
-        String sql = "SELECT text, COUNT(*) as count from searches WHERE time > ? GROUP BY text  ORDER BY count DESC,text LIMIT ?";
+        String sql = "SELECT text, COUNT(*) as count from searches WHERE time > ? GROUP BY text HAVING COUNT(*) > 1 ORDER BY count DESC,text LIMIT ?";
         List<Search> customers = getJdbcTemplate().query(sql,
                 new Object[]{a, i},
                 new int[]{Types.TIMESTAMP, Types.BIGINT},

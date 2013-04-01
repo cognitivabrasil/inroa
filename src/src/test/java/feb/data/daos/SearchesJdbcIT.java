@@ -47,14 +47,14 @@ public class SearchesJdbcIT extends AbstractDaoTest {
 		Date a = dfm.parse("2012-06-26 20:15:00");
 		
 		List<Search> l = sDao.getSearches(2, a);
-		
+
 		assertThat(l.size(), equalTo(2));
 		
 		assertThat(l.get(0).getText(), equalTo("jorjao"));
 		assertThat(l.get(0).getCount(), equalTo(3));
 
 		assertThat(l.get(1).getText(), equalTo("bla"));
-		assertThat(l.get(1).getCount(), equalTo(1));
+		assertThat(l.get(1).getCount(), equalTo(2));
 
 	}
 	
@@ -71,7 +71,7 @@ public class SearchesJdbcIT extends AbstractDaoTest {
 		assertThat(l.get(0).getCount(), equalTo(4));
 
 		assertThat(l.get(1).getText(), equalTo("bla"));
-		assertThat(l.get(1).getCount(), equalTo(1));
+		assertThat(l.get(1).getCount(), equalTo(2));
 
 	}
 	
@@ -88,10 +88,10 @@ public class SearchesJdbcIT extends AbstractDaoTest {
 		assertThat(l.get(0).getCount(), equalTo(3));
 
 		assertThat(l.get(1).getText(), equalTo("bla"));
-		assertThat(l.get(1).getCount(), equalTo(1));
+		assertThat(l.get(1).getCount(), equalTo(2));
 		
 		assertThat(l.get(2).getText(), equalTo("teste"));
-		assertThat(l.get(2).getCount(), equalTo(1));
+		assertThat(l.get(2).getCount(), equalTo(2));
 
 	}
 	
