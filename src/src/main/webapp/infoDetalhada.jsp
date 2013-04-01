@@ -172,8 +172,9 @@ modelo de tópico:
                                 </c:if>
 
                                 <c:forEach var="contribute" items="${metadata.lifeCycle.contribute}">
-                                    <li><span class="title">Contribuinte</span>
+                                    <li><span class="title">Contribuinte --${contribute.role.language}--</span>
                                         <ul>
+                                            
                                             <c:if test="${!empty contribute.role}">
                                                 <li><div class="nome">Papel:</div><div class="valor">${contribute.role}</div></li>
                                             </c:if>
@@ -636,8 +637,8 @@ modelo de tópico:
                                                                     <li>
                                                                         <span class="title">Alternativa ao texto</span>
                                                                         <ul>
-                                                                            <c:if test="${!empty equivalent.content.alternativesToText.graphicAlternative.textPt}">
-                                                                                <li><div class="nome">Tem alternativa gr&aacute;fica:</div><div class="valor">${equivalent.content.alternativesToText.graphicAlternativeTxt}</div></li>
+                                                                            <c:if test="${!empty equivalent.content.alternativesToText.graphicAlternative}">
+                                                                                <li><div class="nome">Tem alternativa gr&aacute;fica:</div><div class="valor">${equivalent.content.alternativesToText.graphicAlternative}</div></li>
                                                                             </c:if>
                                                                             <c:forEach var="signLanguage" items="${equivalent.content.alternativesToText.signLanguage}">
                                                                                 <li><div class="nome">Linguagem de sinal:</div><div class="valor">${signLanguage}</div></li>
