@@ -133,9 +133,10 @@ public final class FEBController {
             return "";
         } else if (d.isDeleted()) {
             response.sendError(410, "O documento solicitado foi deletado.");
-//            response.setStatus(410);
+
             return "empty";
         }else {
+            d.getMetadata().setLocale("pt-BR");
             model.addAttribute("obaaEntry", d.getObaaEntry());
             List<String> titles = d.getTitles();
             String title = "Título não informado";
