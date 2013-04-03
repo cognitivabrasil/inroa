@@ -63,12 +63,12 @@ public class SubFederacaoOAI {
                     boolean atualizadoTemp = false;
 
                     if ((subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null)) {
-                        log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getName().toUpperCase());
+                        log.info("Deletando toda a base de dados da Subfederação: " + subFed.getName().toUpperCase());
 
                         for (RepositorioSubFed r : subFed.getRepositorios()) {
                             r.dellAllDocs();
                         }
-                        log.info("FEB: Base deletada!");
+                        log.info("Base deletada!");
                     }
 
                     if (subFed.getUrl().isEmpty()) { //testa se a string url esta vazia.
@@ -91,7 +91,7 @@ public class SubFederacaoOAI {
                         }
                         Long fim = System.currentTimeMillis();
                         Long total = fim - inicio;
-                        log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName()+"\n");
+                        log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName()+"\n");
                     }
 
                     if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
@@ -125,7 +125,7 @@ public class SubFederacaoOAI {
             log.fatal("Could not get AppContext bean!");
             throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
-            log.info("FEB: Atualizando subfederacao: " + subFed.getName());//imprime o nome do repositorio
+            log.info("Atualizando subfederacao: " + subFed.getName());//imprime o nome do repositorio
 
             try {
 
@@ -166,7 +166,7 @@ public class SubFederacaoOAI {
                 } else if (msg.equalsIgnoreCase("idDoesNotExist")) {
                     log.error(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
                 } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
-                    log.info("FEB: " + msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
+                    log.info(msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
                     subFed.setUltimaAtualizacao(new Date());
                 } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                     log.error(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
@@ -215,12 +215,12 @@ public class SubFederacaoOAI {
 
             if (subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null) {
 
-                log.info("FEB: Deletando toda a base de dados da Subfederação: " + subFed.getName().toUpperCase());
+                log.info("Deletando toda a base de dados da Subfederação: " + subFed.getName().toUpperCase());
 
                 for (RepositorioSubFed r : subFed.getRepositorios()) {
                     r.dellAllDocs();
                 }
-                log.info("FEB: Base deletada!");
+                log.info("Base deletada!");
             }
 
             String url = subFed.getUrl();
@@ -232,7 +232,7 @@ public class SubFederacaoOAI {
                 atualizaSubFedOAI(subFed, indexar);
                 Long fim = System.currentTimeMillis();
                 Long total = fim - inicio;
-                log.info("FEB: Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName()+"\n");
+                log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName()+"\n");
             }
         }
     }

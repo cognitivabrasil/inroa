@@ -40,7 +40,7 @@ public class Robo {
         Logger log = Logger.getLogger(Robo.class.getName());
 
         log.info(">>>");
-        log.info(">>> FEB: iniciando o Robo.");
+        log.info(">>> Iniciando o Robo.");
         log.info(">>>");
 
         Long inicioRobo = System.currentTimeMillis();        
@@ -58,10 +58,10 @@ public class Robo {
         if ((subFedAtualizada || repAtualizado) || (finalNumberDocs != initNumberDocs)) {
             indexar.populateR1();
         } else {
-            log.info("FEB: NAO existe atualizaçoes para os repositorios! ");
+            log.info("NAO existe atualizaçoes para os repositorios! ");
         }
         
-        log.info("FEB: limpando visitas antigas...");
+        log.info("Limpando visitas antigas...");
         searchesDao.cleanup();
         
         Long finalRobo = System.currentTimeMillis();

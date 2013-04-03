@@ -55,7 +55,7 @@ public class Objetos {
 
                 //efetua o parser do xml e insere os documentos na base            
                 if (!caminhosXML.isEmpty()) {
-                    log.info("FEB: Lendo os XMLs e inserindo os objetos na base");
+                    log.info("Lendo os XMLs e inserindo os objetos na base");
                 }
                 
                 DocumentosDAO docDao = ctx.getBean(DocumentosDAO.class);
@@ -65,7 +65,7 @@ public class Objetos {
 
                     File arquivoXML = new File(caminho);
                     if (arquivoXML.isFile() || arquivoXML.canRead()) {
-                        log.info("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+                        log.info("Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
                         Importer imp = new Importer();
                         imp.setInputFile(arquivoXML);
@@ -77,7 +77,7 @@ public class Objetos {
                         arquivoXML.delete();
 
                     } else {
-                        log.error("FEB: O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminho);
+                        log.error("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminho);
                     }
                 }
 

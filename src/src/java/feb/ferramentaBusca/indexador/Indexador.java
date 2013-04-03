@@ -90,7 +90,7 @@ public class Indexador {
     public void indexaDocumentos(Paginavel<DocumentoReal> docs) {
         Long inicio = System.currentTimeMillis();
         double size = docs.size();
-        log.info("FEB: Inicio da indexacao... (" + size +")");
+        log.info("Inicio da indexacao... (" + size +")");
         int i = 0;
       
         for(Collection<DocumentoReal> d : docs) {
@@ -107,7 +107,7 @@ public class Indexador {
 
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
-        log.debug("\n FEB: Tempo total para inserir objetos: " + Operacoes.formatTimeMillis(total));
+        log.debug("\n Tempo total para inserir objetos: " + Operacoes.formatTimeMillis(total));
 
     }
     
@@ -135,7 +135,7 @@ public class Indexador {
      *
      */
     public void populateR1() {
-        log.info("FEB: recalculando o indice...");
+        log.info("Recalculando o indice...");
         Long inicio = System.currentTimeMillis();
 
 
@@ -206,9 +206,9 @@ public class Indexador {
 
         for (DocumentoReal doc : docDao.getwithoutToken()) {
             if (doc.isIndexEmpty()) {
-                log.warn("FEB: Foi encontrado um documento sem nenhum atributo. \n obaaEntry: " + doc.getObaaEntry());
+                log.warn("Foi encontrado um documento sem nenhum atributo. \n obaaEntry: " + doc.getObaaEntry());
                 docDao.delete(doc);
-                log.warn("FEB: Documento deletado");
+                log.warn("Documento deletado");
             } else {
                 doc.generateTokens();
 

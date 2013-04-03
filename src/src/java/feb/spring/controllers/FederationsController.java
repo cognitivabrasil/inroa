@@ -124,7 +124,7 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
     public @ResponseBody
     String atualizaFedAjax(@PathVariable("id") Integer id,
             @RequestParam boolean apagar) {
-        log.info("FEB: Solicitacao de atualizacao pela Ferramenta Administrativa...");
+        log.info("Solicitacao de atualizacao pela Ferramenta Administrativa...");
         Integer initNumberDocs = docDao.getSizeWithDeleted();
         try {
             if (id > 0) {

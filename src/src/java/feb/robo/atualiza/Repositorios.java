@@ -261,7 +261,7 @@ public class Repositorios {
             throw e;
         } catch (SAXException e) {
             String msg = e.getMessage();
-            String msgOAI = "\nFEB: ERRO no parser do OAI-PMH, mensagem: ";
+            String msgOAI = "\nERRO no parser do OAI-PMH, mensagem: ";
             if (msg.equalsIgnoreCase("badArgument")) {
                 log.error(msgOAI
                         + msg
@@ -283,8 +283,7 @@ public class Repositorios {
                         + msg
                         + " - The value of the identifier argument is unknown or illegal in this repository.\n");
             } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
-                log.warn("FEB: "
-                        + msg
+                log.warn(msg
                         + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
                 rep.setUltimaAtualizacao(new Date()); // atualiza a hora da
                 // ultima atualizacao

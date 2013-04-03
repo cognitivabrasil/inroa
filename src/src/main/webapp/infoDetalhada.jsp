@@ -172,7 +172,7 @@ modelo de tópico:
                                 </c:if>
 
                                 <c:forEach var="contribute" items="${metadata.lifeCycle.contribute}">
-                                    <li><span class="title">Contribuinte --${contribute.role.language}--</span>
+                                    <li><span class="title">Contribuinte</span>
                                         <ul>
                                             
                                             <c:if test="${!empty contribute.role}">
