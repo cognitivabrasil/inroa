@@ -53,7 +53,7 @@ public class Recuperador {
 
             if (consulta.hasAuthor()) {
 
-                if (consulta.getConsulta().isEmpty()) {
+                if (tokensConsulta.isEmpty()) {
                     //COM autor, SEM termo de busca
                     sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavra_chave, d.id_rep_subfed, d.deleted, d.obaaxml, a.nome ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
                 } else {
@@ -61,6 +61,9 @@ public class Recuperador {
                     sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavra_chave, d.id_rep_subfed, d.deleted, d.obaaxml, a.nome HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
                 }
             } else {
+                if(tokensConsulta.isEmpty()){
+                    return new ArrayList<DocumentoReal>();
+                }
                 sqlOrdenacao = "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavras_chave, d.id_rep_subfed, deleted, obaaxml HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
             }
 
@@ -68,7 +71,7 @@ public class Recuperador {
 
             if (consulta.hasAuthor()) {
 
-                if (consulta.getConsulta().isEmpty()) {
+                if (tokensConsulta.isEmpty()) {
                     //COM autor, SEM termo de busca
                     sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
                 } else {
@@ -76,6 +79,9 @@ public class Recuperador {
                     sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC, SUM (weight) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
                 }
             } else {
+                if(tokensConsulta.isEmpty()){
+                    return new ArrayList<DocumentoReal>();
+                }
                 sqlOrdenacao = "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave ORDER BY SUM(weight) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
 
             }

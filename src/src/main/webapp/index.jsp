@@ -27,6 +27,7 @@
         <link rel="StyleSheet" href="${css}" type="text/css">
         <link href="${images}/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="JavaScript" type="text/javascript" src="${scripts}/rss.js"></script>
+        <script language="javascript" type="text/javascript" src='${scripts}/jquery-1.7.2.js'></script>     
 
     </head>      
 
