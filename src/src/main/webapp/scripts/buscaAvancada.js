@@ -21,7 +21,6 @@ $(function() {
     $('form').submit(function(){
         var consulta = $.trim($('#consulta').val());
         var autor = $.trim($('#autor').val());
-        console.log("autor: '"+autor+"' consulta:'"+consulta+"'");
         if(consulta == '' && autor == ''){
             return false;
         }

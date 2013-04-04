@@ -137,7 +137,6 @@ modelo de tópico:
                                 <c:forEach var="description" items="${metadata.general.descriptions}">
                                     <li><div class="nome">Descrição:</div><div class="valor">${description}</div></li>
                                 </c:forEach>
-
                                 <c:forEach var="keyword" items="${metadata.general.keywords}">
                                     <li><div class="nome">Palavra-chave:</div><div class="valor">${keyword}</div></li>
                                 </c:forEach>
@@ -145,10 +144,10 @@ modelo de tópico:
                                 <c:forEach var="coverage" items="${metadata.general.coverages}">
                                     <li><div class="nome">Cobertura:</div><div class="valor">${coverage}</div></li>
                                 </c:forEach>
-
-                                <c:if test="${!empty metadata.general.structure}">
+                                    <c:set var="structure">${metadata.general.structure}</c:set>
+                                <c:if test="${!empty structure}">
                                     <li>
-                                        <div class="nome">Estrutura:</div><div class="valor">${metadata.general.structure}</div>
+                                        <div class="nome">Estrutura:</div><div class="valor">${structure}</div>
                                     </li>
                                 </c:if>
                                 <c:if test="${!empty metadata.general.aggregationLevel}">
