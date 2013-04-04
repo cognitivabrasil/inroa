@@ -4,9 +4,9 @@ import feb.data.entities.Search;
 import feb.data.interfaces.SearchesDao;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +30,7 @@ public class TagCloudServiceImpl implements TagCloudService {
 
     @Override
     public Map<String, Integer> getTagCloud() {
-        Map<String, Integer> m = new HashMap<String, Integer>();
+        Map<String, Integer> m = new TreeMap<String, Integer>();
 
 
         List<Search> l = searches.getSearches(getMaxSize(), getDate());
