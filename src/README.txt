@@ -46,7 +46,7 @@ na pasta em que os arquivos foram descompactados.
 
 4 - Crie o diretório para armazenamento dos logs e altere o "dono" da pasta para o servidor
 	sudo mkdir /var/log/feb/
-	sudo chown tomcat6 /var/log/feb/
+	sudo chown tomcat7 /var/log/feb/
 
 
 ---------------------------------------------------------------

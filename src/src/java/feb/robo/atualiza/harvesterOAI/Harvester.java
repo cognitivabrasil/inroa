@@ -82,7 +82,6 @@ public class Harvester {
 
         String resumption = listRecords.getResumptionToken(); //solicita a tag ResumptionToken recebida no xml
 
-        //out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         listRecords.getDocument(); //lista o registros retornados
                 
         out.write(listRecords.toString()); //imprime no arquivo os registros transformados para string
@@ -95,7 +94,6 @@ public class Harvester {
             caminhosXML.add(caminhoAbsoluto); //adiciona o endereço do xml no arrayList
             Writer outResume = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(caminhoAbsoluto), "UTF8")); //cria o arquivo xml
-            //outResume.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //escreve a primeira linha do xml
 
             listRecordsResume = new ListRecords(this.endereco, resumption);
 
@@ -106,7 +104,6 @@ public class Harvester {
             outResume.close(); //fecha o arquivo xml
 
         }
-
         return numeroXML;
     }
 }
