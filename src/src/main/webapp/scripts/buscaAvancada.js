@@ -19,8 +19,8 @@ function tornarVisivel(idLink, id, css){
 
 $(function() {
     $('form').submit(function(){
-        var consulta = $.trim($('#consulta').val());
-        var autor = $.trim($('#autor').val());
+        var consulta = $.trim($('#consulta').val().replace(/[^0-9A-Za-z]*/g,''));
+        var autor = $.trim($('#autor').val().replace(/[^0-9A-Za-z]*/g,''));
         if(consulta == '' && autor == ''){
             return false;
         }

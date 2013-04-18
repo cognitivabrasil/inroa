@@ -345,4 +345,14 @@ public class Operacoes {
         }
         return date;
     }
+    
+    /**
+     * Remove todos os caracteres especiais e espaços e texta se o texto está em branco.
+     * Ex.: Se a String for "?" o resultado será true e se for "texto?" retornará false.
+     * @param text String a ser testada
+     * @return true se o texto sem caracteres especiais estiver em branco e false caso contrário. 
+     */
+    public static boolean isEmptyText(String text){
+        return text.replaceAll("[^0-9A-Za-z]*", "").trim().isEmpty();
+    }
 }

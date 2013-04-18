@@ -2,8 +2,10 @@ package feb.data.daos;
 
 import feb.data.entities.Search;
 import feb.data.interfaces.SearchesDao;
+import feb.util.Operacoes;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -91,23 +93,21 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
      */
     @Override
     public void save(String string, Date date) {
-        String sql = "INSERT INTO searches VALUES (?,?)";
-        String[] l = string.trim().toLowerCase().split("\\s+");
-        List<String> n = new ArrayList<String>();
-        for (String s : l) {
-            n.add(s);
+        if (!Operacoes.isEmptyText(string)) {
+            String sql = "INSERT INTO searches VALUES (?,?)";
+            String[] l = string.trim().toLowerCase().split("\\s+");
+            List<String> n = new ArrayList<String>();
+            n.addAll(Arrays.asList(l));
+            String cons = StringUtils.join(n, " ");
+
+            try {
+                getJdbcTemplate().update(sql,
+                        new Object[]{cons, date},
+                        new int[]{Types.VARCHAR, Types.TIMESTAMP});
+            } catch (DataAccessException e) {
+                logger.error("Error while trying to save Search", e);
+            }
         }
-        String cons = StringUtils.join(n, " ");
-
-
-        try {
-            getJdbcTemplate().update(sql,
-                    new Object[]{cons, date},
-                    new int[]{Types.VARCHAR, Types.TIMESTAMP});
-        } catch (DataAccessException e) {
-            logger.error("Error while trying to save Search", e);
-        }
-
     }
 
     @Override
@@ -125,7 +125,7 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
                     new Object[]{tag},
                     new int[]{Types.VARCHAR});
         } catch (DataAccessException e) {
-            logger.error("Error while trying to delete tag: "+tag, e);
+            logger.error("Error while trying to delete tag: " + tag, e);
             throw e;
         }
     }

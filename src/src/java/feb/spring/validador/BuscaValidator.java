@@ -5,6 +5,7 @@
 package feb.spring.validador;
 
 import feb.data.entities.Consulta;
+import feb.util.Operacoes;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -27,7 +28,8 @@ public class BuscaValidator implements Validator {
         //ValidationUtils.rejectIfEmpty(errors, "consulta", "required.consulta", "É necessário informar uma consulta.");
         
         Consulta busca = (Consulta) target;
-        if(busca.getConsulta().trim().isEmpty() && busca.getAutor().trim().isEmpty()){
+        
+        if(Operacoes.isEmptyText(busca.getConsulta()) && Operacoes.isEmptyText(busca.getAutor())){
             errors.rejectValue("consulta","invalid.consulta", "Nenhuma consulta foi informada.");
         }
     }
