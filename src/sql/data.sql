@@ -164,7 +164,7 @@ xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
 	</obaa:technical>
 
 	<obaa:rights>
-		<obaa:description><xsl:value-of select="dc:right"/></obaa:description>
+		<obaa:description><xsl:value-of select="dc:rights"/></obaa:description>
 	</obaa:rights>
 </obaa:obaa>
 </xsl:template>

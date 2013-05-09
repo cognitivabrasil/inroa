@@ -132,7 +132,7 @@
                     <c:otherwise>
                         <div class="Value" id="textResult${repId}">
                             <span>
-                                ${rep.ultimaAtualizacaoFormatada} &nbsp;&nbsp;
+                                ${rep.proximaAtualizacaoFormatada} &nbsp;&nbsp;
                                 <security:authorize access="hasRole('PERM_UPDATE')">
 
                                     <a title='Atualizar agora'

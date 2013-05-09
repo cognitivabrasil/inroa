@@ -266,6 +266,10 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
                     * MILLISECONDS_PER_DAY); // soma a periodicidade
         }
     }
+    
+    public String getProximaAtualizacaoFormatada(){        
+        return Operacoes.ultimaAtualizacaoFrase(getProximaAtualizacao(), getUrl());
+    }
 
     /**
      * Test if repository is outdated.
