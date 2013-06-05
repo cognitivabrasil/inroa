@@ -437,6 +437,11 @@ a:hover{
     color:red;
     font-weight:bold;
 }
+.LinhaEntrada .msgError{
+    margin:0 0 0 41%;
+    color:red;
+    font-weight:bold;
+}
 
 .LinhaEntrada .alerta {
     border:0px solid gray;

@@ -93,6 +93,7 @@
                 <div class="LinhaEntrada">
                     <form:errors path="url" cssClass="ValueErro" />
                     <div class="Comentario">Ex: http://feb.ufrgs.br/feb</div>
+                    <div class="msgError"></div>
                     <div class="Label">URL da federa&ccedil;&atilde;o:</div>
                     <div class="Value">
                         <form:input path="url" maxlength="200"

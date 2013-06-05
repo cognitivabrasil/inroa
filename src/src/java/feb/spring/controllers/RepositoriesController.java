@@ -4,20 +4,18 @@
  */
 package feb.spring.controllers;
 
-import feb.data.daos.AbstractHibernateDAO;
 import feb.data.daos.RepositoryHibernateDAO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
 import feb.data.entities.Repositorio;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
 import feb.robo.atualiza.Repositorios;
 import feb.spring.validador.RepositorioValidator;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller for the repositories.
@@ -34,8 +32,6 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
     private PadraoMetadadosDAO padraoDao;
     private RepositorioValidator repValidator = new RepositorioValidator();
     @Autowired private Repositorios atualizadorRep;
-
-    Logger log = Logger.getLogger(RepositoriesController.class);
    
     /**
      * Shows the details of the repository.
@@ -59,7 +55,9 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
     public String newShow(Model model) {
 
         //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
-        model.addAttribute("repModel", new Repositorio());
+        Repositorio rep = new Repositorio();
+        rep.setUrl("http://");
+        model.addAttribute("repModel", rep);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         return "admin/repositories/new";
     }

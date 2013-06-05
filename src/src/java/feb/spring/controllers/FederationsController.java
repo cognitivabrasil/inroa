@@ -59,6 +59,7 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String cadastraFed(Model model) {
         SubFederacao subFed = new SubFederacao();
+        subFed.setUrl("http://");
         model.addAttribute("federation", subFed);
         return "admin/federations/new";
     }

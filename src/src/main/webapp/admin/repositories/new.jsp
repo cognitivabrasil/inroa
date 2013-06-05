@@ -92,9 +92,11 @@ Primeira etapa do cadastro de um repositorio
                 <div class="subtitle">Sincroniza&ccedil;&atilde;o dos metadados</div>
                 <div class="LinhaEntrada">
                     <form:errors path="url" cssClass="ValueErro" />
+                    <div class="Comentario">Ex: http://url.do.repositorio/request</div>
+                    <div class="msgError"></div>
                     <div class="Label">URL que responde OAI-PMH:</div>
                     <div class="Value">
-                        <form:input path="url" maxlength="200"/>
+                        <form:input path="url" maxlength="200"  />
                         &nbsp;
                         <div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>

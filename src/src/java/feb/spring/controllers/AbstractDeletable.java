@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 public abstract class AbstractDeletable<T extends FebDomainObject, H extends AbstractHibernateDAO<T>>{
     
-    Logger  log = Logger.getLogger(AbstractDeletable.class);
+    private Logger  log = Logger.getLogger(AbstractDeletable.class);
     
     @RequestMapping(value = "/teste", method = RequestMethod.GET)
     public @ResponseBody
