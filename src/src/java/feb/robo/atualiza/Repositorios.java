@@ -59,14 +59,13 @@ public class Repositorios {
         for (Repositorio rep : listRep) { // percorre todos os repositorios que
             // precisam ser atualizados
             try { // chama o metodo que atualiza o repositorio
-                if (atualizaRepositorio(repDao.get(rep.getId()), indexar) > 0) 
-                {
+                if (atualizaRepositorio(repDao.get(rep.getId()), indexar) > 0) {
                     atualizou = true;
                 }
             } catch (Exception e) {
-                // TODO: Isso é um BUG! Tem que dar catch só nas excessões
-                // conhecidas
-				/*
+                // TODO: Isso é um BUG! Tem que dar catch só nas excessões conhecidas
+                
+		/*
                  * ATENÇÃO: esse catch está vazio porque já é feito o tratamento
                  * de exceção dentro do metodo atualizaRepositorio mas é preciso
                  * subir a exceção porque se atualizar um repositorio só pela
@@ -134,15 +133,8 @@ public class Repositorios {
         }
         if (erros.size() > 0) {
             throw new RepositoryException(getMensagem(erros));
-            // gera uma
-            // exception
-            // informando
-            // o nome
-            // dos
-            // repositorios
-            // que nao
-            // foram
-            // atualizados
+            // gera uma exception informando o nome dos repositorios que nao
+            // foram atualizados
         }
 
     }
@@ -204,13 +196,14 @@ public class Repositorios {
                     }
                 }
 
-                // se o diretorio nao existir, cria se já existir apaga todos os
-                // .xml
+                // se o diretorio nao existir, cria se já existir apaga todos os .xml
                 File caminhoTeste = new File(caminhoDiretorioTemporario);
-                if (!caminhoTeste.isDirectory()) {// se o caminho informado nao
-                    // for um diretorio
-                    caminhoTeste.mkdirs();// cria o diretorio
-                } else { // APAGA TODOS ARQUIVOS XML do FEB DA PASTA
+                // se o caminho informado nao for um diretorio
+                if (!caminhoTeste.isDirectory()) {
+                    // cria o diretorio
+                    caminhoTeste.mkdirs();
+                } else {
+                    // APAGA TODOS ARQUIVOS XML do FEB DA PASTA
                     File[] arquivos = caminhoTeste.listFiles();
                     for (File toDelete : arquivos) {
                         if (toDelete.getName().startsWith("FEB-")

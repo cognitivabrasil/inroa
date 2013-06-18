@@ -17,8 +17,6 @@ SET client_min_messages = warning;
 -- Name: federacao; Type: DATABASE; Schema: -; Owner: feb
 --
 
-CREATE DATABASE federacao WITH TEMPLATE = template0 ENCODING = 'UTF8';
-
 
 ALTER DATABASE federacao OWNER TO feb;
 

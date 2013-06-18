@@ -8,9 +8,14 @@ import feb.data.daos.RepositoryHibernateDAO;
 import feb.data.entities.Repositorio;
 import feb.data.interfaces.PadraoMetadadosDAO;
 import feb.data.interfaces.RepositoryDAO;
+import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.Repositorios;
+import feb.robo.atualiza.importaOAI.XMLtoDB;
 import feb.spring.validador.RepositorioValidator;
-import org.apache.log4j.Logger;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,12 +32,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/repositories/*")
 public final class RepositoriesController extends AbstractDeletable<Repositorio, RepositoryHibernateDAO> {
 
-    @Autowired private RepositoryDAO repDao;
+    @Autowired
+    private RepositoryDAO repDao;
     @Autowired
     private PadraoMetadadosDAO padraoDao;
     private RepositorioValidator repValidator = new RepositorioValidator();
-    @Autowired private Repositorios atualizadorRep;
-   
+    @Autowired
+    private Repositorios atualizadorRep;
+
     /**
      * Shows the details of the repository.
      *
@@ -41,17 +48,17 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
     @RequestMapping("/{id}")
     public String show(@PathVariable Integer id,
             Model model,
-            @RequestParam(required=false, value="r") boolean recarregar) {
+            @RequestParam(required = false, value = "r") boolean recarregar) {
         model.addAttribute("rep", repDao.get(id));
         model.addAttribute("repId", id);
-        model.addAttribute("recarregar",recarregar);
+        model.addAttribute("recarregar", recarregar);
         return "admin/repositories/show";
     }
 
     /**
      * Shows the form for creation of a new repository.
      */
-    @RequestMapping(value = "/new", method=RequestMethod.GET)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newShow(Model model) {
 
         //TODO: alterar o jsp para coletar o padrao e o tipo do mapeamento atraves do repModel   
@@ -66,10 +73,10 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
      * Actually saves the repository.
      *
      * @param rep the rep
-     * @return to the admin page in case of success, to repository
-     * creation page otherwise
+     * @return to the admin page in case of success, to repository creation page
+     * otherwise
      */
-    @RequestMapping(value="/new", method=RequestMethod.POST)
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String newDo(
             @ModelAttribute("repModel") Repositorio rep,
             BindingResult result,
@@ -99,7 +106,7 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
 
     /**
      * Shows the edit page of the repository.
-     * 
+     *
      * @param id the repository id
      */
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
@@ -135,21 +142,22 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
             return "admin/repositories/edit";
         } else {
             repDao.updateNotBlank(rep);
-            return "redirect:/admin/repositories/" + id+"?r=true";
+            return "redirect:/admin/repositories/" + id + "?r=true";
         }
     }
-    
+
     /**
      * Ajax method to update (harvest new items) a repository.
      *
      * @param id the repository id
-     * @param apagar if true, delete everything and starts from sratch, if 
-     * false harvests only new items
+     * @param apagar if true, delete everything and starts from sratch, if false
+     * harvests only new items
      * @return "1" in case of success, error string otherwise
      */
-    @RequestMapping(value="/{id}/update", method = RequestMethod.POST)
-    @ResponseBody public String update(
-    		@PathVariable Integer id,
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String update(
+            @PathVariable Integer id,
             @RequestParam boolean apagar) {
 
         try {
@@ -163,6 +171,22 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
     @Override
     public RepositoryHibernateDAO getDAO() {
         return (RepositoryHibernateDAO) repDao;
-    }   
+    }
 
-  }
+    @RequestMapping(value = "/updatelume", method = RequestMethod.GET)
+    @ResponseBody
+    public String updateLume() throws IOException, Exception {
+        XMLtoDB gravar = new XMLtoDB();
+        Repositorio r = getDAO().get(102);
+        Indexador indexar = new Indexador();
+        File dir = new File("/home/marcos/xmlLume/");
+        File[] f = dir.listFiles();
+        List<String> paths = new ArrayList<String>();
+        System.out.println("length " + f.length);
+        for (File xml : f) {
+            paths.add(xml.getAbsolutePath());
+        }
+        gravar.saveXML(paths, r, indexar);
+        return "ok";
+    }
+}

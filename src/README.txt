@@ -1,4 +1,4 @@
-INSTALAÇÃO DO FEB 2.9-SNAPSHOT
+INSTALAÇÃO DO FEB
 ------------------------------------------------------------
 
 PASSO 1 - Dependências
@@ -20,8 +20,7 @@ a instalação do FEB.
 
 PASSO 2
 
-1 - Baixe o arquivo "feb-2.9-SNAPSHOT.tar.gz" e descompacte-o. Abra um terminal e entre
-na pasta em que os arquivos foram descompactados.
+1 - Baixe o arquivo tar.gz com os arquivos de instalação da vesão corrente e descompacte-o. Abra um terminal e entre na pasta em que os arquivos foram descompactados.
 
 2 - Instalação da biblioteca postgres PGSimilarity
 
@@ -35,13 +34,14 @@ na pasta em que os arquivos foram descompactados.
 
 3 - Criação da base de dados para 1a instalação do FEB
     Certifique-se que não existe a base de dados "federacao". Se já existir, remova.
+    sudo dropdb federacao;
 
     Após execute os seguintes comandos:
         sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'"
         sudo -u postgres createdb -O feb federacao
         sudo -u postgres psql federacao -f schema.sql
         sudo -u postgres psql federacao -f data.sql
-	sudo -u postgres psql federacao -f feb_similarity.sql ((( COLOCAR ESSE ARQUIVO JUNTO NO PACOTE e o pg_similarity-0.0.19.tgz )))
+	sudo -u postgres psql federacao -f feb_similarity.sql
 
 
 4 - Crie o diretório para armazenamento dos logs e altere o "dono" da pasta para o servidor
@@ -59,7 +59,7 @@ feb.war -> fazer o deploy do arquivo no servidor.
 
 ---------------------------------------------------------------
 
-PASSO 4 - Configuração da base
+PASSO 4 - Configuração da base (opcional)
 
 Esse passo deve ser executado caso se queira alterar a senha, o servidor
 de banco de dados ou a base de dados.
@@ -77,6 +77,6 @@ de Servlet onde o FEB está rodando. Ex: sudo service tomcat6 restart
 
 PASSO 5 - Testar
 
-Acesse a porta 8080 do servidor onde o FEB foi instalado,
+Acesse a porta 8080/feb do servidor onde o FEB foi instalado,
 logue-se na interface de admin e adiciona algum repositório.
 Verifique que tudo funciona.
