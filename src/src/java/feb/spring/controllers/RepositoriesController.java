@@ -172,21 +172,4 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
     public RepositoryHibernateDAO getDAO() {
         return (RepositoryHibernateDAO) repDao;
     }
-
-    @RequestMapping(value = "/updatelume", method = RequestMethod.GET)
-    @ResponseBody
-    public String updateLume() throws IOException, Exception {
-        XMLtoDB gravar = new XMLtoDB();
-        Repositorio r = getDAO().get(102);
-        Indexador indexar = new Indexador();
-        File dir = new File("/home/marcos/xmlLume/");
-        File[] f = dir.listFiles();
-        List<String> paths = new ArrayList<String>();
-        System.out.println("length " + f.length);
-        for (File xml : f) {
-            paths.add(xml.getAbsolutePath());
-        }
-        gravar.saveXML(paths, r, indexar);
-        return "ok";
-    }
 }
