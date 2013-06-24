@@ -4,6 +4,7 @@ sudo -u postgres dropdb federacao
 echo "Creating user"
 sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'"
 echo "Criando base local..."
+sudo -u postgres createdb federacao -O feb;
 sudo -u postgres psql < schema.sql
 echo "Populando base com dados iniciais..."
 sudo -u postgres psql federacao < data.sql
