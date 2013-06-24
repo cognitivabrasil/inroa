@@ -997,6 +997,36 @@ ALTER TABLE ONLY repositorios_subfed
 CREATE TABLE searches (text TEXT, time timestamp);
 ALTER TABLE searches OWNER TO feb;
 
+-----------------
+-- TRIGER PARA EVITAR OBJETOS ÓRFÃOS
+-----------------
+
+CREATE OR REPLACE FUNCTION object_deleted()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+IF NEW.deleted = TRUE THEN 
+  DELETE FROM objetos WHERE documento = NEW.id;
+END IF;
+RETURN NEW;
+END;
+$BODY$
+
+LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION object_deleted()
+  OWNER TO feb;
+
+-- Trigger: object_deleted on documentos
+-- DROP TRIGGER object_deleted ON documentos;
+
+CREATE TRIGGER object_deleted
+  AFTER UPDATE OF deleted
+  ON documentos
+  FOR EACH ROW
+  EXECUTE PROCEDURE object_deleted();
+
+
 
 -----------------
 -- TRIGER PARA NOME DE AUTORES
