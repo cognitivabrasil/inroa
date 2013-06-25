@@ -278,12 +278,12 @@ public final class FEBController {
      * retornando os documentos no formato XML. Utiliza os mesmos métodos da
      * ferramenta de busca principal do FEB. Retorna um xml FEB com os objetos
      * no padrão de metadados OBAA. Existe uma tag de erro que contém um code e
-     * uma mensagem: <error code="code">Message</error> codigos existentes: +
-     * "badQuery" - Caso a consulta não tenha sido informada + "limitExceeded" -
-     * Caso o limit informado seja superior a 100, que é o limite máximo
-     * permitido (este limite máximo existe para que as consultar por webservice
-     * não comprometam o desempenho da base de dados). + "UnsupportedEncoding" -
-     * Caso ocorra um erro ao codificar a query em utf-8
+     * uma mensagem: <error code="code">Message</error> códigos existentes: 
+     * "badQuery" - Caso a consulta não tenha sido informada 
+     * "limitExceeded" - Caso o limite informado seja superior a 100, que é o 
+     * limite máximo permitido (este limite máximo existe para que as consultar 
+     * por webservice não comprometam o desempenho da base de dados).
+     * "UnsupportedEncoding" - Caso ocorra um erro ao codificar a query em utf-8
      *
      * @param query String que será utilizada para buscar documentos.
      * @param autor String contendo o nome do autor que será utilizado na busca.
