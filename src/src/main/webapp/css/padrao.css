@@ -982,6 +982,7 @@ td{vertical-align:top;}
     color:white;
     font-family:"Zurich Ex BT", "arial", "sans-serif";
     padding: 0.5%;
+    margin: -8px -8px 0 -8px; /*Para remover a borda que tem no body*/
 }
 .barra-superior span{margin-left: 1%;}
 .barra-superior span a{color:white; text-decoration: none;}
