@@ -48,6 +48,7 @@ public class VerificaLinkOAI {
             log.error("FEB ERRO: O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
         }
         }catch (Exception e){
+        	log.error(e);
             resultado = false;
             //colocar aqui os tratamentos para o oai-pmh
         }finally{
