@@ -1,4 +1,4 @@
-INSTALAÇÃO DO FEB
+INSTALAÇÃO DO FEB 
 ------------------------------------------------------------
 
 PASSO 1 - Dependências
