@@ -220,10 +220,14 @@ public class DocumentoReal implements java.io.Serializable,
         return getAttribute("obaaLocation");
     }
 
-    public Map<String,Boolean> getLocationHttp() {
-        Map<String,Boolean> locationhttp = new HashMap<String,Boolean>();
+    public Map<String, Boolean> getLocationHttp() {
+        Map<String, Boolean> locationhttp = new HashMap<String, Boolean>();
         for (String loc : getLocation()) {
-            locationhttp.put(loc,loc.startsWith("http:"));
+            if (loc.startsWith("http:")) {
+                locationhttp.put(loc, loc.startsWith("http:"));
+            } else if (loc.startsWith("https:")) {
+                locationhttp.put(loc, loc.startsWith("https:"));
+            }
         }
         return locationhttp;
     }
@@ -501,8 +505,8 @@ public class DocumentoReal implements java.io.Serializable,
     }
 
     public String getFirstTitle() {
-        if(getTitles().isEmpty()){
-            return null; 
+        if (getTitles().isEmpty()) {
+            return null;
         }
         return (getTitles().get(0));
     }

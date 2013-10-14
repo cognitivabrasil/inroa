@@ -169,8 +169,6 @@ public class Indexador {
         String r1Weights = "INSERT INTO r1weights(documento_id, token, weight)  SELECT  T.documento_id, T.token, (CASE L.len WHEN 0 THEN 0 ELSE I.idf*T.tf/L.len END) as weight FROM r1idf I, r1tf T, r1length L  WHERE I.token = T.token AND T.documento_id = L.documento_id;";
         getSession().createSQLQuery(r1Weights).executeUpdate();
 
-//        apagarCalculosIndice(con);
-
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
         log.info("Tempo total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));
