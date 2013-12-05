@@ -45,7 +45,6 @@ public final class AdminController {
     private PadraoMetadadosDAO padraoDao;
     @Autowired
     private MapeamentoDAO mapDao;
-    private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
     @Autowired
     ServletContext servletContext;
     @Autowired
@@ -140,8 +139,7 @@ public final class AdminController {
     public String recalcularIndice(Model model) {
         Long inicio = System.currentTimeMillis();
         log.info("Recalculando indice - Solicitação feita pela ferramenta administrativa.");
-        tokensDao.clearTokens();
-        indexador.indexarTodosRepositorios();
+        indexador.populateR1();
         model.addAttribute("fim", "Índice recalculado com sucesso!");
         Long fim = System.currentTimeMillis();
         log.debug("Tempo total para limpar e recalcular o indice: " + Operacoes.formatTimeMillis(fim - inicio));

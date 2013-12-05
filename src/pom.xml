@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>feb</groupId>
     <artifactId>feb</artifactId>
-    <version>2.9-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>FEB</name>
     <url>http://feb.ufrgs.br</url>
@@ -13,13 +13,13 @@
     <properties>
 
         <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
-        <org.springframework.security.version>3.1.1.RELEASE</org.springframework.security.version>
+        <org.springframework.security.version>3.1.3.RELEASE</org.springframework.security.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!--<netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>-->
         <include.tests>nothing-to-include</include.tests>
         <config.skiptests>false</config.skiptests>
-
+        <org.slf4j-version>1.7.2</org.slf4j-version>
     </properties>
     <profiles>
         <profile>
@@ -68,8 +68,7 @@
 
 
     <dependencies>
-		
-		
+        	
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -154,7 +153,7 @@
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.0-801.jdbc3</version>
+            <version>9.0-801.jdbc4</version>
         </dependency>
         <dependency>
             <groupId>jsptags</groupId>
@@ -204,7 +203,7 @@
         <dependency>
             <groupId>org.simpleframework</groupId>
             <artifactId>simple-xml</artifactId>
-            <version>2.6</version>
+            <version>2.7.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.extras</groupId>
@@ -241,24 +240,56 @@
             <artifactId>xalan</artifactId>
             <version>2.5.1</version>
         </dependency>
+        
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${org.slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${org.slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
+            <version>1.2.17</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.jms</groupId>
+                    <artifactId>jms</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jdmk</groupId>
+                    <artifactId>jmxtools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jmx</groupId>
+                    <artifactId>jmxri</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!-- <dependency> -->
-        <!-- <groupId>org.slf4j</groupId> -->
-        <!-- <artifactId>slf4j-log4j12</artifactId> -->
-        <!-- <version>1.5.6</version> -->
-        <!-- </dependency> -->
 
         <!-- Core utilities used by other modules. Define this if you use Spring 
-    				Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
+        Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -266,7 +297,7 @@
         </dependency>
 
         <!-- Expression Language (depends on feb.spring-core) Define this if you 
-    				use Spring Expression APIs (org.springframework.expression.*) -->
+        use Spring Expression APIs (org.springframework.expression.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
@@ -274,7 +305,7 @@
         </dependency>
 
         <!-- Bean Factory and JavaBeans utilities (depends on feb.spring-core) 
-    				Define this if you use Spring Bean APIs (org.springframework.beans.*) -->
+        Define this if you use Spring Bean APIs (org.springframework.beans.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -282,7 +313,7 @@
         </dependency>
 
         <!-- Aspect Oriented Programming (AOP) Framework (depends on feb.spring-core, 
-    				feb.spring-beans) Define this if you use Spring AOP APIs (org.springframework.aop.*) -->
+        feb.spring-beans) Define this if you use Spring AOP APIs (org.springframework.aop.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -290,16 +321,23 @@
         </dependency>
 
         <!-- Application Context (depends on feb.spring-core, feb.spring-expression, 
-    				feb.spring-aop, feb.spring-beans) This is the central artifact for Spring's 
-    				Dependency Injection Container and is generally always defined -->
+        feb.spring-aop, feb.spring-beans) This is the central artifact for Spring's 
+        Dependency Injection Container and is generally always defined -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${org.springframework.version}</version>
+            <exclusions>
+                <!-- Exclude Commons Logging in favor of SLF4j -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Various Application Context utilities, including EhCache, JavaMail, 
-    				Quartz, and Freemarker integration Define this if you need any of these integrations -->
+        Quartz, and Freemarker integration Define this if you need any of these integrations -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
@@ -307,8 +345,8 @@
         </dependency>
 
         <!-- Transaction Management Abstraction (depends on feb.spring-core, feb.spring-beans, 
-    				feb.spring-aop, feb.spring-context) Define this if you use Spring Transactions 
-    				or DAO Exception Hierarchy (org.springframework.transaction.*/org.springframework.dao.*) -->
+        feb.spring-aop, feb.spring-context) Define this if you use Spring Transactions 
+        or DAO Exception Hierarchy (org.springframework.transaction.*/org.springframework.dao.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
@@ -316,8 +354,8 @@
         </dependency>
 
         <!-- JDBC Data Access Library (depends on feb.spring-core, feb.spring-beans, 
-    				feb.spring-context, feb.spring-tx) Define this if you use Spring's JdbcTemplate 
-    				API (org.springframework.jdbc.*) -->
+        feb.spring-context, feb.spring-tx) Define this if you use Spring's JdbcTemplate 
+        API (org.springframework.jdbc.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -325,8 +363,8 @@
         </dependency>
 
         <!-- Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, 
-    				and iBatis. (depends on feb.spring-core, feb.spring-beans, feb.spring-context, 
-    				feb.spring-tx) Define this if you need ORM (org.springframework.orm.*) -->
+        and iBatis. (depends on feb.spring-core, feb.spring-beans, feb.spring-context, 
+        feb.spring-tx) Define this if you need ORM (org.springframework.orm.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -334,8 +372,8 @@
         </dependency>
 
         <!-- Object-to-XML Mapping (OXM) abstraction and integration with JAXB, 
-    				JiBX, Castor, XStream, and XML Beans. (depends on feb.spring-core, feb.spring-beans, 
-    				feb.spring-context) Define this if you need OXM (org.springframework.oxm.*) -->
+        JiBX, Castor, XStream, and XML Beans. (depends on feb.spring-core, feb.spring-beans, 
+        feb.spring-context) Define this if you need OXM (org.springframework.oxm.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
@@ -343,9 +381,9 @@
         </dependency>
 
         <!-- Web application development utilities applicable to both Servlet 
-    				and Portlet Environments (depends on feb.spring-core, feb.spring-beans, feb.spring-context) 
-    				Define this if you use Spring MVC, or wish to use Struts, JSF, or another 
-    				web framework with Spring (org.springframework.web.*) -->
+        and Portlet Environments (depends on feb.spring-core, feb.spring-beans, feb.spring-context) 
+        Define this if you use Spring MVC, or wish to use Struts, JSF, or another 
+        web framework with Spring (org.springframework.web.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -353,8 +391,8 @@
         </dependency>
 
         <!-- Spring MVC for Servlet Environments (depends on feb.spring-core, 
-    				feb.spring-beans, feb.spring-context, feb.spring-web) Define this if you 
-    				use Spring MVC with a Servlet Container such as Apache Tomcat (org.springframework.web.servlet.*) -->
+        feb.spring-beans, feb.spring-context, feb.spring-web) Define this if you 
+        use Spring MVC with a Servlet Container such as Apache Tomcat (org.springframework.web.servlet.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -362,14 +400,14 @@
         </dependency>
 
         <!-- Spring MVC for Portlet Environments (depends on feb.spring-core, 
-    				feb.spring-beans, feb.spring-context, feb.spring-web) Define this if you 
-    				use Spring MVC with a Portlet Container (org.springframework.web.portlet.*) -->
+        feb.spring-beans, feb.spring-context, feb.spring-web) Define this if you 
+        use Spring MVC with a Portlet Container (org.springframework.web.portlet.*) -->
         <!--<dependency> <groupId>org.springframework</groupId> <artifactId>feb.spring-webmvc-portlet</artifactId> 
-    				<version>${org.springframework.version}</version> </dependency> -->
+        <version>${org.springframework.version}</version> </dependency> -->
 
         <!-- Support for testing Spring applications with tools such as JUnit 
-    				and TestNG This artifact is generally always defined with a 'test' scope 
-    				for the integration testing framework and unit testing stubs -->
+        and TestNG This artifact is generally always defined with a 'test' scope 
+        for the integration testing framework and unit testing stubs -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -444,7 +482,36 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.11</version>
         </dependency>
-
+        
+        <!--         Dados para uso do SOLR   -->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-core</artifactId>
+            <version>4.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-jdk14</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+        
     </dependencies>
     <build>
 
@@ -476,7 +543,7 @@
                 <artifactId>tomcat6-maven-plugin</artifactId>
                 <version>2.0-SNAPSHOT</version>
                 <!--<configuration> <server>febserver</server> <port>8080</port> <url>http://localhost:8080/feb</url> 
-          						</configuration> -->
+                </configuration> -->
             </plugin>
 
 
@@ -582,7 +649,7 @@
                     </archive>
                 </configuration>
                 <!--<configuration> <webappDirectory>web</webappDirectory> <webXml>web/WEB-INF/web.xml</webXml> 
-          						</configuration> -->
+                </configuration> -->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

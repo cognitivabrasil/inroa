@@ -30,7 +30,7 @@ import org.springframework.util.StopWatch;
 public class DocumentoReal implements java.io.Serializable,
         DocumentoFebInterface, HibernateOaiDocument {
 
-    static Logger log = Logger.getLogger(DocumentoReal.class);
+    private static final Logger log = Logger.getLogger(DocumentoReal.class);
     private static final long serialVersionUID = 61217365141633065L;
     private int id;
     private String obaaEntry;
@@ -320,7 +320,7 @@ public class DocumentoReal implements java.io.Serializable,
      */
     public OBAA getMetadata() {
         if (metadata == null) {
-            if (getObaaXml() == null) {
+            if (getObaaXml() == null || getObaaXml().isEmpty()) {
                 throw new IllegalStateException(
                         "No XML metadata associated with the Object");
             }

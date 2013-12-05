@@ -41,7 +41,7 @@ import org.xml.sax.SAXException;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
-public class updateRepAndFed extends AbstractDaoTest {
+public class UpdateRepAndFedIt extends AbstractDaoTest {
 
     @Autowired
     RepositoryDAO repDao;
@@ -55,7 +55,7 @@ public class updateRepAndFed extends AbstractDaoTest {
     MapeamentoDAO mapDao;
 
     @Test
-    public void repAndSubFedWrhithSameEntry() throws IOException, ParserConfigurationException, SAXException, TransformerException {
+    public void testRepAndSubFedWrhithSameEntry() throws IOException, ParserConfigurationException, SAXException, TransformerException {
         String xmlRep = "src/test/resources/repIFRS-records.xml";
         String xmlFedSets = "src/test/resources/fedIFRS-listSets.xml";
         String xmlFedRecords = "src/test/resources/fedIFRS-records.xml";

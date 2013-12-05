@@ -12,7 +12,6 @@ import metadata.XsltConversor;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import feb.data.entities.Repositorio;

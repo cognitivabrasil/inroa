@@ -78,7 +78,7 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<DocumentoReal> getAll() {
-        return getSession().createCriteria(DocumentoReal.class).list();
+        return getSession().createCriteria(DocumentoReal.class).add(Restrictions.eq("deleted", false)).list();
     }
 
     @Override
@@ -144,12 +144,9 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
                 real.deleteDependencies(); // deletes Objetos, Autores, Tokens
 
             } else {
-                real.setMetadata(obaa);
-                log.debug("Tokenizando o documento");
-                real.generateTokens();
-
+                real.setMetadata(obaa);                
                 getSession().save(real);
-
+                //TODO: talvez colocar aqui a indexacao do soler.
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

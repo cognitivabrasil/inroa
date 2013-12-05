@@ -9,7 +9,7 @@ $(function() {
     }
     
     $("#url").blur(function(){
-        if($(this).val().match("^http://")){
+        if($(this).val().match("^http[s]?://")){
             
             if($("#federation").val()){
                 validaOAI($(this), true);
@@ -18,7 +18,7 @@ $(function() {
             }
         }else{
             setUrlError($(this));
-            $(".msgError").html("A url deve iniciar com http://");
+            $(".msgError").html("A url deve iniciar com http:// ou https://");
         }
     });
     

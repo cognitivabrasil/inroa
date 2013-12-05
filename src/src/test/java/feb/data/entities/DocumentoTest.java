@@ -8,7 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import org.junit.Test;
 
-import feb.data.entities.DocumentoReal;
 
 public class DocumentoTest {
 
@@ -22,7 +21,7 @@ public class DocumentoTest {
 		
 		OBAA m = d.getMetadata();
 		
-		assertThat(m.getTitles(), hasItem("Título 1"));
+		assertThat(m.getGeneral().getTitles(), hasItem("Título 1"));
 
 	}
 	

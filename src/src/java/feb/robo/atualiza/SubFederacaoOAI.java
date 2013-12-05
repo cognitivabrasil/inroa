@@ -125,8 +125,7 @@ public class SubFederacaoOAI {
             log.fatal("Could not get AppContext bean!");
             throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
-            log.info("Atualizando subfederacao: " + subFed.getName());//imprime o nome do repositorio
-
+            log.info("Atualizando subfederacao: " + subFed.getName());//imprime o nome da subfederacao
             try {
 
                 //atualizar repositorios da subfederacao

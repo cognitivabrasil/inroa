@@ -7,6 +7,7 @@ import feb.data.entities.Visita;
 import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
 import feb.services.TagCloudService;
+import feb.solr.main.Solr;
 import feb.spring.ServerInfo;
 import feb.spring.validador.BuscaValidator;
 import java.io.IOException;
@@ -69,6 +70,14 @@ public final class FEBController {
         buscaValidator = new BuscaValidator();
     }
 
+    @RequestMapping("/testsolr")
+    public String testSolr() {
+        List<DocumentoReal> docs = docDao.getAll();
+
+        Solr.indexarBancoDeDados(docs);
+        return "redirect:/";
+    }
+
     @RequestMapping("/")
     public String inicio(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         return index(model, response, request, cookie);
@@ -124,8 +133,8 @@ public final class FEBController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) 
-    throws IOException{
+    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie)
+            throws IOException {
         DocumentoReal d = docDao.get(id);
         if (d == null) {
             response.setStatus(404);
@@ -135,7 +144,7 @@ public final class FEBController {
             response.sendError(410, "O documento solicitado foi deletado.");
 
             return "empty";
-        }else {
+        } else {
             d.getMetadata().setLocale("pt-BR");
             model.addAttribute("obaaEntry", d.getObaaEntry());
             List<String> titles = d.getTitles();
@@ -175,7 +184,6 @@ public final class FEBController {
         log.debug("");
         log.debug("IP: " + request.getRemoteAddr() + " / search: \"" + consulta.getConsulta() + "\" / Cookie: " + !StringUtils.isEmpty(cookie));
         log.debug("User-Agent: " + request.getHeader("User-Agent"));
-
 
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
@@ -278,12 +286,12 @@ public final class FEBController {
      * retornando os documentos no formato XML. Utiliza os mesmos métodos da
      * ferramenta de busca principal do FEB. Retorna um xml FEB com os objetos
      * no padrão de metadados OBAA. Existe uma tag de erro que contém um code e
-     * uma mensagem: <error code="code">Message</error> códigos existentes: 
-     * "badQuery" - Caso a consulta não tenha sido informada 
-     * "limitExceeded" - Caso o limite informado seja superior a 100, que é o 
-     * limite máximo permitido (este limite máximo existe para que as consultar 
-     * por webservice não comprometam o desempenho da base de dados).
-     * "UnsupportedEncoding" - Caso ocorra um erro ao codificar a query em utf-8
+     * uma mensagem: <error code="code">Message</error> códigos existentes:
+     * "badQuery" - Caso a consulta não tenha sido informada "limitExceeded" -
+     * Caso o limite informado seja superior a 100, que é o limite máximo
+     * permitido (este limite máximo existe para que as consultar por webservice
+     * não comprometam o desempenho da base de dados). "UnsupportedEncoding" -
+     * Caso ocorra um erro ao codificar a query em utf-8
      *
      * @param query String que será utilizada para buscar documentos.
      * @param autor String contendo o nome do autor que será utilizado na busca.
@@ -303,8 +311,8 @@ public final class FEBController {
             @RequestParam(required = false) Integer limit,
             @RequestParam(required = false) Integer offset) {
 
-        log.info("consulta feita no webservice: '"+query+"' autor: '"+ autor+"' limit: "+limit+" offset: "+offset);
-        
+        log.info("consulta feita no webservice: '" + query + "' autor: '" + autor + "' limit: " + limit + " offset: " + offset);
+
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                 + "<FEB>";
         try {

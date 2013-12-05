@@ -3,12 +3,9 @@ package cognitivabrasil.obaa;
 import java.io.FileNotFoundException;
 import metadata.Header;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import cognitivabrasil.obaa.OaiCannotDisseminateFormatException;
-import cognitivabrasil.obaa.OaiException;
-import cognitivabrasil.obaa.OaiOBAA;
-import cognitivabrasil.obaa.OaiParseErrorException;
 
 public class OaiOBAATest {
 
@@ -89,6 +86,7 @@ public class OaiOBAATest {
 	 *             the file not found exception
 	 */
 	@Test
+        @Ignore
 	public void testDetectOAINoRecords2() throws FileNotFoundException {
 		try {
 			OaiOBAA l = OaiOBAA

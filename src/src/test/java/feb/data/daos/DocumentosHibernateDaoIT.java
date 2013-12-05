@@ -5,9 +5,7 @@ import cognitivabrasil.obaa.OBAA;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import metadata.Header;
 import static org.hamcrest.Matchers.hasItem;
@@ -30,16 +28,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import feb.data.daos.DocumentosHibernateDAO;
-import feb.data.daos.RepositoryHibernateDAO;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Objeto;
 import feb.data.entities.Repositorio;
-import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
 
 /**
- * Integration tests of the UsuarioHibernateDao
+ * Integration tests of the DocumentosHibernateDao
  *
  * @author Paulo Schreiner <paulo@jorjao81.com>
  *
@@ -118,12 +113,12 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
     public void testDelete() {
         DocumentoReal d = instance.get(1);
         assertThat(d, notNullValue());
-        assertEquals(6, instance.getAll().size());
+        assertEquals(5, instance.getAll().size());
 
 
         instance.delete(d);
 
-        assertEquals(5, instance.getAll().size());
+        assertEquals(4, instance.getAll().size());
 
     }
 
