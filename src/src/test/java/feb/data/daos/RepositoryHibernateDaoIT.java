@@ -4,12 +4,10 @@
  */
 package feb.data.daos;
 
+import feb.data.entities.DocumentoReal;
 import java.util.List;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.SortedTable;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,9 +20,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import org.springframework.test.context.transaction.AfterTransaction;
-
-import feb.data.daos.DocumentosHibernateDAO;
-import feb.data.daos.RepositoryHibernateDAO;
 import feb.data.entities.PadraoMetadados;
 import feb.data.entities.Repositorio;
 import feb.data.interfaces.MapeamentoDAO;
@@ -110,13 +105,12 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     public void testDeleteRemovesDocumentos() {
         Repositorio cesta = repDao.get(1);
 
-        int sizeCesta = cesta.getDocumentos().size();
+        int sizeCesta = 4;        
         int sizeAllBefore = docDao.getAll().size();
         int sizeAfter = sizeAllBefore - sizeCesta;
-
+        
         repDao.delete(cesta);
-
-        assertEquals("Size of Cesta before", 5, sizeCesta);
+      
         assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());
     }
 
@@ -124,13 +118,12 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
     public void testDellAllDocs() {
         Repositorio cesta = repDao.get(1);
 
-        int sizeCesta = cesta.getDocumentos().size();
+        int sizeCesta = 4;
         int sizeAllBefore = docDao.getAll().size();
         int sizeAfter = sizeAllBefore - sizeCesta;
 
         cesta.dellAllDocs();
 
-        assertEquals("Size of Cesta before", 5, sizeCesta);
         assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());
     }
 
@@ -140,7 +133,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         Repositorio cesta = repDao.get(id);
 
         PadraoMetadados p = cesta.getPadraoMetadados();
-        assertEquals("lom", p.getNome());
+        assertEquals("lom", p.getName());
     }
 
     @Test

@@ -62,6 +62,7 @@ public class PadraoMetadados implements java.io.Serializable, FebDomainObject {
         this.name = nome;
     }
 
+    @Override
     public String getName() {
         return name;
     }
