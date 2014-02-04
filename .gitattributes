@@ -420,6 +420,7 @@ src/src/main/webapp/login.jsp -text
 src/src/main/webapp/main-servlet.xml -text
 src/src/main/webapp/robots.txt -text
 src/src/main/webapp/scripts/admin.js -text
+src/src/main/webapp/scripts/barraSuperior.js -text
 src/src/main/webapp/scripts/buscaAvancada.js -text
 src/src/main/webapp/scripts/codemirror/LICENSE -text
 src/src/main/webapp/scripts/codemirror/README.md -text
@@ -476,6 +477,7 @@ src/src/main/webapp/scripts/jquery.tagcloud.js -text
 src/src/main/webapp/scripts/jquery.ui.core.min.js -text
 src/src/main/webapp/scripts/jquery.ui.tabs.min.js -text
 src/src/main/webapp/scripts/jquery.ui.widget.min.js -text
+src/src/main/webapp/scripts/login.js -text
 src/src/main/webapp/scripts/rss.js -text
 src/src/main/webapp/scripts/shBrushXml.js -text
 src/src/main/webapp/scripts/shCore.js -text

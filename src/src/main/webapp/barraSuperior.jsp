@@ -8,17 +8,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:url var="adm" value="/admin/" />
 <c:url var="confederacao" value="http://feb.ufrgs.br/feb/" />
+<c:url var="barraScript" value="/scripts/barraSuperior.js" />
 
-<script language="javascript" type="text/javascript" src="${jquery}"></script>
-<script>
-    $(function() {
-        var thisUrl = document.location.href;
-        thisUrl = thisUrl.replace("/buscaAvancada", "/");
-        if(thisUrl == '${confederacao}'){
-            $( "#confederacao" ).hide();
-        }
-    });
-</script>
+<script language="javascript" type="text/javascript" src="${barraScript}"></script>
 
 <div class="barra-superior">
     <span id="confederacao"><a href="${confederacao}">Confedera&ccedil;&atilde;o</a></span>
