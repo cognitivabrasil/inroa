@@ -116,7 +116,13 @@ img{
 .rodapeConsulta{
     margin-top:0.1%;
     background-color:#AEC9E3;
+    padding: 5px 10px;
+    font-family: Calibri;
 }
+.rodapeConsulta a{
+    color: #000000
+}
+div.suporte{margin-top: 5px; margin-left: 5px;}
 
 .resultadoConsulta{
 

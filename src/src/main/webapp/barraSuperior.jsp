@@ -17,4 +17,9 @@
     <span><a href="${adm}">Ferramenta Administrativa</a></span>
     <span><a href="http://feb.ufrgs.br">Portal do projeto</a></span>
 </div>
-<div class="copyRight">Desenvolvido em parceria com: UFRGS e RNP</div>
+<div class="copyRight">
+    Suporte técnico <a href="http://cognitivabrasil.com.br/">Cognitiva Brasil</a>: <a href="mailto:contato@cogbr.com">contato@cogbr.com</a>
+    |
+    Desenvolvido em parceria com: UFRGS e RNP
+    
+</div>

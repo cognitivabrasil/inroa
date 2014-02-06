@@ -18,14 +18,14 @@
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <c:url var="validateURL" value="/scripts/testUrlActive.js" />
         <script type="text/javascript" src="${validateURL}"></script>
-        
+
         <c:url var="funcoesjs" value="/scripts/funcoes.js" />
         <script language="JavaScript" type="text/javascript" src="${funcoesjs}"></script>
         <c:url var="root" value="/" />
         <script>setRootUrl(${root});</script>
-        
-        
-        
+
+
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -33,8 +33,7 @@
 
     </head>
     <body id="body">
-        <%
-            request.setCharacterEncoding("UTF-8");
+        <%            request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
         %>
 
@@ -135,8 +134,8 @@
                                                     <c:forEach var="localizacao" items="${doc.locationHttp}">
                                                         <c:if test="${localizacao.value}">
                                                             <div class="atributo"><a class="verifyUrl" href="${localizacao.key}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao.key}</a></div>
-                                                        </c:if>
-                                                    </c:forEach>
+                                                            </c:if>
+                                                        </c:forEach>
                                                 </div>
                                             </c:if>
 
@@ -166,8 +165,11 @@
             </c:choose>
         </div>
 
-        <div class="rodapeConsulta">&nbsp;</div>
+        <div class="rodapeConsulta">
+            <span class="suporte">
+                Problemas para utilizar este sistema? Suporte técnico <a href="http://cognitivabrasil.com.br/">Cognitiva Brasil</a>: <a href="mailto:contato@cogbr.com">contato@cogbr.com</a>
+            </span>
+        </div>
         <%@include file="googleAnalytics"%>
-
     </body>
 </html>

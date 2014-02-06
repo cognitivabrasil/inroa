@@ -61,7 +61,8 @@ modelo de tópico:
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB – Federação de Repositórios Educa Brasil</title>
-        <link rel="StyleSheet" href="../css/padrao.css" type="text/css">
+        <c:url var="cssPadrao" value="/css/padrao.css" />
+        <link rel="StyleSheet" href="${cssPadrao}" type="text/css">
         <link href="../imagens/favicon.ico" rel="shortcut icon"
               type="image/x-icon" />
         <c:url var="root" value="/" />
@@ -791,7 +792,9 @@ modelo de tópico:
             <input class="BOTAO" type="button" value="&lArr; Voltar"
                    onclick="javascript:history.back(-1);" />
         </div>
-
+                <div class="suporte">
+                Problemas para utilizar este sistema? Suporte técnico <a href="http://cognitivabrasil.com.br/">Cognitiva Brasil</a>: <a href="mailto:contato@cogbr.com">contato@cogbr.com</a>
+            </div>
         <%@include file="googleAnalytics"%>
     </body>
 </html>
