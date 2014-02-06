@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -231,13 +232,13 @@ class UserDto {
         roles.put(
                 "root",
                 Arrays.asList(StringUtils
-                .split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS,PERM_MANAGE_STATISTICS",
-                ',')));
+                        .split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS,PERM_MANAGE_STATISTICS",
+                                ',')));
         roles.put(
                 "admin",
                 Arrays.asList(StringUtils
-                .split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_VIEW_STATISTICS,PERM_MANAGE_STATISTICS",
-                ',')));
+                        .split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_VIEW_STATISTICS,PERM_MANAGE_STATISTICS",
+                                ',')));
         roles.put("update", Arrays.asList(StringUtils.split(
                 "PERM_UPDATE,PERM_VIEW_STATISTICS", ',')));
         roles.put("view",
@@ -311,7 +312,7 @@ public final class UsersController {
     private UsuarioDAO userDao;
     @Autowired
     private UserValidator userValidator;
-    Logger log = Logger.getLogger(UsersController.class);
+    private static Logger log = Logger.getLogger(UsersController.class);
 
     /**
      * Instantiates a new users controller.
@@ -358,7 +359,6 @@ public final class UsersController {
         UserPasswordValidator userPasswordValidator = new UserPasswordValidator();
         userPasswordValidator.setUser(user);
 
-
         assert (userPasswordValidator != null);
         userPasswordValidator.validate(u, result);
         if (result.hasErrors()) {
@@ -371,7 +371,6 @@ public final class UsersController {
             userDao.save(user);
             return "redirect:/admin/fechaRecarrega";
         }
-
 
     }
 
@@ -450,10 +449,26 @@ public final class UsersController {
     String userDeleteDo(@PathVariable Integer id, Model model, HttpServletResponse response) throws IOException {
         if (userDao.getAll().size() == 1) {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Não é permidito deletar o último usuário.");
-            
+
             return "erro";
         }
-        userDao.delete(userDao.get(id));
+        Usuario u = userDao.get(id);
+        userDao.delete(u);
+        if (u.getId().equals(getCurrentUser().getId())) {
+            SecurityContextHolder.getContext().setAuthentication(null);
+        }
+
         return "ok";
+    }
+
+    private static Usuario getCurrentUser() {
+        Usuario currentUser;
+        try {
+            currentUser = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (NullPointerException e) {
+            log.error("Não foi possível recuperar o usuário que está utilizando o sistema.", e);
+            currentUser = null;
+        }
+        return currentUser;
     }
 }
