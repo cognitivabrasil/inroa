@@ -14,7 +14,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.min.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <c:url var="validateURL" value="/scripts/testUrlActive.js" />
         <script type="text/javascript" src="${validateURL}"></script>

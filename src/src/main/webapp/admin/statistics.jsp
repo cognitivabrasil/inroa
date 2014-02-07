@@ -16,7 +16,7 @@
         <title>FEB - Estatísticas de Uso</title>
         <c:url var="favicon" value="/imagens/favicon.ico" />
         <c:url var="css" value="/css/padrao.css" />
-        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <c:url var="jquery" value="/scripts/jquery-1.7.2.min.js" />
         <c:url var="jqplotcss" value="/css/jquery.jqplot.min.css" />
         <c:url var="jqplotjs" value="/scripts/jquery.jqplot.min.js" />
         <c:url var="pieRendererjs" value="/scripts/jqplot.pieRenderer.min.js" />
