@@ -105,6 +105,8 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
     <bean id="visitasDao" class="feb.data.daos.VisitasHibernateDao" />
 
     <bean id="DocumentosVisitasDao" class="feb.data.daos.DocumentosVisitasHibernateDao" />
+    
+    <bean id="PalavrasOfensivasDAO" class="feb.data.daos.PalavrasOfensivasHibernateDAO" />
 
 
     <context:annotation-config />

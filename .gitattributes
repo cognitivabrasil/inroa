@@ -209,6 +209,7 @@ src/src/java/feb/data/daos/DocumentosHibernateDAO.java -text
 src/src/java/feb/data/daos/DocumentosVisitasHibernateDao.java -text
 src/src/java/feb/data/daos/MapeamentoHibernateDAO.java -text
 src/src/java/feb/data/daos/PadraoMetadadosHibernateDAO.java -text
+src/src/java/feb/data/daos/PalavrasOfensivasHibernateDAO.java -text
 src/src/java/feb/data/daos/RepositoryHibernateDAO.java -text
 src/src/java/feb/data/daos/SearchesJdbcDao.java -text
 src/src/java/feb/data/daos/StopWordHibernateDao.java -text
@@ -224,6 +225,7 @@ src/src/java/feb/data/entities/Estatistica.java -text
 src/src/java/feb/data/entities/Mapeamento.java -text
 src/src/java/feb/data/entities/Objeto.java -text
 src/src/java/feb/data/entities/PadraoMetadados.java -text
+src/src/java/feb/data/entities/PalavrasOfensivas.java -text
 src/src/java/feb/data/entities/Repositorio.java -text
 src/src/java/feb/data/entities/RepositorioPaginavel.java -text
 src/src/java/feb/data/entities/RepositorioSubFed.java -text
@@ -243,6 +245,7 @@ src/src/java/feb/data/interfaces/FebDomainObject.java -text
 src/src/java/feb/data/interfaces/MapeamentoDAO.java -text
 src/src/java/feb/data/interfaces/PadraoMetadadosDAO.java -text
 src/src/java/feb/data/interfaces/Paginavel.java -text
+src/src/java/feb/data/interfaces/PalavrasOfensivasDAO.java -text
 src/src/java/feb/data/interfaces/RepositoryDAO.java -text
 src/src/java/feb/data/interfaces/SearchesDao.java -text
 src/src/java/feb/data/interfaces/StopWordsDao.java -text
@@ -314,6 +317,7 @@ src/src/main/resources/hibernate/DocumentosVisitas.hbm.xml -text
 src/src/main/resources/hibernate/Mapping.hbm.xml -text
 src/src/main/resources/hibernate/MetadataRecord.hbm.xml -text
 src/src/main/resources/hibernate/Objeto.hbm.xml -text
+src/src/main/resources/hibernate/PalavrasOfensivas.hbm.xml -text
 src/src/main/resources/hibernate/Repositorio.hbm.xml -text
 src/src/main/resources/hibernate/RepositorioSubFed.hbm.xml -text
 src/src/main/resources/hibernate/SubFederacao.hbm.xml -text
@@ -497,6 +501,7 @@ src/src/test/java/feb/data/daos/DocumentosHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/DocumentosVisitasHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/MapeamentoHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/PadraoMetadadosHibernateDaoIT.java -text
+src/src/test/java/feb/data/daos/PalavrasOfensivasHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/RepositoryHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/SearchesJdbcIT.java -text
 src/src/test/java/feb/data/daos/SubfederacaoHibernateDaoIT.java -text
@@ -536,7 +541,7 @@ src/src/test/java/feb/metadata/teste1.xml -text
 src/src/test/java/feb/robo/atualiza/importaOAI/ImporterTest.java -text
 src/src/test/java/feb/robo/atualiza/subfedOAI/ImporterTestIT.java -text
 src/src/test/java/feb/robo/atualiza/subfedOAI/SubRepositoriosTest.java -text
-src/src/test/java/feb/services/TagCloudImplTest.java -text
+src/src/test/java/feb/services/TagCloudImplIT.java -text
 src/src/test/java/feb/spring/FebConfigIT.java -text
 src/src/test/java/feb/spring/UserLoggerIT.java -text
 src/src/test/java/functionaltests/LumeXmlIT.java -text

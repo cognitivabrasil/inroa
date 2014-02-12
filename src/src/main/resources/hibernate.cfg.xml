@@ -22,5 +22,6 @@
 		<mapping resource="hibernate/Autores.hbm.xml" />
 		<mapping resource="hibernate/Visita.hbm.xml" />
 		<mapping resource="hibernate/DocumentosVisitas.hbm.xml" />
+                <mapping resource="hibernate/PalavrasOfensivas.hbm.xml" />
 	</session-factory>
 </hibernate-configuration>

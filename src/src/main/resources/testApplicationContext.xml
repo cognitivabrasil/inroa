@@ -36,7 +36,7 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 	<util:properties id="defaultProperties">
 		<prop key="Postgres.username">feb</prop>
 		<prop key="Postgres.password">feb@RNP</prop>
-		<prop key="Postgres.database">federacao</prop>
+		<prop key="Postgres.database">federacao_teste</prop>
 		<prop key="Postgres.host">127.0.0.1</prop>
 		<prop key="Postgres.port">5432</prop>
 
@@ -98,9 +98,13 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 	<bean id="SearchesDao" class="feb.data.daos.SearchesJdbcDao">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+        
+        <bean id="PalavrasOfensivasDAO" class="feb.data.daos.PalavrasOfensivasHibernateDAO" />
 	
-		<bean id="userActionLogger" class="feb.services.UserActionLoggerImpl">
+        <bean id="userActionLogger" class="feb.services.UserActionLoggerImpl">
 	</bean>
+        
+        <bean id="tagService" class="feb.services.TagCloudServiceImpl"/>
 
 	<context:annotation-config />
 	<bean id="myAspect" class="feb.spring.aspects.FebLoggerAspect" />

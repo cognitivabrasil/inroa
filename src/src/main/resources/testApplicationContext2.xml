@@ -101,6 +101,8 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 	
 		<bean id="userActionLogger" class="feb.services.UserActionLoggerImpl">
 	</bean>
+        
+        <bean id="PalavrasOfensivasDAO" class="feb.data.daos.PalavrasOfensivasHibernateDAO" />
 
 	<context:annotation-config />
 	<bean id="myAspect" class="feb.spring.aspects.FebLoggerAspect" />

@@ -1,6 +1,8 @@
 package feb.services;
 
+import feb.data.daos.PalavrasOfensivasHibernateDAO;
 import feb.data.entities.Search;
+import feb.data.interfaces.PalavrasOfensivasDAO;
 import feb.data.interfaces.SearchesDao;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,24 +26,29 @@ public class TagCloudServiceImpl implements TagCloudService {
     private final Logger log = Logger.getLogger(TagCloudServiceImpl.class);
 
     @Autowired
+    PalavrasOfensivasHibernateDAO badWords;
+
+    @Autowired
     public void setSearches(SearchesDao s) {
         searches = s;
     }
-
+    
     @Override
     public Map<String, Integer> getTagCloud() {
         Map<String, Integer> m = new TreeMap<String, Integer>();
 
-
         List<Search> l = searches.getSearches(getMaxSize(), getDate());
-        log.trace("Tag cloud. Número de resultados: "+l.size()+" Número máximo permitido: "+getMaxSize());
+        log.trace("Tag cloud. Número de resultados: " + l.size() + " Número máximo permitido: " + getMaxSize());
         for (Search s : l) {
-            m.put(s.getText(), s.getCount());
 
-            if (m.size() >= getMaxSize()) {
-                break;
+            if (!badWords.contains(s.getText())) {
+                
+                m.put(s.getText(), s.getCount());
+                
+                if (m.size() >= getMaxSize()) {
+                    break;
+                }
             }
-
         }
 
         return m;
@@ -62,6 +69,7 @@ public class TagCloudServiceImpl implements TagCloudService {
         return t;
     }
 
+    @Override
     public int getMaxSize() {
         return size;
     }
@@ -71,6 +79,7 @@ public class TagCloudServiceImpl implements TagCloudService {
      *
      * @param size
      */
+    @Override
     public void setMaxSize(int size) {
         this.size = size;
     }
@@ -98,9 +107,9 @@ public class TagCloudServiceImpl implements TagCloudService {
     public void clear() {
         searches.deleteAll();
     }
-    
+
     @Override
-    public void delete(String tag){
+    public void delete(String tag) {
         searches.delete(tag);
     }
 }

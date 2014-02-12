@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import feb.data.entities.Repositorio;
 
 /**
  * This class is for all entities that have a "name" property and want to
