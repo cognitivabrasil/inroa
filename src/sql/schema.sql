@@ -604,6 +604,15 @@ ALTER TABLE public.documentos_visitas OWNER TO feb;
 
 COMMENT ON TABLE documentos_visitas IS 'tabela n x n de documentos por visitas';
 
+CREATE TABLE palavras_ofensivas (
+  id serial NOT NULL,
+  word text NOT NULL,
+  CONSTRAINT palavras_ofensivas_pkey PRIMARY KEY (id)
+);
+
+ALTER TABLE palavras_ofensivas OWNER TO feb;
+
+
 CREATE SEQUENCE visitas_id_seq
     START WITH 100
     INCREMENT BY 1
