@@ -4,26 +4,18 @@ import feb.data.entities.PalavrasOfensivas;
 import feb.data.interfaces.PalavrasOfensivasDAO;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author luiz
  */
-public class PalavrasOfensivasHibernateDAO extends AbstractHibernateDAO<PalavrasOfensivas> implements PalavrasOfensivasDAO {
+public class PalavrasOfensivasHibernateDAO implements PalavrasOfensivasDAO {
 
-//    @Autowired
-//    private SessionFactory sessionFactory;
-    public PalavrasOfensivasHibernateDAO() {
-        this.setClazz(PalavrasOfensivas.class);
-    }
-
-    @Override
-    public PalavrasOfensivas get(int id) {
-
-        Session s = this.sessionFactory.getCurrentSession();
-        return (PalavrasOfensivas) s.get(PalavrasOfensivas.class, id);
-    }
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public boolean contains(String word) {

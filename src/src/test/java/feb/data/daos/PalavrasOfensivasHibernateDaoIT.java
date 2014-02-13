@@ -36,10 +36,5 @@ public class PalavrasOfensivasHibernateDaoIT extends AbstractDaoTest {
         assertThat(instance.contains("bacteria"), equalTo(false));
         assertThat(instance.contains("a (xota) da vizinha"), equalTo(true));
     }
-    
-    @Test
-    public void getTest(){        
-        PalavrasOfensivas theFWord = instance.get(371);        
-        assertThat(theFWord.getWord(), equalTo("fuck"));
-    }
+
 }
