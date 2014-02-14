@@ -8,7 +8,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Set;
 import org.apache.log4j.Logger;
-
 import feb.data.entities.Repositorio;
 import feb.util.Operacoes;
 
