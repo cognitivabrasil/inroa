@@ -69,14 +69,6 @@ public class EducationalFields {
 		return difficulty;
 	}
 	
-        public static List <List<String>> EducationalNaoIndexaveis(OBAA o)
-        {
-		List<List<String>> naoIndexavel = new ArrayList<List<String>>();
-                
-                
-                return naoIndexavel;
-            
-        }
         
 	public static List<List<String>> getAll (OBAA o)
 	{

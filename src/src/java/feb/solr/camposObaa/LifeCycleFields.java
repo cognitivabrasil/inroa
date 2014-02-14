@@ -9,7 +9,7 @@ public class LifeCycleFields {
 	
 	private static final String cabecalho = "obaa.lifecyclefield.";
 	
-	public static List<String> getStatus(OBAA o)
+        public static List<String> getStatus(OBAA o)
 	{
 		List<String> retorno = new ArrayList<String>();
 		retorno.add(cabecalho+"status");
@@ -17,6 +17,22 @@ public class LifeCycleFields {
 		return retorno;
 	}
 	
+        
+        public static List<String> getEntity(OBAA o)
+	{
+		List<String> entities = new ArrayList<String>();
+		entities.add(cabecalho+"entitiy");
+		
+		for (int i = 0 ; i < o.getLifeCycle().getContribute().size(); i++)
+			for (int j = 0 ; j < o.getLifeCycle().getContribute().get(i).getEntities().size(); j++)
+                            entities.add(o.getLifeCycle().getContribute().get(i).getEntities().get(j));
+		
+		return entities;
+	}
+        
+        /*
+        Nao precisa mais saber o papel da pessoa porque o search sera apenas pelo nome da pessoa
+        
 	public static List<String> getEntity(OBAA o)
 	{
 		List<String> entities = new ArrayList<String>();
@@ -24,26 +40,35 @@ public class LifeCycleFields {
 		
 		for (int i = 0 ; i < o.getLifeCycle().getContribute().size(); i++)
 			for (int j = 0 ; j < o.getLifeCycle().getContribute().get(i).getEntities().size(); j++)
-				entities.add(o.getLifeCycle().getContribute().get(i).getEntities().get(j));
+                        {
+                            entities.add(o.getLifeCycle().getContribute().get(i).getEntities().get(j));
+                            
+                System.out.println(" Role "+o.getLifeCycle().getContribute().get(i).getRole());
+                System.out.println(" entity : "+o.getLifeCycle().getContribute().get(i).getEntities());
+                        }
 		
 		return entities;
 	}
 	
+        
 	public static List<String> getRole (OBAA o)
 	{
 		List<String> roles = new ArrayList<String>();
 		roles.add(cabecalho+"role");
 		for (int i = 0 ; i < o.getLifeCycle().getContribute().size(); i++)
 			roles.add(o.getLifeCycle().getContribute().get(i).getRole().getText());
+                
 		
 		return roles;
 	}
 	
+        */
+        
 	public static List<List<String>> getAll (OBAA o)
 	{
 		List<List<String>> all = new ArrayList<List<String>>();
-			all.add(getEntity(o));
-			all.add(getRole(o));
+                	all.add(getEntity(o));
+		//	all.add(getRole(o));
 			all.add(getStatus(o));
 			return all;
 		

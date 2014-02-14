@@ -24,13 +24,21 @@ public class AcessarBD {
    
     public AcessarBD() {
 
-       ConfiguracaoBancoDados c = new ConfiguracaoBancoDados();
+
+       /*
+        ConfiguracaoBancoDados c = new ConfiguracaoBancoDados();
         host = c.getHost();
         port = c.getPort();
         username = c.getUsername();
         database = c.getDatabase();
-        password = c.getPassword();
-//        password = "feb@RNP";
+       // password = c.getPassword();
+        */
+        
+        host = "127.0.0.1";
+        port = 5432;
+        username = "feb";
+        database = "federacao";
+        password = "feb@RNP";
         String url = "jdbc:postgresql://" + host + ":" + port + "/" + database;
 
         try {

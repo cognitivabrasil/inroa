@@ -35,7 +35,7 @@ public class Converter {
 		return listToSolrInputDocument(feb.solr.camposObaa.AllFields.getAll(o));
 	}
         
-        public static SolrInputDocument OBAAToSolrInputDocument (OBAA o, long id)
+        public static SolrInputDocument OBAAToSolrInputDocument (OBAA o, int id)
 	{
             SolrInputDocument doc = listToSolrInputDocument(feb.solr.camposObaa.AllFields.getAll(o));
             doc.addField("obaa.idBaseDados", id);

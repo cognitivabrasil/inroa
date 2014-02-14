@@ -30,7 +30,8 @@ public class TechnicalFields {
 	public static List<String> getIntendedenduserrole(OBAA o)
 	{
 		List <String> intended = new ArrayList<String>();
-		intended.add(cabecalho+"getintendedenduserrole");		
+		intended.add(cabecalho+"getintendedenduserrole");
+                // ESSE NAO EXISTE? OU NAO EH TECHNICAL...
 	
 	}
 	*/
