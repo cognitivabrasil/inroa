@@ -307,7 +307,7 @@ public final class FEBController {
             @RequestParam(required = false) String query,
             @RequestParam(required = false) String autor,
             @RequestParam(required = false) Integer limit,
-            @RequestParam(required = false) Integer offset) {
+            @RequestParam(required = false) Integer offset)  {
 
         log.info("consulta feita no webservice: '" + query + "' autor: '" + autor + "' limit: " + limit + " offset: " + offset);
 

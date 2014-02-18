@@ -24,7 +24,6 @@ public class AcessarBD {
    
     public AcessarBD() {
 
-
        /*
         ConfiguracaoBancoDados c = new ConfiguracaoBancoDados();
         host = c.getHost();

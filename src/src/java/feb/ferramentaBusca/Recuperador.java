@@ -2,14 +2,20 @@ package feb.ferramentaBusca;
 
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
+import feb.data.interfaces.DocumentosDAO;
+import feb.ferramentaBusca.indexador.Indexador;
+import feb.solr.main.Solr;
+import feb.solr.query.QuerySolr;
 import feb.spring.ApplicationContextProvider;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.StopWatch;
 
@@ -22,6 +28,8 @@ public class Recuperador {
 
     static Logger log = Logger.getLogger(Recuperador.class.getName());
     private static int rssSizeLimit = 100;
+    @Autowired
+    private DocumentosDAO docDao;
 
     public Recuperador() {
     }
@@ -34,121 +42,167 @@ public class Recuperador {
      * base de dados.
      * @return Lista de documentos que atenderam a consulta
      */
-    public List<DocumentoReal> busca(Consulta consulta) {
+    public List<DocumentoReal> busca(Consulta consulta){
 
-        ApplicationContext context = ApplicationContextProvider.getApplicationContext();
-        SessionFactory sf = context.getBean(SessionFactory.class);
-        Session s = sf.getCurrentSession();
-
-
-        ArrayList<String> tokensConsulta = (ArrayList) consulta.getConsultaTokenizada(); //tokeniza as palavras da consulta e adiciona no ArrayList
-        List<DocumentoReal> docs;  //lista dos documentos retornados da consulta
+        
+        /*   
+         ApplicationContext context = ApplicationContextProvider.getApplicationContext();
+         SessionFactory sf = context.getBean(SessionFactory.class);
+         Session s = sf.getCurrentSession();
 
 
-        String consultaSql; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
-        String sqlOrdenacao; //eh preenchido pelo if que testa qual o tipo de ordenacao
+         ArrayList<String> tokensConsulta = (ArrayList) consulta.getConsultaTokenizada(); //tokeniza as palavras da consulta e adiciona no ArrayList
+         List<DocumentoReal> docs;  //lista dos documentos retornados da consulta
 
+
+         String consultaSql; //para cada caso de combinacoes dos parametros a consulta sql eh gerada em um dos metodos privados        
+         String sqlOrdenacao; //eh preenchido pelo if que testa qual o tipo de ordenacao
+
+
+         if (consulta.isRss()) {
+
+         if (consulta.hasAuthor()) {
+
+         if (tokensConsulta.isEmpty()) {
+         //COM autor, SEM termo de busca
+         sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavra_chave, d.id_rep_subfed, d.deleted, d.obaaxml, a.nome ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
+         } else {
+         //COM autor, COM termo de busca
+         sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavra_chave, d.id_rep_subfed, d.deleted, d.obaaxml, a.nome HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
+         }
+         } else {
+         if(tokensConsulta.isEmpty()){
+         return new ArrayList<DocumentoReal>();
+         }
+         sqlOrdenacao = "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavras_chave, d.id_rep_subfed, deleted, obaaxml HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
+         }
+
+         } else {
+
+         if (consulta.hasAuthor()) {
+
+         if (tokensConsulta.isEmpty()) {
+         //COM autor, SEM termo de busca
+         sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
+         } else {
+         //COM autor, COM termo de busca
+         sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC, SUM (weight) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
+         }
+         } else {
+         if(tokensConsulta.isEmpty()){
+         return new ArrayList<DocumentoReal>();
+         }
+         sqlOrdenacao = "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave ORDER BY SUM(weight) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
+
+         }
+         }
+
+         if (consulta.getRepositorios().isEmpty()) {
+         if (consulta.getFederacoes().isEmpty()) {
+         if (consulta.getRepSubfed().isEmpty()) {
+         consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, consulta.hasAuthor());
+         } else {
+         consultaSql = busca_subRep(tokensConsulta, consulta, sqlOrdenacao); //busca no subrepositorio
+         }
+         } else { //subfed != vazio e repLocal = vazio
+         if (consulta.getRepSubfed().isEmpty()) {
+         consultaSql = busca_subfed(tokensConsulta, consulta, sqlOrdenacao);//busca na subfederacao
+         } else {
+         consultaSql = busca_subfed_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca na subfederacao e no subrepositorio
+         }
+         }
+         } else { //replocal != vazio
+         if (consulta.getFederacoes().isEmpty()) { //replocal != vazio e subfed = vazio
+         if (consulta.getRepSubfed().isEmpty()) {
+         consultaSql = busca_repLocal(tokensConsulta, consulta, sqlOrdenacao); //busca no repositorio local
+         } else {
+         consultaSql = busca_repLocal_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca no reposiotio local e no subrepositorio
+         }
+         } else { //replocal != vazio e subfed != vazio
+         if (consulta.getRepSubfed().isEmpty()) {
+         consultaSql = busca_repLocal_subfed(tokensConsulta, consulta, sqlOrdenacao);//busca na subfederacao
+         } else {
+         consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca na subfederacao e no subrepositorio
+         }
+         }
+         }
+         StopWatch t = new StopWatch();
+
+         t.start("QueryDocumentos");
+        
+         log.debug(consultaSql);
+        
+         docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
+         t.stop();
+
+         //SQL
+
+         consultaSql = consultaSql.replace("SELECT d.*", "SELECT COUNT(DISTINCT(d.id))");
+
+         t.start("QuerySize");
+         consultaSql = consultaSql.substring(0, consultaSql.indexOf("GROUP"));
+         BigInteger nResult = (BigInteger) s.createSQLQuery(consultaSql).uniqueResult();
+         t.stop();
+
+         log.trace(t.prettyPrint());
+
+         consulta.setSizeResult(nResult.intValue());
+         return docs;
+         */
+        /**
+         * ********** COLOCAR AQUI O CODIGO DO SOLR *************
+         */
+     //   new Indexador().populateR1();
+     //    Solr so = new Solr();
+     //    so.indexarBancoDeDados();
+        List<DocumentoReal> resultadoConsulta = null;
 
         if (consulta.isRss()) {
 
-            if (consulta.hasAuthor()) {
-
-                if (tokensConsulta.isEmpty()) {
-                    //COM autor, SEM termo de busca
-                    sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavra_chave, d.id_rep_subfed, d.deleted, d.obaaxml, a.nome ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
-                } else {
-                    //COM autor, COM termo de busca
-                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavra_chave, d.id_rep_subfed, d.deleted, d.obaaxml, a.nome HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
-                }
-            } else {
-                if(tokensConsulta.isEmpty()){
-                    return new ArrayList<DocumentoReal>();
-                }
-                sqlOrdenacao = "') GROUP BY d.id, d.titulo, d.obaa_entry, d.resumo, d.data, d.localizacao, d.id_repositorio, d.timestamp, d.palavras_chave, d.id_rep_subfed, deleted, obaaxml HAVING SUM(r1w.weight)>= 0.1*" + tokensConsulta.size() + " ORDER BY timestamp DESC LIMIT " + rssSizeLimit;
-            }
-
+            System.out.println("RSS!");
+            QuerySolr q = new QuerySolr();
+            System.out.println(consulta.getConsulta());
+            q.pesquisaSimples(consulta.getConsulta(), consulta.getOffset(), rssSizeLimit);
+            consulta.setSizeResult(q.getNumDocs());
+            resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), rssSizeLimit);
+            System.out.println("Numero de resultados a serem apresentados: "+resultadoConsulta.size());
         } else {
 
-            if (consulta.hasAuthor()) {
+            QuerySolr q = new QuerySolr();
+            System.out.println(consulta.getConsulta());
+            q.pesquisaSimples(consulta.getConsulta(), consulta.getOffset(), consulta.getLimit());
+            consulta.setSizeResult(q.getNumDocs());
+            resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), consulta.getLimit());
+            System.out.println("Numero de resultados a serem apresentados: "+resultadoConsulta.size());
 
-                if (tokensConsulta.isEmpty()) {
-                    //COM autor, SEM termo de busca
-                    sqlOrdenacao = " a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
-                } else {
-                    //COM autor, COM termo de busca
-                    sqlOrdenacao = "') AND a.documento=d.id AND a.nome~##lower('" + consulta.getAutor() + "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave, a.nome ORDER BY (qgram(a.nome, lower('" + consulta.getAutor() + "'))) DESC, SUM (weight) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
-                }
-            } else {
-                if(tokensConsulta.isEmpty()){
-                    return new ArrayList<DocumentoReal>();
-                }
-                sqlOrdenacao = "') GROUP BY d.id, d.obaa_entry, d.id_repositorio, d.timestamp, d.id_rep_subfed, d.deleted, d.obaaxml, d.titulo, d.resumo, d.data, d.localizacao, d.palavras_chave ORDER BY SUM(weight) DESC LIMIT " + consulta.getLimit() + " OFFSET " + consulta.getOffset() + ";";
-
-            }
         }
+        return resultadoConsulta;
 
-        if (consulta.getRepositorios().isEmpty()) {
-            if (consulta.getFederacoes().isEmpty()) {
-                if (consulta.getRepSubfed().isEmpty()) {
-                    consultaSql = buscaConfederacao(tokensConsulta, sqlOrdenacao, consulta.hasAuthor());
-                } else {
-                    consultaSql = busca_subRep(tokensConsulta, consulta, sqlOrdenacao); //busca no subrepositorio
-                }
-            } else { //subfed != vazio e repLocal = vazio
-                if (consulta.getRepSubfed().isEmpty()) {
-                    consultaSql = busca_subfed(tokensConsulta, consulta, sqlOrdenacao);//busca na subfederacao
-                } else {
-                    consultaSql = busca_subfed_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca na subfederacao e no subrepositorio
-                }
-            }
-        } else { //replocal != vazio
-            if (consulta.getFederacoes().isEmpty()) { //replocal != vazio e subfed = vazio
-                if (consulta.getRepSubfed().isEmpty()) {
-                    consultaSql = busca_repLocal(tokensConsulta, consulta, sqlOrdenacao); //busca no repositorio local
-                } else {
-                    consultaSql = busca_repLocal_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca no reposiotio local e no subrepositorio
-                }
-            } else { //replocal != vazio e subfed != vazio
-                if (consulta.getRepSubfed().isEmpty()) {
-                    consultaSql = busca_repLocal_subfed(tokensConsulta, consulta, sqlOrdenacao);//busca na subfederacao
-                } else {
-                    consultaSql = busca_repLocal_subfed_subrep(tokensConsulta, consulta, sqlOrdenacao); //busca na subfederacao e no subrepositorio
-                }
-            }
-        }
-        StopWatch t = new StopWatch();
+    }
 
-        t.start("QueryDocumentos");
-        log.debug(consultaSql);
-        docs = s.createSQLQuery(consultaSql).addEntity(DocumentoReal.class).list();
-        t.stop();
+    public List<DocumentoReal> buscaAvancada(Consulta consulta) throws SQLException {
 
+        QuerySolr q = new QuerySolr();
+        System.out.println(consulta.getConsulta());
+        //Nao preicsa ser autor, mudar deposi
+        q.pesquisaCompleta(consulta.getConsulta());
+        List<DocumentoReal> resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), consulta.getLimit());
 
-        consultaSql = consultaSql.replace("SELECT d.*", "SELECT COUNT(DISTINCT(d.id))");
+        return resultadoConsulta;
 
-        t.start("QuerySize");
-        consultaSql = consultaSql.substring(0, consultaSql.indexOf("GROUP"));
-        BigInteger nResult = (BigInteger) s.createSQLQuery(consultaSql).uniqueResult();
-        t.stop();
-
-        log.trace(t.prettyPrint());
-
-        consulta.setSizeResult(nResult.intValue());
-
-        return docs;
     }
 
     //confederacao
     protected String buscaConfederacao(List<String> tokensConsulta, String finalSQL, boolean autor) {
 
         StringBuilder consultaSql = new StringBuilder();
-        
+
         if (autor) {                        // if is a author request
             if (tokensConsulta.isEmpty()) {   // see if have a query                
 
                 return ("SELECT d.* FROM documentos d, autores a WHERE " + finalSQL);
 
-            } else {                
+            } else {
 
                 consultaSql.append("SELECT d.* FROM r1weights r1w, documentos d, autores a WHERE r1w.documento_id=d.id AND (r1w.token=");
 
@@ -172,7 +226,6 @@ public class Recuperador {
             consultaSql.append("SELECT d.* FROM r1weights r1w, documentos d"
                     + " WHERE r1w.documento_id=d.id "
                     + " AND (r1w.token=");
-
 
             if (tokensConsulta.isEmpty()) {
                 consultaSql.append("'");
@@ -199,7 +252,7 @@ public class Recuperador {
     protected String busca_repLocal(List<String> tokensConsulta, Consulta c, String finalSQL) {
 
         StringBuilder consultaSql = new StringBuilder();
-        
+
         if (c.hasAuthor()) {                     // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql.append("SELECT d.* FROM documentos d, autores a WHERE (");
@@ -254,9 +307,9 @@ public class Recuperador {
 
     //subfed
     protected String busca_subfed(List<String> tokensConsulta, Consulta c, String finalSQL) {
-        
+
         StringBuilder consultaSql = new StringBuilder();
-        
+
         if (c.hasAuthor()) {                    // if is a author request
             if (tokensConsulta.isEmpty()) {
                 consultaSql.append("SELECT d.* FROM documentos d, autores a, repositorios_subfed rsf WHERE rsf.id=d.id_rep_subfed AND (");
@@ -270,7 +323,6 @@ public class Recuperador {
                     + " WHERE r1w.documento_id=d.id AND d.id_rep_subfed = rsf.id "
                     + " AND (");
         }
-
 
         Iterator<Integer> idsSubfed = c.getFederacoes().iterator();
         boolean addOr = false;
@@ -287,7 +339,6 @@ public class Recuperador {
             }
             addOr = true;
         }
-
 
         if (!tokensConsulta.isEmpty()) {
             consultaSql.append(") AND (r1w.token=");
@@ -328,7 +379,6 @@ public class Recuperador {
                     + " AND (");
         }
 
-
         Iterator<Integer> idsRepSubfed = c.getRepSubfed().iterator();
         boolean addOr = false;
 
@@ -344,7 +394,6 @@ public class Recuperador {
             }
             addOr = true;
         }
-
 
         if (!tokensConsulta.isEmpty()) {
             consultaSql.append(") AND (r1w.token=");
@@ -385,7 +434,6 @@ public class Recuperador {
                     + " (");
         }
 
-
         Iterator<Integer> idsSubfed = c.getFederacoes().iterator();
         boolean addOr = false;
 
@@ -420,7 +468,6 @@ public class Recuperador {
             addOr = true;
         }
 
-
         if (!tokensConsulta.isEmpty()) {
             consultaSql.append(")) AND (r1w.token=");
         } else {
@@ -438,7 +485,6 @@ public class Recuperador {
                 consultaSql.append("' OR r1w.token=");
             }
         }
-
 
         return (consultaSql.append(finalSQL).toString());
     }
@@ -501,7 +547,6 @@ public class Recuperador {
                 consultaSql.append("' OR r1w.token=");
             }
         }
-
 
         return (consultaSql.append(finalSQL).toString());
     }

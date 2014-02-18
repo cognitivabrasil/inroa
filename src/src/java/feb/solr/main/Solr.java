@@ -3,10 +3,14 @@ package feb.solr.main;
 import feb.solr.indexar.IndexarDados;
 import feb.solr.converter.Converter;
 import feb.solr.bd.AcessarBD;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.apache.log4j.Logger;
+
+import cognitivabrasil.obaa.OBAA;
 import feb.data.entities.DocumentoReal;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.apache.solr.common.SolrInputDocument;
 
 public class Solr {
@@ -17,6 +21,7 @@ public class Solr {
     public Solr() {
         bd = new AcessarBD();
     }
+
 
     public static void indexarBancoDeDados(List<DocumentoReal> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
@@ -47,5 +52,62 @@ public class Solr {
                 IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
             }
         }
+    }
+	
+	
+    public boolean indexarBancoDeDados() throws SQLException {
+
+        // Testa se esta conectado ao BD e, se nao estiver, tenta conectar.
+        if (!bd.estaConectado()) {
+            bd = new AcessarBD();
+            if (!bd.estaConectado()) {
+                System.out.println("Erro de conexao. Não foi possivel conectar no BD!");
+                return false;
+            }
+        }
+
+        // Fazer uploads de cerca de 10.000 arquivos por vez.
+        int numeroRows = bd.numRowsDocumentos() / bd.PAGE + 1;
+
+        for (int a = 0; a < numeroRows; a++) {
+            ResultSet rs = bd.BuscarObjetos(a);
+            List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
+            while (rs.next()) {
+
+                if (rs.getString(12).isEmpty()) {
+                    continue;
+                }
+
+                OBAA o = OBAA.fromString(rs.getString(12));
+                if (o.getGeneral().getIdentifiers() != null && o.getGeneral().getIdentifiers().size() > 0) {
+                    o.getGeneral().getIdentifiers().get(0).setEntry(rs.getString(3));
+                    docs.add(Converter.OBAAToSolrInputDocument(o, rs.getInt(1)));
+
+                } else {
+                    //Nem ideia de como fazer isso....
+                }
+            }
+
+            //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
+            if (!IndexarDados.indexarColecaoSolrInputDocument(docs)) {
+                for (int d = 0; d < docs.size(); d++) {
+                    IndexarDados.indexarSolrInputDocument(docs.get(d));
+                }
+            }
+
+        }
+
+        return true;
+
+    }
+
+    public static boolean indexarSolr() throws SQLException {
+        Solr s = new Solr();
+        if (!s.bd.estaConectado()) {
+            System.out.println("Erro de conexao. Não foi possivel conectar no BD!");
+            return false;
+        }
+        s.indexarBancoDeDados();
+        return true;
     }
 }
