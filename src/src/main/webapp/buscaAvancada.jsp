@@ -21,7 +21,7 @@
     response.setCharacterEncoding("UTF-8");
 
 %>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
@@ -55,17 +55,17 @@
 
                         <div class="LinhaEntrada">
                             <form:errors path="consulta" cssClass="ValueErro" />
-                            <div class="LabelLeft">
-                                <b>Texto</b> para a busca
-                            </div>
+                            <label class="LabelLeft" for="consulta" >
+                                <strong>Texto</strong> para a busca
+                            </label>
                             <div class="Value">
                                 <input type="text" name="consulta" id="consulta" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
                             </div>
                         </div>
                         <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Pesquisar objetos <b>de autoria</b> de
-                            </div>
+                            <label class="LabelLeft" for="autor" >
+                                Pesquisar objetos <strong>de autoria</strong> de
+                            </label>
                             <div class="Value">
                                 <input type="text" name="autor" id="autor" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
                             </div>
@@ -80,7 +80,7 @@
                                 <c:if test="${i.index==0}"><div class='ValueTree'>- Reposit&oacute;rios</div></c:if>
 
                                 <div class='ValueTree'>&nbsp;&nbsp;&nbsp;
-                                    <input value='${rep.id}' type=checkbox id="${rep.id}" name="repositorios"> ${fn:toUpperCase(rep.nome)}
+                                    <input value='${rep.id}' type=checkbox id="${rep.id}" name="repositorios"> <label for="${rep.id}">${fn:toUpperCase(rep.nome)}</label>
                                 </div>
 
                             </c:forEach>

@@ -20,7 +20,7 @@
     request.setCharacterEncoding("UTF-8");
     response.setCharacterEncoding("UTF-8");
 %>
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
@@ -55,8 +55,10 @@
 
                     <div class="busca">
                         <div><form:errors path="consulta" cssClass="ValueErro" /></div>
-                        <form:input path="consulta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />
-                        <input class="botaoLupa" type="submit" value=""/>
+                        <label class="accessibility" for="consulta">Texto para consulta</label>
+                        <form:input path="consulta" onFocus="this.className='inputSelecionado'" onBlur="this.className=''" />                        
+                        <label class="accessibility" for="botaoLupa">Enviar</label>
+                        <input id="botaoLupa" class="botaoLupa" type="submit" value=""/>
                     </div>
                 </div>
             </form:form>

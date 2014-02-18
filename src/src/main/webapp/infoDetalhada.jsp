@@ -57,7 +57,7 @@ modelo de tópico:
     "http://www.w3.org/TR/html4/loose.dtd">
 
 
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB – Federação de Repositórios Educa Brasil</title>

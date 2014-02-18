@@ -12,7 +12,7 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="pt-BR">
     <head>
         <c:url var="jquery" value="/scripts/jquery-1.7.2.min.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
@@ -52,8 +52,8 @@
                 <c:url var="rsslink" value="rss/feed?${BuscaModel.urlEncoded}"/>
                 <c:url var="rssImg" value="/imagens/feed-icon-14x14.png"/>
                 <a href="${rsslink}"><img src="${rssImg}" alt="RSS"/></a>
-                <c:if test="${!empty BuscaModel.consulta}"> &nbsp;Consulta efetuada <i>"<strong><c:out value="${BuscaModel.consulta}"/></strong>"</i></c:if>
-                <c:if test="${!empty BuscaModel.autor}"> &nbsp;Autor: <i>"<strong><c:out value="${BuscaModel.autor}"/></strong>"</i></c:if>
+                <c:if test="${!empty BuscaModel.consulta}"> &nbsp;Consulta efetuada <em>"<strong><c:out value="${BuscaModel.consulta}"/></strong>"</em></c:if>
+                <c:if test="${!empty BuscaModel.autor}"> &nbsp;Autor: <em>"<strong><c:out value="${BuscaModel.autor}"/></strong>"</em></c:if>
                 </div>
                 <div class="direita">
                     Total de <strong>${BuscaModel.sizeResult}</strong> objeto(s) encontrado(s)&nbsp;
@@ -66,12 +66,8 @@
 
             <c:choose>
                 <c:when test="${empty documentos}">
-                    <p align="center">
-                        <strong>
-                            <font size="3" face="Verdana, Arial, Helvetica, sans-serif">
-                                Nenhum objeto encontrado
-                            </font>
-                        </strong>
+                    <p class="nenhumOa">
+                        <strong>Nenhum objeto encontrado</strong>
                     </p>
                 </c:when>
                 <c:otherwise>

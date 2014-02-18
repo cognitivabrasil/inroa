@@ -8,7 +8,7 @@
 
 <c:url var="login" value="/scripts/login.js" />
 
-<html>
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>FEB - Ferramenta Administrativa</title>

@@ -1059,3 +1059,22 @@ body.loading {
 body.loading .modal {
     display: block;
 }
+
+/*  É o mesmo que a classe hidden, porém usada nas classes 
+    de acessibilidade.
+*/
+.accessibility {
+    display: none;
+}
+
+/* Estava com a a tag font no site 
+*/
+.nenhumOa {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.paginacao {
+    font-family: Helvetica;
+    
+}
