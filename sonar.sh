@@ -14,4 +14,5 @@ PROJECT_NAME="${NAME}-${PROJECT_SUFFIX}"
 echo ${PROJECT_KEY}
 echo ${PROJECT_NAME}
 
-../../sonar-runner-2.3/bin/sonar-runner -D sonar.language=${PROJECT_SUFFIX} -D sonar.projectKey=${PROJECT_KEY} -D sonar.projectName=${PROJECT_NAME} -D sonar.projectVersion=${VERSION} -D sonar.sources=${SOURCES}
+SONAR_RUNNER_HOME=/var/lib/jenkins/sonar-runner-2.3/
+/var/lib/jenkins/sonar-runner-2.3/bin/sonar-runner -D sonar.language=${PROJECT_SUFFIX} -D sonar.projectKey=${PROJECT_KEY} -D sonar.projectName=${PROJECT_NAME} -D sonar.projectVersion=${VERSION} -D sonar.sources=${SOURCES}
