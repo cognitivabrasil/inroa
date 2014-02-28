@@ -256,7 +256,7 @@ src/src/java/feb/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text
 src/src/java/feb/ferramentaAdministrativa/validarOAI/VerificaLinkOAI.java -text
 src/src/java/feb/ferramentaBusca/Recuperador.java -text
 src/src/java/feb/ferramentaBusca/indexador/Indexador.java -text
-src/src/java/feb/ferramentaBusca/indexador/IndexadorNovo.java -text
+src/src/java/feb/ferramentaBusca/indexador/IndexadorAntigo.java -text
 src/src/java/feb/ferramentaBusca/indexador/package.html -text
 src/src/java/feb/ferramentaBusca/package.html -text
 src/src/java/feb/metadata/XSLTUtil.java -text

@@ -23,12 +23,13 @@ public class AllFields {
                 if (o.getLifeCycle()!=null)
                     all.addAll(LifeCycleFields.getAll(o));
                 
-		//if (o.getSegmentsInformationTable()!= null)
-                    //all.addAll(SegmentsInformationTableFields.getAll(o));
+		if (o.getSegmentsInformationTable()!= null)
+                    all.addAll(SegmentsInformationTableFields.getAll(o));
 		
                 if (o.getTechnical()!= null)
                     all.addAll(TechnicalFields.getAll(o));
 		
+                
 		return all;
 	}
 }
