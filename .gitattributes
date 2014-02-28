@@ -298,6 +298,8 @@ src/src/java/feb/solr/converter/DocumentoSolr.java -text
 src/src/java/feb/solr/indexar/IndexarDados.java -text
 src/src/java/feb/solr/main/Indexar.java -text
 src/src/java/feb/solr/main/Solr.java -text
+src/src/java/feb/solr/query/QueryResposta.java -text
+src/src/java/feb/solr/query/QuerySolr.java -text
 src/src/java/feb/spring/ApplicationContextProvider.java -text
 src/src/java/feb/spring/FebConfig.java -text
 src/src/java/feb/spring/ServerInfo.java -text
