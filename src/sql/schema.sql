@@ -18,6 +18,7 @@ SET client_min_messages = warning;
 --
 
 
+CREATE DATABASE federacao;
 ALTER DATABASE federacao OWNER TO feb;
 
 \connect federacao
