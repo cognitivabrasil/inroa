@@ -2,7 +2,7 @@ Source: feb
 Section: java
 Priority: extra
 Maintainer: Equipe FEB <feb@rnp.br>
-Build-Depends: debhelper (>= 7.0.0), autotools-dev, maven3
+Build-Depends: debhelper (>= 7.0.0), autotools-dev, maven
 Standards-Version: 3.9.2
 Homepage: http://feb.ufrgs.br
 #Vcs-Git: git://git.debian.org/collab-maint/feb.git
@@ -10,6 +10,6 @@ Homepage: http://feb.ufrgs.br
 
 Package: feb
 Architecture: all
-Depends: \${misc:Depends}, postgresql, tomcat7 | tomcat6, default-jre, pg-similarity, apache2, libapache2-mod-jk
+Depends: \${misc:Depends}, postgresql, tomcat7, default-jre, pg-similarity, apache2, libapache2-mod-jk
 Description: FEB - Federação de Repositórios Educa Brasil
  O FEB armazena os metadados dos objetos de aprendizagem usando como padrão o OBAA, que consiste em uma extensão do padrão IEEE-LOM, levando em consideração a portabilidade do recurso educacional para as plataformas Web, de TV Digital e em dispositivos portáteis diversos (texto e multimídia) e contemplando as especificidades do Sistema Educacional Brasileiro (mais detalhes em Padrões de metadados em e-learning, ou diretamente no Portal da Comunidade OBAA).
