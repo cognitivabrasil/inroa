@@ -40,6 +40,7 @@ public class Indexador {
      */
     public void populateR1() {
         log.info("Recalculando o indice do Solr...");
+        Solr.apagarIndice();
         Long inicio = System.currentTimeMillis();
         List<DocumentoReal> docs = docDao.getAll();
         System.out.println("Numero de Docs: "+docs.size());

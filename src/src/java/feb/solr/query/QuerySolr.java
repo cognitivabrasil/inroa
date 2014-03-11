@@ -1,5 +1,6 @@
 package feb.solr.query;
 
+import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -86,17 +87,11 @@ public class QuerySolr {
         return (int) queryResponse.getResults().getNumFound();
     }
 
-    public boolean pesquisaCompleta(String pesquisa, int... rows) {
+    public boolean pesquisaCompleta(Consulta pesquisa, int... rows) {
 
-        String busca = "";
-        String[] searchFields = pesquisa.split(" ");
-        for (String s : searchFields) {
-            busca = busca.concat(" OR " + s + ":" + pesquisa);
-        }
-
-        //Remove o " OR " inicial
-        busca = busca.substring(4);
-        query.setQuery(busca);
+        String campos = identificaCampos (pesquisa);
+        
+        query.setQuery(campos);
 
         int startRow = rows.length > 0 ? rows[0] : 0;
         if (rows.length > 1) {
@@ -172,4 +167,34 @@ public class QuerySolr {
         return retorno;
     }
 
+    private String identificaCampos (Consulta pesquisa)
+    {
+        String resultado = "";
+        
+        if (pesquisa.hasAuthor())
+            resultado += "OR obaa.general.author:"+pesquisa.getAutor();
+       
+         if (pesquisa.hasAuthor())
+            resultado += "OR obaa.general.author:"+pesquisa.getAutor();
+       
+          if (pesquisa.hasAuthor())
+            resultado += "OR obaa.general.author:"+pesquisa.getAutor();
+       
+           if (pesquisa.hasAuthor())
+            resultado += "OR obaa.general.author:"+pesquisa.getAutor();
+       
+            if (pesquisa.hasAuthor())
+            resultado += "OR obaa.general.author:"+pesquisa.getAutor();
+       
+             if (pesquisa.hasAuthor())
+            resultado += "OR obaa.general.author:"+pesquisa.getAutor();
+       
+              if (pesquisa.hasAuthor())
+            resultado += "OR obaa.general.author:"+pesquisa.getAutor();
+       
+                    
+        if (resultado.startsWith("OR "))
+           resultado = resultado.substring(3);
+        return resultado;        
+    }
 }

@@ -66,7 +66,8 @@
                             <div class="LabelLeft">
                                 Pesquisar objetos <b>de autoria</b> de
                             </div>
-                            <div class="Value">
+                            <div class="Value"><form:input path="autor" 
+                                
                                 <input type="text" name="autor" id="autor" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
                             </div>
                         </div>
