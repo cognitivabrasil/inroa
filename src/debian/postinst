@@ -12,6 +12,7 @@ case "$1" in
 	configure)
 	chown -R tomcat7:tomcat7 /var/lib/tomcat7/solr
 	chown tomcat7:tomcat7 /etc/feb/feb.properties
+	chmod 600 /etc/feb/feb.properties
 
 	if [ -z "$2" ]; then
 		db_get feb/password
@@ -25,17 +26,11 @@ case "$1" in
 
 		sed -i "s/password=.*/password=$password/g" /etc/feb/feb.properties
 		
+		
 	else
 		FULLOLDVERSION=$2
 		OLDVERSION=${FULLOLDVERSION:0:3}
-		if [[ "$OLDVERSION" < "2.2" ]]; then
-			echo "Atualizando de versão anterior à 2.2"
-			echo "Apagando base e recriando..."
-			
-			sudo -u postgres dropdb federacao >> /tmp/instalacao_feb.log;
-			sudo -u postgres psql -f /usr/share/FEB/schema.sql >> /tmp/instalacao_feb.log;
-			sudo -u postgres psql federacao -f /usr/share/FEB/data.sql >> /tmp/instalacao_feb.log;
-		elif [ "$OLDVERSION" = "$NEWVERSION" ]; then
+		if [ "$OLDVERSION" = "$NEWVERSION" ]; then
 			echo "Same major-minor, no database change"
 		else
 			echo "Standard upgrade procedure..."

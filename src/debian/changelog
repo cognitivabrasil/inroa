@@ -1,4 +1,4 @@
-feb (3.0-ubuntu10) precise; urgency=low
+feb (3.0-ubuntu13) precise; urgency=low
 
   * Adicionei pedido de senha para postgres e admin
   * Instala arquivos do Solr
