@@ -15,7 +15,26 @@ import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
 
 public class IndexarDados {
+
     private static final Logger log = Logger.getLogger(IndexarDados.class);
+
+    public static boolean apagarIndice() {
+        SolrServer server = new HttpSolrServer("http://localhost:8983/solr/");
+        try {
+            UpdateResponse response = server.deleteByQuery("*:*");
+            if (response.getStatus() == 400) {
+                return false;
+            }
+            server.commit();
+            return true;
+        } catch (SolrServerException e) {
+            log.error("Nao foi possivel se conectar ao servidor solr", e);
+        } catch (IOException e) {
+            log.error("Nao foi possivel se conectar ao servidor solr", e);
+        }
+        return true;
+
+    }
 
     public static boolean indexarObjeto(List<List<String>> objeto) {
         SolrInputDocument doc = Converter.listToSolrInputDocument(objeto);
@@ -28,9 +47,9 @@ public class IndexarDados {
             server.commit();
             return true;
         } catch (SolrServerException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr",e);
+            log.error("Nao foi possivel se conectar ao servidor solr", e);
         } catch (IOException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr",e);
+            log.error("Nao foi possivel se conectar ao servidor solr", e);
         }
 
         return false;
@@ -44,7 +63,7 @@ public class IndexarDados {
         SolrServer server = new HttpSolrServer("http://localhost:8983/solr/");
         try {
             UpdateResponse response = server.add(docs);
-          
+
             if (response.getStatus() == 400) {
                 log.error("Não foi possivel indexar os documentos.");
                 return false;
@@ -59,21 +78,21 @@ public class IndexarDados {
 
         return false;
     }
-    
-     public static boolean indexarSolrInputDocument(SolrInputDocument docs) {
+
+    public static boolean indexarSolrInputDocument(SolrInputDocument docs) {
         SolrServer server = new HttpSolrServer("http://localhost:8983/solr/");
         try {
             UpdateResponse response = server.add(docs);
-          
+
             if (response.getStatus() == 400) {
                 return false;
             }
             server.commit();
             return true;
         } catch (Exception e) {
-       //     System.out.println(e+"\n Nao foi possivel se conectar ao servidor solr");
+            //     System.out.println(e+"\n Nao foi possivel se conectar ao servidor solr");
         }
 
         return false;
-     }
+    }
 }

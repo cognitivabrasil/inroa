@@ -159,21 +159,20 @@ public class Recuperador {
 
         if (consulta.isRss()) {
 
-            System.out.println("RSS!");
             QuerySolr q = new QuerySolr();
-            System.out.println(consulta.getConsulta());
+            log.debug(consulta.getConsulta());
             q.pesquisaSimples(consulta.getConsulta(), consulta.getOffset(), rssSizeLimit);
             consulta.setSizeResult(q.getNumDocs());
             resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), rssSizeLimit);
-            System.out.println("Numero de resultados a serem apresentados: "+resultadoConsulta.size());
+            log.debug("Numero de resultados a serem apresentados: "+resultadoConsulta.size());
         } else {
 
             QuerySolr q = new QuerySolr();
-            System.out.println(consulta.getConsulta());
+            log.debug(consulta.getConsulta());
             q.pesquisaSimples(consulta.getConsulta(), consulta.getOffset(), consulta.getLimit());
             consulta.setSizeResult(q.getNumDocs());
             resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), consulta.getLimit());
-            System.out.println("Numero de resultados a serem apresentados: "+resultadoConsulta.size());
+            log.debug("Numero de resultados a serem apresentados: "+resultadoConsulta.size());
 
         }
         return resultadoConsulta;
@@ -183,9 +182,9 @@ public class Recuperador {
     public List<DocumentoReal> buscaAvancada(Consulta consulta) throws SQLException {
 
         QuerySolr q = new QuerySolr();
-        System.out.println(consulta.getConsulta());
+        log.debug(consulta.getConsulta());
         //Nao preicsa ser autor, mudar deposi
-        q.pesquisaCompleta(consulta.getConsulta());
+        q.pesquisaCompleta(consulta);
         List<DocumentoReal> resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), consulta.getLimit());
 
         return resultadoConsulta;

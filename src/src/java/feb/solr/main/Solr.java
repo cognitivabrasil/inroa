@@ -23,6 +23,14 @@ public class Solr {
         bd = new AcessarBD();
     }
 
+    public static boolean apagarIndice() {
+        
+        if (IndexarDados.apagarIndice()) {
+            return true;
+        }
+        return false;
+    }
+
     public static void indexarBancoDeDados(List<DocumentoReal> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
         int numDocs = 0;
@@ -31,7 +39,7 @@ public class Solr {
         for (DocumentoReal doc : docs) {
             numDocs++;
             try {
-                String entry = doc.getMetadata().getGeneral().getIdentifiers().get(0).getEntry();
+                String entry = doc.getObaaEntry();
                 if (entry.isEmpty()) {
                     log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
                     continue;
