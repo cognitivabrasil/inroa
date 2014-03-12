@@ -10,6 +10,6 @@ Homepage: http://feb.ufrgs.br
 
 Package: feb
 Architecture: all
-Depends: \${misc:Depends}, postgresql, tomcat7, default-jre, apache2, libapache2-mod-jk
+Depends: \${misc:Depends}, postgresql, tomcat7, default-jre, apache2, libapache2-mod-jk, solr
 Description: FEB - Federação de Repositórios Educa Brasil
  O FEB armazena os metadados dos objetos de aprendizagem usando como padrão o OBAA, que consiste em uma extensão do padrão IEEE-LOM, levando em consideração a portabilidade do recurso educacional para as plataformas Web, de TV Digital e em dispositivos portáteis diversos (texto e multimídia) e contemplando as especificidades do Sistema Educacional Brasileiro (mais detalhes em Padrões de metadados em e-learning, ou diretamente no Portal da Comunidade OBAA).

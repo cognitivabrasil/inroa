@@ -1,4 +1,4 @@
-feb (${feb.version}-ubuntu${build.number}) precise; urgency=low
+feb (3.0-ubuntu8) precise; urgency=low
 
   * Teste.
 
