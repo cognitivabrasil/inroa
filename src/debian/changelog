@@ -1,14 +1,15 @@
-feb (3.0-ubuntu8) precise; urgency=low
+feb (3.0-ubuntu10) precise; urgency=low
 
-  * Teste.
+  * Adicionei pedido de senha para postgres e admin
+  * Instala arquivos do Solr
 
- -- Paulo Schreiner <paulo@jorjao81.com>  Tue, 17 Jul 2012 10:28:31 -0300
+ -- Paulo Schreiner <paulo@cognitivabrasil.com.br>  Tue, 17 Jul 2012 10:28:31 -0300
 
 feb (2.0.1-ubuntu6) oneiric; urgency=low
 
   * WAR correto.
 
- -- Paulo Schreiner <paulo@jorjao81.com>  Mon, 12 Dec 2011 21:28:31 -0200
+ -- Paulo Schreiner <paulo@cognitivabrasil.com.br>  Mon, 12 Dec 2011 21:28:31 -0200
 
 feb (2.0.1-ubuntu5) oneiric; urgency=low
 

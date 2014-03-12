@@ -41,8 +41,6 @@ esac
 
 if [ $1 = "purge" ]; then
 	echo "Purge, removing database and user"
-	# stop postgresl
-	service postgresql restart
 	# remove the database
 	sudo -u postgres dropdb federacao
 	# and the user 

@@ -3,6 +3,7 @@ Section: java
 Priority: extra
 Maintainer: Equipe FEB <feb@rnp.br>
 Build-Depends: debhelper (>= 7.0.0), autotools-dev, maven
+Pre-Depends: debconf
 Standards-Version: 3.9.2
 Homepage: http://feb.ufrgs.br
 #Vcs-Git: git://git.debian.org/collab-maint/feb.git
