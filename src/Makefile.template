@@ -1,4 +1,4 @@
-all: target/feb.war feb.tar.gz
+all: target/feb.war
 
 install: install-feb install-solr-conf
 

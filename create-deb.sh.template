@@ -3,5 +3,3 @@ tar -cvzf feb_${feb.version}.orig.tar.gz feb-${feb.version}/* feb-${feb.version}
 cd feb-${feb.version}
 dpkg-buildpackage
 
-# 
-rm ../feb_${feb.version}.orig.tar.gz 
