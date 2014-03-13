@@ -3,12 +3,32 @@
 # Source debconf library.
 . /usr/share/debconf/confmodule
 
-# Do you like debian?
-db_input high feb/password || true
-db_go
 
-# Check their answer.
-db_get feb/password
+echo "New version ${FULLNEWVERSION}"
 
-echo "Returned $RET"
+case "$1" in
+	configure)
+	if [ -z "$2" ]; then
+		db_input high feb/password || true
+		db_go
+
+		# Check their answer.
+		db_get feb/password
+
+		echo "Returned $RET"
+	else
+		echo "Upgrading, nothing to do"
+	fi
+
+;;
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
 
