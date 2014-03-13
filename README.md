@@ -15,37 +15,52 @@ Criação da base de dados PostgreSQL
 e popular o banco de dados com os dados iniciais, e fazer 
 mesmo com a base de teste:
 
-'''
+```
 cd src/sql
 sh create.sh
-'''
+```
+
+Isso irá criar uma base de dados *federacao* com senha
+*feb@RNP* e um usuário *feb*.
+
+**IMPORTANTE! MUDE A SENHA USAR A INSTALAÇÃO PARA QUALQUER
+COISA ALÉM DE DESENVOLVIMENTO**
 
 Configuração do Solr
 ----------------------------------------------------
-TODO:
+Os arquivos da coleção FEB, com o Schema correto,
+estão em src/solr.
+Caso você tenha instalado o SOLR no tomcat com o
+instalador (.deb) da Cognitiva, basta copiar 
+o diretório:
 
+```
+sudo cp -R -f src/solr/feb /var/lib/tomcat7/solr/
+sudo chown tomcat7:tomcat7 /var/lib/tomcat7/solr/ -R
+```
 
 Criação de diretórios e permissões
 ----------------------------------------------------
 Esse passo não é estritamente necessário para começar
 a desenvolver.
 
-'''
+```
 	sudo mkdir /var/log/feb/
 	sudo chown tomcat7 /var/log/feb/
-'''
+```
 
 Rodar o feb
 ----------------------------------------------------
 
-'''
+```
 mvn jetty:run
-'''
+```
 
 Verificação de que está rodando certo
 -----------------------------------------------------------
 
-Acesse o feb em [http://localhost:9091](http://localhost:9091).
+Acesse o feb em http://localhost:9091.
+A senha padrão de administrador é *feb@RNP*.
 
 Adicione o repositório BLA BLA BLA TODO: e atualize e faça uma
 atualização e uma busca teste.
@@ -53,9 +68,9 @@ atualização e uma busca teste.
 
 Rodar os testes
 ---------------------------------------------------
-'''
+```
 mvn verify
-'''
+```
 
 
 
@@ -72,6 +87,7 @@ REGRA 2: Se necessário for
 base necessária
 	* atualizar os arquivos debian/postinst para atualizar
 a base em caso de upgrade via instalador, caso possível
+	* obrigatório fazer um BUMP da versão minor ou major.
 
 
 Instalador .deb
@@ -94,26 +110,26 @@ seus arquivos não devem mudar.
 
 Para criar o tag no git, execute:
 
-'''
+```
 git tag -a v1.4 -m 'RESUMO DA RELEASE'
 git push origin --tags
-'''
+```
 
 
 
 Para gerar os debs você pode ir passo a passo:
 
-'''
+```
 groovy CreateDeb.groovy
 sh create-deb.sh
 sh deploy.sh
-'''
+```
 
 ou executar 
 
-'''
+```
 sh publish\_ppa.sh
-'''
+```
 
 ### Como desenvolver
 
