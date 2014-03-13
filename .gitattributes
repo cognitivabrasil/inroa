@@ -278,8 +278,6 @@ src/src/java/feb/services/TagCloudService.java -text
 src/src/java/feb/services/TagCloudServiceImpl.java -text
 src/src/java/feb/services/UserActionLogger.java -text
 src/src/java/feb/services/UserActionLoggerImpl.java -text
-src/src/java/feb/solr/bd/AcessarBD.java -text
-src/src/java/feb/solr/bd/ConfiguracaoBancoDados.java -text
 src/src/java/feb/solr/camposObaa/AccessibilityFields.java -text
 src/src/java/feb/solr/camposObaa/AllFields.java -text
 src/src/java/feb/solr/camposObaa/AnnotationFields.java -text
@@ -298,7 +296,6 @@ src/src/java/feb/solr/converter/DocumentoSolr.java -text
 src/src/java/feb/solr/indexar/IndexarDados.java -text
 src/src/java/feb/solr/main/Indexar.java -text
 src/src/java/feb/solr/main/Solr.java -text
-src/src/java/feb/solr/query/QueryResposta.java -text
 src/src/java/feb/solr/query/QuerySolr.java -text
 src/src/java/feb/spring/ApplicationContextProvider.java -text
 src/src/java/feb/spring/FebConfig.java -text
@@ -527,7 +524,6 @@ src/src/test/java/feb/data/entities/RepositorioTest.java -text
 src/src/test/java/feb/data/entities/SubFederacaoTest.java -text
 src/src/test/java/feb/data/entities/UsuarioTest.java -text
 src/src/test/java/feb/ferramentaAdministrativa/VerificaLinkOAITest.java -text
-src/src/test/java/feb/ferramentaBusca/RecuperadorTest.java -text
 src/src/test/java/feb/metadata/FEB-froac1.xml -text
 src/src/test/java/feb/metadata/XsltConversorTest.java -text
 src/src/test/java/feb/metadata/XsltDC2ObaaTest.java -text

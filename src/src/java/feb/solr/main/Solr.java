@@ -2,12 +2,8 @@ package feb.solr.main;
 
 import feb.solr.indexar.IndexarDados;
 import feb.solr.converter.Converter;
-import feb.solr.bd.AcessarBD;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
-import cognitivabrasil.obaa.OBAA;
 import feb.data.entities.DocumentoReal;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,27 +11,31 @@ import org.apache.solr.common.SolrInputDocument;
 
 public class Solr {
 
-    private AcessarBD bd;
     private static final Logger log = Logger.getLogger(Solr.class);
-    private static final int maxDocs = 10000;
-
+    private static final int maxDocs = 10000; // Numero maximo de documentos que seram indexados upload para o Solr
+ 
     public Solr() {
-        bd = new AcessarBD();
     }
 
+    /**
+     * Apaga todo o indice do Solr e todos os documentos contindo nele
+     * @return  True se deu certo. False se houve alguma falha.
+     */
     public static boolean apagarIndice() {
+            return IndexarDados.apagarIndice();
         
-        if (IndexarDados.apagarIndice()) {
-            return true;
-        }
-        return false;
     }
 
+    /**
+     * Recebe uma lista de documentos reais, converte eles para DocumentSolr e envia eles para o sistema indexar
+     * Converte um a um os documentos reais ate atingir maxDocs documentos. Apos, envia eles para o Sorl
+     * @param docs Lista de documentos reais a serem indexados
+     */
     public static void indexarBancoDeDados(List<DocumentoReal> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
         int numDocs = 0;
         log.debug("Convertendo obaaXML em SolrXML...");
-
+log.debug("Numero de objetos a serem convertidos: "+ docs.size());
         for (DocumentoReal doc : docs) {
             numDocs++;
             try {
@@ -74,63 +74,4 @@ public class Solr {
         }
 
     }
-    /*
-     public boolean indexarBancoDeDados() throws SQLException {
-
-     // Testa se esta conectado ao BD e, se nao estiver, tenta conectar.
-     if (!bd.estaConectado()) {
-     bd = new AcessarBD();
-     if (!bd.estaConectado()) {
-     System.out.println("Erro de conexao. Não foi possivel conectar no BD!");
-     return false;
-     }
-     }
-
-     // Fazer uploads de cerca de 10.000 arquivos por vez.
-     int numeroRows = bd.numRowsDocumentos() / bd.PAGE + 1;
-
-     for (int a = 0; a < numeroRows; a++) {
-     ResultSet rs = bd.BuscarObjetos(a);
-     List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
-     while (rs.next()) {
-
-     if (rs.getString(12).isEmpty()) {
-     continue;
-     }
-
-     OBAA o = OBAA.fromString(rs.getString(12));
-     if (o.getGeneral().getIdentifiers() != null && o.getGeneral().getIdentifiers().size() > 0) {
-     o.getGeneral().getIdentifiers().get(0).setEntry(rs.getString(3));
-                    
-     //      docs.add(Converter.OBAAToSolrInputDocument(o, rs.getInt(1)));
-
-     } else {
-     //Nem ideia de como fazer isso....
-     }
-     }
-
-     //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
-     if (!IndexarDados.indexarColecaoSolrInputDocument(docs)) {
-     for (int d = 0; d < docs.size(); d++) {
-     IndexarDados.indexarSolrInputDocument(docs.get(d));
-     }
-     }
-
-     }
-
-     return true;
-
-     }
-
-     public static boolean indexarSolr() throws SQLException {
-     Solr s = new Solr();
-     if (!s.bd.estaConectado()) {
-     System.out.println("Erro de conexao. Não foi possivel conectar no BD!");
-     return false;
-     }
-     s.indexarBancoDeDados();
-     return true;
-     }
-    
-     */
 }

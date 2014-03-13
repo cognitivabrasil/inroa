@@ -7,7 +7,7 @@ import org.apache.solr.common.SolrInputDocument;
 import cognitivabrasil.obaa.OBAA;
 
 public class Converter {
-
+    
     public static SolrInputDocument listToSolrInputDocument(List<List<String>> objeto) {
         SolrInputDocument documento = new SolrInputDocument();
 
