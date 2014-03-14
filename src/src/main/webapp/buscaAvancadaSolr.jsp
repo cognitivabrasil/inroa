@@ -21,7 +21,7 @@
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="javascript" type="text/javascript" src='${scripts}/jquery-1.7.2.js'></script>
-        <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancadaSolr.js"></script>
+        <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/buscaAvancadaSolr.js"></script>
     </head>
     
     <body>

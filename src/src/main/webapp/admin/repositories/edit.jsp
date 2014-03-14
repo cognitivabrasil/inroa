@@ -22,7 +22,7 @@
         <c:url var="validateJs" value="/scripts/validatejs.js" />
         <c:url var="funcoesJs" value="/scripts/funcoes.js" />
         
-        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <c:url var="validateOAI" value="/scripts/validateOAI.js" />
         <script type="text/javascript" src="${validateOAI}"></script>

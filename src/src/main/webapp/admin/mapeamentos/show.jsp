@@ -22,7 +22,7 @@
         <script>setRootUrl(${root});</script>
 
         <!-- Include required JS files -->
-        <c:url var="shCoreJs" value="/scripts/shCore.js" />
+        <c:url var="shCoreJs" value="/scripts/vendor/shCore.js" />
 
         <script type="text/javascript" src="${shCoreJs }"></script>
 
@@ -30,7 +30,7 @@
             At least one brush, here we choose JS. You need to include a brush for every
             language you want to highlight
         -->
-        <c:url var="shBrushXml" value="/scripts/shBrushXml.js" />
+        <c:url var="shBrushXml" value="/scripts/vendor/shBrushXml.js" />
 
         <script type="text/javascript" src="${shBrushXml}"></script>
 
