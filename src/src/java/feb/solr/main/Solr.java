@@ -13,33 +13,37 @@ public class Solr {
 
     private static final Logger log = Logger.getLogger(Solr.class);
     private static final int maxDocs = 10000; // Numero maximo de documentos que seram indexados upload para o Solr
- 
+
     public Solr() {
     }
 
     /**
      * Apaga todo o indice do Solr e todos os documentos contindo nele
-     * @return  True se deu certo. False se houve alguma falha.
+     *
+     * @return True se deu certo. False se houve alguma falha.
      */
     public static boolean apagarIndice() {
-            return IndexarDados.apagarIndice();
-        
+        return IndexarDados.apagarIndice();
+
     }
 
     /**
-     * Recebe uma lista de documentos reais, converte eles para DocumentSolr e envia eles para o sistema indexar
-     * Converte um a um os documentos reais ate atingir maxDocs documentos. Apos, envia eles para o Sorl
+     * Recebe uma lista de documentos reais, converte eles para DocumentSolr e
+     * envia eles para o sistema indexar Converte um a um os documentos reais
+     * ate atingir maxDocs documentos. Apos, envia eles para o Sorl
+     *
      * @param docs Lista de documentos reais a serem indexados
      */
     public static void indexarBancoDeDados(List<DocumentoReal> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
         int numDocs = 0;
         log.debug("Convertendo obaaXML em SolrXML...");
-log.debug("Numero de objetos a serem convertidos: "+ docs.size());
+        log.debug("Numero de objetos a serem convertidos: " + docs.size());
         for (DocumentoReal doc : docs) {
             numDocs++;
+            String entry = "";
             try {
-                String entry = doc.getObaaEntry();
+                entry = doc.getObaaEntry();
                 if (entry.isEmpty()) {
                     log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
                     continue;
@@ -57,7 +61,7 @@ log.debug("Numero de objetos a serem convertidos: "+ docs.size());
             int federacao = doc.getRepositorioSubFed() != null
                     ? doc.getRepositorioSubFed().getSubFederacao().getId() : -1;
 
-            docsSolr.add(Converter.OBAAToSolrInputDocument(doc.getMetadata(), doc.getId(), repositorio, subFeb, federacao));
+            docsSolr.add(Converter.OBAAToSolrInputDocument(doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao));
 
             if (numDocs == maxDocs) {
                 log.debug("Enviando para o Solrs a lista de documento.");

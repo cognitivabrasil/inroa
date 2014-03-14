@@ -46,8 +46,7 @@ public class IndexarDados {
     /**
      * Converte Strings passados para formato SOLR e envia eles para indexacao
      *
-     * @param objeto Lista de Lista de Strings. Os String sao do formato
-     * <Field:Metadados>
+     * @param objeto Lista de Lista de Strings. Os String sao do formato  <Field:Metadados>
      * @return True se todos os objetos foram indexados
      */
     public static boolean indexarObjeto(List<List<String>> objeto) {

@@ -1,4 +1,3 @@
-//******************COMPLETO **************////////
 package feb.solr.camposObaa;
 
 import java.util.ArrayList;

@@ -7,7 +7,14 @@ import org.apache.solr.common.SolrInputDocument;
 import cognitivabrasil.obaa.OBAA;
 
 public class Converter {
-    
+
+    /**
+     * Converte uma Lista de lista de strings para formato SORL (cria um unico
+     * documento com esse parametro)
+     *
+     * @param objeto Lista de lista de strings no formatp <field:texto>
+     * @return O documento SOLR
+     */
     public static SolrInputDocument listToSolrInputDocument(List<List<String>> objeto) {
         SolrInputDocument documento = new SolrInputDocument();
 
@@ -29,16 +36,31 @@ public class Converter {
         return feb.solr.camposObaa.AllFields.getAll(o);
     }
 
-    public static SolrInputDocument OBAAToSolrInputDocument(OBAA o) {
-        return listToSolrInputDocument(feb.solr.camposObaa.AllFields.getAll(o));
-    }
-
-    public static SolrInputDocument OBAAToSolrInputDocument(OBAA o, int id, int rep, int subFeb, int federacao) {
+    /**
+     * Converte um objeto do tipo OBAA para um documento SOLR
+     *
+     * @param o Objeto Obaa a ser convertido
+     * @param entry String com o Entry do objeto (esse entry pode ser encontrado
+     * no banco de dados e nao necessariamente eh o mesmo entry do XML do Obaa).
+     * @param id identificador do Objeto referente ao seu numero no banco de
+     * dados
+     * @param rep Repositorio ao qual o objeto pertence (Se nao pertencer a
+     * nenhum, passar o valor -1)
+     * @param subFeb Subfederacao ao qual o objeto pertence (Se nao pertencer a
+     * nenhum, passar o valor -1)
+     * @param federacao Federacao ao qual o objeto pertence (Se nao pertencer a
+     * nenhum, passar o valor -1)
+     * @return Documento SOLR pronto para ser indexado
+     */
+    public static SolrInputDocument OBAAToSolrInputDocument(OBAA o, String entry, int id, int rep, int subFeb, int federacao) {
         SolrInputDocument doc = listToSolrInputDocument(feb.solr.camposObaa.AllFields.getAll(o));
+
+        doc.addField("obaa.general.identifier.entry", entry);
         doc.addField("obaa.idBaseDados", id);
         doc.addField("obaa.repositorio", rep);
         doc.addField("obaa.subFederacao", subFeb);
         doc.addField("obaa.federacao", federacao);
+
         return doc;
     }
 }

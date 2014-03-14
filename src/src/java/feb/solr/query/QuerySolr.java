@@ -14,16 +14,14 @@ import org.apache.solr.common.SolrDocumentList;
 
 public class QuerySolr {
 
-    private HttpSolrServer serverSolr;
+    private final HttpSolrServer serverSolr;
     private SolrQuery query;
-    private List<Integer> idsDocumentos;
     private QueryResponse queryResponse;
 
     public QuerySolr() {
         serverSolr = new HttpSolrServer("http://localhost:8983/solr");
         query = new SolrQuery();
         queryResponse = new QueryResponse();
-        idsDocumentos = new ArrayList<Integer>();
 
     }
 
@@ -37,7 +35,6 @@ public class QuerySolr {
         serverSolr = new HttpSolrServer(url);
         query = new SolrQuery();
         queryResponse = new QueryResponse();
-        idsDocumentos = new ArrayList<Integer>();
 
     }
 
