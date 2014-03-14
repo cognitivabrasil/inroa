@@ -38,6 +38,15 @@ public class TechnicalFields {
         return support;
     }
 
+    public static List<String> getLocation(OBAA o) {
+        List<String> location = new ArrayList<String>();
+        location.add(cabecalho + "location");
+        for (int i = 0; i < o.getTechnical().getLocation().size() && i < 3; i++) {
+            location.add(o.getTechnical().getLocation().get(i));
+        }
+        return location;
+    }
+
     public static List<List<String>> getAll(OBAA o) {
         List<List<String>> all = new ArrayList<List<String>>();
 
@@ -45,6 +54,7 @@ public class TechnicalFields {
         all.add(getFormat(o));
         all.add(getSize(o));
         all.add(getSupportedplatforms(o));
+        all.add(getLocation(o));
         return all;
     }
 

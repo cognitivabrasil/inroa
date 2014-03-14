@@ -5,6 +5,9 @@ import feb.solr.converter.Converter;
 import org.apache.log4j.Logger;
 
 import feb.data.entities.DocumentoReal;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryUsage;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.solr.common.SolrInputDocument;
@@ -64,12 +67,39 @@ public class Solr {
             docsSolr.add(Converter.OBAAToSolrInputDocument(doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao));
 
             if (numDocs == maxDocs) {
-                log.debug("Enviando para o Solrs a lista de documento.");
+                log.debug("Enviando para o Solrs a lista de documento. (Numero de documentos: " + docsSolr.size() + ")");
                 //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
-                if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
-                    log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
-                    for (int d = 0; d < docsSolr.size(); d++) {
-                        IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
+                try {
+                    if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
+                        log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
+                        for (int d = 0; d < docsSolr.size(); d++) {
+                            IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
+                        }
+                    }
+
+                } catch (OutOfMemoryError e) {
+                    log.error("Out of memory enquanto enviava os documentos para o SOLR!" + e);
+                    List<SolrInputDocument> listaInicial = docsSolr.subList(0, docsSolr.size() / 2 - 1);
+                    List<SolrInputDocument> listaFinal = docsSolr.subList(docsSolr.size() / 2 - 1, docsSolr.size());
+    MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
+
+                        MemoryUsage heapUsage = memoryBean.getHeapMemoryUsage();
+            long maxMemory = heapUsage.getMax() / (1024*1024);
+            long usedMemory = heapUsage.getUsed() / (1024*1024);
+            System.out.println( " : Memory Use :" + usedMemory + "M/" + maxMemory + "M");
+       
+            
+                    if (!IndexarDados.indexarColecaoSolrInputDocument(listaInicial)) {
+                        log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
+                        for (int d = 0; d < docsSolr.size(); d++) {
+                            IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
+                        }
+                    }
+                    if (!IndexarDados.indexarColecaoSolrInputDocument(listaFinal)) {
+                        log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
+                        for (int d = 0; d < docsSolr.size(); d++) {
+                            IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
+                        }
                     }
                 }
                 numDocs = 0;
