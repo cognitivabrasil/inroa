@@ -1,0 +1,5 @@
+Template: feb/password
+Type: password
+Default: feb@RNP
+Description: Digite uma senha para o banco de dados do FEB.
+  Voce precisa de uma senha segura para o FEB.

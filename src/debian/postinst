@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
 FULLNEWVERSION=$(cat /etc/feb/version)
 NEWVERSION=${FULLNEWVERSION:0:3}
 
@@ -7,27 +10,27 @@ echo "New version ${FULLNEWVERSION}"
 
 case "$1" in
 	configure)
+	chown -R tomcat7:tomcat7 /var/lib/tomcat7/solr
+	chown tomcat7:tomcat7 /etc/feb/feb.properties
+	chmod 600 /etc/feb/feb.properties
 
 	if [ -z "$2" ]; then
-		echo "New installation"
-		echo "Creating user"
-		sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'" >> instalacao_feb.log;
-		
-		echo "Creating database schema..."
+		db_get feb/password
+		password=$RET
+
+		sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD '$password'" >> instalacao_feb.log;
 		sudo -u postgres psql -f /usr/share/FEB/schema.sql >> /tmp/instalacao_feb.log;
-		echo "Populating database..."
 		sudo -u postgres psql federacao -f /usr/share/FEB/data.sql >> /tmp/instalacao_feb.log;
+
+		sudo -u postgres psql federacao -c "UPDATE usuarios SET senha = MD5('$password') WHERE login = 'admin'";
+
+		sed -i "s/password=.*/password=$password/g" /etc/feb/feb.properties
+		
+		
 	else
 		FULLOLDVERSION=$2
 		OLDVERSION=${FULLOLDVERSION:0:3}
-		if [[ "$OLDVERSION" < "2.2" ]]; then
-			echo "Atualizando de versão anterior à 2.2"
-			echo "Apagando base e recriando..."
-			
-			sudo -u postgres dropdb federacao >> /tmp/instalacao_feb.log;
-			sudo -u postgres psql -f /usr/share/FEB/schema.sql >> /tmp/instalacao_feb.log;
-			sudo -u postgres psql federacao -f /usr/share/FEB/data.sql >> /tmp/instalacao_feb.log;
-		elif [ "$OLDVERSION" = "$NEWVERSION" ]; then
+		if [ "$OLDVERSION" = "$NEWVERSION" ]; then
 			echo "Same major-minor, no database change"
 		else
 			echo "Standard upgrade procedure..."
@@ -35,6 +38,9 @@ case "$1" in
 			sudo -u postgres psql -f /usr/share/FEB/upgrade${OLDVERSION}to${NEWVERSION}
 		fi
 	fi
+
+	# remove password from debconf
+	db_reset feb/password
 
 	if [ -f /etc/tomcat7/server.xml ]; then
 		TOMCAT_CONFIG=/etc/tomcat7/server.xml

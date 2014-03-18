@@ -1,0 +1,34 @@
+#!/bin/sh -e
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+
+echo "New version ${FULLNEWVERSION}"
+
+case "$1" in
+	configure)
+	if [ -z "$2" ]; then
+		db_input high feb/password || true
+		db_go
+
+		# Check their answer.
+		db_get feb/password
+
+		echo "Returned $RET"
+	else
+		echo "Upgrading, nothing to do"
+	fi
+
+;;
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+

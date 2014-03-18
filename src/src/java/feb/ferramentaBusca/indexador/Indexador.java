@@ -30,8 +30,6 @@ public class Indexador {
     
     public Indexador() {
     }
-
-    
    
     /**
      * Esse metodo deverá ser executado sempre depois da adiç&atilde;o de todos
@@ -40,11 +38,11 @@ public class Indexador {
      */
     public void populateR1() {
         log.info("Recalculando o indice do Solr...");
+        Solr.apagarIndice();
         Long inicio = System.currentTimeMillis();
         List<DocumentoReal> docs = docDao.getAll();
-        System.out.println("Numero de Docs: "+docs.size());
+        log.info("Numero de Docs: "+docs.size());
         Solr.indexarBancoDeDados(docs);
-
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
         log.info("Tempo total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));

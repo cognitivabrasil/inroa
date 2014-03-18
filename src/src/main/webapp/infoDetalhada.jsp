@@ -66,7 +66,7 @@ modelo de tópico:
               type="image/x-icon" />
         <c:url var="root" value="/" />
         <script>rootUrl = ${root};</script>
-        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <c:url var="validateURL" value="/scripts/testUrlActive.js" />
         <script type="text/javascript" src="${validateURL}"></script>

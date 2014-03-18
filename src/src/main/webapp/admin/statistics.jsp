@@ -16,17 +16,17 @@
         <title>FEB - Estatísticas de Uso</title>
         <c:url var="favicon" value="/imagens/favicon.ico" />
         <c:url var="css" value="/css/padrao.css" />
-        <c:url var="jquery" value="/scripts/jquery-1.7.2.js" />
+        <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js" />
         <c:url var="jqplotcss" value="/css/jquery.jqplot.min.css" />
-        <c:url var="jqplotjs" value="/scripts/jquery.jqplot.min.js" />
-        <c:url var="pieRendererjs" value="/scripts/jqplot.pieRenderer.min.js" />
+        <c:url var="jqplotjs" value="/scripts/vendor/jquery.jqplot.min.js" />
+        <c:url var="pieRendererjs" value="/scripts/vendor/jqplot.pieRenderer.min.js" />
         <c:url var="zebraScript" value="/scripts/zebraScript.js" />
         <c:url var="statistics" value="/scripts/statistics.js" />
         <c:url var="uicss" value="/css/Theme/jquery-ui-1.8.22.custom.css" />
-        <c:url var="jqueryUi" value="/scripts/jquery-ui-1.8.22.custom.min.js" />
+        <c:url var="jqueryUi" value="/scripts/vendor/jquery-ui-1.8.22.custom.min.js" />
         <c:url var="formDate" value="/scripts/formDate.js" />
         <c:url var="messagecss" value="/css/messages/messages.css" />
-        <c:url var="jquery_mask" value="/scripts/jquery.maskedinput-1.3.min.js" />
+        <c:url var="jquery_mask" value="/scripts/vendor/jquery.maskedinput-1.3.min.js" />
 
 
         <link rel="shortcut icon" type="image/x-icon" href="${favicon}"  />

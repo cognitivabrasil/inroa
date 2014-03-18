@@ -10,14 +10,6 @@ public class GeneralFields {
 
     private static final String cabecalho = "obaa.general.";
 
-    public static List<String> getEntry(OBAA o) {
-        List<String> entry = new ArrayList<String>();
-        entry.add(cabecalho + "identifier.entry");
-        entry.add(o.getGeneral().getIdentifiers().get(0).getEntry());
-
-        return entry;
-    }
-
     public static List<String> getTitle(OBAA o) {
         List<String> title = new ArrayList<String>();
         title.add(cabecalho + "title");
@@ -130,7 +122,6 @@ public class GeneralFields {
         List<List<String>> all = new ArrayList<List<String>>();
 
         all.add(getDescription(o));
-        all.add(getEntry(o));
         all.add(getKeyword(o));
         all.add(getLanguage(o));
         all.add(getTitle(o));

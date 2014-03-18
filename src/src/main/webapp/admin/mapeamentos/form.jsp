@@ -33,16 +33,16 @@ Primeira etapa do cadastro de um repositorio
         <c:url var="root" value="/" />
         <script>setRootUrl(${root});</script>
 
-        <c:url var="codeMirrorJs" value="/scripts/codemirror/lib/codemirror.js" />
+        <c:url var="codeMirrorJs" value="/scripts/vendor/codemirror/lib/codemirror.js" />
         <script type="text/javascript" src="${codeMirrorJs}"></script>
 
         <c:url var="codeMirrorCss"
-               value="/scripts/codemirror/lib/codemirror.css" />
+               value="/scripts/vendor/codemirror/lib/codemirror.css" />
         <link rel="stylesheet" href="${codeMirrorCss }">
 
-        <c:url var="codeMirrorXml" value="/scripts/codemirror/mode/xml/xml.js" />
+        <c:url var="codeMirrorXml" value="/scripts/vendor/codemirror/mode/xml/xml.js" />
         <script type="text/javascript" src="${codeMirrorXml }"></script>
-        <c:url var="codeMirrorClosetag" value="/scripts/codemirror/lib/util/closetag.js" />
+        <c:url var="codeMirrorClosetag" value="/scripts/vendor/codemirror/lib/util/closetag.js" />
         <script type="text/javascript" src="${codeMirrorClosetag}"></script>
 
 
