@@ -73,6 +73,78 @@
                         </div>
                             
                         <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Pesquisar <b>formato</b> de objetos
+                            </div>
+                            <div class="Value">
+                                <input type="text" name="format" id="format" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                            </div>
+                        </div>
+                            
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Pesquisar <b>tamanho</b> de objetos
+                            </div>
+                            <div class="Value">
+                                <input type="text" name="size" id="size" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                            </div>
+                        </div>
+                            
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Pesquisar objetos por <b>idade</b>
+                            </div>
+                            <div class="Value">
+                                <input type="range" name="age_range" id="age_range" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                            </div>
+                        </div> 
+                            
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Pesquisar objetos por <b>dificuldade</b>
+                            </div>
+                            <div class="Value">
+                                <input type="text" name="difficult" id="difficult" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                            </div>
+                        </div> 
+                            
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                <b>Custo</b>
+                            </div>
+                            <div class="Value">
+                               <input type="radio" name="cost" value="pagos" onBlur="this.className=''"/> Pagos <input type="radio" name="cost" value="gratis" onBlur="this.className=''"/> Grátis <input type="radio" name="cost" value="ambos" onBlur="this.className=''"/> Ambos
+                            </div>
+                        </div> 
+                            
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Objetos com <b>visual</b>
+                            </div>
+                            <div class="Value">
+                                <input type="radio" name="hasVisual" value="sim" onBlur="this.className=''"/> Sim <input type="radio" name="hasVisual" value="nao" onBlur="this.className=''"/> Não <input type="radio" name="hasVisual" value="ambos" onBlur="this.className=''"/> Ambos
+                            </div>
+                        </div> 
+                         
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Objetos <b>auditivos</b>
+                            </div>
+                            <div class="Value">
+                                <input type="radio" name="hasAditory" value="sim" onBlur="this.className=''"/> Sim <input type="radio" name="hasAditory" value="nao" onBlur="this.className=''"/> Não <input type="radio" name="hasAditory" value="ambos" onBlur="this.className=''"/> Ambos
+                            </div>
+                        </div>
+                            
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Objetos <b>textuais</b>
+                            </div>
+                            <div class="Value">
+                                <input type="radio" name="hasText" value="sim" onBlur="this.className=''"/> Sim <input type="radio" name="hasText" value="nao" onBlur="this.className=''"/> Não <input type="radio" name="hasText" value="ambos" onBlur="this.className=''"/> Ambos
+                            </div>
+                        </div>    
+                            
+                        <div class="LinhaEntrada">
                             <div class="Buttons">
                                 <input class="BOTAO" type="submit" value="Consultar"/>
                             </div>

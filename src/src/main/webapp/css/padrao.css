@@ -482,7 +482,7 @@ a:hover{
     padding-bottom:5px;
 }
 
-.LinhaEntrada .Value input,.LinhaEntrada .Value select {width:50%; border-color: #006699}
+.LinhaEntrada .Value input,.LinhaEntrada .Value select {/* width:50%; */ border-color: #006699}
 .LinhaEntrada .Value .disabled{
     background-color: #D7EBFF;
     border: 0px;

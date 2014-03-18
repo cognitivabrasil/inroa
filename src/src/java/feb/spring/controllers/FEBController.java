@@ -110,7 +110,7 @@ public final class FEBController {
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
         }
-        return "buscaAvancada";
+        return "buscaAvancadaSolr";
     }
 
     /**
