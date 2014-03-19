@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -110,7 +111,7 @@ public final class FEBController {
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
         }
-        return "buscaAvancadaSolr";
+        return "buscaAvancada";
     }
 
     /**
@@ -167,7 +168,7 @@ public final class FEBController {
             }
 
             model.addAttribute("title", title);
-            model.addAttribute("metadata", d.getMetadata());
+            model.addAttribute("metadata", d.getMetadata().getRights().getCost());
             return "infoDetalhada";
         }
     }
@@ -218,7 +219,7 @@ public final class FEBController {
             BindingResult result, Model model,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("BuscaModel", consulta);
-
+        
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
             model.addAttribute("repDAO", repDao);

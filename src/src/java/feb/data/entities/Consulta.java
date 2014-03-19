@@ -3,19 +3,10 @@ package feb.data.entities;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextException;
-
-import feb.data.interfaces.StopWordsDao;
-import feb.spring.ApplicationContextProvider;
-import feb.util.Operacoes;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
-
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  *
@@ -33,30 +24,29 @@ public class Consulta {
     private int offset;
     private int sizeResult;
     private String idioma;
-    static Logger log = Logger.getLogger(Consulta.class);
+    private String format;
+    private String age_range;
+    private String difficult;
+    public Boolean cost;
+    public Boolean hasVisual;
+    public Boolean hasAditory;
+    public Boolean hasText;
+    public String size;
+
+    private static final Logger log = Logger.getLogger(Consulta.class);
 
     public Consulta() {
-        consulta = "";
-        autor = "";
-        repositorios = new HashSet<Integer>();
-        federacoes = new HashSet<Integer>();
-        repSubfed = new HashSet<Integer>();
         rss = false;
         limit = 5;
         offset = 0;
         sizeResult = 0;
-        idioma = "pt-BR";
     }
 
-    public List<String> getConsultaTokenizada() {
-        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-        if (ctx == null) {
-            log.fatal("Could not get AppContext bean!");
-            throw new ApplicationContextException("Could not get AppContext bean!");
-        } else {
-            StopWordsDao stopWordDao = ctx.getBean(StopWordsDao.class);
-            return Operacoes.tokeniza(this.consulta, stopWordDao.getStopWords(idioma));
-        }
+    public boolean isEmpty() {
+        return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
+                && isBlank(format) && isBlank(age_range) && isBlank(difficult)
+                && isBlank(size) && cost == null && hasVisual == null
+                && hasAditory == null && hasText == null;
     }
 
     public String getConsulta() {
@@ -64,11 +54,11 @@ public class Consulta {
     }
 
     public void setConsulta(String consulta) {
-        try{
-        byte[] bytes = consulta.getBytes();
-        this.consulta = new String(bytes, "UTF-8");
-        } catch(UnsupportedEncodingException e){
-            log.error("Não foi possível codificar em utf-8 a string: "+consulta, e);
+        try {
+            byte[] bytes = consulta.getBytes();
+            this.consulta = new String(bytes, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            log.error("Não foi possível codificar em utf-8 a string: " + consulta, e);
         }
     }
 
@@ -81,6 +71,9 @@ public class Consulta {
     }
 
     public Set<Integer> getFederacoes() {
+        if (federacoes == null) {
+            federacoes = new HashSet<Integer>();
+        }
         return federacoes;
     }
 
@@ -89,6 +82,9 @@ public class Consulta {
     }
 
     public Set<Integer> getRepSubfed() {
+        if (repSubfed == null) {
+            repSubfed = new HashSet<Integer>();
+        }
         return repSubfed;
     }
 
@@ -97,6 +93,9 @@ public class Consulta {
     }
 
     public Set<Integer> getRepositorios() {
+        if (repositorios == null) {
+            repositorios = new HashSet<Integer>();
+        }
         return repositorios;
     }
 
@@ -104,12 +103,82 @@ public class Consulta {
         this.repositorios = repositorios;
     }
 
-    public boolean hasAuthor() {
-        if (autor.equals("")) {
-            return false;
-        } else {
-            return true;
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getAge_range() {
+        return age_range;
+    }
+
+    public void setAge_range(String age_range) {
+        this.age_range = age_range;
+    }
+
+    public String getDifficult() {
+        return difficult;
+    }
+
+    public void setDifficult(String difficult) {
+        this.difficult = difficult;
+    }
+
+    public Boolean isCost() {
+        return cost;
+    }
+
+    public void setCost(Boolean cost) {
+        this.cost = cost;
+    }
+
+    public Boolean isHasVisual() {
+        return hasVisual;
+    }
+
+    public void setHasVisual(Boolean hasVisual) {
+        this.hasVisual = hasVisual;
+    }
+
+    public Boolean isHasAditory() {
+        return hasAditory;
+    }
+
+    public void setHasAditory(Boolean hasAditory) {
+        this.hasAditory = hasAditory;
+    }
+
+    public Boolean isHasText() {
+        return hasText;
+    }
+
+    public void setHasText(String hasText) {
+        if (hasText != null && !hasText.isEmpty()) {
+            this.hasText = Boolean.parseBoolean(hasText);
         }
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public boolean hasAuthor() {
+        return !autor.equals("");
     }
 
     public boolean isRss() {
@@ -161,29 +230,31 @@ public class Consulta {
     public void setSizeResult(int sizeResult) {
         this.sizeResult = sizeResult;
     }
-    
+
     /**
      * @return the consulta params in an URL encoded form
      */
     public String getUrlEncoded() {
-    	try {
-			String encoded = "consulta=" + URLEncoder.encode(consulta,"UTF-8");
-			if(isNotBlank(autor)) { encoded += "&autor=" + URLEncoder.encode(autor,"UTF-8"); }
-			
-			for(Integer i : repositorios) {
-				encoded += "&repositorios=" + URLEncoder.encode(i.toString(),"UTF-8");
-			}
-			for(Integer i : federacoes) {
-				encoded += "&federacoes=" + URLEncoder.encode(i.toString(),"UTF-8");
-			}
-			for(Integer i : repositorios) {
-				encoded += "&repositorios=" + URLEncoder.encode(i.toString(),"UTF-8");
-			}
-			
-			return encoded;
-		} catch (UnsupportedEncodingException e) {
-			// UTF 8 is always supported
-			throw new RuntimeException("FATAL", e);
-		}
+        try {
+            String encoded = "consulta=" + URLEncoder.encode(consulta, "UTF-8");
+            if (isNotBlank(autor)) {
+                encoded += "&autor=" + URLEncoder.encode(autor, "UTF-8");
+            }
+
+            for (Integer i : repositorios) {
+                encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
+            }
+            for (Integer i : federacoes) {
+                encoded += "&federacoes=" + URLEncoder.encode(i.toString(), "UTF-8");
+            }
+            for (Integer i : repositorios) {
+                encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
+            }
+
+            return encoded;
+        } catch (UnsupportedEncodingException e) {
+            // UTF 8 is always supported
+            throw new RuntimeException("FATAL", e);
+        }
     }
 }

@@ -508,6 +508,7 @@ src/src/test/java/feb/data/daos/SearchesJdbcIT.java -text
 src/src/test/java/feb/data/daos/SubfederacaoHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/TokensHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/UsuarioHibernateDaoIT.java -text
+src/src/test/java/feb/data/entities/ConsultaTest.java -text
 src/src/test/java/feb/data/entities/DocumentoTest.java -text
 src/src/test/java/feb/data/entities/RepositorioTest.java -text
 src/src/test/java/feb/data/entities/SubFederacaoTest.java -text
