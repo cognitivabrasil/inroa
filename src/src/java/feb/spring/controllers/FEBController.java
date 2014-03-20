@@ -108,6 +108,7 @@ public final class FEBController {
 
         model.addAttribute("repDAO", repDao);
         model.addAttribute("subDAO", subDao);
+        model.addAttribute("buscaModel", new Consulta());
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
         }
@@ -179,7 +180,7 @@ public final class FEBController {
             BindingResult result, Model model,
             @RequestParam(value = "pager.offset", required = false) Integer offset,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
-        model.addAttribute("BuscaModel", consulta);
+        model.addAttribute("buscaModel", consulta);
         log.debug("");
         log.debug("IP: " + request.getRemoteAddr() + " / search: \"" + consulta.getConsulta() + "\" / Cookie: " + !StringUtils.isEmpty(cookie));
         log.debug("User-Agent: " + request.getHeader("User-Agent"));
@@ -218,7 +219,7 @@ public final class FEBController {
             @ModelAttribute("buscaModel") Consulta consulta,
             BindingResult result, Model model,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
-        model.addAttribute("BuscaModel", consulta);
+        model.addAttribute("buscaModel", consulta);
         
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {

@@ -42,7 +42,7 @@ public class TechnicalFields {
         List<String> location = new ArrayList<String>();
         location.add(cabecalho + "location");
         for (int i = 0; i < o.getTechnical().getLocation().size() && i < 3; i++) {
-            location.add(o.getTechnical().getLocation().get(i));
+            location.add(o.getTechnical().getLocation().get(i).getText());
         }
         return location;
     }

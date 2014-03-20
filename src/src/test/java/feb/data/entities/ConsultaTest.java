@@ -93,7 +93,7 @@ public class ConsultaTest {
     @Test
     public void testNotEmpty9() {
         Consulta c = new Consulta();
-        c.setHasText("text");
+        c.setHasText(Boolean.FALSE);
         assertThat(c.isEmpty(), equalTo(false));
     }
 

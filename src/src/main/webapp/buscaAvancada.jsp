@@ -24,135 +24,144 @@
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
         <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancadaSolr.js"></script>
     </head>
-    
+
     <body>
         <jsp:include page="barraSuperior.jsp" />
+
         <div id="page-index">
             <c:if test="${!empty erro}">
                 <div class="DivErro" id="MensagemErro">${erro}</div>
             </c:if>
-            
-            <form:form method="post" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">    
+
+            <form:form method="GET" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">    
                 <div id="index">
                     <a href="${index}">
                         <img src="${logoReduzido}" alt="Logo FEB_reduzido" class="logo"/>
                     </a>
-                    
+
                     <div class="clear"> </div>
                     <div class="EspacoAntes">&nbsp;</div>
 
 
                     <div id="buscaAvancada">
-                        
                         <div class="LinhaEntrada">
                             <form:errors path="consulta" cssClass="ValueErro" />
                             <div class="LabelLeft">
                                 <b>Texto</b> para a busca
                             </div>
                             <div class="Value">
-                                <input type="text" name="consulta" id="consulta" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                                <form:input path="consulta"/>
                             </div>
                         </div>  
-                        
+
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 Pesquisar objetos <b>de autoria</b> de
                             </div>
                             <div class="Value">
-                                <input type="text" name="autor" id="autor" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                                <form:input path="autor"/>
                             </div>
                         </div>
-                            
+
                         <div class="LinhaEntrada">
                             <form:errors path="idioma" cssClass="ValueErro" />
                             <div class="LabelLeft">
                                 <b>Idioma</b>
                             </div>
                             <div class="Value">
-                                <input type="text" name="idioma" id="consulta" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                                <form:input path="idioma"/>
                             </div>
                         </div>  
-                            
+
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 Pesquisar <b>formato</b> de objetos
                             </div>
                             <div class="Value">
-                                <input type="text" name="format" id="format" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                                <form:input path="format"/>
                             </div>
                         </div>
-                            
+
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 Pesquisar <b>tamanho</b> de objetos
                             </div>
                             <div class="Value">
-                                <input type="text" name="size" id="size" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                                <form:input path="size"/>
                             </div>
                         </div>
-                            
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Pesquisar objetos por <b>idade</b>
-                            </div>
-                            <div class="Value">
-                                fazer lista
-                                <input type="range" name="age_range" id="age_range" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
-                            </div>
-                        </div> 
-                            
-<!--                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Pesquisar objetos por <b>dificuldade</b>
-                            </div>
-                            <div class="Value">
-                                <input type="text" name="difficult" id="difficult" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
-                            </div>
-                        </div> -->
-                            
+
+                        <%--                        <div class="LinhaEntrada">
+                                                    <div class="LabelLeft">
+                                                        Pesquisar objetos por <b>idade</b>
+                                                    </div>
+                                                    <div class="Value">
+                                                        fazer lista
+                                                        <input type="range" name="age_range" id="age_range" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                                                    </div>
+                                                </div>
+                                                    
+                                                <div class="LinhaEntrada">
+                                                    <div class="LabelLeft">
+                                                        Pesquisar objetos por <b>dificuldade</b>
+                                                    </div>
+                                                    <div class="Value">
+                                                    <form:input path="difficult"/>
+                                                        <input type="text" name="difficult" id="difficult" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
+                                                    </div>
+                                                </div> --%>
+
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 <b>Custo</b>
                             </div>
                             <div class="Value">
-                               <input type="radio" name="cost" value="false" onBlur="this.className=''"/> Grátis <input type="radio" name="cost" value="true" onBlur="this.className=''"/> Pagos <input type="radio" name="cost" value="" onBlur="this.className=''"/> Ambos
+                                <form:radiobutton path="cost" value="trrue"/> Grátis
+                                <form:radiobutton path="cost" value="false"/> Pagos
+                                <form:radiobutton path="cost" value=""/> Ambos
                             </div>
                         </div> 
-                            
+
                         <div class="LinhaEntrada">
                             <div class="LabelLeft"> 
                                 Objetos com <b>visual</b>
                             </div>
                             <div class="Value">
-                                <input type="radio" name="hasVisual" value="sim" onBlur="this.className=''"/> Sim <input type="radio" name="hasVisual" value="nao" onBlur="this.className=''"/> Não <input type="radio" name="hasVisual" value="" checked="true" onBlur="this.className=''"/> Ambos
+                                <form:radiobutton path="hasVisual" value="true"/> Sim
+                                <form:radiobutton path="hasVisual" value="false"/> Não
+                                <form:radiobutton path="hasVisual" value=""/> Ambos
                             </div>
                         </div> 
-                         
+
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 Objetos <b>auditivos</b>
                             </div>
                             <div class="Value">
-                                <input type="radio" name="hasAditory" value="sim" onBlur="this.className=''"/> Sim <input type="radio" name="hasAditory" value="nao" onBlur="this.className=''"/> Não <input type="radio" name="hasAditory" value="" onBlur="this.className=''"/> Ambos
+                                <form:radiobutton path="hasAditory" value="true"/> Sim
+                                <form:radiobutton path="hasAditory" value="false"/> Não
+                                <form:radiobutton path="hasAditory" value=""/> Ambos
                             </div>
                         </div>
-                            
+
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 Objetos <b>textuais</b>
                             </div>
                             <div class="Value">
-                                <input type="radio" name="hasText" value="sim" onBlur="this.className=''"/> Sim <input type="radio" name="hasText" value="nao" onBlur="this.className=''"/> Não <input type="radio" name="hasText" value=" " onBlur="this.className=''"/> Ambos
+                                <form:radiobutton path="hasText" value="true"/> Sim
+                                <form:radiobutton path="hasText" value="false"/> Não
+                                <form:radiobutton path="hasText" value=""/> Ambos
                             </div>
                         </div>    
-                            
+
                         <div class="LinhaEntrada">
                             <div class="Buttons">
                                 <input class="BOTAO" type="submit" value="Consultar"/>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="EspacoAntes">&nbsp;</div>
                     <div>
                         <a href="${index}">Retornar a busca padr&atilde;o</a>
                     </div>

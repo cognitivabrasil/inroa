@@ -64,7 +64,7 @@ public class XsltDC2ObaaTest {
 		OBAA l = oai.getMetadata(5);
 		assert(!(l.getTechnical() == null));
 		assert(!(l.getTechnical().getLocation() == null));
-		assertThat(l.getTechnical().getLocation().get(0), 
+		assertThat(l.getTechnical().getLocation().get(0).getText(), 
 				equalTo("http://hdl.handle.net/10183/399"));
 		
 	}

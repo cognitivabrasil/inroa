@@ -135,7 +135,7 @@ public class Consulta {
         this.difficult = difficult;
     }
 
-    public Boolean isCost() {
+    public Boolean getCost() {
         return cost;
     }
 
@@ -143,7 +143,7 @@ public class Consulta {
         this.cost = cost;
     }
 
-    public Boolean isHasVisual() {
+    public Boolean getHasVisual() {
         return hasVisual;
     }
 
@@ -151,7 +151,7 @@ public class Consulta {
         this.hasVisual = hasVisual;
     }
 
-    public Boolean isHasAditory() {
+    public Boolean getHasAditory() {
         return hasAditory;
     }
 
@@ -159,14 +159,12 @@ public class Consulta {
         this.hasAditory = hasAditory;
     }
 
-    public Boolean isHasText() {
+    public Boolean getHasText() {
         return hasText;
     }
 
-    public void setHasText(String hasText) {
-        if (hasText != null && !hasText.isEmpty()) {
-            this.hasText = Boolean.parseBoolean(hasText);
-        }
+    public void setHasText(Boolean hasText) {
+        this.hasText = hasText;
     }
 
     public String getSize() {
@@ -234,6 +232,7 @@ public class Consulta {
     /**
      * @return the consulta params in an URL encoded form
      */
+    @Deprecated
     public String getUrlEncoded() {
         try {
             String encoded = "consulta=" + URLEncoder.encode(consulta, "UTF-8");
@@ -241,13 +240,13 @@ public class Consulta {
                 encoded += "&autor=" + URLEncoder.encode(autor, "UTF-8");
             }
 
-            for (Integer i : repositorios) {
+            for (Integer i : getRepositorios()) {
                 encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
             }
-            for (Integer i : federacoes) {
+            for (Integer i : getFederacoes()) {
                 encoded += "&federacoes=" + URLEncoder.encode(i.toString(), "UTF-8");
             }
-            for (Integer i : repositorios) {
+            for (Integer i : getRepositorios()) {
                 encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
             }
 

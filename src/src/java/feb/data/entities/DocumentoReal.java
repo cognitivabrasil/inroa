@@ -3,6 +3,7 @@ package feb.data.entities;
 import ORG.oclc.oai.models.HibernateOaiDocument;
 import cognitivabrasil.obaa.LifeCycle.Contribute;
 import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.Technical.Location;
 import feb.data.interfaces.DocumentoFebInterface;
 import feb.data.interfaces.StopWordsDao;
 import feb.spring.ApplicationContextProvider;
@@ -107,6 +108,12 @@ public class DocumentoReal implements java.io.Serializable,
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setId(Long id) {
+        if (id != null) {
+            this.id = id.intValue();
+        }
     }
 
     @Override
@@ -373,8 +380,8 @@ public class DocumentoReal implements java.io.Serializable,
 
         if (obaa.getTechnical() != null
                 && obaa.getTechnical().getLocation() != null) {
-            for (String l : obaa.getTechnical().getLocation()) {
-                this.addLocation(l);
+            for (Location l : obaa.getTechnical().getLocation()) {
+                this.addLocation(l.getText());
             }
         }
 
