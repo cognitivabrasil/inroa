@@ -3,6 +3,8 @@ package feb.spring.controllers;
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.DocumentosVisitas;
+import feb.data.entities.Repositorio;
+import feb.data.entities.SubFederacao;
 import feb.data.entities.Visita;
 import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
@@ -16,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.Cookie;
@@ -30,7 +33,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -106,9 +108,16 @@ public final class FEBController {
     @RequestMapping("/buscaAvancada")
     public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
-        model.addAttribute("repDAO", repDao);
-        model.addAttribute("subDAO", subDao);
+        
+        Map<Integer, String> repositorios = new HashMap<Integer, String>();
+        for (Repositorio rep : repDao.getAll()) {
+            repositorios.put(rep.getId(), rep.getName().toUpperCase());
+        }
+        
+        model.addAttribute("repositories", repositorios);
+        model.addAttribute("federations", subDao.getAll());
         model.addAttribute("buscaModel", new Consulta());
+        
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
         }
@@ -220,11 +229,15 @@ public final class FEBController {
             BindingResult result, Model model,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("buscaModel", consulta);
-        
+
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
-            model.addAttribute("repDAO", repDao);
-            model.addAttribute("subDAO", subDao);
+            Map<Integer, String> repositorios = new HashMap<Integer, String>();
+            for (Repositorio rep : repDao.getAll()) {
+                repositorios.put(rep.getId(), rep.getName().toUpperCase());
+            }
+            model.addAttribute("repositories", repositorios);
+            model.addAttribute("federations", subDao.getAll());
             return "buscaAvancada";
         } else {
             try {
@@ -309,7 +322,7 @@ public final class FEBController {
             @RequestParam(required = false) String query,
             @RequestParam(required = false) String autor,
             @RequestParam(required = false) Integer limit,
-            @RequestParam(required = false) Integer offset)  {
+            @RequestParam(required = false) Integer offset) {
 
         log.info("consulta feita no webservice: '" + query + "' autor: '" + autor + "' limit: " + limit + " offset: " + offset);
 

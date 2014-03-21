@@ -2,12 +2,10 @@ package feb.data.entities;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.TreeMap;
 import org.apache.log4j.Logger;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -47,6 +45,7 @@ public class Consulta {
         sizeResult = 0;
         
         languages = new HashMap<String, String>();
+        languages.put("", "Todos");
         languages.put("pt", "Português");
         languages.put("en", "Inglês");
         languages.put("es", "Espanhol");

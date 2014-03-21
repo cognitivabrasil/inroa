@@ -14,15 +14,17 @@
 <c:url var="logoReduzido" value="/imagens/Logo FEB_reduzido.png" />
 <c:url var="index" value="/" />
 <c:url var="scripts" value="/scripts" />
+<c:url var="css" value="/css" />
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
-        <link rel="StyleSheet" href="css/padrao.css" type="text/css">
+        <link rel="StyleSheet" href="${css}/padrao.css" type="text/css">
+        <link rel="StyleSheet" href="${css}/buscaAvancada.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
-        <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancadaSolr.js"></script>
+        <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancada.js"></script>
     </head>
 
     <body>
@@ -41,7 +43,7 @@
 
                     <div class="clear"> </div>
                     <div class="EspacoAntes">&nbsp;</div>
-
+                    <%--<form:errors path="*" cssClass="ValueErro" />--%>
 
                     <div id="buscaAvancada">
                         <div class="LinhaEntrada">
@@ -116,8 +118,8 @@
                                 <b>Custo</b>
                             </div>
                             <div class="Value">
-                                <form:radiobutton path="cost" value="trrue"/> Grátis
-                                <form:radiobutton path="cost" value="false"/> Pagos
+                                <form:radiobutton path="cost" value="false"/> Grátis
+                                <form:radiobutton path="cost" value="true"/> Pagos
                                 <form:radiobutton path="cost" value=""/> Ambos
                             </div>
                         </div> 
@@ -153,7 +155,40 @@
                                 <form:radiobutton path="hasText" value="false"/> Não
                                 <form:radiobutton path="hasText" value=""/> Ambos
                             </div>
-                        </div>    
+                        </div>  
+
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Local para busca
+                            </div>
+                            <div class="checkboxList Value">
+                                - Repositórios:
+                                <form:checkboxes path="repositorios" items="${repositories}"/>
+                            </div>
+                            <div class='checkboxList Value'>
+                                <c:forEach var="subFed" items="${federations}" varStatus="i">
+
+                                    <c:if test="${i.index==0}">- Subfedera&ccedil;&otilde;es</c:if>
+
+                                        <span>
+                                            <a id='link${subFed.id}' class='linkRepSubfeb' onclick='tornarVisivel("link${subFed.id}", "listaRep${subFed.id}", "Interno");'>+</a>
+                                        <form:checkbox path="federacoes" label="${fn:toUpperCase(subFed.nome)}" value="${subFed.id}"/>
+
+                                        <div id='listaRep${subFed.id}' class='hidden containerCheckHidden'>
+                                            <c:forEach var="repSubFed" items="${subFed.repositorios}" varStatus="i">
+                                                <span>
+                                                    <form:checkbox path="repSubfed" value="${repSubFed.id}" label="${fn:toUpperCase(repSubFed.name)}"/>
+                                                </span>
+                                            </c:forEach>
+                                        </div>
+                                    </span>
+
+
+                                </c:forEach>
+                            </div>
+
+
+                        </div>  
 
                         <div class="LinhaEntrada">
                             <div class="Buttons">
