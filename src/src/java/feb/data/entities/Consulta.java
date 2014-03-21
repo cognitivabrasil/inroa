@@ -2,8 +2,13 @@ package feb.data.entities;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import org.apache.log4j.Logger;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -32,14 +37,20 @@ public class Consulta {
     public Boolean hasAditory;
     public Boolean hasText;
     public String size;
-
-    private static final Logger log = Logger.getLogger(Consulta.class);
+    private final Map<String, String> languages;
+    private static final Logger log = Logger.getLogger(Consulta.class);        
 
     public Consulta() {
         rss = false;
         limit = 5;
         offset = 0;
         sizeResult = 0;
+        
+        languages = new HashMap<String, String>();
+        languages.put("pt", "Português");
+        languages.put("en", "Inglês");
+        languages.put("es", "Espanhol");
+        languages.put("fr", "Francês");
     }
 
     public boolean isEmpty() {
@@ -227,6 +238,10 @@ public class Consulta {
 
     public void setSizeResult(int sizeResult) {
         this.sizeResult = sizeResult;
+    }
+
+    public Map<String, String> getLanguages() {
+        return languages;
     }
 
     /**

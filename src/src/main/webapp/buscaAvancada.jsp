@@ -33,7 +33,7 @@
                 <div class="DivErro" id="MensagemErro">${erro}</div>
             </c:if>
 
-            <form:form method="GET" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">    
+            <form:form method="GET" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">   
                 <div id="index">
                     <a href="${index}">
                         <img src="${logoReduzido}" alt="Logo FEB_reduzido" class="logo"/>
@@ -61,17 +61,7 @@
                             <div class="Value">
                                 <form:input path="autor"/>
                             </div>
-                        </div>
-
-                        <div class="LinhaEntrada">
-                            <form:errors path="idioma" cssClass="ValueErro" />
-                            <div class="LabelLeft">
-                                <b>Idioma</b>
-                            </div>
-                            <div class="Value">
-                                <form:input path="idioma"/>
-                            </div>
-                        </div>  
+                        </div> 
 
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
@@ -90,6 +80,16 @@
                                 <form:input path="size"/>
                             </div>
                         </div>
+
+                        <div class="LinhaEntrada">
+                            <form:errors path="idioma" cssClass="ValueErro" />
+                            <div class="LabelLeft">
+                                <b>Idioma</b>
+                            </div>
+                            <div class="Value">
+                                <form:select path="idioma" items="${buscaModel.languages}"/>
+                            </div>
+                        </div> 
 
                         <%--                        <div class="LinhaEntrada">
                                                     <div class="LabelLeft">
