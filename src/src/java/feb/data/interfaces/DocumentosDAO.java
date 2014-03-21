@@ -58,6 +58,16 @@ public interface DocumentosDAO {
      * @return All the documents
      */
     List<DocumentoReal> getAll();
+    
+    /**
+     * Gets all the documents present in the System with limit and offset. Use with extreme care, as
+     * it might return to many results.
+     *
+     * @param maxResults Limit upon the number of objects to be retrieved.
+     * @param firstResult The first result to be retrieved.
+     * @return All documents within this range
+     */
+    List<DocumentoReal> getAll(int maxResults, int firstResult);
 
     /**
      * Gets the document by ID.

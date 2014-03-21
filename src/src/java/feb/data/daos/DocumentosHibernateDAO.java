@@ -12,6 +12,7 @@ import metadata.Header;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
@@ -79,6 +80,14 @@ public class DocumentosHibernateDAO implements DocumentosDAO {
     @Override
     public List<DocumentoReal> getAll() {
         return getSession().createCriteria(DocumentoReal.class).add(Restrictions.eq("deleted", false)).list();
+    }
+    
+    @Override
+    public List<DocumentoReal> getAll(int maxResults, int firstResult){
+        return getSession().createCriteria(DocumentoReal.class)
+                .add(Restrictions.eq("deleted", false))
+                .setFirstResult(firstResult).setMaxResults(maxResults)
+                .addOrder(Order.asc("id")).list();
     }
 
     @Override
