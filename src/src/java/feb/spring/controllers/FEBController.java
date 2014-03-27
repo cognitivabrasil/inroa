@@ -4,7 +4,6 @@ import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.DocumentosVisitas;
 import feb.data.entities.Repositorio;
-import feb.data.entities.SubFederacao;
 import feb.data.entities.Visita;
 import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
@@ -60,7 +59,7 @@ public final class FEBController {
     private VisitasDao visDao;
     @Autowired
     private DocumentosVisitasDao docVisDao;
-    private BuscaValidator buscaValidator;
+    private final BuscaValidator buscaValidator;
     private final Logger log = Logger.getLogger(FEBController.class);
     @Autowired
     private SearchesDao searchesDao;
@@ -108,16 +107,10 @@ public final class FEBController {
     @RequestMapping("/buscaAvancada")
     public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
-        
-        Map<Integer, String> repositorios = new HashMap<Integer, String>();
-        for (Repositorio rep : repDao.getAll()) {
-            repositorios.put(rep.getId(), rep.getName().toUpperCase());
-        }
-        
-        model.addAttribute("repositories", repositorios);
+        model.addAttribute("repositories", repDao.getAll());
         model.addAttribute("federations", subDao.getAll());
         model.addAttribute("buscaModel", new Consulta());
-        
+
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
         }
@@ -232,11 +225,7 @@ public final class FEBController {
 
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
-            Map<Integer, String> repositorios = new HashMap<Integer, String>();
-            for (Repositorio rep : repDao.getAll()) {
-                repositorios.put(rep.getId(), rep.getName().toUpperCase());
-            }
-            model.addAttribute("repositories", repositorios);
+            model.addAttribute("repositories", repDao.getAll());
             model.addAttribute("federations", subDao.getAll());
             return "buscaAvancada";
         } else {

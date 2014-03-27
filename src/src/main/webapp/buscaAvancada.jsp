@@ -22,8 +22,10 @@
         <title>FEB – Federa&ccedil;&atilde;o de Reposit&oacute;rios Educa Brasil</title>
         <link rel="StyleSheet" href="${css}/padrao.css" type="text/css">
         <link rel="StyleSheet" href="${css}/buscaAvancada.css" type="text/css">
+        <link rel="StyleSheet" href="${scripts}/vendor/jsTree/dist/themes/default/style.min.css" type="text/css">
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
+        <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/jsTree/dist/jstree.min.js"></script>
         <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancada.js"></script>
     </head>
 
@@ -93,26 +95,6 @@
                             </div>
                         </div> 
 
-                        <%--                        <div class="LinhaEntrada">
-                                                    <div class="LabelLeft">
-                                                        Pesquisar objetos por <b>idade</b>
-                                                    </div>
-                                                    <div class="Value">
-                                                        fazer lista
-                                                        <input type="range" name="age_range" id="age_range" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
-                                                    </div>
-                                                </div>
-                                                    
-                                                <div class="LinhaEntrada">
-                                                    <div class="LabelLeft">
-                                                        Pesquisar objetos por <b>dificuldade</b>
-                                                    </div>
-                                                    <div class="Value">
-                                                    <form:input path="difficult"/>
-                                                        <input type="text" name="difficult" id="difficult" value="" onFocus="this.className='inputSelecionado'" onBlur="this.className=''"/>
-                                                    </div>
-                                                </div> --%>
-
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 <b>Custo</b>
@@ -163,33 +145,32 @@
                             </div>
                             <div class="checkboxList Value">
                                 - Repositórios:
-                                <form:checkboxes path="repositorios" items="${repositories}"/>
+                                <div id="tree_repositories">
+                                    <ul>
+                                        <form:checkboxes itemValue="id" path="repositorios" cssClass="hidden" element="li" items="${repositories}"/>
+                                    </ul>
+                                </div>
                             </div>
                             <div class='checkboxList Value'>
-                                <c:forEach var="subFed" items="${federations}" varStatus="i">
+                                <c:if test="${!empty federations}">
+                                    - Federa&ccedil;&otilde;es
+                                    <div id="tree_federations">
+                                        <ul>
+                                            <c:forEach var="subFed" items="${federations}">
 
-                                    <c:if test="${i.index==0}">- Subfedera&ccedil;&otilde;es</c:if>
-
-                                        <span>
-                                            <a id='link${subFed.id}' class='linkRepSubfeb' onclick='tornarVisivel("link${subFed.id}", "listaRep${subFed.id}", "Interno");'>+</a>
-                                        <form:checkbox path="federacoes" label="${fn:toUpperCase(subFed.nome)}" value="${subFed.id}"/>
-
-                                        <div id='listaRep${subFed.id}' class='hidden containerCheckHidden'>
-                                            <c:forEach var="repSubFed" items="${subFed.repositorios}" varStatus="i">
-                                                <span>
-                                                    <form:checkbox path="repSubfed" value="${repSubFed.id}" label="${fn:toUpperCase(repSubFed.name)}"/>
-                                                </span>
+                                                <li>
+                                                    ${fn:toUpperCase(subFed.nome)}
+                                                    <ul>
+                                                        <form:checkboxes itemValue="id" itemLabel="name" path="repSubfed" cssClass="hidden" element="li" items="${subFed.repositorios}"/>
+                                                    </ul>
+                                                </li>
                                             </c:forEach>
-                                        </div>
-                                    </span>
-
-
-                                </c:forEach>
+                                        </ul>
+                                    </div>
+                                </c:if>
                             </div>
 
-
-                        </div>  
-
+                        </div>
                         <div class="LinhaEntrada">
                             <div class="Buttons">
                                 <input class="BOTAO" type="submit" value="Consultar"/>

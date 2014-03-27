@@ -2,11 +2,11 @@ package feb.data.entities;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import org.apache.log4j.Logger;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -99,6 +99,8 @@ public class Consulta {
     }
 
     public void setRepSubfed(Set<Integer> repSubfed) {
+        //o form envia valoes em branco e o spring seta como null na lista, ai tem que remover
+        repSubfed.removeAll(Collections.singleton(null));
         this.repSubfed = repSubfed;
     }
 
@@ -110,6 +112,7 @@ public class Consulta {
     }
 
     public void setRepositorios(Set<Integer> repositorios) {
+        repositorios.removeAll(Collections.singleton(null));
         this.repositorios = repositorios;
     }
 
