@@ -1,7 +1,7 @@
 <%-- 
     Document   : index
     Created on : 25/06/2009, 18:26:51
-    Author     : Marcos Nunes e Alan Santos
+    Author     : Marcos Nunes
     Updated on : 19/03/2014, 14:05
 --%>
 
@@ -65,15 +65,6 @@
                             <div class="Value">
                                 <form:input path="autor"/>
                             </div>
-                        </div> 
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Pesquisar <b>formato</b> de objetos
-                            </div>
-                            <div class="Value">
-                                <form:input path="format"/>
-                            </div>
                         </div>
 
                         <div class="LinhaEntrada">
@@ -82,6 +73,15 @@
                             </div>
                             <div class="Value">
                                 <form:input path="size"/>
+                            </div>
+                        </div>
+
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Pesquisar <b>formato</b> de objetos
+                            </div>
+                            <div class="Value">
+                                <form:select path="format" items="${buscaModel.mimeTypes}"/>
                             </div>
                         </div>
 
@@ -122,9 +122,9 @@
                                 Objetos <b>auditivos</b>
                             </div>
                             <div class="Value">
-                                <form:radiobutton path="hasAditory" value="true"/> Sim
-                                <form:radiobutton path="hasAditory" value="false"/> Não
-                                <form:radiobutton path="hasAditory" value=""/> Ambos
+                                <form:radiobutton path="hasAuditory" value="true"/> Sim
+                                <form:radiobutton path="hasAuditory" value="false"/> Não
+                                <form:radiobutton path="hasAuditory" value=""/> Ambos
                             </div>
                         </div>
 
@@ -137,7 +137,18 @@
                                 <form:radiobutton path="hasText" value="false"/> Não
                                 <form:radiobutton path="hasText" value=""/> Ambos
                             </div>
-                        </div>  
+                        </div>
+
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Objetos <b>táteis</b>
+                            </div>
+                            <div class="Value">
+                                <form:radiobutton path="hasTactile" value="true"/> Sim
+                                <form:radiobutton path="hasTactile" value="false"/> Não
+                                <form:radiobutton path="hasTactile" value=""/> Ambos
+                            </div>
+                        </div>
 
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">

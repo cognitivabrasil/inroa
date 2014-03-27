@@ -104,19 +104,6 @@ public final class FEBController {
         return "index";
     }
 
-    @RequestMapping("/buscaAvancada")
-    public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
-
-        model.addAttribute("repositories", repDao.getAll());
-        model.addAttribute("federations", subDao.getAll());
-        model.addAttribute("buscaModel", new Consulta());
-
-        if (StringUtils.isEmpty(cookie)) {
-            addCookie(response, request);
-        }
-        return "buscaAvancada";
-    }
-
     /**
      * Se o usuário tentar a cessar /feb/objetos ele redireciona para o index
      *
@@ -213,6 +200,19 @@ public final class FEBController {
                 return "index";
             }
         }
+    }
+    
+     @RequestMapping("/buscaAvancada")
+    public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+
+        model.addAttribute("repositories", repDao.getAll());
+        model.addAttribute("federations", subDao.getAll());
+        model.addAttribute("buscaModel", new Consulta());
+
+        if (StringUtils.isEmpty(cookie)) {
+            addCookie(response, request);
+        }
+        return "buscaAvancada";
     }
 
     @RequestMapping("/consultaAvancada")

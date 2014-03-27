@@ -1,5 +1,6 @@
 package feb.data.entities;
 
+import feb.util.Informacoes;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collections;
@@ -32,11 +33,12 @@ public class Consulta {
     private String difficult;
     public Boolean cost;
     public Boolean hasVisual;
-    public Boolean hasAditory;
+    public Boolean hasAuditory;
     public Boolean hasText;
+    public Boolean hasTactile;
     public String size;
     private final Map<String, String> languages;
-    private static final Logger log = Logger.getLogger(Consulta.class);        
+    private static final Logger log = Logger.getLogger(Consulta.class);      
 
     public Consulta() {
         rss = false;
@@ -56,7 +58,7 @@ public class Consulta {
         return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
                 && isBlank(format) && isBlank(age_range) && isBlank(difficult)
                 && isBlank(size) && cost == null && hasVisual == null
-                && hasAditory == null && hasText == null;
+                && hasAuditory == null && hasText == null;
     }
 
     public String getConsulta() {
@@ -164,12 +166,12 @@ public class Consulta {
         this.hasVisual = hasVisual;
     }
 
-    public Boolean getHasAditory() {
-        return hasAditory;
+    public Boolean getHasAuditory() {
+        return hasAuditory;
     }
 
-    public void setHasAditory(Boolean hasAditory) {
-        this.hasAditory = hasAditory;
+    public void setHasAuditory(Boolean hasAuditory) {
+        this.hasAuditory = hasAuditory;
     }
 
     public Boolean getHasText() {
@@ -178,6 +180,14 @@ public class Consulta {
 
     public void setHasText(Boolean hasText) {
         this.hasText = hasText;
+    }
+
+    public Boolean getHasTactile() {
+        return hasTactile;
+    }
+
+    public void setHasTactile(Boolean hasTactile) {
+        this.hasTactile = hasTactile;
     }
 
     public String getSize() {
@@ -244,6 +254,10 @@ public class Consulta {
 
     public Map<String, String> getLanguages() {
         return languages;
+    }
+    
+    public Map<String, String> getMimeTypes(){
+        return Informacoes.getMimeType();
     }
 
     /**

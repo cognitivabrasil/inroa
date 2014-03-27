@@ -86,7 +86,7 @@ public class ConsultaTest {
     @Test
     public void testNotEmpty8() {
         Consulta c = new Consulta();
-        c.setHasAditory(true);
+        c.setHasAuditory(true);
         assertThat(c.isEmpty(), equalTo(false));
     }
 

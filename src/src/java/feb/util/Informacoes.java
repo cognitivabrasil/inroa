@@ -1,5 +1,8 @@
 package feb.util;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * Informações úteis para o robô
  *
@@ -17,6 +20,18 @@ public class Informacoes {
      */
     public String getCaminho() {
         return System.getProperty("java.io.tmpdir");
+    }
+    
+    public static Map<String,String> getMimeType(){
+        Map<String,String> types = new TreeMap<String, String>();
+        types.put("application", "Aplicação");
+        types.put("audio", "Áudio");
+        types.put("image", "Imagem");
+        types.put("message", "Mensagem");
+        types.put("model", "Modelo 3D");
+        types.put("text", "Texto");
+        types.put("video", "Vídeo");
+        return types;
     }
 
 }
