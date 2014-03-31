@@ -158,7 +158,7 @@ public final class FEBController {
             }
 
             model.addAttribute("title", title);
-            model.addAttribute("metadata", d.getMetadata().getRights().getCost());
+            model.addAttribute("metadata", d.getMetadata());
             return "infoDetalhada";
         }
     }
