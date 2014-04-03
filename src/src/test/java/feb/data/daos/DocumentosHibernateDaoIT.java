@@ -5,9 +5,7 @@ import cognitivabrasil.obaa.OBAA;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import metadata.Header;
 import static org.hamcrest.Matchers.hasItem;
@@ -30,12 +28,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import feb.data.daos.DocumentosHibernateDAO;
-import feb.data.daos.RepositoryHibernateDAO;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.Objeto;
 import feb.data.entities.Repositorio;
-import feb.data.entities.RepositorioSubFed;
 import feb.data.entities.SubFederacao;
 
 /**
@@ -348,5 +343,5 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
     public void testGetSize(){
         Integer total = instance.getSize();
         assertThat(total, equalTo(5));
-    }
+    } 
 }

@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.SQLGrammarException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -122,7 +123,7 @@ public final class FEBController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie) 
+    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie)
     throws IOException{
         DocumentoReal d = docDao.get(id);
         if (d == null) {
@@ -225,7 +226,13 @@ public final class FEBController {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
                 return "consulta";
-            } catch (Exception e) {
+            } catch (SQLGrammarException e){
+                model.addAttribute("erro",
+                        "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
+                log.error("FEB ERRO: Erro ao consultar a base de dados, é possível que o PGSimilarity não esteja instalado!"+e);
+                return "buscaAvancada";
+            }
+            catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
                 log.error("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "
@@ -276,7 +283,7 @@ public final class FEBController {
      * retornando os documentos no formato XML. Utiliza os mesmos métodos da
      * ferramenta de busca principal do FEB. Retorna um xml FEB com os objetos
      * no padrão de metadados OBAA. Existe uma tag de erro que contém um code e
-     * uma mensagem: <error code="code">Message</error> códigos existentes: 
+     * uma mensagem: <error code="code">Message</error> códigos existentes:
      * "badQuery" - Caso a consulta não tenha sido informada 
      * "limitExceeded" - Caso o limite informado seja superior a 100, que é o 
      * limite máximo permitido (este limite máximo existe para que as consultar 
@@ -302,7 +309,7 @@ public final class FEBController {
             @RequestParam(required = false) Integer offset) {
 
         log.info("consulta feita no webservice: '"+query+"' autor: '"+ autor+"' limit: "+limit+" offset: "+offset);
-        
+
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                 + "<FEB>";
         try {
