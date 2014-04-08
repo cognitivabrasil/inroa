@@ -304,6 +304,7 @@ src/src/java/feb/spring/controllers/RepositoriesController.java -text
 src/src/java/feb/spring/controllers/RssController.java -text
 src/src/java/feb/spring/controllers/StatisticsController.java -text
 src/src/java/feb/spring/controllers/UsersController.java -text
+src/src/java/feb/spring/dtos/JstreeDto.java -text
 src/src/java/feb/spring/dtos/MapeamentoDto.java -text
 src/src/java/feb/spring/validador/BuscaValidator.java -text
 src/src/java/feb/spring/validador/InfoBDValidator.java -text
@@ -313,6 +314,7 @@ src/src/java/feb/spring/validador/RepositorioValidator.java -text
 src/src/java/feb/spring/validador/SubFederacaoValidador.java -text
 src/src/java/feb/spring/views/DocumentsRssViewer.java -text
 src/src/java/feb/util/Informacoes.java -text
+src/src/java/feb/util/JsonGenerator.java -text
 src/src/java/feb/util/Message.java -text
 src/src/java/feb/util/Operacoes.java -text
 src/src/java/feb/util/package.html -text
@@ -397,6 +399,7 @@ src/src/main/webapp/css/padrao.css -text
 src/src/main/webapp/css/shCore.css -text
 src/src/main/webapp/css/shCoreDefault.css -text
 src/src/main/webapp/css/shThemeDefault.css -text
+src/src/main/webapp/css/showDocument.css -text
 src/src/main/webapp/empty.jsp -text
 src/src/main/webapp/error.jsp -text
 src/src/main/webapp/errors/error404.jspx -text
@@ -441,6 +444,7 @@ src/src/main/webapp/scripts/funcoesMapeamento.js -text
 src/src/main/webapp/scripts/funcoesPadrao.js -text
 src/src/main/webapp/scripts/index.js -text
 src/src/main/webapp/scripts/rss.js -text
+src/src/main/webapp/scripts/showMetadata.js -text
 src/src/main/webapp/scripts/statistics.js -text
 src/src/main/webapp/scripts/tabsNavigator.js -text
 src/src/main/webapp/scripts/tagCloud.js -text
@@ -505,6 +509,7 @@ src/src/main/webapp/scripts/vendor/jstree.min.js -text
 src/src/main/webapp/scripts/vendor/shBrushXml.js -text
 src/src/main/webapp/scripts/vendor/shCore.js -text
 src/src/main/webapp/scripts/zebraScript.js -text
+src/src/main/webapp/showDocument.jsp -text
 src/src/main/webapp/tagCloud.jsp -text
 src/src/test/java/cognitivabrasil/obaa/OaiOBAATest.java -text
 src/src/test/java/feb/data/StatisticsIT.java -text
