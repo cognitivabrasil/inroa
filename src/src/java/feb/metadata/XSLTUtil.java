@@ -71,7 +71,7 @@ public class XSLTUtil {
 		throws TransformerException, TransformerConfigurationException {
 
 	        // Create a transform factory instance.
-       		 TransformerFactory tfactory = TransformerFactory.newInstance();
+       		 TransformerFactory tfactory = new net.sf.saxon.TransformerFactoryImpl();
 
 
 
@@ -97,7 +97,7 @@ public class XSLTUtil {
 	public static String transform(InputStream xml, InputStream xsl) throws TransformerException, TransformerConfigurationException {
 
         // Create a transform factory instance.
-   		 TransformerFactory tfactory = TransformerFactory.newInstance();
+   		 TransformerFactory tfactory = new net.sf.saxon.TransformerFactoryImpl();
 
 	 // Create a transformer for the stylesheet.
 	 Transformer transformer = tfactory.newTransformer(new StreamSource(xsl));
