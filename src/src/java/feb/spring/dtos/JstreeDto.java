@@ -16,37 +16,44 @@ import java.util.List;
 public class JstreeDto {
  
     
-    String text;
+    String label;
     List<JstreeDto> children;
-    String type;
+    String value;
         
-    public JstreeDto(String text, List<JstreeDto> children) {
-        this.text = text;
+    public JstreeDto(String label, List<JstreeDto> children) {
+        this.label = label;
         this.children = children;
     }
     
-    public JstreeDto(String text, JstreeDto children) {
-        this.text = text;
+    public JstreeDto(String label, JstreeDto children) {
+        this.label = label;
         this.children = new ArrayList<JstreeDto>();
         this.children.add(children);
     }
-    
-    public JstreeDto(String text) {
-        this.text = text;
+
+    public JstreeDto(String label, String value) {
+        this.label = label;
+        this.value = value;
+    }
+        
+    public JstreeDto(String label) {
+        this.label = label;
     }
     
-    public JstreeDto(String text, String children) {
-        this.text = text;
-        this.children = new ArrayList<JstreeDto>();
-        this.children.add(new JstreeDto(children));
-    }
-    
-    public String getText() {
-        return text;
+    public String getLabel() {
+        return label;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setLabel(String text) {
+        this.label = text;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public List<JstreeDto> getChildren() {
@@ -62,11 +69,6 @@ public class JstreeDto {
             this.children = new ArrayList<JstreeDto>();
         }
         this.children.add(children);
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-    
+    }   
     
 }

@@ -140,6 +140,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
 
     }
     
+    @Ignore
     @Test(timeout=30000)
     @Transactional
     public void jorjaoTest() throws ParserConfigurationException, SAXException, IOException, TransformerConfigurationException, TransformerException {

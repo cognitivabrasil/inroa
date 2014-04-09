@@ -253,18 +253,6 @@ img{
     margin-bottom:15px;
     font-family:arial, sans-serif;
 }
-.subTituloBusca
-{
-    font-size: 120%;
-    text-align:center;
-    font-weight: bold;
-    padding-left: 10px;
-    background-color: #414042;
-    color:white;
-    font-family:"Zurich Ex BT", "arial", "sans-serif";
-    padding:5px;
-    margin-bottom:15px;
-}
 .subTitulo-left
 {
     font-size: 120%;
@@ -485,11 +473,6 @@ a:hover{
     color: black;
     text-align: center;
 }
-
-.EspacoPequeno{
-    padding-top:1px;
-    font-size:0;
-}
 .Espaco{
     padding-top:5px;
 
@@ -684,18 +667,7 @@ td{vertical-align:top;}
     vertical-align:middle;
 }
 .clear { clear: both; }
-.logoBusca{
-    text-align:center;
-    background-color:#35a0f2;
-    border-color: white;
-}
-.logoBusca .logo{
-    width: 11%;
-}
-.logoBusca a{
-    text-decoration:none;
-    color:white;
-}
+
 
 .linkCantoEsquerdo{
     float:left;
@@ -729,26 +701,6 @@ td{vertical-align:top;}
 .linkCantoDireito a:hover{
     font-size:102%;
     text-decoration:none;
-}
-
-/* parte da Info detalhada*/
-.tituloPrincipal{
-    margin-bottom:2%;
-    background-color:#AEC9E3;
-}
-.tituloPrincipal .tituloObj{
-    font-size:135%;
-    margin-left:5%;
-    font-weight:bold;
-}
-
-.tituloPrincipal .identificadorObj{
-    margin-left:7%;
-    color:#32618F;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-style:italic;
-    font-weight:bold;
-    font-size: 80%;
 }
 
 
@@ -800,15 +752,7 @@ td{vertical-align:top;}
     text-align: right;
 }
 
-.socialBookmarks {
-    float: right;
-    margin-top: 1px;
-    margin-right: 30px;
-    margin-bottom: 15px;
-}
-.socialBookmark {
-    float: right;
-}
+
 
 .tableSubfed{
     border-color: red;
@@ -920,23 +864,7 @@ td{vertical-align:top;}
 .margin-top{margin-top: 2%;}
 
 .sucesso{color: #007a00; font-weight: bold}
-.infoDetalhada {margin-bottom: 2%;}
-.infoDetalhada .title{text-decoration: underline; font-size:120%;}
-.infoDetalhada li{
-    margin-top: 1%;
-    clear: both;
-}
-.infoDetalhada ul{background-color: #f1f1f1; list-style-type: none;}
-.infoDetalhada strong{margin-right: 1%;}
-.infoDetalhada .nome{
-    float: left;
-    text-align:left;
-    font-weight: bold;
-    margin-right: 1%;
-}
-.infoDetalhada .valor{
-    margin:0% 0% 1% 12%;
-}
+
 #tagcloud{
     margin-top: 8%;
     margin-left: 5%;

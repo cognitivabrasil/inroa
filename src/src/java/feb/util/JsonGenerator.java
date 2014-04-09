@@ -92,20 +92,17 @@ public class JsonGenerator {
             if (TextElement.class.isAssignableFrom(obj.getClass())) {
                 TextElement text = (TextElement) obj;
                 if (!text.getTranslated().isEmpty()) {
-                    JstreeDto children = new JstreeDto(fieldName+": "+text.getTranslated());
-                    children.setType("file");
+                    JstreeDto children = new JstreeDto(fieldName,text.getTranslated());
                     jsRoot.addChildren(children);
                 }
             } else if (String.class.isAssignableFrom(obj.getClass())) {
                 String s = (String) obj;
                 if (!s.isEmpty()) {
-                    JstreeDto children = new JstreeDto(fieldName+": "+s);
-                    children.setType("file");
-                    jsRoot.addChildren(new JstreeDto(fieldName+": "+s));
+                    JstreeDto children = new JstreeDto(fieldName,s);
+                    jsRoot.addChildren(children);
                 }
             } else {
                 JstreeDto jsNodo = new JstreeDto(fieldName);
-                jsNodo.setType("root");
                 createTree(obj, jsNodo);
                 jsRoot.addChildren(jsNodo);
             }

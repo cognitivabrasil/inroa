@@ -1,6 +1,5 @@
 package feb.spring.controllers;
 
-import cognitivabrasil.obaa.OBAA;
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
 import feb.data.entities.DocumentosVisitas;
@@ -10,16 +9,13 @@ import feb.ferramentaBusca.Recuperador;
 import feb.services.TagCloudService;
 import feb.solr.main.Solr;
 import feb.spring.ServerInfo;
-import feb.spring.dtos.JstreeDto;
 import feb.spring.validador.BuscaValidator;
 import feb.util.JsonGenerator;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -161,13 +157,19 @@ public final class FEBController {
             }
 
             model.addAttribute("title", title);
-            model.addAttribute("metadata", d.getMetadata());
-            JsonGenerator json = new JsonGenerator("pt-BR");
-            model.addAttribute("obaaJson", json.getJson(d.getMetadata()));
+            model.addAttribute("docId", d.getId());
             return "infoDetalhada";
         }
     }
-
+    
+    @RequestMapping("/json/{id}")
+    public @ResponseBody
+    String getJson(@PathVariable Integer id){
+        DocumentoReal d = docDao.get(id);
+        JsonGenerator json = new JsonGenerator("pt-BR");
+        return json.getJson(d.getMetadata());
+    }
+            
     @RequestMapping("/consulta")
     public String consulta(HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,

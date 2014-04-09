@@ -384,6 +384,7 @@ src/src/main/webapp/css/Theme/images/ui-icons_888888_256x240.png -text
 src/src/main/webapp/css/Theme/images/ui-icons_cd0a0a_256x240.png -text
 src/src/main/webapp/css/Theme/jquery-ui-1.8.22.custom.css -text
 src/src/main/webapp/css/buscaAvancada.css -text
+src/src/main/webapp/css/header.css -text
 src/src/main/webapp/css/images/Lapiz-24x24.png -text
 src/src/main/webapp/css/images/add-24x24.png -text
 src/src/main/webapp/css/images/ajax-loader.gif -text
@@ -451,6 +452,18 @@ src/src/main/webapp/scripts/tagCloud.js -text
 src/src/main/webapp/scripts/testUrlActive.js -text
 src/src/main/webapp/scripts/validateOAI.js -text
 src/src/main/webapp/scripts/validatejs.js -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap-theme.css -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap-theme.css.map -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.css -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.css.map -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/fonts/glyphicons-halflings-regular.eot -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/fonts/glyphicons-halflings-regular.svg -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/fonts/glyphicons-halflings-regular.ttf -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/fonts/glyphicons-halflings-regular.woff -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.js -text
+src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js -text
 src/src/main/webapp/scripts/vendor/codemirror/LICENSE -text
 src/src/main/webapp/scripts/vendor/codemirror/README.md -text
 src/src/main/webapp/scripts/vendor/codemirror/index.html -text

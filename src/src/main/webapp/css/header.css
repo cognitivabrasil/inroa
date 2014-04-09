@@ -1,0 +1,28 @@
+.logoBusca{
+    text-align:center;
+    background-color:#35a0f2;
+    border-color: white;
+}
+.logoBusca .logo{
+    width: 11%;
+}
+.logoBusca a{
+    text-decoration:none;
+    color:white;
+}
+.subTituloBusca
+{
+    font-size: 120%;
+    text-align:center;
+    font-weight: bold;
+    padding-left: 10px;
+    background-color: #414042;
+    color:white;
+    font-family:"Zurich Ex BT", "arial", "sans-serif";
+    padding:5px;
+    margin-bottom:15px;
+}
+.espacoPequeno{
+    padding-top:1px;
+    font-size:0;
+}
