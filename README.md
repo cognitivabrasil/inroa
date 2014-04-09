@@ -62,8 +62,24 @@ Verificação de que está rodando certo
 Acesse o feb em http://localhost:9091.
 A senha padrão de administrador é *feb@RNP*.
 
-Adicione o repositório BLA BLA BLA TODO: e atualize e faça uma
-atualização e uma busca teste.
+
+Adicionar LUME como repositório de testes
+--------------------------------------------------------
+
+Entre na ferramenta administrativa e adicione um novo repositório.
+Para o LUME os dados são:
+
+Nome: LUME
+Descrição: LUME
+
+URL: http://www.lume.ufrgs.br/oai/request
+Comunidades: (vazio)
+Padrão metadados: Dublin Core
+Mapeamento: DC Padrão
+MetadataPrefix e Namespace: oai_dc
+Periodicidade: 1
+
+Após adicionar, rode a atualização manual.
 
 
 Rodar os testes
