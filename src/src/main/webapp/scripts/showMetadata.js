@@ -6,8 +6,15 @@ $(function() {
         var err = textStatus + ", " + error;
         console.log("Request Failed: " + err);
         $("#obaaTree").addClass("error").html("Ocorreu um erro ao carregar o documento. Tente novamente mais tarde. ");
+    }).done(function() {
+        $("ul.well").find("ul.well").each(function() {
+            $(this).removeClass("well");
+        });
     });
+
 });
+
+var firstUl = true, ulWell = false;
 
 /**
  * Build a html tree from a Obaa json. Developed in java script to get faster.
@@ -16,7 +23,13 @@ $(function() {
  */
 function buildList(json) {
 
-    var html = '<ul>';
+    var html = '<ul';
+    if (firstUl) {
+        html += '>';
+    } else {
+        html += ' class="well">';
+    }
+    firstUl = false;
 
     for (var i in json) {
 
@@ -29,9 +42,9 @@ function buildList(json) {
 
             html += '</li>';
         } else {
-            if (json[i].value) {
+            if (json[i].value && json[i].value !== "NULL") {
                 html += '<li class="row">';
-                html += '<span class="name col-md-2 col-xs-8">' + json[i].label + '</span><span class="value col-md-10 col-xs-12">' + json[i].value + '</span>'; // No submenu
+                html += '<span class="name col-md-2 col-xs-12">' + json[i].label + '</span><span class="value col-md-10 col-xs-12">' + json[i].value + '</span>'; // No submenu
                 html += '</li>';
             }
         }
