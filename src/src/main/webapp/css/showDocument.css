@@ -14,10 +14,8 @@ and open the template in the editor.
 .socialBookmarks {float: right;margin-top: 1px;margin-right: 30px;margin-bottom: 15px}
 .socialBookmark {float: right}
 
-#obaaTree{/* margin-bottom: 2%; */}
 #obaaTree .title{text-decoration: underline; font-size:120%;}
 #obaaTree li{margin-top: 0.8em;}
-/*#obaaTree ul:first-child{background-color: transparent;}*/
 #obaaTree ul{list-style-type: none;}
 #obaaTree .name{font-weight: bold}
 .footerButton{margin-bottom: 5px;}
