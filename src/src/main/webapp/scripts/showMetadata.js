@@ -1,5 +1,6 @@
 $(function() {
-    $.getJSON(linkJson, function(data) {
+    var url = $("#obaaTree").attr("src");
+    $.getJSON(url, function(data) {
         var html = buildList(data, false);
         $("#obaaTree").html(html);
     }).fail(function(jqxhr, textStatus, error) {

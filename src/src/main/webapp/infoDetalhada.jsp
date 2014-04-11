@@ -32,14 +32,13 @@
         <c:url var="linkJson" value="/objetos/${docId}/json" />
         <script>
             rootUrl = ${root};
-            linkJson = '${linkJson}';
         </script>
         <c:url var="jquery" value="/scripts/vendor/jquery-1.11.0.min.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <c:url var="jsBootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js" />
         <script language="javascript" type="text/javascript" src='${jsBootstrap}'></script>
         <c:url var="showJs" value="/scripts/showMetadata.js" />
-        <script type="text/javascript" src="${showJs}"></script>
+        <script type="text/javascript" src="${showJs}" ></script>
 
         <script type="text/javascript"
                 src="https://apis.google.com/js/plusone.js">
@@ -96,7 +95,7 @@
 
             </div>
 
-            <div id="obaaTree" class="col-md-12">
+            <div id="obaaTree" class="col-md-12" src="${linkJson}">
                 <c:url var="imgLoader" value="/imagens/ajax-loader.gif"/>
                 <div class="text-center"><img src='${imgLoader}' border='0' alt='Carregando' align='middle'> Aguarde, carregando...</div>
             </div>
