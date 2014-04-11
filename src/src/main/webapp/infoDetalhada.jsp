@@ -29,7 +29,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_theme_css}" />        
 
         <c:url var="root" value="/" />
-        <c:url var="linkJson" value="/json/${docId}" />
+        <c:url var="linkJson" value="/objetos/${docId}/json" />
         <script>
             rootUrl = ${root};
             linkJson = '${linkJson}';
@@ -98,7 +98,7 @@
 
             <div id="obaaTree" class="col-md-12">
                 <c:url var="imgLoader" value="/imagens/ajax-loader.gif"/>
-                <span class="center"><img src='${imgLoader}' border='0' alt='Carregando' align='middle'> Aguarde, carregando...</span>
+                <div class="text-center"><img src='${imgLoader}' border='0' alt='Carregando' align='middle'> Aguarde, carregando...</div>
             </div>
             
             <div class="footerButton">

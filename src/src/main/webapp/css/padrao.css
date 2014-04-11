@@ -477,7 +477,7 @@ a:hover{
     padding-top:5px;
 
 }
-.textoErro{
+.error,.textoErro{
     color:red;
     font-weight: bold;
 }

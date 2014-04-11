@@ -5,7 +5,9 @@ $(function() {
     }).fail(function(jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
         console.log("Request Failed: " + err);
-        $("#obaaTree").addClass("error").html("Ocorreu um erro ao carregar o documento. Tente novamente mais tarde. ");
+        $("#obaaTree .text-center")
+                .addClass("error")
+                .html("Ocorreu um erro ao carregar o documento. Tente novamente mais tarde. ");
     }).done(function() {
         $("ul.well").find("ul.well").each(function() {
             $(this).removeClass("well");

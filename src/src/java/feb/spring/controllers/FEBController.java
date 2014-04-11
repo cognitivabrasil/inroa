@@ -69,14 +69,6 @@ public final class FEBController {
         buscaValidator = new BuscaValidator();
     }
 
-    @RequestMapping("/testsolr")
-    public String testSolr() {
-        List<DocumentoReal> docs = docDao.getAll();
-
-        Solr.indexarBancoDeDados(docs);
-        return "redirect:/";
-    }
-
     @RequestMapping("/")
     public String inicio(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         return index(model, response, request, cookie);
@@ -162,12 +154,12 @@ public final class FEBController {
         }
     }
     
-    @RequestMapping("/json/{id}")
+    @RequestMapping("/objetos/{id}/json")
     public @ResponseBody
     String getJson(@PathVariable Integer id){
         DocumentoReal d = docDao.get(id);
-        JsonGenerator json = new JsonGenerator("pt-BR");
-        return json.getJson(d.getMetadata());
+        d.getMetadata().setLocale("pt-BR");
+        return d.getMetadata().getJson();
     }
             
     @RequestMapping("/consulta")
