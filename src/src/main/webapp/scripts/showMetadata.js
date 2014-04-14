@@ -17,7 +17,7 @@ $(function() {
 
 });
 
-var firstUl = true, ulWell = false;
+var firstUl = true;
 
 /**
  * Build a html tree from a Obaa json. Developed in java script to get faster.
