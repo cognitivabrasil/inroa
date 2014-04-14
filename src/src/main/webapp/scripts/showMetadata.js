@@ -1,7 +1,7 @@
 $(function() {
     var url = $("#obaaTree").attr("src");
     $.getJSON(url, function(data) {
-        var html = buildList(data, false);
+        var html = buildList(data);
         $("#obaaTree").html(html);
     }).fail(function(jqxhr, textStatus, error) {
         var err = textStatus + ", " + error;
