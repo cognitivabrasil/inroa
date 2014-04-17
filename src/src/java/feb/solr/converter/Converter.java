@@ -52,7 +52,7 @@ public class Converter {
      * nenhum, passar o valor -1)
      * @return Documento SOLR pronto para ser indexado
      */
-    public static SolrInputDocument OBAAToSolrInputDocument(OBAA o, String entry, int id, int rep, int subFeb, int federacao) {
+    public SolrInputDocument OBAAToSolrInputDocument(OBAA o, String entry, int id, int rep, int subFeb, int federacao, String nomeRep) {
         SolrInputDocument doc = listToSolrInputDocument(feb.solr.camposObaa.AllFields.getAll(o));
 
         doc.addField("obaa.general.identifier.entry", entry);
@@ -60,6 +60,7 @@ public class Converter {
         doc.addField("obaa.repositorio", rep);
         doc.addField("obaa.subFederacao", subFeb);
         doc.addField("obaa.federacao", federacao);
+        doc.addField("obaa.nomeRep", nomeRep);
 
         return doc;
     }

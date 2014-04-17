@@ -7,6 +7,7 @@ import feb.data.entities.Visita;
 import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
 import feb.services.TagCloudService;
+import feb.solr.main.Solr;
 import feb.spring.validador.BuscaValidator;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -62,6 +63,14 @@ public final class FEBController {
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
+    }
+
+    @RequestMapping("/testsolr")
+    public String testSolr() {
+        List<DocumentoReal> docs = docDao.getAll();
+        Solr s = new Solr();
+        s.indexarBancoDeDados(docs);
+        return "redirect:/";
     }
 
     @RequestMapping("/")

@@ -289,6 +289,7 @@ src/src/java/feb/solr/camposObaa/TechnicalFields.java -text
 src/src/java/feb/solr/converter/Converter.java -text
 src/src/java/feb/solr/indexar/IndexarDados.java -text
 src/src/java/feb/solr/main/Solr.java -text
+src/src/java/feb/solr/query/CriaQuery.java -text
 src/src/java/feb/solr/query/QuerySolr.java -text
 src/src/java/feb/spring/ApplicationContextProvider.java -text
 src/src/java/feb/spring/FebConfig.java -text

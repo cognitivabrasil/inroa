@@ -15,9 +15,12 @@ import org.apache.solr.common.SolrInputDocument;
 public class Solr {
 
     private static final Logger log = Logger.getLogger(Solr.class);
-    private static final int maxDocs = 10000; // Numero maximo de documentos que seram indexados upload para o Solr
+    private static final int maxDocs = 9999; // Numero maximo de documentos que seram indexados upload para o Solr
+    private Converter convert;
+    private IndexarDados st;
 
     public Solr() {
+        convert = new Converter();
     }
 
     /**
@@ -37,9 +40,10 @@ public class Solr {
      *
      * @param docs Lista de documentos reais a serem indexados
      */
-    public static void indexarBancoDeDados(List<DocumentoReal> docs) {
+    public void indexarBancoDeDados(List<DocumentoReal> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
         int numDocs = 0;
+        docs = docs.subList(0, docs.size());
         log.debug("Convertendo obaaXML em SolrXML...");
         log.debug("Numero de objetos a serem convertidos: " + docs.size());
         for (DocumentoReal doc : docs) {
@@ -58,18 +62,22 @@ public class Solr {
                 log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
                 continue;
             }
-
+            
+            
             int repositorio = doc.getRepositorio() != null ? doc.getRepositorio().getId() : -1;
             int subFeb = doc.getRepositorioSubFed() != null ? doc.getRepositorioSubFed().getId() : -1;
             int federacao = doc.getRepositorioSubFed() != null
                     ? doc.getRepositorioSubFed().getSubFederacao().getId() : -1;
 
-            docsSolr.add(Converter.OBAAToSolrInputDocument(doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao));
+            String nomeRep = doc.getNomeRep();
+
+            docsSolr.add(convert.OBAAToSolrInputDocument(doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao, nomeRep));
 
             if (numDocs == maxDocs) {
+               
                 log.debug("Enviando para o Solrs a lista de documento. (Numero de documentos: " + docsSolr.size() + ")");
-                //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
                 try {
+                //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
                     if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
                         log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
                         for (int d = 0; d < docsSolr.size(); d++) {
@@ -78,29 +86,10 @@ public class Solr {
                     }
 
                 } catch (OutOfMemoryError e) {
+                    //NAO TEM ERRO ESPECIFICO PORQUE EH TESTE. DEPOIS EU FACO ISSO, JORJAO...
+                    System.gc();
                     log.error("Out of memory enquanto enviava os documentos para o SOLR!" + e);
-                    List<SolrInputDocument> listaInicial = docsSolr.subList(0, docsSolr.size() / 2 - 1);
-                    List<SolrInputDocument> listaFinal = docsSolr.subList(docsSolr.size() / 2 - 1, docsSolr.size());
-    MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
-
-                        MemoryUsage heapUsage = memoryBean.getHeapMemoryUsage();
-            long maxMemory = heapUsage.getMax() / (1024*1024);
-            long usedMemory = heapUsage.getUsed() / (1024*1024);
-            System.out.println( " : Memory Use :" + usedMemory + "M/" + maxMemory + "M");
-       
-            
-                    if (!IndexarDados.indexarColecaoSolrInputDocument(listaInicial)) {
-                        log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
-                        for (int d = 0; d < docsSolr.size(); d++) {
-                            IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
-                        }
-                    }
-                    if (!IndexarDados.indexarColecaoSolrInputDocument(listaFinal)) {
-                        log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
-                        for (int d = 0; d < docsSolr.size(); d++) {
-                            IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
-                        }
-                    }
+                    return;
                 }
                 numDocs = 0;
                 docsSolr = new ArrayList<SolrInputDocument>();

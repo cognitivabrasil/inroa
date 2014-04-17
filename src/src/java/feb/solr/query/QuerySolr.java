@@ -2,6 +2,7 @@ package feb.solr.query;
 
 import feb.data.entities.Consulta;
 import feb.data.entities.DocumentoReal;
+import feb.data.entities.Repositorio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,6 +53,11 @@ public class QuerySolr {
     public boolean pesquisaSimples(String pesquisa, int offset, int limit) {
 
         // Parametros da pesquisa
+        
+    // Isso talvez seja necessario para os pesos dos campos
+        query.set("qt", "\browse");
+//query.setQueryType("\browser");
+
         query = new SolrQuery(pesquisa);
         query.setStart(offset);
         query.setRows(limit);
@@ -82,7 +88,7 @@ public class QuerySolr {
      */
     public boolean pesquisaCompleta(Consulta pesquisa, int offset, int limit) {
 
-        String campos = identificaCampos(pesquisa);
+        String campos = CriaQuery.criaQueryCompleta(pesquisa);
 
         query.setQuery(campos);
 
@@ -127,6 +133,9 @@ public class QuerySolr {
             //O valor de numDoc eh o documento a ser apresentado
             int numDoc = i;
 
+            //Apenas para ver a diferenca dos searchs.
+         //   System.out.println(list.get(numDoc).toString());
+
             DocumentoReal doc = new DocumentoReal();
 
             if (list.get(numDoc).getFieldValues("obaa.general.title") != null) {
@@ -153,6 +162,13 @@ public class QuerySolr {
                 }
             }
 
+            /**
+             * FEDERACAO, SUBFEDERACAO E REPOSITORIO*
+             */
+            Repositorio rep = new Repositorio();
+            rep.setName((String) list.get(numDoc).getFieldValue("obaa.nomeRep"));
+            doc.setRepositorio(rep);
+
             doc.setId((Integer) list.get(numDoc).getFieldValue("obaa.idBaseDados"));
 
             retorno.add(doc);
@@ -161,47 +177,4 @@ public class QuerySolr {
         return retorno;
     }
 
-    /**
-     * Identifica todos os campos onde a busca deve acontecer
-     *
-     * @param pesquisa Devolve o String de busca pronto para ser utilizado pelo
-     * SORL
-     * @return
-     */
-    private String identificaCampos(Consulta pesquisa) {
-        String resultado = "";
-
-        if (pesquisa.hasAuthor()) {
-            resultado += "OR obaa.general.author:" + pesquisa.getAutor();
-        }
-
-        if (pesquisa.hasAuthor()) {
-            resultado += "OR obaa.general.author:" + pesquisa.getAutor();
-        }
-
-        if (pesquisa.hasAuthor()) {
-            resultado += "OR obaa.general.author:" + pesquisa.getAutor();
-        }
-
-        if (pesquisa.hasAuthor()) {
-            resultado += "OR obaa.general.author:" + pesquisa.getAutor();
-        }
-
-        if (pesquisa.hasAuthor()) {
-            resultado += "OR obaa.general.author:" + pesquisa.getAutor();
-        }
-
-        if (pesquisa.hasAuthor()) {
-            resultado += "OR obaa.general.author:" + pesquisa.getAutor();
-        }
-
-        if (pesquisa.hasAuthor()) {
-            resultado += "OR obaa.general.author:" + pesquisa.getAutor();
-        }
-
-        if (resultado.startsWith("OR ")) {
-            resultado = resultado.substring(3);
-        }
-        return resultado;
-    }
 }
