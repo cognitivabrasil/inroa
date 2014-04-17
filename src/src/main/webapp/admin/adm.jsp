@@ -493,7 +493,7 @@ Author     : Marcos Nunes
             </div>
             <div id="tabs-4">
 
-                <div class="versao">Vers&atilde;o ${versao}</div>
+                <div class="versao">Vers&atilde;o ${version}</div>
 
                 <security:authorize access="hasRole('PERM_UPDATE')">
 

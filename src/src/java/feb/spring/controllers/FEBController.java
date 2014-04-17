@@ -7,10 +7,7 @@ import feb.data.entities.Visita;
 import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
 import feb.services.TagCloudService;
-import feb.solr.main.Solr;
-import feb.spring.ServerInfo;
 import feb.spring.validador.BuscaValidator;
-import feb.util.JsonGenerator;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -44,8 +41,6 @@ public final class FEBController {
 
     @Autowired
     private SessionFactory sessionFactory;
-    @Autowired
-    ServerInfo serverInfo;
     @Autowired
     private UsuarioDAO userDao;
     @Autowired
@@ -274,12 +269,6 @@ public final class FEBController {
             }
             return "login";
         }
-    }
-
-    @RequestMapping("/version")
-    public @ResponseBody
-    String version() {
-        return serverInfo.getFullVersion();
     }
 
     /**

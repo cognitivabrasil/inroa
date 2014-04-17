@@ -26,17 +26,15 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 
 
     <!-- TODO: Use properties TODO: Encrypt password <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
-  		destroy-method="close" p:driverClassName="${dataSource.driverClassName}" 
-  		p:url="${dataSource.url}" p:username="${dataSource.username}" p:password="${dataSource.password}" 
-  		/> -->
+    destroy-method="close" p:driverClassName="${dataSource.driverClassName}" 
+    p:url="${dataSource.url}" p:username="${dataSource.username}" p:password="${dataSource.password}" 
+    /> -->
 
     <encryption:string-encryptor id="myEncryptor"
                                  password="feb@RNP" pool-size="5" />
 
-    <!-- <encryption:encryptable-properties id="myProperties" encryptor="myEncryptor" 
-  		location="file:///etc/feb/feb.properties" -->
-    <!-- /> -->
-
+    <util:properties id="febInf" location="classpath:info.properties"/>
+    
     <!-- in case the user does not specify a properties file -->
     <util:properties id="defaultProperties">
         <prop key="Postgres.username">feb</prop>
@@ -46,8 +44,7 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
         <prop key="Postgres.port">5432</prop>
 
     </util:properties>
-
-
+    
     <bean id="febConfig" class="feb.spring.FebConfig">
         <property name="filename">
             <value>/etc/feb/feb.properties</value>

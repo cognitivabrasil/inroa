@@ -292,7 +292,6 @@ src/src/java/feb/solr/main/Solr.java -text
 src/src/java/feb/solr/query/QuerySolr.java -text
 src/src/java/feb/spring/ApplicationContextProvider.java -text
 src/src/java/feb/spring/FebConfig.java -text
-src/src/java/feb/spring/ServerInfo.java -text
 src/src/java/feb/spring/aspects/FebLoggerAspect.java -text
 src/src/java/feb/spring/controllers/AbstractDeletable.java -text
 src/src/java/feb/spring/controllers/AdminController.java -text
@@ -335,6 +334,7 @@ src/src/main/resources/hibernate/SubFederacao.hbm.xml -text
 src/src/main/resources/hibernate/Token.hbm.xml -text
 src/src/main/resources/hibernate/Usuario.hbm.xml -text
 src/src/main/resources/hibernate/Visita.hbm.xml -text
+src/src/main/resources/info.properties -text
 src/src/main/resources/log4j.properties -text
 src/src/main/resources/manifest.mf -text
 src/src/main/resources/spring-security.xml -text

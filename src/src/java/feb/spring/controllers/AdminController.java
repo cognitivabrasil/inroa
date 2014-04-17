@@ -13,15 +13,15 @@ import feb.data.interfaces.UsuarioDAO;
 import feb.ferramentaAdministrativa.validarOAI.VerificaLinkOAI;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.spring.FebConfig;
-import feb.spring.ServerInfo;
 import feb.spring.validador.InfoBDValidator;
-import feb.spring.validador.SubFederacaoValidador;
 import feb.util.Operacoes;
 import java.io.IOException;
+import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -52,12 +52,13 @@ public final class AdminController {
     @Autowired
     private Indexador indexador;
     @Autowired
-    private ServerInfo serverInfo;
-    @Autowired
     private FebConfig conf;
     @Autowired
     TokensDao tokensDao;
-    static Logger log = Logger.getLogger(AdminController.class);
+    @Autowired @Qualifier("febInf")
+    private Properties febInfo;
+    
+    private final static Logger log = Logger.getLogger(AdminController.class);
 
     public AdminController() {
     }
@@ -69,7 +70,7 @@ public final class AdminController {
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         model.addAttribute("users", userDao.getAll());
-        model.addAttribute("versao", serverInfo.getFullVersion());
+        model.addAttribute("version", febInfo.getProperty("feb.version"));
         return "admin/adm";
     }
 
