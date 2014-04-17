@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>feb</groupId>
     <artifactId>feb</artifactId>
-    <version>2.9-SNAPSHOT</version>
+    <version>2.9-RELEASE</version>
     <packaging>war</packaging>
     <name>FEB</name>
     <url>http://feb.ufrgs.br</url>
