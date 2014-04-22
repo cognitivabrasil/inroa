@@ -26,10 +26,10 @@ public class CriaQuery {
             resultado += "AND obaa.general.author:" + pesquisa.getAutor();
         }
 
-    /*    if (pesquisa.getHasAditory() != null) {
-            resultado += "AND obaa.educational.resourcedescription.primary.hasauditory:" + pesquisa.getHasAditory();
+        if (pesquisa.getHasAuditory() != null) {
+            resultado += "AND obaa.educational.resourcedescription.primary.hasauditory:" + pesquisa.getHasAuditory();
         }
-*/
+
         if (pesquisa.getHasVisual() != null) {
             resultado += "AND obaa.educational.resourcedescription.primary.hasvisual:" + pesquisa.getHasVisual();
         }
@@ -37,12 +37,11 @@ public class CriaQuery {
         if (pesquisa.getHasText() != null) {
             resultado += "AND obaa.educational.resourcedescription.primary.hastext:" + pesquisa.getHasText();
         }
-
-        /*
-        if (pesquisa.gethastactile) {
-            resultado += "OR obaa.educational.resourcedescription.primary.hastactile:" + pesquisa.gethastactile();
+        
+        if (pesquisa.getHasTactile()) {
+            resultado += "OR obaa.educational.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
         }
-        */
+        
         
         if (pesquisa.getCost() != null) {
             resultado += "AND obaa.rights.cost:" + pesquisa.getCost();

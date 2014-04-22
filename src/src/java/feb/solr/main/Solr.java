@@ -1,5 +1,6 @@
 package feb.solr.main;
 
+import cognitivabrasil.obaa.OBAA;
 import feb.solr.indexar.IndexarDados;
 import feb.solr.converter.Converter;
 import org.apache.log4j.Logger;
@@ -33,6 +34,16 @@ public class Solr {
 
     }
 
+    public void memoryLeakTest (List<DocumentoReal> docs)
+    {
+                      for (DocumentoReal doc : docs) {
+  
+                          OBAA o = doc.getMetadata();
+                          if (o.getGeneral()==null)
+                              System.out.println("dfillsfdis");
+                      }
+
+    }
     /**
      * Recebe uma lista de documentos reais, converte eles para DocumentSolr e
      * envia eles para o sistema indexar Converte um a um os documentos reais
@@ -43,10 +54,11 @@ public class Solr {
     public void indexarBancoDeDados(List<DocumentoReal> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
         int numDocs = 0;
-        docs = docs.subList(0, docs.size());
+        //docs = docs.subList(0, docs.size());
         log.debug("Convertendo obaaXML em SolrXML...");
         log.debug("Numero de objetos a serem convertidos: " + docs.size());
         for (DocumentoReal doc : docs) {
+                System.out.print(".");
             numDocs++;
             String entry = "";
             try {
@@ -76,23 +88,23 @@ public class Solr {
             if (numDocs == maxDocs) {
 
                 log.debug("Enviando para o Solrs a lista de documento. (Numero de documentos: " + docsSolr.size() + ")");
-                try {
-                    //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
-                    if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
-                        log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
-                        for (int d = 0; d < docsSolr.size(); d++) {
-                            IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
-                        }
-                    }
-
-                } catch (OutOfMemoryError e) {
-                    //NAO TEM ERRO ESPECIFICO PORQUE EH TESTE. DEPOIS EU FACO ISSO, JORJAO...
-                    System.gc();
-                    log.error("Out of memory enquanto enviava os documentos para o SOLR!" + e);
-                    return;
-                }
+//                try {
+//                    //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
+//                    if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
+//                        log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
+//                        for (int d = 0; d < docsSolr.size(); d++) {
+//                            IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
+//                        }
+//                    }
+//
+//                } catch (OutOfMemoryError e) {
+//                    //NAO TEM ERRO ESPECIFICO PORQUE EH TESTE. DEPOIS EU FACO ISSO, JORJAO...
+//                    System.gc();
+//                    log.error("Out of memory enquanto enviava os documentos para o SOLR!" + e);
+//                    return;
+//                }
                 numDocs = 0;
-                docsSolr = new ArrayList<SolrInputDocument>();
+                docsSolr.clear();
             }
         }
 

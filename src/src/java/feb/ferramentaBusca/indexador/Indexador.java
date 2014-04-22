@@ -51,7 +51,8 @@ public class Indexador {
         //ELE DA ERRO NO 115.000
         for (int i = 0; i < docDao.getSize(); i = i + numMaxDoc) {
 
-            s.indexarBancoDeDados(docDao.getAll(numMaxDoc, i));
+            System.out.println(i);
+            s.memoryLeakTest(docDao.getAll(numMaxDoc, i));
         }
 
         System.out.println("FIM DA INDEACAO");
