@@ -62,22 +62,22 @@ public class Solr {
                 log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
                 continue;
             }
-            
-            
+
             int repositorio = doc.getRepositorio() != null ? doc.getRepositorio().getId() : -1;
             int subFeb = doc.getRepositorioSubFed() != null ? doc.getRepositorioSubFed().getId() : -1;
             int federacao = doc.getRepositorioSubFed() != null
                     ? doc.getRepositorioSubFed().getSubFederacao().getId() : -1;
 
+       
             String nomeRep = doc.getNomeRep();
 
             docsSolr.add(convert.OBAAToSolrInputDocument(doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao, nomeRep));
 
             if (numDocs == maxDocs) {
-               
+
                 log.debug("Enviando para o Solrs a lista de documento. (Numero de documentos: " + docsSolr.size() + ")");
                 try {
-                //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
+                    //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
                     if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
                         log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
                         for (int d = 0; d < docsSolr.size(); d++) {

@@ -52,15 +52,13 @@ public class QuerySolr {
      */
     public boolean pesquisaSimples(String pesquisa, int offset, int limit) {
 
-        // Parametros da pesquisa
-        
-    // Isso talvez seja necessario para os pesos dos campos
-        query.set("qt", "\browse");
-//query.setQueryType("\browser");
+        query = new SolrQuery();
 
-        query = new SolrQuery(pesquisa);
+        query.setRequestHandler("/browse");
         query.setStart(offset);
         query.setRows(limit);
+
+        query.setQuery(pesquisa);
 
         try {
             queryResponse = serverSolr.query(query);
@@ -89,6 +87,8 @@ public class QuerySolr {
     public boolean pesquisaCompleta(Consulta pesquisa, int offset, int limit) {
 
         String campos = CriaQuery.criaQueryCompleta(pesquisa);
+
+        query = new SolrQuery();
 
         query.setQuery(campos);
 
@@ -133,9 +133,6 @@ public class QuerySolr {
             //O valor de numDoc eh o documento a ser apresentado
             int numDoc = i;
 
-            //Apenas para ver a diferenca dos searchs.
-         //   System.out.println(list.get(numDoc).toString());
-
             DocumentoReal doc = new DocumentoReal();
 
             if (list.get(numDoc).getFieldValues("obaa.general.title") != null) {
@@ -166,7 +163,7 @@ public class QuerySolr {
              * FEDERACAO, SUBFEDERACAO E REPOSITORIO*
              */
             Repositorio rep = new Repositorio();
-            rep.setName((String) list.get(numDoc).getFieldValue("obaa.nomeRep"));
+            rep.setName((String) list.get(numDoc).getFieldValue("obaa.repName"));
             doc.setRepositorio(rep);
 
             doc.setId((Integer) list.get(numDoc).getFieldValue("obaa.idBaseDados"));

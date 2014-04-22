@@ -42,18 +42,15 @@ public class Indexador {
         log.info("Recalculando o indice do Solr...");
 
         Solr.apagarIndice();
-        
+
         Long inicio = System.currentTimeMillis();
         int numMaxDoc = 10000;
-        int numeroParticoes = docDao.getSize() / numMaxDoc + 1;
-        
-    //    System.out.println("numer de particoes " + numeroParticoes + ". Totoal de doc " + docDao.getSize());
 
         Solr s = new Solr();
 
         //ELE DA ERRO NO 115.000
         for (int i = 0; i < docDao.getSize(); i = i + numMaxDoc) {
-       //     System.out.println(i);
+
             s.indexarBancoDeDados(docDao.getAll(numMaxDoc, i));
         }
 

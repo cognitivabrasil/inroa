@@ -60,7 +60,7 @@ public class Converter {
         doc.addField("obaa.repositorio", rep);
         doc.addField("obaa.subFederacao", subFeb);
         doc.addField("obaa.federacao", federacao);
-        doc.addField("obaa.nomeRep", nomeRep);
+        doc.addField("obaa.repName", nomeRep);
 
         return doc;
     }

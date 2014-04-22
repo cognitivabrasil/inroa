@@ -20,7 +20,7 @@ public class CriaQuery {
      */
     public static String criaQueryCompleta (Consulta pesquisa)
     {
-           String resultado = "";
+           String resultado = "obaaQueryFields:" + pesquisa.getConsulta();
 
         if (pesquisa.hasAuthor()) {
             resultado += "AND obaa.general.author:" + pesquisa.getAutor();
