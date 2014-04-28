@@ -331,7 +331,7 @@ public class DocumentoReal implements java.io.Serializable,
                 throw new IllegalStateException(
                         "No XML metadata associated with the Object");
             }
-            metadata = OBAA.fromString(getObaaXml());
+                    metadata = OBAA.fromString(getObaaXml());             
         }
         return metadata;
     }

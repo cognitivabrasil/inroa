@@ -141,7 +141,7 @@ public final class AdminController {
         Long inicio = System.currentTimeMillis();
         log.info("Recalculando indice - Solicitação feita pela ferramenta administrativa.");
         indexador.populateR1();
-        model.addAttribute("fim", "Índice recalculado com sucesso!");
+         model.addAttribute("fim", "Índice recalculado com sucesso!");
         Long fim = System.currentTimeMillis();
         log.debug("Tempo total para limpar e recalcular o indice: " + Operacoes.formatTimeMillis(fim - inicio));
         return "admin/recalcularIndice";
