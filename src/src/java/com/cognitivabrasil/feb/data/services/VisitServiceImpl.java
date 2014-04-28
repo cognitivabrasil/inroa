@@ -7,7 +7,7 @@ import java.util.List;
 import com.cognitivabrasil.feb.data.entities.Visita;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +38,8 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public int visitsInAMonth(int month, int year) {
         
-        LocalDate fromDt = new LocalDate(year, month, 1);
-        LocalDate ultilDt = fromDt.minusMonths(1);
+        DateTime fromDt = new DateTime(year, month, 1,0,0);
+        DateTime ultilDt = fromDt.minusMonths(1);
         
         return visitRep.countBetweenInclusive(fromDt, ultilDt);
     }

@@ -525,7 +525,7 @@ src/src/test/java/com/cognitivabrasil/feb/data/entities/DocumentoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/RepositorioTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/SubFederacaoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/UsuarioTest.java -text
-src/src/test/java/feb/data/StatisticsIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/VisitServiceIT.java -text
 src/src/test/java/feb/data/daos/AbstractDaoTest.java -text
 src/src/test/java/feb/data/daos/DocumentosHibernateDaoIT.java -text
 src/src/test/java/feb/data/daos/DocumentosVisitasHibernateDaoIT.java -text

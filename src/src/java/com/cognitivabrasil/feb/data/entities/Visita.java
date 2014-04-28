@@ -6,22 +6,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author Luiz Henrique Longhi Rossi <lh.rossi@cognitivabrasil.com.br>
- * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br> * 
+ * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
  */
 @Entity
 @Table(name = "visitas")
 public class Visita {
 
     private int id;
-    private Date horario;
+    @DateTimeFormat(style = "M-")
+    private DateTime horario;
 
     public Visita() {
-        horario = new Date();
+        horario = DateTime.now();
     }
 
     @Id
@@ -34,12 +37,12 @@ public class Visita {
         this.id = id;
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getHorario() {
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    public DateTime getHorario() {
         return horario;
     }
 
-    public void setHorario(Date horario) {
+    public void setHorario(DateTime horario) {
         this.horario = horario;
     }
 }

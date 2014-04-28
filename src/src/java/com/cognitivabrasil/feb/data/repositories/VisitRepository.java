@@ -7,7 +7,7 @@
 package com.cognitivabrasil.feb.data.repositories;
 
 import com.cognitivabrasil.feb.data.entities.Visita;
-import org.joda.time.LocalDate;
+import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,6 +19,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface VisitRepository extends JpaRepository<Visita, Integer> {
     
     @Query("SELECT count(*) FROM Visita d WHERE horario >= ?1 AND horario < ?2")
-    public Integer countBetweenInclusive(LocalDate from, LocalDate until);
+    public Integer countBetweenInclusive(DateTime from, DateTime until);
     
 }

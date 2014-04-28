@@ -7,7 +7,7 @@
         <param name="sequence">usuarios_id_seq</param>
       </generator>
     </id>
-    <property name="userName" column="login" not-null="true" type="string"/>
+    <property name="username" column="login" not-null="true" type="string"/>
     <property column="senha" name="passwordMd5" type="string"/>
     <property column="nome" name="description" type="string"/>
     <property name="role" type="string"/>

@@ -1,4 +1,4 @@
-package feb.data;
+package com.cognitivabrasil.feb.data.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +23,7 @@ import feb.data.daos.AbstractDaoTest;
 import com.cognitivabrasil.feb.data.entities.Estatistica;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.SubNodo;
-import com.cognitivabrasil.feb.data.services.VisitService;
+import com.cognitivabrasil.feb.data.entities.Visita;
 
 /**
  *
@@ -35,15 +33,15 @@ import com.cognitivabrasil.feb.data.services.VisitService;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class StatisticsIT extends AbstractDaoTest {
+public class VisitServiceIT extends AbstractDaoTest {
 
     @Autowired
     VisitService v;
-    
+
     @Autowired
     SessionFactory sessionFactory;
-    
-    public StatisticsIT() {
+
+    public VisitServiceIT() {
     }
 
     @BeforeClass
@@ -54,35 +52,9 @@ public class StatisticsIT extends AbstractDaoTest {
     public static void tearDownClass() throws Exception {
     }
 
-    @Before
-    public void setUp() {
-        
-//        Calendar c1 = Calendar.getInstance();        
-//        c1.set(2012, 6, 10);
-//        
-//        Calendar c2 = Calendar.getInstance();        
-//        c2.set(2012, 6, 9);
-//        
-//        Date d1 = c1.getTime();
-//        Date d2 = c2.getTime();
-//                
-//        
-//        String sql = "INSERT INTO visitas (horario) VALUES ("+d1+", "+d2+")";
-//        
-//        //System.out.println("!!!!!!!!!!!!!!"+sql);
-//        sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();        
-    }
-
-    @After
-    public void tearDown() {
-//        String sql = "DELETE FROM visitas";
-//        Session s = this.sessionFactory.getCurrentSession();
-//        s.createSQLQuery(sql).executeUpdate();
-    }
-
     @Test
-    public void testConvertIntList(){
-        List confirmation = new ArrayList<Integer>();
+    public void testConvertIntList() {
+        List confirmation = new ArrayList<>();
         confirmation.add(2);
         confirmation.add(1);
         confirmation.add(2);
@@ -95,47 +67,57 @@ public class StatisticsIT extends AbstractDaoTest {
         confirmation.add(1);
         confirmation.add(0);
         confirmation.add(3);
-        
+
         Estatistica e = new Estatistica();
-        
+
         assertEquals("[2, 1, 2, 1, 0, 1, 2, 0, 0, 1, 0, 3]", e.convertIntList(confirmation));
     }
+
     @Test
     public void testConvertNodoList() {
-        
-        List<SubNodo> repList = new ArrayList<SubNodo>();
-        
+
+        List<SubNodo> repList = new ArrayList<>();
+
         Repositorio r = mock(Repositorio.class);
 
         when(r.getName()).thenReturn("teste");
-        when(r.getSize()).thenReturn(321);        
-        
+        when(r.getSize()).thenReturn(321);
+
         repList.add(r);
 
         Repositorio r2 = mock(Repositorio.class);
 
         when(r2.getName()).thenReturn("teste2");
-        when(r2.getSize()).thenReturn(321);    
-        
+        when(r2.getSize()).thenReturn(321);
+
         repList.add(r2);
-        
+
         Estatistica run = new Estatistica();
         String teste = run.convertNodoList(repList, "size");
         ////System.out.println(teste);
-        
+
         assertEquals("[ [ 'teste', 321 ], [ 'teste2', 321 ] ]", teste);
     }
-    
-    @Test 
+
+    @Test
     public void testVisitsInAMonth() {
+        Visita vt = new Visita();
+        vt.setId(1000);
+        v.save(vt);
+        
+        System.out.println("\n+++++\n");
+        for(Visita v: v.getAll()){
+            System.out.println(v.getId()+" "+v.getHorario());
+        }
+        System.out.println("\n\n");
         assertEquals(2, v.visitsInAMonth(7, 2012));
         assertEquals(3, v.visitsInAMonth(12, 2012));
     }
-    
-    @Test 
+
+    @Test
     public void testVisitsInAYear() {
-        
-        List confirmation = new ArrayList<Integer>();
+
+        List confirmation = new ArrayList<>();
         confirmation.add(2);
         confirmation.add(1);
         confirmation.add(2);
@@ -148,14 +130,14 @@ public class StatisticsIT extends AbstractDaoTest {
         confirmation.add(1);
         confirmation.add(0);
         confirmation.add(3);
-                
+
         assertEquals(confirmation, v.visitsInAYear(2012));
     }
-    
-    @Test 
+
+    @Test
     public void testVisitsUpToAMonth() {
-        
-        List confirmation = new ArrayList<Integer>();
+
+        List confirmation = new ArrayList<>();
 //        confirmation.add(2); //jan 12
 //        confirmation.add(1);
 //        confirmation.add(2);
@@ -168,7 +150,7 @@ public class StatisticsIT extends AbstractDaoTest {
         confirmation.add(1);
         confirmation.add(0);
         confirmation.add(3); //dez 12
-        
+
         confirmation.add(2); //jan 13
         confirmation.add(1);
         confirmation.add(2);
@@ -181,7 +163,7 @@ public class StatisticsIT extends AbstractDaoTest {
 //        confirmation.add(1);
 //        confirmation.add(0);
 //        confirmation.add(3); //dez 13
-                
-        assertEquals(confirmation, v.visitsUpToAMonth(8, 2013,12));
+
+        assertEquals(confirmation, v.visitsUpToAMonth(8, 2013, 12));
     }
 }
