@@ -4,18 +4,11 @@
  */
 package feb.spring.controllers;
 
-import feb.data.daos.RepositoryHibernateDAO;
-import feb.data.entities.Repositorio;
-import feb.data.interfaces.PadraoMetadadosDAO;
-import feb.data.interfaces.RepositoryDAO;
-import feb.ferramentaBusca.indexador.Indexador;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.robo.atualiza.Repositorios;
-import feb.robo.atualiza.importaOAI.XMLtoDB;
 import feb.spring.validador.RepositorioValidator;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +23,23 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("repositories")
 @RequestMapping("/admin/repositories/*")
-public final class RepositoriesController extends AbstractDeletable<Repositorio, RepositoryHibernateDAO> {
+public final class RepositoriesController{// extends AbstractDeletable<Repositorio, RepositoryHibernateDAO> {
 
+//TODO: fazer o metodo delete
+//    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+//    public @ResponseBody
+//    String delete(@PathVariable("id") Integer id, Model model) {
+//            T obj = getDAO().get(id);
+//            log.info("Deletando "+obj.getClass().getName()+": "+obj.getName());
+//            getDAO().delete(obj);
+//            log.info(obj.getClass().getName()+" deletado(a) com sucesso.");
+//            return "ok";
+//    }
+    
     @Autowired
-    private RepositoryDAO repDao;
+    private RepositoryService repDao;
     @Autowired
-    private PadraoMetadadosDAO padraoDao;
+    private MetadataRecordService padraoDao;
     private RepositorioValidator repValidator = new RepositorioValidator();
     @Autowired
     private Repositorios atualizadorRep;
@@ -168,8 +172,4 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
         }
     }
 
-    @Override
-    public RepositoryHibernateDAO getDAO() {
-        return (RepositoryHibernateDAO) repDao;
-    }
 }

@@ -132,7 +132,7 @@ CREATE TABLE documentos (
     data character varying(255) DEFAULT NULL::character varying,
     localizacao text,
     id_repositorio integer,
-    "timestamp" timestamp without time zone DEFAULT now(),
+    created timestamp without time zone DEFAULT now(),
     palavras_chave character varying,
     id_rep_subfed integer,
     deleted boolean DEFAULT false NOT NULL,
@@ -201,47 +201,6 @@ CREATE TABLE mapeamentos (
 
 
 ALTER TABLE public.mapeamentos OWNER TO feb;
-
---
--- TOC entry 167 (class 1259 OID 16447)
--- Dependencies: 6
--- Name: objetos; Type: TABLE; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE TABLE objetos (
-    id integer NOT NULL,
-    atributo character varying NOT NULL,
-    valor character varying,
-    documento integer NOT NULL
-);
-
-
-ALTER TABLE public.objetos OWNER TO feb;
-
---
--- TOC entry 168 (class 1259 OID 16453)
--- Dependencies: 6 167
--- Name: objetos_id_seq; Type: SEQUENCE; Schema: public; Owner: feb
---
-
-CREATE SEQUENCE objetos_id_seq
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.objetos_id_seq OWNER TO feb;
-
---
--- TOC entry 2101 (class 0 OID 0)
--- Dependencies: 168
--- Name: objetos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: feb
---
-
-ALTER SEQUENCE objetos_id_seq OWNED BY objetos.id;
-
 
 --
 -- TOC entry 169 (class 1259 OID 16455)
@@ -417,7 +376,7 @@ CREATE TABLE repositorios (
     mapeamento_id integer DEFAULT 1 NOT NULL,
     metadata_prefix character varying(45),
     name_space character varying(45),
-    set character varying(45),
+    internal_set character varying(45),
     data_xml character varying
 );
 
@@ -612,13 +571,6 @@ ALTER TABLE ONLY dados_subfederacoes ALTER COLUMN id SET DEFAULT nextval('dados_
 ALTER TABLE ONLY documentos ALTER COLUMN id SET DEFAULT nextval('documentos_id_seq'::regclass);
 
 
---
--- TOC entry 2041 (class 2604 OID 16534)
--- Dependencies: 168 167
--- Name: id; Type: DEFAULT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY objetos ALTER COLUMN id SET DEFAULT nextval('objetos_id_seq'::regclass);
 
 
 --
@@ -713,17 +665,6 @@ ALTER TABLE ONLY autores
 
 ALTER TABLE ONLY dados_subfederacoes
     ADD CONSTRAINT pki_dadossubf PRIMARY KEY (id);
-
-
---
--- TOC entry 2060 (class 2606 OID 18005)
--- Dependencies: 167 167
--- Name: pki_metadados; Type: CONSTRAINT; Schema: public; Owner: feb; Tablespace: 
---
-
-ALTER TABLE ONLY objetos
-    ADD CONSTRAINT pki_metadados PRIMARY KEY (id);
-
 
 --
 -- TOC entry 2076 (class 2606 OID 18181)
@@ -821,15 +762,6 @@ CREATE INDEX fki_mapeamento ON repositorios USING btree (mapeamento_id);
 
 
 --
--- TOC entry 2058 (class 1259 OID 18025)
--- Dependencies: 167
--- Name: fki_obj_doc; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
---
-
-CREATE INDEX fki_obj_doc ON objetos USING btree (documento);
-
-
---
 -- TOC entry 2074 (class 1259 OID 18211)
 -- Dependencies: 184
 -- Name: fki_padraometadados; Type: INDEX; Schema: public; Owner: feb; Tablespace: 
@@ -876,17 +808,6 @@ ALTER TABLE ONLY autores
 ALTER TABLE ONLY repositorios
     ADD CONSTRAINT mapeamento FOREIGN KEY (mapeamento_id) REFERENCES mapeamentos(id);
 
-
---
--- TOC entry 2087 (class 2606 OID 18063)
--- Dependencies: 167 164 2055
--- Name: obj_doc; Type: FK CONSTRAINT; Schema: public; Owner: feb
---
-
-ALTER TABLE ONLY objetos
-    ADD CONSTRAINT obj_doc FOREIGN KEY (documento) REFERENCES documentos(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
 --
 -- TOC entry 2091 (class 2606 OID 18268)
 -- Dependencies: 169 2061 186
@@ -926,71 +847,9 @@ ALTER TABLE ONLY documentos
 ALTER TABLE ONLY repositorios_subfed
     ADD CONSTRAINT subfed FOREIGN KEY (id_subfed) REFERENCES dados_subfederacoes(id) ON UPDATE CASCADE ON DELETE CASCADE;
  
-CREATE TABLE searches (text TEXT, time timestamp);
+CREATE TABLE searches (id serial NOT NULL,text TEXT, time timestamp,PRIMARY KEY (id));
 ALTER TABLE searches OWNER TO feb;
 
------------------
--- TRIGER PARA EVITAR OBJETOS ÓRFÃOS
------------------
-
-CREATE OR REPLACE FUNCTION object_deleted()
-  RETURNS trigger AS
-$BODY$
-BEGIN
-IF NEW.deleted = TRUE THEN 
-  DELETE FROM objetos WHERE documento = NEW.id;
-END IF;
-RETURN NEW;
-END;
-$BODY$
-
-LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION object_deleted()
-  OWNER TO feb;
-
--- Trigger: object_deleted on documentos
--- DROP TRIGGER object_deleted ON documentos;
-
-CREATE TRIGGER object_deleted
-  AFTER UPDATE OF deleted
-  ON documentos
-  FOR EACH ROW
-  EXECUTE PROCEDURE object_deleted();
-
-
-
------------------
--- TRIGER PARA NOME DE AUTORES
------------------
-
--- Function: author_length()
--- DROP FUNCTION author_length();
-
-CREATE OR REPLACE FUNCTION author_length()
-RETURNS trigger AS
-$BODY$
-BEGIN
-IF length(NEW.nome) > 1000 THEN 
-NEW.nome := (substring(NEW.nome,0,1000));
-END IF;
-RETURN NEW;
-END;
-$BODY$
-LANGUAGE plpgsql VOLATILE
-COST 100;
-ALTER FUNCTION author_length()
-OWNER TO feb;
-
-
--- Trigger: author_length on autores
--- DROP TRIGGER author_length ON autores;
-
-CREATE TRIGGER author_length
-BEFORE INSERT
-ON autores
-FOR EACH ROW
-EXECUTE PROCEDURE author_length();
 
 --
 -- TOC entry 2097 (class 0 OID 0)
@@ -1009,4 +868,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-

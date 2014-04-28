@@ -49,7 +49,7 @@
 
             <div class="LinhaEntrada">
                 <div class="Label">Nome/Sigla:</div>
-                <div class="Value">&nbsp;${rep.nome}</div>
+                <div class="Value">&nbsp;${rep.name}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">Descri&ccedil;&atilde;o:</div>
@@ -57,7 +57,7 @@
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">Padr&atilde;o de metadados utilizado:</div>
-                <div class="Value">&nbsp;${fn:toUpperCase(rep.padraoMetadados.nome)}</div>
+                <div class="Value">&nbsp;${fn:toUpperCase(rep.padraoMetadados.name)}</div>
             </div>
             <div class="LinhaEntrada">
                 <div class="Label">Nome do mapeamento:</div>

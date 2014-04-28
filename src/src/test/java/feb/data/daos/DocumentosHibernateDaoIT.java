@@ -2,6 +2,9 @@ package feb.data.daos;
 
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,10 +31,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import feb.data.entities.DocumentoReal;
-import feb.data.entities.Objeto;
-import feb.data.entities.Repositorio;
-import feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import org.springframework.data.domain.PageRequest;
 
 /**
  * Integration tests of the DocumentosHibernateDao
@@ -47,13 +50,13 @@ import feb.data.entities.SubFederacao;
 public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
-    DocumentosHibernateDAO instance;
+    DocumentService docService;
 
     @Autowired
-    RepositoryHibernateDAO repDao;
+    RepositoryService repDao;
 
     @Autowired
-    SubFederacaoHibernateDAO subDao;
+    FederationService fedService;
 
     @Autowired
     SessionFactory sessionFactory;
@@ -74,10 +77,10 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         obaa.getGeneral().addDescription("Bla bla");
 
         // set repository to null through reflection
-        Class aClass = DocumentosHibernateDAO.class;
+        Class aClass = DocumentService.class;
         Field field = aClass.getDeclaredField("repository");
         field.setAccessible(true);
-        field.set(instance, null);
+        field.set(docService, null);
 
         Header h = mock(Header.class);
 
@@ -87,7 +90,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         Repositorio r = repDao.get(1);
 
         try {
-            instance.save(obaa, h, r);
+            docService.save(obaa, h, r);
             fail("Should throw IllegalStateException!");
         } catch (IllegalStateException e) {
 
@@ -97,7 +100,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testGet() {
-        DocumentoReal d = instance.get(1);
+        DocumentoReal d = docService.get(1);
 
         assertEquals("oai:cesta2.cinted.ufrgs.br:123456789/57", d.getObaaEntry());
         assertEquals("Cesta", d.getRepositorio().getName());
@@ -105,7 +108,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testGetByObaaEntry() {
-        DocumentoReal d = instance.get("dois");
+        DocumentoReal d = docService.get("dois");
         assertThat(d, notNullValue());
         assertEquals(2, d.getId());
 
@@ -113,13 +116,13 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testDelete() {
-        DocumentoReal d = instance.get(1);
+        DocumentoReal d = docService.get(1);
         assertThat(d, notNullValue());
-        assertEquals(5, instance.getAll().size());
+        assertEquals(5, docService.getAll().size());
 
-        instance.delete(d);
+        docService.delete(d);
 
-        assertEquals(4, instance.getAll().size());
+        assertEquals(4, docService.getAll().size());
 
     }
 
@@ -145,9 +148,9 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         Repositorio r = repDao.get(1);
         assertThat(r, notNullValue());
 
-        instance.save(obaa, h, r);
+        docService.save(obaa, h, r);
 
-        DocumentoReal d = instance.get("obaa:identifier");
+        DocumentoReal d = docService.get("obaa:identifier");
         assertThat(d, notNullValue());
         assertThat(d.getKeywords(), hasItem("key1"));
         assertThat(d.getTitles(), hasItem("teste2"));
@@ -176,9 +179,9 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         when(h.getTimestamp()).thenReturn(new Date());
         when(h.getIdentifier()).thenReturn("obaa:identifier");
 
-        instance.save(obaa, h, r);
+        docService.save(obaa, h, r);
 
-        DocumentoReal d = instance.get("obaa:identifier");
+        DocumentoReal d = docService.get("obaa:identifier");
         assertThat(d, notNullValue());
 
         assertThat("Should return metadata", d.getMetadata(), notNullValue());
@@ -210,69 +213,18 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         when(h.getTimestamp()).thenReturn(new Date());
         when(h.getIdentifier()).thenReturn("dois"); // existing obaa entry
 
-        int oldSize = instance.getAll().size();
-        instance.save(obaa, h, r);
+        int oldSize = docService.getAll().size();
+        docService.save(obaa, h, r);
 
-        DocumentoReal d = instance.get("obaa:identifier");
+        DocumentoReal d = docService.get("obaa:identifier");
 
-        assertThat(instance.getAll().size(), equalTo(oldSize));
-
-    }
-
-    @Test
-    public void cascadesObjects() {
-        Session s = sessionFactory.getCurrentSession();
-
-        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(6));
-
-        instance.delete(instance.get(1));
-
-        s.flush();
-
-        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(0));
-
-    }
-
-    @Test
-    public void removesObjects() {
-        Session s = sessionFactory.getCurrentSession();
-
-        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(6));
-
-        DocumentoReal doc = instance.get(1);
-        doc.getObjetos().clear();
-        s.save(doc);
-
-        s.flush();
-
-        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(0));
-
-    }
-
-    @Test
-    public void addsObjects() {
-        Session s = sessionFactory.getCurrentSession();
-
-        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(6));
-
-        DocumentoReal doc = instance.get(1);
-        doc.getObjetos().clear();
-
-        doc.addTitle("Teste");
-        doc.addTitle("Teste2");
-        doc.addKeyword("Teste2");
-
-        s.save(doc);
-
-        s.flush();
-
-        assertThat(s.createCriteria(Objeto.class).list().size(), equalTo(3));
+        assertThat(docService.getAll().size(), equalTo(oldSize));
 
     }
 
     @Test
     public void myTest() {
-        Integer initNumberDocs = instance.getSizeWithDeleted();
+        long initNumberDocs = docService.getSizeWithDeleted();
         OBAA obaa = new OBAA();
         obaa.setGeneral(new General());
 
@@ -287,7 +239,7 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
         when(h.getIdentifier()).thenReturn("obaa:identifier");
         when(h.getSetSpec()).thenReturn(s2);
 
-        SubFederacao r = subDao.get(1);
+        SubFederacao r = fedService.get(1);
 
         Session session = sessionFactory.getCurrentSession();
         session.flush();
@@ -295,10 +247,10 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
         assertThat(r, notNullValue());
 
-        instance.save(obaa, h, r);
+        docService.save(obaa, h, r);
 
-        Integer finalNumberDocs = instance.getSizeWithDeleted();
-        DocumentoReal d = instance.get("obaa:identifier");
+        long finalNumberDocs = docService.getSizeWithDeleted();
+        DocumentoReal d = docService.get("obaa:identifier");
         assertThat(d, notNullValue());
         assertThat(d.getTitles(), hasItem("teste1"));
         assertThat(d.getRepositorioSubFed(), notNullValue());
@@ -320,9 +272,9 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
         Repositorio r = repDao.get(1);
 
-        instance.save(obaa, h, r);
+        docService.save(obaa, h, r);
 
-        DocumentoReal d = instance.get("dois");
+        DocumentoReal d = docService.get("dois");
         assertThat(d, notNullValue());
         assertEquals(d.isDeleted(), true);
 
@@ -330,19 +282,19 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testGetSizeWhitDeleted() {
-        Integer total = instance.getSizeWithDeleted();
-        assertThat(total, equalTo(6));
+        long total = docService.getSizeWithDeleted();
+        assertThat(total, equalTo(6L));
     }
 
     @Test
     public void testGetSize() {
-        Integer total = instance.getSize();
-        assertThat(total, equalTo(5));
+        long total = docService.getSize();
+        assertThat(total, equalTo(5L));
     }
 
     @Test
     public void testGetAllPaginated() {
-        List<DocumentoReal> docs = instance.getAll(2, 0);
+        List<DocumentoReal> docs = docService.getlAll(new PageRequest(0,2)).getContent();
         assertThat(docs.size(), equalTo(2));
         assertThat(docs.get(0).getId(), equalTo(1));
         assertThat(docs.get(1).getId(), equalTo(2));

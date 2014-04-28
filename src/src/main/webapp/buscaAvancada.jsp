@@ -170,7 +170,7 @@
                                             <c:forEach var="subFed" items="${federations}">
 
                                                 <li>
-                                                    ${fn:toUpperCase(subFed.nome)}
+                                                    ${fn:toUpperCase(subFed.name)}
                                                     <ul>
                                                         <form:checkboxes itemValue="id" itemLabel="name" path="repSubfed" cssClass="hidden" element="li" items="${subFed.repositorios}"/>
                                                     </ul>

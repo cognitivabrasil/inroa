@@ -1,6 +1,6 @@
 package feb.robo.main;
 
-import feb.data.interfaces.DocumentosDAO;
+import com.cognitivabrasil.feb.data.services.DocumentService;
 import feb.data.interfaces.SearchesDao;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.Repositorios;
@@ -26,7 +26,7 @@ public class Robo {
     @Autowired private SubFederacaoOAI subFed;
     
     @Autowired private SearchesDao searchesDao;
-    @Autowired private DocumentosDAO docDao;
+    @Autowired private DocumentService docDao;
 
     /**
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma
@@ -44,14 +44,14 @@ public class Robo {
         log.info(">>>");
 
         Long inicioRobo = System.currentTimeMillis();        
-        Integer initNumberDocs = docDao.getSizeWithDeleted();
+        long initNumberDocs = docDao.getSizeWithDeleted();
 //TESTA/ATUALIZA SUBFEDERACAO
         boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);
 
 //TESTA REPOSITORIO
         boolean repAtualizado = repositorio.testa_atualizar_repositorio(indexar);
 
-        Integer finalNumberDocs = docDao.getSizeWithDeleted();
+        long finalNumberDocs = docDao.getSizeWithDeleted();
 
 //TESTA SE PRECISA RECALCULAR O INDICE
 

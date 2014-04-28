@@ -4,15 +4,14 @@
  */
 package feb.data.daos;
 
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import java.util.List;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.SortedTable;
-import org.junit.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,8 +19,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import feb.data.daos.PadraoMetadadosHibernateDAO;
-import feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 
 
 
@@ -38,7 +36,7 @@ import feb.data.entities.PadraoMetadados;
 public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {
     
     @Autowired
-    PadraoMetadadosHibernateDAO instance;
+    MetadataRecordService instance;
     
 
     /**
@@ -60,7 +58,7 @@ public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {
         int id = 1;
         PadraoMetadados p = instance.get(id);
         
-        assertEquals("lom", p.getNome());
+        assertEquals("lom", p.getName());
         assertEquals("oai_lom", p.getMetadataPrefix());
         assertEquals("lom", p.getNamespace());
     }
@@ -82,14 +80,14 @@ public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {
     @Test
     public void testSaveAndUpdate() throws Exception {
         PadraoMetadados n = new PadraoMetadados();
-        n.setNome("Novo");
+        n.setName("Novo");
         n.setNamespace("obaa");
         n.setMetadataPrefix("obaa");
         
         instance.save(n);
         
         PadraoMetadados u = instance.get(1);
-        u.setNome("Updated");
+        u.setName("Updated");
         
         instance.save(u);
 

@@ -5,13 +5,14 @@ import feb.solr.indexar.IndexarDados;
 import feb.solr.converter.Converter;
 import org.apache.log4j.Logger;
 
-import feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.solr.common.SolrInputDocument;
+import org.springframework.data.domain.Page;
 
 public class Solr {
 
@@ -34,7 +35,7 @@ public class Solr {
 
     }
 
-    public void memoryLeakTest (List<DocumentoReal> docs)
+    public void memoryLeakTest (Page<DocumentoReal> docs)
     {
                       for (DocumentoReal doc : docs) {
   

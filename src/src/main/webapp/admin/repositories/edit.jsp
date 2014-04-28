@@ -42,7 +42,7 @@
 
             <script type="text/javascript">
                 var myForm = new Validate();
-                myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
+                myForm.addRules({id:'name',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
                 myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
                 myForm.addRules({id:'padraoMetadados.id',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
                 myForm.addRules({id:'mapeamento.id',option:'isNotEmpty',error:'* Deve ser selecionado um mapeamento!'});
@@ -52,7 +52,7 @@
                 myForm.addRules({id : 'url', option : 'required', error : '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
             </script>
 
-            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.nome}</div>
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.name}</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             
             <form:form method="post" modelAttribute="repModel" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
@@ -61,12 +61,12 @@
                     <c:out value="${erro}"/>
                 </div>
                 <div class="LinhaEntrada">
-                    <form:errors path="nome" cssClass="ValueErro" />
+                    <form:errors path="name" cssClass="ValueErro" />
                     <div class="Label">
                         Nome/Sigla:
                     </div>
                     <div class="Value">
-                        <form:input path="nome" maxlength="45" />                        
+                        <form:input path="name" maxlength="45" />                        
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -128,7 +128,7 @@
                     <div class="Value">
                         <select name="padraoMetadados.id" id="padraoMetadados.id" onChange="selecionaMapeamento('resultado', this.value, ${repModel.mapeamento.id});">
                             <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
-                                <option value="${padraoMet.id}" ${padraoMet.id==repModel.padraoMetadados.id ? 'selected':''}> ${fn:toUpperCase(padraoMet.nome)}                           
+                                <option value="${padraoMet.id}" ${padraoMet.id==repModel.padraoMetadados.id ? 'selected':''}> ${fn:toUpperCase(padraoMet.name)}                           
                                 </c:forEach>
                         </select>
                     </div>

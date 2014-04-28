@@ -6,8 +6,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 
-import feb.data.entities.SubFederacao;
-import feb.data.interfaces.SubFederacaoDAO;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.FederationService;
 import feb.spring.ApplicationContextProvider;
 import feb.util.Informacoes;
 import feb.util.Operacoes;
@@ -52,7 +52,7 @@ public class SubRepositorios {
                     log.debug("Repositorios coletados: " + listaSubrep);
                     subFed.atualizaListaSubRepositorios(listaSubrep);
                     
-                    SubFederacaoDAO subFedDao = ctx.getBean(SubFederacaoDAO.class);
+                    FederationService subFedDao = ctx.getBean(FederationService.class);
                     subFedDao.save(subFed);
                     
                     arquivoXML.delete(); //apaga arquivo XML

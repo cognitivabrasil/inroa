@@ -7,14 +7,15 @@
 // Nao quis apagar tudo e colocar esse, entao deixei esse com novo nome. Mas no futuro, só esse arquivo vai ser necessário...
 package feb.ferramentaBusca.indexador;
 
-import feb.data.entities.DocumentoReal;
-import feb.data.interfaces.DocumentosDAO;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import feb.solr.main.Solr;
 import feb.util.Operacoes;
-import java.util.List;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
@@ -27,7 +28,7 @@ public class Indexador {
 
     static Logger log = Logger.getLogger(Indexador.class);
     @Autowired
-    private DocumentosDAO docDao;
+    private DocumentService docService;
 
     public Indexador() {
     }
@@ -49,13 +50,19 @@ public class Indexador {
         Solr s = new Solr();
 
         //ELE DA ERRO NO 115.000
-        for (int i = 0; i < docDao.getSize(); i = i + numMaxDoc) {
-
-            System.out.println(i);
-            s.memoryLeakTest(docDao.getAll(numMaxDoc, i));
+        
+        boolean hasResult = true;
+        for(int page = 0; hasResult; page++){
+             Pageable limit = new PageRequest(page, numMaxDoc);
+            Page<DocumentoReal> docs = docService.getlAll(limit);
+            if(docs.hasContent()){
+                s.memoryLeakTest(docs);
+            }else{
+                hasResult=false;
+            }
         }
-
-        System.out.println("FIM DA INDEACAO");
+        
+        System.out.println("FIM DA INDEXACAO");
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
         log.info("Tempo total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));

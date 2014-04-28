@@ -1,6 +1,5 @@
 package feb.spring.controllers;
 
-import feb.data.daos.MapeamentoHibernateDAO;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -14,10 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import feb.data.entities.Mapeamento;
-import feb.data.entities.PadraoMetadados;
-import feb.data.interfaces.MapeamentoDAO;
-import feb.data.interfaces.PadraoMetadadosDAO;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import feb.spring.dtos.MapeamentoDto;
 import feb.spring.validador.MapeamentoValidator;
 import javax.servlet.http.HttpServletResponse;
@@ -30,15 +29,15 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("mapeamentos")
 @RequestMapping("/admin/mapeamentos/*")
-public final class MapeamentosController extends AbstractDeletable<Mapeamento, MapeamentoHibernateDAO>{
+public final class MapeamentosController {//extends AbstractDeletable<Mapeamento, MappingService>{
 
     @Autowired
-    private MapeamentoDAO mapDao;
+    private MappingService mapDao;
     @Autowired
-    private PadraoMetadadosDAO padraoDao;
+    private MetadataRecordService padraoDao;
     @Autowired
     private MapeamentoValidator validator;
-    private static Logger log = Logger.getLogger(MapeamentosController.class);
+    private static final Logger log = Logger.getLogger(MapeamentosController.class);
 
     /**
      * Instantiates a new users controller.
@@ -64,7 +63,7 @@ public final class MapeamentosController extends AbstractDeletable<Mapeamento, M
      * @return the map
      */
     private Map<Integer, String> getMetadataListForSelect(
-            PadraoMetadadosDAO pDao) {
+            MetadataRecordService pDao) {
         Map<Integer, String> hash = new LinkedHashMap<Integer, String>();
 
         for (PadraoMetadados m : pDao.getAll()) {
@@ -144,8 +143,4 @@ public final class MapeamentosController extends AbstractDeletable<Mapeamento, M
         return "admin/mapeamentos/form";
     }
 
-    @Override
-    public MapeamentoHibernateDAO getDAO() {
-        return (MapeamentoHibernateDAO) mapDao;
-    }
 }

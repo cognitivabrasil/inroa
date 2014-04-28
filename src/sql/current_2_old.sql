@@ -139,7 +139,7 @@ CREATE TABLE documentos (
     data character varying(255) DEFAULT NULL::character varying,
     localizacao text,
     id_repositorio integer,
-    "timestamp" timestamp without time zone DEFAULT now(),
+    created timestamp without time zone DEFAULT now(),
     palavras_chave character varying,
     id_rep_subfed integer,
     deleted boolean NOT NULL DEFAULT false,

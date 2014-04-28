@@ -1,8 +1,8 @@
 package functionaltests;
 
+import com.cognitivabrasil.feb.data.services.DocumentService;
 import java.io.File;
 import java.io.IOException;
-
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
@@ -16,51 +16,48 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import feb.data.daos.AbstractDaoTest;
-import feb.data.daos.DocumentosHibernateDAO;
-import feb.data.entities.Mapeamento;
-import feb.data.entities.Repositorio;
-import feb.data.interfaces.MapeamentoDAO;
-import feb.data.interfaces.PadraoMetadadosDAO;
-import feb.data.interfaces.RepositoryDAO;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.robo.atualiza.importaOAI.Importer;
 
 /**
- * 
+ *
  * @author marcos
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
 public class LumeXmlIT extends AbstractDaoTest {
-	@Autowired
-	DocumentosHibernateDAO docDao;
-	@Autowired
-	RepositoryDAO repDao;
-	@Autowired
-	PadraoMetadadosDAO padDao;
-	@Autowired
-	MapeamentoDAO mapDao;
 
-	@Test
-	public void importLume() throws IOException {
+    @Autowired
+    DocumentService docDao;
+    @Autowired
+    RepositoryService repDao;
+    @Autowired
+    MetadataRecordService padDao;
+    @Autowired
+    MappingService mapDao;
+
+    @Test
+    public void importLume() throws IOException {
         String inputXmlFile = "src/test/java/feb/metadata/lume_erro_null_documento.xml";
-		String inputXsltFile = "src/xslt/dc2obaa_full.xsl"; // input xsl
-		String xslt = FileUtils.readFileToString(new File(inputXsltFile));
-		
-		Mapeamento m = new Mapeamento();
-		m.setXslt(xslt);
-		m.setDescription("bla");
-		m.setName("teste");
-		m.setPadraoMetadados(padDao.get(1));
-		mapDao.save(m);
-		
+        String inputXsltFile = "src/xslt/dc2obaa_full.xsl"; // input xsl
+        String xslt = FileUtils.readFileToString(new File(inputXsltFile));
 
+        Mapeamento m = new Mapeamento();
+        m.setXslt(xslt);
+        m.setDescription("bla");
+        m.setName("teste");
+        m.setPadraoMetadados(padDao.get(1));
+        mapDao.save(m);
 
         Repositorio r = repDao.get(1);
-		r.setMapeamento(m);
-
+        r.setMapeamento(m);
 
         Importer imp = new Importer();
         imp.setInputFile(new File(inputXmlFile));
@@ -68,5 +65,5 @@ public class LumeXmlIT extends AbstractDaoTest {
         imp.setDocDao(docDao);
         imp.setRepDao(repDao);
         imp.update();
-	}
+    }
 }

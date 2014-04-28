@@ -25,7 +25,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import feb.data.entities.Search;
+import com.cognitivabrasil.feb.data.entities.Search;
 
 /**
  * 
@@ -135,7 +135,7 @@ public class SearchesJdbcIT extends AbstractDaoTest {
         public void delete(){
             List<Search> l = sDao.getSearches(10);
             int before = l.size();
-            System.out.println(before);
+            //System.out.println(before);
             sDao.delete("teste");
             
             assertThat(sDao.getSearches(10), hasSize(before-1));

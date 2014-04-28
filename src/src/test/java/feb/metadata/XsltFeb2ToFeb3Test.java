@@ -12,6 +12,7 @@ import cognitivabrasil.obaa.OaiOBAA;
 import cognitivabrasil.obaa.LifeCycle.Contribute;
 
 import cognitivabrasil.obaa.LifeCycle.Role;
+import cognitivabrasil.obaa.Technical.Format;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class XsltFeb2ToFeb3Test {
 
 		try {
         		String s = XSLTUtil.transform(xml, xsl);
-//        		System.out.println(s);
+//        		//System.out.println(s);
 			oai = OaiOBAA.fromString(s);
  		} catch (Exception ex) {      			
 			throw new RuntimeException(ex);
@@ -104,8 +105,8 @@ public class XsltFeb2ToFeb3Test {
 	public void format() {
 		OBAA l = oai.getMetadata(0);
 		boolean found = false;
-		for(String f : l.getTechnical().getFormat()) {
-			if("application/pdf".equals(f)) {
+		for(Format f : l.getTechnical().getFormats()) {
+			if("application/pdf".equals(f.toString())) {
 				found = true;
 			}
 		}

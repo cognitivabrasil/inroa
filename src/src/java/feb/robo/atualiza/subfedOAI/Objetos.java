@@ -4,8 +4,8 @@
  */
 package feb.robo.atualiza.subfedOAI;
 
-import feb.data.entities.SubFederacao;
-import feb.data.interfaces.DocumentosDAO;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.DocumentService;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.harvesterOAI.Harvester;
 import feb.spring.ApplicationContextProvider;
@@ -58,7 +58,7 @@ public class Objetos {
                     log.info("Lendo os XMLs e inserindo os objetos na base");
                 }
                 
-                DocumentosDAO docDao = ctx.getBean(DocumentosDAO.class);
+                DocumentService docDao = ctx.getBean(DocumentService.class);
 
                 
                 for (String caminho : caminhosXML) {

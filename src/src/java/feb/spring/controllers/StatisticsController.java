@@ -1,11 +1,14 @@
 package feb.spring.controllers;
 
-import feb.data.entities.*;
-import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.DocumentosVisitasDao;
-import feb.data.interfaces.RepositoryDAO;
-import feb.data.interfaces.SubFederacaoDAO;
-import feb.data.interfaces.VisitasDao;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Estatistica;
+import com.cognitivabrasil.feb.data.entities.DocumentosVisitas;
+import com.cognitivabrasil.feb.data.entities.Visita;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.DocumentVisitService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.VisitService;
 import feb.services.TagCloudService;
 import feb.util.Message;
 import feb.util.Operacoes;
@@ -41,15 +44,15 @@ public final class StatisticsController {
     @Autowired
     private SessionFactory sessionFactory;
     @Autowired
-    private RepositoryDAO repDao;
+    private RepositoryService repDao;
     @Autowired
-    private VisitasDao visitasDao;
+    private VisitService visitasDao;
     @Autowired
-    private DocumentosVisitasDao docVisDao;
+    private DocumentVisitService docVisDao;
     @Autowired
-    private SubFederacaoDAO fedDao;
+    private FederationService fedDao;
     @Autowired
-    private DocumentosDAO docDao;
+    private DocumentService docDao;
     @Autowired
     private TagCloudService tagCloud;
     private static Logger log = Logger.getLogger(StatisticsController.class);

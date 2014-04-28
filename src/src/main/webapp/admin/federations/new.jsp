@@ -72,10 +72,10 @@
                        acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="LinhaEntrada">
-                    <form:errors path="nome" cssClass="ValueErro" />
+                    <form:errors path="name" cssClass="ValueErro" />
                     <div class="Label">Nome:</div>
                     <div class="Value">
-                        <form:input path="nome" maxlength="45"
+                        <form:input path="name" maxlength="45"
                                     onFocus="this.className='inputSelecionado'"
                                     onBlur="this.className=''" />
                     </div>

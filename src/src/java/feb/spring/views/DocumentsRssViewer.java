@@ -15,8 +15,8 @@ import com.sun.syndication.feed.rss.Content;
 import com.sun.syndication.feed.rss.Image;
 import com.sun.syndication.feed.rss.Item;
 
-import feb.data.entities.Autor;
-import feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Autor;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 
 public class DocumentsRssViewer extends AbstractRssFeedView {
 	

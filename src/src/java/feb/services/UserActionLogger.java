@@ -1,6 +1,6 @@
 package feb.services;
 
-import feb.data.entities.Usuario;
+import com.cognitivabrasil.feb.data.entities.Usuario;
 import feb.data.interfaces.FebDomainObject;
 
 

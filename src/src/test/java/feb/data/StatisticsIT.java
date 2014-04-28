@@ -22,10 +22,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import feb.data.daos.AbstractDaoTest;
-import feb.data.entities.Estatistica;
-import feb.data.entities.Repositorio;
-import feb.data.entities.SubNodo;
-import feb.data.interfaces.VisitasDao;
+import com.cognitivabrasil.feb.data.entities.Estatistica;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.SubNodo;
+import com.cognitivabrasil.feb.data.services.VisitService;
 
 /**
  *
@@ -38,7 +38,7 @@ import feb.data.interfaces.VisitasDao;
 public class StatisticsIT extends AbstractDaoTest {
 
     @Autowired
-    VisitasDao v;
+    VisitService v;
     
     @Autowired
     SessionFactory sessionFactory;
@@ -69,7 +69,7 @@ public class StatisticsIT extends AbstractDaoTest {
 //        
 //        String sql = "INSERT INTO visitas (horario) VALUES ("+d1+", "+d2+")";
 //        
-//        System.out.println("!!!!!!!!!!!!!!"+sql);
+//        //System.out.println("!!!!!!!!!!!!!!"+sql);
 //        sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();        
     }
 
@@ -121,7 +121,7 @@ public class StatisticsIT extends AbstractDaoTest {
         
         Estatistica run = new Estatistica();
         String teste = run.convertNodoList(repList, "size");
-        //System.out.println(teste);
+        ////System.out.println(teste);
         
         assertEquals("[ [ 'teste', 321 ], [ 'teste2', 321 ] ]", teste);
     }

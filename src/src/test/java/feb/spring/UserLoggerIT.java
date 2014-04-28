@@ -28,13 +28,13 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import feb.data.daos.AbstractDaoTest;
-import feb.data.entities.Mapeamento;
-import feb.data.entities.Repositorio;
-import feb.data.entities.Usuario;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.Usuario;
 import feb.data.interfaces.FebDomainObject;
-import feb.data.interfaces.MapeamentoDAO;
-import feb.data.interfaces.PadraoMetadadosDAO;
-import feb.data.interfaces.RepositoryDAO;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.services.UserActionLogger;
 import feb.spring.FebConfig;
 import feb.spring.aspects.FebLoggerAspect;
@@ -49,16 +49,16 @@ import static org.mockito.Mockito.*;
 public class UserLoggerIT extends AbstractDaoTest {
 
 	@Autowired
-	MapeamentoDAO mapDao;
+	MappingService mapDao;
 	
 	@Autowired
 	FebConfig febConfig;
 	
 	@Autowired
-	PadraoMetadadosDAO padraoDao;
+	MetadataRecordService padraoDao;
 	
 	@Autowired
-	RepositoryDAO repDao;
+	RepositoryService repDao;
 	
 	@Autowired SessionFactory sessionFactory;
 	Session session;

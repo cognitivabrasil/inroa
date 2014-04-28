@@ -80,12 +80,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     </beans:bean>
 
     <authentication-manager>
-		<!-- <authentication-provider> -->
-		<!-- <user-service> -->
-		<!-- <user name="juan" password="juan" authorities="user" /> -->
-		<!-- </user-service> -->
-		<!-- </authentication-provider> -->
-        <authentication-provider user-service-ref="UsuarioDAO">
+        <authentication-provider user-service-ref="UserService">
             <password-encoder ref="passwordEncoder" />
         </authentication-provider>
     </authentication-manager>

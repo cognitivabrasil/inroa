@@ -29,10 +29,10 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import feb.data.daos.SubFederacaoHibernateDAO;
-import feb.data.entities.RepositorioSubFed;
-import feb.data.entities.SubFederacao;
-import feb.data.interfaces.DocumentosDAO;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
 
 /**
  *
@@ -46,10 +46,10 @@ import feb.data.interfaces.DocumentosDAO;
 public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
-    SubFederacaoHibernateDAO instance;
+    FederationService instance;
     
     @Autowired
-	private DocumentosDAO docDao;
+	private DocumentService docDao;
 
     public SubfederacaoHibernateDaoIT() {
     }
@@ -62,7 +62,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     public void testGet() {
-        System.out.println("get");
+        //System.out.println("get");
         int id = 1;
         SubFederacao ufrgs = instance.get(id);
 
@@ -74,7 +74,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     public void testGetAll() {
-        System.out.println("getAll");;
+        //System.out.println("getAll");;
         List result = instance.getAll();
         assertEquals(4, result.size());
     }
@@ -82,7 +82,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
     @Test
     @Ignore("Dont know why, it gives an error") // TODO:
     public void testRepository() {
-        System.out.println("repository");;
+        //System.out.println("repository");;
 
         List<SubFederacao> l = instance.getAll();
         SubFederacao ufrgs = l.get(0);
@@ -158,10 +158,10 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testSaveAndUpdate() throws Exception {
-        System.out.println("save");
+        //System.out.println("save");
 
         SubFederacao f = new SubFederacao();
-        f.setNome("Nova");
+        f.setName("Nova");
         f.setUrl("http://nova");
         f.setDataXML("2012-03-19T18:01:54Z");
         
@@ -184,10 +184,10 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         assertThat(instance.getAll(), hasSize(5));
         
         //assertEquals("Nr correto de Subfederacoes apos adicao", 5, instance.getAll().size());
-        System.out.println("Repositorios: "+fTeste.getRepositorios());
+        //System.out.println("Repositorios: "+fTeste.getRepositorios());
         
         SubFederacao f2 = instance.get(3);
-        f2.setNome("Jorjao");
+        f2.setName("Jorjao");
         f2.setUrl("http://jorjao");
 
         instance.save(f2);

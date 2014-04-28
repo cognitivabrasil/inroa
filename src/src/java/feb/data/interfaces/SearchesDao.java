@@ -1,6 +1,6 @@
 package feb.data.interfaces;
 
-import feb.data.entities.Search;
+import com.cognitivabrasil.feb.data.entities.Search;
 import java.util.Date;
 import java.util.List;
 

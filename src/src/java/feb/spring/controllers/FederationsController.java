@@ -4,10 +4,9 @@
  */
 package feb.spring.controllers;
 
-import feb.data.daos.SubFederacaoHibernateDAO;
-import feb.data.entities.SubFederacao;
-import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.SubFederacaoDAO;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
 import feb.exceptions.FederationException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.SubFederacaoOAI;
@@ -29,12 +28,15 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("federations")
 @RequestMapping("/admin/federations/*")
-public final class FederationsController extends AbstractDeletable<SubFederacao, SubFederacaoHibernateDAO> {
+public final class FederationsController{// extends AbstractDeletable<SubFederacao, SubFederacaoHibernateDAO> {
 
+    
+    //TODO: refazer o delete que estava no abstractDeletable
+    
     @Autowired
-    private SubFederacaoDAO subDao;
+    private FederationService subDao;
     @Autowired
-    private DocumentosDAO docDao;
+    private DocumentService docDao;
     @Autowired
     private Indexador indexar;
     @Autowired
@@ -126,7 +128,7 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
     String atualizaFedAjax(@PathVariable("id") Integer id,
             @RequestParam boolean apagar) {
         log.info("Solicitacao de atualizacao pela Ferramenta Administrativa...");
-        Integer initNumberDocs = docDao.getSizeWithDeleted();
+        long initNumberDocs = docDao.getSizeWithDeleted();
         try {
             if (id > 0) {
                 subFedOAI.atualizaSubfedAdm(subDao.get(id), indexar, apagar);
@@ -145,17 +147,11 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
             log.error("Erro ao atualizar uma federação",e);
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
         }finally{
-            Integer finalNumberDocs = docDao.getSizeWithDeleted();
+            long finalNumberDocs = docDao.getSizeWithDeleted();
             if(finalNumberDocs != initNumberDocs){
                 log.info("Foram atualizados: "+(finalNumberDocs-initNumberDocs) +" documentos");
                 indexar.populateR1();
             }
         }
-    }
-
-    @Override
-    public SubFederacaoHibernateDAO getDAO() {
-        return (SubFederacaoHibernateDAO) subDao;
-    }
-    
+    }    
 }

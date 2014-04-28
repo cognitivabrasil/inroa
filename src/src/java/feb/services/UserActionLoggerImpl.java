@@ -8,7 +8,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.hibernate.LazyInitializationException;
 
-import feb.data.entities.Usuario;
+import com.cognitivabrasil.feb.data.entities.Usuario;
 import feb.data.interfaces.FebDomainObject;
 
 /**

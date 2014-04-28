@@ -11,7 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
 
 /**
  *

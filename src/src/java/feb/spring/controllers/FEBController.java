@@ -1,9 +1,15 @@
 package feb.spring.controllers;
 
-import feb.data.entities.Consulta;
-import feb.data.entities.DocumentoReal;
-import feb.data.entities.DocumentosVisitas;
-import feb.data.entities.Visita;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
+import com.cognitivabrasil.feb.data.services.DocumentVisitService;
+import com.cognitivabrasil.feb.data.services.VisitService;
+import com.cognitivabrasil.feb.data.services.UserService;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.DocumentosVisitas;
+import com.cognitivabrasil.feb.data.entities.Visita;
 import feb.data.interfaces.*;
 import feb.ferramentaBusca.Recuperador;
 import feb.services.TagCloudService;
@@ -43,17 +49,17 @@ public final class FEBController {
     @Autowired
     private SessionFactory sessionFactory;
     @Autowired
-    private UsuarioDAO userDao;
+    private UserService userDao;
     @Autowired
-    private RepositoryDAO repDao;
+    private RepositoryService repDao;
     @Autowired
-    private SubFederacaoDAO subDao;
+    private FederationService subDao;
     @Autowired
-    private DocumentosDAO docDao;
+    private DocumentService docDao;
     @Autowired
-    private VisitasDao visDao;
+    private VisitService visDao;
     @Autowired
-    private DocumentosVisitasDao docVisDao;
+    private DocumentVisitService docVisDao;
     private final BuscaValidator buscaValidator;
     private final Logger log = Logger.getLogger(FEBController.class);
     @Autowired

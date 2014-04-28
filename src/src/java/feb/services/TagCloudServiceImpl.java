@@ -1,6 +1,6 @@
 package feb.services;
 
-import feb.data.entities.Search;
+import com.cognitivabrasil.feb.data.entities.Search;
 import feb.data.interfaces.SearchesDao;
 import java.util.Calendar;
 import java.util.Date;

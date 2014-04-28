@@ -1,8 +1,8 @@
 package feb.robo.atualiza.importaOAI;
 
-import feb.data.entities.Repositorio;
-import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.RepositoryDAO;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.spring.ApplicationContextProvider;
 
@@ -46,7 +46,7 @@ public class XMLtoDB {
             throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
 
-            RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
+            RepositoryService repDao = ctx.getBean(RepositoryService.class);
             Repositorio r = repDao.get(id);
             saveXML(caminhoXML, r, indexar);
         }
@@ -77,8 +77,8 @@ public class XMLtoDB {
             throw new ApplicationContextException("Could not get AppContext bean!");
         } else {
 
-            DocumentosDAO docDao = ctx.getBean(DocumentosDAO.class);
-            RepositoryDAO repDao = ctx.getBean(RepositoryDAO.class);
+            DocumentService docDao = ctx.getBean(DocumentService.class);
+            RepositoryService repDao = ctx.getBean(RepositoryService.class);
 
             for (int i = 0; i < caminhoXML.size(); i++) {
                 log.info("Lendo XML " + caminhoXML.get(i).substring(caminhoXML.get(i).lastIndexOf("/") + 1));

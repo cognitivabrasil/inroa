@@ -27,8 +27,8 @@ import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import feb.data.entities.Usuario;
-import feb.data.interfaces.UsuarioDAO;
+import com.cognitivabrasil.feb.data.entities.Usuario;
+import com.cognitivabrasil.feb.data.services.UserService;
 
 /**
  * Integration tests of the UsuarioHibernateDao
@@ -44,7 +44,7 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
 
 	
     @Autowired
-    UsuarioDAO instance;
+    UserService instance;
 
 
     public UsuarioHibernateDaoIT() {
@@ -82,7 +82,7 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     public void testDelete() {
-        System.out.println("delete");
+        //System.out.println("delete");
         Usuario r = instance.get(2);
         instance.delete(r);
 
@@ -94,7 +94,7 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     public void testGet() {
-        System.out.println("*****************get");
+        //System.out.println("*****************get");
         int id = 1;
         Usuario u = instance.get(id);
         assertEquals("admin", u.getLogin());
@@ -122,7 +122,7 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     public void testGetAll() {
-        System.out.println("getAll");
+        //System.out.println("getAll");
         List result = instance.getAll();
         assertEquals(2, result.size());
     }
@@ -134,7 +134,7 @@ public class UsuarioHibernateDaoIT extends AbstractDaoTest {
     @Rollback(false)
     @Transactional
     public void testSaveAndUpdate() throws Exception {
-        System.out.println("save");
+        //System.out.println("save");
         Usuario r = instance.get(1);
         r.setLogin("jorjao");
         instance.save(r);

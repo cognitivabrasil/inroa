@@ -16,7 +16,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import feb.data.entities.Search;
+import com.cognitivabrasil.feb.data.entities.Search;
 import feb.data.interfaces.SearchesDao;
 
 public class TagCloudImplTest {

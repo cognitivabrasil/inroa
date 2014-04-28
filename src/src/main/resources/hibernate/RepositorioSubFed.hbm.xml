@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="feb.data.entities.RepositorioSubFed" table="repositorios_subfed">
-        <id column="id" name="id" type="int">
-            <generator class="sequence">
-                <param name="sequence">repositorios_subfed_id_seq</param>
-            </generator>  
-        </id>
-        <property name="name" column="nome" not-null="true" type="string"/>
-        
-        <many-to-one class="feb.data.entities.SubFederacao" column="id_subfed" name="subFederacao" not-null="true"/>    
-        
-        <set name="documentos" table="documentos" cascade="all-delete-orphan" inverse="true">
-            <key column="id_rep_subfed"/>
-            <one-to-many class="feb.data.entities.DocumentoReal"/>
-        </set>
-
-    </class>
+  <class name="com.cognitivabrasil.feb.data.entities.RepositorioSubFed" table="repositorios_subfed">
+    <id column="id" name="id" type="int">
+      <generator class="sequence">
+        <param name="sequence">repositorios_subfed_id_seq</param>
+      </generator>
+    </id>
+    <property column="nome" name="name" not-null="true" type="string"/>
+    <many-to-one class="com.cognitivabrasil.feb.data.entities.SubFederacao" column="id_subfed" name="subFederacao" not-null="true"/>
+    <set cascade="all-delete-orphan" inverse="true" name="documentos" table="documentos">
+      <key column="id_rep_subfed"/>
+      <one-to-many class="com.cognitivabrasil.feb.data.entities.DocumentoReal"/>
+    </set>
+  </class>
 </hibernate-mapping>

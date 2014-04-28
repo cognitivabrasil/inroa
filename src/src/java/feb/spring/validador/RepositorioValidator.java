@@ -4,7 +4,7 @@
  */
 package feb.spring.validador;
 
-import feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.springframework.stereotype.Component;

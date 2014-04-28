@@ -4,6 +4,7 @@
  */
 package feb.data.daos;
 
+import com.cognitivabrasil.feb.data.services.MappingService;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
@@ -22,8 +23,8 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import feb.data.entities.Mapeamento;
-import feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 
 /**
  *
@@ -37,7 +38,7 @@ import feb.data.entities.PadraoMetadados;
 public class MapeamentoHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
-    MapeamentoHibernateDAO instance;
+    MappingService instance;
     
     @Test
     public void testGet() {

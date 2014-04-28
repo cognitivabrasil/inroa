@@ -46,7 +46,7 @@ Primeira etapa do cadastro de um repositorio
         </script>
         <script type="text/javascript">
             var myForm = new Validate();
-            myForm.addRules({id : 'nome', option : 'required', error : '* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
+            myForm.addRules({id : 'name', option : 'required', error : '* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
             myForm.addRules({id : 'descricao', option : 'required',	error : '* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
             myForm.addRules({id : 'padraoMetadados', option : 'required', error : '* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
             myForm.addRules({id : 'periodicidadeAtualizacao', option : 'required', error : '* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
@@ -75,10 +75,10 @@ Primeira etapa do cadastro de um repositorio
                 <div class="subtitle">Informa&ccedil;&otilde;es gerais sobre o
                     reposit&oacute;rio</div>
                 <div class="LinhaEntrada">
-                    <form:errors path="nome" cssClass="ValueErro" />
+                    <form:errors path="name" cssClass="ValueErro" />
                     <div class="Label">Nome/Sigla:</div>
                     <div class="Value">
-                        <form:input path="nome" maxlength="45"/>
+                        <form:input path="name" maxlength="45"/>
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -130,7 +130,7 @@ Primeira etapa do cadastro de um repositorio
 
                                 <option value="${padraoMet.id}"
                                         ${padraoMet.id==padraoSelecionado ? 'selected':''}>
-                                    ${fn:toUpperCase(padraoMet.nome)}
+                                    ${fn:toUpperCase(padraoMet.name)}
                                 </c:forEach>
                         </select>
                     </div>

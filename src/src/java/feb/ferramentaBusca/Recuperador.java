@@ -1,8 +1,8 @@
 package feb.ferramentaBusca;
 
-import feb.data.entities.Consulta;
-import feb.data.entities.DocumentoReal;
-import feb.data.interfaces.DocumentosDAO;
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.services.DocumentService;
 import feb.solr.query.QuerySolr;
 import java.sql.SQLException;
 
@@ -20,7 +20,7 @@ public class Recuperador {
     static Logger log = Logger.getLogger(Recuperador.class.getName());
     private static int rssSizeLimit = 100;
     @Autowired
-    private DocumentosDAO docDao;
+    private DocumentService docDao;
 
     public Recuperador() {
     }

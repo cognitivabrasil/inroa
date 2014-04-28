@@ -4,8 +4,8 @@
  */
 package feb.robo.atualiza;
 
-import feb.data.entities.Repositorio;
-import feb.data.interfaces.RepositoryDAO;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.exceptions.RepositoryException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.harvesterOAI.Harvester;
@@ -37,7 +37,7 @@ public class Repositorios {
     @Autowired
     private Indexador indexar;
     @Autowired
-    private RepositoryDAO repDao;
+    private RepositoryService repService;
     private static Logger log = Logger.getLogger(Repositorios.class);
 
     /**
@@ -54,12 +54,12 @@ public class Repositorios {
         Long inicio = System.currentTimeMillis();
         boolean atualizou = false;
 
-        List<Repositorio> listRep = repDao.getOutDated();
+        List<Repositorio> listRep = repService.getOutDated();
 
         for (Repositorio rep : listRep) { // percorre todos os repositorios que
             // precisam ser atualizados
             try { // chama o metodo que atualiza o repositorio
-                if (atualizaRepositorio(repDao.get(rep.getId()), indexar) > 0) {
+                if (atualizaRepositorio(repService.get(rep.getId()), indexar) > 0) {
                     atualizou = true;
                 }
             } catch (Exception e) {
@@ -100,7 +100,7 @@ public class Repositorios {
 
         if (idRep > 0) { // atualizar um repositorio especifico ou
             // todos. 0 = todos
-            Repositorio rep = repDao.get(idRep);
+            Repositorio rep = repService.get(idRep);
             if (apagar) { // seta as duas datas como null porque quando atualiza
                 // se as datas forem null todos os documentos do
                 // repositorio sao excluidos
@@ -110,16 +110,16 @@ public class Repositorios {
             if (atualizaRepositorio(rep, indexar) > 0) {
                 recalcularIndice = true;
             }
-            repDao.save(rep);
+            repService.save(rep);
 
         } else {
-            List<Repositorio> repositorios = repDao.getAll();
+            List<Repositorio> repositorios = repService.getAll();
             for (Repositorio rep : repositorios) {
                 try {
                     if (atualizaRepositorio(rep, indexar) > 0) {
                         recalcularIndice = true;
                     }
-                    repDao.save(rep);
+                    repService.save(rep);
                 } catch (Exception e) {
                     erros.add(rep.getName());
                     log.error("FEB ERRO: Erro ao atualizar o repositorio "

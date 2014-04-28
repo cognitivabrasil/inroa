@@ -4,7 +4,7 @@
  */
 package feb.spring.validador;
 
-import feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.Consulta;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

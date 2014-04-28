@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import feb.data.entities.Mapeamento;
-import feb.data.interfaces.MapeamentoDAO;
-import feb.data.interfaces.PadraoMetadadosDAO;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import feb.spring.dtos.MapeamentoDto;
 
 @Component
 public class MapeamentoValidator implements Validator {
 	@Autowired
-	private MapeamentoDAO mapDao;
+	private MappingService mapDao;
 	@Autowired
-	private PadraoMetadadosDAO padraoDao;
+	private MetadataRecordService padraoDao;
 	@Autowired
 	private SessionFactory sessionFactory;
 	

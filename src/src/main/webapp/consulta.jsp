@@ -144,14 +144,6 @@
                                                 </div>
                                             </c:if>
 
-                                            <c:if test="${!empty doc.date}">
-                                                <div class="atributo"> Data:
-                                                    <c:forEach var="data" items="${doc.date}">
-                                                        <div class="atributo">${data}</div>
-                                                    </c:forEach>
-                                                </div>
-                                            </c:if>
-
                                             <c:if test="${!empty doc.nomeRep}">
                                                 <div class="atributo"> Reposit&oacute;rio: ${doc.nomeRep}</div>
                                             </c:if>

@@ -1,6 +1,6 @@
 package feb.data.daos;
 
-import feb.data.entities.Search;
+import com.cognitivabrasil.feb.data.entities.Search;
 import feb.data.interfaces.SearchesDao;
 import feb.util.Operacoes;
 import java.sql.Types;

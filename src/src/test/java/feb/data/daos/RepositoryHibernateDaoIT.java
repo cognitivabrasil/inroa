@@ -4,7 +4,7 @@
  */
 package feb.data.daos;
 
-import feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.services.DocumentService;
 import java.util.List;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.SortedTable;
@@ -20,9 +20,10 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import org.springframework.test.context.transaction.AfterTransaction;
-import feb.data.entities.PadraoMetadados;
-import feb.data.entities.Repositorio;
-import feb.data.interfaces.MapeamentoDAO;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 
 /**
  *
@@ -36,11 +37,11 @@ import feb.data.interfaces.MapeamentoDAO;
 public class RepositoryHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
-    RepositoryHibernateDAO repDao;
+    RepositoryService repDao;
     @Autowired
-    DocumentosHibernateDAO docDao;
+    DocumentService docDao;
     @Autowired
-    MapeamentoDAO mapDao;
+    MappingService mapDao;
 
     /**
      * Test of delete method, of class RepositoryHibernateDAO.
@@ -50,7 +51,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     public void testGet() {
-        System.out.println("get");
+        //System.out.println("get");
         int id = 1;
         Repositorio cesta = repDao.get(id);
 
@@ -71,7 +72,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     public void testGetAll() {
-        System.out.println("getAll");
+        //System.out.println("getAll");
         List expResult = null;
         List result = repDao.getAll();
         assertEquals(4, result.size());
@@ -187,7 +188,7 @@ public class RepositoryHibernateDaoIT extends AbstractDaoTest {
         if (updated) {
             updated = false;
             String[] ignore = {"id", "metadata_prefix", "periodicidade_horas", "padrao_metadados", "mapeamento_id", "descricao", "data_ultima_atualizacao",
-                "set", "tipo_mapeamento_id", "tipo_sincronizacao", "data_xml"};
+                "internal_set", "tipo_mapeamento_id", "tipo_sincronizacao", "data_xml"};
             String[] sort = {"nome"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("repositorios"), sort), new SortedTable(getConnection().createDataSet().getTable("repositorios"), sort), ignore);
 

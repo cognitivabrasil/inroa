@@ -5,7 +5,7 @@
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:security="http://www.springframework.org/schema/security"
        xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:task="http://www.springframework.org/schema/task"
-
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 
        xmlns:encryption="http://www.jasypt.org/schema/encryption"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -18,11 +18,19 @@ http://www.springframework.org/schema/task
 http://www.springframework.org/schema/task/spring-task-3.1.xsd
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd 
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
-http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd">
+http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd
+http://www.springframework.org/schema/data/jpa
+http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd">
+    
+    <context:component-scan base-package="com.cognitivabrasil.feb" />
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
 
 
     <!-- TODO: use inversion of control instead of this ! -->
-    <bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"></bean>
+    <bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"/>
 
 
     <!-- TODO: Use properties TODO: Encrypt password <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
@@ -53,72 +61,45 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
     </bean>
 
 
-
-
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close" p:driverClassName="org.postgresql.Driver"
           p:url="jdbc:postgresql://#{febConfig.host}:#{febConfig.port}/#{febConfig.database}"
           p:username="#{febConfig.username}" p:password="#{febConfig.password}" />
+    
 
-    <bean id="documentosDAO" class="feb.data.daos.DocumentosHibernateDAO" />
 
-    <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <bean id="entityManagerFactory"
+           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="packagesToScan" value="com.cognitivabrasil.feb.data" />
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.PostgreSQLDialect
+                </prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+                <prop key="hibernate.jdbc.fetch_size">50</prop>
+                <prop key="hibernate.jdbc.batch_size">10</prop>
+                <prop key="hibernate.show_sql">false</prop>
+            </props>
+        </property>
     </bean>
-
-
-    <bean id="transactionManager"
-          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-    <tx:annotation-driven />
-
-    <bean id="repositoryDAO" class="feb.data.daos.RepositoryHibernateDAO">
-    </bean>
-
-    <bean id="subFederationDAO" class="feb.data.daos.SubFederacaoHibernateDAO">
-    </bean>
-
-    <bean id="PadraoMetadadosDAO" class="feb.data.daos.PadraoMetadadosHibernateDAO">
-    </bean>
-
-    <bean id="MapeamentoDAO" class="feb.data.daos.MapeamentoHibernateDAO">
-    </bean>
-
-    <bean id="UsuarioDAO" class="feb.data.daos.UsuarioHibernateDAO">
-        <!-- <property name="sessionFactory" ref="sessionFactory"/> -->
-    </bean>
-
-    <bean id="TokensDAO" class="feb.data.daos.TokensHibernateDao">
-    </bean>
-
-    <bean id="Indexador" class="feb.ferramentaBusca.indexador.Indexador">
-    </bean>
-
-    <bean id="StopWord" class="feb.data.daos.StopWordHibernateDao" />
-
-    <bean id="visitasDao" class="feb.data.daos.VisitasHibernateDao" />
-
-    <bean id="DocumentosVisitasDao" class="feb.data.daos.DocumentosVisitasHibernateDao" />
-
 
     <context:annotation-config />
+    
+    <jpa:repositories base-package="com.cognitivabrasil.feb.data.repositories"
+                      entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager" />
+    
     <!--Inicio Inicializar o Robo -->
-
     <bean id="robo" class="feb.robo.main.Robo" />
-
     <task:scheduler id="myScheduler" pool-size="1" />
-
     <task:scheduled-tasks scheduler="myScheduler">
         <task:scheduled ref="robo" method="testaUltimaImportacao"
                         cron="0 0 2 * * *" />
-        <!-- 		<task:scheduled ref="robo" method="testaUltimaImportacao" -->
-        <!-- 			fixed-delay="10"/> -->
     </task:scheduled-tasks>
-
-
     <!--Fim Inicializar o Robo -->
 
     <bean id="SearchesDao" class="feb.data.daos.SearchesJdbcDao">
@@ -134,13 +115,11 @@ http://www.jasypt.org/schema/encryption http://www.jasypt.org/schema/encryption/
 
 
     <bean id="defaultUserActionLogger" class="feb.services.UserActionLoggerImpl">
-        <property name="file" value="/tmp/feb-actions.log" />
+        <property name="file" value="/var/log/feb/feb-actions.log" />
     </bean>
 
     <bean id="repositorios" class="feb.robo.atualiza.Repositorios" />
     <bean id="subf" class="feb.robo.atualiza.SubFederacaoOAI" />
-
-
 
     <bean id="myAspect" class="feb.spring.aspects.FebLoggerAspect" />
 
