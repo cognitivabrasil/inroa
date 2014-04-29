@@ -1,4 +1,4 @@
-package com.cognitivabrasil.feb.data.services;
+package feb.data.daos;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -23,7 +23,7 @@ import feb.data.daos.AbstractDaoTest;
 import com.cognitivabrasil.feb.data.entities.Estatistica;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.SubNodo;
-import com.cognitivabrasil.feb.data.entities.Visita;
+import com.cognitivabrasil.feb.data.services.VisitService;
 
 /**
  *
@@ -101,15 +101,6 @@ public class VisitServiceIT extends AbstractDaoTest {
 
     @Test
     public void testVisitsInAMonth() {
-        Visita vt = new Visita();
-        vt.setId(1000);
-        v.save(vt);
-        
-        System.out.println("\n+++++\n");
-        for(Visita v: v.getAll()){
-            System.out.println(v.getId()+" "+v.getHorario());
-        }
-        System.out.println("\n\n");
         assertEquals(2, v.visitsInAMonth(7, 2012));
         assertEquals(3, v.visitsInAMonth(12, 2012));
     }

@@ -38,10 +38,10 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public int visitsInAMonth(int month, int year) {
         
-        DateTime fromDt = new DateTime(year, month, 1,0,0);
-        DateTime ultilDt = fromDt.minusMonths(1);
+        DateTime from = new DateTime(year, month, 1,0,0);
+        DateTime until = from.plusMonths(1).minusDays(1).plusSeconds(1);
         
-        return visitRep.countBetweenInclusive(fromDt, ultilDt);
+        return visitRep.countBetween(from, until);
     }
     
     @Override

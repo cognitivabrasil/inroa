@@ -19,6 +19,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface VisitRepository extends JpaRepository<Visita, Integer> {
     
     @Query("SELECT count(*) FROM Visita d WHERE horario >= ?1 AND horario < ?2")
-    public Integer countBetweenInclusive(DateTime from, DateTime until);
+    public Integer countBetween(DateTime from, DateTime until);
     
 }
