@@ -54,7 +54,7 @@ public class QuerySolr {
 
         query = new SolrQuery();
 
-        query.setRequestHandler("/browse");
+        query.setRequestHandler("/feb");
         query.setStart(offset);
         query.setRows(limit);
 
