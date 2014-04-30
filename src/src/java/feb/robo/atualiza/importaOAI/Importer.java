@@ -83,12 +83,6 @@ public class Importer {
                 logger.error("NullPointer ao tentar inserir elemento " + i, e);
             }
 
-            //TODO: Testar para ver se funciona sem o flush e o clear
-//            if (i % 20 == 0) {
-//                session.flush();
-//                session.clear();
-//            }
-
         }
 
         // TODO: move the conversion to and from String of the date to OaiOBAA class

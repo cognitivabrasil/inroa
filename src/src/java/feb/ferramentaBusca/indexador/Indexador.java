@@ -28,7 +28,7 @@ import org.springframework.data.domain.Pageable;
  */
 public class Indexador {
 
-    static Logger log = Logger.getLogger(Indexador.class);
+    private static final Logger log = Logger.getLogger(Indexador.class);
     @Autowired
     private DocumentService docService;
     @PersistenceContext

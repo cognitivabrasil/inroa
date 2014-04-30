@@ -209,9 +209,9 @@ class UserDto {
      */
     protected static Map<String, Map<String, String>> referenceData() {
 
-        Map<String, Map<String, String>> referenceData = new HashMap<String, Map<String, String>>();
+        Map<String, Map<String, String>> referenceData = new HashMap<>();
 
-        Map<String, String> roles = new LinkedHashMap<String, String>();
+        Map<String, String> roles = new LinkedHashMap<>();
         roles.put("root", "Superusuário");
         roles.put("admin", "Administrador de federações");
         roles.put("update", "Visualizar e atualizar");
