@@ -525,16 +525,6 @@ src/src/test/java/com/cognitivabrasil/feb/data/entities/DocumentoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/RepositorioTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/SubFederacaoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/UsuarioTest.java -text
-src/src/test/java/feb/data/daos/AbstractDaoTest.java -text
-src/src/test/java/feb/data/daos/DocumentosHibernateDaoIT.java -text
-src/src/test/java/feb/data/daos/DocumentosVisitasHibernateDaoIT.java -text
-src/src/test/java/feb/data/daos/MapeamentoHibernateDaoIT.java -text
-src/src/test/java/feb/data/daos/PadraoMetadadosHibernateDaoIT.java -text
-src/src/test/java/feb/data/daos/RepositoryHibernateDaoIT.java -text
-src/src/test/java/feb/data/daos/SearchesJdbcIT.java -text
-src/src/test/java/feb/data/daos/SubfederacaoHibernateDaoIT.java -text
-src/src/test/java/feb/data/daos/UsuarioHibernateDaoIT.java -text
-src/src/test/java/feb/data/daos/VisitServiceIT.java -text
 src/src/test/java/feb/ferramentaAdministrativa/VerificaLinkOAITest.java -text
 src/src/test/java/feb/metadata/FEB-froac1.xml -text
 src/src/test/java/feb/metadata/XsltConversorTest.java -text
