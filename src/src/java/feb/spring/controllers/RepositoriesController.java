@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("repositories")
 @RequestMapping("/admin/repositories/*")
-public final class RepositoriesController {// extends AbstractDeletable<Repositorio, RepositoryHibernateDAO> {
+public final class RepositoriesController {
 
     @Autowired
     private RepositoryService repDao;
@@ -172,9 +172,10 @@ public final class RepositoriesController {// extends AbstractDeletable<Reposito
     public @ResponseBody
     String delete(@PathVariable("id") Integer id, Model model) {
         Repositorio obj = repDao.get(id);
-        log.info("Deletando " + obj.getClass().getName() + ": " + obj.getName());
+        String name = obj.getName();
+        log.info("Deletando o repositório: " + name);
         repDao.delete(obj);
-        log.info(obj.getClass().getName() + " deletado(a) com sucesso.");
+        log.info("Repositório "+name+" deletado com sucesso.");
         return "ok";
     }
 

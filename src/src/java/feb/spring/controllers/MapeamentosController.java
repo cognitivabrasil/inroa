@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("mapeamentos")
 @RequestMapping("/admin/mapeamentos/*")
-public final class MapeamentosController {//extends AbstractDeletable<Mapeamento, MappingService>{
+public final class MapeamentosController {
 
     @Autowired
     private MappingService mapDao;
@@ -142,5 +142,15 @@ public final class MapeamentosController {//extends AbstractDeletable<Mapeamento
 
         return "admin/mapeamentos/form";
     }
-
+    
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    public @ResponseBody
+    String delete(@PathVariable("id") Integer id, Model model) {
+            Mapeamento obj = mapDao.get(id);
+            String name = obj.getName();
+            log.info("Deletando o mapeamento: "+name);
+            mapDao.delete(obj);
+            log.info("Mapeamento "+name+" deletado com sucesso.");
+            return "ok";
+    }
 }

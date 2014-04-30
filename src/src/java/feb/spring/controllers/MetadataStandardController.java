@@ -21,8 +21,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("metadataStandard")
 @RequestMapping("/admin/metadataStandard/*")
-public final class MetadataStandardController{// extends AbstractDeletable<PadraoMetadados, PadraoMetadadosHibernateDAO> {
-//TODO: IMPLEMENTAR O METODO DELETE
+public final class MetadataStandardController{
     @Autowired
     private MetadataRecordService padraoDao;
     Logger log = Logger.getLogger(MetadataStandardController.class);
@@ -86,5 +85,14 @@ public final class MetadataStandardController{// extends AbstractDeletable<Padra
         }
     }
 
-
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    public @ResponseBody
+    String delete(@PathVariable("id") Integer id, Model model) {
+            PadraoMetadados obj = padraoDao.get(id);
+            String name = obj.getName();
+            log.info("Deletando o padrão: "+name);
+            padraoDao.delete(obj);
+            log.info("Padrão '"+name+"' deletado com sucesso.");
+            return "ok";
+    }
 }
