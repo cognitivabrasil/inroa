@@ -53,14 +53,13 @@ public class Indexador {
 
         Solr s = new Solr();
 
-        //ELE DA ERRO NO 115.000
         Pageable limit = new PageRequest(0, numMaxDoc);
         Page<DocumentoReal> docs = docService.getlAll(limit);
-        s.memoryLeakTest(docs);
+        s.indexarBancoDeDados(docs.getContent());
 
         while (docs.hasNextPage()) {
             docs = docService.getlAll(docs.nextPageable());
-            s.memoryLeakTest(docs);
+            s.indexarBancoDeDados(docs.getContent());
             em.clear();
         }
 
