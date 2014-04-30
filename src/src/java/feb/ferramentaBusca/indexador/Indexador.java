@@ -11,6 +11,8 @@ import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import feb.solr.main.Solr;
 import feb.util.Operacoes;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,8 @@ public class Indexador {
     static Logger log = Logger.getLogger(Indexador.class);
     @Autowired
     private DocumentService docService;
+    @PersistenceContext
+    private EntityManager em;
 
     public Indexador() {
     }
@@ -50,18 +54,16 @@ public class Indexador {
         Solr s = new Solr();
 
         //ELE DA ERRO NO 115.000
-        
-        boolean hasResult = true;
-        for(int page = 0; hasResult; page++){
-             Pageable limit = new PageRequest(page, numMaxDoc);
-            Page<DocumentoReal> docs = docService.getlAll(limit);
-            if(docs.hasContent()){
-                s.memoryLeakTest(docs);
-            }else{
-                hasResult=false;
-            }
+        Pageable limit = new PageRequest(0, numMaxDoc);
+        Page<DocumentoReal> docs = docService.getlAll(limit);
+        s.memoryLeakTest(docs);
+
+        while (docs.hasNextPage()) {
+            docs = docService.getlAll(docs.nextPageable());
+            s.memoryLeakTest(docs);
+            em.clear();
         }
-        
+
         System.out.println("FIM DA INDEXACAO");
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;

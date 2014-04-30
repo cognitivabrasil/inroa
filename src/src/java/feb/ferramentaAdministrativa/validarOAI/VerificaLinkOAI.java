@@ -74,7 +74,7 @@ public class VerificaLinkOAI {
         Identify listIndentifiers = new Identify(endereco);
 
         Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(caminhoAbsoluto), "UTF8")); //escreve um arquivo xml em UTF8 no caminho setado no configuracao.java
+                new FileOutputStream(caminhoAbsoluto), "UTF-8")); //escreve um arquivo xml em UTF-8 no caminho setado no configuracao.java
 
 
         out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");

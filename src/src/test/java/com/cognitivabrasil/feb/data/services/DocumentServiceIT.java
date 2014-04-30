@@ -2,9 +2,6 @@ package com.cognitivabrasil.feb.data.services;
 
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
-import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.FederationService;
-import com.cognitivabrasil.feb.data.services.RepositoryService;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Date;
@@ -17,8 +14,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,9 +29,12 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Integration tests of the DocumentosHibernateDao
@@ -49,7 +47,7 @@ import org.springframework.data.domain.PageRequest;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class DocumentosHibernateDaoIT extends AbstractDaoTest {
+public class DocumentServiceIT extends AbstractDaoTest {
 
     @Autowired
     DocumentService docService;
@@ -294,9 +292,36 @@ public class DocumentosHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testGetAllPaginated() {
-        List<DocumentoReal> docs = docService.getlAll(new PageRequest(0,2)).getContent();
+        List<DocumentoReal> docs = docService.getlAll(new PageRequest(0, 2)).getContent();
         assertThat(docs.size(), equalTo(2));
         assertThat(docs.get(0).getId(), equalTo(1));
         assertThat(docs.get(1).getId(), equalTo(2));
     }
+
+    @Test
+    public void testGetAllPaginated2() {
+        List<DocumentoReal> modelDoc = docService.getAll();
+        List<Integer> ids = new ArrayList<>();
+
+        Pageable limit = new PageRequest(0, 2);
+        Page<DocumentoReal> docs = docService.getlAll(limit);
+        for (DocumentoReal doc : docs.getContent()) {
+            ids.add(doc.getId());
+        }
+
+        while (docs.hasNextPage()) {
+            docs = docService.getlAll(docs.nextPageable());
+            for (DocumentoReal doc : docs.getContent()) {
+                ids.add(doc.getId());
+            }
+            em.clear();
+        }
+        
+        assertThat(modelDoc.size(), equalTo(ids.size()));
+        
+        for (DocumentoReal doc : modelDoc) {
+            assertThat(ids.contains(doc.getId()), equalTo(true));
+        }
+    }
+
 }

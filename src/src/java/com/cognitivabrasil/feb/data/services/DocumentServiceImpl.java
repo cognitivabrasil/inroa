@@ -90,7 +90,7 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
 
     @Override
     public Page<DocumentoReal> getlAll(Pageable pageable) {
-        return docRep.findByDeletedIsFalseOrderByIdAsc(pageable);
+        return docRep.findByDeletedIsFalse(pageable);
     }
 
     @Override

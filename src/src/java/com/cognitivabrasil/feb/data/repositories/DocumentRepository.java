@@ -31,7 +31,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface DocumentRepository extends JpaRepository<DocumentoReal, Integer> {
 
     public List<DocumentoReal> findByDeletedIsFalse();
-    public Page<DocumentoReal> findByDeletedIsFalseOrderByIdAsc(Pageable pageable);
+    public Page<DocumentoReal> findByDeletedIsFalse(Pageable pageable);
     public DocumentoReal findByObaaEntry(String entry);
     public DocumentoReal findById(int id);
     
