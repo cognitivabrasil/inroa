@@ -52,11 +52,5 @@ public class RepositorioValidator implements Validator  {
         if(rep.getPadraoMetadados().getId() <= 0){
             errors.rejectValue("padraoMetadados.id","invalid.padraoMetadados.id", "Informe um padrão de metadados.");
         }
-        
-        if(rep.getPeriodicidadeAtualizacao() == null || rep.getPeriodicidadeAtualizacao() <= 0){
-            errors.rejectValue("periodicidadeAtualizacao","invalid.periodicidadeAtualizacao", "Informe uma periodicidade de atualização.");            
-        }
-        
-    }
-    
+    }    
 }

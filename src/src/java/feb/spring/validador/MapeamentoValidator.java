@@ -2,7 +2,6 @@ package feb.spring.validador;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -12,58 +11,60 @@ import com.cognitivabrasil.feb.data.entities.Mapeamento;
 import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import feb.spring.dtos.MapeamentoDto;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Component
 public class MapeamentoValidator implements Validator {
-	@Autowired
-	private MappingService mapDao;
-	@Autowired
-	private MetadataRecordService padraoDao;
-	@Autowired
-	private SessionFactory sessionFactory;
-	
-	@Override
-	public boolean supports(@SuppressWarnings("rawtypes") Class clazz) {
-		return MapeamentoDto.class.isAssignableFrom(clazz);
-	}
 
-	@Override
-	public void validate(Object target, Errors errors) {
-		MapeamentoDto m = (MapeamentoDto) target;
+    @Autowired
+    private MappingService mapDao;
+    @Autowired
+    private MetadataRecordService padraoDao;
+    @PersistenceContext
+    private EntityManager em;
 
-		if (isBlank(m.getName())) {
-			errors.rejectValue("name", "name.empty", "Informe um nome.");
-		} else if (m.getId() != null && mapDao.exists(m.getName())) {
-			Mapeamento real = mapDao.get(m.getId());
-			if (!m.getName().equals(real.getName())) {
-				errors.rejectValue("name", "description.exists",
-						"O nome já existe.");
-			}
-		}
-		sessionFactory.getCurrentSession().clear();
+    @Override
+    public boolean supports(@SuppressWarnings("rawtypes") Class clazz) {
+        return MapeamentoDto.class.isAssignableFrom(clazz);
+    }
 
+    @Override
+    public void validate(Object target, Errors errors) {
+        MapeamentoDto m = (MapeamentoDto) target;
 
-		if (isBlank(m.getDescription())) {
-			errors.rejectValue("description", "description.empty",
-					"Informe uma descrição");
-		}
+        if (isBlank(m.getName())) {
+            errors.rejectValue("name", "name.empty", "Informe um nome.");
+        } else if (m.getId() != null && mapDao.exists(m.getName())) {
+            Mapeamento real = mapDao.get(m.getId());
+            if (!m.getName().equals(real.getName())) {
+                errors.rejectValue("name", "description.exists",
+                        "O nome já existe.");
+            }
+        }
+        em.clear();
 
-		if (isBlank(m.getXslt())) {
-			errors.rejectValue("xslt", "xslt.empty", "Informe um XSLT");
-		}
+        if (isBlank(m.getDescription())) {
+            errors.rejectValue("description", "description.empty",
+                    "Informe uma descrição");
+        }
 
-		if (m != null && padraoDao != null
-				&& padraoDao.get(m.getPadraoMetadados()) == null) {
-			errors.rejectValue("padraoMetadados", "padraoMetadados.empty",
-					"Informe uma padrão de metadados");
-		}
+        if (isBlank(m.getXslt())) {
+            errors.rejectValue("xslt", "xslt.empty", "Informe um XSLT");
+        }
 
-		m.transform();
+        if (padraoDao != null
+                && padraoDao.get(m.getPadraoMetadados()) == null) {
+            errors.rejectValue("padraoMetadados", "padraoMetadados.empty",
+                    "Informe uma padrão de metadados");
+        }
 
-		if (m.isFailed()) {
-			errors.rejectValue("xslt", "xslt.invalid", "O XSLT é inválido.");
-		}
+        m.transform();
 
-	}
+        if (m.isFailed()) {
+            errors.rejectValue("xslt", "xslt.invalid", "O XSLT é inválido.");
+        }
+
+    }
 
 }

@@ -1,7 +1,7 @@
 package feb.services;
 
 import com.cognitivabrasil.feb.data.entities.Search;
-import feb.data.interfaces.SearchesDao;
+import com.cognitivabrasil.feb.data.services.SearchService;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,12 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TagCloudServiceImpl implements TagCloudService {
 
     private int size;
-    SearchesDao searches;
+    SearchService searches;
     private int days;
     private final Logger log = Logger.getLogger(TagCloudServiceImpl.class);
 
     @Autowired
-    public void setSearches(SearchesDao s) {
+    public void setSearches(SearchService s) {
         searches = s;
     }
 

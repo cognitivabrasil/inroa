@@ -189,7 +189,7 @@ public class RepositoryServiceIT extends AbstractDaoTest {
     public void testSaveAndUpdate2() throws Exception {
         if (updated) {
             updated = false;
-            String[] ignore = {"id", "metadata_prefix", "periodicidade_horas", "padrao_metadados", "mapeamento_id", "descricao", "data_ultima_atualizacao",
+            String[] ignore = {"id", "metadata_prefix", "padrao_metadados", "mapeamento_id", "descricao", "data_ultima_atualizacao",
                 "internal_set", "tipo_mapeamento_id", "tipo_sincronizacao", "data_xml"};
             String[] sort = {"nome"};
             Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("repositorios"), sort), new SortedTable(getConnection().createDataSet().getTable("repositorios"), sort), ignore);

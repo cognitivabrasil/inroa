@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cognitivabrasil.feb.data.entities.Search;
-import feb.data.interfaces.SearchesDao;
+import com.cognitivabrasil.feb.data.services.SearchService;
 
 public class TagCloudImplTest {
 	TagCloudServiceImpl tagService;
@@ -39,7 +39,7 @@ public class TagCloudImplTest {
 		l.add(new Search("grêmio", 1));
 
 		
-		SearchesDao search = mock(SearchesDao.class);
+		SearchService search = mock(SearchService.class);
 		when(search.getSearches(argThat(is(3)), argThat(any(Date.class)))).thenReturn(l);
 		when(search.getSearches(argThat(is(5)), argThat(any(Date.class)))).thenReturn(l);
 

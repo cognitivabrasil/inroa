@@ -96,12 +96,6 @@
                 </div>
             </div>
 
-            <div class="LinhaEntrada">
-                <div class="Label">Periodicidade de atualiza&ccedil;&atilde;o :
-                </div>
-                <div class="Value">&nbsp;${rep.periodicidadeAtualizacao} dia(s)</div>
-            </div>
-
             <div class="subtitulo">Atualiza&ccedil;&atilde;o</div>
             <div class="EspacoAntes">&nbsp;</div>
             <div class="LinhaEntrada">

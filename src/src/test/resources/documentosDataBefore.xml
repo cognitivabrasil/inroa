@@ -25,28 +25,24 @@ in the editor. -->
 
     <repositorios id="1" nome="Cesta" descricao="dfsd"
                url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request"
-               periodicidade_horas="24"
                data_ultima_atualizacao="2014-04-28 07:51:22.48377"
                metadata_prefix="lom"
                padrao_metadados="1"
                mapeamento_id="1"
                name_space="lom" />
     <repositorios id="2" nome="Teste2" descricao="dfsd" url_or_ip="http://"
-                  periodicidade_horas="24"
                   data_ultima_atualizacao="1984-08-21 00:00:00"
                   padrao_metadados="1"
                   mapeamento_id="1"
                   metadata_prefix="lom"
                   name_space="lom" />
     <repositorios id="3" nome="Teste3" descricao="dfsd" url_or_ip="http://"
-                  periodicidade_horas="24"
                   data_ultima_atualizacao="9014-08-21 07:51:22.48377"
                   padrao_metadados="1"
                   mapeamento_id="1"
                   metadata_prefix="lom"
                   name_space="lom" />
     <repositorios id="4" nome="marcos" descricao="x" url_or_ip="htttp://x"
-                  periodicidade_horas="24"
                   data_ultima_atualizacao="2014-04-01 23:59:59.48377"
                   padrao_metadados="1"
                   mapeamento_id="1"

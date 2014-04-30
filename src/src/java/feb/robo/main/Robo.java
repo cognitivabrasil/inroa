@@ -1,7 +1,7 @@
 package feb.robo.main;
 
 import com.cognitivabrasil.feb.data.services.DocumentService;
-import feb.data.interfaces.SearchesDao;
+import com.cognitivabrasil.feb.data.services.SearchService;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.Repositorios;
 import feb.robo.atualiza.SubFederacaoOAI;
@@ -25,7 +25,7 @@ public class Robo {
     @Autowired private Repositorios repositorio;
     @Autowired private SubFederacaoOAI subFed;
     
-    @Autowired private SearchesDao searchesDao;
+    @Autowired private SearchService searchesDao;
     @Autowired private DocumentService docDao;
 
     /**

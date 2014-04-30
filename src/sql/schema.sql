@@ -351,7 +351,6 @@ CREATE TABLE repositorios (
     nome character varying(45) NOT NULL,
     descricao character varying(455) DEFAULT NULL::character varying,
     data_ultima_atualizacao timestamp without time zone,
-    periodicidade_horas integer,
     url_or_ip character varying(200) NOT NULL,
     padrao_metadados integer,
     mapeamento_id integer DEFAULT 1 NOT NULL,
@@ -809,6 +808,8 @@ ALTER TABLE ONLY repositorios_subfed
 CREATE TABLE searches (id serial NOT NULL,text TEXT, time timestamp,PRIMARY KEY (id));
 ALTER TABLE searches OWNER TO feb;
 
+
+SELECT setval('public.visitas_id_seq', 100, true);
 
 --
 -- TOC entry 2097 (class 0 OID 0)

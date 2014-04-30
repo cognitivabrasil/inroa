@@ -112,7 +112,7 @@ http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd">
     </task:scheduled-tasks>
     <!--Fim Inicializar o Robo -->
 
-    <bean id="SearchesDao" class="feb.data.daos.SearchesJdbcDao">
+    <bean id="SearchesDao" class="com.cognitivabrasil.feb.data.repositories.SearchesJdbcDao">
         <property name="dataSource" ref="dataSource" />
     </bean>
 

@@ -1,5 +1,6 @@
 package feb.spring.controllers;
 
+import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.DocumentVisitService;
@@ -63,7 +64,7 @@ public final class FEBController {
     private final BuscaValidator buscaValidator;
     private final Logger log = Logger.getLogger(FEBController.class);
     @Autowired
-    private SearchesDao searchesDao;
+    private SearchService searchesDao;
     @Autowired
     private TagCloudService tagCloud;
 

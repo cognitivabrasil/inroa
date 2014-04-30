@@ -16,7 +16,6 @@
     <property column="metadata_prefix" name="metadataPrefix" not-null="true" type="string"/>
     <property column="data_ultima_atualizacao" name="ultimaAtualizacao" type="timestamp"/>
     <property column="name_space" name="namespace" type="string"/>
-    <property column="periodicidade_horas" name="periodicidadeAtualizacao" type="integer"/>
     <property column="internal_set" name="colecoesInternal" type="string"/>
     <property column="data_xml" name="dataOrigem" type="timestamp"/>
     <many-to-one class="com.cognitivabrasil.feb.data.entities.PadraoMetadados" column="padrao_metadados" fetch="join" name="padraoMetadados"/>

@@ -1,15 +1,10 @@
-package feb.data.daos;
+package com.cognitivabrasil.feb.data.repositories;
 
 import com.cognitivabrasil.feb.data.entities.Search;
-import feb.data.interfaces.SearchesDao;
-import feb.util.Operacoes;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,11 +14,10 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
  *
  */
-public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
+public class SearchesJdbcDao extends JdbcDaoSupport {
 
-    private Logger logger = Logger.getLogger(SearchesJdbcDao.class);
+    private final Logger log = Logger.getLogger(SearchesJdbcDao.class);
 
-    @Override
     public void cleanup() {
         String sql = "DELETE FROM searches WHERE time < ?";
 
@@ -36,7 +30,7 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
                     new Object[]{d},
                     new int[]{Types.TIMESTAMP});
         } catch (DataAccessException e) {
-            logger.error("Error while trying to cleanup", e);
+            log.error("Error while trying to cleanup", e);
         }
     }
 
@@ -49,24 +43,23 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
      * @param limit
      * @return
      */
-    @Override
     public List<Search> getSearches(int limit) {
         String sql = "SELECT text, COUNT(*) as count from searches GROUP BY text HAVING COUNT(*) > 1 ORDER BY count DESC,text  LIMIT ?";
         List<Search> customers = getJdbcTemplate().query(sql,
                 new Object[]{limit},
                 new int[]{Types.BIGINT},
-                new BeanPropertyRowMapper<Search>(Search.class));
+                new BeanPropertyRowMapper<>(Search.class));
 
         return customers;
     }
 
-    @Override
     public List<Search> getSearches(Integer i, Date a) {
         String sql = "SELECT text, COUNT(*) as count from searches WHERE time > ? GROUP BY text HAVING COUNT(*) > 1 ORDER BY count DESC,text LIMIT ?";
-        List<Search> customers = getJdbcTemplate().query(sql,
+        List<Search> customers;
+        customers = getJdbcTemplate().query(sql,
                 new Object[]{a, i},
                 new int[]{Types.TIMESTAMP, Types.BIGINT},
-                new BeanPropertyRowMapper<Search>(Search.class));
+                new BeanPropertyRowMapper<>(Search.class));
 
         return customers;
     }
@@ -76,7 +69,7 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
         List<Search> customers = getJdbcTemplate().query(sql,
                 new Object[]{a},
                 new int[]{Types.TIMESTAMP},
-                new BeanPropertyRowMapper<Search>(Search.class));
+                new BeanPropertyRowMapper<>(Search.class));
 
         return customers;
     }
@@ -91,41 +84,32 @@ public class SearchesJdbcDao extends JdbcDaoSupport implements SearchesDao {
      * @param string
      * @param date
      */
-    @Override
     public void save(String string, Date date) {
-        if (!Operacoes.isEmptyText(string)) {
-            String sql = "INSERT INTO searches VALUES (?,?)";
-            String[] l = string.trim().toLowerCase().split("\\s+");
-            List<String> n = new ArrayList<String>();
-            n.addAll(Arrays.asList(l));
-            String cons = StringUtils.join(n, " ");
 
-            try {
-                getJdbcTemplate().update(sql,
-                        new Object[]{cons, date},
-                        new int[]{Types.VARCHAR, Types.TIMESTAMP});
-            } catch (DataAccessException e) {
-                logger.error("Error while trying to save Search", e);
-            }
+        String sql = "INSERT INTO searches (text, time) VALUES (?,?)";
+
+        try {
+            getJdbcTemplate().update(sql,
+                    new Object[]{string, date},
+                    new int[]{Types.VARCHAR, Types.TIMESTAMP});
+        } catch (DataAccessException e) {
+            log.error("Error while trying to save Search", e);
         }
     }
 
-    @Override
     public void deleteAll() {
         getJdbcTemplate().update("DELETE from searches");
     }
 
-    @Override
     public void delete(String tag) {
         String sql = "DELETE FROM searches WHERE text = ?";
-
 
         try {
             getJdbcTemplate().update(sql,
                     new Object[]{tag},
                     new int[]{Types.VARCHAR});
         } catch (DataAccessException e) {
-            logger.error("Error while trying to delete tag: " + tag, e);
+            log.error("Error while trying to delete tag: " + tag, e);
             throw e;
         }
     }

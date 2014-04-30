@@ -197,8 +197,6 @@ src/pom.xml -text
 src/settings.xml -text
 src/sql/clone_database_teste.sql -text
 src/sql/create.sh -text
-src/sql/current_2_old.sql -text
-src/sql/current_old.sql -text
 src/sql/data.sql -text
 src/sql/feb_similarity.sql -text
 src/sql/schema.sql -text
@@ -226,6 +224,7 @@ src/src/java/com/cognitivabrasil/feb/data/repositories/FederationRepository.java
 src/src/java/com/cognitivabrasil/feb/data/repositories/MappingRepository.java -text
 src/src/java/com/cognitivabrasil/feb/data/repositories/MetadataRecordRepository.java -text
 src/src/java/com/cognitivabrasil/feb/data/repositories/RepositoryRepository.java -text
+src/src/java/com/cognitivabrasil/feb/data/repositories/SearchesJdbcDao.java -text
 src/src/java/com/cognitivabrasil/feb/data/repositories/UserRepository.java -text
 src/src/java/com/cognitivabrasil/feb/data/repositories/VisitRepository.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/DocumentService.java -text
@@ -240,15 +239,15 @@ src/src/java/com/cognitivabrasil/feb/data/services/MetadataRecordService.java -t
 src/src/java/com/cognitivabrasil/feb/data/services/MetadataRecordServiceImpl.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/RepositoryService.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/RepositoryServiceImpl.java -text
+src/src/java/com/cognitivabrasil/feb/data/services/SearchService.java -text
+src/src/java/com/cognitivabrasil/feb/data/services/SearchServiceImpl.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/UserService.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/UserServiceImpl.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/VisitService.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/VisitServiceImpl.java -text
-src/src/java/feb/data/daos/SearchesJdbcDao.java -text
 src/src/java/feb/data/interfaces/DocumentoFebInterface.java -text
 src/src/java/feb/data/interfaces/FebDomainObject.java -text
 src/src/java/feb/data/interfaces/Paginavel.java -text
-src/src/java/feb/data/interfaces/SearchesDao.java -text
 src/src/java/feb/exceptions/FederationException.java -text
 src/src/java/feb/exceptions/RepositoryException.java -text
 src/src/java/feb/ferramentaAdministrativa/validarOAI/ParserIdentify.java -text

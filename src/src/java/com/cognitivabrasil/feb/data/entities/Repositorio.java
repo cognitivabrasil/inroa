@@ -55,7 +55,6 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     @DateTimeFormat(style = "M-")
     private DateTime ultimaAtualizacao;
     private String namespace;
-    private Integer periodicidadeAtualizacao;
     private String colecoesInternal;
     private PadraoMetadados padraoMetadados;
     private Mapeamento mapeamento;
@@ -74,7 +73,6 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         ultimaAtualizacao = null;
         dataOrigem = null;
         namespace = "";
-        periodicidadeAtualizacao = 1;
         colecoesInternal = "";
     }
 
@@ -251,22 +249,13 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         this.namespace = namespace;
     }
 
-    // TODO ver o que precisa para modificar na base para dias e nao horas.
-    @Column(name = "periodicidade_horas")
-    public Integer getPeriodicidadeAtualizacao() {
-        return periodicidadeAtualizacao;
-    }
-
-    public void setPeriodicidadeAtualizacao(Integer periodicidadeAtualizacao) {
-        this.periodicidadeAtualizacao = periodicidadeAtualizacao;
-    }
-
     @Transient
     public Date getProximaAtualizacao() {
         if (ultimaAtualizacao == null) {
             return null;
         } else {
-            return ultimaAtualizacao.plusDays(1).toDate(); // soma a periodicidade
+            // soma a periodicidade
+            return ultimaAtualizacao.plusDays(1).toDate();
         }
     }
 
@@ -283,6 +272,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
      */
     @Transient
     public boolean getIsOutdated() {
+        //TODO: adicionar algumas horas no new Date para garantir que será atualizado mesmo que tenha demorado na última vez.s
         return getProximaAtualizacao() == null || getProximaAtualizacao().before(new Date());
     }
 

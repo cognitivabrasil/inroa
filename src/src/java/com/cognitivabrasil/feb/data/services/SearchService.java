@@ -1,10 +1,10 @@
-package feb.data.interfaces;
+package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.data.entities.Search;
 import java.util.Date;
 import java.util.List;
 
-public interface SearchesDao {
+public interface SearchService {
 	
 	/**
 	 * Cleans up the Searches table.
@@ -24,6 +24,13 @@ public interface SearchesDao {
 	 * @return
 	 */
 	public List<Search> getSearches(int limit);
+        
+        /**
+	 * Returns at distinct searches that occurred after @{code date}.
+	 * @param date
+	 * @return
+	 */
+        public List<Search> getSearches(Date a);
 
 
 	/**

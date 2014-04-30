@@ -42,17 +42,16 @@ Primeira etapa do cadastro de um repositorio
 
         <script language="JavaScript" type="text/javascript"
                 src="${funcoesMapeamentoJs}">
-                    //funcoes javascript que chamam o ajax
+            //funcoes javascript que chamam o ajax
         </script>
         <script type="text/javascript">
             var myForm = new Validate();
-            myForm.addRules({id : 'name', option : 'required', error : '* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
-            myForm.addRules({id : 'descricao', option : 'required',	error : '* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
-            myForm.addRules({id : 'padraoMetadados', option : 'required', error : '* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
-            myForm.addRules({id : 'periodicidadeAtualizacao', option : 'required', error : '* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
-            myForm.addRules({id : 'mapeamento.id', option : 'required', error : '* Deve ser selecionado um mapeamento!'});
-            myForm.addRules({id : 'metadataPrefix', option : 'required', error : '* Deve ser informado o MetadataPrefix!' });
-            myForm.addRules({id : 'url', option : 'required', error : '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
+            myForm.addRules({id: 'name', option: 'required', error: '* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
+            myForm.addRules({id: 'descricao', option: 'required', error: '* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
+            myForm.addRules({id: 'padraoMetadados', option: 'required', error: '* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
+            myForm.addRules({id: 'mapeamento.id', option: 'required', error: '* Deve ser selecionado um mapeamento!'});
+            myForm.addRules({id: 'metadataPrefix', option: 'required', error: '* Deve ser informado o MetadataPrefix!'});
+            myForm.addRules({id: 'url', option: 'required', error: '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
         </script>
 
     </head>
@@ -149,17 +148,6 @@ Primeira etapa do cadastro de um repositorio
 
 
                     <div class="Espaco">&nbsp;</div>
-                </div>
-
-
-                <div class="LinhaEntrada">
-                    <form:errors path="periodicidadeAtualizacao" cssClass="ValueErro" />
-                    <div class="Label">Periodicidade de atualiza&ccedil;&atilde;o
-                        (em dias):</div>
-                    <div class="Value">
-                        <form:input path="periodicidadeAtualizacao" maxlength="3"
-                                    onkeypress="return ( isNumber(event) );"/>
-                    </div>
                 </div>
 
                 <div class="LinhaEntrada">

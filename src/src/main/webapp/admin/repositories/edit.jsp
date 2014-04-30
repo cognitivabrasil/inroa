@@ -48,7 +48,6 @@
                 myForm.addRules({id:'mapeamento.id',option:'isNotEmpty',error:'* Deve ser selecionado um mapeamento!'});
                 myForm.addRules({id:'metadataPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
                 myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
-                myForm.addRules({id:'periodicidadeAtualizacao',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
                 myForm.addRules({id : 'url', option : 'required', error : '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
             </script>
 
@@ -107,16 +106,6 @@
                     </div>
                     <div class="Value">
                         <form:input path="colecoesString" maxlength="45" />
-                    </div>
-                </div>
-
-                <div class="LinhaEntrada">
-                    <form:errors path="periodicidadeAtualizacao" cssClass="ValueErro" />
-                    <div class="Label">
-                        Periodicidade de atualiza&ccedil;&atilde;o (em dias):
-                    </div>
-                    <div class="Value">
-                        <form:input path="periodicidadeAtualizacao" maxlength="3" onkeypress ="return ( isNumber(event) );" />
                     </div>
                 </div>
 

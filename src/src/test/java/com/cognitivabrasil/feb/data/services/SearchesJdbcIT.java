@@ -26,7 +26,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cognitivabrasil.feb.data.entities.Search;
-import feb.data.daos.SearchesJdbcDao;
 
 /**
  * 
@@ -40,7 +39,7 @@ import feb.data.daos.SearchesJdbcDao;
 public class SearchesJdbcIT extends AbstractDaoTest {
 
 
-	@Autowired SearchesJdbcDao sDao;
+	@Autowired SearchService sDao;
 	
 	@Test
 	public void getSearches() throws ParseException {
