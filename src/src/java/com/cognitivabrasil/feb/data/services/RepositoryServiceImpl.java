@@ -44,7 +44,7 @@ public class RepositoryServiceImpl implements RepositoryService{
 
     @Override
     public Repositorio get(String name) {
-        return rep.findByName(name);
+        return rep.findByNameIgnoreCase(name);
     }
 
     @Override

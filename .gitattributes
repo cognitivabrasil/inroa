@@ -525,6 +525,16 @@ src/src/test/java/com/cognitivabrasil/feb/data/entities/DocumentoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/RepositorioTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/SubFederacaoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/UsuarioTest.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/AbstractDaoTest.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/DocumentosHibernateDaoIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/DocumentosVisitasHibernateDaoIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/MapeamentoHibernateDaoIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/PadraoMetadadosHibernateDaoIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/RepositoryServiceIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/SearchesJdbcIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/SubfederacaoHibernateDaoIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/UsuarioHibernateDaoIT.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/services/VisitServiceIT.java -text
 src/src/test/java/feb/ferramentaAdministrativa/VerificaLinkOAITest.java -text
 src/src/test/java/feb/metadata/FEB-froac1.xml -text
 src/src/test/java/feb/metadata/XsltConversorTest.java -text
@@ -557,6 +567,7 @@ src/src/test/java/feb/robo/atualiza/subfedOAI/SubRepositoriosTest.java -text
 src/src/test/java/feb/services/TagCloudImplTest.java -text
 src/src/test/java/feb/spring/FebConfigIT.java -text
 src/src/test/java/feb/spring/UserLoggerIT.java -text
+src/src/test/java/feb/util/OperacoesTest.java -text
 src/src/test/java/functionaltests/LumeXmlIT.java -text
 src/src/test/java/functionaltests/PerformanceTest.java -text
 src/src/test/java/functionaltests/UpdateRepAndFedIt.java -text

@@ -6,7 +6,6 @@
        xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:task="http://www.springframework.org/schema/task"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-
        xmlns:encryption="http://www.jasypt.org/schema/encryption"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
@@ -69,7 +68,7 @@ http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd">
 
 
     <bean id="entityManagerFactory"
-           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
@@ -131,6 +130,7 @@ http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd">
 
     <bean id="repositorios" class="feb.robo.atualiza.Repositorios" />
     <bean id="subf" class="feb.robo.atualiza.SubFederacaoOAI" />
+    <bean id="Indexador" class="feb.ferramentaBusca.indexador.Indexador"/>
 
     <bean id="myAspect" class="feb.spring.aspects.FebLoggerAspect" />
 

@@ -34,7 +34,7 @@ public class FederationServiceImpl implements FederationService{
 
     @Override
     public SubFederacao get(String name) {
-        return rep.findByName(name);
+        return rep.findByNameIgnoreCase(name);
     }
 
     @Override

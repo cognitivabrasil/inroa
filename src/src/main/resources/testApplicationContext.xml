@@ -104,7 +104,7 @@ http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd">
     <bean id="SearchesDao" class="feb.data.daos.SearchesJdbcDao">
         <property name="dataSource" ref="dataSource" />
     </bean>
-	
+        	
     <bean id="userActionLogger" class="feb.services.UserActionLoggerImpl"/>
 
     <context:annotation-config />

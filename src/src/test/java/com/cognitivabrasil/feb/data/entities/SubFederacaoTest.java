@@ -100,7 +100,7 @@ public class SubFederacaoTest {
     @Test
     public void testUpdateListRepositories() throws Exception{
         
-        Set<RepositorioSubFed> listSubRep = new HashSet<RepositorioSubFed>();
+        Set<RepositorioSubFed> listSubRep = new HashSet<>();
         RepositorioSubFed rsf = new RepositorioSubFed();
         rsf.setName("marcos");
         listSubRep.add(rsf);
@@ -116,13 +116,13 @@ public class SubFederacaoTest {
         SubFederacao r1 = new SubFederacao();
         r1.setRepositorios(listSubRep);
         
-        Set<String> listaNova = new HashSet<String>();
+        Set<String> listaNova = new HashSet<>();
         listaNova.add("marcos");
         listaNova.add("jorge");
         listaNova.add("preto");
         
         r1.atualizaListaSubRepositorios(listaNova);
-       Set<RepositorioSubFed> correto = new HashSet<RepositorioSubFed>();
+       Set<RepositorioSubFed> correto = new HashSet<>();
        
         rsf = new RepositorioSubFed();
         rsf.setName("marcos");

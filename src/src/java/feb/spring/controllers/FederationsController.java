@@ -30,8 +30,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/federations/*")
 public final class FederationsController{// extends AbstractDeletable<SubFederacao, SubFederacaoHibernateDAO> {
 
-    
-    //TODO: refazer o delete que estava no abstractDeletable
+    //TODO: fazer o metodo delete
+//    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+//    public @ResponseBody
+//    String delete(@PathVariable("id") Integer id, Model model) {
+//            T obj = getDAO().get(id);
+//            log.info("Deletando "+obj.getClass().getName()+": "+obj.getName());
+//            getDAO().delete(obj);
+//            log.info(obj.getClass().getName()+" deletado(a) com sucesso.");
+//            return "ok";
+//    }
     
     @Autowired
     private FederationService subDao;
@@ -43,11 +51,12 @@ public final class FederationsController{// extends AbstractDeletable<SubFederac
     ServletContext servletContext;
     @Autowired SubFederacaoOAI subFedOAI;
     
-    private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
-    Logger log = Logger.getLogger(FederationsController.class);
+    private final SubFederacaoValidador subFedValidador;
+    private final Logger log = Logger.getLogger(FederationsController.class);
 
 
     public FederationsController() {
+        subFedValidador = new SubFederacaoValidador();
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

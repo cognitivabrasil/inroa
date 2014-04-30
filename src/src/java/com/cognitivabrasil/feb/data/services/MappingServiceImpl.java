@@ -43,6 +43,6 @@ public class MappingServiceImpl implements MappingService{
 
     @Override
     public boolean exists(String name) {
-        return mapRep.findByName(name);
+        return mapRep.findByName(name)!=null;
     }    
 }

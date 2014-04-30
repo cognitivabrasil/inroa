@@ -1,22 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.1.4
--- Dumped by pg_dump version 9.1.4
--- Started on 2012-06-19 15:30:51 BRT
-
-SET statement_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- TOC entry 2095 (class 1262 OID 16385)
--- Name: federacao; Type: DATABASE; Schema: -; Owner: feb
---
-
 
 CREATE DATABASE federacao;
 ALTER DATABASE federacao OWNER TO feb;
@@ -475,7 +456,7 @@ ALTER TABLE public.usuarios OWNER TO feb;
 -- Table: visitas
 
 CREATE TABLE visitas (
-  id integer NOT NULL,
+  id serial NOT NULL,
   horario timestamp without time zone
 );
 
@@ -486,7 +467,7 @@ COMMENT ON TABLE visitas IS 'contador de visitas do FEB';
 -- Table: documentos_visitas
 
 CREATE TABLE documentos_visitas (
-    documento integer NOT NULL,
+    documento serial NOT NULL,
     visita integer NOT NULL,
     id integer NOT NULL
 );
@@ -495,28 +476,6 @@ ALTER TABLE public.documentos_visitas OWNER TO feb;
 
 COMMENT ON TABLE documentos_visitas IS 'tabela n x n de documentos por visitas';
 
-CREATE SEQUENCE visitas_id_seq
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1
-    CYCLE;
-
-ALTER TABLE public.visitas_id_seq OWNER TO feb;
-
-CREATE SEQUENCE documentos_visitas_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-ALTER TABLE public.documentos_visitas_id_seq OWNER TO feb;
-
-ALTER SEQUENCE documentos_visitas_id_seq OWNED BY documentos_visitas.id;
-
-ALTER TABLE ONLY documentos_visitas ALTER COLUMN id SET DEFAULT nextval('documentos_visitas_id_seq'::regclass);
 
 ALTER TABLE ONLY documentos_visitas
     ADD CONSTRAINT pki_documentos_visitas PRIMARY KEY (id);

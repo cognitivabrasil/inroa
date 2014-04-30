@@ -14,5 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
  */
 public interface FederationRepository extends JpaRepository<SubFederacao, Integer> {
-    public SubFederacao findByName(String name);
+    public SubFederacao findByNameIgnoreCase(String name);
 }

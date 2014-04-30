@@ -20,14 +20,16 @@ import org.springframework.validation.Validator;
 public class RepositorioValidator implements Validator  {
     
     
+    @Override
     public boolean supports(Class clazz) {
         return Repositorio.class.isAssignableFrom(clazz);
     }
     
+    @Override
     public void validate(Object target, Errors errors) {
         
-        ValidationUtils.rejectIfEmpty(errors, "nome",
-                "required.nome", "É necessário informar um nome.");
+        ValidationUtils.rejectIfEmpty(errors, "name",
+                "required.name", "É necessário informar um nome.");
         ValidationUtils.rejectIfEmpty(errors, "descricao",
                 "required.descricao", "É necessário informar uma descrição.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mapeamento.id",

@@ -15,5 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface MappingRepository extends JpaRepository<Mapeamento, Integer>{
     
-    public boolean findByName(String name);
+    public Mapeamento findByName(String name);
 }

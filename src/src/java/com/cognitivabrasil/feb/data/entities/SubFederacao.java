@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 import org.springframework.core.style.ToStringCreator;
 import feb.util.Operacoes;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -252,31 +254,34 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
      * reposit&oacute;rios da subfedera&ccedil;&atilde;o
      *
      * @param subFed objeto federa&ccedil;&atilde;o
-     * @param listaSubRep ArrayList de Strings contendo o nome dos
+     * @param listXml ArrayList de Strings contendo o nome dos
      * reposit&oacute;rios da subfedera&ccedil;&atilde;o
      * @throws Exception
      */
-    public void atualizaListaSubRepositorios(Set<String> listaSubRep) {
+    public void atualizaListaSubRepositorios(Set<String> listXml) {
 
-        Set<RepositorioSubFed> repSubFed = this.getRepositorios();
+        Set<RepositorioSubFed> listBase = this.getRepositorios();
 
-        for (String nomeSubRep : listaSubRep) {
+        for (String nomeSubRep : listXml) {
             RepositorioSubFed repTest = new RepositorioSubFed();
             repTest.setSubFederacao(this);
             repTest.setName(nomeSubRep);
 
-            if (!repSubFed.contains(repTest)) { //se nao tiver na base o repositorio, adiciona.
-                repSubFed.add(repTest);
+            //se nao tiver na base o repositorio, adiciona.
+            if (!listBase.contains(repTest)) { 
+                listBase.add(repTest);
             }
         }
-
-        Set<RepositorioSubFed> newListRepositories = new HashSet<>();
-        for (RepositorioSubFed repTest : repSubFed) {
-            if (listaSubRep.contains(repTest.getName())) { //se tiver na base algum repositorio que nao esteja na lista, remove.
-                newListRepositories.add(repTest);
+        List<RepositorioSubFed> delete = new ArrayList<>();
+        for(RepositorioSubFed rep : listBase){
+            //se tiver na base algum repositorio que nao esteja na lista, remove.
+            if(!listXml.contains(rep.getName())){
+                delete.add(rep);
             }
         }
-        this.setRepositorios(newListRepositories); //armazena o Set modificado
+        for(RepositorioSubFed rep : delete){
+            listBase.remove(rep);
+        }
     }
 
     public RepositorioSubFed getRepositoryByName(String nome) {

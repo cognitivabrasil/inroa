@@ -9,7 +9,7 @@ import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.DocumentService;
-import feb.data.daos.AbstractDaoTest;
+import com.cognitivabrasil.feb.data.services.AbstractDaoTest;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import feb.data.interfaces.*;

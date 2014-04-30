@@ -29,6 +29,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -41,7 +44,7 @@ import javax.persistence.Transient;
 @Table(name = "repositorios")
 public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObject {
 
-    static Logger log = Logger.getLogger(Repositorio.class.getName());
+    private static final Logger log = Logger.getLogger(Repositorio.class);
     private static final long serialVersionUID = 1011292251690153763L;
     private Integer id;
     private String name;
@@ -49,7 +52,8 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     private String url;
     private String metadataPrefix;
     private transient Set<DocumentoReal> documentos;
-    private Date ultimaAtualizacao;
+    @DateTimeFormat(style = "M-")
+    private DateTime ultimaAtualizacao;
     private String namespace;
     private Integer periodicidadeAtualizacao;
     private String colecoesInternal;
@@ -59,7 +63,6 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     private transient Session session;
     private Date dataOrigem;
     private Date dataOrigemTemp;
-    private static final long MILLISECONDS_PER_DAY = 24L * 3600 * 1000;
 
     public Repositorio() {
         id = null;
@@ -67,7 +70,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         descricao = "";
         url = "";
         metadataPrefix = "";
-        documentos = new HashSet<DocumentoReal>(0);
+        documentos = new HashSet<>(0);
         ultimaAtualizacao = null;
         dataOrigem = null;
         namespace = "";
@@ -200,20 +203,20 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     public String getMetadataPrefix() {
         return metadataPrefix;
     }
-
-    public void setUltimaAtualizacao(Date ultimaAtualizacao) {
+    
+    public void setUltimaAtualizacao(DateTime ultimaAtualizacao) {
         this.ultimaAtualizacao = ultimaAtualizacao;
         if (this.dataOrigemTemp != null) {
             this.dataOrigem = this.dataOrigemTemp;
         }
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Column(name = "data_ultima_atualizacao")
-    public Date getUltimaAtualizacao() {
+    public DateTime getUltimaAtualizacao() {
         return ultimaAtualizacao;
     }
-
+    
     /**
      * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se o
      * reposit&oacute;rio n&atilde;o tiver uma url associada ele informa que
@@ -263,8 +266,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         if (ultimaAtualizacao == null) {
             return null;
         } else {
-            return new Date(ultimaAtualizacao.getTime() + periodicidadeAtualizacao
-                    * MILLISECONDS_PER_DAY); // soma a periodicidade
+            return ultimaAtualizacao.plusDays(1).toDate(); // soma a periodicidade
         }
     }
 
@@ -281,11 +283,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
      */
     @Transient
     public boolean getIsOutdated() {
-        if (getProximaAtualizacao() == null || getProximaAtualizacao().before(new Date())) {
-            return true;
-        } else {
-            return false;
-        }
+        return getProximaAtualizacao() == null || getProximaAtualizacao().before(new Date());
     }
 
     /**
@@ -295,9 +293,9 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     @Transient
     public Set<String> getColecoes() {
         if (colecoesInternal.isEmpty()) {
-            return new HashSet<String>();
+            return new HashSet<>();
         } else {
-            return new HashSet<String>(Arrays.asList(colecoesInternal.split(";")));
+            return new HashSet<>(Arrays.asList(colecoesInternal.split(";")));
         }
     }
 

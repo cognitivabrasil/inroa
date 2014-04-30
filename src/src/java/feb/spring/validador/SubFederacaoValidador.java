@@ -20,14 +20,16 @@ import com.cognitivabrasil.feb.data.entities.SubFederacao;
 @Component
 public class SubFederacaoValidador implements Validator {
 
+    @Override
     public boolean supports(Class clazz) {
         return SubFederacao.class.isAssignableFrom(clazz);
     }
 
+    @Override
     public void validate(Object target, Errors errors) {
         
-        ValidationUtils.rejectIfEmpty(errors, "nome",
-                "required.nome", "É necessário informar um nome.");
+        ValidationUtils.rejectIfEmpty(errors, "name",
+                "required.name", "É necessário informar um nome.");
         ValidationUtils.rejectIfEmpty(errors, "descricao",
                 "required.descricao", "É necessário informar uma descrição.");
 
