@@ -239,6 +239,15 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
         this.dataOrigem = dataOrigem;
         this.dataOrigemTemp = null;
     }
+    
+    @Transient
+    public Date getDataOrigemTemp() {
+        return dataOrigemTemp;
+    }
+
+    public void setDataOrigemTemp(Date dataOrigemTemp) {
+        this.dataOrigemTemp = dataOrigemTemp;
+    }
 
     @Column(name = "name_space")
     public String getNamespace() {

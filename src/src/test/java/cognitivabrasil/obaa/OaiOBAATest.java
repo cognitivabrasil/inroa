@@ -12,7 +12,7 @@ public class OaiOBAATest {
 	@Test
 	public void testSetSpec() throws FileNotFoundException {
 		OaiOBAA l = OaiOBAA
-				.fromFilename("./src/test/java/feb/metadata/oai_obaa.xml");
+				.fromFilename("./src/test/resources/oai_obaa.xml");
 
 		Header h = l.getHeader(0);
 

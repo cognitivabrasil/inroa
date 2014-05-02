@@ -139,4 +139,12 @@ public class SubFederacaoTest {
         assertEquals(correto, r1.getRepositorios());
         
     }
+    
+    @Test
+    public void testUpdateDate(){
+        SubFederacao fed = new SubFederacao();
+        fed.setUltimaAtualizacao(new Date());
+        
+        
+    }
 }

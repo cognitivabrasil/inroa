@@ -105,6 +105,7 @@ public class Importer {
 				docDao.save(obaa, header, subFed);
 			}
 		}
+                subFed.setDataXMLTemp(oai.getResponseDate());
 	}
 
 	/**

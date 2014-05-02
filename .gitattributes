@@ -984,7 +984,6 @@ src/src/test/java/feb/metadata/oai_error.xml -text
 src/src/test/java/feb/metadata/oai_lom.xml -text
 src/src/test/java/feb/metadata/oai_norecords.xml -text
 src/src/test/java/feb/metadata/oai_norecords2.xml -text
-src/src/test/java/feb/metadata/oai_obaa.xml -text
 src/src/test/java/feb/metadata/oai_subRepositorios.xml -text
 src/src/test/java/feb/metadata/obaa1.xml -text
 src/src/test/java/feb/metadata/teste1.xml -text
@@ -1015,6 +1014,7 @@ src/src/test/resources/fedIFRS-records.xml -text
 src/src/test/resources/froac.xml -text
 src/src/test/resources/froacLOM.xml -text
 src/src/test/resources/oai-feb2.1.xml -text
+src/src/test/resources/oai_obaa.xml -text
 src/src/test/resources/repIFRS-records.xml -text
 src/src/xslt/dc2obaa.xsl -text
 src/src/xslt/dc2obaa_full.xsl -text

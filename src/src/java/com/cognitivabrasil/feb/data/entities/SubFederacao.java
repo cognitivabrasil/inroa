@@ -80,6 +80,15 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
         this.dataXML = dataXML;
         this.dataXMLTemp = null;
     }
+    
+    @Transient
+    public String getDataXMLTemp() {
+        return dataXMLTemp;
+    }
+
+    public void setDataXMLTemp(String dataXMLTemp) {
+        this.dataXMLTemp = dataXMLTemp;
+    }
 
     public String getDescricao() {
         return descricao;

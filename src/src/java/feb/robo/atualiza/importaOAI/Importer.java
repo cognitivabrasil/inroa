@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 // TODO: Auto-generated Javadoc
 public class Importer {
@@ -86,15 +88,21 @@ public class Importer {
         }
 
         // TODO: move the conversion to and from String of the date to OaiOBAA class
-        repDao.save(rep);
+        Date d;
+        try {
+            d = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(oai.getResponseDate());
+            rep.setDataOrigemTemp(d);
+            repDao.save(rep);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            logger.error("Error in parsing date from OaiPMH, probably malformed XML.");
+        }
 
         //TODO: Testar para ver se funciona sem o flush
 //        docDao.flush();
-
         return oai.getSize();
 
     }
-
 
     /**
      * Gets the oai obaa.

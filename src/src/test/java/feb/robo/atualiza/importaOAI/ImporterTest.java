@@ -11,13 +11,11 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.hibernate.Session;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,9 +27,10 @@ import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import com.cognitivabrasil.feb.data.entities.Mapeamento;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
-import com.cognitivabrasil.feb.data.entities.SubNodo;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
+import java.text.SimpleDateFormat;
+import static org.hamcrest.Matchers.equalTo;
 import org.junit.Ignore;
 
 /**
@@ -69,6 +68,8 @@ public class ImporterTest {
 		imp.setRepDao(repDao);
 		imp.update();
 		
+                assertThat(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").format(r.getDataOrigemTemp()), equalTo("2011-09-12T12:25:51Z"));
+                
 		OaiOBAA oai = imp.getOaiObaa();
 		
 		assertEquals(2, oai.getSize());
