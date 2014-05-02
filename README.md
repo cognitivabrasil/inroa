@@ -61,7 +61,7 @@ a desenvolver.
 	sudo chown tomcat7 /var/log/feb/
 ```
 
-TODO: Nao está funcionando. Rodar o feb
+Rodar o feb
 ----------------------------------------------------
 
 ```
@@ -72,24 +72,24 @@ Verificação de que está rodando certo
 -----------------------------------------------------------
 
 Acesse o feb em http://localhost:9091.
-A senha padrão de administrador é *feb@RNP*.
+A senha padrão de administrador é *teste*.
 
 
 
-TODO: NAO LUME, um MENOR! Adicionar LUME como repositório de testes
+Adicionar Repositório Cognix como repositório de testes
 --------------------------------------------------------
 
 Entre na ferramenta administrativa e adicione um novo repositório.
 Para o LUME os dados são:
 
-Nome: LUME
-Descrição: LUME
+Nome: Cognix
+Descrição: Repositório Cognix
 
-URL: http://www.lume.ufrgs.br/oai/request
+URL: http://feb.ufrgs.br/repositorio/oai
 Comunidades: (vazio)
-Padrão metadados: Dublin Core
-Mapeamento: DC Padrão
-MetadataPrefix e Namespace: oai_dc
+Padrão metadados: OBAA
+Mapeamento: OBAA Padrão
+MetadataPrefix e Namespace: obaa
 Periodicidade: 1
 
 Após adicionar, rode a atualização manual.
