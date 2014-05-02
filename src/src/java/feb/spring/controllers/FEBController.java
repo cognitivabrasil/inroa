@@ -241,7 +241,7 @@ public final class FEBController {
         } else {
             try {
                 Recuperador rec = new Recuperador();
-                List<DocumentoReal> docs = rec.busca(consulta);
+                List<DocumentoReal> docs = rec.buscaAvancada(consulta);
                 model.addAttribute("documentos", docs);
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());

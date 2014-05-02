@@ -55,7 +55,6 @@ public class Indexador {
 /**
         for (int i = 0; i < tamanhoDocDAO; i = i + numMaxDoc) {
 
-            System.out.println(i);
             s.indexarBancoDeDados(docDao.getAll(numMaxDoc, i));
             
             // Esse comando abaixo serve para evitar estouro de memoria. 
