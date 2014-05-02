@@ -196,13 +196,6 @@ src/pg_similarity-0.0.19.tgz -text
 src/pom.xml -text
 src/settings.xml -text
 src/solr/README.txt -text
-src/solr/feb/conf/velocity/clusterResults.vm -text
-src/solr/feb/conf/velocity/hitGrouped.vm -text
-src/solr/feb/conf/velocity/join-doc.vm -text
-src/solr/feb/conf/velocity/product-doc.vm -text
-src/solr/feb/conf/velocity/queryGroup.vm -text
-src/solr/feb/conf/velocity/querySpatial.vm -text
-src/solr/feb/conf/velocity/richtext-doc.vm -text
 src/solr/solr.xml -text
 src/solr/zoo.cfg -text
 src/sql/clone_database_teste.sql -text
