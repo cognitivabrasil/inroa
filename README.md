@@ -30,6 +30,18 @@ Configuração do Solr
 ----------------------------------------------------
 Os arquivos da coleção FEB, com o Schema correto,
 estão em src/solr.
+
+Se você estiver desenvolvendo, o mais fácil é rodar
+o Solr embedded incluido com o FEB, que já vem configurado
+corretamente:
+
+```
+cd src/solr
+java -jar start.jar
+```
+
+Para deploy, o melhor é usar o pacote solr.
+
 Caso você tenha instalado o SOLR no tomcat com o
 instalador (.deb) da Cognitiva, basta copiar 
 o diretório:
@@ -49,7 +61,7 @@ a desenvolver.
 	sudo chown tomcat7 /var/log/feb/
 ```
 
-Rodar o feb
+TODO: Nao está funcionando. Rodar o feb
 ----------------------------------------------------
 
 ```
@@ -63,7 +75,8 @@ Acesse o feb em http://localhost:9091.
 A senha padrão de administrador é *feb@RNP*.
 
 
-Adicionar LUME como repositório de testes
+
+TODO: NAO LUME, um MENOR! Adicionar LUME como repositório de testes
 --------------------------------------------------------
 
 Entre na ferramenta administrativa e adicione um novo repositório.

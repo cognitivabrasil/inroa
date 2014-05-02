@@ -24,3 +24,6 @@ src/src/main/webapp/WEB-INF
 src/src/test/java/metadata/.oai_obaa.xml.swp
 src/target
 src/test
+src/solr/logs/
+src/solr/solr/feb/data/
+*.swp
