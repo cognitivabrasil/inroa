@@ -23,23 +23,23 @@ public class CriaQuery {
            String resultado = "obaaQueryFields:" + pesquisa.getConsulta();
 
         if (pesquisa.hasAuthor()) {
-            resultado += "AND obaa.general.author:" + pesquisa.getAutor();
+            resultado += "AND obaa.lifecycle.entity:" + pesquisa.getAutor();
         }
 
         if (pesquisa.getHasAuditory() != null) {
-            resultado += "AND obaa.educational.resourcedescription.primary.hasauditory:" + pesquisa.getHasAuditory();
+            resultado += "AND obaa.accessibility.resourcedescription.primary.hasauditory:" + pesquisa.getHasAuditory();
         }
 
         if (pesquisa.getHasVisual() != null) {
-            resultado += "AND obaa.educational.resourcedescription.primary.hasvisual:" + pesquisa.getHasVisual();
+            resultado += "AND obaa.accessibility.resourcedescription.primary.hasvisual:" + pesquisa.getHasVisual();
         }
 
         if (pesquisa.getHasText() != null) {
-            resultado += "AND obaa.educational.resourcedescription.primary.hastext:" + pesquisa.getHasText();
+            resultado += "AND obaa.accessibility.resourcedescription.primary.hastext:" + pesquisa.getHasText();
         }
         
         if (pesquisa.getHasTactile()) {
-            resultado += "OR obaa.educational.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
+            resultado += "OR obaa.accessibility.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
         }
         
         

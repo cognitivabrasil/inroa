@@ -7,7 +7,7 @@ import cognitivabrasil.obaa.OBAA;
 
 public class LifeCycleFields {
 
-    private static final String cabecalho = "obaa.lifecyclefield.";
+    private static final String cabecalho = "obaa.lifecycle.";
 
     public static List<String> getStatus(OBAA o) {
         List<String> retorno = new ArrayList<String>();
@@ -18,7 +18,7 @@ public class LifeCycleFields {
 
     public static List<String> getEntity(OBAA o) {
         List<String> entities = new ArrayList<String>();
-        entities.add(cabecalho + "entitiy");
+        entities.add(cabecalho + "entity");
 
         for (int i = 0; i < o.getLifeCycle().getContribute().size(); i++) {
             for (int j = 0; j < o.getLifeCycle().getContribute().get(i).getEntities().size(); j++) {

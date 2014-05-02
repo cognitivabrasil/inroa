@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -91,6 +92,7 @@ public class QuerySolr {
 
         String campos = CriaQuery.criaQueryCompleta(pesquisa);
 
+        System.out.println(campos);
         query = new SolrQuery();
 
         query.setQuery(campos);

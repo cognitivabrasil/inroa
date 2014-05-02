@@ -50,12 +50,9 @@ public class Solr {
      */
     public void indexarBancoDeDados(List<DocumentoReal> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
-        int numDocs = 0;
-        //docs = docs.subList(0, docs.size());
-        log.debug("Convertendo obaaXML em SolrXML...");
-        log.debug("Numero de objetos a serem convertidos: " + docs.size());
+        
+        log.debug("Convertendo obaaXML em SolrXML: Numero de objetos a serem convertidos: " + docs.size());
         for (DocumentoReal doc : docs) {
-            numDocs++;
             String entry = "";
             try {
                 entry = doc.getObaaEntry();

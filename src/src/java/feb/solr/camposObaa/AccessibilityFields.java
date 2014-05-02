@@ -7,8 +7,7 @@ import cognitivabrasil.obaa.OBAA;
 
 public class AccessibilityFields {
 
-	private static final String cabecalho = "obaa.educational.resourcedescription.primary.";
-
+	private static final String cabecalho = "obaa.accessibility.resourcedescription.primary.";
 
 	public static List<String> getHasVisual(OBAA o)
 	{
