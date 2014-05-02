@@ -4,7 +4,7 @@
  */
 package feb.spring.validador;
 
-import feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

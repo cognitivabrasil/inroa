@@ -21,8 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
-import feb.data.entities.SubFederacao;
-import feb.data.interfaces.DocumentosDAO;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.DocumentService;
 import feb.metadata.XSLTUtil;
 
 /**
@@ -38,7 +38,7 @@ public class Importer {
 	File inputXmlFile;
 	OaiOBAA oai;
 	@Autowired
-	private DocumentosDAO docDao;
+	private DocumentService docDao;
 
 	Logger log = Logger.getLogger(this.getClass().getName());
 
@@ -91,7 +91,6 @@ public class Importer {
 			oai = OaiOBAA.fromFile(inputXmlFile);
 		}
 
-		Session session = docDao.getSession();
 
 		for (int i = 0; i < oai.getSize(); i++) {
 			Header header = oai.getHeader(i);
@@ -106,14 +105,13 @@ public class Importer {
 				docDao.save(obaa, header, subFed);
 			}
 
-			if (i % 10 == 0) {
-				session.flush();
-				session.clear();
-			}
+//			if (i % 10 == 0) {
+//				session.flush();
+//				session.clear();
+//			}
 		}
 
-		docDao.flush();
-		subFed.setDataXMLTemp(oai.getResponseDate());
+//		docDao.flush();
 	}
 
 	/**
@@ -134,7 +132,7 @@ public class Importer {
 	 * @param documentDao
 	 *            the DocumentDAO to set
 	 */
-	public void setDocDao(DocumentosDAO documentDao) {
+	public void setDocDao(DocumentService documentDao) {
 		this.docDao = documentDao;
 	}
 

@@ -4,10 +4,9 @@
  */
 package feb.spring.controllers;
 
-import feb.data.daos.SubFederacaoHibernateDAO;
-import feb.data.entities.SubFederacao;
-import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.SubFederacaoDAO;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
 import feb.exceptions.FederationException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.SubFederacaoOAI;
@@ -29,30 +28,31 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("federations")
 @RequestMapping("/admin/federations/*")
-public final class FederationsController extends AbstractDeletable<SubFederacao, SubFederacaoHibernateDAO> {
+public final class FederationsController {
 
     @Autowired
-    private SubFederacaoDAO subDao;
+    private FederationService subDao;
     @Autowired
-    private DocumentosDAO docDao;
+    private DocumentService docDao;
     @Autowired
     private Indexador indexar;
     @Autowired
     ServletContext servletContext;
-    @Autowired SubFederacaoOAI subFedOAI;
-    
-    private SubFederacaoValidador subFedValidador = new SubFederacaoValidador();
-    Logger log = Logger.getLogger(FederationsController.class);
+    @Autowired
+    SubFederacaoOAI subFedOAI;
 
+    private final SubFederacaoValidador subFedValidador;
+    private final Logger log = Logger.getLogger(FederationsController.class);
 
     public FederationsController() {
+        subFedValidador = new SubFederacaoValidador();
     }
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String exibeFed(@PathVariable("id") Integer id, Model model,
-    @RequestParam(required=false, value="r") boolean recarregar) {
+            @RequestParam(required = false, value = "r") boolean recarregar) {
         model.addAttribute("federation", subDao.get(id));
-        model.addAttribute("recarregar",recarregar);
+        model.addAttribute("recarregar", recarregar);
         return "admin/federations/show";
     }
 
@@ -64,7 +64,6 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
         return "admin/federations/new";
     }
 
-    
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String salvaFed(
             @ModelAttribute("federation") SubFederacao subfed,
@@ -89,8 +88,6 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
         }
     }
 
-
-
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String editaFed(
             @PathVariable("id") Integer id,
@@ -112,7 +109,7 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
                 return "admin/federations/edit";
             } else {
                 subDao.updateNotBlank(subfed); //Grava a subfederacao modificada no formulario
-                return "redirect:/admin/federations/" + id+"?r=true";
+                return "redirect:/admin/federations/" + id + "?r=true";
             }
         } catch (Exception e) {
             model.addAttribute("erro", "Ocorreu um erro. Exception: " + e);
@@ -121,12 +118,12 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
         }
     }
 
-    @RequestMapping(value="/{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
     public @ResponseBody
     String atualizaFedAjax(@PathVariable("id") Integer id,
             @RequestParam boolean apagar) {
         log.info("Solicitacao de atualizacao pela Ferramenta Administrativa...");
-        Integer initNumberDocs = docDao.getSizeWithDeleted();
+        long initNumberDocs = docDao.getSizeWithDeleted();
         try {
             if (id > 0) {
                 subFedOAI.atualizaSubfedAdm(subDao.get(id), indexar, apagar);
@@ -138,24 +135,29 @@ public final class FederationsController extends AbstractDeletable<SubFederacao,
         } catch (ConnectException c) {
             log.error("Erro ao coletar o xml por OAI-PMH", c);
             return "Erro ao coletar o xml por OAI-PMH. " + c.toString();
-        } catch(FederationException f){
-            log.error("Ocorreu algum erro atualizar.",f);
+        } catch (FederationException f) {
+            log.error("Ocorreu algum erro atualizar.", f);
             return f.toString();
         } catch (Exception e) {
-            log.error("Erro ao atualizar uma federação",e);
+            log.error("Erro ao atualizar uma federação", e);
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
-        }finally{
-            Integer finalNumberDocs = docDao.getSizeWithDeleted();
-            if(finalNumberDocs != initNumberDocs){
-                log.info("Foram atualizados: "+(finalNumberDocs-initNumberDocs) +" documentos");
+        } finally {
+            long finalNumberDocs = docDao.getSizeWithDeleted();
+            if (finalNumberDocs != initNumberDocs) {
+                log.info("Foram atualizados: " + (finalNumberDocs - initNumberDocs) + " documentos");
                 indexar.populateR1();
             }
         }
     }
 
-    @Override
-    public SubFederacaoHibernateDAO getDAO() {
-        return (SubFederacaoHibernateDAO) subDao;
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    public @ResponseBody
+    String delete(@PathVariable("id") Integer id, Model model) {
+        SubFederacao obj = subDao.get(id);
+        String fedName = obj.getName();
+        log.info("Deletando " + obj.getClass().getName() + ": " + fedName);
+        subDao.delete(obj);
+        log.info("Federação " + fedName + " deletada com sucesso.");
+        return "ok";
     }
-    
 }

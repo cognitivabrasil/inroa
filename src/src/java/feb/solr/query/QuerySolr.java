@@ -1,8 +1,11 @@
 package feb.solr.query;
 
-import feb.data.entities.Consulta;
-import feb.data.entities.DocumentoReal;
-import feb.data.entities.Repositorio;
+import cognitivabrasil.obaa.General.General;
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.Technical.Technical;
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -134,28 +137,42 @@ public class QuerySolr {
             int numDoc = i;
 
             DocumentoReal doc = new DocumentoReal();
+            OBAA obaa;
+            try{
+                obaa = doc.getMetadata();
+            }catch(IllegalStateException il){
+                obaa = new OBAA();
+                doc.setMetadata(obaa);                
+            }
+            
+            if(obaa.getGeneral()==null){
+                obaa.setGeneral(new General());
+            }
+            if(obaa.getTechnical()==null){
+                obaa.setTechnical(new Technical());
+            }
 
             if (list.get(numDoc).getFieldValues("obaa.general.title") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.general.title")) {
-                    doc.addTitle((String) o);
+                    obaa.getGeneral().addTitle((String) o);
                 }
             }
 
             if (list.get(numDoc).getFieldValues("obaa.general.description") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.general.description")) {
-                    doc.addDescription((String) o);
+                    obaa.getGeneral().addDescription((String) o);
                 }
             }
 
             if (list.get(numDoc).getFieldValues("obaa.general.keyword") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.general.keyword")) {
-                    doc.addKeyword((String) o);
+                    obaa.getGeneral().addKeyword((String) o);
                 }
             }
 
             if (list.get(numDoc).getFieldValues("obaa.technical.location") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.technical.location")) {
-                    doc.addLocation((String) o);
+                    obaa.getTechnical().addLocation((String) o);
                 }
             }
 

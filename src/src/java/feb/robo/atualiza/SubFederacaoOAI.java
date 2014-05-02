@@ -4,9 +4,9 @@
  */
 package feb.robo.atualiza;
 
-import feb.data.entities.RepositorioSubFed;
-import feb.data.entities.SubFederacao;
-import feb.data.interfaces.SubFederacaoDAO;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.FederationService;
 import feb.exceptions.FederationException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.subfedOAI.Objetos;
@@ -56,7 +56,7 @@ public class SubFederacaoOAI {
         } else {
 
             try {
-                SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
+                FederationService subDao = ctx.getBean(FederationService.class);
                 List<SubFederacao> listaSubfed = subDao.getAll();
 
                 for (SubFederacao subFed : listaSubfed) { //percorre todas as federacoes cadastradas
@@ -138,7 +138,7 @@ public class SubFederacaoOAI {
 
 
                 subFed.setUltimaAtualizacao(new Date());
-                SubFederacaoDAO subDao = ctx.getBean(SubFederacaoDAO.class);
+                FederationService subDao = ctx.getBean(FederationService.class);
                 subDao.save(subFed);
 
 

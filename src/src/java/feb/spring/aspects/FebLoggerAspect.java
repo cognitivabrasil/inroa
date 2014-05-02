@@ -8,11 +8,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import feb.data.entities.Repositorio;
-import feb.data.entities.SubFederacao;
-import feb.data.entities.Usuario;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.entities.Usuario;
 import feb.data.interfaces.FebDomainObject;
-import feb.data.interfaces.RepositoryDAO;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.services.UserActionLogger;
 import feb.spring.FebConfig;
 
@@ -21,7 +20,7 @@ public class FebLoggerAspect {
 	private UserActionLogger userActionLogger;
 	
 	@Autowired
-	RepositoryDAO repDao;
+	RepositoryService repDao;
 	
 	
 	@Autowired
@@ -41,10 +40,10 @@ public class FebLoggerAspect {
 		return currentUser;
 	}
 
-	@Pointcut(value="execution(public * save(..)) && args(febDom) && within(feb.data.daos.*)")
+	@Pointcut(value="execution(public * save(..)) && args(febDom) && within(com.cognitivabrasil.feb.data.services.*)")
 	public void anySaveMethod( FebDomainObject febDom) {}
 	
-	@Pointcut(value="execution(public * delete(..)) && args(febDom) && within(feb.data.daos.*)")
+	@Pointcut(value="execution(public * delete(..)) && args(febDom) && within(com.cognitivabrasil.feb.data.services.*)")
 	public void anyDeleteMethod( FebDomainObject febDom) {}
 	
 	@Pointcut(value="execution(public * feb.spring.FebConfig.save()) && target(callee)")
@@ -83,19 +82,15 @@ public class FebLoggerAspect {
 	public void logFebConfigAction(JoinPoint pjp, FebConfig febConfig) throws Throwable {
 		userActionLogger.log(getCurrentUser(), "salvar configurações" + febConfig);
 	}
-
 	
 	@Before("anySaveMethod(febDom)")
 	public void logAction(JoinPoint pjp, FebDomainObject febDom) throws Throwable {
 		userActionLogger.log(getCurrentUser(), febDom, "salvar ou editar");
  	}
-
-
 	
 	@Before("anyDeleteMethod(febDom)")
 	public void logDeleteAction(JoinPoint pjp, FebDomainObject febDom) throws Throwable {
 		userActionLogger.log(getCurrentUser(), febDom, "apagar");
 
-	}
-	
+	}	
 }

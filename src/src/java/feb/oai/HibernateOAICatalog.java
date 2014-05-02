@@ -25,7 +25,7 @@ import org.springframework.context.ApplicationContext;
 
 import ORG.oclc.oai.models.HibernateOaiDocument;
 import ORG.oclc.oai.server.catalog.AbstractHibernateOAICatalog;
-import feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 import feb.spring.ApplicationContextProvider;
 
 
@@ -88,7 +88,7 @@ public class HibernateOAICatalog extends AbstractHibernateOAICatalog {
 	@Override
 	public Class<? extends HibernateOaiDocument> getHibernateClass() {
 		// TODO Auto-generated method stub
-		return feb.data.entities.DocumentoReal.class;
+		return com.cognitivabrasil.feb.data.entities.DocumentoReal.class;
 	}
 
 	@Override

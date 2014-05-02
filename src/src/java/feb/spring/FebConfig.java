@@ -37,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  */
 public class FebConfig {
-	private Logger logger = Logger.getLogger(FebConfig.class);
+	private final Logger logger = Logger.getLogger(FebConfig.class);
 
 	private StringEncryptor encryptor;
 

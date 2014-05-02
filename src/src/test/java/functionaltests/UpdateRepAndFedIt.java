@@ -4,11 +4,16 @@
  */
 package functionaltests;
 
-import feb.data.daos.AbstractDaoTest;
-import feb.data.entities.Mapeamento;
-import feb.data.entities.Repositorio;
-import feb.data.entities.RepositorioSubFed;
-import feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.AbstractDaoTest;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import feb.data.interfaces.*;
 import feb.robo.atualiza.importaOAI.Importer;
 import feb.robo.atualiza.importaOAI.XMLtoDB;
@@ -44,15 +49,15 @@ import org.xml.sax.SAXException;
 public class UpdateRepAndFedIt extends AbstractDaoTest {
 
     @Autowired
-    RepositoryDAO repDao;
+    RepositoryService repDao;
     @Autowired
-    DocumentosDAO docDao;
+    DocumentService docDao;
     @Autowired
-    SubFederacaoDAO subDao;
+    FederationService subDao;
     @Autowired
-    PadraoMetadadosDAO padDao;
+    MetadataRecordService padDao;
     @Autowired
-    MapeamentoDAO mapDao;
+    MappingService mapDao;
 
     @Test
     public void testRepAndSubFedWrhithSameEntry() throws IOException, ParserConfigurationException, SAXException, TransformerException {

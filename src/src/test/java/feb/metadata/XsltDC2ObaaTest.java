@@ -92,8 +92,8 @@ public class XsltDC2ObaaTest {
 
 		try {
 			
-			System.out.println("===============================");
-			System.out.println(oai.toString());
+			//System.out.println("===============================");
+			//System.out.println(oai.toString());
  		} catch (Exception ex) {
       			//XSLTUtil.handleException(ex);
 			fail("Shoudln't throw exception");

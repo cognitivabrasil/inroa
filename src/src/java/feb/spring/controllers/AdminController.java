@@ -1,15 +1,14 @@
 package feb.spring.controllers;
 
-import feb.data.entities.PadraoMetadados;
-import feb.data.entities.Repositorio;
-import feb.data.entities.SubFederacao;
-import feb.data.entities.Usuario;
-import feb.data.interfaces.MapeamentoDAO;
-import feb.data.interfaces.PadraoMetadadosDAO;
-import feb.data.interfaces.RepositoryDAO;
-import feb.data.interfaces.SubFederacaoDAO;
-import feb.data.interfaces.TokensDao;
-import feb.data.interfaces.UsuarioDAO;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.entities.Usuario;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.UserService;
 import feb.ferramentaAdministrativa.validarOAI.VerificaLinkOAI;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.spring.FebConfig;
@@ -38,23 +37,21 @@ import org.springframework.web.bind.annotation.*;
 public final class AdminController {
 
     @Autowired
-    private RepositoryDAO repDao;
+    private RepositoryService repDao;
     @Autowired
-    private SubFederacaoDAO subDao;
+    private FederationService subDao;
     @Autowired
-    private PadraoMetadadosDAO padraoDao;
+    private MetadataRecordService padraoDao;
     @Autowired
-    private MapeamentoDAO mapDao;
+    private MappingService mapDao;
     @Autowired
     ServletContext servletContext;
     @Autowired
-    private UsuarioDAO userDao;
+    private UserService userDao;
     @Autowired
     private Indexador indexador;
     @Autowired
     private FebConfig conf;
-    @Autowired
-    TokensDao tokensDao;
     @Autowired @Qualifier("febInf")
     private Properties febInfo;
     

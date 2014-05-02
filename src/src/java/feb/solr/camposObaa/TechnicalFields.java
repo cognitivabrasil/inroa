@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cognitivabrasil.obaa.OBAA;
+import static cognitivabrasil.util.HelperFunctions.toStringList;
 
 public class TechnicalFields {
 
@@ -12,7 +13,7 @@ public class TechnicalFields {
     public static List<String> getFormat(OBAA o) {
         List<String> format = new ArrayList<String>();
         format.add(cabecalho + "format");
-        format.addAll(o.getTechnical().getFormat());
+        format.addAll(toStringList(o.getTechnical().getFormats()));
         return format;
     }
 

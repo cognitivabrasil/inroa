@@ -6,8 +6,8 @@ import java.io.Writer;
 
 import metadata.XsltConversor;
 import cognitivabrasil.obaa.OaiOBAA;
-import feb.data.entities.Mapeamento;
-import feb.data.interfaces.PadraoMetadadosDAO;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import feb.metadata.XSLTUtil;
 
 public class MapeamentoDto {
@@ -132,7 +132,7 @@ public class MapeamentoDto {
 
 	}
 
-	public Mapeamento createMapeamento(PadraoMetadadosDAO padraoDao) {
+	public Mapeamento createMapeamento(MetadataRecordService padraoDao) {
 		Mapeamento m = new Mapeamento();
 		m.setId(id);
 		m.setPadraoMetadados(padraoDao.get(padraoMetadados));

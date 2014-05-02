@@ -27,11 +27,11 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
-import feb.data.entities.Mapeamento;
-import feb.data.entities.Repositorio;
-import feb.data.entities.SubNodo;
-import feb.data.interfaces.DocumentosDAO;
-import feb.data.interfaces.RepositoryDAO;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.SubNodo;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import org.junit.Ignore;
 
 /**
@@ -59,11 +59,8 @@ public class ImporterTest {
 		Repositorio r = new Repositorio();
 		r.setMapeamento(m);
 		
-		DocumentosDAO docDao = mock(DocumentosDAO.class);
-		RepositoryDAO repDao = mock(RepositoryDAO.class);
-		Session s = mock(Session.class);
-		
-		when(docDao.getSession()).thenReturn(s);
+		DocumentService docDao = mock(DocumentService.class);
+		RepositoryService repDao = mock(RepositoryService.class);
 				
 		Importer imp = new Importer();
 		imp.setInputFile(new File(inputXmlFile));
@@ -98,12 +95,9 @@ public class ImporterTest {
 		Repositorio r = new Repositorio();
 		r.setMapeamento(m);
 		
-		DocumentosDAO docDao = mock(DocumentosDAO.class);
-		RepositoryDAO repDao = mock(RepositoryDAO.class);
-		Session s = mock(Session.class);
-		
-		when(docDao.getSession()).thenReturn(s);
-				
+		DocumentService docDao = mock(DocumentService.class);
+		RepositoryService repDao = mock(RepositoryService.class);
+						
 		Importer imp = new Importer();
 		imp.setInputFile(new File(inputXmlFile));
 		imp.setRepositorio(r);

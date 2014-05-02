@@ -7,16 +7,17 @@
 // Nao quis apagar tudo e colocar esse, entao deixei esse com novo nome. Mas no futuro, só esse arquivo vai ser necessário...
 package feb.ferramentaBusca.indexador;
 
-import cognitivabrasil.obaa.OBAA;
-import feb.data.daos.DocumentosHibernateDAO;
-import feb.data.entities.DocumentoReal;
-import feb.data.interfaces.DocumentosDAO;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import feb.solr.main.Solr;
 import feb.util.Operacoes;
-import java.util.List;
-import java.util.logging.Level;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
@@ -27,9 +28,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class Indexador {
 
-    static Logger log = Logger.getLogger(Indexador.class);
+    private static final Logger log = Logger.getLogger(Indexador.class);
     @Autowired
-    private DocumentosDAO docDao;
+    private DocumentService docService;
+    @PersistenceContext
+    private EntityManager em;
 
     public Indexador() {
     }
@@ -46,9 +49,10 @@ public class Indexador {
          Solr.apagarIndice();
         Long inicio = System.currentTimeMillis();
         int numMaxDoc = 10000;
-        int tamanhoDocDAO = docDao.getSize();
+        int tamanhoDocDAO = (int) docService.getSize();
         Solr s = new Solr();
 
+/**
         for (int i = 0; i < tamanhoDocDAO; i = i + numMaxDoc) {
 
             System.out.println(i);
@@ -57,9 +61,18 @@ public class Indexador {
             // Esse comando abaixo serve para evitar estouro de memoria. 
             //Jorjao vai resolver isso porque eh um erro do hibernate
            docDao.getSession().clear();
+*/
+        Pageable limit = new PageRequest(0, numMaxDoc);
+        Page<DocumentoReal> docs = docService.getlAll(limit);
+        s.indexarBancoDeDados(docs.getContent());
+
+        while (docs.hasNextPage()) {
+            docs = docService.getlAll(docs.nextPageable());
+            s.indexarBancoDeDados(docs.getContent());
+            em.clear();
         }
 
-        System.out.println("FIM DA INDEACAO");
+        System.out.println("FIM DA INDEXACAO");
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
         log.info("Tempo total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));

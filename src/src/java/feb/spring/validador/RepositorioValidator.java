@@ -4,7 +4,7 @@
  */
 package feb.spring.validador;
 
-import feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 import java.net.MalformedURLException;
 import java.net.URL;
 import org.springframework.stereotype.Component;
@@ -20,14 +20,16 @@ import org.springframework.validation.Validator;
 public class RepositorioValidator implements Validator  {
     
     
+    @Override
     public boolean supports(Class clazz) {
         return Repositorio.class.isAssignableFrom(clazz);
     }
     
+    @Override
     public void validate(Object target, Errors errors) {
         
-        ValidationUtils.rejectIfEmpty(errors, "nome",
-                "required.nome", "É necessário informar um nome.");
+        ValidationUtils.rejectIfEmpty(errors, "name",
+                "required.name", "É necessário informar um nome.");
         ValidationUtils.rejectIfEmpty(errors, "descricao",
                 "required.descricao", "É necessário informar uma descrição.");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mapeamento.id",
@@ -50,11 +52,5 @@ public class RepositorioValidator implements Validator  {
         if(rep.getPadraoMetadados().getId() <= 0){
             errors.rejectValue("padraoMetadados.id","invalid.padraoMetadados.id", "Informe um padrão de metadados.");
         }
-        
-        if(rep.getPeriodicidadeAtualizacao() == null || rep.getPeriodicidadeAtualizacao() <= 0){
-            errors.rejectValue("periodicidadeAtualizacao","invalid.periodicidadeAtualizacao", "Informe uma periodicidade de atualização.");            
-        }
-        
-    }
-    
+    }    
 }

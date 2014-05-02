@@ -4,18 +4,12 @@
  */
 package feb.spring.controllers;
 
-import feb.data.daos.RepositoryHibernateDAO;
-import feb.data.entities.Repositorio;
-import feb.data.interfaces.PadraoMetadadosDAO;
-import feb.data.interfaces.RepositoryDAO;
-import feb.ferramentaBusca.indexador.Indexador;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.robo.atualiza.Repositorios;
-import feb.robo.atualiza.importaOAI.XMLtoDB;
 import feb.spring.validador.RepositorioValidator;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,15 +24,21 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("repositories")
 @RequestMapping("/admin/repositories/*")
-public final class RepositoriesController extends AbstractDeletable<Repositorio, RepositoryHibernateDAO> {
+public final class RepositoriesController {
 
     @Autowired
-    private RepositoryDAO repDao;
+    private RepositoryService repDao;
     @Autowired
-    private PadraoMetadadosDAO padraoDao;
-    private RepositorioValidator repValidator = new RepositorioValidator();
+    private MetadataRecordService padraoDao;
+    private final RepositorioValidator repValidator;
     @Autowired
     private Repositorios atualizadorRep;
+
+    private final Logger log = Logger.getLogger(RepositoriesController.class);
+
+    public RepositoriesController() {
+        repValidator = new RepositorioValidator();
+    }
 
     /**
      * Shows the details of the repository.
@@ -168,8 +168,15 @@ public final class RepositoriesController extends AbstractDeletable<Repositorio,
         }
     }
 
-    @Override
-    public RepositoryHibernateDAO getDAO() {
-        return (RepositoryHibernateDAO) repDao;
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    public @ResponseBody
+    String delete(@PathVariable("id") Integer id, Model model) {
+        Repositorio obj = repDao.get(id);
+        String name = obj.getName();
+        log.info("Deletando o repositório: " + name);
+        repDao.delete(obj);
+        log.info("Repositório "+name+" deletado com sucesso.");
+        return "ok";
     }
+
 }

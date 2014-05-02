@@ -1,11 +1,10 @@
 package feb.solr.main;
 
 import cognitivabrasil.obaa.OBAA;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import feb.solr.indexar.IndexarDados;
 import feb.solr.converter.Converter;
 import org.apache.log4j.Logger;
-
-import feb.data.entities.DocumentoReal;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.solr.common.SolrInputDocument;

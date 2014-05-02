@@ -1,7 +1,7 @@
 
 package feb.solr.query;
 
-import feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.Consulta;
 
 /**
  *

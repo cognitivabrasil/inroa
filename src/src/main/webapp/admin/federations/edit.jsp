@@ -32,7 +32,7 @@
         <script type="text/javascript">
             var myForm = new Validate();
             myForm.addRules({
-                id : 'nome',
+                id : 'name',
                 option : 'required',
                 error : '* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'
             });
@@ -67,10 +67,10 @@
                     <!--Aqui o script colocara a mensagem de erro, se ocorrer-->
                 </div>
                 <div class="LinhaEntrada">
-                    <form:errors path="nome" cssClass="ValueErro" />
+                    <form:errors path="name" cssClass="ValueErro" />
                     <div class="Label">Nome:</div>
                     <div class="Value">
-                        <form:input path="nome" maxlength="45"
+                        <form:input path="name" maxlength="45"
                                     onFocus="this.className='inputSelecionado'"
                                     onBlur="this.className=''" />
                     </div>

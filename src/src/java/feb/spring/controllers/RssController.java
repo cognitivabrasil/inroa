@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import feb.data.entities.Consulta;
-import feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import feb.ferramentaBusca.Recuperador;
  
 @Controller

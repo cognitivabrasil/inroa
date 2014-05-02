@@ -8,7 +8,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 import feb.util.Operacoes;
 
 //import util.*;
@@ -77,7 +77,7 @@ public class Harvester {
         ListRecords listRecordsResume; //cria uma variavel do tipo ListRecords para efetuar o ResumptionToken se necessario
 
         Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(caminhoAbsoluto), "UTF8")); //escreve um arquivo xml em UTF8 no caminho setado no configuracao.java
+                new FileOutputStream(caminhoAbsoluto), "UTF-8")); //escreve um arquivo xml em UTF-8 no caminho setado no configuracao.java
 
         String resumption = listRecords.getResumptionToken(); //solicita a tag ResumptionToken recebida no xml
 
@@ -92,7 +92,7 @@ public class Harvester {
             caminhoAbsoluto = nomeArquivo + numeroXML + ".xml"; //cria um novo nome de arquivo com o numeroXML incrementado
             caminhosXML.add(caminhoAbsoluto); //adiciona o endereço do xml no arrayList
             Writer outResume = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(caminhoAbsoluto), "UTF8")); //cria o arquivo xml
+                    new FileOutputStream(caminhoAbsoluto), "UTF-8")); //cria o arquivo xml
 
             listRecordsResume = new ListRecords(this.endereco, resumption);
 

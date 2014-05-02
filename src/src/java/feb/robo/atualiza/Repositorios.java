@@ -4,8 +4,8 @@
  */
 package feb.robo.atualiza;
 
-import feb.data.entities.Repositorio;
-import feb.data.interfaces.RepositoryDAO;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.exceptions.RepositoryException;
 import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.harvesterOAI.Harvester;
@@ -18,13 +18,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.xml.sax.SAXException;
 
@@ -37,7 +36,7 @@ public class Repositorios {
     @Autowired
     private Indexador indexar;
     @Autowired
-    private RepositoryDAO repDao;
+    private RepositoryService repService;
     private static Logger log = Logger.getLogger(Repositorios.class);
 
     /**
@@ -54,12 +53,12 @@ public class Repositorios {
         Long inicio = System.currentTimeMillis();
         boolean atualizou = false;
 
-        List<Repositorio> listRep = repDao.getOutDated();
+        List<Repositorio> listRep = repService.getOutDated();
 
         for (Repositorio rep : listRep) { // percorre todos os repositorios que
             // precisam ser atualizados
             try { // chama o metodo que atualiza o repositorio
-                if (atualizaRepositorio(repDao.get(rep.getId()), indexar) > 0) {
+                if (atualizaRepositorio(repService.get(rep.getId()), indexar) > 0) {
                     atualizou = true;
                 }
             } catch (Exception e) {
@@ -96,30 +95,33 @@ public class Repositorios {
 
         boolean recalcularIndice = false;
 
-        ArrayList<String> erros = new ArrayList<String>();
+        ArrayList<String> erros = new ArrayList<>();
 
         if (idRep > 0) { // atualizar um repositorio especifico ou
             // todos. 0 = todos
-            Repositorio rep = repDao.get(idRep);
-            if (apagar) { // seta as duas datas como null porque quando atualiza
+            Repositorio rep = repService.get(idRep);
+            if (apagar) { 
+                // seta as duas datas como null porque quando atualiza
                 // se as datas forem null todos os documentos do
                 // repositorio sao excluidos
-                rep.setUltimaAtualizacao(null);
+                DateTime dateNull = null;
+                //TODO: depois de substituir tudo de date para Datetime pode setar null direto. Agora tem dois setUltimaAtualizacao ai da erro.
+                rep.setUltimaAtualizacao(dateNull);
                 rep.setDataOrigem(null);
             }
             if (atualizaRepositorio(rep, indexar) > 0) {
                 recalcularIndice = true;
             }
-            repDao.save(rep);
+            repService.save(rep);
 
         } else {
-            List<Repositorio> repositorios = repDao.getAll();
+            List<Repositorio> repositorios = repService.getAll();
             for (Repositorio rep : repositorios) {
                 try {
                     if (atualizaRepositorio(rep, indexar) > 0) {
                         recalcularIndice = true;
                     }
-                    repDao.save(rep);
+                    repService.save(rep);
                 } catch (Exception e) {
                     erros.add(rep.getName());
                     log.error("FEB ERRO: Erro ao atualizar o repositorio "
@@ -174,7 +176,7 @@ public class Repositorios {
 
             } else {// repositorio possui url para atualizacao
 
-                Date data_ultima_atualizacao = rep.getUltimaAtualizacao();
+                DateTime data_ultima_atualizacao = rep.getUltimaAtualizacao();
 
                 log.info("Ultima Atualizacao: "
                         + data_ultima_atualizacao + " nome do rep: "
@@ -230,7 +232,7 @@ public class Repositorios {
                 }
             }
 
-            rep.setUltimaAtualizacao(new Date()); // atualiza a hora da ultima atualizacao
+            rep.setUltimaAtualizacao(DateTime.now()); // atualiza a hora da ultima atualizacao
             Long fim = System.currentTimeMillis();
             Long total = fim - inicio;
 
@@ -278,8 +280,8 @@ public class Repositorios {
             } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
                 log.warn(msg
                         + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
-                rep.setUltimaAtualizacao(new Date()); // atualiza a hora da
-                // ultima atualizacao
+                // atualiza a hora da ultima atualizacao
+                rep.setUltimaAtualizacao(DateTime.now()); 
             } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                 log.error(msgOAI
                         + msg

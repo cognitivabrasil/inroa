@@ -23,6 +23,9 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import metadata.TextElement;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.xml.sax.InputSource;
 import ptstemmer.Stemmer;
 import ptstemmer.exceptions.PTStemmerException;
@@ -35,7 +38,7 @@ import ptstemmer.exceptions.PTStemmerException;
  */
 public class Operacoes {
 
-    private static Logger log = Logger.getLogger(Operacoes.class);
+    private static final Logger log = Logger.getLogger(Operacoes.class);
 
     public Operacoes() {
     } // public para o Spring
@@ -55,6 +58,14 @@ public class Operacoes {
         } else {
             Date dataTeste = new Date(1);
             return dataTeste.after(horaBase);
+        }
+    }
+    public static boolean testarDataDifZero(DateTime horaBase) {
+        if (horaBase == null) {
+            return true;
+        } else {
+            DateTime dataTeste = new DateTime(1);
+            return dataTeste.isAfter(horaBase);
         }
     }
 
@@ -151,6 +162,16 @@ public class Operacoes {
             return ("N&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o");
         } else {
             return f.format(data);
+        }
+    }
+    public static String ultimaAtualizacaoFrase(DateTime data, String url) {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("'Dia' dd/MM/yyyy '&agrave;s' HH:mm:ss");
+        if (data == null || testarDataDifZero(data)) {
+            return "Ainda n&atilde;o foi atualizado!";
+        } else if (url == null || url.isEmpty()) {
+            return ("N&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o");
+        } else {
+            return fmt.print(data);
         }
     }
 

@@ -1,7 +1,7 @@
 package feb.spring.controllers;
 
-import feb.data.entities.Usuario;
-import feb.data.interfaces.UsuarioDAO;
+import com.cognitivabrasil.feb.data.entities.Usuario;
+import com.cognitivabrasil.feb.data.services.UserService;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
@@ -209,9 +209,9 @@ class UserDto {
      */
     protected static Map<String, Map<String, String>> referenceData() {
 
-        Map<String, Map<String, String>> referenceData = new HashMap<String, Map<String, String>>();
+        Map<String, Map<String, String>> referenceData = new HashMap<>();
 
-        Map<String, String> roles = new LinkedHashMap<String, String>();
+        Map<String, String> roles = new LinkedHashMap<>();
         roles.put("root", "Superusuário");
         roles.put("admin", "Administrador de federações");
         roles.put("update", "Visualizar e atualizar");
@@ -255,7 +255,7 @@ class UserDto {
 class UserValidator implements Validator {
 
     @Autowired
-    UsuarioDAO userDao;
+    UserService userDao;
 
     @Override
     public boolean supports(Class clazz) {
@@ -309,7 +309,7 @@ public final class UsersController {
     @Autowired
     ServletContext servletContext;
     @Autowired
-    private UsuarioDAO userDao;
+    private UserService userDao;
     @Autowired
     private UserValidator userValidator;
     private static Logger log = Logger.getLogger(UsersController.class);

@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="feb.data.entities.DocumentosVisitas" table="documentos_visitas">
-        <id column="id" name="id" type="int">
-            <generator class="sequence">
-                <param name="sequence">documentos_visitas_id_seq</param>
-            </generator>
-        </id>
-        
-        <many-to-one class="feb.data.entities.DocumentoReal" column="documento"
-                     name="documento" />   
-                        
-        <many-to-one class="feb.data.entities.Visita" column="visita"
-                     name="visita" />   
-   
-    </class>
+  <class name="com.cognitivabrasil.feb.data.entities.DocumentosVisitas" table="documentos_visitas">
+    <id column="id" name="id" type="int">
+      <generator class="sequence">
+        <param name="sequence">documentos_visitas_id_seq</param>
+      </generator>
+    </id>
+    <many-to-one class="com.cognitivabrasil.feb.data.entities.DocumentoReal" column="documento" name="documento"/>
+    <many-to-one class="com.cognitivabrasil.feb.data.entities.Visita" column="visita" name="visita"/>
+  </class>
 </hibernate-mapping>

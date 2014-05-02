@@ -4,14 +4,10 @@
  */
 package feb.spring.controllers;
 
-import feb.data.daos.PadraoMetadadosHibernateDAO;
-import feb.data.entities.Mapeamento;
-import feb.data.entities.PadraoMetadados;
-import feb.data.interfaces.PadraoMetadadosDAO;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import feb.spring.validador.PadraoValidator;
 import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +21,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller("metadataStandard")
 @RequestMapping("/admin/metadataStandard/*")
-public final class MetadataStandardController extends AbstractDeletable<PadraoMetadados, PadraoMetadadosHibernateDAO> {
-
+public final class MetadataStandardController{
     @Autowired
-    private PadraoMetadadosDAO padraoDao;
+    private MetadataRecordService padraoDao;
     Logger log = Logger.getLogger(MetadataStandardController.class);
 
     public MetadataStandardController() {
@@ -90,9 +85,14 @@ public final class MetadataStandardController extends AbstractDeletable<PadraoMe
         }
     }
 
-    @Override
-    public PadraoMetadadosHibernateDAO getDAO() {
-        return (PadraoMetadadosHibernateDAO) padraoDao;
+    @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+    public @ResponseBody
+    String delete(@PathVariable("id") Integer id, Model model) {
+            PadraoMetadados obj = padraoDao.get(id);
+            String name = obj.getName();
+            log.info("Deletando o padrão: "+name);
+            padraoDao.delete(obj);
+            log.info("Padrão '"+name+"' deletado com sucesso.");
+            return "ok";
     }
-
 }

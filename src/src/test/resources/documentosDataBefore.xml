@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- To change this template, choose Tools | Templates and open the template 
-	in the editor. -->
+in the editor. -->
 
 <dataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="dataset.xsd">
+         xsi:noNamespaceSchemaLocation="dataset.xsd">
 
-	<usuarios id="1" login="admin" senha="698dc19d489c4e4db73e28a713eab07b"
-		nome="Administrador da federação" permissions="PERM_MANAGE_USERS,PERM_MANAGE_MAPPING" />
-	<usuarios id="2" login="admin2" senha="698dc19d489c4e4db73e28a713eab07b"
-		nome="Administrador da federação" />
+    <usuarios id="1" login="admin" senha="698dc19d489c4e4db73e28a713eab07b"
+                  nome="Administrador da federação" permissions="PERM_MANAGE_USERS,PERM_MANAGE_MAPPING" />
+    <usuarios id="2" login="admin2" senha="698dc19d489c4e4db73e28a713eab07b"
+                  nome="Administrador da federação" />
 
-	<padraometadados id="1" nome="lom" metadata_prefix="oai_lom"
-		name_space="lom" atributos="" />
-	<padraometadados id="2" nome="lom2" metadata_prefix="oai_lom"
-		name_space="lom" atributos="" />
-	<padraometadados id="3" nome="lom3" metadata_prefix="oai_lom"
-		name_space="lom" atributos="" />
+    <padraometadados id="1" nome="lom" metadata_prefix="oai_lom"
+                         name_space="lom" atributos="" />
+    <padraometadados id="2" nome="lom2" metadata_prefix="oai_lom"
+                         name_space="lom" atributos="" />
+    <padraometadados id="3" nome="lom3" metadata_prefix="oai_lom"
+                         name_space="lom" atributos="" />
 
-	<mapeamentos id="1" nome="Padrao" descricao="Blabla" xslt="xslt"
-		padrao_id="1" />
-	<mapeamentos id="2" nome="Padrao2" descricao="Blabla" xslt="xslt"
-		padrao_id="1" />
+    <mapeamentos id="1" nome="Padrao" descricao="Blabla" xslt="xslt"
+                     padrao_id="1" />
+    <mapeamentos id="2" nome="Padrao2" descricao="Blabla" xslt="xslt"
+                     padrao_id="1" />
 
 
- <repositorios id="1" nome="Cesta" descricao="dfsd"
-                  url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request"
-                  periodicidade_horas="24"
-                  metadata_prefix="lom"
-                  padrao_metadados="1"
-                  mapeamento_id="1"
-                  name_space="lom" />
+    <repositorios id="1" nome="Cesta" descricao="dfsd"
+               url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request"
+               data_ultima_atualizacao="2014-04-28 07:51:22.48377"
+               metadata_prefix="lom"
+               padrao_metadados="1"
+               mapeamento_id="1"
+               name_space="lom" />
     <repositorios id="2" nome="Teste2" descricao="dfsd" url_or_ip="http://"
-                  periodicidade_horas="24"
+                  data_ultima_atualizacao="1984-08-21 00:00:00"
                   padrao_metadados="1"
                   mapeamento_id="1"
                   metadata_prefix="lom"
                   name_space="lom" />
     <repositorios id="3" nome="Teste3" descricao="dfsd" url_or_ip="http://"
-                  periodicidade_horas="24"
+                  data_ultima_atualizacao="9014-08-21 07:51:22.48377"
                   padrao_metadados="1"
                   mapeamento_id="1"
                   metadata_prefix="lom"
                   name_space="lom" />
     <repositorios id="4" nome="marcos" descricao="x" url_or_ip="htttp://x"
-                  periodicidade_horas="24"
+                  data_ultima_atualizacao="2014-04-01 23:59:59.48377"
                   padrao_metadados="1"
                   mapeamento_id="1"
                   metadata_prefix="obaa"
@@ -65,90 +65,73 @@
 
     <repositorios_subfed id="1" nome="RepUfrgs1" id_subfed="1"/>
 
-	<documentos id="1" obaa_entry="oai:cesta2.cinted.ufrgs.br:123456789/57"
-		id_repositorio="1" id_rep_subfed="1" timestamp="2012-03-09 07:51:22.48377"
-		deleted="false" />
-	<documentos id="2" obaa_entry="dois" id_repositorio="1"
-		timestamp="2012-03-09 07:51:22.48377" deleted="false" />
-	<documentos id="3" obaa_entry="tres" id_repositorio="1"
-		timestamp="2012-03-09 07:51:22.48377" deleted="false" />
-	<documentos id="4" obaa_entry="quatro" id_repositorio="1"
-		timestamp="2012-03-09 07:51:22.48377" deleted="true" />
-	<documentos id="5" obaa_entry="cinco" id_repositorio="1"
-		timestamp="2012-03-09 07:51:22.48377" deleted="false" />
-	<documentos id="6" obaa_entry="cinco2" id_rep_subfed="1"
-		timestamp="2012-03-09 07:51:22.48377" deleted="false" />
-		
-		    <autores id="1" nome="Jorge" documento="1" />
-		
+    <documentos id="1" obaa_entry="oai:cesta2.cinted.ufrgs.br:123456789/57"
+                    id_repositorio="1" id_rep_subfed="1" created="2012-03-09 07:51:22.48377"
+                    deleted="false" />
+    <documentos id="2" obaa_entry="dois" id_repositorio="1"
+                    created="2012-03-09 07:51:22.48377" deleted="false" />
+    <documentos id="3" obaa_entry="tres" id_repositorio="1"
+                    created="2012-03-09 07:51:22.48377" deleted="false" />
+    <documentos id="4" obaa_entry="quatro" id_repositorio="1"
+                    created="2012-03-09 07:51:22.48377" deleted="true" />
+    <documentos id="5" obaa_entry="cinco" id_repositorio="1"
+                    created="2012-03-09 07:51:22.48377" deleted="false" />
+    <documentos id="6" obaa_entry="cinco2" id_rep_subfed="1"
+                    created="2012-03-09 07:51:22.48377" deleted="false" />
 
-	<objetos id="1" atributo="obaaTitle" valor="Ataque a o TCP - Mitnick"
-		documento="1" />
-	<objetos id="2" atributo="obaaTitle" valor="Exploraração segurança TCP"
-		documento="1" />
-	<objetos id="3" atributo="obaaKeyword" valor="ataque Mitnick"
-		documento="1" />
-	<objetos id="4" atributo="obaaKeyword" valor="segurança"
-		documento="1" />
-	<objetos id="5" atributo="obaaKeyword" valor="TCP" documento="1" />
-	<objetos id="6" atributo="obaaDescription"
-		valor="Animação ilustrando a troca de mensagens que ocorre quando um intruso bloqueia um computador medianteo envio de mensagens de hadshake repetidas e depois impersona esta máquina enquanto ela está imobilizada."
-		documento="1" />
 
-	<stopwords id="1" stopword="a" />
-	<stopwords id="2" stopword="o" />
-	<stopwords id="3" stopword="de" />
-	<stopwords id="4" stopword="depois" />
-	<stopwords id="5" stopword="que" />
-	<stopwords id="6" stopword="quando" />
-	<stopwords id="7" stopword="um" />
-	<stopwords id="8" stopword="e" />
-	<stopwords id="9" stopword="esta" />
-	<stopwords id="10" stopword="está" />
-	<stopwords id="11" stopword="enquanto" />
-	<stopwords id="12" stopword="ela" />
+    <stopwords id="1" stopword="a" />
+    <stopwords id="2" stopword="o" />
+    <stopwords id="3" stopword="de" />
+    <stopwords id="4" stopword="depois" />
+    <stopwords id="5" stopword="que" />
+    <stopwords id="6" stopword="quando" />
+    <stopwords id="7" stopword="um" />
+    <stopwords id="8" stopword="e" />
+    <stopwords id="9" stopword="esta" />
+    <stopwords id="10" stopword="está" />
+    <stopwords id="11" stopword="enquanto" />
+    <stopwords id="12" stopword="ela" />
 
-	<visitas id="1" horario="2012-01-10 10:04:47" />
-	<visitas id="2" horario="2012-01-09 12:06:01" />
-	<visitas id="3" horario="2012-02-09 12:06:01" />
-	<visitas id="4" horario="2012-03-09 12:06:01" />
-	<visitas id="5" horario="2012-03-09 12:06:01" />
-	<visitas id="6" horario="2012-04-09 12:06:01" />
-	<visitas id="7" horario="2012-06-09 12:06:01" />
-	<visitas id="8" horario="2012-07-10 10:04:47" />
-	<visitas id="9" horario="2012-07-09 12:06:01" />
-	<visitas id="10" horario="2012-10-09 12:06:01" />
-	<visitas id="11" horario="2012-12-09 12:06:01" />
-	<visitas id="12" horario="2012-12-09 12:06:01" />
-	<visitas id="13" horario="2012-12-09 12:06:01" />
+    <visitas id="1" horario="2012-01-10 10:04:47" />
+    <visitas id="2" horario="2012-01-09 12:06:01" />
+    <visitas id="3" horario="2012-02-09 12:06:01" />
+    <visitas id="4" horario="2012-03-09 12:06:01" />
+    <visitas id="5" horario="2012-03-09 12:06:01" />
+    <visitas id="6" horario="2012-04-09 12:06:01" />
+    <visitas id="7" horario="2012-06-09 12:06:01" />
+    <visitas id="8" horario="2012-07-10 10:04:47" />
+    <visitas id="9" horario="2012-07-09 12:06:01" />
+    <visitas id="10" horario="2012-10-09 12:06:01" />
+    <visitas id="11" horario="2012-12-09 12:06:01" />
+    <visitas id="12" horario="2012-12-09 12:06:01" />
+    <visitas id="13" horario="2012-12-09 12:06:01" />
         
-        <visitas id="14" horario="2013-01-10 10:04:47" />
-	<visitas id="15" horario="2013-01-09 12:06:01" />
-	<visitas id="16" horario="2013-02-09 12:06:01" />
-	<visitas id="17" horario="2013-03-09 12:06:01" />
-	<visitas id="18" horario="2013-03-09 12:06:01" />
-	<visitas id="19" horario="2013-04-09 12:06:01" />
-	<visitas id="20" horario="2013-06-09 12:06:01" />
-	<visitas id="21" horario="2013-07-10 10:04:47" />
-	<visitas id="22" horario="2013-07-09 12:06:01" />
-	<visitas id="23" horario="2013-10-09 12:06:01" />
-	<visitas id="24" horario="2013-12-09 12:06:01" />
-	<visitas id="25" horario="2013-12-09 12:06:01" />
-	<visitas id="26" horario="2013-12-09 12:06:01" />
+    <visitas id="14" horario="2013-01-10 10:04:47" />
+    <visitas id="15" horario="2013-01-09 12:06:01" />
+    <visitas id="16" horario="2013-02-09 12:06:01" />
+    <visitas id="17" horario="2013-03-09 12:06:01" />
+    <visitas id="18" horario="2013-03-09 12:06:01" />
+    <visitas id="19" horario="2013-04-09 12:06:01" />
+    <visitas id="20" horario="2013-06-09 12:06:01" />
+    <visitas id="21" horario="2013-07-10 10:04:47" />
+    <visitas id="22" horario="2013-07-09 12:06:01" />
+    <visitas id="23" horario="2013-10-09 12:06:01" />
+    <visitas id="24" horario="2013-12-09 12:06:01" />
+    <visitas id="25" horario="2013-12-09 12:06:01" />
+    <visitas id="26" horario="2013-12-09 12:06:01" />
         	
-	<documentos_visitas id="1" documento="2" visita="1"/>
-        <documentos_visitas id="2" documento="3" visita="3"/>
-	
-	<r1tokens id="1" documento_id="2" token="bla" field="3"/>
+    <documentos_visitas id="1" documento="2" visita="1"/>
+    <documentos_visitas id="2" documento="3" visita="3"/>
 
-	<searches text="jorjao" time="2012-07-09 12:06:02" />
-	<searches text="jorjao" time="2012-07-09 12:06:01" />
-	<searches text="jorjao" time="2012-07-09 12:06:00" />
-	<searches text="teste" time="2012-07-09 12:06:06" />
-        <searches text="teste" time="2012-07-09 12:06:07" />
-	<searches text="bla" time="2012-06-29 12:06:01" />
-        <searches text="bla" time="2012-06-29 12:06:02" />
-	<searches text="jorjao" time="2011-12-09 12:06:01" />
+    <searches text="jorjao" time="2012-07-09 12:06:02" />
+    <searches text="jorjao" time="2012-07-09 12:06:01" />
+    <searches text="jorjao" time="2012-07-09 12:06:00" />
+    <searches text="teste" time="2012-07-09 12:06:06" />
+    <searches text="teste" time="2012-07-09 12:06:07" />
+    <searches text="bla" time="2012-06-29 12:06:01" />
+    <searches text="bla" time="2012-06-29 12:06:02" />
+    <searches text="jorjao" time="2011-12-09 12:06:01" />
        
 
 </dataset>

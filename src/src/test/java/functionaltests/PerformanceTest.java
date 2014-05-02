@@ -4,9 +4,14 @@
  */
 package functionaltests;
 
-import feb.data.daos.AbstractDaoTest;
-import feb.data.entities.RepositorioSubFed;
-import feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.AbstractDaoTest;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import feb.data.interfaces.*;
 import feb.robo.atualiza.subfedOAI.ParserListSets;
 import feb.spring.controllers.FederationsController;
@@ -55,15 +60,15 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
 	Logger log = Logger.getLogger(PerformanceTest.class);
 
     @Autowired
-    RepositoryDAO repDao;
+    RepositoryService repDao;
     @Autowired
-    DocumentosDAO docDao;
+    DocumentService docDao;
     @Autowired
-    SubFederacaoDAO subDao;
+    FederationService subDao;
     @Autowired
-    PadraoMetadadosDAO padDao;
+    MetadataRecordService padDao;
     @Autowired
-    MapeamentoDAO mapDao;
+    MappingService mapDao;
     @Autowired SessionFactory sessionFactory;
 
     @Test
@@ -104,7 +109,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
         	StopWatch stop = new StopWatch();
         	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
-            System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+            //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
             feb.robo.atualiza.subfedOAI.Importer imp = new feb.robo.atualiza.subfedOAI.Importer();
             imp.setInputFile(arquivoXML);
@@ -113,7 +118,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
             imp.update();
             
             stop.stop();
-            System.out.println("XML " + stop.prettyPrint());
+            //System.out.println("XML " + stop.prettyPrint());
             
 
         }
@@ -121,10 +126,10 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
         subDao.save(subFed);
         int docSizeAfterSubFed = docDao.getAll().size();
         int docsUpdated = docSizeAfterSubFed - before;
-        System.out.println("docs updated: " + docsUpdated);
+        //System.out.println("docs updated: " + docsUpdated);
         Long fim = System.currentTimeMillis();
         Long tempoTotal = fim-inicio;
-        System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
+        //System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
         
         sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().clear();
@@ -134,7 +139,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
          subFed = subDao.get(subFed.getId());
         subDao.delete(subFed);
         Long deletef = System.currentTimeMillis();
-        System.out.println("Tempo para deletar a federacao: " + Operacoes.formatTimeMillis(deletef-deletei));
+        //System.out.println("Tempo para deletar a federacao: " + Operacoes.formatTimeMillis(deletef-deletei));
         assertEquals(before, docDao.getAll().size());
         assertEquals(null, subDao.get("performanceTest2"));
 
@@ -178,7 +183,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
         	StopWatch stop = new StopWatch();
         	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
-            System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+            //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
             feb.robo.atualiza.subfedOAI.Importer imp = new feb.robo.atualiza.subfedOAI.Importer();
             imp.setInputFile(arquivoXML);
@@ -187,7 +192,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
             imp.update();
             
             stop.stop();
-            System.out.println("XML " + stop.prettyPrint());
+            //System.out.println("XML " + stop.prettyPrint());
             
 
         }
@@ -195,10 +200,10 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
         subDao.save(subFed);
         int docSizeAfterSubFed = docDao.getAll().size();
         int docsUpdated = docSizeAfterSubFed - before;
-        System.out.println("docs updated: " + docsUpdated);
+        //System.out.println("docs updated: " + docsUpdated);
         Long fim = System.currentTimeMillis();
         Long tempoTotal = fim-inicio;
-        System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
+        //System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
         
         sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().clear();
@@ -208,7 +213,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
          subFed = subDao.get(subFed.getId());
         subDao.delete(subFed);
         Long deletef = System.currentTimeMillis();
-        System.out.println("Tempo para deletar a federacao: " + Operacoes.formatTimeMillis(deletef-deletei));
+        //System.out.println("Tempo para deletar a federacao: " + Operacoes.formatTimeMillis(deletef-deletei));
         assertEquals(before, docDao.getAll().size());
         assertEquals(null, subDao.get("performanceTest2"));
 
@@ -230,7 +235,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
         SubFederacao subFed = subDao.get(100);
         subFed.setVersion("2.1");
 
-        System.out.println("repositorios: "+ subFed.getRepositorios());
+        //System.out.println("repositorios: "+ subFed.getRepositorios());
 
         int before = docDao.getAll().size();
 
@@ -239,7 +244,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
         	StopWatch stop = new StopWatch();
         	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
-            System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+            //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
             feb.robo.atualiza.subfedOAI.Importer imp = new feb.robo.atualiza.subfedOAI.Importer();
             imp.setInputFile(arquivoXML);
@@ -248,7 +253,7 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
             imp.update();
 
             stop.stop();
-            System.out.println("XML " + stop.prettyPrint());
+            //System.out.println("XML " + stop.prettyPrint());
 
 
         }
@@ -256,10 +261,10 @@ public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTes
         subDao.save(subFed);
         int docSizeAfterSubFed = docDao.getAll().size();
         int docsUpdated = docSizeAfterSubFed - before;
-        System.out.println("docs updated: " + docsUpdated);
+        //System.out.println("docs updated: " + docsUpdated);
         Long fim = System.currentTimeMillis();
         Long tempoTotal = fim-inicio;
-        System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
+        //System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
 
     }
 }
