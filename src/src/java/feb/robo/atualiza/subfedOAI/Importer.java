@@ -104,14 +104,7 @@ public class Importer {
 			} else {
 				docDao.save(obaa, header, subFed);
 			}
-
-//			if (i % 10 == 0) {
-//				session.flush();
-//				session.clear();
-//			}
 		}
-
-//		docDao.flush();
 	}
 
 	/**

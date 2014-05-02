@@ -11,7 +11,7 @@ public class AccessibilityFields {
 
 	public static List<String> getHasVisual(OBAA o)
 	{
-		List<String> visual = new ArrayList<String>();
+		List<String> visual = new ArrayList<>();
 		visual.add(cabecalho+"hasvisual");
 		visual.add(o.getAccessibility().getResourceDescription().getPrimary().getHasVisual());
 		return visual;
@@ -20,7 +20,7 @@ public class AccessibilityFields {
 
 	public static List<String> getHasAuditory(OBAA o)
 	{
-		List<String> audio = new ArrayList<String>();
+		List<String> audio = new ArrayList<>();
 		audio.add(cabecalho+"hasauditory");
 		audio.add(o.getAccessibility().getResourceDescription().getPrimary().getHasAuditory());
 		return audio;
@@ -29,7 +29,7 @@ public class AccessibilityFields {
 
 	public static List<String> getHasTactile(OBAA o)
 	{
-		List<String> tatil = new ArrayList<String>();
+		List<String> tatil = new ArrayList<>();
 		tatil.add(cabecalho+"hastactile");
 		tatil.add(o.getAccessibility().getResourceDescription().getPrimary().getHasTactile());
 		return tatil;
@@ -38,7 +38,7 @@ public class AccessibilityFields {
 
 	public static List<String> getHasText(OBAA o)
 	{
-		List<String> text = new ArrayList<String>();
+		List<String> text = new ArrayList<>();
 		text.add(cabecalho+"hastext");
 		text.add(o.getAccessibility().getResourceDescription().getPrimary().getHasText());
 		return text;
@@ -46,7 +46,7 @@ public class AccessibilityFields {
 
 	public static List<List<String>> getAll (OBAA o)
 	{
-		List<List<String>> all = new ArrayList<List<String>>();
+		List<List<String>> all = new ArrayList<>();
 
 		all.add(getHasAuditory(o));
 		all.add(getHasTactile(o));

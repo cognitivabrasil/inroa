@@ -237,7 +237,7 @@ public class SubFederacaoOAI {
     }
 
     public void atualizaSubfedAdm(List<SubFederacao> subFed, Indexador indexar, boolean apagar) throws FederationException {
-        ArrayList<String> erros = new ArrayList<String>();
+        ArrayList<String> erros = new ArrayList<>();
         for (SubFederacao subFederacao : subFed) {
             try {
                 atualizaSubfedAdm(subFederacao, indexar, apagar);
