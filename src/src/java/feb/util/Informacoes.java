@@ -31,6 +31,7 @@ public class Informacoes {
         types.put("model", "Modelo 3D");
         types.put("text", "Texto");
         types.put("video", "Vídeo");
+        types.put("", "Todos");
         return types;
     }
 

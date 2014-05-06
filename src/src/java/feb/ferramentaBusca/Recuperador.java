@@ -65,11 +65,24 @@ public class Recuperador {
      */
     public List<DocumentoReal> buscaAvancada(Consulta consulta) {
 
-        QuerySolr q = new QuerySolr();
-        log.debug(consulta.getConsulta());
-        q.pesquisaCompleta(consulta, consulta.getLimit(), consulta.getOffset());
-        List<DocumentoReal> resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), consulta.getLimit());
-        log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
+        List<DocumentoReal> resultadoConsulta;
+
+        if (consulta.isRss()) {
+
+            QuerySolr q = new QuerySolr();
+            log.debug(consulta.getConsulta());
+            q.pesquisaCompleta(consulta, consulta.getOffset(), rssSizeLimit);
+            consulta.setSizeResult(q.getNumDocs());
+            resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), rssSizeLimit);
+            log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
+        } else {
+            QuerySolr q = new QuerySolr();
+            log.debug(consulta.getConsulta());
+            q.pesquisaCompleta(consulta, consulta.getOffset(), consulta.getLimit());
+            consulta.setSizeResult(q.getNumDocs());
+            resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), consulta.getLimit());
+            log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
+        }
         return resultadoConsulta;
 
     }

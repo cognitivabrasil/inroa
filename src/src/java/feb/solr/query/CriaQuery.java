@@ -2,6 +2,7 @@
 package feb.solr.query;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
  *
@@ -23,79 +24,69 @@ public class CriaQuery {
            String resultado = "obaaQueryFields:" + pesquisa.getConsulta();
 
         if (pesquisa.hasAuthor()) {
-            resultado += "AND obaa.lifecycle.entity:" + pesquisa.getAutor();
+            resultado += " AND obaa.lifecycle.entity:" + pesquisa.getAutor();
         }
-
         if (pesquisa.getHasAuditory() != null) {
-            resultado += "AND obaa.accessibility.resourcedescription.primary.hasauditory:" + pesquisa.getHasAuditory();
+            resultado += " AND obaa.accessibility.resourcedescription.primary.hasauditory:" + pesquisa.getHasAuditory();
         }
-
         if (pesquisa.getHasVisual() != null) {
-            resultado += "AND obaa.accessibility.resourcedescription.primary.hasvisual:" + pesquisa.getHasVisual();
+            resultado += " AND obaa.accessibility.resourcedescription.primary.hasvisual:" + pesquisa.getHasVisual();
+        }
+        if (pesquisa.getHasText() != null) {
+            resultado += " AND obaa.accessibility.resourcedescription.primary.hastext:" + pesquisa.getHasText();
         }
 
-        if (pesquisa.getHasText() != null) {
-            resultado += "AND obaa.accessibility.resourcedescription.primary.hastext:" + pesquisa.getHasText();
-        }
-        
+/*        
         if (pesquisa.getHasTactile()) {
-            resultado += "OR obaa.accessibility.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
+            resultado += " AND obaa.accessibility.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
         }
-        
+        */
         
         if (pesquisa.getCost() != null) {
-            resultado += "AND obaa.rights.cost:" + pesquisa.getCost();
+            resultado += " AND obaa.rights.cost:" + pesquisa.getCost();
         }
-
-        if (pesquisa.getIdioma()!= null) {
-            resultado += "AND obaa.general.language:" + pesquisa.getIdioma();
-        }
-        
-        
-        if (pesquisa.getFormat()!= null) {
-            resultado += "AND obaa.technical.format:" + pesquisa.getFormat();
+        if (!isBlank(pesquisa.getIdioma())) {
+            resultado += " AND obaa.general.language:" + pesquisa.getIdioma();
         }
         
-        
-        if (pesquisa.getDifficult()!= null) {
-            resultado += "AND obaa.educational.difficulty:" + pesquisa.getDifficult();
+        if (!isBlank(pesquisa.getFormat())) {
+            resultado += " AND obaa.technical.format:" + pesquisa.getFormat();
         }
         
-        
-        if (pesquisa.getSize()!= null) {
-            resultado += "OR obaa.technical.size:" + pesquisa.getSize();
+        if (!isBlank(pesquisa.getDifficult())) {
+            resultado += " AND obaa.educational.difficulty:" + pesquisa.getDifficult();
         }
         
+        if (!isBlank(pesquisa.getSize())) {
+            resultado += " OR obaa.technical.size:" + pesquisa.getSize();
+        }
         /**FEDERACOES, REPOSITORIOS E SUBFEDERACOE **/
         
-        if (pesquisa.getFederacoes() != null)
+        if (!pesquisa.getFederacoes().isEmpty())
         {
-            resultado += "AND obaa.federacao:";
+            resultado += " AND obaa.federacao:";
             for (int feds: pesquisa.getFederacoes())
                 resultado += " "+feds;
         }
         
-        
-        if (pesquisa.getRepSubfed()!= null)
+        if (!pesquisa.getRepSubfed().isEmpty())
         {
-            resultado += "AND obaa.subFederacao:";
+            resultado += " AND obaa.subFederacao:";
             for (int subFeds: pesquisa.getRepSubfed())
                 resultado += " "+subFeds;
         }
         
-        
-        if (pesquisa.getRepositorios()!= null)
+        if (!pesquisa.getRepositorios().isEmpty())
         {
-            resultado += "AND obaa.repositorio:";
+            resultado += " AND obaa.repositorio:";
             for (int repos: pesquisa.getRepositorios())
                 resultado += " "+repos;
         }
         
-        
-        if (resultado.startsWith("OR ") ) {
+        if (resultado.startsWith(" OR ") ) {
             resultado = resultado.substring(3);
         }
-        if (resultado.startsWith("AND ") ) {
+        if (resultado.startsWith(" AND ") ) {
             resultado = resultado.substring(4);
         }
         

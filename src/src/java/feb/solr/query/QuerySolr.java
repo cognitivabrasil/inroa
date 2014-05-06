@@ -92,7 +92,6 @@ public class QuerySolr {
 
         String campos = CriaQuery.criaQueryCompleta(pesquisa);
 
-        System.out.println(campos);
         query = new SolrQuery();
 
         query.setQuery(campos);
