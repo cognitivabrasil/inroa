@@ -1,7 +1,6 @@
 package com.cognitivabrasil.feb.data.entities;
 
 import ORG.oclc.oai.models.HibernateOaiDocument;
-import ORG.oclc.oai.models.OaiDocument;
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Location;
 import feb.data.interfaces.DocumentoFebInterface;
@@ -17,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import org.apache.log4j.Logger;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -36,7 +38,8 @@ public class DocumentoReal implements java.io.Serializable,
     private static final long serialVersionUID = 61217365141633065L;
     private int id;
     private String obaaEntry;
-    private Date created;
+    @DateTimeFormat(style = "M-")
+    private DateTime created;
     private Repositorio repositorio;
     private RepositorioSubFed repositorioSubFed;
     private Boolean deleted;
@@ -45,8 +48,6 @@ public class DocumentoReal implements java.io.Serializable,
     private Set<Autor> autores;
 
     public DocumentoReal() {
-        obaaEntry = "";
-        created = new Date(0);
         deleted = false;
         autores = new HashSet<>();
     }
@@ -70,16 +71,16 @@ public class DocumentoReal implements java.io.Serializable,
     @Transient
     @Override
     public Date getTimestamp() {
-        return this.created;
+        return this.created.toDate();
     }
 
     
-    @Temporal(javax.persistence.TemporalType.DATE)
-    public Date getCreated() {
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    public DateTime getCreated() {
         return this.created;
     }
 
-    public void setCreated(Date date) {
+    public void setCreated(DateTime date) {
         this.created = date;
     }
 

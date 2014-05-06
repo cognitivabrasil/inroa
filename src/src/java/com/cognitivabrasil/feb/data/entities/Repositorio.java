@@ -62,14 +62,11 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     private String dataOrigemTemp;
 
     public Repositorio() {
-        id = null;
         name = "";
         descricao = "";
         url = "";
         metadataPrefix = "";
         documentos = new HashSet<>(0);
-        ultimaAtualizacao = null;
-        dataOrigem = null;
         namespace = "";
         colecoesInternal = "";
     }

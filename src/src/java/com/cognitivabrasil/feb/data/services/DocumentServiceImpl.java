@@ -116,7 +116,7 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
         doc.setObaaEntry(h.getIdentifier());
 
         DocumentoReal real = getWithoutId(doc);
-        real.setCreated(h.getTimestamp());
+        real.setCreated(new DateTime(h.getTimestamp()));
 
         try {
             if (h.isDeleted()) {
