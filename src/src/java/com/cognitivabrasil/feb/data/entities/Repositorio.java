@@ -1,22 +1,10 @@
 // Generated 20/07/2011 15:25:15 by Hibernate Tools 3.2.0.b9
 package com.cognitivabrasil.feb.data.entities;
 
-import java.util.*;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.transaction.annotation.Transactional;
-
 import feb.data.interfaces.FebDomainObject;
 import feb.spring.ApplicationContextProvider;
 import feb.util.Operacoes;
+import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,11 +15,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 import javax.persistence.Transient;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.springframework.context.ApplicationContext;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -60,8 +58,8 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     private Mapeamento mapeamento;
     private transient SessionFactory sessionFactory;
     private transient Session session;
-    private Date dataOrigem;
-    private Date dataOrigemTemp;
+    private String dataOrigem;
+    private String dataOrigemTemp;
 
     public Repositorio() {
         id = null;
@@ -201,7 +199,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     public String getMetadataPrefix() {
         return metadataPrefix;
     }
-    
+
     public void setUltimaAtualizacao(DateTime ultimaAtualizacao) {
         this.ultimaAtualizacao = ultimaAtualizacao;
         if (this.dataOrigemTemp != null) {
@@ -214,7 +212,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     public DateTime getUltimaAtualizacao() {
         return ultimaAtualizacao;
     }
-    
+
     /**
      * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se o
      * reposit&oacute;rio n&atilde;o tiver uma url associada ele informa que
@@ -229,23 +227,22 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
                 getUrl());
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
     @Column(name = "data_xml")
-    public Date getDataOrigem() {
+    public String getDataOrigem() {
         return dataOrigem;
     }
 
-    public void setDataOrigem(Date dataOrigem) {
+    public void setDataOrigem(String dataOrigem) {
         this.dataOrigem = dataOrigem;
         this.dataOrigemTemp = null;
     }
-    
+
     @Transient
-    public Date getDataOrigemTemp() {
+    public String getDataOrigemTemp() {
         return dataOrigemTemp;
     }
 
-    public void setDataOrigemTemp(Date dataOrigemTemp) {
+    public void setDataOrigemTemp(String dataOrigemTemp) {
         this.dataOrigemTemp = dataOrigemTemp;
     }
 

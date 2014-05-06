@@ -185,7 +185,7 @@ public class Repositorios {
                 // se a data da ultima atualização for inferior a 01/01/1000
                 // apaga todos as informacoes do repositorio
                 if ((data_ultima_atualizacao == null && rep.getDataOrigem() == null)
-                        || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(rep.getDataOrigem()))) {
+                        || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(DateTime.parse(rep.getDataOrigem())))) {
                     log.info("Deletando todos os documentos do repositório: "
                             + rep.getName().toUpperCase());
                     try {
@@ -219,7 +219,7 @@ public class Repositorios {
                     // efetua o Harvester e grava os xmls na pasta temporaria
 
                     // coletando xmls
-                    ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(rep.getUrl(), Operacoes.formatDateOAIPMH(rep.getDataOrigem()), rep.getName(), caminhoDiretorioTemporario, rep.getMetadataPrefix(), set); // chama o
+                    ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(rep.getUrl(), rep.getDataOrigem(), rep.getName(), caminhoDiretorioTemporario, rep.getMetadataPrefix(), set); // chama o
                     // metodo que efetua o HarvesterVerb grava um xml em disco e
                     // retorna um arrayList com os caminhos para os XML
 

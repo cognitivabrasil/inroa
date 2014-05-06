@@ -6,8 +6,8 @@
 
 package com.cognitivabrasil.feb.data.services;
 
-import com.cognitivabrasil.feb.data.repositories.RepositoryRepository;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.repositories.RepositoryRepository;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;

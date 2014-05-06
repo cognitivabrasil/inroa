@@ -2,34 +2,26 @@ package feb.robo.atualiza.importaOAI;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
-import java.io.File;
-import java.util.Date;
-
-import metadata.Header;
-import metadata.XsltConversor;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.File;
+import java.util.Date;
+import metadata.Header;
+import metadata.XsltConversor;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
 // TODO: Auto-generated Javadoc
 public class Importer {
 
     Logger logger = Logger.getLogger(Importer.class);
-
     private XsltConversor conversor;
     private Repositorio rep;
     private File inputXmlFile;
     private OaiOBAA oai;
-
     @Autowired
     private DocumentService docDao;
-
     @Autowired
     private RepositoryService repDao;
 
@@ -88,15 +80,10 @@ public class Importer {
         }
 
         // TODO: move the conversion to and from String of the date to OaiOBAA class
-        Date d;
-        try {
-            d = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").parse(oai.getResponseDate());
-            rep.setDataOrigemTemp(d);
-            repDao.save(rep);
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            logger.error("Error in parsing date from OaiPMH, probably malformed XML.");
-        }
+
+        rep.setDataOrigemTemp(oai.getResponseDate());
+//        repDao.save(rep);
+
 
         //TODO: Testar para ver se funciona sem o flush
 //        docDao.flush();
@@ -128,5 +115,4 @@ public class Importer {
     public void setRepDao(RepositoryService repositoryDao) {
         this.repDao = repositoryDao;
     }
-
 }

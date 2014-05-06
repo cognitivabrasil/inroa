@@ -26,6 +26,7 @@ in the editor. -->
     <repositorios id="1" nome="Cesta" descricao="dfsd"
                url_or_ip="http://cesta2.cinted.ufrgs.br/oai/request"
                data_ultima_atualizacao="2014-04-28 07:51:22.48377"
+               data_xml="1984-08-21T07:35:00Z"
                metadata_prefix="lom"
                padrao_metadados="1"
                mapeamento_id="1"

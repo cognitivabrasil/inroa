@@ -4,9 +4,16 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.SortedTable;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import org.joda.time.DateTime;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,17 +22,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import org.springframework.test.context.transaction.AfterTransaction;
-import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
-import com.cognitivabrasil.feb.data.entities.Repositorio;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
  *
  * @author paulo
- *
+ * @author Marcos Nunes <marcos@cognitivabrasil.com.br>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
@@ -39,6 +42,8 @@ public class RepositoryServiceIT extends AbstractDaoTest {
     DocumentService docDao;
     @Autowired
     MappingService mapDao;
+    @PersistenceContext
+    private EntityManager em;
 
     /**
      * Test of delete method, of class RepositoryHibernateDAO.
@@ -48,11 +53,11 @@ public class RepositoryServiceIT extends AbstractDaoTest {
      */
     @Test
     public void testGet() {
-        //System.out.println("get");
         int id = 1;
         Repositorio cesta = repDao.get(id);
 
         assertEquals("Cesta", cesta.getName());
+        assertThat(cesta.getDataOrigem(), equalTo("1984-08-21T07:35:00Z"));
     }
 
     @Test
@@ -183,6 +188,26 @@ public class RepositoryServiceIT extends AbstractDaoTest {
     @Test
     public void testGetOutDated(){
         assertThat(repDao.getOutDated(), hasSize(3));
+    }
+    
+     @Test
+    public void testUpdateDate(){
+        Repositorio rep = new Repositorio();
+        String date = "1984-08-21T13:32:03Z";
+        rep.setDataOrigemTemp(date);
+        rep.setUltimaAtualizacao(DateTime.now());
+        rep.setName("marcosn");
+        rep.setNamespace("obaa");
+        rep.setUrl("http://url");
+        rep.setMapeamento(mapDao.get(1));
+        
+        assertThat(rep.getDataOrigem(), equalTo(date)); 
+        repDao.save(rep);
+        em.flush();
+        em.clear();
+        
+        Repositorio rep2 = repDao.get("marcosn");
+        assertThat(rep2.getDataOrigem(), equalTo(date)); 
     }
 
     @AfterTransaction

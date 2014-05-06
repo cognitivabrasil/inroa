@@ -41,86 +41,87 @@ import org.junit.Ignore;
 @ContextConfiguration(locations = "classpath:testApplicationContext.xml")
 @TestExecutionListeners(DependencyInjectionTestExecutionListener.class)
 public class ImporterTest {
-	/**
-	 * Tests that the importer is converting the file and calling the
-	 * correct number of save() in the document DAO, from a sample DC input.
-	 * @throws IOException 
-	 */
-	@Test
-	public void testImportDC() throws IOException {
-		String inputXmlFile = "src/test/java/feb/metadata/oai_dc.xml"; // input xml
-		String inputXsltFile = "src/xslt/dc2obaa_full.xsl"; // input xsl
-		String xslt = FileUtils.readFileToString(new File(inputXsltFile));
-		
-		Mapeamento m = new Mapeamento();
-		m.setXslt(xslt);
-		
-		Repositorio r = new Repositorio();
-		r.setMapeamento(m);
-		
-		DocumentService docDao = mock(DocumentService.class);
-		RepositoryService repDao = mock(RepositoryService.class);
-				
-		Importer imp = new Importer();
-		imp.setInputFile(new File(inputXmlFile));
-		imp.setRepositorio(r);
-		imp.setDocDao(docDao);
-		imp.setRepDao(repDao);
-		imp.update();
-		
-                assertThat(new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'").format(r.getDataOrigemTemp()), equalTo("2011-09-12T12:25:51Z"));
-                
-		OaiOBAA oai = imp.getOaiObaa();
-		
-		assertEquals(2, oai.getSize());
-		assertEquals("2011-09-12T12:25:51Z", oai.getResponseDate());
-		
-		OBAA obaa = oai.getMetadata(0);
-		
-		assertThat(obaa.getTitles(), hasItems("Taquaraço: 9 anos de glórias", "Taquaraço: 9 years of glory"));
-		
-		// Verify that save() was called twice on mocked docDao
-		verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));	
 
-	}
-        @Ignore("Teste para o LOM, os arquivos que estão sendo usados estão com erro no namespace LOM")
-        @Test
-	public void testImportLOM() throws IOException {
-				String inputXmlFile = "src/test/resources/froacLOM.xml"; // input xml
-		String inputXsltFile = "src/xslt/lom2obaa_full.xsl"; // input xsl
-		String xslt = FileUtils.readFileToString(new File(inputXsltFile));
-		
-		Mapeamento m = new Mapeamento();
-		m.setXslt(xslt);
-		
-		Repositorio r = new Repositorio();
-		r.setMapeamento(m);
-		
-		DocumentService docDao = mock(DocumentService.class);
-		RepositoryService repDao = mock(RepositoryService.class);
-						
-		Importer imp = new Importer();
-		imp.setInputFile(new File(inputXmlFile));
-		imp.setRepositorio(r);
-		imp.setDocDao(docDao);
-		imp.setRepDao(repDao);
-		imp.update();
-		
-		OaiOBAA oai = imp.getOaiObaa();
-		
-                
-                assertEquals(93, oai.getSize());
-                
-		assertEquals("2012-10-03T20:09:26Z", oai.getResponseDate());
-		
-		OBAA obaa = oai.getMetadata(0);
-		
-		assertThat(obaa.getGeneral().getTitles(), hasItems("Imagen Arquitectura BDI"));
-		
-		// Verify that save() was called twice on mocked docDao
-		verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));	
+    /**
+     * Tests that the importer is converting the file and calling the correct
+     * number of save() in the document DAO, from a sample DC input.
+     *
+     * @throws IOException
+     */
+    @Test
+    public void testImportDC() throws IOException {
+        String inputXmlFile = "src/test/java/feb/metadata/oai_dc.xml"; // input xml
+        String inputXsltFile = "src/xslt/dc2obaa_full.xsl"; // input xsl
+        String xslt = FileUtils.readFileToString(new File(inputXsltFile));
 
-	}
-    
+        Mapeamento m = new Mapeamento();
+        m.setXslt(xslt);
+
+        Repositorio r = new Repositorio();
+        r.setMapeamento(m);
+
+        DocumentService docDao = mock(DocumentService.class);
+        RepositoryService repDao = mock(RepositoryService.class);
+
+        Importer imp = new Importer();
+        imp.setInputFile(new File(inputXmlFile));
+        imp.setRepositorio(r);
+        imp.setDocDao(docDao);
+        imp.setRepDao(repDao);
+        imp.update();
+
+        assertThat(r.getDataOrigemTemp(), equalTo("2011-09-12T12:25:51Z"));
+
+        OaiOBAA oai = imp.getOaiObaa();
+
+        assertEquals(2, oai.getSize());
+        assertEquals("2011-09-12T12:25:51Z", oai.getResponseDate());
+
+        OBAA obaa = oai.getMetadata(0);
+
+        assertThat(obaa.getTitles(), hasItems("Taquaraço: 9 anos de glórias", "Taquaraço: 9 years of glory"));
+
+        // Verify that save() was called twice on mocked docDao
+        verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));
+
+    }
+
+    @Ignore("Teste para o LOM, os arquivos que estão sendo usados estão com erro no namespace LOM")
+    @Test
+    public void testImportLOM() throws IOException {
+        String inputXmlFile = "src/test/resources/froacLOM.xml"; // input xml
+        String inputXsltFile = "src/xslt/lom2obaa_full.xsl"; // input xsl
+        String xslt = FileUtils.readFileToString(new File(inputXsltFile));
+
+        Mapeamento m = new Mapeamento();
+        m.setXslt(xslt);
+
+        Repositorio r = new Repositorio();
+        r.setMapeamento(m);
+
+        DocumentService docDao = mock(DocumentService.class);
+        RepositoryService repDao = mock(RepositoryService.class);
+
+        Importer imp = new Importer();
+        imp.setInputFile(new File(inputXmlFile));
+        imp.setRepositorio(r);
+        imp.setDocDao(docDao);
+        imp.setRepDao(repDao);
+        imp.update();
+
+        OaiOBAA oai = imp.getOaiObaa();
+
+
+        assertEquals(93, oai.getSize());
+
+        assertEquals("2012-10-03T20:09:26Z", oai.getResponseDate());
+
+        OBAA obaa = oai.getMetadata(0);
+
+        assertThat(obaa.getGeneral().getTitles(), hasItems("Imagen Arquitectura BDI"));
+
+        // Verify that save() was called twice on mocked docDao
+        verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));
+
+    }
 }
-
