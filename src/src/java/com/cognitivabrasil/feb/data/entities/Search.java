@@ -1,7 +1,5 @@
 package com.cognitivabrasil.feb.data.entities;
 
-import java.util.Date;
-
 public class Search {
 	private String text;
 	private Integer times;

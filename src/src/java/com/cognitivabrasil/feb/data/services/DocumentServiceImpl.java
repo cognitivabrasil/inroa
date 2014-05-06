@@ -5,25 +5,25 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
+import ORG.oclc.oai.server.catalog.OaiDocumentService;
 import cognitivabrasil.obaa.OBAA;
-import com.cognitivabrasil.feb.data.repositories.DocumentRepository;
 import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.repositories.DocumentRepository;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import metadata.Header;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import ORG.oclc.oai.server.catalog.OaiDocumentService;
-import java.util.Date;
-import java.util.Iterator;
-import org.joda.time.DateTime;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 /**
  *

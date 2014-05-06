@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;

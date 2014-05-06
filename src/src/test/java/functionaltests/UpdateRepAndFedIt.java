@@ -83,7 +83,6 @@ public class UpdateRepAndFedIt extends AbstractDaoTest {
         imp.setInputFile(xmlRep);
         imp.setRepositorio(rep);
         imp.setDocDao(docDao);
-        imp.setRepDao(repDao);
         int updated = imp.update();
         assert (updated > 0);
         repDao.save(rep);

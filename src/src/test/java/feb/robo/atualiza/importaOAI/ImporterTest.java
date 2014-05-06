@@ -61,13 +61,11 @@ public class ImporterTest {
         r.setMapeamento(m);
 
         DocumentService docDao = mock(DocumentService.class);
-        RepositoryService repDao = mock(RepositoryService.class);
 
         Importer imp = new Importer();
         imp.setInputFile(new File(inputXmlFile));
         imp.setRepositorio(r);
         imp.setDocDao(docDao);
-        imp.setRepDao(repDao);
         imp.update();
 
         assertThat(r.getDataOrigemTemp(), equalTo("2011-09-12T12:25:51Z"));
@@ -100,13 +98,11 @@ public class ImporterTest {
         r.setMapeamento(m);
 
         DocumentService docDao = mock(DocumentService.class);
-        RepositoryService repDao = mock(RepositoryService.class);
 
         Importer imp = new Importer();
         imp.setInputFile(new File(inputXmlFile));
         imp.setRepositorio(r);
         imp.setDocDao(docDao);
-        imp.setRepDao(repDao);
         imp.update();
 
         OaiOBAA oai = imp.getOaiObaa();

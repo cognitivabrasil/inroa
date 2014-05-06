@@ -78,7 +78,6 @@ public class XMLtoDB {
         } else {
 
             DocumentService docDao = ctx.getBean(DocumentService.class);
-            RepositoryService repDao = ctx.getBean(RepositoryService.class);
 
             for (int i = 0; i < caminhoXML.size(); i++) {
                 log.info("Lendo XML " + caminhoXML.get(i).substring(caminhoXML.get(i).lastIndexOf("/") + 1));
@@ -88,7 +87,6 @@ public class XMLtoDB {
                     imp.setInputFile(arquivoXML);
                     imp.setRepositorio(r);
                     imp.setDocDao(docDao);
-                    imp.setRepDao(repDao);
                     updated += imp.update();
 
                     //apaga arquivo XML

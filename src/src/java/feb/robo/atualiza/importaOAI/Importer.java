@@ -4,7 +4,6 @@ import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.RepositoryService;
 import java.io.File;
 import java.util.Date;
 import metadata.Header;
@@ -22,8 +21,6 @@ public class Importer {
     private OaiOBAA oai;
     @Autowired
     private DocumentService docDao;
-    @Autowired
-    private RepositoryService repDao;
 
     /**
      * Sets the input file.
@@ -64,8 +61,8 @@ public class Importer {
             try {
                 Header header = oai.getHeader(i);
                 logger.debug(header);
-                header.setDatestamp(new Date()); // set date to current date (instead of the
-                // repository date
+                // set date to current date (instead of the repository date
+                header.setDatestamp(new Date()); 
                 OBAA metadata = oai.getMetadata(i);
 
                 if ((!header.isDeleted()) && metadata == null) {
@@ -82,11 +79,7 @@ public class Importer {
         // TODO: move the conversion to and from String of the date to OaiOBAA class
 
         rep.setDataOrigemTemp(oai.getResponseDate());
-//        repDao.save(rep);
 
-
-        //TODO: Testar para ver se funciona sem o flush
-//        docDao.flush();
         return oai.getSize();
 
     }
@@ -110,9 +103,5 @@ public class Importer {
      */
     public void setDocDao(DocumentService documentDao) {
         this.docDao = documentDao;
-    }
-
-    public void setRepDao(RepositoryService repositoryDao) {
-        this.repDao = repositoryDao;
     }
 }

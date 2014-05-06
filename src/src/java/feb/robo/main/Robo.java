@@ -6,9 +6,6 @@ import feb.ferramentaBusca.indexador.Indexador;
 import feb.robo.atualiza.Repositorios;
 import feb.robo.atualiza.SubFederacaoOAI;
 import feb.util.Operacoes;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +17,16 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class Robo {
 
-    @Autowired private Indexador indexar;
-    
-    @Autowired private Repositorios repositorio;
-    @Autowired private SubFederacaoOAI subFed;
-    
-    @Autowired private SearchService searchesDao;
-    @Autowired private DocumentService docDao;
+    @Autowired
+    private Indexador indexar;
+    @Autowired
+    private Repositorios repositorio;
+    @Autowired
+    private SubFederacaoOAI subFed;
+    @Autowired
+    private SearchService searchesDao;
+    @Autowired
+    private DocumentService docDao;
 
     /**
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma
@@ -43,7 +43,7 @@ public class Robo {
         log.info(">>> Iniciando o Robo.");
         log.info(">>>");
 
-        Long inicioRobo = System.currentTimeMillis();        
+        Long inicioRobo = System.currentTimeMillis();
         long initNumberDocs = docDao.getSizeWithDeleted();
 //TESTA/ATUALIZA SUBFEDERACAO
         boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);
@@ -60,10 +60,10 @@ public class Robo {
         } else {
             log.info("NAO existe atualizaçoes para os repositorios! ");
         }
-        
+
         log.info("Limpando visitas antigas...");
         searchesDao.cleanup();
-        
+
         Long finalRobo = System.currentTimeMillis();
         Long tempoTotal = (finalRobo - inicioRobo);
         log.info("Levou " + Operacoes.formatTimeMillis(tempoTotal) + " todo o processo do Robo");

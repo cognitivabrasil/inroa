@@ -63,7 +63,6 @@ public class LumeXmlIT extends AbstractDaoTest {
         imp.setInputFile(new File(inputXmlFile));
         imp.setRepositorio(r);
         imp.setDocDao(docDao);
-        imp.setRepDao(repDao);
         imp.update();
     }
 }

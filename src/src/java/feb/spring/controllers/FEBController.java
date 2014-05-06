@@ -2,7 +2,6 @@ package feb.spring.controllers;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.DocumentoReal;
-import com.cognitivabrasil.feb.data.entities.DocumentosVisitas;
 import com.cognitivabrasil.feb.data.entities.Visita;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.DocumentVisitService;
