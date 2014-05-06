@@ -1,17 +1,16 @@
 package feb.spring.controllers;
 
-import com.cognitivabrasil.feb.data.services.SearchService;
-import com.cognitivabrasil.feb.data.services.FederationService;
-import com.cognitivabrasil.feb.data.services.RepositoryService;
-import com.cognitivabrasil.feb.data.services.DocumentVisitService;
-import com.cognitivabrasil.feb.data.services.VisitService;
-import com.cognitivabrasil.feb.data.services.UserService;
-import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import com.cognitivabrasil.feb.data.entities.DocumentosVisitas;
 import com.cognitivabrasil.feb.data.entities.Visita;
-import feb.data.interfaces.*;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.DocumentVisitService;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
+import com.cognitivabrasil.feb.data.services.SearchService;
+import com.cognitivabrasil.feb.data.services.UserService;
+import com.cognitivabrasil.feb.data.services.VisitService;
 import feb.ferramentaBusca.Recuperador;
 import feb.services.TagCloudService;
 import feb.solr.main.Solr;
@@ -30,8 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,8 +44,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller("feb")
 public final class FEBController {
 
-    @Autowired
-    private SessionFactory sessionFactory;
     @Autowired
     private UserService userDao;
     @Autowired
@@ -142,21 +137,6 @@ public final class FEBController {
             String title = "Título não informado";
             if (!titles.isEmpty()) {
                 title = titles.get(0);
-            }
-
-            Cookie[] testeCokies = request.getCookies();
-            if (testeCokies != null && testeCokies.length > 0) {
-
-                if (!existingCookie(cookie)) {
-                    Cookie newVisitor = addCookie(response, request);
-                    cookie = newVisitor.getValue();
-                }
-
-                DocumentosVisitas docVis = new DocumentosVisitas();
-                docVis.setDocumento(d);
-
-                docVis.setVisita((Visita) getSession().load(Visita.class, Integer.parseInt(cookie)));
-                docVisDao.save(docVis);
             }
 
             model.addAttribute("title", title);
@@ -392,15 +372,6 @@ public final class FEBController {
         } catch (IOException e) {
             return "false";
         }
-    }
-
-    /**
-     * Gets the session.
-     *
-     * @return the session
-     */
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
     }
 
     private Cookie addCookie(HttpServletResponse response, HttpServletRequest request) {
