@@ -677,7 +677,6 @@ src/src/java/feb/ferramentaBusca/indexador/package.html -text
 src/src/java/feb/ferramentaBusca/package.html -text
 src/src/java/feb/metadata/XSLTUtil.java -text
 src/src/java/feb/metadata/XsltConversorDefault.java -text
-src/src/java/feb/oai/HibernateOAICatalog.java -text
 src/src/java/feb/robo/atualiza/Repositorios.java -text
 src/src/java/feb/robo/atualiza/SubFederacaoOAI.java -text
 src/src/java/feb/robo/atualiza/harvesterOAI/Harvester.java -text
