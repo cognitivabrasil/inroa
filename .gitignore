@@ -31,3 +31,4 @@ src/solr/solr/feb/data/
 src/solr/solr/feb/data/*
 !src/solr/logs/*.swp
 src/solr/logs/*
+!src/src/java/com/cognitivabrasil/feb/oai/*.swp

@@ -1,6 +1,6 @@
 package com.cognitivabrasil.feb.data.entities;
 
-import ORG.oclc.oai.models.HibernateOaiDocument;
+import ORG.oclc.oai.models.OaiDocument;
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Location;
 import feb.data.interfaces.DocumentoFebInterface;
@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import org.apache.log4j.Logger;
 import org.hibernate.annotations.Type;
@@ -32,7 +31,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "documentos")
 public class DocumentoReal implements java.io.Serializable,
-        DocumentoFebInterface, HibernateOaiDocument {
+        DocumentoFebInterface, OaiDocument {
 
     private static final Logger log = Logger.getLogger(DocumentoReal.class);
     private static final long serialVersionUID = 61217365141633065L;

@@ -664,6 +664,7 @@ src/src/java/com/cognitivabrasil/feb/data/services/UserService.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/UserServiceImpl.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/VisitService.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/VisitServiceImpl.java -text
+src/src/java/com/cognitivabrasil/feb/oai/DataServiceOaiCatalog.java -text
 src/src/java/feb/data/interfaces/DocumentoFebInterface.java -text
 src/src/java/feb/data/interfaces/FebDomainObject.java -text
 src/src/java/feb/data/interfaces/Paginavel.java -text
