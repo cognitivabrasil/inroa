@@ -23,6 +23,7 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
+import org.joda.time.DateTime;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 import org.xml.sax.SAXException;
@@ -137,7 +138,7 @@ public class SubFederacaoOAI {
                 obj.atualizaObjetosSubFed(subFed, indexar);
 
 
-                subFed.setUltimaAtualizacao(new Date());
+                subFed.setUltimaAtualizacao(DateTime.now());
                 FederationService subDao = ctx.getBean(FederationService.class);
                 subDao.save(subFed);
 
@@ -166,7 +167,7 @@ public class SubFederacaoOAI {
                     log.error(msgOAI + msg + " - The value of the identifier argument is unknown or illegal in this repository.\n");
                 } else if (msg.equalsIgnoreCase("noRecordsMatch")) {
                     log.info(msg + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
-                    subFed.setUltimaAtualizacao(new Date());
+                    subFed.setUltimaAtualizacao(DateTime.now());
                 } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                     log.error(msgOAI + msg + " - There are no metadata formats available for the specified item.\n");
                 } else if (msg.equalsIgnoreCase("noSetHierarchy")) {

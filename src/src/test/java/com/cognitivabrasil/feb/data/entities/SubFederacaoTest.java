@@ -42,7 +42,7 @@ public class SubFederacaoTest {
     @Test
     public void testGetProximaAtualizacao() {
         SubFederacao s = new SubFederacao();
-        s.setUltimaAtualizacao(new Date());
+        s.setUltimaAtualizacao(DateTime.now());
         assertThat(s.getProximaAtualizacao(), is(notNullValue()));
     }
 
@@ -143,7 +143,7 @@ public class SubFederacaoTest {
         SubFederacao fed = new SubFederacao();
         DateTime date = DateTime.parse("1984-08-21T07:35:00Z");
         fed.setDataXMLTemp("1984-08-21T05:35:00Z");
-        fed.setUltimaAtualizacao(date.toDate());
+        fed.setUltimaAtualizacao(date);
         
         assertThat(fed.getDataXML(), equalTo("1984-08-21T05:35:00Z"));        
     }

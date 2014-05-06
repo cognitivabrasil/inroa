@@ -17,6 +17,7 @@ import org.dbunit.Assertion;
 import org.dbunit.dataset.SortedTable;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import org.joda.time.DateTime;
 import static org.junit.Assert.assertEquals;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -198,7 +199,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         SubFederacao fed = new SubFederacao();
         fed.setName("marcosn");
         fed.setDataXMLTemp(date);
-        fed.setUltimaAtualizacao(new Date());
+        fed.setUltimaAtualizacao(DateTime.now());
 
         assertThat(fed.getDataXML(), equalTo(date));
         instance.save(fed);

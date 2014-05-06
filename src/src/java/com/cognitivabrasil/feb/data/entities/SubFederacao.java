@@ -6,13 +6,11 @@ package com.cognitivabrasil.feb.data.entities;
 
 import feb.data.interfaces.FebDomainObject;
 import feb.spring.ApplicationContextProvider;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import org.springframework.core.style.ToStringCreator;
 import feb.util.Operacoes;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,13 +20,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.style.ToStringCreator;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -43,7 +44,8 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
     private String name;
     private String descricao;
     private String url;
-    private Date ultimaAtualizacao;
+    @DateTimeFormat(style = "M-")
+    private DateTime ultimaAtualizacao;
     private String dataXML;
     private String version;
     private String dataXMLTemp;
@@ -116,9 +118,9 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
         this.version = version;
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @Column(name = "data_ultima_atualizacao")
-    public Date getUltimaAtualizacao() {
+    public DateTime getUltimaAtualizacao() {
         return ultimaAtualizacao;
     }
 
@@ -143,7 +145,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
         return Operacoes.ultimaAtualizacaoFrase(getUltimaAtualizacao(), getUrl());
     }
 
-    public void setUltimaAtualizacao(Date ultimaAtualizacao) {
+    public void setUltimaAtualizacao(DateTime ultimaAtualizacao) {
         this.ultimaAtualizacao = ultimaAtualizacao;
         if (dataXMLTemp != null) {
             this.dataXML = this.dataXMLTemp;
@@ -175,11 +177,11 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
     }
 
     @Transient
-    public Date getProximaAtualizacao() {
+    public DateTime getProximaAtualizacao() {
         if (this.ultimaAtualizacao == null) {
             return null;
         } else {
-            return new Date(this.ultimaAtualizacao.getTime() + 24 * 60 * 60 * 1000); // soma a periodicidade em dias
+            return getUltimaAtualizacao().plusDays(1); 
         }
     }
 
@@ -255,7 +257,7 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
      */
     @Transient
     public boolean getIsOutdated() {
-        return getProximaAtualizacao() == null || getProximaAtualizacao().before(new Date());
+        return getProximaAtualizacao() == null || getProximaAtualizacao().isBeforeNow();
     }
 
     /**
