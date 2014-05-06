@@ -27,3 +27,7 @@ src/test
 src/solr/logs/
 src/solr/solr/feb/data/
 *.swp
+!src/solr/solr/feb/data/*.swp
+src/solr/solr/feb/data/*
+!src/solr/logs/*.swp
+src/solr/logs/*

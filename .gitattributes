@@ -223,15 +223,6 @@ src/solr/lib/jetty-webapp-8.1.8.v20121106.jar -text
 src/solr/lib/jetty-xml-8.1.8.v20121106.jar -text
 src/solr/lib/servlet-api-3.0.jar -text
 src/solr/logs/solr.log -text
-src/solr/logs/solr.log.1 -text
-src/solr/logs/solr.log.2 -text
-src/solr/logs/solr.log.3 -text
-src/solr/logs/solr.log.4 -text
-src/solr/logs/solr.log.5 -text
-src/solr/logs/solr.log.6 -text
-src/solr/logs/solr.log.7 -text
-src/solr/logs/solr.log.8 -text
-src/solr/logs/solr.log.9 -text
 src/solr/resources/log4j.properties -text
 src/solr/solr-webapp/webapp/META-INF/LICENSE.txt -text
 src/solr/solr-webapp/webapp/META-INF/MANIFEST.MF -text
