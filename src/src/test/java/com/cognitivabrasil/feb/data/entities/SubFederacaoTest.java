@@ -5,11 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import org.joda.time.DateTime;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-
-import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
-import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
  
@@ -143,8 +141,10 @@ public class SubFederacaoTest {
     @Test
     public void testUpdateDate(){
         SubFederacao fed = new SubFederacao();
-        fed.setUltimaAtualizacao(new Date());
+        DateTime date = DateTime.parse("1984-08-21T07:35:00Z");
+        fed.setDataXMLTemp("1984-08-21T05:35:00Z");
+        fed.setUltimaAtualizacao(date.toDate());
         
-        
+        assertThat(fed.getDataXML(), equalTo("1984-08-21T05:35:00Z"));        
     }
 }

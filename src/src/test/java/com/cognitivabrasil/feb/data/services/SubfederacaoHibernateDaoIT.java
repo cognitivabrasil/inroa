@@ -4,20 +4,20 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.SortedTable;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,11 +28,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-
-import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
-import com.cognitivabrasil.feb.data.entities.SubFederacao;
-import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.FederationService;
 
 /**
  *
@@ -47,9 +42,10 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
     @Autowired
     FederationService instance;
-    
     @Autowired
-	private DocumentService docDao;
+    private DocumentService docDao;
+    @PersistenceContext
+    private EntityManager em;
 
     public SubfederacaoHibernateDaoIT() {
     }
@@ -100,30 +96,30 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
     @Test
     public void testDelete() {
-    	SubFederacao cesta = instance.get(1);
+        SubFederacao cesta = instance.get(1);
 
-        instance.delete(cesta);        
-        
+        instance.delete(cesta);
+
 
         List<SubFederacao> l = instance.getAll();
         assertEquals(3, l.size());
 
 
     }
-    
+
     @Test
     public void testDeleteRemovesDocuments() {
         SubFederacao cesta = instance.get(1);
 
         int sizeCesta = 0;
-        for(RepositorioSubFed r : cesta.getRepositorios()) {
-        	sizeCesta += r.getDocumentos().size();
+        for (RepositorioSubFed r : cesta.getRepositorios()) {
+            sizeCesta += r.getDocumentos().size();
         }
         int sizeAllBefore = docDao.getAll().size();
         int sizeAfterShould = sizeAllBefore - sizeCesta;
 
-        instance.delete(cesta);        
-        
+        instance.delete(cesta);
+
         assertEquals("Size of UFRGS before", 2, sizeCesta);
         assertEquals("Size of UFRGS after deletion", sizeAfterShould, docDao.getAll().size());
     }
@@ -164,14 +160,14 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         f.setName("Nova");
         f.setUrl("http://nova");
         f.setDataXML("2012-03-19T18:01:54Z");
-        
+
         Set<String> listaRep = new HashSet<>();
         listaRep.add("marcos");
         listaRep.add("jorge");
         listaRep.add("preto");
-        
+
         f.atualizaListaSubRepositorios(listaRep);
-        
+
         assertThat(instance.getAll(), hasSize(4));
 
         instance.save(f);
@@ -179,13 +175,13 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         SubFederacao fTeste = instance.get("Nova");
         assertThat(fTeste, is(notNullValue()));
         assertEquals("Nova", fTeste.getName());
-       // assertThat(fTeste.getRepositorios(), hasSize(3));
-        
+        // assertThat(fTeste.getRepositorios(), hasSize(3));
+
         assertThat(instance.getAll(), hasSize(5));
-        
+
         //assertEquals("Nr correto de Subfederacoes apos adicao", 5, instance.getAll().size());
         //System.out.println("Repositorios: "+fTeste.getRepositorios());
-        
+
         SubFederacao f2 = instance.get(3);
         f2.setName("Jorjao");
         f2.setUrl("http://jorjao");
@@ -195,10 +191,21 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         updated = true;
 
     }
-    
+
     @Test
-    public void testUpdateDate(){
-        
+    public void testSaveDataXML() {
+        String date = "1984-08-21T05:35:00Z";
+        SubFederacao fed = new SubFederacao();
+        fed.setName("marcosn");
+        fed.setDataXMLTemp(date);
+        fed.setUltimaAtualizacao(new Date());
+
+        assertThat(fed.getDataXML(), equalTo(date));
+        instance.save(fed);
+        em.flush();
+        em.clear();
+        SubFederacao fed2 = instance.get("marcosn");
+        assertThat(fed2.getDataXML(), equalTo(date));
     }
 
     /*
