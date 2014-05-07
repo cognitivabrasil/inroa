@@ -628,13 +628,11 @@ src/src/java/com/cognitivabrasil/feb/data/entities/Estatistica.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Mapeamento.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/PadraoMetadados.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Repositorio.java -text
-src/src/java/com/cognitivabrasil/feb/data/entities/RepositorioPaginavel.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/RepositorioSubFed.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/ResultadoConsulta.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Search.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/SubFederacao.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/SubNodo.java -text
-src/src/java/com/cognitivabrasil/feb/data/entities/SubRepPaginavel.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Usuario.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Visita.java -text
 src/src/java/com/cognitivabrasil/feb/data/repositories/DocumentRepository.java -text

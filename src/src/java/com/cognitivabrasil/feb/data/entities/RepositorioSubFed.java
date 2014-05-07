@@ -1,14 +1,7 @@
 package com.cognitivabrasil.feb.data.entities;
 
-import java.util.Set;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.style.ToStringCreator;
-import org.springframework.dao.support.DataAccessUtils;
-
 import feb.spring.ApplicationContextProvider;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.style.ToStringCreator;
+import org.springframework.dao.support.DataAccessUtils;
 
 /**
  *
@@ -34,7 +33,8 @@ public class RepositorioSubFed implements SubNodo{
     private String name;
     private SubFederacao subFederacao;
     private Set<DocumentoReal> documentos;
-    SessionFactory sessionFactory;
+    private transient SessionFactory sessionFactory;
+    private transient Session session;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,12 +69,8 @@ public class RepositorioSubFed implements SubNodo{
     @Transient
     @Override
     public Integer getSize() {
-
-        return DataAccessUtils.intResult(
-                getSessionFactory().getCurrentSession().
-                createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorioSubFed = :rep AND doc.deleted = :deleted").
+        return DataAccessUtils.intResult(getSession().createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorioSubFed = :rep AND doc.deleted = :deleted").
                 setParameter("rep", this).setParameter("deleted", false).list());
-  
     }
     
     @Transient
@@ -84,15 +80,31 @@ public class RepositorioSubFed implements SubNodo{
                 createQuery("SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorioSubFed = :rep;").setParameter("rep", this).list());
     }
     
+    /**
+     * @return the session
+     */
     @Transient
-    SessionFactory getSessionFactory() {
+    private Session getSession() {
+        if (session == null) {
+            try {
+                session = getSessionFactory().getCurrentSession();
+            } catch (HibernateException e) {
+                session = getSessionFactory().openSession();
+            }
+        }
+        return session;
+    }
+    
+    @Transient
+    public SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
             if (ctx != null) {
-                //TODO:
+                // TODO:
                 sessionFactory = ctx.getBean(SessionFactory.class);
             } else {
-                throw new IllegalStateException("Could not get Application context");
+                throw new IllegalStateException(
+                        "FEB ERRO: Could not get Application context");
             }
         }
         return sessionFactory;
