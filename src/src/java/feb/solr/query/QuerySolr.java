@@ -138,7 +138,7 @@ public class QuerySolr {
             int numDoc = i;
 
             DocumentoReal doc = new DocumentoReal();
-            OBAA obaa;
+            OBAA obaa = new OBAA();
             try{
                 obaa = doc.getMetadata();
             }catch(IllegalStateException il){
@@ -146,12 +146,10 @@ public class QuerySolr {
                 doc.setMetadata(obaa);                
             }
             
-            if(obaa.getGeneral()==null){
                 obaa.setGeneral(new General());
-            }
-            if(obaa.getTechnical()==null){
+            
                 obaa.setTechnical(new Technical());
-            }
+            
 
             if (list.get(numDoc).getFieldValues("obaa.general.title") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.general.title")) {
@@ -173,6 +171,7 @@ public class QuerySolr {
 
             if (list.get(numDoc).getFieldValues("obaa.technical.location") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.technical.location")) {
+                    System.out.println((String) o);
                     obaa.getTechnical().addLocation((String) o);
                 }
             }

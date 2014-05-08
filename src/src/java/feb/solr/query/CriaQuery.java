@@ -1,4 +1,3 @@
-
 package feb.solr.query;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
@@ -10,8 +9,6 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  */
 public class CriaQuery {
 
-
-    
     /**
      * Identifica todos os campos onde a busca deve acontecer
      *
@@ -19,9 +16,12 @@ public class CriaQuery {
      * SORL
      * @return
      */
-    public static String criaQueryCompleta (Consulta pesquisa)
-    {
-           String resultado = "obaaQueryFields:" + pesquisa.getConsulta();
+    public static String criaQueryCompleta(Consulta pesquisa) {
+        String resultado = "";
+
+        if (!isBlank(pesquisa.getConsulta())) {
+            resultado = "obaaQueryFields:" + pesquisa.getConsulta();
+        }
 
         if (pesquisa.hasAuthor()) {
             resultado += " AND obaa.lifecycle.entity:" + pesquisa.getAutor();
@@ -36,61 +36,62 @@ public class CriaQuery {
             resultado += " AND obaa.accessibility.resourcedescription.primary.hastext:" + pesquisa.getHasText();
         }
 
-/*        
-        if (pesquisa.getHasTactile()) {
-            resultado += " AND obaa.accessibility.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
-        }
-        */
-        
+        /*        
+         if (pesquisa.getHasTactile()) {
+         resultado += " AND obaa.accessibility.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
+         }
+         */
         if (pesquisa.getCost() != null) {
             resultado += " AND obaa.rights.cost:" + pesquisa.getCost();
         }
         if (!isBlank(pesquisa.getIdioma())) {
             resultado += " AND obaa.general.language:" + pesquisa.getIdioma();
         }
-        
+
         if (!isBlank(pesquisa.getFormat())) {
             resultado += " AND obaa.technical.format:" + pesquisa.getFormat();
         }
-        
+
         if (!isBlank(pesquisa.getDifficult())) {
             resultado += " AND obaa.educational.difficulty:" + pesquisa.getDifficult();
         }
-        
+
         if (!isBlank(pesquisa.getSize())) {
             resultado += " OR obaa.technical.size:" + pesquisa.getSize();
         }
-        /**FEDERACOES, REPOSITORIOS E SUBFEDERACOE **/
-        
-        if (!pesquisa.getFederacoes().isEmpty())
-        {
+        /**
+         * FEDERACOES, REPOSITORIOS E SUBFEDERACOE *
+         */
+
+        if (!pesquisa.getFederacoes().isEmpty()) {
             resultado += " AND obaa.federacao:";
-            for (int feds: pesquisa.getFederacoes())
-                resultado += " "+feds;
+            for (int feds : pesquisa.getFederacoes()) {
+                resultado += " " + feds;
+            }
         }
-        
-        if (!pesquisa.getRepSubfed().isEmpty())
-        {
+
+        if (!pesquisa.getRepSubfed().isEmpty()) {
             resultado += " AND obaa.subFederacao:";
-            for (int subFeds: pesquisa.getRepSubfed())
-                resultado += " "+subFeds;
+            for (int subFeds : pesquisa.getRepSubfed()) {
+                resultado += " " + subFeds;
+            }
         }
-        
-        if (!pesquisa.getRepositorios().isEmpty())
-        {
+
+        if (!pesquisa.getRepositorios().isEmpty()) {
             resultado += " AND obaa.repositorio:";
-            for (int repos: pesquisa.getRepositorios())
-                resultado += " "+repos;
+            for (int repos : pesquisa.getRepositorios()) {
+                resultado += " " + repos;
+            }
         }
-        
-        if (resultado.startsWith(" OR ") ) {
+
+        if (resultado.startsWith(" OR ")) {
             resultado = resultado.substring(3);
         }
-        if (resultado.startsWith(" AND ") ) {
+        if (resultado.startsWith(" AND ")) {
             resultado = resultado.substring(4);
         }
-        
+
         return resultado;
-    
+
     }
 }

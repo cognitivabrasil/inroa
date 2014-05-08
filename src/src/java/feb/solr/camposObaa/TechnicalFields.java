@@ -5,6 +5,7 @@ import java.util.List;
 
 import cognitivabrasil.obaa.OBAA;
 import static cognitivabrasil.util.HelperFunctions.toStringList;
+import java.util.Map;
 
 public class TechnicalFields {
 
@@ -42,9 +43,17 @@ public class TechnicalFields {
     public static List<String> getLocation(OBAA o) {
         List<String> location = new ArrayList<String>();
         location.add(cabecalho + "location");
-        for (int i = 0; i < o.getTechnical().getLocation().size() && i < 3; i++) {
-            location.add(o.getTechnical().getLocation().get(i).getText());
+        
+        for (Map.Entry<String, Boolean> entry : o.getTechnical().getLocationHttp().entrySet())
+        {
+            if (entry.getValue())
+                location.add(entry.getKey());
         }
+        
+        // Para mostrar apenas os primeiros 3 locations, removemos os demais
+        if (location.size()>4)
+            location = location.subList(0, 4);
+        
         return location;
     }
 
