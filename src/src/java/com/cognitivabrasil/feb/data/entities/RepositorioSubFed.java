@@ -76,7 +76,7 @@ public class RepositorioSubFed implements SubNodo{
     @Transient
     @Override
     public Integer getVisits() {
-        return DataAccessUtils.intResult(getSessionFactory().getCurrentSession().
+        return DataAccessUtils.intResult(getSession().
                 createQuery("SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorioSubFed = :rep;").setParameter("rep", this).list());
     }
     
@@ -139,8 +139,7 @@ public class RepositorioSubFed implements SubNodo{
     public int dellAllDocs() {
         //TODO: nao teria só que trocar o deleted pra true? Pq ta deletando tudo da base.
         String hql = "delete from DocumentoReal as d WHERE d.repositorioSubFed = :rep";
-        Session session = getSessionFactory().getCurrentSession();
-        Query query = session.createQuery(hql);
+        Query query = getSession().createQuery(hql);
         query.setParameter("rep", this);
         return query.executeUpdate();
     }

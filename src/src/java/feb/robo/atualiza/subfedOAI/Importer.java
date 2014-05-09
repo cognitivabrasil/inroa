@@ -23,106 +23,105 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Import the OBAA xml file to OBAA object and saves in database. Only for
  * federation.
- * 
+ *
  * @author Marcos Nunes <marcosn@gmail.com>
  * @author Paulo Schreiner <paulo@jorjao81.com>
  */
 public class Importer {
 
-	SubFederacao subFed;
-	File inputXmlFile;
-	OaiOBAA oai;
-	@Autowired
-	private DocumentService docDao;
+    private SubFederacao subFed;
+    private File inputXmlFile;
+    private OaiOBAA oai;
+    @Autowired
+    private DocumentService docDao;
+    private final Logger log = Logger.getLogger(Importer.class);
 
-	Logger log = Logger.getLogger(this.getClass().getName());
+    /**
+     * Sets the input file.
+     *
+     * @param inputFile the new input file
+     */
+    public void setInputFile(String inputFile) {
+        setInputFile(new File(inputFile));
+    }
 
-	/**
-	 * Sets the input file.
-	 * 
-	 * @param inputFile
-	 *            the new input file
-	 */
-	public void setInputFile(String inputFile) {
-		setInputFile(new File(inputFile));
-	}
+    public void setInputFile(File arquivoXML) {
+        inputXmlFile = arquivoXML;
 
-	public void setInputFile(File arquivoXML) {
-		inputXmlFile = arquivoXML;
+    }
 
-	}
+    /**
+     * Sets the federation.
+     *
+     * @param sf the federarion
+     */
+    public void setSubFed(SubFederacao sf) {
+        this.subFed = sf;
+    }
 
-	/**
-	 * Sets the federation.
-	 * 
-	 * @param sf
-	 *            the federarion
-	 */
-	public void setSubFed(SubFederacao sf) {
-		this.subFed = sf;
-	}
+    /**
+     * Updates the repository from the XML input file. This method dont'n save
+     * the federation.
+     *
+     * @throws FileNotFoundException
+     * @throws TransformerException
+     * @throws TransformerConfigurationException
+     */
+    public void update() throws FileNotFoundException,
+            TransformerConfigurationException, TransformerException {
+        assert (inputXmlFile != null);
 
-	/**
-	 * Updates the repository from the XML input file. This method dont'n save
-	 * the federation.
-	 * 
-	 * @throws FileNotFoundException
-	 * @throws TransformerException
-	 * @throws TransformerConfigurationException
-	 */
-	public void update() throws FileNotFoundException,
-			TransformerConfigurationException, TransformerException {
-		assert (inputXmlFile != null);
+        // if version 2.1, convert XML
+        if ("2.1".equals(subFed.getVersion())) {
+            log.info("Version 2.1, going to convert XML...");
+            InputStream xsl = this.getClass().getResourceAsStream(
+                    "/feb2to3.xsl"); // input xsl
+            String transformed = XSLTUtil.transform(new FileInputStream(
+                    inputXmlFile), xsl);
+            oai = OaiOBAA.fromString(transformed);
+        } else {
+            oai = OaiOBAA.fromFile(inputXmlFile);
+        }
 
-		// if version 2.1, convert XML
-		if ("2.1".equals(subFed.getVersion())) {
-			log.info("Version 2.1, going to convert XML...");
-			InputStream xsl = this.getClass().getResourceAsStream(
-					"/feb2to3.xsl"); // input xsl
-			String transformed = XSLTUtil.transform(new FileInputStream(
-					inputXmlFile), xsl);
-			oai = OaiOBAA.fromString(transformed);
-		} else {
-			oai = OaiOBAA.fromFile(inputXmlFile);
-		}
+        for (int i = 0; i < oai.getSize(); i++) {
+            Header header = oai.getHeader(i);
+            OBAA obaa = oai.getMetadata(i);
+            log.debug("Saving object: " + header.getIdentifier());
 
+            header.setDatestamp(new Date());
+            if ((!header.isDeleted()) && obaa == null) {
+                log.error("Não foi possível carregar metadados do objeto " + i
+                        + ", provavelmente o XML está mal formado");
+            } else {
+                docDao.save(obaa, header, subFed);
+            }
 
-		for (int i = 0; i < oai.getSize(); i++) {
-			Header header = oai.getHeader(i);
-			OBAA obaa = oai.getMetadata(i);
-			log.debug("Saving object: " + header.getIdentifier());
+//            if (i % 10 == 0) {
+//                session.flush();
+//                session.clear();
+//            }
+        }
+        subFed.setDataXMLTemp(oai.getResponseDate());
+    }
 
-			header.setDatestamp(new Date());
-			if ((!header.isDeleted()) && obaa == null) {
-				log.error("Não foi possível carregar metadados do objeto " + i
-						+ ", provavelmente o XML está mal formado");
-			} else {
-				docDao.save(obaa, header, subFed);
-			}
-		}
-                subFed.setDataXMLTemp(oai.getResponseDate());
-	}
+    /**
+     * Gets the oai obaa.
+     *
+     * IMPORTANT! This is an internal method, to help unit testing.
+     *
+     * @return the oai obaa
+     */
+    protected OaiOBAA getOaiObaa() {
+        return oai;
+    }
 
-	/**
-	 * Gets the oai obaa.
-	 * 
-	 * IMPORTANT! This is an internal method, to help unit testing.
-	 * 
-	 * @return the oai obaa
-	 */
-	protected OaiOBAA getOaiObaa() {
-		return oai;
-	}
-
-	/**
-	 * Don't use unless you know what you are doing, this variable will be
-	 * autowired by Spring.
-	 * 
-	 * @param documentDao
-	 *            the DocumentDAO to set
-	 */
-	public void setDocDao(DocumentService documentDao) {
-		this.docDao = documentDao;
-	}
-
+    /**
+     * Don't use unless you know what you are doing, this variable will be
+     * autowired by Spring.
+     *
+     * @param documentDao the DocumentDAO to set
+     */
+    public void setDocDao(DocumentService documentDao) {
+        this.docDao = documentDao;
+    }
 }

@@ -1,18 +1,16 @@
 package feb.spring.validador;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
 import com.cognitivabrasil.feb.data.entities.Mapeamento;
 import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import feb.spring.dtos.MapeamentoDto;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 @Component
 public class MapeamentoValidator implements Validator {

@@ -3,12 +3,10 @@
  * dados
  *
  */
- //Daniel
-// Nao quis apagar tudo e colocar esse, entao deixei esse com novo nome. Mas no futuro, só esse arquivo vai ser necessário...
 package feb.ferramentaBusca.indexador;
 
-import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.services.DocumentService;
 import feb.solr.main.Solr;
 import feb.util.Operacoes;
 import javax.persistence.EntityManager;
@@ -49,7 +47,6 @@ public class Indexador {
          Solr.apagarIndice();
         Long inicio = System.currentTimeMillis();
         int numMaxDoc = 10000;
-        int tamanhoDocDAO = (int) docService.getSize();
         Solr s = new Solr();
 
 /**

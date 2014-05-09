@@ -34,7 +34,7 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
 
     @Autowired
     private DocumentRepository docRep;
-
+    
     private static final Logger log = Logger.getLogger(DocumentServiceImpl.class);
 
     @Override
