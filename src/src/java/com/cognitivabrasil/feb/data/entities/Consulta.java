@@ -35,7 +35,7 @@ public class Consulta {
     public Boolean hasVisual;
     public Boolean hasAuditory;
     public Boolean hasText;
-    public Boolean hasTactile;
+    public boolean hasTactile;
     public String size;
     private final Map<String, String> languages;
     private static final Logger log = Logger.getLogger(Consulta.class);      

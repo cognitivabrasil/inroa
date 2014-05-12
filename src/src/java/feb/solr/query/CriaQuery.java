@@ -36,12 +36,11 @@ public class CriaQuery {
             resultado += " AND obaa.accessibility.resourcedescription.primary.hastext:" + pesquisa.getHasText();
         }
 
-        /*        
          if (pesquisa.getHasTactile()) {
          resultado += " AND obaa.accessibility.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
          }
-         */
-        if (pesquisa.getCost() != null) {
+
+         if (pesquisa.getCost() != null) {
             resultado += " AND obaa.rights.cost:" + pesquisa.getCost();
         }
         if (!isBlank(pesquisa.getIdioma())) {
