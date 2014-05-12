@@ -47,7 +47,15 @@ function buildList(json) {
         } else {
             if (json[i].value && json[i].value !== "NULL") {
                 html += '<li class="row">';
-                html += '<span class="name col-md-2 col-xs-12">' + json[i].label + '</span><span class="value col-md-10 col-xs-12">' + json[i].value + '</span>'; // No submenu
+                html += '<span class="name col-md-2 col-xs-12">' + json[i].label + '</span><span class="value col-md-10 col-xs-12">';
+                 if (json[i].value.match("^http[s]?://")) {
+                    html += '<a class="link-interno" href="' + json[i].value + '">' + json[i].value + '</a>';
+                }
+                else {
+                    html += json[i].value;
+                }
+
+                html += '</span>'; // No submenu
                 html += '</li>';
             }
         }
