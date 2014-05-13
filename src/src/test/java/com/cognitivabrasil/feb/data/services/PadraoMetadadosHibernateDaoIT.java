@@ -68,8 +68,7 @@ public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {
      */
     @Test
     public void testGetAll() {
-        List expResult = null;
-        List result = instance.getAll();
+        List<PadraoMetadados> result = instance.getAll();
         assertEquals(3, result.size());
     }
     

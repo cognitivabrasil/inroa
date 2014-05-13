@@ -1,28 +1,28 @@
 $(function() {
     var url = $.trim($("#url").val());
     if(url != "" && url !="http://"){
-        if($("#federation").val()){
-            validaOAI($("#url"), true);
-        }else{
-            validaOAI($("#url"), false);
-        }
+        testHttp($("#url"));
     }
     
     $("#url").blur(function(){
-        if($(this).val().match("^http[s]?://")){
-            
-            if($("#federation").val()){
-                validaOAI($(this), true);
-            }else{
-                validaOAI($(this), false);
-            }
-        }else{
-            setUrlError($(this));
-            $(".msgError").html("A url deve iniciar com http:// ou https://");
-        }
+        testHttp($(this));
     });
     
 });
+
+function testHttp(input){
+    if(input.val().match("^http[s]?://")){
+            
+        if($("#federation").val()){
+            validaOAI(input, true);
+        }else{
+            validaOAI(input, false);
+        }
+    }else{
+        setUrlError(input);
+        $(".msgError").html("A url deve iniciar com http:// ou https://");
+    }
+}
 
 /**
  * Verifica a consistencia do link OAI-PMH

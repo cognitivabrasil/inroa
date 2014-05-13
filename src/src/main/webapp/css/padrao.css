@@ -419,7 +419,6 @@ a:hover{
 .LinhaEntrada .ValueErro{
     margin:0 0 20px 41%;
     color:red;
-    font-weight:bold;
 }
 .LinhaEntrada .msgError{
     margin:0 0 0 41%;

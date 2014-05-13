@@ -13,9 +13,11 @@ import feb.robo.atualiza.SubFederacaoOAI;
 import feb.spring.validador.SubFederacaoValidador;
 import java.net.ConnectException;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -97,12 +99,11 @@ public final class FederationsController {
     }
 
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
-    public String salvaFed(
-            @RequestParam Integer id,
-            @ModelAttribute("federation") SubFederacao subfed,
-            Model model,
-            BindingResult result) {
+    public String edit(@PathVariable("id") Integer id, SubFederacao subfed, BindingResult result,
+            ExtendedModelMap model) {
         try {
+            //tive que colocar isso pois nao esta pegando sozinho o id da federacao.
+            subfed.setId(id);
             subFedValidador.validate(subfed, result);
             if (result.hasErrors()) {
                 model.addAttribute("federation", subfed);
