@@ -916,7 +916,7 @@ td{vertical-align:top;}
     margin-right: auto;
     padding-top: 1%;
     padding-left: 1%;
-    width: 50%;
+    max-width: 800px;
     border: 2px solid #AEC9E3;
     color: #414042;
     text-align: left;

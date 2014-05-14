@@ -41,6 +41,16 @@ $(function() {
             selected.prop("checked", true);
         }
     };
-    
+
     $("#ageRange").slider({});
+    $("#adultAge").click(function() {
+        if (this.checked) {
+            console.log("checked");
+            $("#ageRange").slider("disable");
+        }
+        else {
+            console.log("unchecked");
+            $("#ageRange").slider("enable");
+        }
+    });
 });

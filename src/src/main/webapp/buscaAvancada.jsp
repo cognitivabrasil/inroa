@@ -24,6 +24,8 @@
         <link rel="StyleSheet" href="${css}/buscaAvancada.css" type="text/css">
         <link rel="StyleSheet" href="${scripts}/vendor/jsTree/dist/themes/default/style.min.css" type="text/css">
         <link rel="StyleSheet" href="${scripts}/vendor/bootstrap-slider/css/slider.css" type="text/css">
+        <c:url value="/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" var="bootstrap_theme_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_theme_css}" />
         <c:url value="/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css" var="bootstrap_theme_css" />
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_theme_css}" />
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -163,7 +165,8 @@
                                 Faixa etária:
                             </div>
                             <div class="Value">
-                                <form:input path="ageRange" class="span2" data-slider-min="0" data-slider-max="200" data-slider-step="1" data-slider-value="[0,100]"/>
+                                <form:input path="ageRange" class="span2" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="[0,20]"/>
+                                <input id="adultAge" name="adultAge" type="checkbox" value="19+"/> 19 ou +
                             </div>
                         </div>
 
