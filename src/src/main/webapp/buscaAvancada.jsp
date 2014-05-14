@@ -23,9 +23,15 @@
         <link rel="StyleSheet" href="${css}/padrao.css" type="text/css">
         <link rel="StyleSheet" href="${css}/buscaAvancada.css" type="text/css">
         <link rel="StyleSheet" href="${scripts}/vendor/jsTree/dist/themes/default/style.min.css" type="text/css">
+        <link rel="StyleSheet" href="${scripts}/vendor/bootstrap-slider/css/slider.css" type="text/css">
+        <c:url value="/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css" var="bootstrap_theme_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_theme_css}" />
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
         <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/jsTree/dist/jstree.min.js"></script>
+        <c:url var="jsBootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js" />
+        <script language="javascript" type="text/javascript" src='${jsBootstrap}'></script>
+        <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/bootstrap-slider/js/bootstrap-slider.js"></script>
         <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancada.js"></script>
     </head>
 
@@ -147,6 +153,17 @@
                                 <form:radiobutton path="hasTactile" value="true"/> Sim
                                 <form:radiobutton path="hasTactile" value="false"/> Não
                                 <form:radiobutton path="hasTactile" value=""/> Ambos
+                            </div>
+                        </div>
+
+                        <div class="LinhaEntrada">
+                            
+                        <div class="LinhaEntrada">
+                            <div class="LabelLeft">
+                                Faixa etária:
+                            </div>
+                            <div class="Value">
+                                <form:input path="ageRange" class="span2" data-slider-min="0" data-slider-max="200" data-slider-step="1" data-slider-value="[0,100]"/>
                             </div>
                         </div>
 

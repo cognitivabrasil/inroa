@@ -875,6 +875,8 @@ src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/fonts/glyphicons-halflin
 src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/fonts/glyphicons-halflings-regular.woff -text
 src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.js -text
 src/src/main/webapp/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js -text
+src/src/main/webapp/scripts/vendor/bootstrap-slider/css/slider.css -text
+src/src/main/webapp/scripts/vendor/bootstrap-slider/js/bootstrap-slider.js -text
 src/src/main/webapp/scripts/vendor/codemirror/LICENSE -text
 src/src/main/webapp/scripts/vendor/codemirror/README.md -text
 src/src/main/webapp/scripts/vendor/codemirror/index.html -text

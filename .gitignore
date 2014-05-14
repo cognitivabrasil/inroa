@@ -32,3 +32,6 @@ src/solr/solr/feb/data/*
 !src/solr/logs/*.swp
 src/solr/logs/*
 !src/src/java/com/cognitivabrasil/feb/oai/*.swp
+!src/src/main/webapp/scripts/vendor/bootstrap-slider/css/*.swp
+!src/src/main/webapp/scripts/vendor/bootstrap-slider/js/*.swp
+!src/src/main/webapp/scripts/vendor/bootstrap-slider/*.swp

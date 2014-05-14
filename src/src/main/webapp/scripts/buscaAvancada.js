@@ -41,4 +41,6 @@ $(function() {
             selected.prop("checked", true);
         }
     };
+    
+    $("#ageRange").slider({});
 });

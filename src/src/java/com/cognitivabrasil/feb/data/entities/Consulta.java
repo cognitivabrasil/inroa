@@ -29,7 +29,7 @@ public class Consulta {
     private int sizeResult;
     private String idioma;
     private String format;
-    private String age_range;
+    private String ageRange;
     private String difficult;
     public Boolean cost;
     public Boolean hasVisual;
@@ -56,7 +56,7 @@ public class Consulta {
 
     public boolean isEmpty() {
         return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
-                && isBlank(format) && isBlank(age_range) && isBlank(difficult)
+                && isBlank(format) && isBlank(ageRange) && isBlank(difficult)
                 && isBlank(size) && cost == null && hasVisual == null
                 && hasAuditory == null && hasText == null;
     }
@@ -134,12 +134,12 @@ public class Consulta {
         this.format = format;
     }
 
-    public String getAge_range() {
-        return age_range;
+    public String getAgeRange() {
+        return ageRange;
     }
 
-    public void setAge_range(String age_range) {
-        this.age_range = age_range;
+    public void setAgeRange(String ageRange) {
+        this.ageRange = ageRange;
     }
 
     public String getDifficult() {

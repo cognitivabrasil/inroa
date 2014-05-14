@@ -45,7 +45,7 @@ public class ConsultaTest {
     @Test
     public void testNotEmpty2() {
         Consulta c = new Consulta();
-        c.setAge_range("age");
+        c.setAgeRange("age");
         assertThat(c.isEmpty(), equalTo(false));
     }
 
