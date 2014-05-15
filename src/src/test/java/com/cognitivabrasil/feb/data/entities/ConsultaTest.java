@@ -1,6 +1,5 @@
 package com.cognitivabrasil.feb.data.entities;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
@@ -110,5 +109,41 @@ public class ConsultaTest {
         Consulta c = new Consulta();
         c.setIdioma("pt-BR");
         assertThat(c.isEmpty(), equalTo(false));
+    }
+
+    @Test
+    public void testNotEmpty12() {
+        Consulta c = new Consulta();
+        c.setAdultAge(Boolean.TRUE);
+        assertThat(c.isEmpty(), equalTo(false));
+    }
+    
+    @Test
+    public void testFormatAgeRange(){
+        Consulta c = new Consulta();
+        c.setAgeRange("2:8");
+        
+        assertThat(c.getAgeRange(), equalTo("2 - 8"));
+        
+        c.setAgeRange("2 : 8");
+        
+        assertThat(c.getAgeRange(), equalTo("2 - 8"));
+        
+        c.setAgeRange(" 2 : 8 ");
+        
+        assertThat(c.getAgeRange(), equalTo("2 - 8"));
+        
+        c.setAgeRange(" 2,8 ");
+        
+        assertThat(c.getAgeRange(), equalTo("2 - 8"));
+    }
+    
+    @Test
+    public void testGetStartAgeRange(){
+        Consulta c = new Consulta();
+        c.setAgeRange("2:8");
+        
+        assertThat(c.getStartAgeRange(), equalTo(2));
+        assertThat(c.getEndAgeRange(), equalTo(8));
     }
 }

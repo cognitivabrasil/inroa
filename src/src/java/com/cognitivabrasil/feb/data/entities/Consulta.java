@@ -17,6 +17,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  * @author Marcos Nunes <marcosn@gmail.com>
  */
 public class Consulta {
+
     //TODO: deve ter transferida para spring.dtos
     private String consulta;
     private Set<Integer> repositorios;
@@ -30,6 +31,7 @@ public class Consulta {
     private String idioma;
     private String format;
     private String ageRange;
+    private Boolean adultAge;
     private String difficult;
     public Boolean cost;
     public Boolean hasVisual;
@@ -38,15 +40,15 @@ public class Consulta {
     public boolean hasTactile;
     public String size;
     private final Map<String, String> languages;
-    private static final Logger log = Logger.getLogger(Consulta.class);      
+    private static final Logger log = Logger.getLogger(Consulta.class);
 
     public Consulta() {
         rss = false;
         limit = 5;
         offset = 0;
         sizeResult = 0;
-        
-        languages = new HashMap<String, String>();
+
+        languages = new HashMap<>();
         languages.put("", "Todos");
         languages.put("pt", "Português");
         languages.put("en", "Inglês");
@@ -56,7 +58,7 @@ public class Consulta {
 
     public boolean isEmpty() {
         return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
-                && isBlank(format) && isBlank(ageRange) && isBlank(difficult)
+                && isBlank(format) && isBlank(ageRange) && adultAge == null && isBlank(difficult)
                 && isBlank(size) && cost == null && hasVisual == null
                 && hasAuditory == null && hasText == null;
     }
@@ -84,7 +86,7 @@ public class Consulta {
 
     public Set<Integer> getFederacoes() {
         if (federacoes == null) {
-            federacoes = new HashSet<Integer>();
+            federacoes = new HashSet<>();
         }
         return federacoes;
     }
@@ -95,7 +97,7 @@ public class Consulta {
 
     public Set<Integer> getRepSubfed() {
         if (repSubfed == null) {
-            repSubfed = new HashSet<Integer>();
+            repSubfed = new HashSet<>();
         }
         return repSubfed;
     }
@@ -108,7 +110,7 @@ public class Consulta {
 
     public Set<Integer> getRepositorios() {
         if (repositorios == null) {
-            repositorios = new HashSet<Integer>();
+            repositorios = new HashSet<>();
         }
         return repositorios;
     }
@@ -135,12 +137,36 @@ public class Consulta {
     }
 
     public String getAgeRange() {
+        if(isAdultAge()!=null && isAdultAge()){
+            return "19 - 100";
+        }
+        if(ageRange!=null){
+            return ageRange.replaceAll(" ","").replaceFirst(":|,", " - ");
+        }
         return ageRange;
     }
 
     public void setAgeRange(String ageRange) {
         this.ageRange = ageRange;
     }
+    
+    public int getStartAgeRange(){
+        String[] start = getAgeRange().split(" - ");
+        return Integer.parseInt(start[0]);
+    }
+    
+    public int getEndAgeRange(){
+        String[] start = getAgeRange().split(" - ");
+        return Integer.parseInt(start[1]);
+    }
+
+    public Boolean isAdultAge() {
+        return adultAge;
+    }
+
+    public void setAdultAge(Boolean adultAge) {
+        this.adultAge = adultAge;
+    }    
 
     public String getDifficult() {
         return difficult;
@@ -255,8 +281,8 @@ public class Consulta {
     public Map<String, String> getLanguages() {
         return languages;
     }
-    
-    public Map<String, String> getMimeTypes(){
+
+    public Map<String, String> getMimeTypes() {
         return Informacoes.getMimeType();
     }
 

@@ -211,7 +211,7 @@ public final class FEBController {
             BindingResult result, Model model,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("buscaModel", consulta);
-
+        log.debug("ageRange: "+consulta.getAgeRange());
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
             model.addAttribute("repositories", repDao.getAll());

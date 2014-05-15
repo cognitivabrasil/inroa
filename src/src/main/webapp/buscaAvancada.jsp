@@ -166,10 +166,9 @@
                             </div>
                             <div class="Value">
                                 <form:input path="ageRange" class="span2" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="[0,20]"/>
-                                <input id="adultAge" name="adultAge" type="checkbox" value="19+"/> 19 ou +
+                                <input id="adultAge" name="adultAge" type="checkbox" value="true"/> 19 ou +
                             </div>
                         </div>
-
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 Local para busca
