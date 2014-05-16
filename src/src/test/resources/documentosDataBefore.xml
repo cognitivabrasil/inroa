@@ -80,20 +80,6 @@ in the editor. -->
     <documentos id="6" obaa_entry="cinco2" id_rep_subfed="1"
                     created="2012-03-09 07:51:22.48377" deleted="false" />
 
-
-    <stopwords id="1" stopword="a" />
-    <stopwords id="2" stopword="o" />
-    <stopwords id="3" stopword="de" />
-    <stopwords id="4" stopword="depois" />
-    <stopwords id="5" stopword="que" />
-    <stopwords id="6" stopword="quando" />
-    <stopwords id="7" stopword="um" />
-    <stopwords id="8" stopword="e" />
-    <stopwords id="9" stopword="esta" />
-    <stopwords id="10" stopword="está" />
-    <stopwords id="11" stopword="enquanto" />
-    <stopwords id="12" stopword="ela" />
-
     <visitas id="1" horario="2012-01-10 10:04:47" />
     <visitas id="2" horario="2012-01-09 12:06:01" />
     <visitas id="3" horario="2012-02-09 12:06:01" />

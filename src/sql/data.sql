@@ -1,51 +1,7 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.1.4
--- Dumped by pg_dump version 9.1.4
--- Started on 2012-06-19 15:53:01 BRT
-
-SET statement_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
-SET search_path = public, pg_catalog;
-
---
--- TOC entry 2037 (class 0 OID 0)
--- Dependencies: 170
--- Name: padraometadados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: feb
---
-
---
--- TOC entry 2038 (class 0 OID 0)
--- Dependencies: 181
--- Name: stopwords_id_seq; Type: SEQUENCE SET; Schema: public; Owner: feb
---
-
-SELECT pg_catalog.setval('stopwords_id_seq', 179, true);
-
-
-
---
--- TOC entry 2031 (class 0 OID 16455)
--- Dependencies: 169
--- Data for Name: padraometadados; Type: TABLE DATA; Schema: public; Owner: feb
---
 
 INSERT INTO padraometadados VALUES (1, 'LOM', 'lom', 'lom', '');
 INSERT INTO padraometadados VALUES (2, 'Dublin Core', 'oai_dc', 'oai_dc', '');
 INSERT INTO padraometadados VALUES (3, 'OBAA', 'obaa', 'obaa', '');
-
-
---
--- TOC entry 2034 (class 0 OID 18259)
--- Dependencies: 186 2031
--- Data for Name: mapeamentos; Type: TABLE DATA; Schema: public; Owner: feb
---
 
 INSERT INTO mapeamentos VALUES (2, 'DC Padrão', 'Mapeamento Dublin Core padrão', '<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
@@ -254,19 +210,4 @@ xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
   </xsl:copy>
 </xsl:template></xsl:stylesheet>','', 3);
 
-
---
--- TOC entry 2033 (class 0 OID 16525)
--- Dependencies: 182
--- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: feb
---
-
 INSERT INTO usuarios VALUES (1, 'admin', '698dc19d489c4e4db73e28a713', 'Administrador da federação', 'PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS, PERM_MANAGE_STATISTICS', 'Administrador');
-
-
--- Completed on 2012-06-19 15:53:02 BRT
-
---
--- PostgreSQL database dump complete
---
-
