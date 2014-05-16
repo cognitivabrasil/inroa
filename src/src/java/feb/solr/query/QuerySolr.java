@@ -16,6 +16,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.search.QueryParsing;
 
 public class QuerySolr {
 
@@ -99,6 +100,9 @@ public class QuerySolr {
         query.setStart(offset);
         query.setRows(limit);
 
+        //Para definir que espaco em branco sera considerado OR e nao +
+        query.set(QueryParsing.OP, "OR");
+        
         try {
             queryResponse = serverSolr.query(query);
             return true;

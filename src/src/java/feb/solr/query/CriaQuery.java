@@ -20,67 +20,70 @@ public class CriaQuery {
         String resultado = "";
 
         if (!isBlank(pesquisa.getConsulta())) {
-            resultado = "obaaQueryFields:" + pesquisa.getConsulta();
+            resultado = "obaaQueryFields:(" + pesquisa.getConsulta() + ")";
         }
 
         if (pesquisa.hasAuthor()) {
-            resultado += " AND obaa.lifecycle.entity:" + pesquisa.getAutor();
+            resultado += " AND obaa.lifecycle.entity:(" + pesquisa.getAutor() + ")";
         }
         if (pesquisa.getHasAuditory() != null) {
-            resultado += " AND obaa.accessibility.resourcedescription.primary.hasauditory:" + pesquisa.getHasAuditory();
+            resultado += " AND obaa.accessibility.resourcedescription.primary.hasauditory:(" + pesquisa.getHasAuditory() + ")";
         }
         if (pesquisa.getHasVisual() != null) {
-            resultado += " AND obaa.accessibility.resourcedescription.primary.hasvisual:" + pesquisa.getHasVisual();
+            resultado += " AND obaa.accessibility.resourcedescription.primary.hasvisual:(" + pesquisa.getHasVisual() + ")";
         }
         if (pesquisa.getHasText() != null) {
-            resultado += " AND obaa.accessibility.resourcedescription.primary.hastext:" + pesquisa.getHasText();
+            resultado += " AND obaa.accessibility.resourcedescription.primary.hastext:(" + pesquisa.getHasText() + ")";
         }
 
-         if (pesquisa.getHasTactile()) {
-         resultado += " AND obaa.accessibility.resourcedescription.primary.hastactile:" + pesquisa.getHasTactile();
-         }
+        if (pesquisa.getHasTactile()) {
+            resultado += " AND obaa.accessibility.resourcedescription.primary.hastactile:(" + pesquisa.getHasTactile() + ")";
+        }
 
-         if (pesquisa.getCost() != null) {
-            resultado += " AND obaa.rights.cost:" + pesquisa.getCost();
+        if (pesquisa.getCost() != null) {
+            resultado += " AND obaa.rights.cost:(" + pesquisa.getCost() + ")";
         }
         if (!isBlank(pesquisa.getIdioma())) {
-            resultado += " AND obaa.general.language:" + pesquisa.getIdioma();
+            resultado += " AND obaa.general.language:(" + pesquisa.getIdioma() + ")";
         }
 
         if (!isBlank(pesquisa.getFormat())) {
-            resultado += " AND obaa.technical.format:" + pesquisa.getFormat();
+            resultado += " AND obaa.technical.format:(" + pesquisa.getFormat() + ")";
         }
 
         if (!isBlank(pesquisa.getDifficult())) {
-            resultado += " AND obaa.educational.difficulty:" + pesquisa.getDifficult();
+            resultado += " AND obaa.educational.difficulty:(" + pesquisa.getDifficult() + ")";
         }
 
         if (!isBlank(pesquisa.getSize())) {
-            resultado += " OR obaa.technical.size:" + pesquisa.getSize();
+            resultado += " OR obaa.technical.size:(" + pesquisa.getSize() + ")";
         }
         /**
          * FEDERACOES, REPOSITORIOS E SUBFEDERACOE *
          */
 
         if (!pesquisa.getFederacoes().isEmpty()) {
-            resultado += " AND obaa.federacao:";
+            resultado += " AND obaa.federacao:(";
             for (int feds : pesquisa.getFederacoes()) {
                 resultado += " " + feds;
             }
+            resultado += ")";
         }
 
         if (!pesquisa.getRepSubfed().isEmpty()) {
-            resultado += " AND obaa.subFederacao:";
+            resultado += " AND obaa.subFederacao:(";
             for (int subFeds : pesquisa.getRepSubfed()) {
                 resultado += " " + subFeds;
             }
+            resultado += ")";
         }
 
         if (!pesquisa.getRepositorios().isEmpty()) {
-            resultado += " AND obaa.repositorio:";
+            resultado += " AND obaa.repositorio:(";
             for (int repos : pesquisa.getRepositorios()) {
                 resultado += " " + repos;
             }
+            resultado += ")";
         }
 
         if (resultado.startsWith(" OR ")) {
@@ -90,6 +93,7 @@ public class CriaQuery {
             resultado = resultado.substring(4);
         }
 
+     //   System.out.println(resultado);
         return resultado;
 
     }
