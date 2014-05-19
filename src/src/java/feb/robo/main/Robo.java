@@ -61,7 +61,7 @@ public class Robo {
             log.info("NAO existe atualizaçoes para os repositorios! ");
         }
 
-        log.info("Limpando visitas antigas...");
+        log.info("Limpando consultas antigas...");
         searchesDao.cleanup();
 
         Long finalRobo = System.currentTimeMillis();

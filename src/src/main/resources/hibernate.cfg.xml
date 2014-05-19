@@ -16,7 +16,5 @@
     <mapping resource="hibernate/SubFederacao.hbm.xml"/>
     <mapping resource="hibernate/RepositorioSubFed.hbm.xml"/>
     <mapping resource="hibernate/Usuario.hbm.xml"/>
-    <mapping resource="hibernate/Visita.hbm.xml"/>
-    <mapping resource="hibernate/DocumentosVisitas.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -59,10 +59,4 @@ $(function() {
         .dialog('open'); // opens the dialog
         $("#msgApagar").text($(this).attr('title'));
     });
-                
-    $('#estatisticas a').click(function (e) {
-        $("#loading").removeClass("hidden");
-    });
-                
-
 });

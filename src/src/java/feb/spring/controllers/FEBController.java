@@ -2,14 +2,11 @@ package feb.spring.controllers;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.DocumentoReal;
-import com.cognitivabrasil.feb.data.entities.Visita;
 import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.DocumentVisitService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.UserService;
-import com.cognitivabrasil.feb.data.services.VisitService;
 import feb.ferramentaBusca.Recuperador;
 import feb.services.TagCloudService;
 import feb.solr.main.Solr;
@@ -28,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,10 +49,6 @@ public final class FEBController {
     private FederationService subDao;
     @Autowired
     private DocumentService docDao;
-    @Autowired
-    private VisitService visDao;
-    @Autowired
-    private DocumentVisitService docVisDao;
     private final BuscaValidator buscaValidator;
     private final Logger log = Logger.getLogger(FEBController.class);
     @Autowired
@@ -96,7 +90,6 @@ public final class FEBController {
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
         }
-
         return "index";
     }
 
@@ -377,30 +370,10 @@ public final class FEBController {
         Cookie newCookie = null;
         Cookie[] testeCokies = request.getCookies();
         if (testeCokies != null && testeCokies.length > 0) {
-            Visita newVisitor = new Visita();
-            visDao.save(newVisitor);
-            log.debug("Adicionou nova visita!");
-            Integer id = newVisitor.getId();
-            newCookie = new Cookie("feb.cookie", id.toString());
+            newCookie = new Cookie("feb.cookie", DateTime.now().toString());
             newCookie.setMaxAge(300);
             response.addCookie(newCookie);
-
         }
         return newCookie;
-    }
-
-    private boolean existingCookie(String cookie) {
-
-        if (StringUtils.isEmpty(cookie)) {
-            return false;
-        } else {
-            Visita chkVisitor = visDao.get(Integer.parseInt(cookie));
-            if (chkVisitor == null) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
     }
 }

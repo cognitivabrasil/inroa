@@ -86,21 +86,6 @@ CREATE TABLE usuarios (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE visitas (
-    id serial NOT NULL,
-    horario timestamp without time zone,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE documentos_visitas (
-    id integer NOT NULL,
-    documento serial NOT NULL,
-    visita integer NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (documento) REFERENCES documentos(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (visita) REFERENCES visitas(id) ON UPDATE CASCADE ON DELETE CASCADE
-);
-
 CREATE TABLE searches (
     id serial NOT NULL,
     text TEXT,

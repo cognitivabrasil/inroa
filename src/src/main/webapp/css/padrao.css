@@ -205,25 +205,6 @@ img{
     font-weight: bold;
 }
 
-#estatisticas .caixaAzul
-{
-    width: 1000px;
-    border: 2px #AEC9E3 solid;
-    padding: 10px;
-    margin: 10px auto;
-}
-
-#estatisticas table td{text-align: center;}
-#estatisticas table td:first-child{text-align: left;}
-
-.estatisticasTitulo
-{
-    text-align:center;
-    font-size: 110%;
-    color: black;
-    font-weight: bold;
-    padding: 2px;
-}
 .zebraEven
 {
     background-color:#D7EBFF;

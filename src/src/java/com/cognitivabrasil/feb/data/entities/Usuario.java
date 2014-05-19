@@ -38,8 +38,6 @@ import javax.persistence.Transient;
  * PERM_MANAGE_METADATA - Permission to add, change and delete metadata
  * standards PERM_MANAGE_MAPPINGS - Permission do add, change or update mappings
  * PERM_CHANGE_DATABASE - Permission to change the database config
- * PERM_VIEW_STATISTICS - Permission to view the statistics
- * PERM_MANAGE_STATISTICS - Permission to delete from statistics' data
  *
  * The main ADMIN user should have all the permissions.
  *
@@ -171,8 +169,7 @@ public class Usuario implements UserDetails, FebDomainObject {
     @Override
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> authorities
-                = new HashSet<GrantedAuthority>();
+        Set<GrantedAuthority> authorities = new HashSet<>();
         for (String s : getPermissions()) {
             authorities.add(new GrantedAuthorityImpl(s));
         }
@@ -285,5 +282,4 @@ public class Usuario implements UserDetails, FebDomainObject {
     public String getName() {
         return getUsername();
     }
-
 }

@@ -210,4 +210,4 @@ xpath-default-namespace="http://www.openarchives.org/OAI/2.0/">
   </xsl:copy>
 </xsl:template></xsl:stylesheet>','', 3);
 
-INSERT INTO usuarios VALUES (1, 'admin', '698dc19d489c4e4db73e28a713', 'Administrador da federação', 'PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS, PERM_MANAGE_STATISTICS', 'Administrador');
+INSERT INTO usuarios VALUES (1, 'admin', '698dc19d489c4e4db73e28a713', 'Administrador da federação', 'PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE', 'Administrador');

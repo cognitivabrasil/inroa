@@ -72,13 +72,7 @@ public class RepositorioSubFed implements SubNodo{
         return DataAccessUtils.intResult(getSession().createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorioSubFed = :rep AND doc.deleted = :deleted").
                 setParameter("rep", this).setParameter("deleted", false).list());
     }
-    
-    @Transient
-    @Override
-    public Integer getVisits() {
-        return DataAccessUtils.intResult(getSession().
-                createQuery("SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorioSubFed = :rep;").setParameter("rep", this).list());
-    }
+
     
     /**
      * @return the session

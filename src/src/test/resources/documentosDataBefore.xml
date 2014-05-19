@@ -80,37 +80,6 @@ in the editor. -->
     <documentos id="6" obaa_entry="cinco2" id_rep_subfed="1"
                     created="2012-03-09 07:51:22.48377" deleted="false" />
 
-    <visitas id="1" horario="2012-01-10 10:04:47" />
-    <visitas id="2" horario="2012-01-09 12:06:01" />
-    <visitas id="3" horario="2012-02-09 12:06:01" />
-    <visitas id="4" horario="2012-03-09 12:06:01" />
-    <visitas id="5" horario="2012-03-09 12:06:01" />
-    <visitas id="6" horario="2012-04-09 12:06:01" />
-    <visitas id="7" horario="2012-06-09 12:06:01" />
-    <visitas id="8" horario="2012-07-10 10:04:47" />
-    <visitas id="9" horario="2012-07-09 12:06:01" />
-    <visitas id="10" horario="2012-10-09 12:06:01" />
-    <visitas id="11" horario="2012-12-09 12:06:01" />
-    <visitas id="12" horario="2012-12-09 12:06:01" />
-    <visitas id="13" horario="2012-12-09 12:06:01" />
-        
-    <visitas id="14" horario="2013-01-10 10:04:47" />
-    <visitas id="15" horario="2013-01-09 12:06:01" />
-    <visitas id="16" horario="2013-02-09 12:06:01" />
-    <visitas id="17" horario="2013-03-09 12:06:01" />
-    <visitas id="18" horario="2013-03-09 12:06:01" />
-    <visitas id="19" horario="2013-04-09 12:06:01" />
-    <visitas id="20" horario="2013-06-09 12:06:01" />
-    <visitas id="21" horario="2013-07-10 10:04:47" />
-    <visitas id="22" horario="2013-07-09 12:06:01" />
-    <visitas id="23" horario="2013-10-09 12:06:01" />
-    <visitas id="24" horario="2013-12-09 12:06:01" />
-    <visitas id="25" horario="2013-12-09 12:06:01" />
-    <visitas id="26" horario="2013-12-09 12:06:01" />
-        	
-    <documentos_visitas id="1" documento="2" visita="1"/>
-    <documentos_visitas id="2" documento="3" visita="3"/>
-
     <searches text="jorjao" time="2012-07-09 12:06:02" />
     <searches text="jorjao" time="2012-07-09 12:06:01" />
     <searches text="jorjao" time="2012-07-09 12:06:00" />

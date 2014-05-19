@@ -228,23 +228,22 @@ class UserDto {
      * @return the permissions
      */
     private Set<String> getPermissions(String role) {
-        Map<String, List<String>> roles = new LinkedHashMap<String, List<String>>();
+        Map<String, List<String>> roles = new LinkedHashMap<>();
         roles.put(
                 "root",
                 Arrays.asList(StringUtils
-                        .split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_VIEW_STATISTICS,PERM_MANAGE_STATISTICS",
+                        .split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE",
                                 ',')));
         roles.put(
                 "admin",
                 Arrays.asList(StringUtils
-                        .split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_VIEW_STATISTICS,PERM_MANAGE_STATISTICS",
+                        .split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS",
                                 ',')));
         roles.put("update", Arrays.asList(StringUtils.split(
-                "PERM_UPDATE,PERM_VIEW_STATISTICS", ',')));
+                "PERM_UPDATE", ',')));
         roles.put("view",
-                Arrays.asList(StringUtils.split("PERM_VIEW_STATISTICS", ',')));
-        return new HashSet<String>(roles.get(role));
-
+                Arrays.asList(StringUtils.split("PERM_VIEW", ',')));
+        return new HashSet<>(roles.get(role));
     }
 }
 

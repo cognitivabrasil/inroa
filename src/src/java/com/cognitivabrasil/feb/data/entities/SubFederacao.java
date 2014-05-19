@@ -243,13 +243,6 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
         return ((Integer) getSizeDoc());
     }
 
-    @Override
-    @Transient
-    public Integer getVisits() {
-        return DataAccessUtils.intResult(getSessionFactory().getCurrentSession().
-                createQuery("SELECT COUNT(*) FROM DocumentosVisitas dv, DocumentoReal d WHERE d.id=dv.documento AND d.repositorioSubFed.subFederacao = :rep").setParameter("rep", this).list());
-    }
-
     /**
      * Test if federation is outdated.
      *

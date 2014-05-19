@@ -138,7 +138,7 @@
                                                 <div class="atributo"> Localiza&ccedil;&atilde;o:
                                                     <c:forEach var="localizacao" items="${doc.locationHttp}">
                                                         <c:if test="${localizacao.value}">
-                                                            <div class="atributo"><a class="verifyUrl" href="${localizacao.key}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao.key}</a></div>
+                                                            <div class="atributo"><a class="verifyUrl" href="${localizacao.key}" target="_new">${localizacao.key}</a></div>
                                                             </c:if>
                                                         </c:forEach>
                                                 </div>
