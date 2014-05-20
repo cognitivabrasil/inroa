@@ -30,7 +30,7 @@ import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:testApplicationContext.xml")
+@ContextConfiguration(locations="classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {

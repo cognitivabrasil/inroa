@@ -32,7 +32,7 @@ import com.cognitivabrasil.feb.data.entities.Search;
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional

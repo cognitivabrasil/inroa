@@ -37,7 +37,7 @@ import com.cognitivabrasil.feb.data.services.UserService;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testApplicationContext.xml", "classpath:spring-security.xml"})
+@ContextConfiguration(locations = {"classpath:applicationContext.xml", "classpath:spring-security.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class UsuarioHibernateDaoIT extends AbstractDaoTest {

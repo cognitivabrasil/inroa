@@ -26,7 +26,7 @@ import feb.spring.FebConfig;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 public class FebConfigIT {
 	@Autowired private StringEncryptor stringEncryptor;	

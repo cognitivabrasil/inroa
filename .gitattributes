@@ -734,12 +734,10 @@ src/src/main/resources/hibernate/MetadataRecord.hbm.xml -text
 src/src/main/resources/hibernate/Repositorio.hbm.xml -text
 src/src/main/resources/hibernate/RepositorioSubFed.hbm.xml -text
 src/src/main/resources/hibernate/SubFederacao.hbm.xml -text
-src/src/main/resources/hibernate/Usuario.hbm.xml -text
 src/src/main/resources/info.properties -text
 src/src/main/resources/log4j.properties -text
 src/src/main/resources/manifest.mf -text
 src/src/main/resources/spring-security.xml -text
-src/src/main/resources/testApplicationContext.xml -text
 src/src/main/webapp/META-INF/context.xml -text
 src/src/main/webapp/WEB-INF/jsp/pager-taglib.tld -text
 src/src/main/webapp/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
