@@ -75,10 +75,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
     }
 
     @Test
-    @Ignore("Dont know why, it gives an error") // TODO:
     public void testRepository() {
-        //System.out.println("repository");;
-
         List<SubFederacao> l = instance.getAll();
         SubFederacao ufrgs = l.get(0);
 
@@ -89,7 +86,6 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
         assertEquals("RepUfrgs1", t.getName());
         assertEquals("Get from getDocumentos", 2, t.getDocumentos().size());
         assertEquals("Get from size()", 2, (int) t.getSize());
-
 
     }
 
@@ -107,7 +103,6 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
     }
 
     @Test
-//    @Ignore("Dont know why, it gives an error")
     public void testDeleteRemovesDocuments() {
         SubFederacao cesta = instance.get(1);
 
