@@ -4,19 +4,16 @@
  */
 package functionaltests;
 
-import com.cognitivabrasil.feb.data.services.FederationService;
-import com.cognitivabrasil.feb.data.services.RepositoryService;
-import com.cognitivabrasil.feb.data.services.MetadataRecordService;
-import com.cognitivabrasil.feb.data.services.MappingService;
-import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.AbstractDaoTest;
 import com.cognitivabrasil.feb.data.entities.Mapeamento;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
-import feb.data.interfaces.*;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.robo.atualiza.importaOAI.Importer;
-import feb.robo.atualiza.importaOAI.XMLtoDB;
 import feb.robo.atualiza.subfedOAI.ParserListSets;
 import java.io.File;
 import java.io.IOException;
@@ -24,17 +21,17 @@ import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.apache.commons.io.FileUtils;
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import static org.junit.Assert.assertEquals;
-import org.junit.Ignore;
 import org.xml.sax.SAXException;
 
 /**
@@ -44,9 +41,9 @@ import org.xml.sax.SAXException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
+@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
 @Transactional
-public class UpdateRepAndFedIt extends AbstractDaoTest {
+public class UpdateRepAndFedIt extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     RepositoryService repDao;

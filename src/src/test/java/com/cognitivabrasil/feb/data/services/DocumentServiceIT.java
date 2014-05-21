@@ -35,6 +35,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 /**
  * Integration tests of the DocumentosHibernateDao
@@ -46,8 +47,8 @@ import org.springframework.data.domain.Pageable;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class DocumentServiceIT extends AbstractDaoTest {
+@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     DocumentService docService;
@@ -118,11 +119,11 @@ public class DocumentServiceIT extends AbstractDaoTest {
     public void testDelete() {
         DocumentoReal d = docService.get(1);
         assertThat(d, notNullValue());
-        assertEquals(5, docService.getAll().size());
+        assertEquals(6, docService.getAll().size());
 
         docService.delete(d);
 
-        assertEquals(4, docService.getAll().size());
+        assertEquals(5, docService.getAll().size());
 
     }
 
@@ -281,13 +282,13 @@ public class DocumentServiceIT extends AbstractDaoTest {
     @Test
     public void testGetSizeWhitDeleted() {
         long total = docService.getSizeWithDeleted();
-        assertThat(total, equalTo(6L));
+        assertThat(total, equalTo(7L));
     }
 
     @Test
     public void testGetSize() {
         long total = docService.getSize();
-        assertThat(total, equalTo(5L));
+        assertThat(total, equalTo(6L));
     }
 
     @Test

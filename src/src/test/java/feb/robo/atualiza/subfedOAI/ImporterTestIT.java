@@ -5,23 +5,21 @@
 package feb.robo.atualiza.subfedOAI;
 
 import cognitivabrasil.obaa.OaiOBAA;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import org.junit.Ignore;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-
-import com.cognitivabrasil.feb.data.services.AbstractDaoTest;
-import com.cognitivabrasil.feb.data.entities.SubFederacao;
-import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.FederationService;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
 
 /**
  *
@@ -30,8 +28,8 @@ import static org.junit.Assert.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class ImporterTestIT extends AbstractDaoTest {
+@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+public class ImporterTestIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private FederationService subFedDao;

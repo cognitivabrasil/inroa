@@ -4,17 +4,15 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
+import com.cognitivabrasil.feb.data.entities.DocumentoReal;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.dbunit.Assertion;
-import org.dbunit.dataset.SortedTable;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import org.joda.time.DateTime;
@@ -25,9 +23,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
@@ -38,8 +36,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     FederationService instance;
@@ -84,7 +82,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         List<SubFederacao> l = instance.getAll();
         SubFederacao ufrgs = l.get(0);
 
-        List<RepositorioSubFed> r = new ArrayList<RepositorioSubFed>(ufrgs.getRepositorios());
+        List<RepositorioSubFed> r = new ArrayList<>(ufrgs.getRepositorios());
 
         RepositorioSubFed t = r.get(0);
 
@@ -109,20 +107,21 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
     }
 
     @Test
+//    @Ignore("Dont know why, it gives an error")
     public void testDeleteRemovesDocuments() {
         SubFederacao cesta = instance.get(1);
 
-        int sizeCesta = 0;
+        int sizeDocsCesta = 0;
         for (RepositorioSubFed r : cesta.getRepositorios()) {
-            sizeCesta += r.getDocumentos().size();
+            sizeDocsCesta += r.getDocumentos().size();
         }
-        int sizeAllBefore = docDao.getAll().size();
-        int sizeAfterShould = sizeAllBefore - sizeCesta;
+        int sizeAllDocsBefore = docDao.getAll().size();
+        int sizeAfterShould = sizeAllDocsBefore - sizeDocsCesta;
 
         instance.delete(cesta);
 
-        assertEquals("Size of UFRGS before", 2, sizeCesta);
-        assertEquals("Size of UFRGS after deletion", sizeAfterShould, docDao.getAll().size());
+        assertThat("Size of UFRGS before", sizeDocsCesta, equalTo(2));
+        assertThat("Size of UFRGS after deletion", docDao.getAll().size(), equalTo(sizeAfterShould));
     }
 
     @Test
@@ -189,8 +188,6 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
 
         instance.save(f2);
 
-        updated = true;
-
     }
 
     @Test
@@ -208,20 +205,14 @@ public class SubfederacaoHibernateDaoIT extends AbstractDaoTest {
         SubFederacao fed2 = instance.get("marcosn");
         assertThat(fed2.getDataXML(), equalTo(date));
     }
-
-    /*
-     * This is needed to get over AbstractTransactionalJUnit4SpringContextTests
-     * limitations TODO: find a more elegant and generic solution to integrate
-     * feb.spring and DbUnit, maybe with annotations?
-     */
-    @AfterTransaction
-    public void testSaveAndUpdate2() throws Exception {
-        if (updated) {
-            updated = false;
-            String[] ignore = {"id", "data_xml", "data_ultima_atualizacao", "descricao", "version"};
-            String[] sort = {"nome"};
-            Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("dados_subfederacoes"), sort), new SortedTable(getConnection().createDataSet().getTable("dados_subfederacoes"), sort), ignore);
-
-        }
+    
+    @Test
+    public void testGetDocsRepSubFed(){
+        SubFederacao fed = instance.get(1);
+        Set<RepositorioSubFed> setRep = fed.getRepositorios();
+        assertThat(setRep, hasSize(1));
+        RepositorioSubFed rep = setRep.iterator().next();
+        assertThat(rep.getDocumentos(), hasSize(2));
     }
+
 }

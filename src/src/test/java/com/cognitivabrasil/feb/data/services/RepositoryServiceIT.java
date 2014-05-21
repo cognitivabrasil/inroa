@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.dbunit.Assertion;
 import org.dbunit.dataset.SortedTable;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import org.joda.time.DateTime;
 import static org.junit.Assert.*;
@@ -20,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.AfterTransaction;
@@ -33,8 +33,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class RepositoryServiceIT extends AbstractDaoTest {
+@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     RepositoryService repDao;
@@ -181,8 +181,6 @@ public class RepositoryServiceIT extends AbstractDaoTest {
         r2.setName("Jorjao");
 
         repDao.save(r2);
-
-        updated = true;
     }
     
     @Test
@@ -210,15 +208,4 @@ public class RepositoryServiceIT extends AbstractDaoTest {
         assertThat(rep2.getDataOrigem(), equalTo(date)); 
     }
 
-    @AfterTransaction
-    public void testSaveAndUpdate2() throws Exception {
-        if (updated) {
-            updated = false;
-            String[] ignore = {"id", "metadata_prefix", "padrao_metadados", "mapeamento_id", "descricao", "data_ultima_atualizacao",
-                "internal_set", "tipo_mapeamento_id", "tipo_sincronizacao", "data_xml"};
-            String[] sort = {"nome"};
-            Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("repositorios"), sort), new SortedTable(getConnection().createDataSet().getTable("repositorios"), sort), ignore);
-
-        }
-    }
 }

@@ -1,52 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/beans"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
              xmlns:beans="http://www.springframework.org/schema/beans"
-             xmlns:context="http://www.springframework.org/schema/context"
-             xmlns:tx="http://www.springframework.org/schema/tx"
              xmlns:p="http://www.springframework.org/schema/p"
-             xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-             xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-             xmlns:util="http://www.springframework.org/schema/util"
-             xmlns:encryption="http://www.jasypt.org/schema/encryption"
-             xmlns:task="http://www.springframework.org/schema/task"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:tx="http://www.springframework.org/schema/tx" 
+             xmlns:security="http://www.springframework.org/schema/security"
+             xmlns:util="http://www.springframework.org/schema/util" 
              xmlns:aop="http://www.springframework.org/schema/aop"
+             xmlns:task="http://www.springframework.org/schema/task"
+             xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+             xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+             xmlns:encryption="http://www.jasypt.org/schema/encryption"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
-                http://www.springframework.org/schema/beans/spring-beans.xsd
-                http://www.springframework.org/schema/context
-                http://www.springframework.org/schema/context/spring-context.xsd
-                http://www.springframework.org/schema/tx
-                http://www.springframework.org/schema/tx/spring-tx.xsd
-                http://www.springframework.org/schema/data/jpa
-                http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd
-                http://www.springframework.org/schema/jdbc
-                http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-                http://www.springframework.org/schema/security
-                http://www.springframework.org/schema/security/spring-security-3.1.xsd
-                http://www.springframework.org/schema/util
-                http://www.springframework.org/schema/util/spring-util-3.2.xsd
-                http://www.jasypt.org/schema/encryption
-                http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd
-                http://www.springframework.org/schema/task
-                http://www.springframework.org/schema/task/spring-task-3.1.xsd
-                http://www.springframework.org/schema/aop 
-                http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
-
+http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/jdbc
+http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/task
+http://www.springframework.org/schema/task/spring-task-3.1.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd 
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util-3.2.xsd
+http://www.jasypt.org/schema/encryption
+http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd
+http://www.springframework.org/schema/data/jpa
+http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd ">
+    
     <context:component-scan base-package="com.cognitivabrasil.feb" />
-                
+
     <beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </beans:bean>
-    
+
     <tx:annotation-driven />
-		
+
     <beans profile="prod">
-        
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
               destroy-method="close" p:driverClassName="org.postgresql.Driver"
               p:url="jdbc:postgresql://#{febConfig.host}:#{febConfig.port}/#{febConfig.database}"
               p:username="#{febConfig.username}" p:password="#{febConfig.password}" />
-        
+    
         <beans:bean id="entityManagerFactory"
                     class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
             <property name="dataSource" ref="dataSource" />
@@ -66,7 +64,6 @@
                 </props>
             </property>
         </beans:bean>
-        
         <beans:bean id="febConfig" class="feb.spring.FebConfig">
             <property name="filename">
                 <value>/etc/feb/feb.properties</value>
@@ -83,23 +80,27 @@
         </task:scheduled-tasks>
         <!--Fim Inicializar o Robo -->
         
-        <bean id="myAspect" class="feb.spring.aspects.FebLoggerAspect" />
-        <aop:aspectj-autoproxy proxy-target-class="true">
-            <aop:include name="myAspect" />
-        </aop:aspectj-autoproxy>
-
+        <bean id="defaultUserActionLogger" class="feb.services.UserActionLoggerImpl">
+            <property name="file" value="/var/log/feb/feb-actions.log" />
+        </bean>
+        
         <bean id="repositorios" class="feb.robo.atualiza.Repositorios" />
         <bean id="subf" class="feb.robo.atualiza.SubFederacaoOAI" />
         <bean id="Indexador" class="feb.ferramentaBusca.indexador.Indexador"/>
     </beans>
+    
     <beans profile="test,it">
+        <jdbc:embedded-database id="dataSource" type="H2">
+            <jdbc:script location="classpath:schema.sql" />
+            <jdbc:script location="classpath:test-data.sql" />            
+        </jdbc:embedded-database>
         
         <beans:bean id="entityManagerFactory"
                     class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
             <property name="dataSource" ref="dataSource" />
             <property name="packagesToScan" value="com.cognitivabrasil.feb.data" />
             <property name="jpaVendorAdapter">
-                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">				</bean>
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
             </property>
             <property name="jpaProperties">
                 <props>
@@ -113,31 +114,18 @@
                 </props>
             </property>
         </beans:bean>
-   
-        <jdbc:embedded-database id="dataSource" type="H2">
-            <jdbc:script location="classpath:schema.sql" />
-            <jdbc:script location="classpath:test-data.sql" />
-            
-        </jdbc:embedded-database>	
+   	
         
-        <beans:bean id="passwordEncoder"
-                    class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+        <bean id="userActionLogger" class="feb.services.UserActionLoggerImpl"/>
         <bean id="febConfig" class="feb.spring.FebConfig">
             <property name="file">
                 <value>classpath:feb.properties</value>
             </property>
             <property name="defaultProperties" ref="defaultProperties" />
         </bean>
-        
-        <bean id="userActionLogger" class="feb.services.UserActionLoggerImpl"/>
-    </beans> 
+    </beans>
     
     <beans profile="prod,test,it">
-        <context:annotation-config />
-        <jpa:repositories base-package="com.cognitivabrasil.feb.data.repositories"
-                          entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager" />
-        
-        <bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"/>
         
         <bean id="SearchesDao" class="com.cognitivabrasil.feb.data.repositories.SearchesJdbcDao">
             <property name="dataSource" ref="dataSource" />
@@ -150,10 +138,18 @@
             <property name="maxSize" value="30" />
         </bean>
         
+        <bean id="myAspect" class="feb.spring.aspects.FebLoggerAspect" />
+        <aop:aspectj-autoproxy proxy-target-class="true">
+            <aop:include name="myAspect" />
+        </aop:aspectj-autoproxy>
+        
+        <!-- TODO: Use properties TODO: Encrypt password <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+        destroy-method="close" p:driverClassName="${dataSource.driverClassName}" 
+        p:url="${dataSource.url}" p:username="${dataSource.username}" p:password="${dataSource.password}" 
+        /> -->
 
-        
         <encryption:string-encryptor id="myEncryptor" password="feb@RNP" pool-size="5" />
-        
+
         <util:properties id="febInf" location="classpath:info.properties"/>
     
         <!-- in case the user does not specify a properties file -->
@@ -164,13 +160,21 @@
             <prop key="Postgres.host">127.0.0.1</prop>
             <prop key="Postgres.port">5432</prop>
         </util:properties>
-        
+       
         <bean id="sessionFactory"
               class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
             <property name="dataSource" ref="dataSource" />
             <property name="configLocation" value="classpath:hibernate.cfg.xml" />
         </bean>
-
+    
+        <context:annotation-config />
+    
+        <jpa:repositories base-package="com.cognitivabrasil.feb.data.repositories"
+                          entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager" />
+    
+        <!-- TODO: use inversion of control instead of this ! -->
+        <bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"/>
+    
     </beans>
     
 </beans:beans>

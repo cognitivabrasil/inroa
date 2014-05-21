@@ -618,8 +618,6 @@ src/sql/clone_database_teste.sql -text
 src/sql/create.sh -text
 src/sql/data.sql -text
 src/sql/feb_similarity.sql -text
-src/sql/postgres_schema.sql -text
-src/sql/schema.sql -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Autor.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Consulta.java -text
@@ -723,6 +721,7 @@ src/src/java/feb/util/Message.java -text
 src/src/java/feb/util/Operacoes.java -text
 src/src/java/feb/util/package.html -text
 src/src/main/resources/applicationContext.xml -text
+src/src/main/resources/applicationContext_1.xml -text
 src/src/main/resources/dummy.properties -text
 src/src/main/resources/feb.properties -text
 src/src/main/resources/feb2to3.xsl -text
@@ -737,7 +736,10 @@ src/src/main/resources/hibernate/SubFederacao.hbm.xml -text
 src/src/main/resources/info.properties -text
 src/src/main/resources/log4j.properties -text
 src/src/main/resources/manifest.mf -text
+src/src/main/resources/postgres_schema.sql -text
+src/src/main/resources/schema.sql -text
 src/src/main/resources/spring-security.xml -text
+src/src/main/resources/test-data.sql -text
 src/src/main/webapp/META-INF/context.xml -text
 src/src/main/webapp/WEB-INF/jsp/pager-taglib.tld -text
 src/src/main/webapp/WEB-INF/jsp/paginacaoPersonalizada.jsp -text
@@ -928,7 +930,6 @@ src/src/test/java/com/cognitivabrasil/feb/data/entities/DocumentoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/RepositorioTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/SubFederacaoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/UsuarioTest.java -text
-src/src/test/java/com/cognitivabrasil/feb/data/services/AbstractDaoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/services/DocumentServiceIT.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/services/MapeamentoHibernateDaoIT.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/services/PadraoMetadadosHibernateDaoIT.java -text
@@ -981,8 +982,6 @@ src/src/test/resources/Fiocruz-listSets.xml -text
 src/src/test/resources/Fiocruz-listSets2.xml -text
 src/src/test/resources/delete.xml -text
 src/src/test/resources/delete2.xml -text
-src/src/test/resources/documentosDataAfter.xml -text
-src/src/test/resources/documentosDataBefore.xml -text
 src/src/test/resources/fedIFRS-listSets.xml -text
 src/src/test/resources/fedIFRS-records.xml -text
 src/src/test/resources/froac.xml -text

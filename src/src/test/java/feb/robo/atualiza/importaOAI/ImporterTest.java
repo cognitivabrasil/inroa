@@ -77,7 +77,7 @@ public class ImporterTest {
 
         OBAA obaa = oai.getMetadata(0);
 
-        assertThat(obaa.getTitles(), hasItems("Taquaraço: 9 anos de glórias", "Taquaraço: 9 years of glory"));
+        assertThat(obaa.getGeneral().getTitles(), hasItems("Taquaraço: 9 anos de glórias", "Taquaraço: 9 years of glory"));
 
         // Verify that save() was called twice on mocked docDao
         verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));

@@ -4,30 +4,23 @@
  */
 package functionaltests;
 
-import com.cognitivabrasil.feb.data.services.FederationService;
-import com.cognitivabrasil.feb.data.services.RepositoryService;
-import com.cognitivabrasil.feb.data.services.MetadataRecordService;
-import com.cognitivabrasil.feb.data.services.MappingService;
-import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.AbstractDaoTest;
-import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
-import feb.data.interfaces.*;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.MappingService;
+import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
 import feb.robo.atualiza.subfedOAI.ParserListSets;
-import feb.spring.controllers.FederationsController;
-import feb.util.Operacoes;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.apache.log4j.Logger;
-import static org.junit.Assert.assertEquals;
-
 import org.hibernate.SessionFactory;
+import static org.junit.Assert.assertEquals;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,14 +31,9 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.util.StopWatch;
 import org.xml.sax.SAXException;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -54,7 +42,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
+@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
 @Transactional
 public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTests {
 	Logger log = Logger.getLogger(PerformanceTest.class);

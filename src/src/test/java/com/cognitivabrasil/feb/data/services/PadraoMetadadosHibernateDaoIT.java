@@ -4,25 +4,18 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
-import com.cognitivabrasil.feb.data.services.MetadataRecordService;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 import java.util.List;
-import org.dbunit.Assertion;
-import org.dbunit.dataset.SortedTable;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-
-import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
-
-
-
 
 /**
  *
@@ -32,8 +25,8 @@ import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations="classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {
+@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+public class PadraoMetadadosHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
     
     @Autowired
     MetadataRecordService instance;
@@ -89,22 +82,6 @@ public class PadraoMetadadosHibernateDaoIT extends AbstractDaoTest {
         u.setName("Updated");
         
         instance.save(u);
-
-        updated = true;
-
     }
 
-    /* This is needed to get over AbstractTransactionalJUnit4SpringContextTests limitations
-     * TODO: find a more elegant and generic solution to integrate feb.spring and DbUnit, maybe with annotations?
-     */
-    @AfterTransaction
-    public void testSaveAndUpdate2() throws Exception {
-        if (updated) {
-            updated = false;
-            String[] ignore = {"id", "atributos"};
-            String[] sort = {"nome"};
-            Assertion.assertEqualsIgnoreCols(new SortedTable(getAfterDataSet().getTable("padraometadados"), sort), new SortedTable(getConnection().createDataSet().getTable("padraometadados"), sort), ignore);
-
-        }
-    }
 }
