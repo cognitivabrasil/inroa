@@ -37,7 +37,7 @@ CREATE TABLE mapeamentos (
 
 CREATE TABLE repositorios (
     id serial NOT NULL,
-    nome text NOT NULL,
+    nome character varying NOT NULL,
     descricao text,
     data_ultima_atualizacao timestamp,
     url_or_ip character varying(200) NOT NULL,

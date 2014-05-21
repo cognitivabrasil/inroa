@@ -9,8 +9,6 @@ import com.cognitivabrasil.feb.data.entities.Repositorio;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.dbunit.Assertion;
-import org.dbunit.dataset.SortedTable;
 import static org.hamcrest.Matchers.*;
 import org.joda.time.DateTime;
 import static org.junit.Assert.*;
@@ -22,8 +20,8 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -33,7 +31,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -74,8 +72,6 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
      */
     @Test
     public void testGetAll() {
-        //System.out.println("getAll");
-        List expResult = null;
         List result = repDao.getAll();
         assertEquals(4, result.size());
     }

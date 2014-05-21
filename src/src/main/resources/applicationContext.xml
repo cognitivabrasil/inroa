@@ -31,14 +31,6 @@
                 http://www.springframework.org/schema/task/spring-task-3.1.xsd
                 http://www.springframework.org/schema/aop 
                 http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
-
-    <context:component-scan base-package="com.cognitivabrasil.feb" />
-                
-    <beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </beans:bean>
-    
-    <tx:annotation-driven />
 		
     <beans profile="prod">
         
@@ -78,8 +70,7 @@
         <bean id="robo" class="feb.robo.main.Robo" />
         <task:scheduler id="myScheduler" pool-size="1" />
         <task:scheduled-tasks scheduler="myScheduler">
-            <task:scheduled ref="robo" method="testaUltimaImportacao"
-                            cron="0 0 2 * * *" />
+            <task:scheduled ref="robo" method="testaUltimaImportacao" cron="0 0 2 * * *" />
         </task:scheduled-tasks>
         <!--Fim Inicializar o Robo -->
         
@@ -115,8 +106,8 @@
         </beans:bean>
    
         <jdbc:embedded-database id="dataSource" type="H2">
-            <jdbc:script location="classpath:schema.sql" />
-            <jdbc:script location="classpath:test-data.sql" />
+            <jdbc:script location="classpath:sql/schema.sql" />
+            <jdbc:script location="classpath:sql/test-data.sql" encoding = "UTF-8"/>
             
         </jdbc:embedded-database>	
         
@@ -133,7 +124,16 @@
     </beans> 
     
     <beans profile="prod,test,it">
+        <context:component-scan base-package="com.cognitivabrasil.feb" />
+        
+        <tx:annotation-driven />
+    
+        <beans:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+            <property name="entityManagerFactory" ref="entityManagerFactory" />
+        </beans:bean>
+        
         <context:annotation-config />
+        
         <jpa:repositories base-package="com.cognitivabrasil.feb.data.repositories"
                           entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager" />
         

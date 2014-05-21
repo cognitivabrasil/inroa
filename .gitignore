@@ -34,3 +34,4 @@ src/solr/logs/*
 !src/src/main/webapp/scripts/vendor/bootstrap-slider/css/*.swp
 !src/src/main/webapp/scripts/vendor/bootstrap-slider/js/*.swp
 !src/src/main/webapp/scripts/vendor/bootstrap-slider/*.swp
+!src/src/main/resources/sql/*.swp

@@ -159,6 +159,7 @@ src/build.xml -text
 src/config/sun-checks.xml -text
 src/config/workers.properties -text
 src/configure -text
+src/create.sh -text
 src/debian/README.Debian -text
 src/debian/README.source -text
 src/debian/changelog.template -text
@@ -615,8 +616,6 @@ src/solr/solr/zoo.cfg -text
 src/solr/start.jar -text
 src/solr/webapps/solr.war -text
 src/sql/clone_database_teste.sql -text
-src/sql/create.sh -text
-src/sql/data.sql -text
 src/sql/feb_similarity.sql -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Autor.java -text
@@ -721,7 +720,6 @@ src/src/java/feb/util/Message.java -text
 src/src/java/feb/util/Operacoes.java -text
 src/src/java/feb/util/package.html -text
 src/src/main/resources/applicationContext.xml -text
-src/src/main/resources/applicationContext_1.xml -text
 src/src/main/resources/dummy.properties -text
 src/src/main/resources/feb.properties -text
 src/src/main/resources/feb2to3.xsl -text
@@ -736,10 +734,11 @@ src/src/main/resources/hibernate/SubFederacao.hbm.xml -text
 src/src/main/resources/info.properties -text
 src/src/main/resources/log4j.properties -text
 src/src/main/resources/manifest.mf -text
-src/src/main/resources/postgres_schema.sql -text
-src/src/main/resources/schema.sql -text
 src/src/main/resources/spring-security.xml -text
-src/src/main/resources/test-data.sql -text
+src/src/main/resources/sql/data.sql -text
+src/src/main/resources/sql/postgres_schema.sql -text
+src/src/main/resources/sql/schema.sql -text
+src/src/main/resources/sql/test-data.sql -text
 src/src/main/webapp/META-INF/context.xml -text
 src/src/main/webapp/WEB-INF/jsp/pager-taglib.tld -text
 src/src/main/webapp/WEB-INF/jsp/paginacaoPersonalizada.jsp -text

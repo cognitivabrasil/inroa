@@ -101,8 +101,12 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
     @Test
     public void testGet() {
+        System.out.println("\n\n  GETALL...");
+        for(DocumentoReal doc : docService.getAll()){
+            System.out.println("id: "+doc.getId());
+        }
         DocumentoReal d = docService.get(1);
-
+        System.out.println("-----\n\nd: "+d+"\n\n--------");
         assertEquals("oai:cesta2.cinted.ufrgs.br:123456789/57", d.getObaaEntry());
         assertEquals("Cesta", d.getRepositorio().getName());
     }
