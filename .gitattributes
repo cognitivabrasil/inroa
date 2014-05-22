@@ -615,8 +615,6 @@ src/solr/solr/solr.xml -text
 src/solr/solr/zoo.cfg -text
 src/solr/start.jar -text
 src/solr/webapps/solr.war -text
-src/sql/clone_database_teste.sql -text
-src/sql/feb_similarity.sql -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Autor.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Consulta.java -text

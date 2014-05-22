@@ -108,7 +108,6 @@
         <jdbc:embedded-database id="dataSource" type="H2">
             <jdbc:script location="classpath:sql/schema.sql" />
             <jdbc:script location="classpath:sql/test-data.sql" encoding = "UTF-8"/>
-            
         </jdbc:embedded-database>	
         
         <beans:bean id="passwordEncoder"
