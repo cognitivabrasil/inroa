@@ -71,3 +71,4 @@ src/solr/logs/*
 !src/src/java/com/cognitivabrasil/feb/ferramentaAdministrativa/*.swp
 !src/src/java/com/cognitivabrasil/feb/data/interfaces/*.swp
 !src/src/java/com/cognitivabrasil/feb/util/*.swp
+!src/src/test/java/com/cognitivabrasil/feb/metadata/*.swp

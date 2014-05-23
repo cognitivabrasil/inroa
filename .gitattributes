@@ -937,6 +937,11 @@ src/src/test/java/com/cognitivabrasil/feb/ferramentaAdministrativa/VerificaLinkO
 src/src/test/java/com/cognitivabrasil/feb/functionaltests/LumeXmlIT.java -text
 src/src/test/java/com/cognitivabrasil/feb/functionaltests/PerformanceTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/functionaltests/UpdateRepAndFedIt.java -text
+src/src/test/java/com/cognitivabrasil/feb/metadata/XsltConversorTest.java -text
+src/src/test/java/com/cognitivabrasil/feb/metadata/XsltDC2ObaaTest.java -text
+src/src/test/java/com/cognitivabrasil/feb/metadata/XsltFeb2ToFeb3Test.java -text
+src/src/test/java/com/cognitivabrasil/feb/metadata/XsltLom2ObaaTest.java -text
+src/src/test/java/com/cognitivabrasil/feb/metadata/XsltTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/obaa/OaiOBAATest.java -text
 src/src/test/java/com/cognitivabrasil/feb/robo/atualiza/importaOAI/ImporterTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/robo/atualiza/subfedOAI/ImporterTestIT.java -text
@@ -960,11 +965,6 @@ src/src/test/resources/fedIFRS-records.xml -text
 src/src/test/resources/froac.xml -text
 src/src/test/resources/froacLOM.xml -text
 src/src/test/resources/metadata/FEB-froac1.xml -text
-src/src/test/resources/metadata/XsltConversorTest.java -text
-src/src/test/resources/metadata/XsltDC2ObaaTest.java -text
-src/src/test/resources/metadata/XsltFeb2ToFeb3Test.java -text
-src/src/test/resources/metadata/XsltLom2ObaaTest.java -text
-src/src/test/resources/metadata/XsltTest.java -text
 src/src/test/resources/metadata/cesta1.xml -text
 src/src/test/resources/metadata/cesta_complete.xml -text
 src/src/test/resources/metadata/educationalContext.xml -text
