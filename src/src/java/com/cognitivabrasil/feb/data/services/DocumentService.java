@@ -43,6 +43,14 @@ public interface DocumentService {
      */
     void delete(DocumentoReal d);
     
+    /**
+     * Deletes all documents from the repository entered.
+     *
+     * @param r Repository that will have your documents deleted.
+     * @return Rows affected
+     */
+    int deleteAllFromRep(Repositorio r);
+    
 
     /**
      * Need to call flush on session after saving many documents. 

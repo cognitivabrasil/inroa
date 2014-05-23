@@ -101,12 +101,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
     @Test
     public void testGet() {
-        System.out.println("\n\n  GETALL...");
-        for(DocumentoReal doc : docService.getAll()){
-            System.out.println("id: "+doc.getId());
-        }
         DocumentoReal d = docService.get(1);
-        System.out.println("-----\n\nd: "+d+"\n\n--------");
         assertEquals("oai:cesta2.cinted.ufrgs.br:123456789/57", d.getObaaEntry());
         assertEquals("Cesta", d.getRepositorio().getName());
     }
@@ -327,6 +322,21 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
         for (DocumentoReal doc : modelDoc) {
             assertThat(ids.contains(doc.getId()), equalTo(true));
         }
+    }
+    
+    @Test
+    public void testDeleteDocsFromRep(){
+        int sizeAllBefore = docService.getAll().size();
+        
+        Repositorio cesta = repDao.get(1);
+        int numDocsRep = cesta.getDocumentos().size();
+        int sizeCestaWithoutDeleted = 4;
+        
+        int affected = docService.deleteAllFromRep(cesta);
+        
+        assertThat(affected, equalTo(numDocsRep));
+
+        assertThat("Size of Cesta after deletion", docService.getAll().size(), equalTo(sizeAllBefore - sizeCestaWithoutDeleted));   
     }
 
 }

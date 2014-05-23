@@ -183,4 +183,10 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
         return dateTime.plusSeconds(1);
     }
 
+    @Override
+    public int deleteAllFromRep(Repositorio r) {
+        return docRep.deleteByRepositorio(r);
+    }
+
+    
 }

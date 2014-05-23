@@ -16,13 +16,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -32,7 +32,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+@Transactional
 public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -89,22 +90,18 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
     }
 
     @Test
-    @Rollback(true)
     public void testDelete() {
-        Repositorio cesta = repDao.get(1);
-        List<Repositorio> l1 = repDao.getAll();
-        int sizeBefore = l1.size();
+        int sizeBefore = repDao.getAll().size();
+        
+        Repositorio cesta = repDao.get(1);        
         repDao.delete(cesta);
 
-        List<Repositorio> l2 = repDao.getAll();
-        int sizeAfter = l2.size();
+        int sizeAfter = repDao.getAll().size();
         assertEquals(sizeBefore-1, sizeAfter);
-
     }
 
     @Test
-    @Ignore("Por algum motivo nao faz rollback e da erro no DocumentServiceIT")
-    public void testDeleteRemovesDocumentos() {
+    public void testDeleteRepAndDocuments() {
         Repositorio cesta = repDao.get(1);
 
         int sizeCesta = 4;        
@@ -117,21 +114,6 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
     }
 
     @Test
-    @Ignore("Por algum motivo nao faz rollback e da erro no DocumentServiceIT")
-    public void testDellAllDocs() {
-        Repositorio cesta = repDao.get(1);
-
-        int sizeCesta = 4;
-        int sizeAllBefore = docDao.getAll().size();
-        int sizeAfter = sizeAllBefore - sizeCesta;
-
-        cesta.dellAllDocs();
-
-        assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());
-    }
-
-    @Test
-    @Ignore("Por algum motivo nao faz rollback e da erro no DocumentServiceIT")
     public void testGetMetadataRecord() {
         int id = 1;
         Repositorio cesta = repDao.get(id);

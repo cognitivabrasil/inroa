@@ -5,6 +5,7 @@
 package com.cognitivabrasil.feb.data.repositories;
 
 import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 
 import java.util.List;
 import org.joda.time.DateTime;
@@ -12,7 +13,10 @@ import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <b>ATENTION!</b>
@@ -31,23 +35,30 @@ import org.springframework.data.jpa.repository.Query;
 public interface DocumentRepository extends JpaRepository<DocumentoReal, Integer> {
 
     public List<DocumentoReal> findByDeletedIsFalse();
+
     public Page<DocumentoReal> findByDeletedIsFalse(Pageable pageable);
+
     public DocumentoReal findByObaaEntry(String entry);
+
     public DocumentoReal findById(int id);
-    
+
+    @Modifying
+    @Transactional
+    @Query("delete from DocumentoReal d where d.repositorio = :repositorio")
+    int deleteByRepositorio(@Param("repositorio") Repositorio repositorio);
+
     @Query("SELECT count(*) FROM DocumentoReal d WHERE deleted is false")
     public long countDeletedFalse();
-    
+
     //metodos para o OAI
-    
     // Hack: we add one second to the date and use non-inclusive comparison for until, and 
     // use incluse queries for from, in this way we ignore fractions of seconds.
     @Query("SELECT d FROM DocumentoReal d WHERE created >= ?1")
     public Page<DocumentoReal> from(DateTime dateTime, Pageable p);
-    
+
     @Query("SELECT count(*) FROM DocumentoReal d WHERE created >= ?1")
     public Integer countFrom(DateTime dateTime);
-    
+
     @Query("SELECT d FROM DocumentoReal d WHERE created < ?1")
     public Page<DocumentoReal> until(DateTime dateTime, Pageable p);
 
@@ -65,5 +76,5 @@ public interface DocumentRepository extends JpaRepository<DocumentoReal, Integer
 
     @Query("SELECT count(*) FROM DocumentoReal d")
     public Integer countInt();
-    
+
 }
