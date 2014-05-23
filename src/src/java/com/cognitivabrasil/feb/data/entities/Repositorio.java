@@ -1,9 +1,9 @@
 // Generated 20/07/2011 15:25:15 by Hibernate Tools 3.2.0.b9
 package com.cognitivabrasil.feb.data.entities;
 
-import feb.data.interfaces.FebDomainObject;
-import feb.spring.ApplicationContextProvider;
-import feb.util.Operacoes;
+import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
+import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
+import com.cognitivabrasil.feb.util.Operacoes;
 import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -145,19 +145,6 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
                 "select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").setParameter("rep", this).setParameter("deleted", false).list());
     }
 
-    /**
-     * Delete all DocumentoReal from this Repositorio
-     *
-     * @return Rows affected
-     *
-     */
-    public int dellAllDocs() {
-        //TODO: mover isso aqui para o Service
-        String hql = "delete from DocumentoReal as d WHERE d.repositorio = :rep";
-        Query query = getSession().createQuery(hql);
-        query.setParameter("rep", this);
-        return query.executeUpdate();
-    }
 
     /**
      * @param url the url to set

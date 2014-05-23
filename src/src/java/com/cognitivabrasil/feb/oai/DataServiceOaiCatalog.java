@@ -12,7 +12,7 @@ package com.cognitivabrasil.feb.oai;
 
 import ORG.oclc.oai.server.catalog.AbstractServiceOaiCatalog;
 import ORG.oclc.oai.server.catalog.OaiDocumentService;
-import feb.spring.ApplicationContextProvider;
+import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -59,7 +59,7 @@
             </property>
         </beans:bean>
         
-        <beans:bean id="febConfig" class="feb.spring.FebConfig">
+        <beans:bean id="febConfig" class="com.cognitivabrasil.feb.spring.FebConfig">
             <property name="filename">
                 <value>/etc/feb/feb.properties</value>
             </property>
@@ -67,21 +67,18 @@
         </beans:bean>
         
         <!--Inicio Inicializar o Robo -->
-        <bean id="robo" class="feb.robo.main.Robo" />
+        <bean id="robo" class="com.cognitivabrasil.feb.robo.main.Robo" />
         <task:scheduler id="myScheduler" pool-size="1" />
         <task:scheduled-tasks scheduler="myScheduler">
             <task:scheduled ref="robo" method="testaUltimaImportacao" cron="0 0 2 * * *" />
         </task:scheduled-tasks>
         <!--Fim Inicializar o Robo -->
         
-        <bean id="myAspect" class="feb.spring.aspects.FebLoggerAspect" />
+        <bean id="myAspect" class="com.cognitivabrasil.feb.spring.aspects.FebLoggerAspect" />
         <aop:aspectj-autoproxy proxy-target-class="true">
             <aop:include name="myAspect" />
         </aop:aspectj-autoproxy>
 
-        <bean id="repositorios" class="feb.robo.atualiza.Repositorios" />
-        <bean id="subf" class="feb.robo.atualiza.SubFederacaoOAI" />
-        <bean id="Indexador" class="feb.ferramentaBusca.indexador.Indexador"/>
     </beans>
     <beans profile="test,it">
         
@@ -112,14 +109,14 @@
         
         <beans:bean id="passwordEncoder"
                     class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
-        <bean id="febConfig" class="feb.spring.FebConfig">
+        <bean id="febConfig" class="com.cognitivabrasil.feb.spring.FebConfig">
             <property name="file">
                 <value>classpath:feb.properties</value>
             </property>
             <property name="defaultProperties" ref="defaultProperties" />
         </bean>
         
-        <bean id="userActionLogger" class="feb.services.UserActionLoggerImpl"/>
+        <bean id="userActionLogger" class="com.cognitivabrasil.feb.data.services.UserActionLoggerImpl"/>
     </beans> 
     
     <beans profile="prod,test,it">
@@ -136,13 +133,13 @@
         <jpa:repositories base-package="com.cognitivabrasil.feb.data.repositories"
                           entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager" />
         
-        <bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"/>
+        <bean id="applicationContextProvider" class="com.cognitivabrasil.feb.spring.ApplicationContextProvider"/>
         
         <bean id="SearchesDao" class="com.cognitivabrasil.feb.data.repositories.SearchesJdbcDao">
             <property name="dataSource" ref="dataSource" />
         </bean>
 
-        <bean id="tagService" class="feb.services.TagCloudServiceImpl">
+        <bean id="tagService" class="com.cognitivabrasil.feb.data.services.TagCloudServiceImpl">
             <!--days = numero de dias que expira o termo de busca -->
             <property name="days" value="15" />
             <!--maxSize = numero de buscas da tagcloud -->
@@ -169,7 +166,11 @@
             <property name="dataSource" ref="dataSource" />
             <property name="configLocation" value="classpath:hibernate.cfg.xml" />
         </bean>
-
+        
+        <bean id="repositorios" class="com.cognitivabrasil.feb.robo.atualiza.Repositorios" />
+        <bean id="subf" class="com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI" />
+        <bean id="Indexador" class="com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador"/>
+        
     </beans>
     
 </beans:beans>

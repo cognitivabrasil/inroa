@@ -13,8 +13,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import feb.data.interfaces.FebDomainObject;
-import feb.spring.ApplicationContextProvider;
+import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
+import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

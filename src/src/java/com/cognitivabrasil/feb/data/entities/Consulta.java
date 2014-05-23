@@ -1,6 +1,6 @@
 package com.cognitivabrasil.feb.data.entities;
 
-import feb.util.Informacoes;
+import com.cognitivabrasil.feb.util.Informacoes;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collections;

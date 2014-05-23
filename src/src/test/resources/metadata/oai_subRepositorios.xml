@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?><OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd"><responseDate>2012-05-16T16:53:03Z</responseDate><request verb="ListSets">http://143.54.83.93/feb/OAIHandler</request><ListSets><set>
+<setSpec>LUME</setSpec>
+<setName>LUME</setName>
+</set>
+<set>
+<setSpec>CESTA</setSpec>
+<setName>CESTA</setName>
+</set>
+</ListSets></OAI-PMH>

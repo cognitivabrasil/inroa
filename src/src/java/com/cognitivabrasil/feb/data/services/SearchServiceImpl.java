@@ -7,7 +7,7 @@ package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.data.entities.Search;
 import com.cognitivabrasil.feb.data.repositories.SearchesJdbcDao;
-import feb.util.Operacoes;
+import com.cognitivabrasil.feb.util.Operacoes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;

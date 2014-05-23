@@ -1,6 +1,6 @@
 package com.cognitivabrasil.feb.data.entities;
 
-import feb.spring.ApplicationContextProvider;
+import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

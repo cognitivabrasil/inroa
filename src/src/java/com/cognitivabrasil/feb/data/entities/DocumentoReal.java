@@ -3,7 +3,7 @@ package com.cognitivabrasil.feb.data.entities;
 import ORG.oclc.oai.models.OaiDocument;
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Location;
-import feb.data.interfaces.DocumentoFebInterface;
+import com.cognitivabrasil.feb.data.interfaces.DocumentoFebInterface;
 import java.util.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;

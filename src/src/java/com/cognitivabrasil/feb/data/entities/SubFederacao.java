@@ -4,9 +4,9 @@
  */
 package com.cognitivabrasil.feb.data.entities;
 
-import feb.data.interfaces.FebDomainObject;
-import feb.spring.ApplicationContextProvider;
-import feb.util.Operacoes;
+import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
+import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
+import com.cognitivabrasil.feb.util.Operacoes;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

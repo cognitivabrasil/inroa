@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2011-09-12T12:25:51Z</responseDate>
+	<request metadataPrefix="oai_dc" verb="ListRecords">http://www.lume.ufrgs.br/oai/request</request>
+	<ListRecords>
+	<record>
+		<header>
+			<identifier>oai:www.lume.ufrgs.br:10183/394</identifier>
+			<datestamp>2010-10-01T15:59:29Z</datestamp>
+			<setSpec>hdl_10183_43</setSpec>
+		</header>
+	<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:contributor>Sílton</dc:contributor>
+	<dc:creator>Jorjão</dc:creator>
+	<dc:date>2007-06-04T11:33:20Z</dc:date>
+	<dc:date>2006</dc:date>
+	<dc:identifier>http://hdl.handle.net/10183/394</dc:identifier>
+	<dc:description>
+		Descrição 1
+	</dc:description>
+	<dc:description>
+		Descrição 2
+	</dc:description>
+	<dc:publisher>Pub 1</dc:publisher>
+	<dc:publisher>Pub 2</dc:publisher>
+	<dc:format>506857 bytes</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:subject>Futebol</dc:subject>
+	<dc:subject>Campeonato do Dacomp</dc:subject>
+	<dc:subject>Taquaraço</dc:subject>
+	<dc:title>Taquaraço: 9 anos de glórias</dc:title>
+	<dc:title>Taquaraço: 9 years of glory</dc:title>
+	<dc:type>Artigo</dc:type>
+	<dc:identifier>000578214</dc:identifier>
+	<dc:relation>Rel 1</dc:relation>
+	<dc:relation>Rel 2</dc:relation>
+	<dc:coverage>Coverage 1</dc:coverage>
+	<dc:coverage>Coverage 2</dc:coverage>
+	<dc:right>Right 1</dc:right>
+	<dc:right>Right 2</dc:right>
+</oai_dc:dc>
+
+	</metadata>
+</record>
+	<record>
+		<header>
+			<identifier>oai:www.lume.ufrgs.br:10183/394</identifier>
+			<datestamp>2010-10-01T15:59:29Z</datestamp>
+			<setSpec>hdl_10183_43</setSpec>
+		</header>
+	<metadata>
+<oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+
+	<dc:contributor>Sílton</dc:contributor>
+	<dc:creator>Jorjão</dc:creator>
+	<dc:date>2007-06-04T11:33:20Z</dc:date>
+	<dc:date>2006</dc:date>
+	<dc:identifier>http://hdl.handle.net/10183/394</dc:identifier>
+	<dc:description>
+		Descrição 1
+	</dc:description>
+	<dc:description>
+		Descrição 2
+	</dc:description>
+	<dc:publisher>Pub 1</dc:publisher>
+	<dc:publisher>Pub 2</dc:publisher>
+	<dc:format>506857 bytes</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:subject>Futebol</dc:subject>
+	<dc:subject>Campeonato do Dacomp</dc:subject>
+	<dc:subject>Taquaraço</dc:subject>
+	<dc:title>Taquaraço: 9 anos de glórias</dc:title>
+	<dc:title>Taquaraço: 9 years of glory</dc:title>
+	<dc:type>Artigo</dc:type>
+	<dc:identifier>000578214</dc:identifier>
+	<dc:relation>Rel 1</dc:relation>
+	<dc:relation>Rel 2</dc:relation>
+	<dc:coverage>Coverage 1</dc:coverage>
+	<dc:coverage>Coverage 2</dc:coverage>
+	<dc:right>Right 1</dc:right>
+	<dc:right>Right 2</dc:right>
+</oai_dc:dc>
+
+	</metadata>
+</record>
+</ListRecords>
+</OAI-PMH>

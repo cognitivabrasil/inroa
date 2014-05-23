@@ -1,0 +1,7 @@
+<OAI-PMH
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2012-06-11T16:39:57Z</responseDate>
+	<request metadataPrefix="oai_dc" verb="ListRecords" from="2012-06-11T15:34:01Z">http://cesta2.cinted.ufrgs.br/oai/request</request>
+	<error code="noRecordsMatch">The combination of the values of the from, until,
+		set, and metadataPrefix arguments results in an empty list.</error>
+</OAI-PMH>
