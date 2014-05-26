@@ -1,4 +1,4 @@
-package com.cognitivabrasil.feb.solr.camposObaa;
+package feb.solr.camposObaa;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,56 @@ public class EducationalFields {
         List<String> typical = new ArrayList<String>();
         typical.add(cabecalho + "typicalagerange");
         typical.addAll(o.getEducational().getTypicalAgeRanges());
+
         return typical;
+    }
+    
+    /*
+    
+    public static List<String> getTypicalagerange(OBAA o) {
+
+        List<String> typical = new ArrayList<String>();
+        typical.add(cabecalho + "typicalagerange");
+        typical.addAll(o.getEducational().getTypicalAgeRanges());
+        if (o.getEducational().getTypicalAgeRanges().size()>0)
+        {
+            System.out.println(o.getEducational().getTypicalAgeRanges());
+        }
+        return typical;
+    }
+    */
+
+    public static int getMintypicalagerange(OBAA o) {
+
+        int min = -1;
+
+        if (o.getEducational().getTypicalAgeRanges().size()>0
+                && o.getEducational() != null &&
+                o.getEducational().getTypicalAgeRanges() != null) {
+                        System.out.println("IdadeMinima");
+
+            String[] idades = o.getEducational().getTypicalAgeRanges().get(0).split("-");
+            //Adicionamos e removemos o espaco em branco que tem depois do digito de idade
+            min = Integer.parseInt(idades[0].substring(0, idades[0].length() - 1));
+        }
+
+        return min;
+    }
+
+    public static int getMaxtypicalagerange(OBAA o) {
+
+        int max = -1;
+
+        if (o.getEducational() != null &&
+                o.getEducational().getTypicalAgeRanges() != null
+                && !o.getEducational().getTypicalAgeRanges().isEmpty()) {
+            String[] idades = o.getEducational().getTypicalAgeRanges().get(0).split("-");
+            //Adicionamos e removemos o espaco em branco que tem antes e depois do digito de idade
+            idades[1] = idades[1].substring(1);
+            max = Integer.parseInt(idades[1].substring(0, idades[1].indexOf(" ")));
+        }
+
+        return max;
     }
 
     public static List<String> getDifficulty(OBAA o) {
