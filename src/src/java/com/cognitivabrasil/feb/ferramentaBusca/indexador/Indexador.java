@@ -5,7 +5,7 @@
  */
 package com.cognitivabrasil.feb.ferramentaBusca.indexador;
 
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.solr.main.Solr;
 import com.cognitivabrasil.feb.util.Operacoes;
@@ -59,7 +59,7 @@ public class Indexador {
            docDao.getSession().clear();
 */
         Pageable limit = new PageRequest(0, numMaxDoc);
-        Page<DocumentoReal> docs = docService.getlAll(limit);
+        Page<Document> docs = docService.getlAll(limit);
         s.indexarBancoDeDados(docs.getContent());
 
         while (docs.hasNextPage()) {

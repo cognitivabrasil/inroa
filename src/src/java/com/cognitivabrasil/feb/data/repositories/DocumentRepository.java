@@ -4,7 +4,7 @@
  */
 package com.cognitivabrasil.feb.data.repositories;
 
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 
 import java.util.List;
@@ -32,49 +32,49 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
  */
-public interface DocumentRepository extends JpaRepository<DocumentoReal, Integer> {
+public interface DocumentRepository extends JpaRepository<Document, Integer> {
 
-    public List<DocumentoReal> findByDeletedIsFalse();
+    public List<Document> findByDeletedIsFalse();
 
-    public Page<DocumentoReal> findByDeletedIsFalse(Pageable pageable);
+    public Page<Document> findByDeletedIsFalse(Pageable pageable);
 
-    public DocumentoReal findByObaaEntry(String entry);
+    public Document findByObaaEntry(String entry);
 
-    public DocumentoReal findById(int id);
+    public Document findById(int id);
 
     @Modifying
     @Transactional
-    @Query("delete from DocumentoReal d where d.repositorio = :repositorio")
+    @Query("delete from Document d where d.repositorio = :repositorio")
     int deleteByRepositorio(@Param("repositorio") Repositorio repositorio);
 
-    @Query("SELECT count(*) FROM DocumentoReal d WHERE deleted is false")
+    @Query("SELECT count(*) FROM Document d WHERE deleted is false")
     public long countDeletedFalse();
 
     //metodos para o OAI
     // Hack: we add one second to the date and use non-inclusive comparison for until, and 
     // use incluse queries for from, in this way we ignore fractions of seconds.
-    @Query("SELECT d FROM DocumentoReal d WHERE created >= ?1")
-    public Page<DocumentoReal> from(DateTime dateTime, Pageable p);
+    @Query("SELECT d FROM Document d WHERE created >= ?1")
+    public Page<Document> from(DateTime dateTime, Pageable p);
 
-    @Query("SELECT count(*) FROM DocumentoReal d WHERE created >= ?1")
+    @Query("SELECT count(*) FROM Document d WHERE created >= ?1")
     public Integer countFrom(DateTime dateTime);
 
-    @Query("SELECT d FROM DocumentoReal d WHERE created < ?1")
-    public Page<DocumentoReal> until(DateTime dateTime, Pageable p);
+    @Query("SELECT d FROM Document d WHERE created < ?1")
+    public Page<Document> until(DateTime dateTime, Pageable p);
 
-    @Query("SELECT count(*) FROM DocumentoReal d WHERE created < ?1")
+    @Query("SELECT count(*) FROM Document d WHERE created < ?1")
     public Integer countUntil(DateTime dateTime);
 
-    @Query("SELECT d FROM DocumentoReal d WHERE created >= ?1 AND created < ?2")
-    public Page<DocumentoReal> betweenInclusive(DateTime from, DateTime until, Pageable p);
+    @Query("SELECT d FROM Document d WHERE created >= ?1 AND created < ?2")
+    public Page<Document> betweenInclusive(DateTime from, DateTime until, Pageable p);
 
-    @Query("SELECT count(*) FROM DocumentoReal d WHERE created >= ?1 AND created < ?2")
+    @Query("SELECT count(*) FROM Document d WHERE created >= ?1 AND created < ?2")
     public Integer countBetweenInclusive(DateTime from, DateTime until);
 
-    @Query("SELECT d FROM DocumentoReal d")
-    public Page<DocumentoReal> all(Pageable pageable);
+    @Query("SELECT d FROM Document d")
+    public Page<Document> all(Pageable pageable);
 
-    @Query("SELECT count(*) FROM DocumentoReal d")
+    @Query("SELECT count(*) FROM Document d")
     public Integer countInt();
 
 }

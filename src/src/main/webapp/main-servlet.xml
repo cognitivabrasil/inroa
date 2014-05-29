@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-xmlns:p="http://www.springframework.org/schema/p"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns:mvc="http://www.springframework.org/schema/mvc"
- xmlns:context="http://www.springframework.org/schema/context"
-xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/feb.spring-beans-3.1.xsd 
-http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/feb.spring-mvc-3.1.xsd
-  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/feb.spring-context-3.1.xsd">
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
  
-    <context:component-scan base-package="feb.spring"/>
+    <context:component-scan base-package="com.cognitivabrasil.feb.spring"/>
  
     <mvc:resources mapping="/css/**" location="/css/" />
     <mvc:resources mapping="/imagens/**" location="/imagens/" />
@@ -20,32 +20,11 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
     <mvc:annotation-driven/>
     
     <!-- TODO: use inversion of control instead of this !-->
-    <bean id="applicationContextProvider" class="feb.spring.ApplicationContextProvider"></bean>
-
-<!--<bean name="/feb/*"
-class="feb.spring.FEBController"/>-->
-
-<!-- TODO: Use properties
-    TODO: Encrypt password
-    <bean id="dataSource"
-class="org.apache.commons.dbcp.BasicDataSource"
-destroy-method="close"
-p:driverClassName="${dataSource.driverClassName}"
-p:url="${dataSource.url}"
-p:username="${dataSource.username}"
-p:password="${dataSource.password}" /> -->
-
-    <bean id="dataSource"
-class="org.apache.commons.dbcp.BasicDataSource"
-destroy-method="close"
-p:driverClassName="org.postgresql.Driver"
-p:url="jdbc:postgresql://127.0.0.1:5432/federacao"
-p:username="feb"
-p:password="feb@RNP" />
-
+    <bean id="applicationContextProvider" class="com.cognitivabrasil.feb.spring.ApplicationContextProvider"></bean>
 
     
+    
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-p:prefix="/"
-p:suffix=".jsp"/>
+          p:prefix="/"
+          p:suffix=".jsp"/>
 </beans>

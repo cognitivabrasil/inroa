@@ -46,7 +46,7 @@
     </head>
 
     <body>
-        <jsp:useBean id="operacoesBean" class="feb.util.Operacoes"
+        <jsp:useBean id="operacoesBean" class="com.cognitivabrasil.feb.util.Operacoes"
                      scope="page" />
 
         <div id="page">

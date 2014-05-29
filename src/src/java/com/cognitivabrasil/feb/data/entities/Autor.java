@@ -8,13 +8,13 @@ public class Autor {
 
     private int id;
     private String nome;
-    private DocumentoReal doc;
+    private Document doc;
 
-    public DocumentoReal getDoc() {
+    public Document getDoc() {
         return doc;
     }
 
-    public void setDoc(DocumentoReal doc) {
+    public void setDoc(Document doc) {
         this.doc = doc;
     }
 

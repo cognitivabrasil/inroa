@@ -7,7 +7,7 @@ package com.cognitivabrasil.feb.data.services;
 
 import ORG.oclc.oai.server.catalog.OaiDocumentService;
 import cognitivabrasil.obaa.OBAA;
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
@@ -38,24 +38,24 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
     private static final Logger log = Logger.getLogger(DocumentServiceImpl.class);
 
     @Override
-    public DocumentoReal get(String e) {
+    public Document get(String e) {
         return docRep.findByObaaEntry(e);
     }
 
     @Override
-    public DocumentoReal get(int i) {
+    public Document get(int i) {
         return docRep.findById(i);
     }
     
     @Override
-    public void delete(DocumentoReal d) {
+    public void delete(Document d) {
         docRep.delete(d);
     }
     
      @Override
     public void save(OBAA obaa, Header h, SubFederacao federation)
             throws IllegalStateException {
-        DocumentoReal doc = new DocumentoReal();
+        Document doc = new Document();
         log.trace("Going to create documento " + h.getIdentifier());
 
         log.debug("Armazenando objeto do tipo RepositorioSubFed");
@@ -75,7 +75,7 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
 
     @Override
     public void save(OBAA obaa, Header h, Repositorio r) {
-        DocumentoReal doc = new DocumentoReal();
+        Document doc = new Document();
         log.trace("Going to create documento " + h.getIdentifier());
 
         doc.setRepositorio(r);
@@ -84,12 +84,12 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
     }
 
     @Override
-    public List<DocumentoReal> getAll() {
+    public List<Document> getAll() {
         return docRep.findByDeletedIsFalse();
     }
 
     @Override
-    public Page<DocumentoReal> getlAll(Pageable pageable) {
+    public Page<Document> getlAll(Pageable pageable) {
         return docRep.findByDeletedIsFalse(pageable);
     }
 
@@ -108,15 +108,16 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
      *
      * @param obaa OBAA object
      * @param h OAI-PMH header
-     * @param doc a newly initialized DocumentoReal, should have either a
-     * Repsitory or a RepSubFed set.
+     * @param doc a newly initialized Document, should have either a
+ Repsitory or a RepSubFed set.
      */
-    private void save(OBAA obaa, Header h, DocumentoReal doc) {
+    private void save(OBAA obaa, Header h, Document doc) {
         doc.setDeleted(false);
         doc.setObaaEntry(h.getIdentifier());
 
-        DocumentoReal real = getWithoutId(doc);
-        real.setCreated(new DateTime(h.getTimestamp()));
+        Document real = getWithoutId(doc);
+        DateTime hTimestamp = new DateTime(h.getTimestamp());
+        real.setCreated(hTimestamp);
 
         try {
             if (h.isDeleted()) {
@@ -136,10 +137,10 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
         }
     }
 
-    private DocumentoReal getWithoutId(DocumentoReal doc) {
+    private Document getWithoutId(Document doc) {
 
         if (!doc.getObaaEntry().isEmpty()) {
-            DocumentoReal d = docRep.findByObaaEntry(doc.getObaaEntry());
+            Document d = docRep.findByObaaEntry(doc.getObaaEntry());
             if (d != null) {
                 return d;
             }

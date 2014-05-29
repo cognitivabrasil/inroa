@@ -1,7 +1,7 @@
 package com.cognitivabrasil.feb.ferramentaBusca;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
 import java.sql.SQLException;
@@ -31,9 +31,9 @@ public class Recuperador {
      * @param consulta Consulta efetuada (obvio....)
      * @return Lista de documentos reais que correspondem ao resultado da busca
      */
-    public List<DocumentoReal> busca(Consulta consulta) {
+    public List<Document> busca(Consulta consulta) {
 
-        List<DocumentoReal> resultadoConsulta;
+        List<Document> resultadoConsulta;
 
         if (consulta.isRss()) {
 
@@ -63,9 +63,9 @@ public class Recuperador {
      * @param consulta Consulta realizada
      * @return Lista de documentos reais que correspondem ao resultado da busca
      */
-    public List<DocumentoReal> buscaAvancada(Consulta consulta) {
+    public List<Document> buscaAvancada(Consulta consulta) {
 
-        List<DocumentoReal> resultadoConsulta;
+        List<Document> resultadoConsulta;
 
         if (consulta.isRss()) {
 

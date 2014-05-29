@@ -618,7 +618,7 @@ src/solr/webapps/solr.war -text
 src/src/conf/MANIFEST.MF -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Autor.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Consulta.java -text
-src/src/java/com/cognitivabrasil/feb/data/entities/DocumentoReal.java -text
+src/src/java/com/cognitivabrasil/feb/data/entities/Document.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Mapeamento.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/PadraoMetadados.java -text
 src/src/java/com/cognitivabrasil/feb/data/entities/Repositorio.java -text
@@ -652,8 +652,6 @@ src/src/java/com/cognitivabrasil/feb/data/services/SearchService.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/SearchServiceImpl.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/TagCloudService.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/TagCloudServiceImpl.java -text
-src/src/java/com/cognitivabrasil/feb/data/services/UserActionLogger.java -text
-src/src/java/com/cognitivabrasil/feb/data/services/UserActionLoggerImpl.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/UserService.java -text
 src/src/java/com/cognitivabrasil/feb/data/services/UserServiceImpl.java -text
 src/src/java/com/cognitivabrasil/feb/exceptions/FederationException.java -text
@@ -925,6 +923,7 @@ src/src/test/java/com/cognitivabrasil/feb/data/entities/DocumentoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/RepositorioTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/SubFederacaoTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/entities/UsuarioTest.java -text
+src/src/test/java/com/cognitivabrasil/feb/data/repositories/DocumentRepositoryIt.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/services/DocumentServiceIT.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/services/MapeamentoHibernateDaoIT.java -text
 src/src/test/java/com/cognitivabrasil/feb/data/services/PadraoMetadadosHibernateDaoIT.java -text
@@ -948,7 +947,6 @@ src/src/test/java/com/cognitivabrasil/feb/robo/atualiza/subfedOAI/SubRepositorio
 src/src/test/java/com/cognitivabrasil/feb/services/TagCloudImplTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/solr/SolrTest.java -text
 src/src/test/java/com/cognitivabrasil/feb/spring/FebConfigIT.java -text
-src/src/test/java/com/cognitivabrasil/feb/spring/UserLoggerIT.java -text
 src/src/test/java/com/cognitivabrasil/feb/util/OperacoesTest.java -text
 src/src/test/resources/FEB-fiocruz2.xml -text
 src/src/test/resources/FEB-fiocruz3.xml -text

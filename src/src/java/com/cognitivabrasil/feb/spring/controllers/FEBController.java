@@ -1,7 +1,7 @@
 package com.cognitivabrasil.feb.spring.controllers;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
@@ -9,7 +9,6 @@ import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
 import com.cognitivabrasil.feb.data.services.TagCloudService;
-import com.cognitivabrasil.feb.solr.main.Solr;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -60,14 +59,6 @@ public final class FEBController {
         buscaValidator = new BuscaValidator();
     }
 
-    @RequestMapping("/testsolr")
-    public String testSolr() {
-        List<DocumentoReal> docs = docDao.getAll();
-        Solr s = new Solr();
-        s.indexarBancoDeDados(docs);
-        return "redirect:/";
-    }
-
     @RequestMapping("/")
     public String inicio(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
         return index(model, response, request, cookie);
@@ -94,7 +85,7 @@ public final class FEBController {
     }
 
     /**
-     * Se o usuário tentar a cessar /feb/objetos ele redireciona para o index
+     * Se o usuário tentar acessar /feb/objetos ele redireciona para o index
      *
      * @return redireciona para o /
      */
@@ -113,7 +104,7 @@ public final class FEBController {
     @RequestMapping("/objetos/{id}")
     public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie)
             throws IOException {
-        DocumentoReal d = docDao.get(id);
+        Document d = docDao.get(id);
         if (d == null) {
             response.setStatus(404);
             log.warn("O id " + id + " solicitado não existe!");
@@ -140,7 +131,7 @@ public final class FEBController {
     @RequestMapping("/objetos/{id}/json")
     public @ResponseBody
     String getJson(@PathVariable Integer id){
-        DocumentoReal d = docDao.get(id);
+        Document d = docDao.get(id);
         d.getMetadata().setLocale("pt-BR");
         return d.getMetadata().getJson();
     }
@@ -166,7 +157,7 @@ public final class FEBController {
                 }
 
                 Recuperador rec = new Recuperador();
-                List<DocumentoReal> docs = rec.busca(consulta);
+                List<Document> docs = rec.busca(consulta);
                 log.trace("Carregou " + docs.size() + " documentos.");
                 model.addAttribute("documentos", docs);
 
@@ -213,7 +204,7 @@ public final class FEBController {
         } else {
             try {
                 Recuperador rec = new Recuperador();
-                List<DocumentoReal> docs = rec.buscaAvancada(consulta);
+                List<Document> docs = rec.buscaAvancada(consulta);
                 model.addAttribute("documentos", docs);
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
@@ -316,7 +307,7 @@ public final class FEBController {
                 if (autor != null) {
                     c.setAutor(autor);
                 }
-                List<DocumentoReal> docs = rep.busca(c);
+                List<Document> docs = rep.busca(c);
 
                 xml += "<ListRecords "
                         + "query=\"" + c.getConsulta() + "\" ";
@@ -326,7 +317,7 @@ public final class FEBController {
                 xml += "limit=\"" + c.getLimit() + "\" "
                         + "offset=\"" + c.getOffset() + "\" >";
 
-                for (DocumentoReal doc : docs) {
+                for (Document doc : docs) {
                     xml += "<document><metadata>"
                             + doc.getObaaXml()
                             + "</metadata></document>";

@@ -32,7 +32,7 @@ public class RepositorioSubFed implements SubNodo{
     private int id;
     private String name;
     private SubFederacao subFederacao;
-    private Set<DocumentoReal> documentos;
+    private Set<Document> documentos;
     private transient SessionFactory sessionFactory;
     private transient Session session;
 
@@ -69,7 +69,7 @@ public class RepositorioSubFed implements SubNodo{
     @Transient
     @Override
     public Integer getSize() {
-        return DataAccessUtils.intResult(getSession().createQuery("select count(*) from DocumentoReal doc WHERE doc.repositorioSubFed = :rep AND doc.deleted = :deleted").
+        return DataAccessUtils.intResult(getSession().createQuery("select count(*) from Document doc WHERE doc.repositorioSubFed = :rep AND doc.deleted = :deleted").
                 setParameter("rep", this).setParameter("deleted", false).list());
     }
 
@@ -109,20 +109,20 @@ public class RepositorioSubFed implements SubNodo{
      */
     
     @OneToMany(mappedBy = "repositorioSubFed", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<DocumentoReal> getDocumentos() {
+    public Set<Document> getDocumentos() {
         return documentos;
     }
 
     /**
      * @param documentos the documentos to set
      */
-    public void setDocumentos(Set<DocumentoReal> documentos) {
+    public void setDocumentos(Set<Document> documentos) {
         this.documentos = documentos;
     }
     
         
     /**
-     * Delete all DocumentoReal from this Repositorio. 
+     * Delete all Document from this Repositorio. 
      * 
      * This is mainly used to reset a repository, e.g., when the user manually
      * chooses to do so in the interface.
@@ -132,7 +132,7 @@ public class RepositorioSubFed implements SubNodo{
      */
     public int dellAllDocs() {
         //TODO: nao teria só que trocar o deleted pra true? Pq ta deletando tudo da base.
-        String hql = "delete from DocumentoReal as d WHERE d.repositorioSubFed = :rep";
+        String hql = "delete from Document as d WHERE d.repositorioSubFed = :rep";
         Query query = getSession().createQuery(hql);
         query.setParameter("rep", this);
         return query.executeUpdate();

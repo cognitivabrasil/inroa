@@ -18,7 +18,7 @@
     <!--
     <set name="repositorios" table="repositorios">
       <key column="padrao_metadados"/>
-      <one-to-many class="feb.data.entities.Repositorio"/>
+      <one-to-many class="com.cognitivabrasil.feb.data.entities.Repositorio"/>
     </set>
     -->
   </class>

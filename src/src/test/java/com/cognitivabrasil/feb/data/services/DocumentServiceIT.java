@@ -26,12 +26,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -101,14 +102,14 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
     @Test
     public void testGet() {
-        DocumentoReal d = docService.get(1);
+        Document d = docService.get(1);
         assertEquals("oai:cesta2.cinted.ufrgs.br:123456789/57", d.getObaaEntry());
         assertEquals("Cesta", d.getRepositorio().getName());
     }
 
     @Test
     public void testGetByObaaEntry() {
-        DocumentoReal d = docService.get("dois");
+        Document d = docService.get("dois");
         assertThat(d, notNullValue());
         assertEquals(2, d.getId());
 
@@ -116,7 +117,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
     @Test
     public void testDelete() {
-        DocumentoReal d = docService.get(1);
+        Document d = docService.get(1);
         assertThat(d, notNullValue());
         assertEquals(6, docService.getAll().size());
 
@@ -150,7 +151,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
         docService.save(obaa, h, r);
 
-        DocumentoReal d = docService.get("obaa:identifier");
+        Document d = docService.get("obaa:identifier");
         assertThat(d, notNullValue());
         assertThat(d.getKeywords(), hasItem("key1"));
         assertThat(d.getTitles(), hasItem("teste2"));
@@ -181,7 +182,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
         docService.save(obaa, h, r);
 
-        DocumentoReal d = docService.get("obaa:identifier");
+        Document d = docService.get("obaa:identifier");
         assertThat(d, notNullValue());
 
         assertThat("Should return metadata", d.getMetadata(), notNullValue());
@@ -216,7 +217,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
         int oldSize = docService.getAll().size();
         docService.save(obaa, h, r);
 
-        DocumentoReal d = docService.get("obaa:identifier");
+        Document d = docService.get("obaa:identifier");
 
         assertThat(docService.getAll().size(), equalTo(oldSize));
 
@@ -248,7 +249,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
         docService.save(obaa, h, r);
 
         long finalNumberDocs = docService.getSizeWithDeleted();
-        DocumentoReal d = docService.get("obaa:identifier");
+        Document d = docService.get("obaa:identifier");
         assertThat(d, notNullValue());
         assertThat(d.getTitles(), hasItem("teste1"));
         assertThat(d.getRepositorioSubFed(), notNullValue());
@@ -272,7 +273,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
         docService.save(obaa, h, r);
 
-        DocumentoReal d = docService.get("dois");
+        Document d = docService.get("dois");
         assertThat(d, notNullValue());
         assertEquals(d.isDeleted(), true);
 
@@ -292,7 +293,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
     @Test
     public void testGetAllPaginated() {
-        List<DocumentoReal> docs = docService.getlAll(new PageRequest(0, 2)).getContent();
+        List<Document> docs = docService.getlAll(new PageRequest(0, 2)).getContent();
         assertThat(docs.size(), equalTo(2));
         assertThat(docs.get(0).getId(), equalTo(1));
         assertThat(docs.get(1).getId(), equalTo(2));
@@ -300,18 +301,18 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
     @Test
     public void testGetAllPaginated2() {
-        List<DocumentoReal> modelDoc = docService.getAll();
+        List<Document> modelDoc = docService.getAll();
         List<Integer> ids = new ArrayList<>();
 
         Pageable limit = new PageRequest(0, 2);
-        Page<DocumentoReal> docs = docService.getlAll(limit);
-        for (DocumentoReal doc : docs.getContent()) {
+        Page<Document> docs = docService.getlAll(limit);
+        for (Document doc : docs.getContent()) {
             ids.add(doc.getId());
         }
 
         while (docs.hasNextPage()) {
             docs = docService.getlAll(docs.nextPageable());
-            for (DocumentoReal doc : docs.getContent()) {
+            for (Document doc : docs.getContent()) {
                 ids.add(doc.getId());
             }
             em.clear();
@@ -319,7 +320,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
         
         assertThat(modelDoc.size(), equalTo(ids.size()));
         
-        for (DocumentoReal doc : modelDoc) {
+        for (Document doc : modelDoc) {
             assertThat(ids.contains(doc.getId()), equalTo(true));
         }
     }
@@ -338,5 +339,19 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
 
         assertThat("Size of Cesta after deletion", docService.getAll().size(), equalTo(sizeAllBefore - sizeCestaWithoutDeleted));   
     }
-
+    
+    @Test
+    public void testSaveCreated(){
+        Date created = new Date(461905200000L);
+        Repositorio r = repDao.get(1);
+        Header h = mock(Header.class);
+        when(h.getTimestamp()).thenReturn(created);
+        when(h.getIdentifier()).thenReturn("marcos");
+        
+        docService.save(new OBAA(), h, r);
+        
+        Document doc = docService.get("marcos");
+        assertThat(doc.getCreated(), equalTo(new DateTime(1984, 8, 21, 0, 0)));
+        
+    }
 }

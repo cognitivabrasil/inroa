@@ -11,7 +11,7 @@ package com.cognitivabrasil.feb.data.entities;
 public class ResultadoConsulta {
     
     private Consulta consulta;
-    private DocumentoReal documento;
+    private Document documento;
 
     public Consulta getConsulta() {
         return consulta;
@@ -21,11 +21,11 @@ public class ResultadoConsulta {
         this.consulta = consulta;
     }
 
-    public DocumentoReal getDocumento() {
+    public Document getDocumento() {
         return documento;
     }
 
-    public void setDocumento(DocumentoReal documento) {
+    public void setDocumento(Document documento) {
         this.documento = documento;
     }
     

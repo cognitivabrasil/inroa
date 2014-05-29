@@ -10,27 +10,24 @@
              xmlns:util="http://www.springframework.org/schema/util"
              xmlns:encryption="http://www.jasypt.org/schema/encryption"
              xmlns:task="http://www.springframework.org/schema/task"
-             xmlns:aop="http://www.springframework.org/schema/aop"
              xsi:schemaLocation="http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/context
-                http://www.springframework.org/schema/context/spring-context.xsd
+                http://www.springframework.org/schema/context/spring-context-4.0.xsd
                 http://www.springframework.org/schema/tx
                 http://www.springframework.org/schema/tx/spring-tx.xsd
                 http://www.springframework.org/schema/data/jpa
-                http://www.springframework.org/schema/data/jpa/spring-jpa-1.2.xsd
+                http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
                 http://www.springframework.org/schema/jdbc
                 http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
                 http://www.springframework.org/schema/security
-                http://www.springframework.org/schema/security/spring-security-3.1.xsd
+                http://www.springframework.org/schema/security/spring-security-3.2.xsd
                 http://www.springframework.org/schema/util
-                http://www.springframework.org/schema/util/spring-util-3.2.xsd
+                http://www.springframework.org/schema/util/spring-util-4.0.xsd
                 http://www.jasypt.org/schema/encryption
                 http://www.jasypt.org/schema/encryption/jasypt-spring31-encryption-1.xsd
                 http://www.springframework.org/schema/task
-                http://www.springframework.org/schema/task/spring-task-3.1.xsd
-                http://www.springframework.org/schema/aop 
-                http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+                http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 		
     <beans profile="prod">
         
@@ -58,14 +55,7 @@
                 </props>
             </property>
         </beans:bean>
-        
-        <beans:bean id="febConfig" class="com.cognitivabrasil.feb.spring.FebConfig">
-            <property name="filename">
-                <value>/etc/feb/feb.properties</value>
-            </property>
-            <property name="defaultProperties" ref="defaultProperties" />
-        </beans:bean>
-        
+                
         <!--Inicio Inicializar o Robo -->
         <bean id="robo" class="com.cognitivabrasil.feb.robo.main.Robo" />
         <task:scheduler id="myScheduler" pool-size="1" />
@@ -73,12 +63,7 @@
             <task:scheduled ref="robo" method="testaUltimaImportacao" cron="0 0 2 * * *" />
         </task:scheduled-tasks>
         <!--Fim Inicializar o Robo -->
-        
-        <bean id="myAspect" class="com.cognitivabrasil.feb.spring.aspects.FebLoggerAspect" />
-        <aop:aspectj-autoproxy proxy-target-class="true">
-            <aop:include name="myAspect" />
-        </aop:aspectj-autoproxy>
-
+                
     </beans>
     <beans profile="test,it">
         
@@ -116,7 +101,7 @@
             <property name="defaultProperties" ref="defaultProperties" />
         </bean>
         
-        <bean id="userActionLogger" class="com.cognitivabrasil.feb.data.services.UserActionLoggerImpl"/>
+        
     </beans> 
     
     <beans profile="prod,test,it">
@@ -170,7 +155,13 @@
         <bean id="repositorios" class="com.cognitivabrasil.feb.robo.atualiza.Repositorios" />
         <bean id="subf" class="com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI" />
         <bean id="Indexador" class="com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador"/>
-        
+        <beans:bean id="febConfig" class="com.cognitivabrasil.feb.spring.FebConfig">
+            <property name="filename">
+                <value>/etc/feb/feb.properties</value>
+            </property>
+            <property name="defaultProperties" ref="defaultProperties" />
+        </beans:bean>
+
     </beans>
     
 </beans:beans>

@@ -4,7 +4,7 @@ import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Technical;
 import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,14 +126,14 @@ public class QuerySolr {
      * Transoforma a resposta fornecida pelo SOLR em Documentos Reais
      *
      * @param start Posicao do primeiro resultado da busca a ser transformado em
-     * DocumentoReal
+ Document
      * @param offset Numero de resultados da busca a ser transformado em
-     * DocumentoReal
+ Document
      * @return Lista de DocumentosReais construida a partir da busca.
      */
-    public List<DocumentoReal> getDocumentosReais(int start, int offset) {
+    public List<Document> getDocumentosReais(int start, int offset) {
 
-        List<DocumentoReal> retorno = new ArrayList<DocumentoReal>();
+        List<Document> retorno = new ArrayList<Document>();
         SolrDocumentList list = queryResponse.getResults();
 
         for (int i = 0; i < offset && i < list.size(); i++) {
@@ -141,7 +141,7 @@ public class QuerySolr {
             //O valor de numDoc eh o documento a ser apresentado
             int numDoc = i;
 
-            DocumentoReal doc = new DocumentoReal();
+            Document doc = new Document();
             OBAA obaa = new OBAA();
             try{
                 obaa = doc.getMetadata();

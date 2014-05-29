@@ -9,6 +9,6 @@
       </generator>
     </id>
     <property column="nome" name="nome" type="string"/>
-    <many-to-one class="com.cognitivabrasil.feb.data.entities.DocumentoReal" column="documento" name="doc"/>
+    <many-to-one class="com.cognitivabrasil.feb.data.entities.Document" column="documento" name="doc"/>
   </class>
 </hibernate-mapping>

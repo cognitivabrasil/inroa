@@ -16,7 +16,7 @@ import com.sun.syndication.feed.rss.Image;
 import com.sun.syndication.feed.rss.Item;
 
 import com.cognitivabrasil.feb.data.entities.Autor;
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 
 public class DocumentsRssViewer extends AbstractRssFeedView {
 	
@@ -36,7 +36,7 @@ public class DocumentsRssViewer extends AbstractRssFeedView {
 	    return url.toString();
 	}
 	
-	private static String getDocLink(DocumentoReal d, HttpServletRequest req) {		    
+	private static String getDocLink(Document d, HttpServletRequest req) {		    
 		    return getBaseUrl(req) + "/objetos/" + d.getId();
 	}
 
@@ -60,11 +60,11 @@ public class DocumentsRssViewer extends AbstractRssFeedView {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		@SuppressWarnings("unchecked")
-		List<DocumentoReal> listContent = (List<DocumentoReal>) model
+		List<Document> listContent = (List<Document>) model
 				.get("feedContent");
 		List<Item> items = new ArrayList<Item>(listContent.size());
 
-		for (DocumentoReal doc : listContent) {
+		for (Document doc : listContent) {
 
 			Item item = new Item();
 

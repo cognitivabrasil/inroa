@@ -49,7 +49,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     private String descricao;
     private String url;
     private String metadataPrefix;
-    private transient Set<DocumentoReal> documentos;
+    private transient Set<Document> documentos;
     @DateTimeFormat(style = "M-")
     private DateTime ultimaAtualizacao;
     private String namespace;
@@ -115,14 +115,14 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
      * @return the documentos
      */
     @OneToMany(mappedBy = "repositorio", cascade = CascadeType.ALL, orphanRemoval = true)
-    public Set<DocumentoReal> getDocumentos() {
+    public Set<Document> getDocumentos() {
         return documentos;
     }
 
     /**
      * @param documentos the documentos to set
      */
-    public void setDocumentos(Set<DocumentoReal> documentos) {
+    public void setDocumentos(Set<Document> documentos) {
         this.documentos = documentos;
     }
 
@@ -142,7 +142,7 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     //TODO: mover isso aqui para o Service
     public Integer getSize() {
         return DataAccessUtils.intResult(getSession().createQuery(
-                "select count(*) from DocumentoReal doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").setParameter("rep", this).setParameter("deleted", false).list());
+                "select count(*) from Document doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").setParameter("rep", this).setParameter("deleted", false).list());
     }
 
 
@@ -432,7 +432,6 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
             try {
                 session = getSessionFactory().getCurrentSession();
             } catch (HibernateException e) {
-                log.warn("Could not getCurrentSession()!", e);
                 session = getSessionFactory().openSession();
             }
         }

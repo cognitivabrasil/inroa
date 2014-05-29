@@ -129,7 +129,7 @@ public class FebConfig {
 				s.close();
 			}
 		} catch (IOException e) {
-			logger.warn("Config file is missing, using defaults");
+			logger.warn("Config file is missing, using defaults.");
 		}
 		host = properties.getProperty("Postgres.host");
 		port = Integer.parseInt(properties.getProperty("Postgres.port"));

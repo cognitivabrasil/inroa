@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
  
 @Controller
@@ -22,7 +22,7 @@ public class RssController {
         Recuperador rec = new Recuperador();
         
         consulta.setRss(true);
-        List<DocumentoReal> items = rec.busca(consulta);
+        List<Document> items = rec.busca(consulta);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("rssViewer");

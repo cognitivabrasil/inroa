@@ -11,7 +11,7 @@
     <many-to-one class="com.cognitivabrasil.feb.data.entities.SubFederacao" column="id_subfed" name="subFederacao" not-null="true"/>
     <set cascade="all-delete-orphan" inverse="true" name="documentos" table="documentos">
       <key column="id_rep_subfed"/>
-      <one-to-many class="com.cognitivabrasil.feb.data.entities.DocumentoReal"/>
+      <one-to-many class="com.cognitivabrasil.feb.data.entities.Document"/>
     </set>
   </class>
 </hibernate-mapping>

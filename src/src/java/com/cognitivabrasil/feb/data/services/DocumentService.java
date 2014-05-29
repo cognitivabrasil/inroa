@@ -1,7 +1,7 @@
 package com.cognitivabrasil.feb.data.services;
 
 import cognitivabrasil.obaa.OBAA;
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import java.util.List;
@@ -26,7 +26,7 @@ public interface DocumentService {
      * @param obaaEntry the obaa entry
      * @return the document with the corresponding obaaEntry
      */
-    DocumentoReal get(String obaaEntry);
+    Document get(String obaaEntry);
     
     /**
      * Gets the document by ID.
@@ -34,14 +34,14 @@ public interface DocumentService {
      * @param i the Id
      * @return the Document with the corresponding ID.
      */
-    DocumentoReal get(int i);
+    Document get(int i);
 
     /**
      * Delete a document.
      *
      * @param d the document to be deleted.
      */
-    void delete(DocumentoReal d);
+    void delete(Document d);
     
     /**
      * Deletes all documents from the repository entered.
@@ -75,7 +75,7 @@ public interface DocumentService {
      *
      * @return All the documents
      */
-    List<DocumentoReal> getAll();
+    List<Document> getAll();
     
     /**
      * Returns all documents within the range set in Paggeable. 
@@ -84,7 +84,7 @@ public interface DocumentService {
      * @param pageable Object Pageable with information about limit and offset
      * @return All documents within this range
      */
-    Page<DocumentoReal> getlAll(Pageable pageable);
+    Page<Document> getlAll(Pageable pageable);
 
     /**
      * Get the number of documents

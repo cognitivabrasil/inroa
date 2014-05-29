@@ -13,7 +13,7 @@ public class DocumentoTest {
 
 	@Test
 	public void testXmlDeserialization() throws IOException {
-		DocumentoReal d = new DocumentoReal();
+		Document d = new Document();
 		
 		String obaaXml = FileUtils.readFileToString(new File("src/test/resources/metadata/obaa1.xml"),"UTF-8");
 		
@@ -30,7 +30,7 @@ public class DocumentoTest {
 	 */
 	@Test(expected=IllegalStateException.class)
 	public void testThrowsException() {
-		DocumentoReal d = new DocumentoReal();
+		Document d = new Document();
 		
 		d.getMetadata();
 	}

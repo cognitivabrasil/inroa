@@ -22,7 +22,7 @@
     <many-to-one class="com.cognitivabrasil.feb.data.entities.Mapeamento" column="mapeamento_id" fetch="join" name="mapeamento"/>
     <set cascade="save-update" inverse="true" name="documentos" table="documentos">
       <key column="id_repositorio"/>
-      <one-to-many class="com.cognitivabrasil.feb.data.entities.DocumentoReal"/>
+      <one-to-many class="com.cognitivabrasil.feb.data.entities.Document"/>
     </set>
   </class>
 </hibernate-mapping>

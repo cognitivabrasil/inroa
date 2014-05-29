@@ -1,7 +1,7 @@
 package com.cognitivabrasil.feb.solr.main;
 
 import cognitivabrasil.obaa.OBAA;
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.solr.indexar.IndexarDados;
 import com.cognitivabrasil.feb.solr.converter.Converter;
 import org.apache.log4j.Logger;
@@ -30,8 +30,8 @@ public class Solr {
 
     }
 
-    public void memoryLeakTest(List<DocumentoReal> docs) {
-        for (DocumentoReal doc : docs) {
+    public void memoryLeakTest(List<Document> docs) {
+        for (Document doc : docs) {
 
             OBAA o = doc.getMetadata();
             if (o.getGeneral() == null) {
@@ -48,11 +48,11 @@ public class Solr {
      *
      * @param docs Lista de documentos reais a serem indexados
      */
-    public void indexarBancoDeDados(List<DocumentoReal> docs) {
+    public void indexarBancoDeDados(List<Document> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
         
         log.debug("Convertendo obaaXML em SolrXML: Numero de objetos a serem convertidos: " + docs.size());
-        for (DocumentoReal doc : docs) {
+        for (Document doc : docs) {
             String entry = "";
             try {
                 entry = doc.getObaaEntry();

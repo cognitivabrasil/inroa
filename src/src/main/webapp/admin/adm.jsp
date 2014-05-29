@@ -9,7 +9,7 @@ Author     : Marcos Nunes
 <%@ taglib prefix="feb.spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<%@page import="feb.util.Operacoes"%>
+<%@page import="com.cognitivabrasil.feb.util.Operacoes"%>
 <c:url var="root" value="/" />
 
 

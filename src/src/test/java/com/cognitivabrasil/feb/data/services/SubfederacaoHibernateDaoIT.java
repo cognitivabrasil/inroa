@@ -4,7 +4,7 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
-import com.cognitivabrasil.feb.data.entities.DocumentoReal;
+import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import java.util.ArrayList;
