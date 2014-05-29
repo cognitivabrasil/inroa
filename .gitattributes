@@ -694,7 +694,6 @@ src/src/java/com/cognitivabrasil/feb/solr/query/CriaQuery.java -text
 src/src/java/com/cognitivabrasil/feb/solr/query/QuerySolr.java -text
 src/src/java/com/cognitivabrasil/feb/spring/ApplicationContextProvider.java -text
 src/src/java/com/cognitivabrasil/feb/spring/FebConfig.java -text
-src/src/java/com/cognitivabrasil/feb/spring/aspects/FebLoggerAspect.java -text
 src/src/java/com/cognitivabrasil/feb/spring/controllers/AdminController.java -text
 src/src/java/com/cognitivabrasil/feb/spring/controllers/FEBController.java -text
 src/src/java/com/cognitivabrasil/feb/spring/controllers/FederationsController.java -text
