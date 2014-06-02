@@ -36,7 +36,7 @@ public class CriaQuery {
             resultado += " AND obaa.accessibility.resourcedescription.primary.hastext:(" + pesquisa.getHasText() + ")";
         }
 
-        if (pesquisa.getHasTactile()) {
+        if (pesquisa.getHasTactile() != null) {
             resultado += " AND obaa.accessibility.resourcedescription.primary.hastactile:(" + pesquisa.getHasTactile() + ")";
         }
 

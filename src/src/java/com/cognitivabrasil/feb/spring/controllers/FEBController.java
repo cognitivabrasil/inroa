@@ -214,7 +214,7 @@ public final class FEBController {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
                 log.error("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "
-                        + e.toString());
+                        + e);
                 return "buscaAvancada";
             }
         }

@@ -37,7 +37,7 @@ public class Consulta {
     public Boolean hasVisual;
     public Boolean hasAuditory;
     public Boolean hasText;
-    public boolean hasTactile;
+    public Boolean hasTactile;
     public String size;
     private final Map<String, String> languages;
     private static final Logger log = Logger.getLogger(Consulta.class);
@@ -60,7 +60,7 @@ public class Consulta {
         return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
                 && isBlank(format) && isBlank(ageRange) && adultAge == null && isBlank(difficult)
                 && isBlank(size) && cost == null && hasVisual == null
-                && hasAuditory == null && hasText == null;
+                && hasAuditory == null && hasText == null && hasTactile == null;
     }
 
     public String getConsulta() {
