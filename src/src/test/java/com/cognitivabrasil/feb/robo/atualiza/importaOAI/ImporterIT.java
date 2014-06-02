@@ -39,7 +39,7 @@ import org.junit.Ignore;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners(DependencyInjectionTestExecutionListener.class)
-public class ImporterTest {
+public class ImporterIT {
 
     /**
      * Tests that the importer is converting the file and calling the correct

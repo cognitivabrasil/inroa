@@ -30,7 +30,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
-public class ImporterTestIT extends AbstractTransactionalJUnit4SpringContextTests {
+public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private FederationService subFedDao;

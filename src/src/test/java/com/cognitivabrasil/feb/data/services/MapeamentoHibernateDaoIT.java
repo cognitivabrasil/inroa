@@ -28,7 +28,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class MapeamentoHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -85,7 +85,5 @@ public class MapeamentoHibernateDaoIT extends AbstractTransactionalJUnit4SpringC
 
         List<Mapeamento> m3 = instance.getAll();
         assertEquals(3, m3.size());
-
     }
-
 }

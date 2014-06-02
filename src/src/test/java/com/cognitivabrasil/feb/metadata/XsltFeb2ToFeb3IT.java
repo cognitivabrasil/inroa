@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.*;
  *
  * @author paulo
  */
-public class XsltFeb2ToFeb3Test {
+public class XsltFeb2ToFeb3IT {
 
     OaiOBAA oai;
 

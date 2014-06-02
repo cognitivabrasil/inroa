@@ -30,7 +30,7 @@ public class TagCloudServiceImpl implements TagCloudService {
 
     @Override
     public Map<String, Integer> getTagCloud() {
-        Map<String, Integer> m = new TreeMap<String, Integer>();
+        Map<String, Integer> m = new TreeMap<>();
 
 
         List<Search> l = searches.getSearches(getMaxSize(), getDate());

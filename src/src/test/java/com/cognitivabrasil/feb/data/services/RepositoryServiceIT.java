@@ -12,7 +12,6 @@ import javax.persistence.PersistenceContext;
 import static org.hamcrest.Matchers.*;
 import org.joda.time.DateTime;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
@@ -92,24 +91,24 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
     @Test
     public void testDelete() {
         int sizeBefore = repDao.getAll().size();
-        
-        Repositorio cesta = repDao.get(1);        
+
+        Repositorio cesta = repDao.get(1);
         repDao.delete(cesta);
 
         int sizeAfter = repDao.getAll().size();
-        assertEquals(sizeBefore-1, sizeAfter);
+        assertEquals(sizeBefore - 1, sizeAfter);
     }
 
     @Test
     public void testDeleteRepAndDocuments() {
         Repositorio cesta = repDao.get(1);
 
-        int sizeCesta = 4;        
+        int sizeCesta = 4;
         int sizeAllBefore = docDao.getAll().size();
         int sizeAfter = sizeAllBefore - sizeCesta;
-        
+
         repDao.delete(cesta);
-      
+
         assertEquals("Size of Cesta after deletion", sizeAfter, docDao.getAll().size());
     }
 
@@ -165,14 +164,14 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
 
         repDao.save(r2);
     }
-    
+
     @Test
-    public void testGetOutDated(){
+    public void testGetOutDated() {
         assertThat(repDao.getOutDated(), hasSize(3));
     }
-    
-     @Test
-    public void testUpdateDate(){
+
+    @Test
+    public void testUpdateDate() {
         Repositorio rep = new Repositorio();
         String date = "1984-08-21T13:32:03Z";
         rep.setDataOrigemTemp(date);
@@ -181,14 +180,14 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
         rep.setNamespace("obaa");
         rep.setUrl("http://url");
         rep.setMapeamento(mapDao.get(1));
-        
-        assertThat(rep.getDataOrigem(), equalTo(date)); 
+
+        assertThat(rep.getDataOrigem(), equalTo(date));
         repDao.save(rep);
         em.flush();
         em.clear();
-        
+
         Repositorio rep2 = repDao.get("marcosn");
-        assertThat(rep2.getDataOrigem(), equalTo(date)); 
+        assertThat(rep2.getDataOrigem(), equalTo(date));
     }
 
 }

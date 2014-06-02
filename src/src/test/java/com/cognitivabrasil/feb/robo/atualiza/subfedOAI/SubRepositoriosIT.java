@@ -25,7 +25,7 @@ import org.xml.sax.SAXException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners(DependencyInjectionTestExecutionListener.class)
-public class SubRepositoriosTest {
+public class SubRepositoriosIT {
     
     @Test
     public void testParserXML() throws ParserConfigurationException, IOException, SAXException{

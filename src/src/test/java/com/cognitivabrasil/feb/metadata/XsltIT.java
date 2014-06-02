@@ -20,7 +20,7 @@ import org.junit.Ignore;
  *
  * @author paulo
  */
-public class XsltTest {
+public class XsltIT {
 
     OaiOBAA oai;
 

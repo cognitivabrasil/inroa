@@ -30,7 +30,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-public class DocumentRepositoryIt extends AbstractTransactionalJUnit4SpringContextTests {
+public class DocumentRepositoryIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private DocumentRepository docRep;
@@ -46,12 +46,12 @@ public class DocumentRepositoryIt extends AbstractTransactionalJUnit4SpringConte
         doc.setObaaEntry("marcos");
 
         docRep.save(doc);
-        
+
         em.flush();
         em.clear();
-        
-        assertThat(docRep.count(), equalTo(docsBefore+1));
-        
+
+        assertThat(docRep.count(), equalTo(docsBefore + 1));
+
         Document doc2 = docRep.findByObaaEntry("marcos");
         assertThat(doc2.getCreated(), equalTo(new DateTime(2014, 6, 29, 8, 52)));
     }

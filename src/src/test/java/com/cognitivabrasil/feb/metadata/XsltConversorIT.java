@@ -12,14 +12,14 @@ import cognitivabrasil.obaa.OaiOBAA;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class XsltConversorTest.
+ * The Class XsltConversorIT.
  *
  * Test the basic XsltConversor class. No need to do a lot of tests here, since
  * XsltConversor uses XSLTTransformer from Saxon, and that is tested in
  * XsltDC2ObaaTest and others. Tests that verify the XSLT transforms themselves
  * should not be put here.
  */
-public class XsltConversorTest {
+public class XsltConversorIT {
 
     /**
      * Read file as string.

@@ -4,7 +4,6 @@
  */
 package com.cognitivabrasil.feb.data.entities;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -128,14 +127,14 @@ public class RepositorioTest {
 
         r1.merge(r2);
     }
-    
+
     @Test
-    public void testUpdateDate(){
+    public void testUpdateDate() {
         Repositorio rep = new Repositorio();
         String date = "1984-08-21T07:35:00Z";
         rep.setDataOrigemTemp(date);
         rep.setUltimaAtualizacao(DateTime.now());
-        
-        assertThat(rep.getDataOrigem(), equalTo(date));        
+
+        assertThat(rep.getDataOrigem(), equalTo(date));
     }
 }

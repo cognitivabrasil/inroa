@@ -42,9 +42,9 @@ import org.xml.sax.SAXException;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
-public class UpdateRepAndFedIt extends AbstractTransactionalJUnit4SpringContextTests {
+public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     RepositoryService repDao;
@@ -74,7 +74,7 @@ public class UpdateRepAndFedIt extends AbstractTransactionalJUnit4SpringContextT
         mapDao.save(m);
 
         rep.setMapeamento(m);
-        
+
         assertNull(rep);
 
         int docSize = docDao.getAll().size();
@@ -86,7 +86,7 @@ public class UpdateRepAndFedIt extends AbstractTransactionalJUnit4SpringContextT
         assert (updated > 0);
         repDao.save(rep);
         int docSizeAfterRep = docDao.getAll().size();
-        System.out.println("\n\n\n------\n"+docSize + 2+" docSizeAfter: "+ docSizeAfterRep+"\n\n----");
+        System.out.println("\n\n\n------\n" + docSize + 2 + " docSizeAfter: " + docSizeAfterRep + "\n\n----");
         assertEquals("Size of Documents after updated Rep", docSize + 2, docSizeAfterRep);
         SubFederacao subFed = subDao.get("marcos");
 
@@ -114,6 +114,5 @@ public class UpdateRepAndFedIt extends AbstractTransactionalJUnit4SpringContextT
         subDao.save(subFed);
         int docSizeAfterSubFed = docDao.getAll().size();
         assertEquals("Size of Documents after updated Federation", docSizeAfterRep + 2, docSizeAfterSubFed);
-
     }
 }

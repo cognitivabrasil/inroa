@@ -33,7 +33,6 @@ src/solr/logs/*
 !src/src/main/webapp/scripts/vendor/bootstrap-slider/js/*.swp
 !src/src/main/webapp/scripts/vendor/bootstrap-slider/*.swp
 !src/src/main/resources/sql/*.swp
-!src/src/test/java/com/cognitivabrasil/feb/solr/*.swp
 !src/src/test/java/com/cognitivabrasil/feb/robo/atualiza/subfedOAI/*.swp
 !src/src/test/java/com/cognitivabrasil/feb/robo/atualiza/importaOAI/*.swp
 !src/src/test/java/com/cognitivabrasil/feb/robo/atualiza/*.swp

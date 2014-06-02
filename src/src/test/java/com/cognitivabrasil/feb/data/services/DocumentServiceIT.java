@@ -48,7 +48,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
@@ -317,41 +317,41 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
             }
             em.clear();
         }
-        
+
         assertThat(modelDoc.size(), equalTo(ids.size()));
-        
+
         for (Document doc : modelDoc) {
             assertThat(ids.contains(doc.getId()), equalTo(true));
         }
     }
-    
+
     @Test
-    public void testDeleteDocsFromRep(){
+    public void testDeleteDocsFromRep() {
         int sizeAllBefore = docService.getAll().size();
-        
+
         Repositorio cesta = repDao.get(1);
         int numDocsRep = cesta.getDocumentos().size();
         int sizeCestaWithoutDeleted = 4;
-        
+
         int affected = docService.deleteAllFromRep(cesta);
-        
+
         assertThat(affected, equalTo(numDocsRep));
 
-        assertThat("Size of Cesta after deletion", docService.getAll().size(), equalTo(sizeAllBefore - sizeCestaWithoutDeleted));   
+        assertThat("Size of Cesta after deletion", docService.getAll().size(), equalTo(sizeAllBefore - sizeCestaWithoutDeleted));
     }
-    
+
     @Test
-    public void testSaveCreated(){
+    public void testSaveCreated() {
         Date created = new Date(461905200000L);
         Repositorio r = repDao.get(1);
         Header h = mock(Header.class);
         when(h.getTimestamp()).thenReturn(created);
         when(h.getIdentifier()).thenReturn("marcos");
-        
+
         docService.save(new OBAA(), h, r);
-        
+
         Document doc = docService.get("marcos");
         assertThat(doc.getCreated(), equalTo(new DateTime(1984, 8, 21, 0, 0)));
-        
+
     }
 }

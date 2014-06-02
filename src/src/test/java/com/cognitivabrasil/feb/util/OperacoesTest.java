@@ -6,7 +6,6 @@
 
 package com.cognitivabrasil.feb.util;
 
-import com.cognitivabrasil.feb.util.Operacoes;
 import static org.hamcrest.Matchers.equalTo;
 import org.joda.time.DateTime;
 import static org.junit.Assert.assertThat;

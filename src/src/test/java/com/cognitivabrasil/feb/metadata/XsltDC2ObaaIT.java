@@ -21,12 +21,13 @@ import org.junit.Test;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
+import javax.xml.transform.TransformerException;
 
 /**
  *
  * @author paulo
  */
-public class XsltDC2ObaaTest {
+public class XsltDC2ObaaIT {
 
     OaiOBAA oai;
 
@@ -47,13 +48,19 @@ public class XsltDC2ObaaTest {
 
         try {
             String s = XSLTUtil.transformFilename(foo_xml, foo_xsl);
-            PrintWriter out = new PrintWriter("dc2obaa.xml");
-            out.print(s);
-            out.close();
+            try (PrintWriter out = new PrintWriter("dc2obaa.xml")) {
+                out.print(s);
+            }
             oai = OaiOBAA.fromString(s);
-        } catch (Exception ex) {
+        } catch (FileNotFoundException | TransformerException ex) {
             fail("Shoudln't throw exception");
         }
+    }
+    
+    @After
+    public void tearDown() {
+        File dc2obaa = new File("dc2obaa.xml");
+        dc2obaa.delete();
     }
 
     /**
@@ -77,12 +84,6 @@ public class XsltDC2ObaaTest {
         assert (!(l.getTechnical() == null));
         assertThat(l.getTechnical().getFirstHttpLocation(),
                 nullValue());
-    }
-
-    @After
-    public void tearDown() {
-        File dc2obaa = new File("dc2obaa.xml");
-        dc2obaa.delete();
     }
 
     @Test

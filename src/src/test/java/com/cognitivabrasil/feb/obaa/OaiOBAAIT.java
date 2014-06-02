@@ -11,7 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 
-public class OaiOBAATest {
+public class OaiOBAAIT {
 
 	@Test
 	public void testSetSpec() throws FileNotFoundException {

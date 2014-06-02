@@ -44,8 +44,8 @@ import org.xml.sax.SAXException;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
 @Transactional
-public class PerformanceTest extends AbstractTransactionalJUnit4SpringContextTests {
-	Logger log = Logger.getLogger(PerformanceTest.class);
+public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests {
+	Logger log = Logger.getLogger(PerformanceIT.class);
 
     @Autowired
     RepositoryService repDao;
