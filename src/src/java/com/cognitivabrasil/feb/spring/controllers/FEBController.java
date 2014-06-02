@@ -175,7 +175,7 @@ public final class FEBController {
         }
     }
 
-    @RequestMapping("/buscaAvancada")
+    @RequestMapping(value = "/buscaAvancada", method = RequestMethod.GET)
     public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("repositories", repDao.getAll());
@@ -188,14 +188,13 @@ public final class FEBController {
         return "buscaAvancada";
     }
 
-    @RequestMapping("/consultaAvancada")
+    @RequestMapping(value = "/buscaAvancada", method = RequestMethod.POST)
     public String consultaAvancada(
             HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
             BindingResult result, Model model,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("buscaModel", consulta);
-        log.debug("ageRange: "+consulta.getAgeRange());
         buscaValidator.validate(consulta, result);
         if (result.hasErrors()) {
             model.addAttribute("repositories", repDao.getAll());
@@ -204,7 +203,7 @@ public final class FEBController {
         } else {
             try {
                 Recuperador rec = new Recuperador();
-                List<Document> docs = rec.buscaAvancada(consulta);
+                    List<Document> docs = rec.buscaAvancada(consulta);
                 model.addAttribute("documentos", docs);
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
@@ -213,8 +212,7 @@ public final class FEBController {
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                log.error("FEB ERRO: Erro ao efetuar a consula na base de dados. Exception: "
-                        + e);
+                log.error("FEB ERRO: Erro ao efetuar a consula na base de dados.",e);
                 return "buscaAvancada";
             }
         }

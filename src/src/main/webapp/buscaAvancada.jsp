@@ -45,7 +45,7 @@
                 <div class="DivErro" id="MensagemErro">${erro}</div>
             </c:if>
 
-            <form:form method="GET" modelAttribute="buscaModel" action="consultaAvancada" acceptCharset="utf-8">   
+            <form:form method="POST" modelAttribute="buscaModel" acceptCharset="utf-8">   
                 <div id="index">
                     <a href="${index}">
                         <img src="${logoReduzido}" alt="Logo FEB_reduzido" class="logo"/>
@@ -158,13 +158,12 @@
                             </div>
                         </div>
 
-                        <div class="LinhaEntrada">
                             
                         <div class="LinhaEntrada">
                             <div class="LabelLeft">
                                 Faixa etária:
                             </div>
-                            <div class="Value">
+                            <div class="Value slider-margin">
                                 <form:input path="ageRange" class="span2" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="[0,20]"/>
                                 <input id="adultAge" name="adultAge" type="checkbox" value="true"/> 19 ou +
                             </div>
@@ -206,7 +205,6 @@
                                 <input class="BOTAO" type="submit" value="Consultar"/>
                             </div>
                         </div>
-                    </div>
                     <div class="EspacoAntes">&nbsp;</div>
                     <div>
                         <a href="${index}">Retornar a busca padr&atilde;o</a>

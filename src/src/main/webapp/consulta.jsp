@@ -22,13 +22,7 @@
         <c:url var="funcoesjs" value="/scripts/funcoes.js" />
         <script language="JavaScript" type="text/javascript" src="${funcoesjs}"></script>
         <c:url var="root" value="/" />
-        <script>setRootUrl(${root});
-            $(function() {
-                var urlFeedConsulta = ${root}+"rss/feed"+window.location.search;                
-                $("#feedRss").attr("href", urlFeedConsulta)
-            });
-
-        </script>
+        <script>setRootUrl(${root});</script>
 
 
 
@@ -55,8 +49,9 @@
         </div>
         <div class="cabecalhoConsulta">
             <div class="esquerda">
+                <c:url var="rsslink" value="rss/feed?${buscaModel.urlEncoded}"/>
                 <c:url var="rssImg" value="/imagens/feed-icon-14x14.png"/>
-                <a id="feedRss" href=""><img src="${rssImg}" alt="RSS"/></a>
+                <a href="${rsslink}"><img src="${rssImg}" alt="RSS"/></a>
                 <c:if test="${!empty buscaModel.consulta}"> &nbsp;Consulta efetuada <i>"<strong><c:out value="${buscaModel.consulta}"/></strong>"</i></c:if>
                 <c:if test="${!empty buscaModel.autor}"> &nbsp;Autor: <i>"<strong><c:out value="${buscaModel.autor}"/></strong>"</i></c:if>
                 </div>

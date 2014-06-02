@@ -62,7 +62,7 @@ public class DocumentsRssViewer extends AbstractRssFeedView {
 		@SuppressWarnings("unchecked")
 		List<Document> listContent = (List<Document>) model
 				.get("feedContent");
-		List<Item> items = new ArrayList<Item>(listContent.size());
+		List<Item> items = new ArrayList<>(listContent.size());
 
 		for (Document doc : listContent) {
 
@@ -82,7 +82,7 @@ public class DocumentsRssViewer extends AbstractRssFeedView {
 			}
 			if(doc.getAutores().size() > 0) {
 				contentText += "<p><strong>Autor(es): </strong>";
-				List<String> aut = new ArrayList<String>();
+				List<String> aut = new ArrayList<>();
 				for(Autor a : doc.getAutores()) {
 					aut.add(a.getNome());
 				}
@@ -100,8 +100,6 @@ public class DocumentsRssViewer extends AbstractRssFeedView {
 
 			items.add(item);
 		}
-
 		return items;
 	}
-
 }

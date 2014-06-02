@@ -137,11 +137,11 @@ public class Consulta {
     }
 
     public String getAgeRange() {
-        if(isAdultAge()!=null && isAdultAge()){
+        if (isAdultAge() != null && isAdultAge()) {
             return "19 - 100";
         }
-        if(ageRange!=null){
-            return ageRange.replaceAll(" ","").replaceFirst(":|,", " - ");
+        if (ageRange != null) {
+            return ageRange.replaceAll(" ", "").replaceFirst(":|,", " - ");
         }
         return ageRange;
     }
@@ -149,13 +149,13 @@ public class Consulta {
     public void setAgeRange(String ageRange) {
         this.ageRange = ageRange;
     }
-    
-    public int getStartAgeRange(){
+
+    public int getStartAgeRange() {
         String[] start = getAgeRange().split(" - ");
         return Integer.parseInt(start[0]);
     }
-    
-    public int getEndAgeRange(){
+
+    public int getEndAgeRange() {
         String[] start = getAgeRange().split(" - ");
         return Integer.parseInt(start[1]);
     }
@@ -166,7 +166,7 @@ public class Consulta {
 
     public void setAdultAge(Boolean adultAge) {
         this.adultAge = adultAge;
-    }    
+    }
 
     public String getDifficult() {
         return difficult;
@@ -289,22 +289,53 @@ public class Consulta {
     /**
      * @return the consulta params in an URL encoded form
      */
-    @Deprecated
     public String getUrlEncoded() {
         try {
             String encoded = "consulta=" + URLEncoder.encode(consulta, "UTF-8");
             if (isNotBlank(autor)) {
                 encoded += "&autor=" + URLEncoder.encode(autor, "UTF-8");
             }
-
+            if (isNotBlank(idioma)) {
+                encoded += "&idioma=" + URLEncoder.encode(idioma, "UTF-8");
+            }
+            if (isNotBlank(format)) {
+                encoded += "&format=" + URLEncoder.encode(format, "UTF-8");
+            }
+            if (isNotBlank(ageRange)) {
+                encoded += "&ageRange=" + URLEncoder.encode(ageRange, "UTF-8");
+            }
+            if (adultAge!=null) {
+                encoded += "&adultAge=" + URLEncoder.encode(adultAge.toString(), "UTF-8");
+            }
+            if (isNotBlank(difficult)) {
+                encoded += "&difficult=" + URLEncoder.encode(difficult, "UTF-8");
+            }
+            if (isNotBlank(size)) {
+                encoded += "&size=" + URLEncoder.encode(size, "UTF-8");
+            }
+            if (cost!=null) {
+                encoded += "&cost=" + URLEncoder.encode(cost.toString(), "UTF-8");
+            }
+            if (hasVisual!=null) {
+                encoded += "&hasVisual=" + URLEncoder.encode(hasVisual.toString(), "UTF-8");
+            }
+            if (hasAuditory!=null) {
+                encoded += "&hasAuditory=" + URLEncoder.encode(hasAuditory.toString(), "UTF-8");
+            }
+            if (hasText!=null) {
+                encoded += "&hasText=" + URLEncoder.encode(hasText.toString(), "UTF-8");
+            }
+            if (hasTactile!=null) {
+                encoded += "&hasTactile=" + URLEncoder.encode(hasTactile.toString(), "UTF-8");
+            }
             for (Integer i : getRepositorios()) {
                 encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
             }
             for (Integer i : getFederacoes()) {
                 encoded += "&federacoes=" + URLEncoder.encode(i.toString(), "UTF-8");
             }
-            for (Integer i : getRepositorios()) {
-                encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
+            for (Integer i : getRepSubfed()) {
+                encoded += "&repSubfed=" + URLEncoder.encode(i.toString(), "UTF-8");
             }
 
             return encoded;
@@ -312,5 +343,5 @@ public class Consulta {
             // UTF 8 is always supported
             throw new RuntimeException("FATAL", e);
         }
-    }
+    }   
 }

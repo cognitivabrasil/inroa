@@ -68,6 +68,9 @@ public class Document implements java.io.Serializable,
     @Transient
     @Override
     public Date getTimestamp() {
+        if(this.created==null){
+            return null;
+        }
         return this.created.toDate();
     }
 
