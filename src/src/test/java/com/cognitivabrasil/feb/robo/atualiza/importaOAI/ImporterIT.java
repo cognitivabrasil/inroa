@@ -83,10 +83,9 @@ public class ImporterIT {
 
     }
 
-    @Ignore("Teste para o LOM, os arquivos que estão sendo usados estão com erro no namespace LOM")
     @Test
     public void testImportLOM() throws IOException {
-        String inputXmlFile = "src/test/resources/froacLOM.xml"; // input xml
+        String inputXmlFile = "src/test/resources/metadata/oai_lom.xml"; // input xml
         String inputXsltFile = "src/xslt/lom2obaa_full.xsl"; // input xsl
         String xslt = FileUtils.readFileToString(new File(inputXsltFile));
 
@@ -107,16 +106,16 @@ public class ImporterIT {
         OaiOBAA oai = imp.getOaiObaa();
 
 
-        assertEquals(93, oai.getSize());
+        assertEquals(1, oai.getSize());
 
-        assertEquals("2012-10-03T20:09:26Z", oai.getResponseDate());
+        assertEquals("2011-09-09T21:08:38Z", oai.getResponseDate());
 
         OBAA obaa = oai.getMetadata(0);
 
-        assertThat(obaa.getGeneral().getTitles(), hasItems("Imagen Arquitectura BDI"));
+        assertThat(obaa.getGeneral().getTitles(), hasItems("Título 1"));
 
         // Verify that save() was called twice on mocked docDao
-        verify(docDao, times(2)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));
+        verify(docDao, times(1)).save(isA(OBAA.class), isA(metadata.Header.class), isA(Repositorio.class));
 
     }
 }

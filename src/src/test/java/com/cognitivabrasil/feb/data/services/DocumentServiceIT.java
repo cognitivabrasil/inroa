@@ -63,42 +63,6 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
     @PersistenceContext
     private EntityManager em;
 
-    @Test
-    @Ignore
-    public void testSaveException() throws IllegalArgumentException, IllegalAccessException, SecurityException, NoSuchFieldException {
-        OBAA obaa = new OBAA();
-        obaa.setGeneral(new General());
-
-        obaa.getGeneral().addTitle("teste1");
-        obaa.getGeneral().addTitle("teste2");
-
-        obaa.getGeneral().addKeyword("key1");
-        obaa.getGeneral().addKeyword("key2");
-        obaa.getGeneral().addKeyword("key3");
-
-        obaa.getGeneral().addDescription("Bla bla");
-
-        // set repository to null through reflection
-        Class aClass = DocumentService.class;
-        Field field = aClass.getDeclaredField("repository");
-        field.setAccessible(true);
-        field.set(docService, null);
-
-        Header h = mock(Header.class);
-
-        when(h.getTimestamp()).thenReturn(new Date());
-        when(h.getIdentifier()).thenReturn("obaa:identifier");
-
-        Repositorio r = repDao.get(1);
-
-        try {
-            docService.save(obaa, h, r);
-            fail("Should throw IllegalStateException!");
-        } catch (IllegalStateException e) {
-
-        }
-
-    }
 
     @Test
     public void testGet() {

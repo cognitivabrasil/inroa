@@ -958,7 +958,6 @@ src/src/test/resources/delete2.xml -text
 src/src/test/resources/fedIFRS-listSets.xml -text
 src/src/test/resources/fedIFRS-records.xml -text
 src/src/test/resources/froac.xml -text
-src/src/test/resources/froacLOM.xml -text
 src/src/test/resources/metadata/FEB-froac1.xml -text
 src/src/test/resources/metadata/cesta1.xml -text
 src/src/test/resources/metadata/cesta_complete.xml -text
