@@ -27,7 +27,7 @@ import org.springframework.dao.support.DataAccessUtils;
  */
 @Entity
 @Table(name = "repositorios_subfed")
-public class RepositorioSubFed implements SubNodo{
+public class RepositorioSubFed{
 
     private int id;
     private String name;
@@ -46,7 +46,6 @@ public class RepositorioSubFed implements SubNodo{
         this.id = id;
     }
 
-    @Override
     @Column(name = "nome")
     public String getName() {
         return name;
@@ -67,7 +66,7 @@ public class RepositorioSubFed implements SubNodo{
     }
 
     @Transient
-    @Override
+    @Deprecated
     public Integer getSize() {
         return DataAccessUtils.intResult(getSession().createQuery("select count(*) from Document doc WHERE doc.repositorioSubFed = :rep AND doc.deleted = :deleted").
                 setParameter("rep", this).setParameter("deleted", false).list());

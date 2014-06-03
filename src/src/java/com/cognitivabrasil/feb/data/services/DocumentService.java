@@ -97,4 +97,11 @@ public interface DocumentService {
      * @return number of documents
      */
     long getSizeWithDeleted();
+    
+    /**
+     * Number of documents from in a repository, not including those marked as deleted.
+     * @param r Repository
+     * @return Amount of documents entered repository.
+     */
+    Integer countFromRep(Repositorio r);
 }

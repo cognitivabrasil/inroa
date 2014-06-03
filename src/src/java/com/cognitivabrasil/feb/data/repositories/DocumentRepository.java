@@ -49,6 +49,9 @@ public interface DocumentRepository extends JpaRepository<Document, Integer> {
 
     @Query("SELECT count(*) FROM Document d WHERE deleted is false")
     public long countDeletedFalse();
+    
+    @Query("SELECT count(*) FROM Document d WHERE deleted is false AND d.repositorio = :repositorio")
+    public Integer countFromRepositoryDeletedIsFalse(@Param("repositorio") Repositorio repositorio);
 
     //metodos para o OAI
     // Hack: we add one second to the date and use non-inclusive comparison for until, and 

@@ -18,11 +18,14 @@ import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ParserListSets;
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.apache.commons.io.FileUtils;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +61,8 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
     MappingService mapDao;
 
     @Test
-    public void testRepAndSubFedWhithSameEntry() throws IOException, ParserConfigurationException, SAXException, TransformerException {
+    public void testUpdateRepFromXML() throws IOException, ParserConfigurationException, SAXException, TransformerException {
         String xmlRep = "src/test/resources/repIFRS-records.xml";
-        String xmlFedSets = "src/test/resources/fedIFRS-listSets.xml";
-        String xmlFedRecords = "src/test/resources/fedIFRS-records.xml";
         String inputXsltFile = "src/xslt/obaa2obaa.xsl"; // input xsl
         String xslt = FileUtils.readFileToString(new File(inputXsltFile));
         Repositorio rep = repDao.get("marcos");
@@ -75,19 +76,25 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
 
         rep.setMapeamento(m);
 
-        assertNull(rep);
-
-        int docSize = docDao.getAll().size();
+        int docSizeBefore = docDao.getAll().size();
         Importer imp = new Importer();
         imp.setInputFile(xmlRep);
         imp.setRepositorio(rep);
         imp.setDocDao(docDao);
         int updated = imp.update();
-        assert (updated > 0);
+        assertThat(updated, equalTo(2));
+
         repDao.save(rep);
-        int docSizeAfterRep = docDao.getAll().size();
-        System.out.println("\n\n\n------\n" + docSize + 2 + " docSizeAfter: " + docSizeAfterRep + "\n\n----");
-        assertEquals("Size of Documents after updated Rep", docSize + 2, docSizeAfterRep);
+        int docSizeAfter = docDao.getAll().size();
+
+        assertEquals("Size of Documents after updated Rep", docSizeBefore + 2, docSizeAfter);
+    }
+
+    @Test
+    public void testUpdateFedFromXML() throws IOException, ParserConfigurationException, SAXException, TransformerException {
+        String xmlFedSets = "src/test/resources/fedIFRS-listSets.xml";
+        String xmlFedRecords = "src/test/resources/fedIFRS-records.xml";
+
         SubFederacao subFed = subDao.get("marcos");
 
         for (RepositorioSubFed r : subFed.getRepositorios()) {
@@ -103,6 +110,8 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         subFed.atualizaListaSubRepositorios(listaSubrep);
         assertEquals("Size of repSubFed after.", 1, subFed.getRepositorios().size());
 
+        int docSizeAfter = docDao.getAll().size();
+
         subDao.save(subFed);
 
         com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer impSF = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer();
@@ -111,8 +120,7 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         impSF.setSubFed(subFed);
         impSF.update();
 
-        subDao.save(subFed);
         int docSizeAfterSubFed = docDao.getAll().size();
-        assertEquals("Size of Documents after updated Federation", docSizeAfterRep + 2, docSizeAfterSubFed);
+        assertThat("Size of Documents after updated Federation", docSizeAfterSubFed, equalTo(docSizeAfter + 2));
     }
 }

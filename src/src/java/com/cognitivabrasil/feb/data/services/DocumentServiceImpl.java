@@ -189,5 +189,9 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
         return docRep.deleteByRepositorio(r);
     }
 
+    @Override
+    public Integer countFromRep(Repositorio r){
+        return docRep.countFromRepositoryDeletedIsFalse(r);
+    }
     
 }

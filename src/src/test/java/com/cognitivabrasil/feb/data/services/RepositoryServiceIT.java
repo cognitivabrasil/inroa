@@ -65,7 +65,7 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
         Repositorio cesta = repDao.get(id);
 
         assertEquals("Cesta", cesta.getName());
-        assertEquals(4, (int) cesta.getSize());
+        assertEquals(4, (int) repDao.size(cesta));
     }
 
     /**

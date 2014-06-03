@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class RepositoryServiceImpl implements RepositoryService{
     @Autowired
     RepositoryRepository rep;
+    @Autowired
+    DocumentService docService;
 
     @Override
     public List<Repositorio> getAll() {
@@ -64,4 +66,8 @@ public class RepositoryServiceImpl implements RepositoryService{
         return rep.findByUltimaAtualizacaoLessThanOrUltimaAtualizacaoIsNull(date);
     }
     
+    @Override
+    public Integer size(Repositorio r){
+        return docService.countFromRep(r);
+    }
 }

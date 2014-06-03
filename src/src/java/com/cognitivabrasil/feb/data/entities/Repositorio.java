@@ -21,13 +21,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.springframework.context.ApplicationContext;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Entity
 @Table(name = "repositorios")
-public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObject {
+public class Repositorio implements java.io.Serializable, FebDomainObject {
 
     private static final Logger log = Logger.getLogger(Repositorio.class);
     private static final long serialVersionUID = 1011292251690153763L;
@@ -130,21 +128,6 @@ public class Repositorio implements java.io.Serializable, SubNodo, FebDomainObje
     public String toString() {
         return getName();
     }
-
-    /**
-     *
-     * @return Number of documents present in the repository (non-deleted
-     * documents only)
-     */
-    @Transactional(readOnly = true)
-    @Override
-    @Transient
-    //TODO: mover isso aqui para o Service
-    public Integer getSize() {
-        return DataAccessUtils.intResult(getSession().createQuery(
-                "select count(*) from Document doc WHERE doc.repositorio = :rep AND doc.deleted = :deleted").setParameter("rep", this).setParameter("deleted", false).list());
-    }
-
 
     /**
      * @param url the url to set

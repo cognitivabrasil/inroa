@@ -67,4 +67,11 @@ public interface RepositoryService {
      * @return repositories that are outdated
      */
     public List<Repositorio> getOutDated();
+    
+    /**
+     * Gets the number of documents in the repository, not including those marked as deleted.
+     * @param r The repository
+     * @return Document number not including those marked as deleted.
+     */
+    public Integer size(Repositorio r);
 }

@@ -12,7 +12,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Classe que faz o parser/leitura de um arquivo XML
+ * Classe que faz o parser de um arquivo XML contendo os sets de um repositório
  *
  * @author Marcos Nunes
  *
@@ -84,7 +84,7 @@ public class ParserListSets extends DefaultHandler {
             throw new SAXException(erro);
 
         } else if(tag.equalsIgnoreCase("ListSets")){
-            subRepositorios = new HashSet<String>();
+            subRepositorios = new HashSet<>();
         }
 
 

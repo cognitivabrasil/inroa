@@ -28,7 +28,6 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.style.ToStringCreator;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -37,7 +36,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "dados_subfederacoes")
-public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObject {
+public class SubFederacao implements java.io.Serializable, FebDomainObject {
 
     private static final long serialVersionUID = 7452479917517752879L;
     private Integer id;
@@ -225,8 +224,10 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
      * possui.
      *
      * @return int com o n&uacute;mero de documentos
+     * @deprecated use o servide de fera&ccdeil;&atilde;o
      */
     @Transient
+    @Deprecated
     public int getSizeDoc() {
         int size = 0;
 
@@ -237,11 +238,6 @@ public class SubFederacao implements java.io.Serializable, SubNodo, FebDomainObj
         return size;
     }
 
-    @Override
-    @Transient
-    public Integer getSize() {
-        return ((Integer) getSizeDoc());
-    }
 
     /**
      * Test if federation is outdated.
