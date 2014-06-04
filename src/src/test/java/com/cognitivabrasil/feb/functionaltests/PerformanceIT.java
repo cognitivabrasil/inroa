@@ -44,6 +44,7 @@ import org.xml.sax.SAXException;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
 @Transactional
+@Ignore
 public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests {
 	Logger log = Logger.getLogger(PerformanceIT.class);
 
@@ -61,7 +62,6 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
 
     @Test
     @Transactional
-    @Ignore
     public void perfomanceTest() throws IOException, ParserConfigurationException, SAXException, TransformerException {
         Long inicio = System.currentTimeMillis();
 
@@ -133,7 +133,6 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
 
     }
     
-    @Ignore
     @Test(timeout=30000)
     @Transactional
     public void jorjaoTest() throws ParserConfigurationException, SAXException, IOException, TransformerConfigurationException, TransformerException {
@@ -211,7 +210,6 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
 
     @Test
     @Transactional
-    @Ignore
     public void XMLdeleteDocsTest() throws IOException, ParserConfigurationException, SAXException, TransformerException{
           Long inicio = System.currentTimeMillis();
 
