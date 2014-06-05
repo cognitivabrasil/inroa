@@ -40,7 +40,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
     @Autowired
     FederationService instance;
     @Autowired
-    private DocumentService docDao;
+    private DocumentService docService;
     @PersistenceContext
     private EntityManager em;
 
@@ -93,13 +93,13 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
         for (RepositorioSubFed r : cesta.getRepositorios()) {
             sizeDocsCesta += r.getDocumentos().size();
         }
-        int sizeAllDocsBefore = docDao.getAll().size();
+        int sizeAllDocsBefore = docService.getAll().size();
         int sizeAfterShould = sizeAllDocsBefore - sizeDocsCesta;
 
         instance.delete(cesta);
 
         assertThat("Size of UFRGS before", sizeDocsCesta, equalTo(2));
-        assertThat("Size of UFRGS after deletion", docDao.getAll().size(), equalTo(sizeAfterShould));
+        assertThat("Size of UFRGS after deletion", docService.getAll().size(), equalTo(sizeAfterShould));
     }
 
     @Test
@@ -191,6 +191,19 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
         assertThat(setRep, hasSize(1));
         RepositorioSubFed rep = setRep.iterator().next();
         assertThat(rep.getDocumentos(), hasSize(2));
+    }
+     
+    @Test
+    public void testDeleteAllDocs(){
+        long before = docService.getSize();
+        
+        SubFederacao sf = instance.get(1);
+        
+        instance.deleteAllDocs(sf);
+        
+        long after = docService.getSize();
+        
+        assertThat(after, equalTo(before-2));
     }
 
 }

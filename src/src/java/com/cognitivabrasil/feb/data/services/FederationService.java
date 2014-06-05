@@ -60,4 +60,6 @@ public interface FederationService {
      * @throws IllegalArgumentException when r2 is null
      */
     void updateNotBlank(SubFederacao f2);
+    
+    void deleteAllDocs(SubFederacao fed);
 }

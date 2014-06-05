@@ -6,6 +6,7 @@
 
 package com.cognitivabrasil.feb.data.services;
 
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.repositories.FederationRepository;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import java.util.List;
@@ -21,6 +22,8 @@ public class FederationServiceImpl implements FederationService{
 
     @Autowired
     FederationRepository rep;
+    @Autowired
+    DocumentService docService;
     
     @Override
     public List<SubFederacao> getAll() {
@@ -55,6 +58,13 @@ public class FederationServiceImpl implements FederationService{
         SubFederacao r = get(r2.getId());
         r.merge(r2);
         rep.save(r);
+    }
+    
+    @Override
+    public void deleteAllDocs(SubFederacao fed){
+        for(RepositorioSubFed rep : fed.getRepositorios()){
+            docService.deleteAllFromRep(rep);
+        }
     }
     
 }

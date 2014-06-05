@@ -188,6 +188,11 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
     public int deleteAllFromRep(Repositorio r) {
         return docRep.deleteByRepositorio(r);
     }
+    
+    @Override
+    public int deleteAllFromRep(RepositorioSubFed r) {
+        return docRep.deleteBySubRepository(r);
+    }
 
     @Override
     public Integer countFromRep(Repositorio r){

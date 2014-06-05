@@ -47,6 +47,11 @@ public interface DocumentRepository extends JpaRepository<Document, Integer> {
     @Transactional
     @Query("delete from Document d where d.repositorio = :repositorio")
     int deleteByRepositorio(@Param("repositorio") Repositorio repositorio);
+    
+    @Modifying
+    @Transactional
+    @Query("delete from Document d where d.repositorioSubFed = :repositorio")
+    int deleteBySubRepository(@Param("repositorio") RepositorioSubFed repositorio);
 
     @Query("SELECT count(*) FROM Document d WHERE deleted is false")
     public long countDeletedFalse();

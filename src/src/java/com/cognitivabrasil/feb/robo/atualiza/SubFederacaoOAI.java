@@ -64,10 +64,7 @@ public class SubFederacaoOAI {
 
                     if ((subFed.getUltimaAtualizacao() == null && subFed.getDataXML() == null)) {
                         log.info("Deletando toda a base de dados da Subfederação: " + subFed.getName().toUpperCase());
-
-                        for (RepositorioSubFed r : subFed.getRepositorios()) {
-                            r.dellAllDocs();
-                        }
+                        subDao.deleteAllDocs(subFed);
                         log.info("Base deletada!");
                     }
 

@@ -17,8 +17,6 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,8 +46,6 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     private String colecoesInternal;
     private PadraoMetadados padraoMetadados;
     private Mapeamento mapeamento;
-    private transient SessionFactory sessionFactory;
-    private transient Session session;
     private String dataOrigem;
     private String dataOrigemTemp;
 
