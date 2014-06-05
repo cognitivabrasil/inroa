@@ -146,7 +146,7 @@
             <div class="LinhaEntrada">
                 <div class="Label">N&uacute;mero de objetos:</div>
                 <div class="Value">
-                    <div>&nbsp; ${rep.size}</div>
+                    <div>&nbsp; ${repSize}</div>
                 </div>
             </div>
             <security:authorize access="hasRole('PERM_MANAGE_REP')">

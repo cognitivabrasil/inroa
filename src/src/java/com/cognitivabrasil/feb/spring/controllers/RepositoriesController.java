@@ -49,9 +49,13 @@ public final class RepositoriesController {
     public String show(@PathVariable Integer id,
             Model model,
             @RequestParam(required = false, value = "r") boolean recarregar) {
-        model.addAttribute("rep", repDao.get(id));
+        Repositorio rep = repDao.get(id);
+        Integer size = repDao.size(rep);
+        model.addAttribute("rep", rep);
         model.addAttribute("repId", id);
+        model.addAttribute("repSize", size);
         model.addAttribute("recarregar", recarregar);
+        
         return "admin/repositories/show";
     }
 

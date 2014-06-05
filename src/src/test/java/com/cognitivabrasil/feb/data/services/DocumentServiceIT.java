@@ -2,7 +2,6 @@ package com.cognitivabrasil.feb.data.services;
 
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.mockito.Mockito.mock;
@@ -28,6 +26,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
@@ -317,5 +316,14 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
         Document doc = docService.get("marcos");
         assertThat(doc.getCreated(), equalTo(new DateTime(1984, 8, 21, 0, 0)));
 
+    }
+    
+    @Test
+    public void testCountDocSubFed(){
+        RepositorioSubFed r = new RepositorioSubFed();
+        r.setId(1);
+        r.setName("RepUfrgs1");
+        int docsSubRep = docService.countFromSubRep(r);
+        assertThat(docsSubRep, equalTo(2));
     }
 }

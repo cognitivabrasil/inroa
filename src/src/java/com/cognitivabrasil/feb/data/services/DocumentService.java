@@ -3,6 +3,7 @@ package com.cognitivabrasil.feb.data.services;
 import cognitivabrasil.obaa.OBAA;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import java.util.List;
 import metadata.Header;
@@ -104,4 +105,11 @@ public interface DocumentService {
      * @return Amount of documents entered repository.
      */
     Integer countFromRep(Repositorio r);
+    
+    /**
+     * Number of documents from in a sub repository (a federation repository), not including those marked as deleted.
+     * @param r RepositorioSubFed, a federation repository
+     * @return Amount of documents entered repository.
+     */
+    public Integer countFromSubRep(RepositorioSubFed r);
 }

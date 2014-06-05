@@ -64,14 +64,6 @@ public class RepositorioSubFed{
     public void setSubFederacao(SubFederacao subFederacao) {
         this.subFederacao = subFederacao;
     }
-
-    @Transient
-    @Deprecated
-    public Integer getSize() {
-        return DataAccessUtils.intResult(getSession().createQuery("select count(*) from Document doc WHERE doc.repositorioSubFed = :rep AND doc.deleted = :deleted").
-                setParameter("rep", this).setParameter("deleted", false).list());
-    }
-
     
     /**
      * @return the session

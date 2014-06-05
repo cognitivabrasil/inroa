@@ -73,21 +73,6 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
     }
 
     @Test
-    public void testRepository() {
-        List<SubFederacao> l = instance.getAll();
-        SubFederacao ufrgs = l.get(0);
-
-        List<RepositorioSubFed> r = new ArrayList<>(ufrgs.getRepositorios());
-
-        RepositorioSubFed t = r.get(0);
-
-        assertEquals("RepUfrgs1", t.getName());
-        assertEquals("Get from getDocumentos", 2, t.getDocumentos().size());
-        assertEquals("Get from size()", 2, (int) t.getSize());
-
-    }
-
-    @Test
     public void testDelete() {
         SubFederacao cesta = instance.get(1);
 

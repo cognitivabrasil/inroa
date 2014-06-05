@@ -4,6 +4,7 @@
  */
 package com.cognitivabrasil.feb.spring.controllers;
 
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
@@ -12,6 +13,8 @@ import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI;
 import com.cognitivabrasil.feb.spring.validador.SubFederacaoValidador;
 import java.net.ConnectException;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,8 +52,22 @@ public final class FederationsController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String exibeFed(@PathVariable("id") Integer id, Model model,
             @RequestParam(required = false, value = "r") boolean recarregar) {
-        model.addAttribute("federation", subDao.get(id));
+        SubFederacao fed = subDao.get(id);
+        
+        Map<String, Integer> repsSize = new HashMap<>();
+        Integer fedSize = 0;
+        //list rep whith size
+        for(RepositorioSubFed sRep : fed.getRepositorios()){
+            Integer sizeRep = docDao.countFromSubRep(sRep);
+            fedSize+=sizeRep;
+            repsSize.put(sRep.getName(), sizeRep);
+        }
+        
+        model.addAttribute("fedSize", fedSize);
+        model.addAttribute("mapRepSize", repsSize);
+        model.addAttribute("federation", fed);
         model.addAttribute("recarregar", recarregar);
+        
         return "admin/federations/show";
     }
 

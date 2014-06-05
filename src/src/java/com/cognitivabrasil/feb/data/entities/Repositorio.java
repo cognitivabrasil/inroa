@@ -1,8 +1,6 @@
-// Generated 20/07/2011 15:25:15 by Hibernate Tools 3.2.0.b9
 package com.cognitivabrasil.feb.data.entities;
 
 import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
-import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
 import com.cognitivabrasil.feb.util.Operacoes;
 import java.util.*;
 import javax.persistence.CascadeType;
@@ -19,13 +17,10 @@ import javax.persistence.Transient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.apache.log4j.Logger;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.springframework.context.ApplicationContext;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Table(name = "repositorios")
 public class Repositorio implements java.io.Serializable, FebDomainObject {
 
-    private static final Logger log = Logger.getLogger(Repositorio.class);
     private static final long serialVersionUID = 1011292251690153763L;
     private Integer id;
     private String name;
@@ -379,46 +373,6 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     @Deprecated
     public void setColecoesString(String s) {
         setColecoesInternal(s);
-    }
-
-    /**
-     * @return the sessionFactory
-     */
-    @Transient
-    public SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-            if (ctx != null) {
-                // TODO:
-                sessionFactory = ctx.getBean(SessionFactory.class);
-            } else {
-                throw new IllegalStateException(
-                        "FEB ERRO: Could not get Application context");
-            }
-        }
-        return sessionFactory;
-    }
-
-    /**
-     * @param sessionFactory the sessionFactory to set
-     */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    /**
-     * @return the session
-     */
-    @Transient
-    private Session getSession() {
-        if (session == null) {
-            try {
-                session = getSessionFactory().getCurrentSession();
-            } catch (HibernateException e) {
-                session = getSessionFactory().openSession();
-            }
-        }
-        return session;
     }
 
     @Override

@@ -6,6 +6,7 @@ package com.cognitivabrasil.feb.data.repositories;
 
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 
 import java.util.List;
 import org.joda.time.DateTime;
@@ -50,8 +51,11 @@ public interface DocumentRepository extends JpaRepository<Document, Integer> {
     @Query("SELECT count(*) FROM Document d WHERE deleted is false")
     public long countDeletedFalse();
     
-    @Query("SELECT count(*) FROM Document d WHERE deleted is false AND d.repositorio = :repositorio")
-    public Integer countFromRepositoryDeletedIsFalse(@Param("repositorio") Repositorio repositorio);
+    @Query("SELECT count(*) FROM Document d WHERE deleted is :deleted AND d.repositorio = :repositorio")
+    public Integer countFromRepository(@Param("repositorio") Repositorio repositorio,@Param("deleted") boolean deleted);
+    
+    @Query("select count(*) from Document doc WHERE doc.repositorioSubFed = :repositorio AND doc.deleted = :deleted")
+    public Integer countFromSubRepository(@Param("repositorio") RepositorioSubFed repositorio, @Param("deleted") boolean deleted);
 
     //metodos para o OAI
     // Hack: we add one second to the date and use non-inclusive comparison for until, and 

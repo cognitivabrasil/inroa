@@ -5,7 +5,6 @@
 package com.cognitivabrasil.feb.data.entities;
 
 import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
-import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
 import com.cognitivabrasil.feb.util.Operacoes;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,10 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.style.ToStringCreator;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -49,7 +46,6 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
     private String version;
     private String dataXMLTemp;
     private Set<RepositorioSubFed> repositorios;
-    private transient SessionFactory sessionFactory;
 
     public SubFederacao() {
         this.id = null;
@@ -220,26 +216,6 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
     }
 
     /**
-     * Retorna o n&uacute;mero de documentos que a subfedera&ccedil;&atilde;o
-     * possui.
-     *
-     * @return int com o n&uacute;mero de documentos
-     * @deprecated use o servide de fera&ccdeil;&atilde;o
-     */
-    @Transient
-    @Deprecated
-    public int getSizeDoc() {
-        int size = 0;
-
-        for (RepositorioSubFed repSub : getRepositorios()) {
-            size += repSub.getSize();
-        }
-
-        return size;
-    }
-
-
-    /**
      * Test if federation is outdated.
      *
      * @return true if it is outdated or false if it is updated.
@@ -293,19 +269,6 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
         return null;
     }
 
-    @Transient
-    private SessionFactory getSessionFactory() {
-        if (sessionFactory == null) {
-            ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-            if (ctx != null) {
-                //TODO:
-                sessionFactory = ctx.getBean(SessionFactory.class);
-            } else {
-                throw new IllegalStateException("Could not get Application context");
-            }
-        }
-        return sessionFactory;
-    }
 
     @Override
     public String toStringDetailed() {

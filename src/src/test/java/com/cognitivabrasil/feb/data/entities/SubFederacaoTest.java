@@ -45,27 +45,6 @@ public class SubFederacaoTest {
         assertThat(s.getProximaAtualizacao(), is(notNullValue()));
     }
 
-    /**
-     * Test get size doc.
-     */
-    @Test
-    public void testGetSizeDoc() {
-        RepositorioSubFed r1 = mock(RepositorioSubFed.class);
-        RepositorioSubFed r2 = mock(RepositorioSubFed.class);
-
-        when(r1.getSize()).thenReturn(3);
-        when(r2.getSize()).thenReturn(4);
-
-        Set<RepositorioSubFed> sr = new HashSet<>();
-        sr.add(r1);
-        sr.add(r2);
-
-        SubFederacao instance = new SubFederacao();
-
-        instance.setRepositorios(sr);
-        int result = instance.getSizeDoc();
-        assertEquals(7, result);
-    }
 
     /**
      * Test update not blank.

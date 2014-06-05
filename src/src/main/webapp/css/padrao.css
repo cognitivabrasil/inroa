@@ -743,12 +743,9 @@ td{vertical-align:top;}
     font-size: 105%;
 }
 
-.tableSubfed table{
-    text-align: center;
-}
-
 .tableSubfed td {
     border: 2px solid #FFFFFF;
+    text-align: center;
 }
 
 .versao{
@@ -956,3 +953,7 @@ body.loading {
 body.loading .modal {
     display: block;
 }
+
+/*css3 tabela com linhas coloridas*/
+table.zebra tbody tr:nth-child(odd) {background: white}
+table.zebra tbody tr:nth-child(even) {background: #D7EBFF}
