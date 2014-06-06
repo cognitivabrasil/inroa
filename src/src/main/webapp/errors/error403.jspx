@@ -8,19 +8,20 @@
     <c:url var="index" value="/" />
     
     <head>
-        <title>Página não encontrada</title>
+        <title>FEB - Acesso negado</title>
         <style>
-            body {margin: 50px;}
+            body {margin: 50px}
+            logoError{width: 170px}
         </style>
     </head>
 
     <body>
         <c:url var="logo" value="/imagens/Logo FEB_reduzido.png" />
         <a href="${index}">
-            <img src="${logo}" alt="logo" width="15%"/>
+            <img id="logoError" src="${logo}" alt="logo"/>
         </a>
 
-        <h1>Ooops, a página solicitada não foi encontrada.</h1>
+        <h1>Ooops, você não tem permissão para acessar esta página.</h1>
         Clique <a href="${index}">aqui</a> e volte para a ferramenta de busca.
     </body>
 

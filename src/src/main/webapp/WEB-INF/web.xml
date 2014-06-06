@@ -141,6 +141,11 @@
     
     
     <error-page>
+        <error-code>403</error-code>
+        <location>/errors/error403.jspx</location>
+    </error-page>
+    
+    <error-page>
         <error-code>404</error-code>
         <location>/errors/error404.jspx</location>
     </error-page>
