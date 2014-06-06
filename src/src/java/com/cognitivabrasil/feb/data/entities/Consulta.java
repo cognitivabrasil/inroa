@@ -44,7 +44,7 @@ public class Consulta {
 
     public Consulta() {
         rss = false;
-        limit = 5;
+        limit = 10;
         offset = 0;
         sizeResult = 0;
 
