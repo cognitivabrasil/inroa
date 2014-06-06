@@ -16,10 +16,13 @@ import com.cognitivabrasil.feb.spring.validador.InfoBDValidator;
 import com.cognitivabrasil.feb.util.Operacoes;
 import java.io.IOException;
 import java.util.Properties;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -58,19 +61,26 @@ public class AdminController {
     }
 
     @RequestMapping("/")
-    public String admin(Model model) {
+    public String admin(Model model, HttpServletRequest request) {
         model.addAttribute("repositories", repDao.getAll());
         model.addAttribute("mapeamentos", mapDao.getAll());
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         model.addAttribute("users", userDao.getAll());
         model.addAttribute("version", febInfo.getProperty("feb.version"));
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+
+        model.addAttribute("username", name);
+        model.addAttribute("userAdministrator", request.isUserInRole("PERM_MANAGE_USERS"));
+        
         return "admin/adm";
     }
 
     @RequestMapping("/adm")
-    public String admin2(Model model) {
-        return admin(model);
+    public String admin2(Model model, HttpServletRequest request) {
+        return admin(model,request);
     }
 
     @RequestMapping("/sair")

@@ -348,8 +348,13 @@ public final class UsersController {
 
     @RequestMapping(value = "/passwd", method = RequestMethod.POST)
     public String passwdChange(Model model, Principal principal,
-            @ModelAttribute("user") UserPasswordDto u,
-            BindingResult result) {
+            @ModelAttribute("user") UserPasswordDto u, HttpServletResponse response,
+            BindingResult result) throws IOException {
+        Usuario uCurrent = getCurrentUser();
+        if (!uCurrent.getUsername().equals(principal.getName())) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return "ajax";
+        }
         Usuario user = userDao.get(principal.getName());
 
         UserPasswordValidator userPasswordValidator = new UserPasswordValidator();

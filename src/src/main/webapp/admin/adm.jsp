@@ -42,29 +42,25 @@ Author     : Marcos Nunes
         <script>
             setRootUrl(${root});
             $(function() {
-                $( "#recalculo" ).button({
-                    
+                $("#recalculo").button({
                     icons: {
                         primary: "ui-icon-arrowrefresh-1-n"
                     }
                 })
-                
-                $( "#alterarSenha" ).button({
-                    
+
+                $("#alterarSenha").button({
                     icons: {
                         primary: "ui-icon-key"
                     }
                 })
-                
-                $( "#alterarBase" ).button({
-                    
+
+                $("#alterarBase").button({
                     icons: {
                         primary: "ui-icon-suitcase"
                     }
                 })
-                
-                $( "#sair" ).button({
-                    
+
+                $("#sair").button({
                     icons: {
                         primary: "ui-icon-close"
                     }
@@ -76,7 +72,7 @@ Author     : Marcos Nunes
     </head>
     <body id="paginaAdministrativa">
 
-        
+
         <jsp:include page="../cabecalho.jsp">
             <jsp:param value="Ferramenta Administrativa" name="titulo" />
             <jsp:param value="7%" name="tamanho" />
@@ -84,7 +80,7 @@ Author     : Marcos Nunes
 
         <c:url var="logoutUrl" value="/j_spring_security_logout" />
         <div class="sair">
-            <button type="button" id="sair" onclick="location.href='${logoutUrl}'">Sair</button>
+            <button type="button" id="sair" onclick="location.href = '${logoutUrl}'">Sair</button>
         </div>
         <div id="tabs">
             <ul>
@@ -118,7 +114,7 @@ Author     : Marcos Nunes
 
                                 </security:authorize> &nbsp; <input type="button" class="botaoEditar"
                                               title="Editar / Visualizar" name="editar" id="editarRep"
-                                              onclick="NewWindow('repositories/${rep.id}','','850','total');">
+                                              onclick="NewWindow('repositories/${rep.id}', '', '850', 'total');">
                             </td>
                             <td>${rep.name}</td>
                             <td>${rep.descricao}</td>
@@ -163,7 +159,7 @@ Author     : Marcos Nunes
                             <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
 
                                     <a title="Adicionar novo reposit&oacute;rio"
-                                       onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total');">
+                                       onclick="NewWindow('${newRepositoryUrl}', 'Cadastro', '750', 'total');">
                                         <img
                                             src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                             border="0" width="24" height="24" alt="Visualizar" align="middle">
@@ -174,7 +170,7 @@ Author     : Marcos Nunes
                                     access="hasRole('PERM_MANAGE_REP')">
 
                                     <a
-                                        onclick="NewWindow('${newRepositoryUrl}','Cadastro','750','total');">
+                                        onclick="NewWindow('${newRepositoryUrl}', 'Cadastro', '750', 'total');">
                                         Adicionar novo reposit&oacute;rio </a>
                                     </security:authorize>
 
@@ -219,7 +215,7 @@ Author     : Marcos Nunes
 
                                 </security:authorize> &nbsp; <input type="button" class="botaoEditar"
                                               title="Editar / Visualizar" name="editar" id="editarSubfed"
-                                              onclick="NewWindow('./federations/${subfed.id}','','750','560');">
+                                              onclick="NewWindow('./federations/${subfed.id}', '', '750', '560');">
 
                             </td>
                             <td>${subfed.name}</td>
@@ -267,7 +263,7 @@ Author     : Marcos Nunes
                             <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
 
                                     <a title="Adicionar nova federa&ccedil;&atilde;o"
-                                       onclick="NewWindow('${newFederationUrl}','Cadastro','750','650');">
+                                       onclick="NewWindow('${newFederationUrl}', 'Cadastro', '750', '650');">
                                         <img
                                             src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                             border="0" width="24" height="24" alt="Visualizar" align="middle">
@@ -278,7 +274,7 @@ Author     : Marcos Nunes
                                     access="hasRole('PERM_MANAGE_REP')">
 
                                     <a
-                                        onclick="NewWindow('${newFederationUrl}','Cadastro','750','650');">
+                                        onclick="NewWindow('${newFederationUrl}', 'Cadastro', '750', '650');">
                                         Adicionar nova federa&ccedil;&atilde;o </a>
                                     </security:authorize>
                             </td>
@@ -368,7 +364,7 @@ Author     : Marcos Nunes
                                 &nbsp;
                                 <input type="button" class="botaoEditar"
                                        title="Editar / Visualizar" name="editar" id="editarPadrao"
-                                       onclick="NewWindow('./metadataStandard/${padraoMet.id}','editaPadrao','650','400');" />
+                                       onclick="NewWindow('./metadataStandard/${padraoMet.id}', 'editaPadrao', '650', '400');" />
                             </td>
                             <td>${padraoMet.name}</td>
                             <td>${padraoMet.metadataPrefix}</td>
@@ -494,20 +490,22 @@ Author     : Marcos Nunes
 
                 <security:authorize access="hasRole('PERM_UPDATE')">
 
-                    <button id="recalculo" onclick="javascript:NewWindow('confirmaRecalcularIndice','','500','240');">
+                    <button id="recalculo" onclick="javascript:NewWindow('confirmaRecalcularIndice', '', '500', '240');">
                         Recalcular o &Iacute;ndice</button>
                     </security:authorize>
 
-                <button id="alterarSenha" onclick="javascript:NewWindow('./users/passwd','','700','400');return false">
+                <button id="alterarSenha" onclick="javascript:NewWindow('./users/passwd', '', '700', '400');
+                        return false">
                     Alterar Senha </button>
 
                 <security:authorize access="hasRole('PERM_CHANGE_DATABASE')">
-                    <button id="alterarBase" onclick="javascript:NewWindow('alterDB','','650','500');return false">
+                    <button id="alterarBase" onclick="javascript:NewWindow('alterDB', '', '650', '500');
+                            return false">
                         Alterar Base de Dados</button>
                     </security:authorize>
 
 
-                <table class='repositorios-table' cellpadding=3>
+                <table id='tbListUser' class='repositorios-table' cellpadding=3>
                     <tr>
                     <caption>Usu&aacute;rios</caption>
                     </tr>
@@ -527,9 +525,12 @@ Author     : Marcos Nunes
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir usu&aacute;rio ${user.username}"
                                            name="excluirUsario" id="excluirUsario" href="${delUser}" />
-                                </security:authorize> &nbsp; <input type="button" class="botaoEditar"
-                                              title="Editar / Visualizar" name="editar" id="editarSubfed"
-                                              onclick="NewWindow('./users/${user.id}','','750','560');">
+                                </security:authorize> &nbsp; 
+                                <c:if test="${userAdministrator || username == user.username}">
+                                    <input type="button" class="botaoEditar"
+                                           title="Editar / Visualizar" name="editar" id="editarSubfed"
+                                           onclick="NewWindow('./users/${user.id}', '', '750', '560');">
+                                </c:if>
 
                             </td>
                             <td>${user.username}</td>
@@ -542,14 +543,14 @@ Author     : Marcos Nunes
                     <security:authorize access="hasRole('PERM_MANAGE_USERS')">
                         <tr class='center'>
                             <td><a title="Adicionar novo usuário"
-                                   onclick="NewWindow('./users/new','Cadastro','750','650');">
+                                   onclick="NewWindow('./users/new', 'Cadastro', '750', '650');">
                                     <img
                                         src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
                                         border="0" width="24" height="24" alt="Visualizar" align="middle">
                                 </a></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <a
-                                    onclick="NewWindow('./users/new','Cadastro','750','650');">
+                                    onclick="NewWindow('./users/new', 'Cadastro', '750', '650');">
                                     Adicionar novo usuário </a>
                             </td>
                             <td></td>
@@ -603,7 +604,7 @@ Author     : Marcos Nunes
                     <strong>Erro:</strong> <span id="errorThrown"></span>.</p>
             </div>
         </div>
-        
+
         <%@include file="../googleAnalytics"%>
     </BODY>
 </html>

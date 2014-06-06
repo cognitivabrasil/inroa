@@ -41,7 +41,7 @@ a{
 }
 
 a:visited{
-    color:#0066CC;
+    /* color:#0066CC; */
 }
 a:hover{
     text-decoration:underline;
@@ -957,3 +957,5 @@ body.loading .modal {
 /*css3 tabela com linhas coloridas*/
 table.zebra tbody tr:nth-child(odd) {background: white}
 table.zebra tbody tr:nth-child(even) {background: #D7EBFF}
+a#alterarSenha{color: none}
+#tbListUser td{height: 26px}
