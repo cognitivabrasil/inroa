@@ -88,7 +88,7 @@ public class SubFederacaoOAI {
                         }
                         Long fim = System.currentTimeMillis();
                         Long total = fim - inicio;
-                        log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName()+"\n");
+                        log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName() + "\n");
                     }
 
                     if (atualizadoTemp) { //se alguma subfederacao foi atualizada entao seta o atualizou como true
@@ -133,11 +133,9 @@ public class SubFederacaoOAI {
                 Objetos obj = new Objetos();
                 obj.atualizaObjetosSubFed(subFed, indexar);
 
-
                 subFed.setUltimaAtualizacao(DateTime.now());
                 FederationService subDao = ctx.getBean(FederationService.class);
                 subDao.save(subFed);
-
 
             } catch (UnknownHostException u) {
                 log.error("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: " + u);
@@ -226,7 +224,7 @@ public class SubFederacaoOAI {
                 atualizaSubFedOAI(subFed, indexar);
                 Long fim = System.currentTimeMillis();
                 Long total = fim - inicio;
-                log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName()+"\n");
+                log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + subFed.getName() + "\n");
             }
         }
     }
@@ -250,8 +248,8 @@ public class SubFederacaoOAI {
      * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome
      * das federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
      *
-     * @param nome ArrayList<String> contendo o nome das federa&ccedil;&otilde;es
-     * que n&atilde;o foram atualizadas.
+     * @param nome ArrayList<String> contendo o nome das
+     * federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
      * @return String com a mensagem de erro gerada.
      */
     public static String getMensagem(ArrayList<String> nome) {
