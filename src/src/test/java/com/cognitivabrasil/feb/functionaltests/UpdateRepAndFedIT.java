@@ -97,9 +97,7 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
 
         SubFederacao subFed = subDao.get("marcos");
 
-        for (RepositorioSubFed r : subFed.getRepositorios()) {
-            r.dellAllDocs();
-        }
+        subDao.deleteAllDocs(subFed);
 
         ParserListSets parserListSets = new ParserListSets();
         File xmlFedSetsFile = new File(xmlFedSets);
