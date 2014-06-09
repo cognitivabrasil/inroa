@@ -131,8 +131,6 @@
             <property name="maxSize" value="30" />
         </bean>
         
-
-        
         <encryption:string-encryptor id="myEncryptor" password="feb@RNP" pool-size="5" />
         
         <util:properties id="febInf" location="classpath:info.properties"/>
@@ -145,12 +143,7 @@
             <prop key="Postgres.host">127.0.0.1</prop>
             <prop key="Postgres.port">5432</prop>
         </util:properties>
-        
-        <bean id="sessionFactory"
-              class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-            <property name="dataSource" ref="dataSource" />
-            <property name="configLocation" value="classpath:hibernate.cfg.xml" />
-        </bean>
+
         
         <bean id="repositorios" class="com.cognitivabrasil.feb.robo.atualiza.Repositorios" />
         <bean id="subf" class="com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI" />

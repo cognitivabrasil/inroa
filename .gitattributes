@@ -717,14 +717,6 @@ src/src/main/resources/applicationContext.xml -text
 src/src/main/resources/dummy.properties -text
 src/src/main/resources/feb.properties -text
 src/src/main/resources/feb2to3.xsl -text
-src/src/main/resources/hibernate.cfg.xml -text
-src/src/main/resources/hibernate/Autores.hbm.xml -text
-src/src/main/resources/hibernate/Documentos.hbm.xml -text
-src/src/main/resources/hibernate/Mapping.hbm.xml -text
-src/src/main/resources/hibernate/MetadataRecord.hbm.xml -text
-src/src/main/resources/hibernate/Repositorio.hbm.xml -text
-src/src/main/resources/hibernate/RepositorioSubFed.hbm.xml -text
-src/src/main/resources/hibernate/SubFederacao.hbm.xml -text
 src/src/main/resources/info.properties -text
 src/src/main/resources/log4j.properties -text
 src/src/main/resources/manifest.mf -text

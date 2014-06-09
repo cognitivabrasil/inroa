@@ -1,4 +1,4 @@
-package feb.solr.camposObaa;
+package com.cognitivabrasil.feb.solr.camposObaa;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class EducationalFields {
 
     public static List<String> getInteractivitytype(OBAA o) {
 
-        List<String> tipo = new ArrayList<String>();
+        List<String> tipo = new ArrayList<>();
         tipo.add(cabecalho + "interactivitytype");
         tipo.add(o.getEducational().getInteractivityType());
         return tipo;
@@ -19,7 +19,7 @@ public class EducationalFields {
 
     public static List<String> getLearningresourcetype(OBAA o) {
 
-        List<String> learning = new ArrayList<String>();
+        List<String> learning = new ArrayList<>();
         learning.add(cabecalho + "learningresourcetype");
         learning.addAll(o.getEducational().getLearningResourceTypesString());
         return learning;
@@ -27,7 +27,7 @@ public class EducationalFields {
 
     public static List<String> getIntendedenduserrole(OBAA o) {
 
-        List<String> intended = new ArrayList<String>();
+        List<String> intended = new ArrayList<>();
         intended.add(cabecalho + "intendedenduserrole");
         intended.addAll(o.getEducational().getIntendedEndUserRole());
         return intended;
@@ -35,7 +35,7 @@ public class EducationalFields {
 
     public static List<String> getContext(OBAA o) {
 
-        List<String> context = new ArrayList<String>();
+        List<String> context = new ArrayList<>();
         context.add(cabecalho + "context");
         context.addAll(o.getEducational().getContexts());
         return context;
@@ -43,7 +43,7 @@ public class EducationalFields {
 
     public static List<String> getTypicalagerange(OBAA o) {
 
-        List<String> typical = new ArrayList<String>();
+        List<String> typical = new ArrayList<>();
         typical.add(cabecalho + "typicalagerange");
         typical.addAll(o.getEducational().getTypicalAgeRanges());
 
@@ -100,7 +100,7 @@ public class EducationalFields {
 
     public static List<String> getDifficulty(OBAA o) {
 
-        List<String> difficulty = new ArrayList<String>();
+        List<String> difficulty = new ArrayList<>();
         difficulty.add(cabecalho + "difficulty");
         if (o.getEducational().getDifficulty() == null) {
             difficulty.add(null);
@@ -117,7 +117,7 @@ public class EducationalFields {
             return null;
         }
 
-        List<List<String>> all = new ArrayList<List<String>>();
+        List<List<String>> all = new ArrayList<>();
 
         all.add(getContext(o));
         all.add(getDifficulty(o));
