@@ -100,6 +100,8 @@ public class QuerySolr {
         query.setStart(offset);
         query.setRows(limit);
 
+                query.setRequestHandler("/feb_avancado");
+
         //Para definir que espaco em branco sera considerado OR e nao +
         query.set(QueryParsing.OP, "OR");
         
