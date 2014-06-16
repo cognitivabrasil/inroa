@@ -71,8 +71,8 @@
                 <c:choose>
                     <c:when test="${federation.isOutdated}">
                         <div id="textResultSF${param.id}" class='Value textoErro'>
-                            <span> ${federation.ultimaAtualizacaoFormatada} <security:authorize
-                                    access="hasRole('PERM_UPDATE')">
+                            <span> ${federation.ultimaAtualizacaoFormatada} 
+                                <security:authorize access="hasRole('PERM_UPDATE')">
 
                                     <a title='Atualizar agora'
                                        onclick="javaScript:atualizaSubfedAjax(${federation.id}, this.parentNode);">
@@ -85,8 +85,8 @@
                     </c:when>
                     <c:otherwise>
                         <div id="textResultSF${federation.id}" class="Value">
-                            <span> ${federation.ultimaAtualizacaoFormatada} <security:authorize
-                                    access="hasRole('PERM_UPDATE')">
+                            <span> ${federation.ultimaAtualizacaoFormatada} 
+                                <security:authorize access="hasRole('PERM_UPDATE')">
 
                                     <a title='Atualizar agora'
                                        onclick="javaScript:atualizaSubfedAjax(${federation.id}, this.parentNode);">
@@ -99,7 +99,7 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-            
+
             <table width=100% class="zebra tableSubfed">
                 <th width="70%">Reposit&oacute;rio</th>
                 <th width="30%">N&uacute;mero de objetos</th>
