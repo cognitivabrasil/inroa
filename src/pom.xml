@@ -2,24 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>feb</groupId>
+    <groupId>com.cognitivabrasil</groupId>
     <artifactId>feb</artifactId>
-    <version>2.9-RELEASE</version>
+    <version>3.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>FEB</name>
     <url>http://feb.ufrgs.br</url>
     <!-- Shared version number properties -->
 
     <properties>
-
-        <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
-        <org.springframework.security.version>3.1.1.RELEASE</org.springframework.security.version>
+        <java-version>1.7</java-version>
+        <org.springframework.version>3.2.1.RELEASE</org.springframework.version>
+        <org.springframework.security.version>3.1.3.RELEASE</org.springframework.security.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!--<netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>-->
         <include.tests>nothing-to-include</include.tests>
         <config.skiptests>false</config.skiptests>
-
+        <org.slf4j-version>1.7.5</org.slf4j-version>
     </properties>
     <profiles>
         <profile>
@@ -46,10 +45,6 @@
     </scm>
 
     <repositories>
-        <!-- <repository> -->
-        <!-- <id>excilys</id> -->
-        <!-- <url>http://repository.excilys.com/content/repositories/releases</url> -->
-        <!-- </repository> -->
 
         <repository>
             <id>cognitivabrasil</id>
@@ -59,6 +54,7 @@
                 <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
+        
         <repository>
             <id>spring-release</id>
             <name>Spring Repository</name>
@@ -68,8 +64,7 @@
 
 
     <dependencies>
-		
-		
+        	
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-all</artifactId>
@@ -77,23 +72,24 @@
             <scope>test</scope>
         </dependency>
 			
+        <!-- Test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <type>jar</type>
+            <version>4.11</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>cognitivabrasil</groupId>
             <artifactId>obaa</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>2.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>cognitivabrasil</groupId>
             <artifactId>oaicat</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.1</version>
         </dependency>
 
         <!-- RSS -->
@@ -101,19 +97,6 @@
             <groupId>net.java.dev.rome</groupId>
             <artifactId>rome</artifactId>
             <version>1.0.0</version>
-        </dependency>
-
-        <!-- AOP -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>1.6.11</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.6.11</version>
         </dependency>
 
         <dependency>
@@ -154,7 +137,7 @@
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.0-801.jdbc3</version>
+            <version>9.1-901-1.jdbc4</version>
         </dependency>
         <dependency>
             <groupId>jsptags</groupId>
@@ -183,28 +166,28 @@
             <artifactId>jasypt-spring31</artifactId>
             <version>1.9.0</version>
         </dependency>
-
-        <!-- AOP dependency -->
+        
+        <!-- database -->
         <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>2.2.2</version>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.3.170</version>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.1.1.Final</version>
+            <version>4.1.9.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.1.1.Final</version>
+            <version>4.1.9.Final</version>
         </dependency>
         <dependency>
             <groupId>org.simpleframework</groupId>
             <artifactId>simple-xml</artifactId>
-            <version>2.6</version>
+            <version>2.7.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.extras</groupId>
@@ -236,29 +219,55 @@
             <version>3.0</version>
         </dependency>
 
+        <!-- Logging -->
         <dependency>
-            <groupId>xalan</groupId>
-            <artifactId>xalan</artifactId>
-            <version>2.5.1</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${org.slf4j-version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${org.slf4j-version}</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
+            <version>1.2.17</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.jms</groupId>
+                    <artifactId>jms</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jdmk</groupId>
+                    <artifactId>jmxtools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jmx</groupId>
+                    <artifactId>jmxri</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!-- <dependency> -->
-        <!-- <groupId>org.slf4j</groupId> -->
-        <!-- <artifactId>slf4j-log4j12</artifactId> -->
-        <!-- <version>1.5.6</version> -->
-        <!-- </dependency> -->
 
         <!-- Core utilities used by other modules. Define this if you use Spring 
-    				Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
+        Utility APIs (org.springframework.core.*/org.springframework.util.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -266,7 +275,7 @@
         </dependency>
 
         <!-- Expression Language (depends on feb.spring-core) Define this if you 
-    				use Spring Expression APIs (org.springframework.expression.*) -->
+        use Spring Expression APIs (org.springframework.expression.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-expression</artifactId>
@@ -274,32 +283,32 @@
         </dependency>
 
         <!-- Bean Factory and JavaBeans utilities (depends on feb.spring-core) 
-    				Define this if you use Spring Bean APIs (org.springframework.beans.*) -->
+        Define this if you use Spring Bean APIs (org.springframework.beans.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
 
-        <!-- Aspect Oriented Programming (AOP) Framework (depends on feb.spring-core, 
-    				feb.spring-beans) Define this if you use Spring AOP APIs (org.springframework.aop.*) -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>${org.springframework.version}</version>
-        </dependency>
 
         <!-- Application Context (depends on feb.spring-core, feb.spring-expression, 
-    				feb.spring-aop, feb.spring-beans) This is the central artifact for Spring's 
-    				Dependency Injection Container and is generally always defined -->
+        feb.spring-aop, feb.spring-beans) This is the central artifact for Spring's 
+        Dependency Injection Container and is generally always defined -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${org.springframework.version}</version>
+            <exclusions>
+                <!-- Exclude Commons Logging in favor of SLF4j -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Various Application Context utilities, including EhCache, JavaMail, 
-    				Quartz, and Freemarker integration Define this if you need any of these integrations -->
+        Quartz, and Freemarker integration Define this if you need any of these integrations -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
@@ -307,8 +316,8 @@
         </dependency>
 
         <!-- Transaction Management Abstraction (depends on feb.spring-core, feb.spring-beans, 
-    				feb.spring-aop, feb.spring-context) Define this if you use Spring Transactions 
-    				or DAO Exception Hierarchy (org.springframework.transaction.*/org.springframework.dao.*) -->
+        feb.spring-aop, feb.spring-context) Define this if you use Spring Transactions 
+        or DAO Exception Hierarchy (org.springframework.transaction.*/org.springframework.dao.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
@@ -316,8 +325,8 @@
         </dependency>
 
         <!-- JDBC Data Access Library (depends on feb.spring-core, feb.spring-beans, 
-    				feb.spring-context, feb.spring-tx) Define this if you use Spring's JdbcTemplate 
-    				API (org.springframework.jdbc.*) -->
+        feb.spring-context, feb.spring-tx) Define this if you use Spring's JdbcTemplate 
+        API (org.springframework.jdbc.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -325,8 +334,8 @@
         </dependency>
 
         <!-- Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, 
-    				and iBatis. (depends on feb.spring-core, feb.spring-beans, feb.spring-context, 
-    				feb.spring-tx) Define this if you need ORM (org.springframework.orm.*) -->
+        and iBatis. (depends on feb.spring-core, feb.spring-beans, feb.spring-context, 
+        feb.spring-tx) Define this if you need ORM (org.springframework.orm.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -334,8 +343,8 @@
         </dependency>
 
         <!-- Object-to-XML Mapping (OXM) abstraction and integration with JAXB, 
-    				JiBX, Castor, XStream, and XML Beans. (depends on feb.spring-core, feb.spring-beans, 
-    				feb.spring-context) Define this if you need OXM (org.springframework.oxm.*) -->
+        JiBX, Castor, XStream, and XML Beans. (depends on feb.spring-core, feb.spring-beans, 
+        feb.spring-context) Define this if you need OXM (org.springframework.oxm.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
@@ -343,9 +352,9 @@
         </dependency>
 
         <!-- Web application development utilities applicable to both Servlet 
-    				and Portlet Environments (depends on feb.spring-core, feb.spring-beans, feb.spring-context) 
-    				Define this if you use Spring MVC, or wish to use Struts, JSF, or another 
-    				web framework with Spring (org.springframework.web.*) -->
+        and Portlet Environments (depends on feb.spring-core, feb.spring-beans, feb.spring-context) 
+        Define this if you use Spring MVC, or wish to use Struts, JSF, or another 
+        web framework with Spring (org.springframework.web.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -353,8 +362,8 @@
         </dependency>
 
         <!-- Spring MVC for Servlet Environments (depends on feb.spring-core, 
-    				feb.spring-beans, feb.spring-context, feb.spring-web) Define this if you 
-    				use Spring MVC with a Servlet Container such as Apache Tomcat (org.springframework.web.servlet.*) -->
+        feb.spring-beans, feb.spring-context, feb.spring-web) Define this if you 
+        use Spring MVC with a Servlet Container such as Apache Tomcat (org.springframework.web.servlet.*) -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
@@ -362,14 +371,14 @@
         </dependency>
 
         <!-- Spring MVC for Portlet Environments (depends on feb.spring-core, 
-    				feb.spring-beans, feb.spring-context, feb.spring-web) Define this if you 
-    				use Spring MVC with a Portlet Container (org.springframework.web.portlet.*) -->
+        feb.spring-beans, feb.spring-context, feb.spring-web) Define this if you 
+        use Spring MVC with a Portlet Container (org.springframework.web.portlet.*) -->
         <!--<dependency> <groupId>org.springframework</groupId> <artifactId>feb.spring-webmvc-portlet</artifactId> 
-    				<version>${org.springframework.version}</version> </dependency> -->
+        <version>${org.springframework.version}</version> </dependency> -->
 
         <!-- Support for testing Spring applications with tools such as JUnit 
-    				and TestNG This artifact is generally always defined with a 'test' scope 
-    				for the integration testing framework and unit testing stubs -->
+        and TestNG This artifact is generally always defined with a 'test' scope 
+        for the integration testing framework and unit testing stubs -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
@@ -444,15 +453,117 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.11</version>
         </dependency>
+        
+        <!--         Dados para uso do SOLR   -->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-core</artifactId>
+            <version>4.5.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-jdk14</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+        
+        <!--jpa-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.4.3.RELEASE</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-core</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysema.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        
+        <!-- joda time -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-jsptags</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.core</artifactId>
+            <version>3.2.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jadira.usertype</groupId>
+            <artifactId>usertype.spi</artifactId>
+            <version>3.2.0.GA</version>
+        </dependency>
     </dependencies>
     <build>
-
+        <resources>
+            <resource>
+                <!--para pegar a versao do projeto pelo arquivo properties-->
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
         <sourceDirectory>src/java</sourceDirectory>
         <scriptSourceDirectory>src/scripts</scriptSourceDirectory>
         <testSourceDirectory>src/test/java</testSourceDirectory>
         <finalName>feb</finalName>
         <plugins>
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>maven-apt-plugin</artifactId>
+                <version>1.0.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Specifies the directory in which the query types are generated -->
+                            <outputDirectory>target/generated-sources/querydsl</outputDirectory>
+                            <!-- States that the APT code generator should look for JPA annotations -->
+                            <processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
@@ -472,20 +583,10 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat6-maven-plugin</artifactId>
-                <version>2.0-SNAPSHOT</version>
-                <!--<configuration> <server>febserver</server> <port>8080</port> <url>http://localhost:8080/feb</url> 
-          						</configuration> -->
-            </plugin>
-
-
-            <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
                     <webAppSourceDirectory>${basedir}/web/</webAppSourceDirectory>
-                    <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
 
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
@@ -516,22 +617,22 @@
                     <scanIntervalSeconds>100000</scanIntervalSeconds>
                     <stopKey>foo</stopKey>
                     <stopPort>9998</stopPort>
-                    <webAppConfig>
+                    <webApp>
                         <contextPath>/feb</contextPath>
-                    </webAppConfig>
+                    </webApp>
                 </configuration>
             </plugin>
-
-
+            
             <plugin>
-                <inherited>true</inherited>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <optimize>true</optimize>
-                    <debug>true</debug>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
@@ -543,18 +644,21 @@
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <minimumTokens>100</minimumTokens>
-                    <targetJdk>1.6</targetJdk>
+                    <targetJdk>1.7</targetJdk>
                     <excludeRoots>
                         <excludeRoot>target/generated-sources/stubs</excludeRoot>
                     </excludeRoots>
 
                 </configuration>
             </plugin>
-
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>test</spring.profiles.active>
+                    </systemPropertyVariables>
                     <skipTests>${config.skiptests}</skipTests>
                     <excludes>
                         <exclude>${include.tests}</exclude>
@@ -569,6 +673,7 @@
                     </execution>
                 </executions>
             </plugin>
+            
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -582,7 +687,7 @@
                     </archive>
                 </configuration>
                 <!--<configuration> <webappDirectory>web</webappDirectory> <webXml>web/WEB-INF/web.xml</webXml> 
-          						</configuration> -->
+                </configuration> -->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -597,6 +702,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12</version>
                 <configuration>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>test</spring.profiles.active>
+                    </systemPropertyVariables>
                     <skipTests>${config.skiptests}</skipTests>
                     <includes>
                         <include>**/Test*.java</include>
@@ -627,18 +735,20 @@
                     <xmlOutput>true</xmlOutput>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>org.test.int1.Main</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
 
     </build>
     <reporting>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <configuration>
-                    <configLocation>config/sun_checks.xml</configLocation>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
@@ -659,7 +769,7 @@
                     <linkXref>true</linkXref>
                     <sourceEncoding>utf-8</sourceEncoding>
                     <minimumTokens>100</minimumTokens>
-                    <targetJdk>1.5</targetJdk>
+                    <targetJdk>1.7</targetJdk>
                     <excludeRoots>
                         <excludeRoot>target/generated-sources/stubs</excludeRoot>
                     </excludeRoots>

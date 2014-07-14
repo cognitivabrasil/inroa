@@ -18,14 +18,12 @@
         <title>FEB - Ferramenta Administrativa</title>
         <c:url var="favicon" value="/imagens/favicon.ico" />
         <c:url var="css" value="/css/padrao.css" />
-        <c:url var="validateJs" value="/scripts/validatejs.js" />
         <c:url var="funcoesJs" value="/scripts/funcoes.js" />
 
         <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
 
         <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="${css }" type="text/css" />
-        <script type="text/javascript" src="${validateJs }"></script>
         <script type="text/javascript" src="${funcoesJs }"></script>
         <c:url var="root" value="/" />
         <script>setRootUrl(${root});</script>
@@ -35,6 +33,7 @@
 
         <div id="page">
             <c:if test="${recarregar}">
+                <%--quando edita, ele retorna para ca e avisa para recarregar a pagina principal--%>
                 <script language="JavaScript" type="text/javascript">recarrega();</script>
             </c:if>
             <div class="subTitulo-center">&nbsp;Edi&ccedil;&atilde;o /
@@ -72,8 +71,8 @@
                 <c:choose>
                     <c:when test="${federation.isOutdated}">
                         <div id="textResultSF${param.id}" class='Value textoErro'>
-                            <span> ${federation.ultimaAtualizacaoFormatada} <security:authorize
-                                    access="hasRole('PERM_UPDATE')">
+                            <span> ${federation.ultimaAtualizacaoFormatada} 
+                                <security:authorize access="hasRole('PERM_UPDATE')">
 
                                     <a title='Atualizar agora'
                                        onclick="javaScript:atualizaSubfedAjax(${federation.id}, this.parentNode);">
@@ -86,8 +85,8 @@
                     </c:when>
                     <c:otherwise>
                         <div id="textResultSF${federation.id}" class="Value">
-                            <span> ${federation.ultimaAtualizacaoFormatada} <security:authorize
-                                    access="hasRole('PERM_UPDATE')">
+                            <span> ${federation.ultimaAtualizacaoFormatada} 
+                                <security:authorize access="hasRole('PERM_UPDATE')">
 
                                     <a title='Atualizar agora'
                                        onclick="javaScript:atualizaSubfedAjax(${federation.id}, this.parentNode);">
@@ -101,21 +100,18 @@
                 </c:choose>
             </div>
 
-
-            <table width=100% class="tableSubfed">
+            <table width=100% class="zebra tableSubfed">
                 <th width="70%">Reposit&oacute;rio</th>
                 <th width="30%">N&uacute;mero de objetos</th>
-                <c:forEach var="rep" items="${federation.repositorios}"
-                           varStatus="status">
-                    <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
-                        <td>${rep.name}</td>
-                        <td align='center'>${rep.size}</td>
+                    <c:forEach var="rep" items="${mapRepSize}">
+                    <tr>
+                        <td>${rep.key}</td>
+                        <td>${rep.value}</td>
                     </tr>
                 </c:forEach>
-
                 <tr class="bold">
                     <th align="right">TOTAL</th>
-                    <th align='center'>${federation.sizeDoc}</th>
+                    <th align='center'>${fedSize}</th>
                 </tr>
             </table>
 

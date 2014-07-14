@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="center">
-                    <input name="_spring_security_remember_me" type="checkbox"> Permanecer logado
+                    <input name="_spring_security_remember_me" type="checkbox" value=""> Permanecer logado
                 </div>
 
                 <div class="LinhaEntrada">

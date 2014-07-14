@@ -9,8 +9,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
-<script language="javascript" type="text/javascript" src='<spring:url value="/scripts/jquery-1.7.2.min.js" htmlEscape="true" />'></script>
-<script language="javascript" type="text/javascript" src='<spring:url value="/scripts/jquery.tagcloud.js" htmlEscape="true" />'></script>
+<script language="javascript" type="text/javascript" src='<spring:url value="/scripts/vendor/jquery-1.7.2.js" htmlEscape="true" />'></script>
+<script language="javascript" type="text/javascript" src='<spring:url value="/scripts/vendor/jquery.tagcloud.js" htmlEscape="true" />'></script>
 <script language="javascript" type="text/javascript" src='<spring:url value="/scripts/tagCloud.js" htmlEscape="true" />'></script>
 
 

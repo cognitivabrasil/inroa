@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04/04/2014, 15:27:26
+    Author     : Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
+*/
+
+.tituloPrincipal{margin-bottom:2%;background-color:#AEC9E3}
+.tituloPrincipal .tituloObj{margin-left:5%;font-weight:bold}
+.tituloPrincipal .identificadorObj{margin-left:7%;color:#32618F;font-weight:bold;font-size: 1em}
+.socialBookmarks {float: right;margin-top: 1px;margin-right: 30px;margin-bottom: 15px}
+.socialBookmark {float: right}
+
+#obaaTree .title{text-decoration: underline; font-size:120%;}
+#obaaTree li{margin-top: 0.8em;}
+#obaaTree ul{list-style-type: none;}
+#obaaTree .name{font-weight: bold}
+.footerButton{margin-bottom: 5px;}
+.value{word-wrap:break-word;}

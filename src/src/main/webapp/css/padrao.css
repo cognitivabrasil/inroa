@@ -34,10 +34,6 @@ body
 
 }
 
-#bodyLetraMaior{
-    font-size:84%;
-}
-
 a{
     font-weight:inherit;
     color:#0066CC;
@@ -45,7 +41,7 @@ a{
 }
 
 a:visited{
-    color:#0066CC;
+    /* color:#0066CC; */
 }
 a:hover{
     text-decoration:underline;
@@ -215,25 +211,6 @@ div.suporte{margin-top: 5px; margin-left: 5px;}
     font-weight: bold;
 }
 
-#estatisticas .caixaAzul
-{
-    width: 1000px;
-    border: 2px #AEC9E3 solid;
-    padding: 10px;
-    margin: 10px auto;
-}
-
-#estatisticas table td{text-align: center;}
-#estatisticas table td:first-child{text-align: left;}
-
-.estatisticasTitulo
-{
-    text-align:center;
-    font-size: 110%;
-    color: black;
-    font-weight: bold;
-    padding: 2px;
-}
 .zebraEven
 {
     background-color:#D7EBFF;
@@ -262,18 +239,6 @@ div.suporte{margin-top: 5px; margin-left: 5px;}
     padding:5px;
     margin-bottom:15px;
     font-family:arial, sans-serif;
-}
-.subTituloBusca
-{
-    font-size: 120%;
-    text-align:center;
-    font-weight: bold;
-    padding-left: 10px;
-    background-color: #414042;
-    color:white;
-    font-family:"Zurich Ex BT", "arial", "sans-serif";
-    padding:5px;
-    margin-bottom:15px;
 }
 .subTitulo-left
 {
@@ -441,7 +406,6 @@ a:hover{
 .LinhaEntrada .ValueErro{
     margin:0 0 20px 41%;
     color:red;
-    font-weight:bold;
 }
 .LinhaEntrada .msgError{
     margin:0 0 0 41%;
@@ -488,23 +452,18 @@ a:hover{
     padding-bottom:5px;
 }
 
-.LinhaEntrada .Value input,.LinhaEntrada .Value select {width:50%; border-color: #006699}
+.LinhaEntrada .Value input,.LinhaEntrada .Value select {/* width:50%; */ border-color: #006699}
 .LinhaEntrada .Value .disabled{
     background-color: #D7EBFF;
     border: 0px;
     color: black;
     text-align: center;
 }
-
-.EspacoPequeno{
-    padding-top:1px;
-    font-size:0;
-}
 .Espaco{
     padding-top:5px;
 
 }
-.textoErro{
+.error,.textoErro{
     color:red;
     font-weight: bold;
 }
@@ -615,7 +574,6 @@ td{vertical-align:top;}
     vertical-align: middle;
     border: 2px solid #AEC9E3;
     margin-top: 2%;
-    background: #FFFFFF;
     opacity: 0.8;
     padding: 2px;
     margin-left: 0;
@@ -694,18 +652,7 @@ td{vertical-align:top;}
     vertical-align:middle;
 }
 .clear { clear: both; }
-.logoBusca{
-    text-align:center;
-    background-color:#35a0f2;
-    border-color: white;
-}
-.logoBusca .logo{
-    width: 11%;
-}
-.logoBusca a{
-    text-decoration:none;
-    color:white;
-}
+
 
 .linkCantoEsquerdo{
     float:left;
@@ -739,26 +686,6 @@ td{vertical-align:top;}
 .linkCantoDireito a:hover{
     font-size:102%;
     text-decoration:none;
-}
-
-/* parte da Info detalhada*/
-.tituloPrincipal{
-    margin-bottom:2%;
-    background-color:#AEC9E3;
-}
-.tituloPrincipal .tituloObj{
-    font-size:135%;
-    margin-left:5%;
-    font-weight:bold;
-}
-
-.tituloPrincipal .identificadorObj{
-    margin-left:7%;
-    color:#32618F;
-    font-family:Verdana, Arial, Helvetica, sans-serif;
-    font-style:italic;
-    font-weight:bold;
-    font-size: 80%;
 }
 
 
@@ -810,15 +737,7 @@ td{vertical-align:top;}
     text-align: right;
 }
 
-.socialBookmarks {
-    float: right;
-    margin-top: 1px;
-    margin-right: 30px;
-    margin-bottom: 15px;
-}
-.socialBookmark {
-    float: right;
-}
+
 
 .tableSubfed{
     border-color: red;
@@ -830,12 +749,9 @@ td{vertical-align:top;}
     font-size: 105%;
 }
 
-.tableSubfed table{
-    text-align: center;
-}
-
 .tableSubfed td {
     border: 2px solid #FFFFFF;
+    text-align: center;
 }
 
 .versao{
@@ -930,23 +846,7 @@ td{vertical-align:top;}
 .margin-top{margin-top: 2%;}
 
 .sucesso{color: #007a00; font-weight: bold}
-.infoDetalhada {margin-bottom: 2%;}
-.infoDetalhada .title{text-decoration: underline; font-size:120%;}
-.infoDetalhada li{
-    margin-top: 1%;
-    clear: both;
-}
-.infoDetalhada ul{background-color: #f1f1f1; list-style-type: none;}
-.infoDetalhada strong{margin-right: 1%;}
-.infoDetalhada .nome{
-    float: left;
-    text-align:left;
-    font-weight: bold;
-    margin-right: 1%;
-}
-.infoDetalhada .valor{
-    margin:0% 0% 1% 12%;
-}
+
 #tagcloud{
     margin-top: 8%;
     margin-left: 5%;
@@ -999,7 +899,7 @@ td{vertical-align:top;}
     margin-right: auto;
     padding-top: 1%;
     padding-left: 1%;
-    width: 50%;
+    max-width: 800px;
     border: 2px solid #AEC9E3;
     color: #414042;
     text-align: left;
@@ -1043,9 +943,9 @@ td{vertical-align:top;}
     height:     100%;
     width:      100%;
     background: rgba( 255, 255, 255, .8 ) 
-                url('images/ajax-loader.gif') 
-                50% 50% 
-                no-repeat;
+        url('images/ajax-loader.gif') 
+        50% 50% 
+        no-repeat;
 }
 
 /* When the body has the loading class, we turn
@@ -1078,3 +978,8 @@ body.loading .modal {
     font-family: Helvetica;
     
 }
+/*css3 tabela com linhas coloridas*/
+table.zebra tbody tr:nth-child(odd) {background: white}
+table.zebra tbody tr:nth-child(even) {background: #D7EBFF}
+a#alterarSenha{color: none}
+#tbListUser td{height: 26px}

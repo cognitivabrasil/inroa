@@ -1,0 +1,65 @@
+feb (3.0-ubuntu18) precise; urgency=low
+
+  * Adicionei pedido de senha para postgres e admin
+  * Instala arquivos do Solr
+
+ -- Paulo Schreiner <paulo@cognitivabrasil.com.br>  Tue, 17 Jul 2012 10:28:31 -0300
+
+feb (2.0.1-ubuntu6) oneiric; urgency=low
+
+  * WAR correto.
+
+ -- Paulo Schreiner <paulo@cognitivabrasil.com.br>  Mon, 12 Dec 2011 21:28:31 -0200
+
+feb (2.0.1-ubuntu5) oneiric; urgency=low
+
+  * Exibir versao.
+  * Correcao nos scripts SQL.
+
+ -- Marcos Nunes <marcosn@gmail.com>  Mon, 12 Dec 2011 21:15:00 -0200
+
+feb (2.0.1-ubuntu4) oneiric; urgency=low
+
+  * Corrigi dono.
+
+ -- Paulo Schreiner <paulo@paulo-Samsung>  Mon, 12 Dec 2011 19:37:05 -0200
+
+feb (2.0.1-ubuntu3) oneiric; urgency=low
+
+  * Corrigi permissões. 
+
+ -- Paulo Schreiner <paulo@jorjao81.com>  Mon, 12 Dec 2011 19:14:31 -0200
+
+feb (2.0.1-ubuntu2) oneiric; urgency=low
+
+  * Baixei mudanças do marcos.
+
+ -- Paulo Schreiner <paulo@jorjao81.com>  Mon, 12 Dec 2011 17:25:04 -0200
+
+feb (2.0.1-ubuntu1) oneiric; urgency=high
+
+  * OAICat pegando informações do arquivo feb.properties
+  * Pequenas correções
+
+ -- Paulo Schreiner <paulo@jorjao81.com>  Mon, 12 Dec 2011 17:01:39 -0200
+
+feb (2.0-2) unstable; urgency=high
+
+  * Adicionei dependências que estavam causando erros.
+
+ -- Paulo Schreiner <paulo@jorjao81.com>  Sat, 10 Dec 2011 10:47:37 -0200
+
+feb (2.0-1) unstable; urgency=low
+
+  * Gravando senha da base criptografada
+  * Comando feb-config
+  * Sincronização via OAI-PMH
+  * Base de dados pode ser em outra máquina
+  * Melhorias na interface administrativa
+  * Melhoria na ferramenta de busca (balanço dos pesos)
+  * Temporizador para rodar o robô
+  * Verificação de consistência do link OAI-PMH
+  * Bug fixes
+
+ -- Paulo Schreiner  <paulo@jorjao81.com>  Mon, 28 Nov 2011 16:30:24 -0200
+

@@ -1,11 +1,8 @@
 package feb.services;
 
-import feb.data.daos.AbstractDaoTest;
-import feb.data.daos.PalavrasOfensivasHibernateDAO;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.argThat;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -17,22 +14,25 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import feb.data.entities.Search;
-import feb.data.interfaces.SearchesDao;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.cognitivabrasil.feb.data.entities.Search;
+import com.cognitivabrasil.feb.data.services.PalavrasOfensivasHibernateDAO;
+import com.cognitivabrasil.feb.data.services.SearchService;
+import com.cognitivabrasil.feb.data.services.TagCloudServiceImpl;
+
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
-public class TagCloudImplIT extends AbstractDaoTest {
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+public class TagCloudImplIT  extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     TagCloudServiceImpl tagService;
     
@@ -56,7 +56,7 @@ public class TagCloudImplIT extends AbstractDaoTest {
 
         l.add(new Search("merdinha", 15));
 
-        SearchesDao search = mock(SearchesDao.class);
+        SearchService search = mock(SearchService.class);
         when(search.getSearches(argThat(is(3)), argThat(any(Date.class)))).thenReturn(l);
         when(search.getSearches(argThat(is(5)), argThat(any(Date.class)))).thenReturn(l);
 

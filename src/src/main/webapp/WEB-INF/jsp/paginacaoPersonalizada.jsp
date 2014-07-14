@@ -1,6 +1,6 @@
-<span class="paginacao">P&aacute;ginas de Resultado:
-<pg:prev export="pageUrl">&nbsp;<a href="<%= pageUrl%>&consulta=${BuscaModel.consulta}">[&lt;&lt; Anterior]</a></pg:prev>
-</span>
+<font face=Helvetica size=-1>P&aacute;ginas de Resultado:
+<pg:prev export="pageUrl">&nbsp;<a href="<%= pageUrl%>&consulta=${buscaModel.consulta}">[&lt;&lt; Anterior]</a></pg:prev>
+</font>
 
 <pg:pages><%
   if (pageNumber.intValue() < 10) {
@@ -9,12 +9,11 @@
   if (pageNumber == currentPageNumber) {
     %><strong><%= pageNumber %></strong><%
   } else {
-    %><a href="<%= pageUrl%>&consulta=${BuscaModel.consulta}"><%= pageNumber %></a><%
+    %><a href="<%= pageUrl%>&consulta=${buscaModel.consulta}"><%= pageNumber %></a><%
   }
 %>
 </pg:pages>
 
-
-<div class="paginacao">
-<pg:next export="pageUrl">&nbsp;<a href="<%= pageUrl%>&consulta=${BuscaModel.consulta}">[Pr&oacute;xima &gt;&gt;]</a></pg:next>
-</div>
+<font face=Helvetica size=-1>
+<pg:next export="pageUrl">&nbsp;<a href="<%= pageUrl%>&consulta=${buscaModel.consulta}">[Pr&oacute;xima &gt;&gt;]</a></pg:next>
+<br></font>

@@ -22,14 +22,30 @@
         <c:url var="funcoes" value="/scripts/funcoes.js" />
         <link rel="StyleSheet" href="${css}" type="text/css">
         <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
+        <c:url var="jqueryUi" value="/css/Theme/jquery-ui-1.8.22.custom.css" />
+        <link rel="StyleSheet" href="${jqueryUi}" type="text/css"/>
+        <c:url var="jUi" value="/scripts/vendor/jquery-1.7.2.js" />
+        <script language="javascript" type="text/javascript" src='${jUi}'></script>
+        <c:url var="jQuery" value="/scripts/vendor/jquery-ui-1.8.22.custom.min.js" />
+        <script type="text/javascript" src='${jQuery}'></script>
+
         <script language="JavaScript" type="text/javascript" src="${funcoes}"></script>
         <c:url var="root" value="/" />
-        <script>setRootUrl(${root});</script>
+        <script>
+            setRootUrl(${root});
+            $(function() {
+                $( "#alterarSenha" ).button({
+                    
+                    icons: {
+                        primary: "ui-icon-key"
+                    }
+                });
+            });
+        </script>
     </head>
 
     <body>
-        <jsp:useBean id="operacoesBean" class="feb.util.Operacoes"
-                     scope="page" />
+        <jsp:useBean id="operacoesBean" class="com.cognitivabrasil.feb.util.Operacoes" scope="page" />
 
         <div id="page">
 
@@ -59,6 +75,9 @@
                 <div class="Label">Perfil:</div>
                 <div class="Value">&nbsp;${user.role}</div>
             </div>
+                <c:url var="chPass" value="/admin/users/passwd"/>
+            <a id="alterarSenha" href="${chPass}">
+                Alterar Senha </a>
 
             <%@include file="../../googleAnalytics"%>
     </body>

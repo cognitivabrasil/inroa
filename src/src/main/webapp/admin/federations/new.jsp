@@ -15,7 +15,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
 
-        <c:url var="jquery" value="/scripts/jquery-1.7.2.min.js" />
+        <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <c:url var="validateOAI" value="/scripts/validateOAI.js" />
         <script type="text/javascript" src="${validateOAI}"></script>
@@ -72,10 +72,10 @@
                        acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="LinhaEntrada">
-                    <form:errors path="nome" cssClass="ValueErro" />
+                    <form:errors path="name" cssClass="ValueErro" />
                     <div class="Label">Nome:</div>
                     <div class="Value">
-                        <form:input path="nome" maxlength="45"
+                        <form:input path="name" maxlength="45"
                                     onFocus="this.className='inputSelecionado'"
                                     onBlur="this.className=''" />
                     </div>

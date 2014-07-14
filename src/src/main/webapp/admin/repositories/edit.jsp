@@ -22,7 +22,7 @@
         <c:url var="validateJs" value="/scripts/validatejs.js" />
         <c:url var="funcoesJs" value="/scripts/funcoes.js" />
         
-        <c:url var="jquery" value="/scripts/jquery-1.7.2.min.js" />
+        <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <c:url var="validateOAI" value="/scripts/validateOAI.js" />
         <script type="text/javascript" src="${validateOAI}"></script>
@@ -42,17 +42,16 @@
 
             <script type="text/javascript">
                 var myForm = new Validate();
-                myForm.addRules({id:'nome',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
+                myForm.addRules({id:'name',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
                 myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
                 myForm.addRules({id:'padraoMetadados.id',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
                 myForm.addRules({id:'mapeamento.id',option:'isNotEmpty',error:'* Deve ser selecionado um mapeamento!'});
                 myForm.addRules({id:'metadataPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
                 myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
-                myForm.addRules({id:'periodicidadeAtualizacao',option:'required',error:'* Deve ser informado a periodicidade de atualiza&ccedil;&atilde;o. Em dias!'});
                 myForm.addRules({id : 'url', option : 'required', error : '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
             </script>
 
-            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.nome}</div>
+            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.name}</div>
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             
             <form:form method="post" modelAttribute="repModel" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
@@ -61,12 +60,12 @@
                     <c:out value="${erro}"/>
                 </div>
                 <div class="LinhaEntrada">
-                    <form:errors path="nome" cssClass="ValueErro" />
+                    <form:errors path="name" cssClass="ValueErro" />
                     <div class="Label">
                         Nome/Sigla:
                     </div>
                     <div class="Value">
-                        <form:input path="nome" maxlength="45" />                        
+                        <form:input path="name" maxlength="45" />                        
                     </div>
                 </div>
                 <div class="LinhaEntrada">
@@ -111,16 +110,6 @@
                 </div>
 
                 <div class="LinhaEntrada">
-                    <form:errors path="periodicidadeAtualizacao" cssClass="ValueErro" />
-                    <div class="Label">
-                        Periodicidade de atualiza&ccedil;&atilde;o (em dias):
-                    </div>
-                    <div class="Value">
-                        <form:input path="periodicidadeAtualizacao" maxlength="3" onkeypress ="return ( isNumber(event) );" />
-                    </div>
-                </div>
-
-                <div class="LinhaEntrada">
                     <form:errors path="padraoMetadados.id" cssClass="ValueErro" />
                     <div class="Label">
                         Padr&atilde;o de metadados utilizado:
@@ -128,7 +117,7 @@
                     <div class="Value">
                         <select name="padraoMetadados.id" id="padraoMetadados.id" onChange="selecionaMapeamento('resultado', this.value, ${repModel.mapeamento.id});">
                             <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
-                                <option value="${padraoMet.id}" ${padraoMet.id==repModel.padraoMetadados.id ? 'selected':''}> ${fn:toUpperCase(padraoMet.nome)}                           
+                                <option value="${padraoMet.id}" ${padraoMet.id==repModel.padraoMetadados.id ? 'selected':''}> ${fn:toUpperCase(padraoMet.name)}                           
                                 </c:forEach>
                         </select>
                     </div>

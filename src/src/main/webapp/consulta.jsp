@@ -12,9 +12,9 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="pt-BR">
+<html>
     <head>
-        <c:url var="jquery" value="/scripts/jquery-1.7.2.min.js" />
+        <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
         <c:url var="validateURL" value="/scripts/testUrlActive.js" />
         <script type="text/javascript" src="${validateURL}"></script>
@@ -49,14 +49,14 @@
         </div>
         <div class="cabecalhoConsulta">
             <div class="esquerda">
-                <c:url var="rsslink" value="rss/feed?${BuscaModel.urlEncoded}"/>
+                <c:url var="rsslink" value="rss/feed?${buscaModel.urlEncoded}"/>
                 <c:url var="rssImg" value="/imagens/feed-icon-14x14.png"/>
                 <a href="${rsslink}"><img src="${rssImg}" alt="RSS"/></a>
-                <c:if test="${!empty BuscaModel.consulta}"> &nbsp;Consulta efetuada <em>"<strong><c:out value="${BuscaModel.consulta}"/></strong>"</em></c:if>
-                <c:if test="${!empty BuscaModel.autor}"> &nbsp;Autor: <em>"<strong><c:out value="${BuscaModel.autor}"/></strong>"</em></c:if>
+                <c:if test="${!empty buscaModel.consulta}"> &nbsp;Consulta efetuada <i>"<strong><c:out value="${buscaModel.consulta}"/></strong>"</i></c:if>
+                <c:if test="${!empty buscaModel.autor}"> &nbsp;Autor: <i>"<strong><c:out value="${buscaModel.autor}"/></strong>"</i></c:if>
                 </div>
                 <div class="direita">
-                    Total de <strong>${BuscaModel.sizeResult}</strong> objeto(s) encontrado(s)&nbsp;
+                    Total de <strong>${buscaModel.sizeResult}</strong> objeto(s) encontrado(s)&nbsp;
             </div>
 
         </div>
@@ -66,8 +66,12 @@
 
             <c:choose>
                 <c:when test="${empty documentos}">
-                    <p class="nenhumOa">
-                        <strong>Nenhum objeto encontrado</strong>
+                    <p align="center">
+                        <strong>
+                            <font size="3" face="Verdana, Arial, Helvetica, sans-serif">
+                                Nenhum objeto encontrado
+                            </font>
+                        </strong>
                     </p>
                 </c:when>
                 <c:otherwise>
@@ -75,10 +79,10 @@
                         <center>
 
                             <pg:pager
-                                items="${BuscaModel.sizeResult}"
+                                items="${buscaModel.sizeResult}"
                                 url="consulta"
                                 index="center"
-                                maxPageItems="${BuscaModel.limit}"
+                                maxPageItems="${buscaModel.limit}"
                                 maxIndexPages="10"
                                 isOffset="true"
                                 export="offset,currentPageNumber=pageNumber"
@@ -129,17 +133,9 @@
                                                 <div class="atributo"> Localiza&ccedil;&atilde;o:
                                                     <c:forEach var="localizacao" items="${doc.locationHttp}">
                                                         <c:if test="${localizacao.value}">
-                                                            <div class="atributo"><a class="verifyUrl" href="${localizacao.key}" target="_new" onclick="objectAcessCounter(${doc.id})">${localizacao.key}</a></div>
+                                                            <div class="atributo"><a class="verifyUrl" href="${localizacao.key}" target="_new">${localizacao.key}</a></div>
                                                             </c:if>
                                                         </c:forEach>
-                                                </div>
-                                            </c:if>
-
-                                            <c:if test="${!empty doc.date}">
-                                                <div class="atributo"> Data:
-                                                    <c:forEach var="data" items="${doc.date}">
-                                                        <div class="atributo">${data}</div>
-                                                    </c:forEach>
                                                 </div>
                                             </c:if>
 
@@ -161,11 +157,8 @@
             </c:choose>
         </div>
 
-        <div class="rodapeConsulta">
-            <span class="suporte">
-                Problemas para utilizar este sistema? Suporte técnico <a href="http://cognitivabrasil.com.br/">Cognitiva Brasil</a>: <a href="mailto:contato@cogbr.com">contato@cogbr.com</a>
-            </span>
-        </div>
+        <div class="rodapeConsulta">&nbsp;</div>
         <%@include file="googleAnalytics"%>
+
     </body>
 </html>

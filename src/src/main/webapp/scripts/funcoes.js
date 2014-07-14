@@ -308,14 +308,6 @@ function recalcularIndice(destino, form){
     
 }
 
-function objectAcessCounter(id){
-    if (navigator.cookieEnabled){
-        var ajax = openAjax(); // Start Ajax.
-        var link = rootUrl + "admin/statistics/objUser?id="+id;    
-        ajax.open("POST", link, true);
-    }
-}
-
 function paranaodarerro(){
 //alguns navegadores excluem a ultima funcao.
 }

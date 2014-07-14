@@ -1,3 +1,0 @@
--- CRIAR A DATABASE DE TESTE
-    CREATE DATABASE federacao_teste WITH TEMPLATE federacao ENCODING 'UTF-8';
-    ALTER DATABASE federacao_teste OWNER TO feb;
