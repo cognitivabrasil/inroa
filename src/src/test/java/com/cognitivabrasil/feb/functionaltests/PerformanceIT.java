@@ -4,23 +4,37 @@
  */
 package com.cognitivabrasil.feb.functionaltests;
 
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
+import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ParserListSets;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
+
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +58,6 @@ import org.xml.sax.SAXException;
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
 @TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
 @Transactional
-@Ignore
 public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests {
 	Logger log = Logger.getLogger(PerformanceIT.class);
 
@@ -58,10 +71,144 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
     MetadataRecordService padDao;
     @Autowired
     MappingService mapDao;
-    @Autowired SessionFactory sessionFactory;
+    
+    @PersistenceContext
+    private EntityManager em;
+    
+//    @Autowired SessionFactory sessionFactory;
 
     @Test
+    @Ignore
+    public void testUpdateRepFromXML() throws IOException, ParserConfigurationException, SAXException, TransformerException {
+    	  ArrayList<String> caminhosXML = new ArrayList<String>();
+        caminhosXML.add("FEB-ufrgs1.xml");
+        caminhosXML.add("FEB-ufrgs2.xml");
+        caminhosXML.add("FEB-ufrgs3.xml");
+        caminhosXML.add("FEB-ufrgs4.xml");
+        caminhosXML.add("FEB-ufrgs4.xml");
+        caminhosXML.add("FEB-ufrgs6.xml");
+        caminhosXML.add("FEB-ufrgs7.xml");
+        caminhosXML.add("FEB-ufrgs8.xml");
+        caminhosXML.add("FEB-ufrgs9.xml");
+        caminhosXML.add("FEB-ufrgs10.xml");
+        caminhosXML.add("FEB-ufrgs11.xml");
+        caminhosXML.add("FEB-ufrgs12.xml");
+        caminhosXML.add("FEB-ufrgs13.xml");
+        caminhosXML.add("FEB-ufrgs14.xml");
+        caminhosXML.add("FEB-ufrgs15.xml");
+        caminhosXML.add("FEB-ufrgs16.xml");
+        caminhosXML.add("FEB-ufrgs17.xml");
+        caminhosXML.add("FEB-ufrgs18.xml");
+        caminhosXML.add("FEB-ufrgs19.xml");
+        caminhosXML.add("FEB-ufrgs20.xml");
+        caminhosXML.add("FEB-ufrgs21.xml");
+        caminhosXML.add("FEB-ufrgs22.xml");
+        caminhosXML.add("FEB-ufrgs23.xml");
+        caminhosXML.add("FEB-ufrgs24.xml");
+        caminhosXML.add("FEB-ufrgs25.xml");
+        caminhosXML.add("FEB-ufrgs26.xml");
+        caminhosXML.add("FEB-ufrgs27.xml");
+        caminhosXML.add("FEB-ufrgs28.xml");
+        caminhosXML.add("FEB-ufrgs29.xml");
+        caminhosXML.add("FEB-ufrgs30.xml");
+        caminhosXML.add("FEB-ufrgs31.xml");
+        caminhosXML.add("FEB-ufrgs32.xml");
+        caminhosXML.add("FEB-ufrgs33.xml");
+        caminhosXML.add("FEB-ufrgs34.xml");
+        caminhosXML.add("FEB-ufrgs35.xml");
+        caminhosXML.add("FEB-ufrgs36.xml");
+        caminhosXML.add("FEB-ufrgs37.xml");
+        caminhosXML.add("FEB-ufrgs38.xml");
+        caminhosXML.add("FEB-ufrgs39.xml");
+        caminhosXML.add("FEB-ufrgs40.xml");
+        caminhosXML.add("FEB-ufrgs41.xml");
+        caminhosXML.add("FEB-ufrgs42.xml");
+        caminhosXML.add("FEB-ufrgs43.xml");
+        caminhosXML.add("FEB-ufrgs44.xml");
+        caminhosXML.add("FEB-ufrgs45.xml");
+        caminhosXML.add("FEB-ufrgs46.xml");
+        caminhosXML.add("FEB-ufrgs47.xml");
+        caminhosXML.add("FEB-ufrgs48.xml");
+        caminhosXML.add("FEB-ufrgs49.xml");
+        caminhosXML.add("FEB-ufrgs50.xml");
+        caminhosXML.add("FEB-ufrgs51.xml");
+        caminhosXML.add("FEB-ufrgs52.xml");
+        caminhosXML.add("FEB-ufrgs53.xml");
+        caminhosXML.add("FEB-ufrgs54.xml");
+        caminhosXML.add("FEB-ufrgs55.xml");
+        caminhosXML.add("FEB-ufrgs56.xml");
+        caminhosXML.add("FEB-ufrgs57.xml");
+        caminhosXML.add("FEB-ufrgs58.xml");
+        caminhosXML.add("FEB-ufrgs59.xml");
+        caminhosXML.add("FEB-ufrgs60.xml");
+        caminhosXML.add("FEB-ufrgs61.xml");
+        caminhosXML.add("FEB-ufrgs62.xml");
+        caminhosXML.add("FEB-ufrgs63.xml");
+        caminhosXML.add("FEB-ufrgs64.xml");
+        caminhosXML.add("FEB-ufrgs65.xml");
+        caminhosXML.add("FEB-ufrgs66.xml");
+        caminhosXML.add("FEB-ufrgs67.xml");
+        caminhosXML.add("FEB-ufrgs68.xml");
+        caminhosXML.add("FEB-ufrgs69.xml");
+        caminhosXML.add("FEB-ufrgs70.xml");
+        caminhosXML.add("FEB-ufrgs71.xml");
+        caminhosXML.add("FEB-ufrgs72.xml");
+        caminhosXML.add("FEB-ufrgs73.xml");
+        caminhosXML.add("FEB-ufrgs74.xml");
+        caminhosXML.add("FEB-ufrgs75.xml");
+        caminhosXML.add("FEB-ufrgs76.xml");
+        caminhosXML.add("FEB-ufrgs77.xml");
+        caminhosXML.add("FEB-ufrgs78.xml");
+        caminhosXML.add("FEB-ufrgs79.xml");
+        caminhosXML.add("FEB-ufrgs80.xml");
+        caminhosXML.add("FEB-ufrgs81.xml");
+        caminhosXML.add("FEB-ufrgs82.xml");
+        caminhosXML.add("FEB-ufrgs83.xml");
+        caminhosXML.add("FEB-ufrgs84.xml");
+        caminhosXML.add("FEB-ufrgs85.xml");
+        caminhosXML.add("FEB-ufrgs86.xml");
+        caminhosXML.add("FEB-ufrgs87.xml");
+        caminhosXML.add("FEB-ufrgs88.xml");
+        caminhosXML.add("FEB-ufrgs89.xml");
+        caminhosXML.add("FEB-ufrgs90.xml");
+        
+        Collections.reverse(caminhosXML);
+        
+        String inputXsltFile = "src/xslt/obaa2obaa.xsl"; // input xsl
+        String xslt = FileUtils.readFileToString(new File(inputXsltFile));
+        SubFederacao subFed = subDao.get("marcos");
+  
+        
+        for (String caminho : caminhosXML) {
+        	StopWatch stop = new StopWatch();
+        	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+            File arquivoXML = new File(caminho);
+            System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+
+             Importer imp = new Importer();
+             imp.setEntityManager(em);
+            imp.setInputFile(arquivoXML);
+            imp.setSubFed(subFed);
+            imp.setDocDao(docDao);
+            imp.update();
+            
+            //assertThat(updated, equalTo(2));
+
+            subDao.save(subFed);
+            
+    
+            stop.stop();
+            System.out.println("XML " + stop.prettyPrint());
+          
+        }
+        
+
+    }
+    
+    
+    @Test
     @Transactional
+    @Ignore
     public void perfomanceTest() throws IOException, ParserConfigurationException, SAXException, TransformerException {
         Long inicio = System.currentTimeMillis();
 
@@ -119,8 +266,10 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         Long tempoTotal = fim-inicio;
         //System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
         
+        /*
         sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().clear();
+        */
 
 
          Long deletei = System.currentTimeMillis();
@@ -135,6 +284,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
     
     @Test(timeout=30000)
     @Transactional
+    @Ignore
     public void jorjaoTest() throws ParserConfigurationException, SAXException, IOException, TransformerConfigurationException, TransformerException {
     	Long inicio = System.currentTimeMillis();
 
@@ -192,8 +342,11 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         Long tempoTotal = fim-inicio;
         //System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
         
+        /*
         sessionFactory.getCurrentSession().flush();
         sessionFactory.getCurrentSession().clear();
+        */
+
 
 
          Long deletei = System.currentTimeMillis();
@@ -210,6 +363,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
 
     @Test
     @Transactional
+    @Ignore
     public void XMLdeleteDocsTest() throws IOException, ParserConfigurationException, SAXException, TransformerException{
           Long inicio = System.currentTimeMillis();
 
