@@ -12,7 +12,7 @@ import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
-import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer;
+import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ParserListSets;
 
 import java.io.File;
@@ -185,8 +185,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             File arquivoXML = new File(caminho);
             System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
-             Importer imp = new Importer();
-             imp.setEntityManager(em);
+             ImporterSubfed imp = new ImporterSubfed();
             imp.setInputFile(arquivoXML);
             imp.setSubFed(subFed);
             imp.setDocDao(docDao);
@@ -246,7 +245,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             File arquivoXML = new File(caminho);
             //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
-            com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer imp = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer();
+            com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed imp = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed();
             imp.setInputFile(arquivoXML);
             imp.setDocDao(docDao);
             imp.setSubFed(subFed);
@@ -322,7 +321,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             File arquivoXML = new File(caminho);
             //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
-            com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer imp = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer();
+            com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed imp = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed();
             imp.setInputFile(arquivoXML);
             imp.setDocDao(docDao);
             imp.setSubFed(subFed);
@@ -386,7 +385,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             File arquivoXML = new File(caminho);
             //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
-            com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer imp = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer();
+            com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed imp = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed();
             imp.setInputFile(arquivoXML);
             imp.setDocDao(docDao);
             imp.setSubFed(subFed);

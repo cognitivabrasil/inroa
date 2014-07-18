@@ -4,12 +4,13 @@ import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
-import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
 
@@ -22,8 +23,13 @@ import org.springframework.context.ApplicationContextException;
  * @author Marcos
  */
 public class XMLtoDB {
-
     static Logger log = Logger.getLogger(XMLtoDB.class);
+    
+    @Autowired
+    private RepositoryService repDao;
+      
+    @Autowired
+    private ImporterRep imp; 
 
     /**
      * Método que chama o parser xml o qual insere na base de dados os registros
@@ -40,16 +46,10 @@ public class XMLtoDB {
             ArrayList<String> caminhoXML,
             int id,
             Indexador indexar) throws Exception {
-        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-        if (ctx == null) {
-            log.fatal("Could not get AppContext bean!");
-            throw new ApplicationContextException("Could not get AppContext bean!");
-        } else {
 
-            RepositoryService repDao = ctx.getBean(RepositoryService.class);
             Repositorio r = repDao.get(id);
             saveXML(caminhoXML, r, indexar);
-        }
+     
     }
 
     /**
@@ -71,22 +71,12 @@ public class XMLtoDB {
 
         int updated = 0;
 
-        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-        if (ctx == null) {
-            log.fatal("Could not get AppContext bean!");
-            throw new ApplicationContextException("Could not get AppContext bean!");
-        } else {
-
-            DocumentService docDao = ctx.getBean(DocumentService.class);
-
             for (int i = 0; i < caminhoXML.size(); i++) {
                 log.info("Lendo XML " + caminhoXML.get(i).substring(caminhoXML.get(i).lastIndexOf("/") + 1));
                 File arquivoXML = new File(caminhoXML.get(i));
                 if (arquivoXML.isFile() || arquivoXML.canRead()) {
-                    Importer imp = new Importer();
                     imp.setInputFile(arquivoXML);
                     imp.setRepositorio(r);
-                    imp.setDocDao(docDao);
                     updated += imp.update();
 
                     //apaga arquivo XML
@@ -99,5 +89,4 @@ public class XMLtoDB {
 
             return updated;
         }
-    }
 }

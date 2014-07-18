@@ -4,7 +4,7 @@
  */
 package com.cognitivabrasil.feb.robo.atualiza.importaOAI;
 
-import com.cognitivabrasil.feb.robo.atualiza.importaOAI.Importer;
+import com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
@@ -18,11 +18,6 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
@@ -30,16 +25,12 @@ import com.cognitivabrasil.feb.data.entities.Mapeamento;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import static org.hamcrest.Matchers.equalTo;
-import org.junit.Ignore;
 
 /**
  *
  * @author paulo
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
-@TestExecutionListeners(DependencyInjectionTestExecutionListener.class)
-public class ImporterIT {
+public class ImporterTest {
 
     /**
      * Tests that the importer is converting the file and calling the correct
@@ -61,7 +52,7 @@ public class ImporterIT {
 
         DocumentService docDao = mock(DocumentService.class);
 
-        Importer imp = new Importer();
+        ImporterRep imp = new ImporterRep();
         imp.setInputFile(new File(inputXmlFile));
         imp.setRepositorio(r);
         imp.setDocDao(docDao);
@@ -97,7 +88,7 @@ public class ImporterIT {
 
         DocumentService docDao = mock(DocumentService.class);
 
-        Importer imp = new Importer();
+        ImporterRep imp = new ImporterRep();
         imp.setInputFile(new File(inputXmlFile));
         imp.setRepositorio(r);
         imp.setDocDao(docDao);

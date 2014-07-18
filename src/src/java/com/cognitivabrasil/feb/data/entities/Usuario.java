@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -14,7 +15,8 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
-import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
+import com.cognitivabrasil.feb.spring.ApplicationContextProvider2;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -217,7 +219,7 @@ public class Usuario implements UserDetails, FebDomainObject {
     @Transient
     private static PasswordEncoder getPasswordEncoder() {
         if (passEncoder == null) {
-            ApplicationContext ac = ApplicationContextProvider.getApplicationContext();
+            ApplicationContext ac = ApplicationContextProvider2.getApplicationContext();
             passEncoder = ac.getBean(PasswordEncoder.class);
         }
         return passEncoder;

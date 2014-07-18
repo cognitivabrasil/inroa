@@ -6,7 +6,7 @@ import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
-import com.cognitivabrasil.feb.robo.atualiza.importaOAI.Importer;
+import com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep;
 import java.io.File;
 import java.io.IOException;
 import org.apache.commons.io.FileUtils;
@@ -40,6 +40,9 @@ public class LumeXmlIT extends AbstractTransactionalJUnit4SpringContextTests {
     MetadataRecordService padDao;
     @Autowired
     MappingService mapDao;
+    
+    @Autowired
+    private ImporterRep imp;
 
     @Test
     public void importLume() throws IOException {
@@ -57,10 +60,8 @@ public class LumeXmlIT extends AbstractTransactionalJUnit4SpringContextTests {
         Repositorio r = repDao.get(1);
         r.setMapeamento(m);
 
-        Importer imp = new Importer();
         imp.setInputFile(new File(inputXmlFile));
         imp.setRepositorio(r);
-        imp.setDocDao(docDao);
         imp.update();
     }
 }

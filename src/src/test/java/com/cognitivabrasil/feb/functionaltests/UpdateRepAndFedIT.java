@@ -13,7 +13,7 @@ import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
-import com.cognitivabrasil.feb.robo.atualiza.importaOAI.Importer;
+import com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ParserListSets;
 import java.io.File;
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         rep.setMapeamento(m);
 
         int docSizeBefore = docDao.getAll().size();
-        Importer imp = new Importer();
+        ImporterRep imp = new ImporterRep();
         imp.setInputFile(xmlRep);
         imp.setRepositorio(rep);
         imp.setDocDao(docDao);
@@ -112,7 +112,7 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
 
         subDao.save(subFed);
 
-        com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer impSF = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer();
+        com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed impSF = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed();
         impSF.setInputFile(xmlFedRecords);
         impSF.setDocDao(docDao);
         impSF.setSubFed(subFed);

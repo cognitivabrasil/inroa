@@ -4,7 +4,7 @@
  */
 package com.cognitivabrasil.feb.robo.atualiza.subfedOAI;
 
-import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer;
+import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
 import cognitivabrasil.obaa.OaiOBAA;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
@@ -43,7 +43,7 @@ public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
         
         SubFederacao subFed = subFedDao.get("UFRGS");
                 
-        Importer imp = new Importer();
+        ImporterSubfed imp = new ImporterSubfed();
         imp.setInputFile(fileXML);
         imp.setDocDao(docDao);
         imp.setSubFed(subFed);

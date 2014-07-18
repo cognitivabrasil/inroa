@@ -27,14 +27,14 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Marcos Nunes <marcosn@gmail.com>
  * @author Paulo Schreiner <paulo@jorjao81.com>
  */
-public class Importer {
+public class ImporterSubfed {
 
     private SubFederacao subFed;
     private File inputXmlFile;
     private OaiOBAA oai;
     @Autowired
     private DocumentService docDao;
-    private final Logger log = Logger.getLogger(Importer.class);
+    private final Logger log = Logger.getLogger(ImporterSubfed.class);
 
     /**
      * Sets the input file.
