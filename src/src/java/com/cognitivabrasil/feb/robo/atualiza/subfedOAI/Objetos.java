@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class Objetos {
 	@Autowired
-	private DocumentService docDao;
+	private ImporterSubfed imp;
 
 	/**
 	 * Chama o m&eacute;todo respons&aacute;vel por efetuar o harverter na
@@ -67,9 +67,7 @@ public class Objetos {
 					log.info("Lendo XML "
 							+ caminho.substring(caminho.lastIndexOf("/") + 1));
 
-					ImporterSubfed imp = new ImporterSubfed();
 					imp.setInputFile(arquivoXML);
-					imp.setDocDao(docDao);
 					imp.setSubFed(subFed);
 					imp.update();
 

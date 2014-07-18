@@ -35,7 +35,7 @@ public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private FederationService subFedDao;
     @Autowired
-    private DocumentService docDao;
+    private ImporterSubfed imp = new ImporterSubfed();
     
     @Test
     public void testUpdateFederation() throws Exception{        
@@ -43,9 +43,7 @@ public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
         
         SubFederacao subFed = subFedDao.get("UFRGS");
                 
-        ImporterSubfed imp = new ImporterSubfed();
         imp.setInputFile(fileXML);
-        imp.setDocDao(docDao);
         imp.setSubFed(subFed);
         imp.update();
         

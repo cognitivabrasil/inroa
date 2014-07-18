@@ -148,10 +148,15 @@
         <bean id="repositorios" class="com.cognitivabrasil.feb.robo.atualiza.Repositorios" />
         <bean id="subf" class="com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI" />
         <bean id="Indexador" class="com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador"/>
-        <bean id="Objetos" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Objetos"/>
-        <bean id="subRepositoros" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.SubRepositorios"/>
-        <bean id="importerRep" class="com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep"/>
+        <bean id="Objetos" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Objetos" scope="prototype"/>
+        <bean id="subRepositoros" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.SubRepositorios" scope="prototype"/>
+        <bean id="importerRep" class="com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep" scope="prototype"/>
+        <bean id="xmlToDb" class="com.cognitivabrasil.feb.robo.atualiza.importaOAI.XMLtoDB" scope="prototype"/>
+        <bean id="importerSubFed" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed" scope="prototype"/>
         
+        
+        
+                
         
         <beans:bean id="febConfig" class="com.cognitivabrasil.feb.spring.FebConfig">
             <property name="filename">

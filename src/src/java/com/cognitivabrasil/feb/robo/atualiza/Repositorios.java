@@ -40,6 +40,10 @@ public class Repositorios {
     private RepositoryService repService;
     @Autowired
     private DocumentService docService;
+    @Autowired
+    private XMLtoDB gravar;
+    
+    
     private static final Logger log = Logger.getLogger(Repositorios.class);
 
     /**
@@ -158,8 +162,7 @@ public class Repositorios {
         Long inicio = System.currentTimeMillis();
         Harvester importar = new Harvester();
         Informacoes conf = new Informacoes();
-        XMLtoDB gravar = new XMLtoDB();
-        String caminhoDiretorioTemporario = conf.getCaminho();
+       String caminhoDiretorioTemporario = conf.getCaminho();
 
         int updated = 0;
 
