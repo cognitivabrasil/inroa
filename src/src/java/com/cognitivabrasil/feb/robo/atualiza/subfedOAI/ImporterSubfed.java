@@ -6,19 +6,27 @@ package com.cognitivabrasil.feb.robo.atualiza.subfedOAI;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
+
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.metadata.XSLTUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Date;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
+
 import metadata.Header;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Import the OBAA xml file to OBAA object and saves in database. Only for
@@ -34,6 +42,10 @@ public class ImporterSubfed {
     private OaiOBAA oai;
     @Autowired
     private DocumentService docDao;
+    
+    @PersistenceContext
+    private EntityManager em;
+    
     private final Logger log = Logger.getLogger(ImporterSubfed.class);
 
     /**
@@ -67,6 +79,7 @@ public class ImporterSubfed {
      * @throws TransformerException
      * @throws TransformerConfigurationException
      */
+    @Transactional
     public void update() throws FileNotFoundException,
             TransformerConfigurationException, TransformerException {
         assert (inputXmlFile != null);
@@ -96,10 +109,10 @@ public class ImporterSubfed {
                 docDao.save(obaa, header, subFed);
             }
 
-//            if (i % 10 == 0) {
-//                session.flush();
-//                session.clear();
-//            }
+            if (i % 10 == 0) {
+                em.flush();
+                em.clear();
+            }
         }
         subFed.setDataXMLTemp(oai.getResponseDate());
     }
