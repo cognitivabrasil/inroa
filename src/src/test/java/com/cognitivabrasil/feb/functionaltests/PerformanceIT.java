@@ -4,8 +4,6 @@
  */
 package com.cognitivabrasil.feb.functionaltests;
 
-import com.cognitivabrasil.feb.data.entities.Mapeamento;
-import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
@@ -14,6 +12,7 @@ import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ParserListSets;
+import com.cognitivabrasil.feb.spring.controllers.FEBController;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +28,6 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.hibernate.SessionFactory;
-
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -49,17 +46,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
 import org.xml.sax.SAXException;
 
-/**
- *
- * @author marcos
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
-@TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests {
-	Logger log = Logger.getLogger(PerformanceIT.class);
+
+    Logger log = Logger.getLogger(PerformanceIT.class);
 
     @Autowired
     RepositoryService repDao;
@@ -71,16 +65,15 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
     MetadataRecordService padDao;
     @Autowired
     MappingService mapDao;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
-//    @Autowired SessionFactory sessionFactory;
 
+//    @Autowired SessionFactory sessionFactory;
     @Test
     @Ignore
     public void testUpdateRepFromXML() throws IOException, ParserConfigurationException, SAXException, TransformerException {
-    	  ArrayList<String> caminhosXML = new ArrayList<String>();
+        ArrayList<String> caminhosXML = new ArrayList<String>();
         caminhosXML.add("FEB-ufrgs1.xml");
         caminhosXML.add("FEB-ufrgs2.xml");
         caminhosXML.add("FEB-ufrgs3.xml");
@@ -171,40 +164,35 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         caminhosXML.add("FEB-ufrgs88.xml");
         caminhosXML.add("FEB-ufrgs89.xml");
         caminhosXML.add("FEB-ufrgs90.xml");
-        
+
         Collections.reverse(caminhosXML);
-        
+
         String inputXsltFile = "src/xslt/obaa2obaa.xsl"; // input xsl
         String xslt = FileUtils.readFileToString(new File(inputXsltFile));
         SubFederacao subFed = subDao.get("marcos");
-  
-        
+
         for (String caminho : caminhosXML) {
-        	StopWatch stop = new StopWatch();
-        	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+            StopWatch stop = new StopWatch();
+            stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
             System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
-             ImporterSubfed imp = new ImporterSubfed();
+            ImporterSubfed imp = new ImporterSubfed();
             imp.setInputFile(arquivoXML);
             imp.setSubFed(subFed);
             imp.setDocDao(docDao);
             imp.update();
-            
-            //assertThat(updated, equalTo(2));
 
+            //assertThat(updated, equalTo(2));
             subDao.save(subFed);
-            
-    
+
             stop.stop();
             System.out.println("XML " + stop.prettyPrint());
-          
+
         }
-        
 
     }
-    
-    
+
     @Test
     @Transactional
     @Ignore
@@ -218,7 +206,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
 //        caminhosXML.add("src/test/resources/FEB-fiocruz4.xml");
 //        caminhosXML.add("src/test/resources/FEB-fiocruz5.xml");
         caminhosXML.add("src/test/resources/FEB-fiocruz6.xml");
-        
+
         SubFederacao subFed = new SubFederacao();
         subFed.setVersion("2.1");
         subFed.setName("performanceTest2");
@@ -226,22 +214,19 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         subFed.setUrl("http://");
         int before = docDao.getAll().size();
 
-
         ParserListSets parserListSets = new ParserListSets();
         File xmlFedSetsFile = new File(xmlFedSets);
 
         Set<String> listaSubrep = parserListSets.parser(xmlFedSetsFile);//efetua a leitura do xml e insere os objetos na base de dados
-
 
         subFed.atualizaListaSubRepositorios(listaSubrep);
         assertEquals("Size of repSubFed after.", 1, subFed.getRepositorios().size());
 
         subDao.save(subFed);
 
-        
         for (String caminho : caminhosXML) {
-        	StopWatch stop = new StopWatch();
-        	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+            StopWatch stop = new StopWatch();
+            stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
             //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
@@ -250,10 +235,9 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             imp.setDocDao(docDao);
             imp.setSubFed(subFed);
             imp.update();
-            
+
             stop.stop();
             //System.out.println("XML " + stop.prettyPrint());
-            
 
         }
 
@@ -262,17 +246,15 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         int docsUpdated = docSizeAfterSubFed - before;
         //System.out.println("docs updated: " + docsUpdated);
         Long fim = System.currentTimeMillis();
-        Long tempoTotal = fim-inicio;
+        Long tempoTotal = fim - inicio;
         //System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
-        
+
         /*
-        sessionFactory.getCurrentSession().flush();
-        sessionFactory.getCurrentSession().clear();
-        */
-
-
-         Long deletei = System.currentTimeMillis();
-         subFed = subDao.get(subFed.getId());
+         sessionFactory.getCurrentSession().flush();
+         sessionFactory.getCurrentSession().clear();
+         */
+        Long deletei = System.currentTimeMillis();
+        subFed = subDao.get(subFed.getId());
         subDao.delete(subFed);
         Long deletef = System.currentTimeMillis();
         //System.out.println("Tempo para deletar a federacao: " + Operacoes.formatTimeMillis(deletef-deletei));
@@ -280,15 +262,14 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         assertEquals(null, subDao.get("performanceTest2"));
 
     }
-    
-    @Test(timeout=30000)
+
+    @Test(timeout = 30000)
     @Transactional
     @Ignore
     public void jorjaoTest() throws ParserConfigurationException, SAXException, IOException, TransformerConfigurationException, TransformerException {
-    	Long inicio = System.currentTimeMillis();
 
         String xmlFedSets = "src/test/resources/Fiocruz-listSets.xml";
-        ArrayList<String> caminhosXML = new ArrayList<String>();
+        ArrayList<String> caminhosXML = new ArrayList<>();
 //        caminhosXML.add("src/test/resources/FEB-fiocruz2.xml");
 //        caminhosXML.add("src/test/resources/FEB-fiocruz3.xml");
 //        caminhosXML.add("src/test/resources/FEB-fiocruz4.xml");
@@ -302,22 +283,19 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         subFed.setUrl("http://");
         int before = docDao.getAll().size();
 
-
         ParserListSets parserListSets = new ParserListSets();
         File xmlFedSetsFile = new File(xmlFedSets);
 
         Set<String> listaSubrep = parserListSets.parser(xmlFedSetsFile);//efetua a leitura do xml e insere os objetos na base de dados
-
 
         subFed.atualizaListaSubRepositorios(listaSubrep);
         assertEquals("Size of repSubFed after.", 1, subFed.getRepositorios().size());
 
         subDao.save(subFed);
 
-        
         for (String caminho : caminhosXML) {
-        	StopWatch stop = new StopWatch();
-        	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+            StopWatch stop = new StopWatch();
+            stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
             //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
@@ -326,30 +304,20 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             imp.setDocDao(docDao);
             imp.setSubFed(subFed);
             imp.update();
-            
+
             stop.stop();
             //System.out.println("XML " + stop.prettyPrint());
-            
 
         }
 
         subDao.save(subFed);
-        int docSizeAfterSubFed = docDao.getAll().size();
-        int docsUpdated = docSizeAfterSubFed - before;
-        //System.out.println("docs updated: " + docsUpdated);
-        Long fim = System.currentTimeMillis();
-        Long tempoTotal = fim-inicio;
-        //System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
-        
+
         /*
-        sessionFactory.getCurrentSession().flush();
-        sessionFactory.getCurrentSession().clear();
-        */
-
-
-
-         Long deletei = System.currentTimeMillis();
-         subFed = subDao.get(subFed.getId());
+         sessionFactory.getCurrentSession().flush();
+         sessionFactory.getCurrentSession().clear();
+         */
+        Long deletei = System.currentTimeMillis();
+        subFed = subDao.get(subFed.getId());
         subDao.delete(subFed);
         Long deletef = System.currentTimeMillis();
         //System.out.println("Tempo para deletar a federacao: " + Operacoes.formatTimeMillis(deletef-deletei));
@@ -357,31 +325,26 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         assertEquals(null, subDao.get("performanceTest2"));
 
     }
-    
-    
 
     @Test
     @Transactional
     @Ignore
-    public void XMLdeleteDocsTest() throws IOException, ParserConfigurationException, SAXException, TransformerException{
-          Long inicio = System.currentTimeMillis();
+    public void XMLdeleteDocsTest() throws IOException, ParserConfigurationException, SAXException, TransformerException {
+        Long inicio = System.currentTimeMillis();
 
         ArrayList<String> caminhosXML = new ArrayList<String>();
 //        caminhosXML.add("tmp/deleted1.xml");
         caminhosXML.add("tmp/FEB-ufrgs90.xml");
 
-
         SubFederacao subFed = subDao.get(100);
         subFed.setVersion("2.1");
 
         //System.out.println("repositorios: "+ subFed.getRepositorios());
-
         int before = docDao.getAll().size();
 
-
         for (String caminho : caminhosXML) {
-        	StopWatch stop = new StopWatch();
-        	stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
+            StopWatch stop = new StopWatch();
+            stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
             //System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
 
@@ -394,7 +357,6 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             stop.stop();
             //System.out.println("XML " + stop.prettyPrint());
 
-
         }
 
         subDao.save(subFed);
@@ -402,7 +364,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
         int docsUpdated = docSizeAfterSubFed - before;
         //System.out.println("docs updated: " + docsUpdated);
         Long fim = System.currentTimeMillis();
-        Long tempoTotal = fim-inicio;
+        Long tempoTotal = fim - inicio;
         //System.out.println("Tempo executanto o perfomanceTest: " + Operacoes.formatTimeMillis(tempoTotal));
 
     }
