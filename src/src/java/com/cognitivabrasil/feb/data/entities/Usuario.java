@@ -40,6 +40,7 @@ import javax.persistence.Transient;
  * PERM_MANAGE_METADATA - Permission to add, change and delete metadata
  * standards PERM_MANAGE_MAPPINGS - Permission do add, change or update mappings
  * PERM_CHANGE_DATABASE - Permission to change the database config
+ * PERM_MANAGE_STATISTICS - Permission to delete from statistics' data
  *
  * The main ADMIN user should have all the permissions.
  *

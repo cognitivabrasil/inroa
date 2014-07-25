@@ -87,6 +87,8 @@ Author     : Marcos Nunes
                 <li><a href="#tabs-1">Reposit&oacute;rios e Federa&ccedil;&otilde;es</a></li>
                 <li><a href="#tabs-3">Metadados</a></li>
                 <li><a href="#tabs-4">Ger&ecirc;ncia</a></li>
+                    <c:url var="estatistics" value="/admin/statistics/" />
+                <li id="estatisticas"><a href="${estatistics}">Estat&iacute;sticas</a></li>
 
             </ul>
             <div id="tabs-1">
