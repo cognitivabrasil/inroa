@@ -17,11 +17,11 @@
         <c:url var="zebraScript" value="/scripts/zebraScript.js" />
         <c:url var="statistics" value="/scripts/statistics.js" />
         <c:url var="messagecss" value="/css/messages/messages.css" />
-        
+
         <link rel="StyleSheet" href="${messagecss}" type="text/css" />
         <script language="javascript" type="text/javascript" src="${zebraScript}"></script>
         <script language="javascript" type="text/javascript" src="${statistics}"></script>
-        
+
     </head>
     <body>
         <div class="ui-widget hidden" id="dialog-error" title="Erro">
@@ -36,8 +36,32 @@
         <div id="estatisticas">
             <div class="caixaAzul">
                 <span class="left bold">Número total de objetos:</span> <fmt:formatNumber value="${totalObj}" />
+
+                <table class="repositorios-table zebraTable">
+                    <caption class="estatisticasTitulo">Repositórios</caption>
+                    <tr>
+                        <th> Repositório</th><th>Documentos</th>
+                    </tr>
+                    <c:forEach var="map" items="${repositories}">
+                        <tr>
+                            <td>${map.key}</td>
+                            <td class="numObj"><fmt:formatNumber value="${map.value}" /></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+
+                <table class="repositorios-table zebraTable">
+                    <caption class="estatisticasTitulo">Federações</caption>
+                    <tr><th> Federa&ccedil;&atilde;o</th><th>Documentos</th></tr>
+                            <c:forEach var="map" items="${federations}">
+                        <tr>
+                            <td>${map.key}</td>
+                            <td class="numObj"><fmt:formatNumber value="${map.value}" /></td>
+                        </tr>
+                    </c:forEach>
+                </table>
             </div>
-            
+
             <security:authorize access="hasRole('PERM_MANAGE_STATISTICS')">
                 <c:if test="${not empty termosTagCloud}">
                     <div class="caixaAzul">
@@ -49,8 +73,8 @@
                                     <c:forEach var="termo" items="${termosTagCloud}">
                                 <tr>
                                     <td>${termo.key}</td>
-                                    <td>${termo.value}</td>
-                                    <td>
+                                    <td class="center">${termo.value}</td>
+                                    <td class="center">
                                         <a class="deleteTag btSemTexto" href="${deleteTag}/${termo.key}">deletar</a>
                                     </td>
                                 </tr>
@@ -61,17 +85,9 @@
                     </div>
                 </c:if>
             </security:authorize>
-            
-                <%-- <div class="repsGrande caixaAzul">
-                <div class="estatisticasTitulo">Repositórios</div>
-                <table class="repositorios-table zebraTable">
-                    <tr><th> Repositório</th><th>N&uacute;mero de objetos</th></tr>
-                            <c:forEach var="reps" items="${repositorios}" varStatus="status">
-                        <tr><td>${reps.name}</td><td class="col2">${reps.size}</td></tr>
-                        </c:forEach>
-                </table>
-                
-            </div>
+
+
+            <%--
             <div class="fedsGrande caixaAzul">
                 <div class="estatisticasTitulo">Federações</div>
                 <table class="repositorios-table zebraTable">

@@ -220,8 +220,8 @@ div.suporte{margin-top: 5px; margin-left: 5px;}
     margin: 10px auto;
     border-radius: 3px;
 }
-#estatisticas table td{text-align: center;}
-#estatisticas table td:first-child{text-align: left;}
+#estatisticas .numObj{width: 15%;text-align: right;padding-right: 4em}
+#estatisticas table td:first-child{text-align: left;padding-left: 1em}
 .estatisticasTitulo
 {
     text-align:center;

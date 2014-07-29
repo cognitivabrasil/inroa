@@ -1,6 +1,7 @@
 package com.cognitivabrasil.feb.spring.controllers;
 
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
@@ -8,6 +9,7 @@ import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.TagCloudService;
 
 import com.cognitivabrasil.feb.util.Message;
+import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
@@ -43,9 +45,25 @@ public final class StatisticsController {
     public String statistics(Model model) {
         model.addAttribute("totalObj", docDao.getSize());
         List<Repositorio> repList = repDao.getAll();
-        model.addAttribute("repositorios", repList);
         List<SubFederacao> fedList = fedDao.getAll();
-        model.addAttribute("federacoes", fedList);
+
+        Map<String, Integer> repositories = new HashMap<>();
+        for (Repositorio rep : repList) {
+            int size = repDao.size(rep);
+            repositories.put(rep.getName(), size);
+        }
+        model.addAttribute("repositories", repositories);
+
+        Map<String, Integer> federations = new HashMap<>();
+
+        for (SubFederacao fed : fedList) {
+            int fedSize = 0;
+            for (RepositorioSubFed sRep : fed.getRepositorios()) {
+                fedSize += docDao.countFromSubRep(sRep);
+            }
+            federations.put(fed.getName(), fedSize);
+        }
+        model.addAttribute("federations", federations);
 
         Map<String, Integer> termos = tagCloud.getTagCloud();
         model.addAttribute("termosTagCloud", termos);
