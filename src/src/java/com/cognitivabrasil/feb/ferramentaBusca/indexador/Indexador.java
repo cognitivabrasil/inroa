@@ -49,15 +49,7 @@ public class Indexador {
         int numMaxDoc = 10000;
         Solr s = new Solr();
 
-/**
-        for (int i = 0; i < tamanhoDocDAO; i = i + numMaxDoc) {
-
-            s.indexarBancoDeDados(docDao.getAll(numMaxDoc, i));
-            
-            // Esse comando abaixo serve para evitar estouro de memoria. 
-            //Jorjao vai resolver isso porque eh um erro do hibernate
-           docDao.getSession().clear();
-*/
+        
         Pageable limit = new PageRequest(0, numMaxDoc);
         Page<Document> docs = docService.getlAll(limit);
         s.indexarBancoDeDados(docs.getContent());

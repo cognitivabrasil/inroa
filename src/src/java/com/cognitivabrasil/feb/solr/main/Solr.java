@@ -75,6 +75,10 @@ public class Solr {
 
             String nomeRep = doc.getNomeRep();
 
+            //Foi requerido que objetos sem link não fossem indexados ou apresentados ao usuário (FEB-472)
+            if (doc.getMetadata().getTechnical().getLocationHttp().isEmpty())
+                continue;
+            
             docsSolr.add(convert.OBAAToSolrInputDocument(doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao, nomeRep));
 
         }
