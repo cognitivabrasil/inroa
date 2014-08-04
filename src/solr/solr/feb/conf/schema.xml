@@ -42,7 +42,7 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
 
 
 <!-- Metadados do Objeto -->
-   <field name="obaa.general.identifier.entry" type="text_general" indexed="true" stored="true" required="true" multiValued="false" /> 
+   <field name="obaa.general.identifier.entry" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
    <field name="obaa.general.title" type="text_general" indexed="true" stored="true" multiValued="true"/>
   <field name="obaa.general.language" type="text_general" indexed="true" stored="true" multiValued="true"/>
   <field name="obaa.general.description" type="text_general" indexed="true" stored="true" multiValued="true" />
@@ -134,7 +134,7 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
    
  </fields>
 
-
+<!-- O uniqueKey deve ser um tipo nao "tokenizavel", como string ou int -->
  <uniqueKey>obaa.general.identifier.entry</uniqueKey>
 
  
