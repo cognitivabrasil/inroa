@@ -71,7 +71,8 @@ public class QuerySolr {
         } catch (SolrServerException ex) {
             //TODO   Implementar Logger aqui!
             //("Ocorreu um erro durante a pesquisa");
-            Logger.getLogger(QuerySolr.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger("Erro durante a pesquisa ao acessar o servidor SOLR \n"+
+                    QuerySolr.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
 
