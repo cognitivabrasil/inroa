@@ -105,8 +105,7 @@ public final class FederationsController {
 
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String editaFed(
-            @PathVariable("id") Integer id,
-            Model model) {
+            @PathVariable("id") Integer id, Model model) {
         model.addAttribute("federation", subDao.get(id));
         return "admin/federations/edit";
     }

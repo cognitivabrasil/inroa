@@ -1,10 +1,8 @@
-package com.cognitivabrasil.feb.services;
+package feb.services;
 
-import com.cognitivabrasil.feb.data.services.TagCloudServiceImpl;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.argThat;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -16,22 +14,38 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import com.cognitivabrasil.feb.data.entities.Search;
+import com.cognitivabrasil.feb.data.services.PalavrasOfensivasHibernateDAO;
 import com.cognitivabrasil.feb.data.services.SearchService;
+import com.cognitivabrasil.feb.data.services.TagCloudServiceImpl;
 
-public class TagCloudImplIT {
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:applicationContext.xml")
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+public class TagCloudImplIT  extends AbstractTransactionalJUnit4SpringContextTests {
+    @Autowired
     TagCloudServiceImpl tagService;
+    
+    @Autowired
+    PalavrasOfensivasHibernateDAO instance;
 
     @Before
     public void before() {
-        tagService = new TagCloudServiceImpl();
         tagService.setDays(7);
 
         Calendar cal = Calendar.getInstance();
 
-        List<Search> l = new ArrayList<>();
+        List<Search> l = new ArrayList<Search>();
         l.add(new Search("teste", 1));
 
         cal.add(Calendar.MINUTE, -1);
@@ -39,6 +53,8 @@ public class TagCloudImplIT {
 
         cal.add(Calendar.HOUR, -1);
         l.add(new Search("grêmio", 1));
+
+        l.add(new Search("merdinha", 15));
 
         SearchService search = mock(SearchService.class);
         when(search.getSearches(argThat(is(3)), argThat(any(Date.class)))).thenReturn(l);

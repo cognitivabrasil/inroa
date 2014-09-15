@@ -1,14 +1,15 @@
 package com.cognitivabrasil.feb.robo.atualiza.subfedOAI;
 
 import ORG.oclc.oai.harvester2.verb.ListSets;
+
 import java.io.*;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.FederationService;
-import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
 import com.cognitivabrasil.feb.util.Informacoes;
 import com.cognitivabrasil.feb.util.Operacoes;
 
@@ -17,8 +18,10 @@ import com.cognitivabrasil.feb.util.Operacoes;
  * @author Marcos
  */
 public class SubRepositorios {
-
     Logger log = Logger.getLogger(this.getClass().getName());
+    
+    @Autowired
+    private FederationService subFedDao;
 
     /**
      * Coleta o XML com os reposit&oacute;rios da subfedera&ccedil;&atilde;o
@@ -31,12 +34,7 @@ public class SubRepositorios {
      */
     public void atualizaSubRepositorios(SubFederacao subFed) throws Exception {
         log.debug("Atualizando os subrepositorios");
-        ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
-        if (ctx == null) {
-            log.error("Could not get AppContext bean! Class: " + this.getClass().getName());
-            throw new IllegalStateException("Could not get AppContext bean! Class: " + this.getClass().getName());
-        } else {
-            
+     
             Informacoes conf = new Informacoes();
             String caminhoDiretorioTemporario = conf.getCaminho();
             File caminhoTeste = Operacoes.testaDiretorioTemp(caminhoDiretorioTemporario);
@@ -52,7 +50,6 @@ public class SubRepositorios {
                     log.debug("Repositorios coletados: " + listaSubrep);
                     subFed.atualizaListaSubRepositorios(listaSubrep);
                     
-                    FederationService subFedDao = ctx.getBean(FederationService.class);
                     subFedDao.save(subFed);
                     
                     arquivoXML.delete(); //apaga arquivo XML
@@ -63,7 +60,7 @@ public class SubRepositorios {
             } else {
                 log.error("O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
             }
-        }
+      
 
     }
 

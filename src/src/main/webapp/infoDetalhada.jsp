@@ -9,7 +9,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 
 
-<html>
+<html lang="pt-BR">
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -107,7 +107,9 @@
                 </a>
             </div>
         </div>
-
+                <div class="suporte">
+                Problemas para utilizar este sistema? Suporte técnico <a href="http://cognitivabrasil.com.br/">Cognitiva Brasil</a>: <a href="mailto:contato@cogbr.com">contato@cogbr.com</a>
+            </div>
         <%@include file="googleAnalytics"%>
     </body>
 </html>

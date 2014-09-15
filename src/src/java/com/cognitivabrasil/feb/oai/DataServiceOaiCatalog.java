@@ -12,12 +12,15 @@ package com.cognitivabrasil.feb.oai;
 
 import ORG.oclc.oai.server.catalog.AbstractServiceOaiCatalog;
 import ORG.oclc.oai.server.catalog.OaiDocumentService;
-import com.cognitivabrasil.feb.spring.ApplicationContextProvider;
+
+import com.cognitivabrasil.feb.spring.ApplicationContextProvider2;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -70,7 +73,7 @@ public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
 
     @Override
     public OaiDocumentService getDocumentService() {
-        ApplicationContext ctx = ApplicationContextProvider
+        ApplicationContext ctx = ApplicationContextProvider2
                 .getApplicationContext();
         return ctx.getBean(OaiDocumentService.class);
     }

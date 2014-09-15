@@ -4,7 +4,7 @@ Created on : 29/04/2009, 12:04:58
 Author     : Marcos Nunes
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="feb.spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
@@ -19,6 +19,9 @@ Author     : Marcos Nunes
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
+
+        <c:url var="lapiz32" value="/imagens/Lapiz-32x32.png" />
+        <c:url var="imgAdd" value="/imagens/add-24x24.png" />
 
         <link rel="StyleSheet"
               href="<feb.spring:url value="/css/Theme/jquery-ui-1.8.22.custom.css" htmlEscape="true" />"
@@ -87,6 +90,8 @@ Author     : Marcos Nunes
                 <li><a href="#tabs-1">Reposit&oacute;rios e Federa&ccedil;&otilde;es</a></li>
                 <li><a href="#tabs-3">Metadados</a></li>
                 <li><a href="#tabs-4">Ger&ecirc;ncia</a></li>
+                    <c:url var="estatistics" value="/admin/statistics/" />
+                <li id="estatisticas"><a href="${estatistics}">Estat&iacute;sticas</a></li>
 
             </ul>
             <div id="tabs-1">
@@ -160,19 +165,16 @@ Author     : Marcos Nunes
 
                                     <a title="Adicionar novo reposit&oacute;rio"
                                        onclick="NewWindow('${newRepositoryUrl}', 'Cadastro', '750', 'total');">
-                                        <img
-                                            src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                                            border="0" width="24" height="24" alt="Visualizar" align="middle">
+                                        <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                                     </a>
                                 </security:authorize></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
-                                &nbsp;&nbsp; <security:authorize
-                                    access="hasRole('PERM_MANAGE_REP')">
-
-                                    <a
-                                        onclick="NewWindow('${newRepositoryUrl}', 'Cadastro', '750', 'total');">
-                                        Adicionar novo reposit&oacute;rio </a>
-                                    </security:authorize>
+                                &nbsp;&nbsp; 
+                                <security:authorize access="hasRole('PERM_MANAGE_REP')">
+                                    <a onclick="NewWindow('${newRepositoryUrl}', 'Cadastro', '750', 'total');">
+                                        Adicionar novo reposit&oacute;rio 
+                                    </a>
+                                </security:authorize>
 
                             </td>
                             <td>
@@ -184,8 +186,9 @@ Author     : Marcos Nunes
                                            onclick="javaScript:atualizaRepAjax(0, document.getElementById('textResultTodos'));"><img
                                                 src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
                                                 border="0" width="24" height="24" alt="Visualizar"
-                                                align="middle"> Atualizar todos agora</a>
-                                        </security:authorize>
+                                                align="middle"> Atualizar todos agora
+                                        </a>
+                                    </security:authorize>
                                 </div>
                             </td>
                         </tr>
@@ -264,9 +267,7 @@ Author     : Marcos Nunes
 
                                     <a title="Adicionar nova federa&ccedil;&atilde;o"
                                        onclick="NewWindow('${newFederationUrl}', 'Cadastro', '750', '650');">
-                                        <img
-                                            src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                                            border="0" width="24" height="24" alt="Visualizar" align="middle">
+                                        <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                                     </a>
                                 </security:authorize></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
@@ -297,9 +298,8 @@ Author     : Marcos Nunes
                         <tr>
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
-                            <td><img
-                                    src="<feb.spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
-                                    border="0" width="32" height="32" alt="Laudar" align="middle">
+                            <td>
+                                <img src="${lapiz32}" border="0" width="32" height="32" alt="Laudar" align="middle">
                             </td>
                             <td>&nbsp;Visualizar / Editar</td>
 
@@ -321,9 +321,8 @@ Author     : Marcos Nunes
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
 
-                            <td><img
-                                    src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            <td>
+                                <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
                             <td>&nbsp;Adicionar</td>
 
@@ -378,9 +377,7 @@ Author     : Marcos Nunes
                         <tr class='center'>
                             <td><a title="Adicionar novo padr&atilde;o de metadados"
                                    onclick="NewTab('./metadataStandard/new');">
-                                    <img
-                                        src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                                        border="0" width="24" height="24" alt="Visualizar" align="middle">
+                                    <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                                 </a></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <a
@@ -438,9 +435,7 @@ Author     : Marcos Nunes
                         <tr class='center'>
                             <td><a title="Adicionar novo padr&atilde;o de metadados"
                                    onclick="NewTab('./mapeamentos/new');">
-                                    <img
-                                        src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                                        border="0" width="24" height="24" alt="Visualizar" align="middle">
+                                    <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                                 </a></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <a
@@ -458,9 +453,8 @@ Author     : Marcos Nunes
                         <tr>
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
-                            <td><img
-                                    src="<feb.spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
-                                    border="0" width="32" height="32" alt="Laudar" align="middle">
+                            <td>
+                                <img src="${lapiz32}" border="0" width="32" height="32" alt="Laudar" align="middle">
                             </td>
                             <td>&nbsp;Visualizar / Editar</td>
 
@@ -474,9 +468,8 @@ Author     : Marcos Nunes
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
 
-                            <td><img
-                                    src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            <td>
+                                <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
                             <td>&nbsp;Adicionar</td>
 
@@ -544,9 +537,7 @@ Author     : Marcos Nunes
                         <tr class='center'>
                             <td><a title="Adicionar novo usuário"
                                    onclick="NewWindow('./users/new', 'Cadastro', '750', '650');">
-                                    <img
-                                        src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                                        border="0" width="24" height="24" alt="Visualizar" align="middle">
+                                    <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                                 </a></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <a
@@ -563,9 +554,8 @@ Author     : Marcos Nunes
                         <tr>
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
-                            <td><img
-                                    src="<feb.spring:url value="/imagens/Lapiz-32x32.png" htmlEscape="true" />"
-                                    border="0" width="32" height="32" alt="Laudar" align="middle">
+                            <td>
+                                <img src="${lapiz32}" border="0" width="32" height="32" alt="Laudar" align="middle">
                             </td>
                             <td>&nbsp;Visualizar / Editar</td>
 
@@ -579,9 +569,8 @@ Author     : Marcos Nunes
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
 
-                            <td><img
-                                    src="<feb.spring:url value="/imagens/add-24x24.png" htmlEscape="true" />"
-                                    border="0" width="24" height="24" alt="Visualizar" align="middle">
+                            <td>
+                                <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
                             <td>&nbsp;Adicionar</td>
 

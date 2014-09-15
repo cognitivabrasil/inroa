@@ -4,7 +4,7 @@
  */
 package com.cognitivabrasil.feb.robo.atualiza.subfedOAI;
 
-import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer;
+import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
 import cognitivabrasil.obaa.OaiOBAA;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
@@ -35,7 +35,7 @@ public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private FederationService subFedDao;
     @Autowired
-    private DocumentService docDao;
+    private ImporterSubfed imp = new ImporterSubfed();
     
     @Test
     public void testUpdateFederation() throws Exception{        
@@ -43,9 +43,7 @@ public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
         
         SubFederacao subFed = subFedDao.get("UFRGS");
                 
-        Importer imp = new Importer();
         imp.setInputFile(fileXML);
-        imp.setDocDao(docDao);
         imp.setSubFed(subFed);
         imp.update();
         

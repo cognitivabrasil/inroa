@@ -231,12 +231,12 @@ class UserDto {
         roles.put(
                 "root",
                 Arrays.asList(StringUtils
-                        .split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE",
+                        .split("PERM_MANAGE_USERS,PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_CHANGE_DATABASE,PERM_MANAGE_STATISTICS",
                                 ',')));
         roles.put(
                 "admin",
                 Arrays.asList(StringUtils
-                        .split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS",
+                        .split("PERM_UPDATE,PERM_MANAGE_REP,PERM_MANAGE_METADATA,PERM_MANAGE_MAPPINGS,PERM_MANAGE_STATISTICS",
                                 ',')));
         roles.put("update", Arrays.asList(StringUtils.split(
                 "PERM_UPDATE", ',')));

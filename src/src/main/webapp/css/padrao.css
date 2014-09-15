@@ -23,7 +23,7 @@ body
     font-size: 80%;
     text-decoration: none;
     color: #000000;
-
+    /*background-color: whitesmoke;*/
 }
 
 #bodyMenor{
@@ -40,9 +40,6 @@ a{
     cursor:pointer;
 }
 
-a:visited{
-    /* color:#0066CC; */
-}
 a:hover{
     text-decoration:underline;
 }
@@ -60,6 +57,11 @@ img{
 {
     padding: 10px;
     background-color:white;
+    max-width: 1024px;
+    max-height: 375px;
+    margin: auto;
+    margin-top: 4%;
+    border-radius: 7px;
 }
 
 #body
@@ -112,7 +114,13 @@ img{
 .rodapeConsulta{
     margin-top:0.1%;
     background-color:#AEC9E3;
+    padding: 5px 10px;
+    font-family: Calibri;
 }
+.rodapeConsulta a{
+    color: #000000
+}
+div.suporte{margin-top: 5px; margin-left: 5px;}
 
 .resultadoConsulta{
 
@@ -204,7 +212,25 @@ img{
     color: black;
     font-weight: bold;
 }
-
+#estatisticas .caixaAzul
+{
+    max-width: 1000px;
+    border: 1px #AEC9E3 solid;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 3px;
+}
+#estatisticas .numObj{width: 15%;text-align: right;padding-right: 4em}
+#estatisticas table td:first-child{text-align: left;padding-left: 1em}
+.estatisticasTitulo
+{
+    text-align:center;
+    font-size: 110%;
+    color: black;
+    font-weight: bold;
+    padding: 2px;
+}
+.btSemTexto{height:2.2em}
 .zebraEven
 {
     background-color:#D7EBFF;
@@ -503,7 +529,6 @@ td{vertical-align:top;}
 {
     width: 100%;
     padding: 2px;
-    border-bottom: 2px solid #AEC9E3;
     margin:10px 0;
 }
 .repositorios-table th{
@@ -853,7 +878,7 @@ td{vertical-align:top;}
     text-align: center;
 }
 #index .logo{
-    width: 10%;
+    width: 16%;
 }
 #index .logoBusca a{
     text-decoration:none;
@@ -866,7 +891,7 @@ td{vertical-align:top;}
     text-align: center;
     margin-bottom: 1%;
 }
-.busca input[type=text]{width:50%;}
+.busca input[type=text]{width: 70%;}
 .busca .ValueErro{
     color:red;
     font-weight:bold;
@@ -954,6 +979,24 @@ body.loading .modal {
     display: block;
 }
 
+/*  É o mesmo que a classe hidden, porém usada nas classes 
+    de acessibilidade.
+*/
+.accessibility {
+    display: none;
+}
+
+/* Estava com a a tag font no site 
+*/
+.nenhumOa {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.paginacao {
+    font-family: Helvetica;
+
+}
 /*css3 tabela com linhas coloridas*/
 table.zebra tbody tr:nth-child(odd) {background: white}
 table.zebra tbody tr:nth-child(even) {background: #D7EBFF}

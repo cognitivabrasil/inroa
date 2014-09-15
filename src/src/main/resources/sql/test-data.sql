@@ -35,7 +35,7 @@ INSERT INTO dados_subfederacoes (id,nome,url,data_xml,data_ultima_atualizacao,de
 VALUES (4,'marcos','http://','2012-03-09 07:51:22.48377','2012-03-09 07:51:22.48377','Bla');
 
 
-INSERT INTO repositorios_subfed (id,nome,id_subfed,) VALUES (1,'RepUfrgs1',1);
+INSERT INTO repositorios_subfed (id,nome,id_subfed) VALUES (1,'RepUfrgs1',1);
 
 INSERT INTO documentos (id,obaa_entry, id_repositorio,created,deleted)
 VALUES (1,'oai:cesta2.cinted.ufrgs.br:123456789/57',1,'2012-03-09 07:51:22.48377','false');

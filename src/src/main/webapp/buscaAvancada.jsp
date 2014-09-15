@@ -16,6 +16,7 @@
 <c:url var="scripts" value="/scripts" />
 <c:url var="css" value="/css" />
 
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -58,18 +59,18 @@
                     <div id="buscaAvancada">
                         <div class="LinhaEntrada">
                             <form:errors path="consulta" cssClass="ValueErro" />
-                            <div class="LabelLeft">
-                                <b>Texto</b> para a busca
-                            </div>
+                            <label class="LabelLeft" for="consulta" >
+                                <strong>Texto</strong> para a busca
+                            </label>
                             <div class="Value">
                                 <form:input path="consulta"/>
                             </div>
                         </div>  
 
                         <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Pesquisar objetos <b>de autoria</b> de
-                            </div>
+                            <label class="LabelLeft" for="autor" >
+                                Pesquisar objetos <strong>de autoria</strong> de
+                            </label>
                             <div class="Value">
                                 <form:input path="autor"/>
                             </div>
@@ -113,6 +114,7 @@
                                 <form:radiobutton path="cost" value=""/> Ambos
                             </div>
                         </div> 
+
 
                         <div class="LinhaEntrada">
                             <div class="LabelLeft"> 

@@ -127,15 +127,15 @@ public final class FEBController {
             return "infoDetalhada";
         }
     }
-    
+
     @RequestMapping("/objetos/{id}/json")
     public @ResponseBody
-    String getJson(@PathVariable Integer id){
+    String getJson(@PathVariable Integer id) {
         Document d = docDao.get(id);
         d.getMetadata().setLocale("pt-BR");
         return d.getMetadata().getJson();
     }
-            
+
     @RequestMapping("/consulta")
     public String consulta(HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
@@ -203,7 +203,7 @@ public final class FEBController {
         } else {
             try {
                 Recuperador rec = new Recuperador();
-                    List<Document> docs = rec.buscaAvancada(consulta);
+                List<Document> docs = rec.buscaAvancada(consulta);
                 model.addAttribute("documentos", docs);
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
@@ -212,7 +212,7 @@ public final class FEBController {
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                log.error("FEB ERRO: Erro ao efetuar a consula na base de dados.",e);
+                log.error("FEB ERRO: Erro ao efetuar a consula na base de dados.", e);
                 return "buscaAvancada";
             }
         }
@@ -346,7 +346,7 @@ public final class FEBController {
         try {
             URL u = new URL(url);
             HttpURLConnection huc = (HttpURLConnection) u.openConnection();
-            huc.setRequestMethod("GET");
+            huc.setRequestMethod("HEAD");          
             huc.connect();
             int code = huc.getResponseCode();
             return String.valueOf(code >= 200 && code < 400);

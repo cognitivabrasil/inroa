@@ -12,13 +12,18 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 // TODO: Auto-generated Javadoc
-public class Importer {
+/**
+ * @author paulo
+ *
+ */
+public class ImporterRep {
 
-    Logger logger = Logger.getLogger(Importer.class);
+    Logger logger = Logger.getLogger(ImporterRep.class);
     private XsltConversor conversor;
     private Repositorio rep;
     private File inputXmlFile;
     private OaiOBAA oai;
+    
     @Autowired
     private DocumentService docDao;
 

@@ -7,7 +7,7 @@
     %>&nbsp;<%
   }
   if (pageNumber == currentPageNumber) {
-    %><b><%= pageNumber %></b><%
+    %><strong><%= pageNumber %></strong><%
   } else {
     %><a href="<%= pageUrl%>&consulta=${buscaModel.consulta}"><%= pageNumber %></a><%
   }

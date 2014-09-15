@@ -1,6 +1,5 @@
 package com.cognitivabrasil.feb.solr.indexar;
 
-import cognitivabrasil.obaa.Educational.TypicalAgeRange;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrServer;
@@ -21,7 +20,7 @@ public class IndexarDados {
     private static final String solrURL = "http://localhost:8983/solr/";
     private static final Logger log = Logger.getLogger(IndexarDados.class);
 
-    private SolrServer serverteste;
+    private final SolrServer serverteste;
 
     /**
      * Apaga todo o indice do Solr
@@ -39,9 +38,7 @@ public class IndexarDados {
             }
             server.commit();
             return true;
-        } catch (SolrServerException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr", e);
-        } catch (IOException e) {
+        } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr", e);
         }
         return true;
@@ -66,9 +63,7 @@ public class IndexarDados {
             }
             server.commit();
             return true;
-        } catch (SolrServerException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr", e);
-        } catch (IOException e) {
+        } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr", e);
         }
 
@@ -103,10 +98,7 @@ public class IndexarDados {
             server.commit();
 
             return true;
-        } catch (SolrServerException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
-            System.exit(1);
-        } catch (IOException e) {
+        } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
             System.exit(1);
 
@@ -133,11 +125,7 @@ public class IndexarDados {
             }
             server.commit();
             return true;
-        } catch (SolrServerException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
-            System.exit(1);
-
-        } catch (IOException e) {
+        } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
             System.exit(1);
 
@@ -157,11 +145,7 @@ public class IndexarDados {
                 return false;
             }
             return true;
-        } catch (SolrServerException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
-            System.exit(1);
-
-        } catch (IOException e) {
+        } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
             System.exit(1);
 
@@ -173,11 +157,7 @@ public class IndexarDados {
     public void darCommmit() {
         try {
             serverteste.commit();
-        } catch (SolrServerException ex) {
-            java.util.logging.Logger.getLogger(IndexarDados.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(1);
-
-        } catch (IOException ex) {
+        } catch (SolrServerException | IOException ex) {
             java.util.logging.Logger.getLogger(IndexarDados.class.getName()).log(Level.SEVERE, null, ex);
             System.exit(1);
 
@@ -193,11 +173,7 @@ public class IndexarDados {
             server.commit();
 
             return true;
-        } catch (SolrServerException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
-            System.exit(1);
-
-        } catch (IOException e) {
+        } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
             System.exit(1);
 
@@ -205,5 +181,4 @@ public class IndexarDados {
 
         return false;
     }
-
 }

@@ -6,13 +6,16 @@
 <%@ taglib prefix="security"
            uri="http://www.springframework.org/security/tags"%>
 
-<html>
+<c:url var="login" value="/scripts/login.js" />
+
+<html lang="pt-BR">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>FEB - Ferramenta Administrativa</title>
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="css/padrao.css" type="text/css">
         <script type="text/javascript" src="./scripts/validatejs.js"></script>
+        <script type="text/javascript" src="${login}"></script>
 
         <script type="text/javascript">
             var myForm = new Validate();

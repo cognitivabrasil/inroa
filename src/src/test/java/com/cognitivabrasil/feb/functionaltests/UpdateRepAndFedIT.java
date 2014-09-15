@@ -13,19 +13,25 @@ import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
-import com.cognitivabrasil.feb.robo.atualiza.importaOAI.Importer;
+import com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep;
+import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ParserListSets;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Set;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+
 import org.apache.commons.io.FileUtils;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +66,10 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
     @Autowired
     MappingService mapDao;
 
+    @Autowired
+    ImporterSubfed impSF;
+
+
     @Test
     public void testUpdateRepFromXML() throws IOException, ParserConfigurationException, SAXException, TransformerException {
         String xmlRep = "src/test/resources/repIFRS-records.xml";
@@ -77,7 +87,7 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         rep.setMapeamento(m);
 
         int docSizeBefore = docDao.getAll().size();
-        Importer imp = new Importer();
+        ImporterRep imp = new ImporterRep();
         imp.setInputFile(xmlRep);
         imp.setRepositorio(rep);
         imp.setDocDao(docDao);
@@ -112,7 +122,6 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
 
         subDao.save(subFed);
 
-        com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer impSF = new com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Importer();
         impSF.setInputFile(xmlFedRecords);
         impSF.setDocDao(docDao);
         impSF.setSubFed(subFed);
