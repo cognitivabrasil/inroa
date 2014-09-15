@@ -30,17 +30,7 @@ public class Solr {
 
     }
 
-    public void memoryLeakTest(List<Document> docs) {
-        for (Document doc : docs) {
-
-            OBAA o = doc.getMetadata();
-            if (o.getGeneral() == null) {
-                System.out.println("dfillsfdis");
-            }
-        }
-
-    }
-
+    
     /**
      * Recebe uma lista de documentos reais, converte eles para DocumentSolr e
      * envia eles para o sistema indexar Converte um a um os documentos reais
@@ -78,7 +68,7 @@ public class Solr {
             //Foi requerido que objetos sem link não fossem indexados ou apresentados ao usuário (FEB-472)
             if (doc.getMetadata().getTechnical().getLocationHttp().isEmpty())
                 continue;
-            
+             
             docsSolr.add(convert.OBAAToSolrInputDocument(doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao, nomeRep));
 
         }

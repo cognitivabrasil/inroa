@@ -32,6 +32,7 @@ public class IndexarDados {
         try {
             UpdateResponse response = server.deleteByQuery("*:*");
             if (response.getStatus() == 400) {
+                // Add exception para travar o programa
                 log.error("A base de dados nao pode ser apagada (nao sei como esse erro poderia acontecer)");
                 return false;
             }
@@ -99,6 +100,8 @@ public class IndexarDados {
             return true;
         } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
+            System.exit(1);
+
         }
 
         return false;
@@ -124,16 +127,13 @@ public class IndexarDados {
             return true;
         } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
+            System.exit(1);
+
         }
 
         return false;
     }
 
-    //PARA TESTES DE VELOCIDADE. PODE SER APAGADO LIVREMENTE DEPOIS
-    public IndexarDados(boolean t) {
-        serverteste = new HttpSolrServer(solrURL);
-
-    }
 
     public boolean indexarIndividualmente(SolrInputDocument docs) {
         try {
@@ -147,6 +147,8 @@ public class IndexarDados {
             return true;
         } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
+            System.exit(1);
+
         }
 
         return false;
@@ -157,6 +159,8 @@ public class IndexarDados {
             serverteste.commit();
         } catch (SolrServerException | IOException ex) {
             java.util.logging.Logger.getLogger(IndexarDados.class.getName()).log(Level.SEVERE, null, ex);
+            System.exit(1);
+
         }
 
     }
@@ -171,6 +175,8 @@ public class IndexarDados {
             return true;
         } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
+            System.exit(1);
+
         }
 
         return false;
