@@ -165,7 +165,7 @@ public class QuerySolr {
 
             if (list.get(numDoc).getFieldValues("obaa.technical.location") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.technical.location")) {
-                    System.out.println((String) o);
+                    log.debug((String) o);
                     obaa.getTechnical().addLocation((String) o);
                 }
             }

@@ -4,9 +4,6 @@
  */
 package feb.data.daos;
 
-import feb.data.entities.PalavrasOfensivas;
-
-import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;

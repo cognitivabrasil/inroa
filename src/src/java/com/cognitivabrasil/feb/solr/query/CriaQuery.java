@@ -92,9 +92,7 @@ public class CriaQuery {
         if (resultado.startsWith(" AND ")) {
             resultado = resultado.substring(4);
         }
-
-     //   System.out.println(resultado);
+        
         return resultado;
-
     }
 }
