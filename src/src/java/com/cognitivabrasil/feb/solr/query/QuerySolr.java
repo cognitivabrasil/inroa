@@ -8,8 +8,7 @@ import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -23,6 +22,7 @@ public class QuerySolr {
     private final HttpSolrServer serverSolr;
     private SolrQuery query;
     private QueryResponse queryResponse;
+    private static final Logger log = Logger.getLogger(QuerySolr.class);
 
     public QuerySolr() {
         serverSolr = new HttpSolrServer("http://localhost:8983/solr");
@@ -32,8 +32,7 @@ public class QuerySolr {
     }
 
     /**
-     * Realiza a busca em uma url determinada do Solr (se for utilizado a url
-     * padrao a funcao nao precisa de parametros)
+     * Realiza a busca em uma url determinada do Solr (se for utilizado a url padrao a funcao nao precisa de parametros)
      *
      * @param url URL do SOLR
      */
@@ -45,15 +44,13 @@ public class QuerySolr {
     }
 
     /**
-     * Realiza a query no SOLR nos campos padroes definidos no schema.xml
-     * (titulo, keywords e description). O resultado da pesquisa eh armazenado
-     * na variavel queryResponse e pode ser utilizado posteriormente
+     * Realiza a query no SOLR nos campos padroes definidos no schema.xml (titulo, keywords e description). O resultado
+     * da pesquisa eh armazenado na variavel queryResponse e pode ser utilizado posteriormente
      *
      * @param pesquisa Os termos que serao pesquisados
      * @param offset Posicao do primeiro resultado a aparecer
      * @param limit Numero de resultados desejados
-     * @return True se tudo correu bem e false se nao foi possivel fazer a
-     * pesquisa (server offline?)
+     * @return True se tudo correu bem e false se nao foi possivel fazer a pesquisa (server offline?)
      */
     public boolean pesquisaSimples(String pesquisa, int offset, int limit) {
 
@@ -69,26 +66,20 @@ public class QuerySolr {
             queryResponse = serverSolr.query(query);
             return true;
         } catch (SolrServerException ex) {
-            //TODO   Implementar Logger aqui!
-            //("Ocorreu um erro durante a pesquisa");
-            Logger.getLogger("Erro durante a pesquisa ao acessar o servidor SOLR \n"+
-                    QuerySolr.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Erro durante a pesquisa ao acessar o servidor SOLR ", ex);
             return false;
         }
 
     }
 
     /**
-     * Realiza a busca avancada. A funcao verifica quais campos foram escolhidos
-     * e realiza a busca neles PERGUNTA: REALIZA A BUSCA APENAS NELES OU NOS
-     * PRINCIPAIS TAMBEM? E A BUSCA PODE SER DIFERENTE PARA CADA CAMPO?
+     * Realiza a busca avancada. A funcao verifica quais campos foram escolhidos e realiza a busca neles PERGUNTA:
+     * REALIZA A BUSCA APENAS NELES OU NOS PRINCIPAIS TAMBEM? E A BUSCA PODE SER DIFERENTE PARA CADA CAMPO?
      *
-     * @param pesquisa Um Objeto consulta com todas as informacoes da busca
-     * (String, campos, etc)
+     * @param pesquisa Um Objeto consulta com todas as informacoes da busca (String, campos, etc)
      * @param offset Posicao do primeiro resultado a aparecer
      * @param limit Numero de resultados desejados
-     * @return True se tudo correu bem e false se nao foi possivel fazer a
-     * pesquisa (server offline?)
+     * @return True se tudo correu bem e false se nao foi possivel fazer a pesquisa (server offline?)
      */
     public boolean pesquisaCompleta(Consulta pesquisa, int offset, int limit) {
 
@@ -101,18 +92,17 @@ public class QuerySolr {
         query.setStart(offset);
         query.setRows(limit);
 
-                query.setRequestHandler("/feb_avancado");
+        query.setRequestHandler("/feb_avancado");
 
         //Para definir que espaco em branco sera considerado OR e nao +
         query.set(QueryParsing.OP, "OR");
-        
+
         try {
             queryResponse = serverSolr.query(query);
             return true;
 
         } catch (SolrServerException ex) {
-            System.out.println("Ocorreu um erro durante a pesquisa");
-            Logger.getLogger(QuerySolr.class.getName()).log(Level.SEVERE, null, ex);
+            log.error("Ocorreu um erro durante a pesquisa", ex);
             return false;
         }
 
@@ -128,15 +118,13 @@ public class QuerySolr {
     /**
      * Transoforma a resposta fornecida pelo SOLR em Documentos Reais
      *
-     * @param start Posicao do primeiro resultado da busca a ser transformado em
- Document
-     * @param offset Numero de resultados da busca a ser transformado em
- Document
+     * @param start Posicao do primeiro resultado da busca a ser transformado em Document
+     * @param offset Numero de resultados da busca a ser transformado em Document
      * @return Lista de DocumentosReais construida a partir da busca.
      */
     public List<Document> getDocumentosReais(int start, int offset) {
 
-        List<Document> retorno = new ArrayList<Document>();
+        List<Document> retorno = new ArrayList<>();
         SolrDocumentList list = queryResponse.getResults();
 
         for (int i = 0; i < offset && i < list.size(); i++) {
@@ -145,18 +133,17 @@ public class QuerySolr {
             int numDoc = i;
 
             Document doc = new Document();
-            OBAA obaa = new OBAA();
-            try{
+            OBAA obaa;
+            try {
                 obaa = doc.getMetadata();
-            }catch(IllegalStateException il){
+            } catch (IllegalStateException il) {
                 obaa = new OBAA();
-                doc.setMetadata(obaa);                
+                doc.setMetadata(obaa);
             }
-            
-                obaa.setGeneral(new General());
-            
-                obaa.setTechnical(new Technical());
-            
+
+            obaa.setGeneral(new General());
+
+            obaa.setTechnical(new Technical());
 
             if (list.get(numDoc).getFieldValues("obaa.general.title") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.general.title")) {
