@@ -15,7 +15,6 @@ import com.cognitivabrasil.feb.util.Operacoes;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,15 +44,13 @@ public class SubFederacaoOAI {
     private SubRepositorios subRep;
 
     /**
-     * Atualiza todas as subfedera&ccedil;&otilde;es. Coleta da base os dados
-     * das subfedera&ccedil;&otilde;es e chama o m&etodo que efetua a
-     * atualia&ccedil;&atilde;o.
+     * Atualiza todas as subfedera&ccedil;&otilde;es. Coleta da base os dados das subfedera&ccedil;&otilde;es e chama o
+     * m&etodo que efetua a atualia&ccedil;&atilde;o.
      *
      * @param con Conex&atilde;o com a base de dados local.
-     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar
-     * os dados para o indice durante a atualiza&ccidil;&atilde;o dos metadados.
-     * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi
-     * atualizada ou n&atilde;o.
+     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a
+     * atualiza&ccidil;&atilde;o dos metadados.
+     * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;o.
      */
     public boolean pre_AtualizaSubFedOAI(Indexador indexar) {
         boolean atualizou = false;
@@ -104,25 +101,21 @@ public class SubFederacaoOAI {
                 }
             }
         } catch (HibernateException h) {
-            log.error("FEB ERRO: Erro no Hibernate na classe: " + h.getClass()
-                    + ".", h);
+            log.error("Erro no Hibernate.", h);
         }
         return atualizou;
     }
 
     /**
-     * Chama o m&eacute;todo respons&aacute;vel por atualizar os
-     * reposit&oacute;rios da subfedera&ccedil;&atilde;o e o m&eacute;todo
-     * respons&aacute;vel por atualizar os metadados dos objetos da
-     * subfedera&ccedil;&atilde;o. Este m&eacute;todo efetua todo o tratamento
-     * de exce&ccedil;&otilde;es do processo de harverter, parser e
+     * Chama o m&eacute;todo respons&aacute;vel por atualizar os reposit&oacute;rios da subfedera&ccedil;&atilde;o e o
+     * m&eacute;todo respons&aacute;vel por atualizar os metadados dos objetos da subfedera&ccedil;&atilde;o. Este
+     * m&eacute;todo efetua todo o tratamento de exce&ccedil;&otilde;es do processo de harverter, parser e
      * inser&ccedil;&atilde;o na base.
      *
      * @param subFed classe da subfedera&ccedil;&atilde;o.
-     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar
-     * os dados para o indice durante a atualiza&ccidil;&atilde;o dos metadados.
-     * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi
-     * atualizada ou n&atilde;o.
+     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a
+     * atualiza&ccidil;&atilde;o dos metadados.
+     * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;o.
      */
     private void atualizaSubFedOAI(SubFederacao subFed, Indexador indexar)
             throws Exception {
@@ -140,20 +133,17 @@ public class SubFederacaoOAI {
             subDao.save(subFed);
 
         } catch (UnknownHostException u) {
-            log.error("FEB ERRO - Metodo atualizaSubFedOAI: Nao foi possivel encontrar o servidor oai-pmh informado, erro: "
-                    + u);
+            log.error("Nao foi possivel encontrar o servidor oai-pmh informado.", u);
             throw u;
-        } catch (SQLException e) {
-            log.error("FEB ERRO - Metodo atualizaSubFedOAI: SQL Exception... Erro na consulta sql na classe SubFederacaoOAI:"
-                    + e.getMessage());
+        } catch (HibernateException e) {
+            log.error("Erro com o hibernate.", e);
             throw e;
         } catch (ParserConfigurationException e) {
-            log.error("FEB ERRO - Metodo atualizaSubFedOAI: O parser nao foi configurado corretamente. "
-                    + e);
+            log.error("O parser nao foi configurado corretamente. ", e);
             throw e;
         } catch (SAXException e) {
             String msg = e.getMessage();
-            String msgOAI = "\nFEB ERRO - Metodo atualizaSubFedOAI: erro no parser do OAI-PMH, mensagem: ";
+            String msgOAI = "\nErro no parser do OAI-PMH, mensagem: ";
             if (msg.equalsIgnoreCase("badArgument")) {
                 log.error(msgOAI
                         + msg
@@ -191,16 +181,13 @@ public class SubFederacaoOAI {
             }
             throw e;
         } catch (FileNotFoundException e) {
-            log.error("\nFEB ERRO - " + this.getClass()
-                    + ": nao foi possivel coletar os dados de: " + e + "\n");
+            log.error("\nNao foi possivel coletar os dados do arquivo.", e);
             throw e;
         } catch (IOException e) {
-            log.error("\nFEB ERRO - Nao foi possivel coletar ou ler o XML em "
-                    + this.getClass() + ": " + e + "\n");
+            log.error("\nNao foi possivel coletar ou ler o XML.", e);
             throw e;
         } catch (Exception e) {
-            log.error("\nFEB ERRO - " + this.getClass()
-                    + ": erro ao efetuar o Harvester " + e + "\n");
+            log.error("\nErro ao efetuar o Harvester.", e);
             throw e;
         }
     }
@@ -267,11 +254,10 @@ public class SubFederacaoOAI {
     }
 
     /**
-     * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome
-     * das federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
+     * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome das federa&ccedil;&otilde;es que
+     * n&atilde;o foram atualizadas.
      *
-     * @param nome ArrayList<String> contendo o nome das
-     * federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
+     * @param nome ArrayList<String> contendo o nome das federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
      * @return String com a mensagem de erro gerada.
      */
     public static String getMensagem(ArrayList<String> nome) {

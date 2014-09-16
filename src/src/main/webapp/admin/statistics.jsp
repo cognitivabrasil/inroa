@@ -37,29 +37,33 @@
             <div class="caixaAzul">
                 <span class="left bold">Número total de objetos:</span> <fmt:formatNumber value="${totalObj}" />
 
-                <table class="repositorios-table zebraTable">
-                    <caption class="estatisticasTitulo">Repositórios</caption>
-                    <tr>
-                        <th> Repositório</th><th>Documentos</th>
-                    </tr>
-                    <c:forEach var="map" items="${repositories}">
+                <c:if test="${!empty repositories}">
+                    <table class="repositorios-table zebraTable">
+                        <caption class="estatisticasTitulo">Repositórios</caption>
                         <tr>
-                            <td>${map.key}</td>
-                            <td class="numObj"><fmt:formatNumber value="${map.value}" /></td>
+                            <th> Repositório</th><th>Documentos</th>
                         </tr>
-                    </c:forEach>
-                </table>
+                        <c:forEach var="map" items="${repositories}">
+                            <tr>
+                                <td>${map.key}</td>
+                                <td class="numObj"><fmt:formatNumber value="${map.value}" /></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:if>
 
-                <table class="repositorios-table zebraTable">
-                    <caption class="estatisticasTitulo">Federações</caption>
-                    <tr><th> Federa&ccedil;&atilde;o</th><th>Documentos</th></tr>
-                            <c:forEach var="map" items="${federations}">
-                        <tr>
-                            <td>${map.key}</td>
-                            <td class="numObj"><fmt:formatNumber value="${map.value}" /></td>
-                        </tr>
-                    </c:forEach>
-                </table>
+                <c:if test="${!empty federations}">
+                    <table class="repositorios-table zebraTable">
+                        <caption class="estatisticasTitulo">Federações</caption>
+                        <tr><th> Federa&ccedil;&atilde;o</th><th>Documentos</th></tr>
+                                <c:forEach var="map" items="${federations}">
+                            <tr>
+                                <td>${map.key}</td>
+                                <td class="numObj"><fmt:formatNumber value="${map.value}" /></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:if>
             </div>
 
             <security:authorize access="hasRole('PERM_MANAGE_STATISTICS')">
