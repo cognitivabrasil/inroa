@@ -1,6 +1,5 @@
 package com.cognitivabrasil.feb.solr.main;
 
-import cognitivabrasil.obaa.OBAA;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.solr.indexar.IndexarDados;
 import com.cognitivabrasil.feb.solr.converter.Converter;
@@ -12,10 +11,8 @@ import org.apache.solr.common.SolrInputDocument;
 public class Solr {
 
     private static final Logger log = Logger.getLogger(Solr.class);
-    private static final int maxDocs = 9999; // Numero maximo de documentos que seram indexados upload para o Solr
-    private Converter convert;
-    private IndexarDados st;
-
+    private final Converter convert;
+    
     public Solr() {
         convert = new Converter();
     }
@@ -27,20 +24,17 @@ public class Solr {
      */
     public static boolean apagarIndice() {
         return IndexarDados.apagarIndice();
-
     }
 
-    
     /**
-     * Recebe uma lista de documentos reais, converte eles para DocumentSolr e
-     * envia eles para o sistema indexar Converte um a um os documentos reais
-     * ate atingir maxDocs documentos. Apos, envia eles para o Sorl
+     * Recebe uma lista de documentos reais, converte eles para DocumentSolr e envia eles para o sistema indexar
+     * Converte um a um os documentos reais ate atingir maxDocs documentos. Apos, envia eles para o Sorl
      *
      * @param docs Lista de documentos reais a serem indexados
      */
     public void indexarBancoDeDados(List<Document> docs) {
-        List<SolrInputDocument> docsSolr = new ArrayList<SolrInputDocument>();
-        
+        List<SolrInputDocument> docsSolr = new ArrayList<>();
+
         log.debug("Convertendo obaaXML em SolrXML: Numero de objetos a serem convertidos: " + docs.size());
         for (Document doc : docs) {
             String entry = "";
@@ -50,10 +44,7 @@ public class Solr {
                     log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
                     continue;
                 }
-            } catch (NullPointerException n) {
-                log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
-                continue;
-            } catch (IndexOutOfBoundsException i) {
+            } catch (NullPointerException | IndexOutOfBoundsException n) {
                 log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
                 continue;
             }
@@ -66,22 +57,23 @@ public class Solr {
             String nomeRep = doc.getNomeRep();
 
             //Foi requerido que objetos sem link não fossem indexados ou apresentados ao usuário (FEB-472)
-            if (doc.getMetadata().getTechnical().getLocationHttp().isEmpty())
+            if (doc.getMetadata().getTechnical().getLocationHttp().isEmpty()) {
                 continue;
-             
-            docsSolr.add(convert.OBAAToSolrInputDocument(doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao, nomeRep));
+            }
+
+            docsSolr.add(convert.OBAAToSolrInputDocument(
+                    doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao, nomeRep));
 
         }
 
-        log.debug("Enviando para o Solrs a lista de documento. (Numero de documentos: " + docsSolr.size() + ")");
+        log.debug("Enviando para o Solrs a lista de documento. (Número de documentos: " + docsSolr.size() + ")");
 
         //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
         if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
-            log.error("Erro ao mandar a lista de documentos para o Solr, sera enviado um a um.");
+            log.error("Erro ao mandar a lista de documentos para o Solr, será enviado um a um.");
             for (int d = 0; d < docsSolr.size(); d++) {
                 IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
             }
         }
-
     }
 }

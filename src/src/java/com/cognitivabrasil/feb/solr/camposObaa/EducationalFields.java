@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cognitivabrasil.obaa.OBAA;
+import org.apache.log4j.Logger;
 
 public class EducationalFields {
 
     private static final String cabecalho = "obaa.educational.";
+    private static final Logger log = Logger.getLogger(EducationalFields.class);
 
     public static List<String> getInteractivitytype(OBAA o) {
 
@@ -59,7 +61,7 @@ public class EducationalFields {
         typical.addAll(o.getEducational().getTypicalAgeRanges());
         if (o.getEducational().getTypicalAgeRanges().size()>0)
         {
-            System.out.println(o.getEducational().getTypicalAgeRanges());
+            log.debug(o.getEducational().getTypicalAgeRanges());
         }
         return typical;
     }
@@ -72,7 +74,7 @@ public class EducationalFields {
         if (o.getEducational().getTypicalAgeRanges().size()>0
                 && o.getEducational() != null &&
                 o.getEducational().getTypicalAgeRanges() != null) {
-                        System.out.println("IdadeMinima");
+                        log.debug("IdadeMinima");
 
             String[] idades = o.getEducational().getTypicalAgeRanges().get(0).split("-");
             //Adicionamos e removemos o espaco em branco que tem depois do digito de idade

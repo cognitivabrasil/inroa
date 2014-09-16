@@ -60,48 +60,9 @@ public class Indexador {
             em.clear();
         }
 
-        System.out.println("FIM DA INDEXACAO");
+        log.info("FIM DA INDEXACAO");
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
         log.info("Tempo total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));
     }
-    /*
-     public void populateR1(int vez) {
-     log.info("Recalculando o indice do Solr...");
-
-     //    Solr.apagarIndice();
-
-     Long inicio = System.currentTimeMillis();
-     int numMaxDoc = 10000;
-
-     Solr s = new Solr();
-
-     //ELE DA ERRO NO 115.000
-     int prim = 0;
-     if (vez == 1)
-     prim = docDao.getSize()/2;
-     int fin = docDao.getSize()/2;
-     if (vez == 1)
-     fin = docDao.getSize();
-     for (int i = prim; i < fin; i = i + numMaxDoc) {
-
-     System.out.println(i);
-     s.memoryLeakTest(docDao.getAll(numMaxDoc, i));
-     }
-
-     System.out.println("FIM DA INDEACAO");
-     Long fim = System.currentTimeMillis();
-     Long total = fim - inicio;
-     log.info("Tempo total para o recalculo do indice: " + Operacoes.formatTimeMillis(total));
-     s = null;
-     s = new Solr()
-     ;
-     try {
-     Thread.sleep(10000);
-     } catch (InterruptedException ex) {
-     java.util.logging.Logger.getLogger(Indexador.class.getName()).log(Level.SEVERE, null, ex);
-     }
-     System.gc();
-     Runtime.getRuntime().gc();
-     }*/
 }
