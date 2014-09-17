@@ -89,5 +89,6 @@ CREATE TABLE usuarios (
 CREATE TABLE searches (
     id serial NOT NULL,
     text TEXT,
-    time timestamp,PRIMARY KEY (id)
+    created timestamp,
+    PRIMARY KEY (id)
 ); 

@@ -5,6 +5,7 @@
 package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.data.entities.Search;
+import com.cognitivabrasil.feb.data.repositories.SearchRepository;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,10 @@ public class SearchesJdbcIT extends AbstractTransactionalJUnit4SpringContextTest
 
     @Autowired
     SearchService sDao;
-
+    
+    @Autowired
+    SearchRepository sRep;
+    
     @Test
     public void getSearches() throws ParseException {
         DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -56,42 +61,6 @@ public class SearchesJdbcIT extends AbstractTransactionalJUnit4SpringContextTest
 
     }
 
-    @Test
-    public void getSearches2() throws ParseException {
-        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date a = dfm.parse("2012-06-26 20:15:00");
-
-        List<Search> l = sDao.getSearches(2);
-
-        assertThat(l.size(), equalTo(2));
-
-        assertThat(l.get(0).getText(), equalTo("jorjao"));
-        assertThat(l.get(0).getCount(), equalTo(4));
-
-        assertThat(l.get(1).getText(), equalTo("bla"));
-        assertThat(l.get(1).getCount(), equalTo(2));
-
-    }
-
-    @Test
-    public void getSearches3() throws ParseException {
-        DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date a = dfm.parse("2012-06-26 20:15:00");
-
-        List<Search> l = sDao.getSearches(a);
-
-        assertThat(l.size(), equalTo(3));
-
-        assertThat(l.get(0).getText(), equalTo("jorjao"));
-        assertThat(l.get(0).getCount(), equalTo(3));
-
-        assertThat(l.get(1).getText(), equalTo("bla"));
-        assertThat(l.get(1).getCount(), equalTo(2));
-
-        assertThat(l.get(2).getText(), equalTo("teste"));
-        assertThat(l.get(2).getCount(), equalTo(2));
-
-    }
 
     /**
      * Tests that we can add Searches.
@@ -100,43 +69,46 @@ public class SearchesJdbcIT extends AbstractTransactionalJUnit4SpringContextTest
      */
     @Test
     public void getAdd() throws ParseException {
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.HOUR, -1);
-        Date before = c.getTime();
+        
+        int sizeBefore = sRep.findAll().size();
 
         sDao.save("pretto", new Date());
         sDao.save(" Marcos   Nunes", new Date());
         sDao.save("pretto", new Date());
+        sDao.save("Nunes", new Date());
 
-        List<Search> l = sDao.getSearches(before);
+        int sizeAfter = sRep.findAll().size();
 
-        assertThat(l.size(), equalTo(2));
+        assertThat(sizeAfter, equalTo(sizeBefore+4));
 
-        assertThat(l.get(0).getText(), equalTo("pretto"));
-        assertThat(l.get(0).getCount(), equalTo(2));
-
-        assertThat(l.get(1).getText(), equalTo("marcos nunes"));
-        assertThat(l.get(1).getCount(), equalTo(1));
+        //TODO: testar o get com os valores agrupados.
+//        assertThat(l.get(0).getText(), equalTo("pretto"));
+//        assertThat(l.get(0).getCount(), equalTo(2));
+//
+//        assertThat(l.get(1).getText(), equalTo("marcos nunes"));
+//        assertThat(l.get(1).getCount(), equalTo(1));
 
     }
 
     @Test
     public void clear() {
+        assertThat(sRep.findAll(), hasSize(8));
         sDao.deleteAll();
-
-        List<Search> l = sDao.getSearches(10);
-
-        assertThat(l.size(), equalTo(0));
+        assertThat(sRep.findAll(), hasSize(0));
     }
 
     @Test
     public void delete() {
-        List<Search> l = sDao.getSearches(10);
-        int before = l.size();
-        //System.out.println(before);
+        int before = sDao.getSearches(10, new Date(0)).size();
         sDao.delete("teste");
 
-        assertThat(sDao.getSearches(10), hasSize(before - 1));
+        assertThat(sDao.getSearches(10, new Date(0)), hasSize(before - 1));
     }
-
+    
+    @Test
+    public void testCleanup(){
+        assertThat(sRep.findAll().size()>1, equalTo(true));        
+        sDao.cleanup();        
+        assertThat(sRep.findAll(), hasSize(1));
+    }
 }

@@ -57,11 +57,11 @@ VALUES (6,'cinco2',1,'2012-03-09 07:51:22.48377','false');
 INSERT INTO documentos (id,obaa_entry, id_rep_subfed,created,deleted)
 VALUES (7,'cinco3',1,'2012-03-09 07:51:22.48377','false');
 
-INSERT INTO searches (text,time) VALUES ('jorjao','2012-07-09 12:06:02');
-INSERT INTO searches (text,time) VALUES ('jorjao','2012-07-09 12:06:01');
-INSERT INTO searches (text,time) VALUES ('jorjao','2012-07-09 12:06:00');
-INSERT INTO searches (text,time) VALUES ('teste','2012-07-09 12:06:06');
-INSERT INTO searches (text,time) VALUES ('teste','2012-07-09 12:06:07');
-INSERT INTO searches (text,time) VALUES ('bla','2012-06-29 12:06:01');
-INSERT INTO searches (text,time) VALUES ('bla','2012-06-29 12:06:02');
-INSERT INTO searches (text,time) VALUES ('jorjao','2011-12-09 12:06:01');
+INSERT INTO searches (text,created) VALUES ('jorjao','2012-07-09 12:06:02');
+INSERT INTO searches (text,created) VALUES ('jorjao','2012-07-09 12:06:01');
+INSERT INTO searches (text,created) VALUES ('jorjao','2012-07-09 12:06:00');
+INSERT INTO searches (text,created) VALUES ('teste','2012-07-09 12:06:06');
+INSERT INTO searches (text,created) VALUES ('teste','2012-07-09 12:06:07');
+INSERT INTO searches (text,created) VALUES ('bla','2012-06-29 12:06:01');
+INSERT INTO searches (text,created) VALUES ('bla','9999-06-29 12:06:02');
+INSERT INTO searches (text,created) VALUES ('jorjao','2011-12-09 12:06:01');
