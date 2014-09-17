@@ -73,13 +73,13 @@
                         <table class="repositorios-table zebraTable acessos">
                             <caption class="estatisticasTitulo">Termos da <i>tag cloud</i></caption>
                             <tr><th>Termo</th><th>Quantidade de buscas</th><th>Deletar</th></tr>
-                                    <c:url var="deleteTag" value="/admin/statistics/deletetag"/>
+                                    <c:url var="deleteTag" value="/admin/statistics/deletetag?tag="/>
                                     <c:forEach var="termo" items="${termosTagCloud}">
                                 <tr>
                                     <td>${termo.key}</td>
                                     <td class="center">${termo.value}</td>
                                     <td class="center">
-                                        <a class="deleteTag btSemTexto" href="${deleteTag}/${termo.key}">deletar</a>
+                                        <a class="deleteTag btSemTexto" href="${deleteTag}${termo.key}">deletar</a>
                                     </td>
                                 </tr>
                             </c:forEach>
