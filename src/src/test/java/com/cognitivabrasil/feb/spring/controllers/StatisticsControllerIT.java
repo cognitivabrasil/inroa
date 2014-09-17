@@ -5,13 +5,15 @@
  */
 package com.cognitivabrasil.feb.spring.controllers;
 
-import com.cognitivabrasil.feb.data.entities.Repositorio;
-import com.cognitivabrasil.feb.data.entities.SubFederacao;
+import com.cognitivabrasil.feb.data.services.TagCloudService;
+import com.cognitivabrasil.feb.util.Message;
 import java.util.Map;
 import java.util.Map.Entry;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,12 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.ExtendedModelMap;
 
 /**
@@ -35,6 +43,8 @@ public class StatisticsControllerIT extends AbstractTransactionalJUnit4SpringCon
 
     @Autowired
     StatisticsController controller;
+    @Autowired
+    private TagCloudService tagCloud;
 
     @Test
     public void testStatistics() {
@@ -68,5 +78,18 @@ public class StatisticsControllerIT extends AbstractTransactionalJUnit4SpringCon
                 assertThat(map.getValue(), equalTo(0));
             }
         }
+    }
+    
+    @Ignore("Tem que implementar o searches em JPA para funcionar o teste")
+    @Test
+    public void testDeleteTag() throws Exception{
+        Map<String, Integer> mapTagCloud = tagCloud.getTagCloud();
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc.perform(post("/admin/statistics/deletetag").param("tag", "teste"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("type", is(Message.SUCCESS)));
+        
+        assertThat(tagCloud.getTagCloud().size(), equalTo(mapTagCloud.size()-1));
     }
 }

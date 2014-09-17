@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -70,9 +71,9 @@ public final class StatisticsController {
         return "admin/statistics";
     }
 
-    @RequestMapping(value = "/deletetag/{tag}", method = RequestMethod.POST)
+    @RequestMapping(value = "/deletetag", method = RequestMethod.POST)
     @ResponseBody
-    public Message deleteTag(@PathVariable("tag") String tag, RedirectAttributes redirectAttributes) {
+    public Message deleteTag(@RequestParam("tag") String tag) {
         try {
             tagCloud.delete(tag);
             return new Message(Message.SUCCESS, "Termo: '" + tag + "' removido com sucesso da tag cloud");
