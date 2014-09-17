@@ -10,16 +10,18 @@ import java.io.InputStream;
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
 import cognitivabrasil.obaa.LifeCycle.Contribute;
-
 import cognitivabrasil.obaa.LifeCycle.Role;
 import cognitivabrasil.obaa.Technical.Format;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -117,12 +119,13 @@ public class XsltFeb2ToFeb3IT {
     public void resourceDescription() {
         OBAA l = oai.getMetadata(1);
         boolean found = false;
+        System.out.println(l.toXml());
         for (Contribute c : l.getLifeCycle().getContribute()) {
             Role r = c.getRole();
-            r.setCountry("BR");
-            r.setLanguage("BR");
-            if ("Caderno de farmácia".equals(c.getFirstEntity()) && "Publicador".equals(r.getTranslated())) {
+
+            if ("Caderno de farmácia".equals(c.getFirstEntity())) {
                 found = true;
+                assertEquals("publisher", r.getText());
             }
         }
         assert (found);
