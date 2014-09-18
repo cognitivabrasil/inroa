@@ -11,6 +11,8 @@ import cognitivabrasil.obaa.OBAA;
 import com.cognitivabrasil.feb.solr.converter.Converter;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrException;
@@ -52,20 +54,7 @@ public class IndexarDados {
      */
     public static boolean indexarObjeto(List<List<String>> objeto) {
         SolrInputDocument doc = Converter.listToSolrInputDocument(objeto);
-        SolrServer server = new HttpSolrServer(solrURL);
-        try {
-            UpdateResponse response = server.add(doc);
-            if (response.getStatus() == 400) {
-                log.error("Erro ao indexar os objetos (possivelmente falta de 'entry')");
-                return false;
-            }
-            server.commit();
-            return true;
-        } catch (SolrServerException | IOException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr", e);
-        }
-
-        return false;
+        return indexarSolrInputDocument(doc);
     }
 
     /**
@@ -98,7 +87,7 @@ public class IndexarDados {
             return true;
         } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
-            throw new SolrException(SolrException.ErrorCode.SERVICE_UNAVAILABLE, 
+            throw new SolrException(SolrException.ErrorCode.SERVICE_UNAVAILABLE,
                     "Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente");
         }
     }
@@ -110,27 +99,10 @@ public class IndexarDados {
      * @return True se o documento foi indexado
      */
     public static boolean indexarSolrInputDocument(SolrInputDocument docs) {
-        //TODO: tem diferença enviar um SolrInputDocument ou uma collection com apenas um elemento?
-        
-        SolrServer server = new HttpSolrServer(solrURL);
-        try {
-            UpdateResponse response = server.add(docs);
-
-            if (response.getStatus() == 400) {
-
-                log.error("Erro ao indexar o objeto (possivelmente falta de 'entry')");
-                return false;
-            }
-            server.commit();
-            return true;
-        } catch (SolrServerException | IOException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr ou o documento nao esta configurado corretamente", e);
-            throw new SolrException(SolrException.ErrorCode.SERVICE_UNAVAILABLE, 
-                    "Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente");
-        }
-
+        Set<SolrInputDocument> col = new HashSet<>();
+        col.add(docs);
+        return indexarColecaoSolrInputDocument(col);
     }
-
 
     public boolean indexarColecaoSolrInputDocument2(Collection<SolrInputDocument> docs) {
         SolrServer server = new HttpSolrServer(solrURL);
@@ -142,9 +114,8 @@ public class IndexarDados {
             return true;
         } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
-            throw new SolrException(SolrException.ErrorCode.SERVICE_UNAVAILABLE, 
+            throw new SolrException(SolrException.ErrorCode.SERVICE_UNAVAILABLE,
                     "Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente");
-
         }
     }
 }
