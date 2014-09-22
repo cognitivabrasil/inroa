@@ -64,11 +64,6 @@ public final class FEBController {
         return index(model, response, request, cookie);
     }
 
-    @RequestMapping("/index.*")
-    public String indexJSP(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
-        return index(model, response, request, cookie);
-    }
-
     @RequestMapping("/index")
     public String index(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
