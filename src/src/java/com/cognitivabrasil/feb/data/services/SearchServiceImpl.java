@@ -9,11 +9,13 @@ import com.cognitivabrasil.feb.data.entities.Search;
 import com.cognitivabrasil.feb.data.repositories.SearchesJdbcDao;
 import com.cognitivabrasil.feb.data.repositories.SearchRepository;
 import com.cognitivabrasil.feb.util.Operacoes;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

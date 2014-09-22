@@ -1,4 +1,4 @@
-package feb.services;
+package com.cognitivabrasil.feb.data.services;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -23,10 +23,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
-import com.cognitivabrasil.feb.data.entities.Search;
-import com.cognitivabrasil.feb.data.services.PalavrasOfensivasHibernateDAO;
-import com.cognitivabrasil.feb.data.services.SearchService;
-import com.cognitivabrasil.feb.data.services.TagCloudServiceImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")

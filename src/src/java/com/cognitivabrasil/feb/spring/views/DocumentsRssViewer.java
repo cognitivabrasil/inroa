@@ -10,13 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.view.feed.AbstractRssFeedView;
 
-import com.sun.syndication.feed.rss.Channel;
-import com.sun.syndication.feed.rss.Content;
-import com.sun.syndication.feed.rss.Image;
-import com.sun.syndication.feed.rss.Item;
-
 import com.cognitivabrasil.feb.data.entities.Autor;
 import com.cognitivabrasil.feb.data.entities.Document;
+import com.rometools.rome.feed.rss.Channel;
+import com.rometools.rome.feed.rss.Content;
+import com.rometools.rome.feed.rss.Image;
+import com.rometools.rome.feed.rss.Item;
 
 public class DocumentsRssViewer extends AbstractRssFeedView {
 	
