@@ -20,7 +20,7 @@ public class Harvester {
     private String endereco;
     private String dataInicial;
     private String metadataPrefix;
-    static Logger log = Logger.getLogger(Repositorio.class);
+    private static final Logger log = Logger.getLogger(Repositorio.class);
 
     /**
      * Metodo que efetua o Harvesting OAI-PHM e salva arquivos xml's com os resultados
@@ -40,7 +40,7 @@ public class Harvester {
         int numeroXML = 0;
 
 
-        ArrayList<String> caminhosXML = new ArrayList<String>();
+        ArrayList<String> caminhosXML = new ArrayList<>();
         //substitui os espacos por underline
         nomeRepositorio = Operacoes.removeAcentuacao(nomeRepositorio);
         nomeRepositorio = nomeRepositorio.replaceAll(" ", "_");
@@ -51,8 +51,8 @@ public class Harvester {
         if (set == null) {
             coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, null);
         } else {
-            
-            for (String setInterno : set) { //percorre todos os sets que tem que atualizar.
+            //percorre todos os sets que tem que atualizar.
+            for (String setInterno : set) {
                 numeroXML = coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, setInterno); //coleta todos os dados do set especificado
             }
         }

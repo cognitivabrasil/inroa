@@ -18,7 +18,7 @@
     <span><a href="http://feb.ufrgs.br">Portal do projeto</a></span>
 </div>
 <div class="copyRight">
-    Suporte técnico <a href="http://cognitivabrasil.com.br/">Cognitiva Brasil</a>: <a href="mailto:contato@cogbr.com">contato@cogbr.com</a>
+    Suporte técnico <a href="http://cognitivabrasil.com.br/">Cognitiva Brasil</a>: <a href="mailto:contato@cognitivabrasil.com.br">contato@cognitivabrasil.com.br</a>
     |
     Desenvolvido em parceria com: UFRGS e RNP
     

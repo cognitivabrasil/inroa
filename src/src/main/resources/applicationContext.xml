@@ -151,7 +151,6 @@
         <bean id="Objetos" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Objetos" scope="prototype"/>
         <bean id="subRepositoros" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.SubRepositorios" scope="prototype"/>
         <bean id="importerRep" class="com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep" scope="prototype"/>
-        <bean id="xmlToDb" class="com.cognitivabrasil.feb.robo.atualiza.importaOAI.XMLtoDB" scope="prototype"/>
         <bean id="importerSubFed" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed" scope="prototype"/>
         
         

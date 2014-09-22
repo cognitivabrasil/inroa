@@ -149,10 +149,16 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
         return metadataPrefix;
     }
 
+    /**
+     * Define a data que foi realizada a última atualização. Neste método é copiada a data de {@link #dataOrigemTemp}
+     * para {@link #dataOrigem}.
+     *
+     * @param ultimaAtualizacao
+     */
     public void setUltimaAtualizacao(DateTime ultimaAtualizacao) {
         this.ultimaAtualizacao = ultimaAtualizacao;
         if (this.dataOrigemTemp != null) {
-            this.dataOrigem = this.dataOrigemTemp;
+            setDataOrigem(getDataOrigemTemp());
         }
     }
 
@@ -163,10 +169,8 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     }
 
     /**
-     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se o
-     * reposit&oacute;rio n&atilde;o tiver uma url associada ele informa que
-     * n&atilde;o foi informado um endere&ccedil;o para
-     * sincroniza&ccedil;&atilde;o.
+     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se o reposit&oacute;rio n&atilde;o tiver uma url
+     * associada ele informa que n&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o.
      *
      * @return String contendo a data neste formato: Dia "x" &agrave;s "y"
      */
@@ -222,8 +226,7 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     /**
      * Test if repository is outdated.
      *
-     * @return true if the repository is outdated or false if the repository is
-     * updated.
+     * @return true if the repository is outdated or false if the repository is updated.
      */
     @Transient
     public boolean getIsOutdated() {
@@ -311,8 +314,7 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     }
 
     /**
-     * Updates the repository with the same with the data in r2 safely, ignoring
-     * null and blank values
+     * Updates the repository with the same with the data in r2 safely, ignoring null and blank values
      *
      * It does NOT merge the Documents.
      *

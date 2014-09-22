@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ImporterRep {
 
-    Logger logger = Logger.getLogger(ImporterRep.class);
+    private static final Logger logger = Logger.getLogger(ImporterRep.class);
     private XsltConversor conversor;
     private Repositorio rep;
     private File inputXmlFile;

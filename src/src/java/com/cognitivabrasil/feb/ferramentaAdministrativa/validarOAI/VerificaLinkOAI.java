@@ -24,7 +24,7 @@ public class VerificaLinkOAI {
      * @return true se o link oai-pmh for v&atilde;lido ou n&atilde;o.
      */
     public static boolean verificaLinkOAIPMH(String enderecoOAI) {
-        boolean resultado = false;
+        
         try{
         Informacoes conf = new Informacoes();
         String caminhoDiretorioTemporario = conf.getCaminho();
@@ -40,7 +40,7 @@ public class VerificaLinkOAI {
                 parserIdentify.parser(arquivoXML);//efetua a leitura do xml e insere os objetos na base de dados
 
                 arquivoXML.delete(); //apaga arquivo XML
-                resultado=true;
+                return true;
             } else {
                 log.error("FEB ERRO: O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoArquivoXML);
             }
@@ -49,11 +49,10 @@ public class VerificaLinkOAI {
         }
         }catch (Exception e){
         	log.error(e);
-            resultado = false;
+            return false;
             //colocar aqui os tratamentos para o oai-pmh
-        }finally{
-            return resultado;
         }
+        return false;
     }
 
     /**

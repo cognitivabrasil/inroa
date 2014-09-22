@@ -10,7 +10,7 @@ import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.exceptions.RepositoryException;
 import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.robo.atualiza.harvesterOAI.Harvester;
-import com.cognitivabrasil.feb.robo.atualiza.importaOAI.XMLtoDB;
+import com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep;
 import com.cognitivabrasil.feb.util.Informacoes;
 import com.cognitivabrasil.feb.util.Operacoes;
 import java.io.File;
@@ -18,12 +18,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.xml.sax.SAXException;
@@ -41,19 +41,16 @@ public class Repositorios {
     @Autowired
     private DocumentService docService;
     @Autowired
-    private XMLtoDB gravar;
-    
-    
+    private ImporterRep imp;
+
     private static final Logger log = Logger.getLogger(Repositorios.class);
 
     /**
-     * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o
-     * m&etodo respons&aacute;vel por isso.
+     * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o m&etodo respons&aacute;vel por isso.
      *
-     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar
-     * os dados para o indice durante a atualiza&ccidil;&atilde;o dos metadados
-     * @return true ou false indicando se algum reposit&aacute;rio foi
-     * atualizado ou n&atilde;
+     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a
+     * atualiza&ccidil;&atilde;o dos metadados
+     * @return true ou false indicando se algum reposit&aacute;rio foi atualizado ou n&atilde;
      */
     public boolean testa_atualizar_repositorio(Indexador indexar) {
 
@@ -70,8 +67,8 @@ public class Repositorios {
                 }
             } catch (Exception e) {
                 // TODO: Isso é um BUG! Tem que dar catch só nas excessões conhecidas
-                
-		/*
+
+                /*
                  * ATENÇÃO: esse catch está vazio porque já é feito o tratamento
                  * de exceção dentro do metodo atualizaRepositorio mas é preciso
                  * subir a exceção porque se atualizar um repositorio só pela
@@ -86,15 +83,12 @@ public class Repositorios {
     }
 
     /**
-     * M&eacute;todo utilizado pela ferramenta administrativa para atualizar o
-     * reposit&oacute;rio em tempo real. Este m&eacute;todo recebe um id, se
-     * esse if for zero ele atualiza todos os reposit&aacute;rios existentes. Se
-     * for um valor maior que zero ele atualiza apenas o escolhido.
+     * M&eacute;todo utilizado pela ferramenta administrativa para atualizar o reposit&oacute;rio em tempo real. Este
+     * m&eacute;todo recebe um id, se esse if for zero ele atualiza todos os reposit&aacute;rios existentes. Se for um
+     * valor maior que zero ele atualiza apenas o escolhido.
      *
-     * @param idRep id do reposit&oacute;rio a ser atualizado. Se informar zero
-     * atualizar&aacute; todos
-     * @param apagar informar se deseja apagar toda a base. true apaga e false
-     * apenas atualiza.
+     * @param idRep id do reposit&oacute;rio a ser atualizado. Se informar zero atualizar&aacute; todos
+     * @param apagar informar se deseja apagar toda a base. true apaga e false apenas atualiza.
      * @author Marcos Nunes
      */
     public void atualizaFerramentaAdm(int idRep, boolean apagar)
@@ -107,7 +101,7 @@ public class Repositorios {
         if (idRep > 0) { // atualizar um repositorio especifico ou
             // todos. 0 = todos
             Repositorio rep = repService.get(idRep);
-            if (apagar) { 
+            if (apagar) {
                 // seta as duas datas como null porque quando atualiza
                 // se as datas forem null todos os documentos do
                 // repositorio sao excluidos
@@ -152,8 +146,8 @@ public class Repositorios {
      * Atualiza o reposit&oacute;rio solicitado.
      *
      * @param idRepositorio id do reposit&oacute;rio que deve ser atualizado.
-     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar
-     * os dados para o indice durante a atualiza&ccidil;&atilde;o dos metadados
+     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a
+     * atualiza&ccidil;&atilde;o dos metadados
      * @param con Conex&atilde;o com a base de dados.
      * @return number of updated documents, -1 in case of error
      */
@@ -162,7 +156,7 @@ public class Repositorios {
         Long inicio = System.currentTimeMillis();
         Harvester importar = new Harvester();
         Informacoes conf = new Informacoes();
-       String caminhoDiretorioTemporario = conf.getCaminho();
+        String caminhoDiretorioTemporario = conf.getCaminho();
 
         int updated = 0;
 
@@ -184,9 +178,7 @@ public class Repositorios {
 
                 DateTime data_ultima_atualizacao = rep.getUltimaAtualizacao();
 
-                log.info("Ultima Atualizacao: "
-                        + data_ultima_atualizacao + " nome do rep: "
-                        + rep.getName());
+                log.info("Ultima Atualizacao: "+ data_ultima_atualizacao + " nome do rep: " + rep.getName());
 
                 // se a data da ultima atualização for inferior a 01/01/1000
                 // apaga todos as informacoes do repositorio
@@ -224,14 +216,24 @@ public class Repositorios {
                 if (caminhoTeste.isDirectory()) {
                     // efetua o Harvester e grava os xmls na pasta temporaria
 
-                    // coletando xmls
-                    ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(rep.getUrl(), rep.getDataOrigem(), rep.getName(), caminhoDiretorioTemporario, rep.getMetadataPrefix(), set); // chama o
-                    // metodo que efetua o HarvesterVerb grava um xml em disco e
-                    // retorna um arrayList com os caminhos para os XML
+                    // chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
+                    ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(
+                            rep.getUrl(), rep.getDataOrigem(), rep.getName(),
+                            caminhoDiretorioTemporario, rep.getMetadataPrefix(), set);
+                    
+                    //le do xml traduz para o padrao OBAA e armazena na base de dados
+                    for (String caminhoXML1 : caminhoXML) {
+                        log.info("Lendo XML " + caminhoXML1.substring(caminhoXML1.lastIndexOf("/") + 1));
+                        File arquivoXML = new File(caminhoXML1);
+                        if (arquivoXML.isFile() || arquivoXML.canRead()) {
+                            imp.setInputFile(arquivoXML);
+                            imp.setRepositorio(rep);
+                            updated += imp.update();
 
-                    // leXMLgravaBase: le do xml traduz para o padrao OBAA e armazena na base de dados
-                    updated = gravar.saveXML(caminhoXML, rep, indexar);
-
+                        } else {
+                            log.error("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: " + caminhoXML1);
+                        }
+                    }
                 } else {
                     log.error("O caminho informado nao eh um diretorio. E nao pode ser criado em: '"
                             + caminhoDiretorioTemporario + "'");
@@ -248,14 +250,10 @@ public class Repositorios {
         } catch (MalformedURLException m) {
             log.error("Erro na url", m);
         } catch (UnknownHostException u) {
-            log.error(
-                    "FEB ERRO: Nao foi possivel encontrar o servidor oai-pmh informado.",
-                    u);
+            log.error("Não foi possível encontrar o servidor oai-pmh informado.", u);
             throw u;
-        } catch (SQLException e) {
-            log.error(
-                    "FEB ERRO: SQL Exception... Erro na consulta sql na classe Repositorios.",
-                    e);
+        } catch (HibernateException e) {
+            log.error("Erro com o hibernate.", e);
             throw e;
         } catch (ParserConfigurationException e) {
             log.error("FEB ERRO: O parser nao foi configurado corretamente.", e);
@@ -287,7 +285,7 @@ public class Repositorios {
                 log.warn(msg
                         + " - The combination of the values of the from, until, set and metadataPrefix arguments results in an empty list.\n");
                 // atualiza a hora da ultima atualizacao
-                rep.setUltimaAtualizacao(DateTime.now()); 
+                rep.setUltimaAtualizacao(DateTime.now());
             } else if (msg.equalsIgnoreCase("noMetadataFormats")) {
                 log.error(msgOAI
                         + msg
@@ -313,11 +311,10 @@ public class Repositorios {
     }
 
     /**
-     * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome
-     * dos reposit&oacute;rios que n&atilde;o foram atualizados.
+     * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome dos reposit&oacute;rios que n&atilde;o
+     * foram atualizados.
      *
-     * @param nome ArrayList<String> contendo o nome dos reposit&oacute;rios que
-     * n&atilde;o foram atualizados.
+     * @param nome ArrayList<String> contendo o nome dos reposit&oacute;rios que n&atilde;o foram atualizados.
      * @return String com a mensagem de erro gerada.
      */
     public static String getMensagem(ArrayList<String> nome) {
