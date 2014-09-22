@@ -18,6 +18,7 @@ import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * This class represents the FEB (database) configuration.
@@ -36,6 +37,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
  * 
  */
+
+//TODO: fazer pegar de configuração
+//TODO: fazer ter configuração padrão
 public class FebConfig {
 	private final Logger logger = Logger.getLogger(FebConfig.class);
 

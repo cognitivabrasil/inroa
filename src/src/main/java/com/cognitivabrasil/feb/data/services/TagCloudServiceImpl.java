@@ -8,6 +8,8 @@ import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.cognitivabrasil.feb.data.entities.Search;
 
@@ -17,6 +19,9 @@ import com.cognitivabrasil.feb.data.entities.Search;
  * @author paulo
  *
  */
+
+//TODO: get days and Max Size from configuration
+@Service
 public class TagCloudServiceImpl implements TagCloudService {
 
     private int size;

@@ -9,13 +9,16 @@ import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.solr.main.Solr;
 import com.cognitivabrasil.feb.util.Operacoes;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de
@@ -24,6 +27,7 @@ import org.springframework.data.domain.Pageable;
  * @author Luiz Rossi <lh.rossi@gmail.com>
  * @author Marcos Nunes <marcosn@gmail.com>
  */
+@Service
 public class Indexador {
 
     private static final Logger log = Logger.getLogger(Indexador.class);

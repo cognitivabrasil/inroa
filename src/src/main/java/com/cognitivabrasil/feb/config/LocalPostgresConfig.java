@@ -12,6 +12,7 @@ package com.cognitivabrasil.feb.config;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -19,6 +20,8 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+
+import com.cognitivabrasil.feb.spring.FebConfig;
 
 /**
  * Configuração local para o PostgreSQL, devendo ser usada somente no desenvolvimento.
@@ -34,6 +37,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Configuration
 @Profile({ "default", "development" })
 public class LocalPostgresConfig {
+    @Autowired
+    private FebConfig febConfig;
 
     /**
      * Conecta ao PostgreSQL.
@@ -45,10 +50,10 @@ public class LocalPostgresConfig {
     @Bean
     public DataSource dataSource() {
         org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
-        dataSource.setUrl("jdbc:postgresql://localhost/feb");
+        dataSource.setUrl("jdbc:postgresql://" + febConfig.getHost() + "/" + febConfig.getDatabase());
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUsername("feb");
-        dataSource.setPassword("feb@cognitiva");
+        dataSource.setUsername(febConfig.getUsername());
+        dataSource.setPassword(febConfig.getPassword());
         return dataSource;
     }
 

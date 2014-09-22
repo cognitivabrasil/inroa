@@ -1,4 +1,4 @@
-package feb.data.interfaces;
+package com.cognitivabrasil.feb.data.interfaces;
 
 /**
  *

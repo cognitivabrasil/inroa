@@ -2,20 +2,28 @@ package com.cognitivabrasil.feb.robo.atualiza.importaOAI;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.OaiOBAA;
+
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.services.DocumentService;
+
 import java.io.File;
 import java.util.Date;
+
 import metadata.Header;
 import metadata.XsltConversor;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 // TODO: Auto-generated Javadoc
 /**
  * @author paulo
  *
  */
+@Component
+@Scope("prototype")
 public class ImporterRep {
 
     Logger logger = Logger.getLogger(ImporterRep.class);

@@ -13,6 +13,7 @@ import com.cognitivabrasil.feb.robo.atualiza.harvesterOAI.Harvester;
 import com.cognitivabrasil.feb.robo.atualiza.importaOAI.XMLtoDB;
 import com.cognitivabrasil.feb.util.Informacoes;
 import com.cognitivabrasil.feb.util.Operacoes;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,16 +23,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
 /**
  *
  * @author Marcos
  */
+@Service
 public class Repositorios {
 
     @Autowired

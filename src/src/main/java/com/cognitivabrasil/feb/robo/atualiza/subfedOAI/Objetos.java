@@ -16,11 +16,15 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  */
+@Component
+@Scope("prototype")
 public class Objetos {
 	@Autowired
 	private ImporterSubfed imp;

@@ -24,12 +24,14 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
 /**
  *
  * @author Marcos
  */
+@Service
 public class SubFederacaoOAI {
 
     Logger log = Logger.getLogger(SubFederacaoOAI.class);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="feb.data.entities.PalavrasOfensivas" table="palavras_ofensivas">
+  <class name="com.cognitivabrasil.feb.data.entities.PalavrasOfensivas" table="palavras_ofensivas">
         <id column="id" name="id" type="int">
             <generator class="sequence">
                 <param name="sequence">palavras_ofensivas_id_seq</param>

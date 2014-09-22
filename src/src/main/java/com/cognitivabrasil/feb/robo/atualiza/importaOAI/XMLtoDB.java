@@ -13,6 +13,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextException;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /*
  * To change this template, choose Tools | Templates and open the template in
@@ -22,6 +24,8 @@ import org.springframework.context.ApplicationContextException;
  *
  * @author Marcos
  */
+@Component
+@Scope("prototype")
 public class XMLtoDB {
     static Logger log = Logger.getLogger(XMLtoDB.class);
     

@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.FederationService;
@@ -17,6 +19,8 @@ import com.cognitivabrasil.feb.util.Operacoes;
  *
  * @author Marcos
  */
+@Component
+@Scope("prototype")
 public class SubRepositorios {
     Logger log = Logger.getLogger(this.getClass().getName());
     

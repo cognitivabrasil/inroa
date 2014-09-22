@@ -1,4 +1,4 @@
-package feb.data.entities;
+package com.cognitivabrasil.feb.data.entities;
 
 /**
  *

@@ -11,10 +11,10 @@
 	<!-- Shared version number properties -->
 
 
-<!-- 	<scm> -->
-<!-- 		<developerConnection>scm:git:http://stash.cognitivabrasil.com.br/scm/gfe/go-fun-admin.git</developerConnection> -->
-<!-- 		<tag>HEAD</tag> -->
-<!-- 	</scm> -->
+	<!-- <scm> -->
+	<!-- <developerConnection>scm:git:http://stash.cognitivabrasil.com.br/scm/gfe/go-fun-admin.git</developerConnection> -->
+	<!-- <tag>HEAD</tag> -->
+	<!-- </scm> -->
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -93,7 +93,7 @@
 		<dependency>
 			<groupId>cognitivabrasil</groupId>
 			<artifactId>oaicat</artifactId>
-			<version>1.1</version>
+			<version>1.2</version>
 		</dependency>
 
 		<dependency>
@@ -165,10 +165,14 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
+			<version>4.2.1</version>
+
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpmime</artifactId>
+			<version>4.2.1</version>
 		</dependency>
 
 
