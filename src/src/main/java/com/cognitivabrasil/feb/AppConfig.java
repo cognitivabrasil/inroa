@@ -54,6 +54,7 @@ public class AppConfig {
     public StringEncryptor jasyptSpringEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         encryptor.setConfig(environmentVariablesConfiguration());
+        encryptor.setPoolSize(5);
         return encryptor;
     }
 

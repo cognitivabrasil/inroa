@@ -83,8 +83,8 @@ public class LocalTestConfig {
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource);
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        databasePopulator.addScript(new ClassPathResource("schema.sql"));
-        databasePopulator.addScript(new ClassPathResource("test-data.sql"));
+        databasePopulator.addScript(new ClassPathResource("sql/schema.sql"));
+        databasePopulator.addScript(new ClassPathResource("sql/test-data.sql"));
 
         dataSourceInitializer.setDatabasePopulator(databasePopulator);
         dataSourceInitializer.setEnabled(true);

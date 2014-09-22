@@ -9,6 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,6 +20,7 @@ import static org.hamcrest.Matchers.*;
 
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.services.PalavrasOfensivasHibernateDAO;
 
 /**
@@ -26,8 +28,8 @@ import com.cognitivabrasil.feb.data.services.PalavrasOfensivasHibernateDAO;
  * @author luiz
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:testApplicationContext.xml")
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@ContextConfiguration(classes = { AppConfig.class })
+@ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 public class PalavrasOfensivasHibernateDaoIT /* extends  AbstractDaoTest */ {
 
