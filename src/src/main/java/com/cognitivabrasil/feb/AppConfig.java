@@ -46,7 +46,7 @@ public class AppConfig {
     public EnvironmentStringPBEConfig environmentVariablesConfiguration() {
         EnvironmentStringPBEConfig config = new EnvironmentStringPBEConfig();
         config.setAlgorithm("PBEWithMD5AndDES");
-        config.setPasswordEnvName("feb@RNP");
+        config.setPassword("feb@RNP");
         return config;
     }
 
@@ -55,6 +55,7 @@ public class AppConfig {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         encryptor.setConfig(environmentVariablesConfiguration());
         encryptor.setPoolSize(5);
+        encryptor.initialize();
         return encryptor;
     }
 
