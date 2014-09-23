@@ -94,7 +94,7 @@ public class Repositorios {
 
         boolean recalcularIndice = false;
 
-        ArrayList<String> erros = new ArrayList<>();
+        List<String> erros = new ArrayList<>();
 
         if (idRep > 0) { // atualizar um repositorio especifico ou
             // todos. 0 = todos
@@ -310,10 +310,10 @@ public class Repositorios {
      * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome dos reposit&oacute;rios que n&atilde;o
      * foram atualizados.
      *
-     * @param nome ArrayList<String> contendo o nome dos reposit&oacute;rios que n&atilde;o foram atualizados.
+     * @param nome List<String> contendo o nome dos reposit&oacute;rios que n&atilde;o foram atualizados.
      * @return String com a mensagem de erro gerada.
      */
-    public static String getMensagem(ArrayList<String> nome) {
+    private static String getMensagem(List<String> nome) {
         String msg;
         if (nome.size() > 0) {
             msg = "Erro atualizar os repositorios: ";

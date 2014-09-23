@@ -293,7 +293,7 @@ public class SubFederacaoOAI {
     }
 
     public void atualizaSubfedAdm(List<SubFederacao> subFed, boolean apagar) throws FederationException {
-        ArrayList<String> erros = new ArrayList<>();
+        List<String> erros = new ArrayList<>();
         for (SubFederacao subFederacao : subFed) {
             try {
                 atualizaSubfedAdm(subFederacao, apagar);
@@ -312,10 +312,10 @@ public class SubFederacaoOAI {
      * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome das federa&ccedil;&otilde;es que
      * n&atilde;o foram atualizadas.
      *
-     * @param nome ArrayList<String> contendo o nome das federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
+     * @param nome List<String> contendo o nome das federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
      * @return String com a mensagem de erro gerada.
      */
-    public static String getMensagem(ArrayList<String> nome) {
+    private static String getMensagem(List<String> nome) {
         String msg;
         if (nome.size() > 0) {
             msg = "Erro atualizar as federacoes: ";

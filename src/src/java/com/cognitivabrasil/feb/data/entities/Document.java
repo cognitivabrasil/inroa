@@ -68,13 +68,12 @@ public class Document implements java.io.Serializable,
     @Transient
     @Override
     public Date getTimestamp() {
-        if(this.created==null){
+        if (this.created == null) {
             return null;
         }
         return this.created.toDate();
     }
 
-    
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     public DateTime getCreated() {
         return this.created;
@@ -183,9 +182,15 @@ public class Document implements java.io.Serializable,
         return obaa.getTechnical().getLocationHttp();
     }
 
+    /**
+     * Retorna a(s) descrição(ões) do documento limitado em 500 caracteres cada, inserindo um "(...)" no final da String para informar
+     * que foi cortada.
+     *
+     * @return Uma lista cotendo as descrições cotendo no máximo 500 caracteres cada.
+     */
     @Transient
     public List<String> getShortDescriptions() {
-        ArrayList<String> l = new ArrayList<>();
+        List<String> l = new ArrayList<>();
         OBAA obaa = getMetadata();
         if (obaa == null || obaa.getGeneral() == null) {
             return l;
@@ -219,8 +224,8 @@ public class Document implements java.io.Serializable,
     /**
      * Gets a pretty version of the repository name.
      *
-     * If de document is in a repository, return that, if it is in a
-     * subFederation, return the name of the Federation and the repository.
+     * If de document is in a repository, return that, if it is in a subFederation, return the name of the Federation
+     * and the repository.
      *
      * @return Name of the repository fit to print.
      */
@@ -260,8 +265,7 @@ public class Document implements java.io.Serializable,
      * Returns the document metadata.
      *
      * @return the metadata
-     * @throws IllegalStateException if there is no XML metadata associated with
-     * the document
+     * @throws IllegalStateException if there is no XML metadata associated with the document
      */
     @Transient
     public OBAA getMetadata() {

@@ -1,5 +1,6 @@
 package com.cognitivabrasil.feb.data.entities;
 
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -73,20 +74,27 @@ public class RepositorioSubFed{
     }
     
     @Override
-    public boolean equals(Object rsf){
-        if(rsf == null || !rsf.getClass().equals(RepositorioSubFed.class))
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
-        else {
-        	return this.getName().equals( ((RepositorioSubFed)rsf).getName());
         }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RepositorioSubFed other = (RepositorioSubFed) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        return true;
     }
-
-    @Override
+    
+        @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 13 * hash + Objects.hashCode(this.name);
         return hash;
     }
+    
     
     @Override
     public String toString() {
