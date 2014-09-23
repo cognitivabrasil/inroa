@@ -7,23 +7,23 @@ package com.cognitivabrasil.feb.robo.atualiza;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.exceptions.FederationException;
-import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
-import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Objetos;
+import com.cognitivabrasil.feb.robo.atualiza.harvesterOAI.Harvester;
+import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.SubRepositorios;
+import com.cognitivabrasil.feb.util.Informacoes;
 import com.cognitivabrasil.feb.util.Operacoes;
-
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateSystemException;
 import org.xml.sax.SAXException;
 
 /**
@@ -38,7 +38,7 @@ public class SubFederacaoOAI {
     private FederationService subDao;
 
     @Autowired
-    private Objetos obj;
+    private ImporterSubfed imp;
 
     @Autowired
     private SubRepositorios subRep;
@@ -48,11 +48,9 @@ public class SubFederacaoOAI {
      * m&etodo que efetua a atualia&ccedil;&atilde;o.
      *
      * @param con Conex&atilde;o com a base de dados local.
-     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a
-     * atualiza&ccidil;&atilde;o dos metadados.
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;o.
      */
-    public boolean pre_AtualizaSubFedOAI(Indexador indexar) {
+    public boolean pre_AtualizaSubFedOAI() {
         boolean atualizou = false;
 
         try {
@@ -77,7 +75,7 @@ public class SubFederacaoOAI {
 
                     Long inicio = System.currentTimeMillis();
                     try {
-                        atualizaSubFedOAI(subFed, indexar);
+                        atualizaSubFedOAI(subFed);
                         atualizadoTemp = true;
                     } catch (Exception e) {
                         /*
@@ -113,29 +111,30 @@ public class SubFederacaoOAI {
      * inser&ccedil;&atilde;o na base.
      *
      * @param subFed classe da subfedera&ccedil;&atilde;o.
-     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a
-     * atualiza&ccidil;&atilde;o dos metadados.
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;o.
      */
-    private void atualizaSubFedOAI(SubFederacao subFed, Indexador indexar)
+    private void atualizaSubFedOAI(SubFederacao subFed)
             throws Exception {
-        log.info("Atualizando subfederacao: " + subFed.getName());// imprime
-        // o nome da subfederacao
+        String fedName = subFed.getName();
+        log.info("Atualizando subfederacao: " + fedName);
         try {
 
             // atualizar repositorios da subfederacao
             subRep.atualizaSubRepositorios(subFed);
 
             // atualizar objetos da subfederacao
-            obj.atualizaObjetosSubFed(subFed, indexar);
-
+            atualizaObjetosSubFed(subFed);
+            
+            //este get é necessário para atualizar as informações que foram alteradas na base nos processos anteriores.
+            subFed = subDao.get(fedName);
+            
             subFed.setUltimaAtualizacao(DateTime.now());
             subDao.save(subFed);
 
         } catch (UnknownHostException u) {
             log.error("Nao foi possivel encontrar o servidor oai-pmh informado.", u);
             throw u;
-        } catch (HibernateException e) {
+        } catch (HibernateException | HibernateSystemException e) {
             log.error("Erro com o hibernate.", e);
             throw e;
         } catch (ParserConfigurationException e) {
@@ -143,7 +142,7 @@ public class SubFederacaoOAI {
             throw e;
         } catch (SAXException e) {
             String msg = e.getMessage();
-            String msgOAI = "\nErro no parser do OAI-PMH, mensagem: ";
+            String msgOAI = "Erro no parser do OAI-PMH, mensagem: ";
             if (msg.equalsIgnoreCase("badArgument")) {
                 log.error(msgOAI
                         + msg
@@ -176,7 +175,7 @@ public class SubFederacaoOAI {
                 log.error(msgOAI + msg
                         + " - The repository does not support sets.\n");
             } else {
-                log.error("\nFEB ERRO: Problema ao fazer o parse do arquivo. "
+                log.error("Problema ao fazer o parse do arquivo. "
                         + e);
             }
             throw e;
@@ -193,14 +192,71 @@ public class SubFederacaoOAI {
     }
 
     /**
+     * Chama o m&eacute;todo respons&aacute;vel por efetuar o harverter na subfedera&ccedil;&atilde;o e o m&eacute;todo
+     * respons&aacute;vel por efetuar o parser nos xmls e inserir na base de dados.
+     *
+     * @param subfed classe da subfedera&ccedil;&atilde;o
+     * @throws Exception
+     */
+    public void atualizaObjetosSubFed(SubFederacao subFed)
+            throws Exception {
+
+        Informacoes conf = new Informacoes();
+        String caminhoDiretorioTemporario = conf.getCaminho();
+
+        File caminhoTeste = Operacoes
+                .testaDiretorioTemp(caminhoDiretorioTemporario);
+        if (caminhoTeste.isDirectory()) {
+
+            // efetua o Harvester e grava os xmls na pasta temporaria
+            Harvester harvesterOAI = new Harvester();
+            List<String> caminhosXML = harvesterOAI.coletaXML_ListRecords(
+                    subFed.getUrlOAIPMH(), subFed.getDataXML(),
+                    subFed.getName(), caminhoDiretorioTemporario, "obaa", null);
+
+            // efetua o parser do xml e insere os documentos na base
+            if (!caminhosXML.isEmpty()) {
+                log.info("Lendo os XMLs e inserindo os objetos na base");
+            }
+
+            for (String caminho : caminhosXML) {
+
+                File arquivoXML = new File(caminho);
+                if (arquivoXML.isFile() || arquivoXML.canRead()) {
+                    log.info("Lendo XML "
+                            + caminho.substring(caminho.lastIndexOf("/") + 1));
+
+                    imp.setInputFile(arquivoXML);
+                    imp.setSubFed(subFed);
+                    imp.update();
+
+                    // apaga arquivo XML
+                    arquivoXML.delete();
+
+                } else {
+                    log.error("O arquivo informado não é um arquivo ou não pode ser lido. Caminho: "
+                            + caminho);
+                }
+            }
+
+            log.info("Objetos da subfederacao " + subFed.getName()
+                    + " atualizados!");
+
+        } else {
+            log.error("O caminho informado não é um diretório. E não pode ser criado em: '"
+                    + caminhoDiretorioTemporario + "'");
+        }
+
+    }
+
+    /**
      * Atualiza a subfedera&ccedil;&atilde;o informada e recalcula o &iacute;ndice.
      *
      * @param idSub Id da subfedera&ccedil;&atilde;o na ser atualizada.
      * @return true se atualizou e false caso contr&aacute;rio.
      * @throws Exception
      */
-    public void atualizaSubfedAdm(SubFederacao subFed, Indexador indexar,
-            boolean apagar) throws Exception {
+    public void atualizaSubfedAdm(SubFederacao subFed, boolean apagar) throws Exception {
         // Don't really know why, but the following 2 lines solve FEB-219
         subFed.setUltimaAtualizacao(subFed.getUltimaAtualizacao());
         subFed.setDataXML(subFed.getDataXML());
@@ -227,7 +283,7 @@ public class SubFederacaoOAI {
         } else {
 
             Long inicio = System.currentTimeMillis();
-            atualizaSubFedOAI(subFed, indexar);
+            atualizaSubFedOAI(subFed);
             Long fim = System.currentTimeMillis();
             Long total = fim - inicio;
             log.info("Levou: " + Operacoes.formatTimeMillis(total)
@@ -236,12 +292,11 @@ public class SubFederacaoOAI {
         }
     }
 
-    public void atualizaSubfedAdm(List<SubFederacao> subFed, Indexador indexar,
-            boolean apagar) throws FederationException {
+    public void atualizaSubfedAdm(List<SubFederacao> subFed, boolean apagar) throws FederationException {
         ArrayList<String> erros = new ArrayList<>();
         for (SubFederacao subFederacao : subFed) {
             try {
-                atualizaSubfedAdm(subFederacao, indexar, apagar);
+                atualizaSubfedAdm(subFederacao, apagar);
             } catch (Exception e) {
                 erros.add(subFederacao.getName());
                 log.error("FEB ERRO: Erro ao atualizar a federação: "

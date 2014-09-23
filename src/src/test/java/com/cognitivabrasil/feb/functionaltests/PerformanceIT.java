@@ -73,7 +73,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
     @Test
     @Ignore
     public void testUpdateRepFromXML() throws IOException, ParserConfigurationException, SAXException, TransformerException {
-        ArrayList<String> caminhosXML = new ArrayList<String>();
+        ArrayList<String> caminhosXML = new ArrayList<>();
         caminhosXML.add("FEB-ufrgs1.xml");
         caminhosXML.add("FEB-ufrgs2.xml");
         caminhosXML.add("FEB-ufrgs3.xml");

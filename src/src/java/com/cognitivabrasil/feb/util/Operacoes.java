@@ -31,8 +31,8 @@ import ptstemmer.Stemmer;
 import ptstemmer.exceptions.PTStemmerException;
 
 /**
- * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como
- * testes e remo&ccedil;&otilde;es de acentua&ccedil;&atilde;o
+ * Classe com m&eacute;todos que efetuam opera&ccedil;otilde;es diversas. Como testes e remo&ccedil;&otilde;es de
+ * acentua&ccedil;&atilde;o
  *
  * @author Marcos
  */
@@ -44,13 +44,11 @@ public class Operacoes {
     } // public para o Spring
 
     /**
-     * Testa se a data recebida é newDate(0) ou se j&aacute; foi alterada.
-     * Utilizado para testar se a base de dados deve ser sincronizada do zero ou
-     * não.
+     * Testa se a data recebida é newDate(0) ou se j&aacute; foi alterada. Utilizado para testar se a base de dados deve
+     * ser sincronizada do zero ou não.
      *
      * @param horaBase hora que será testada
-     * @return true ou false. Se a data informada como parâmetro for menor
-     * retorna true se não false
+     * @return true ou false. Se a data informada como parâmetro for menor retorna true se não false
      */
     public static boolean testarDataDifZero(Date horaBase) {
         if (horaBase == null) {
@@ -60,12 +58,34 @@ public class Operacoes {
             return dataTeste.after(horaBase);
         }
     }
+
+    /**
+     * Testa se a Data informada é zero ou se já foi alterada.
+     * @param horaBase
+     * @return {@code true} se for maior que zero e {@code false} caso contrátio.
+     */
     public static boolean testarDataDifZero(DateTime horaBase) {
         if (horaBase == null) {
             return true;
         } else {
             DateTime dataTeste = new DateTime(1);
             return dataTeste.isAfter(horaBase);
+        }
+    }
+
+    /**
+     * Testa se a data informada é maior que zero. Transforma a String em um {@link DateTime} e esta se é anterior a
+     * {@code new DateTime(1)}.
+     *
+     * @param data String contendo uma data no formato yyyy-mm-dd.
+     * @return {@code true} se for maior que zero e {@code false} caso contrátio.
+     */
+    public static boolean testarDataDifZero(String data) {
+        if (data == null) {
+            return true;
+        } else {
+            DateTime dataTeste = new DateTime(1);
+            return dataTeste.isAfter(DateTime.parse(data));
         }
     }
 
@@ -92,9 +112,8 @@ public class Operacoes {
     }
 
     /**
-     * Substitui letras acentudas por letras sem acentos (remove acentos das
-     * letras), e remove todo tipo de caracter que n&atilde;o seja letra e
-     * n&uacute;mero.
+     * Substitui letras acentudas por letras sem acentos (remove acentos das letras), e remove todo tipo de caracter que
+     * n&atilde;o seja letra e n&uacute;mero.
      *
      * @param texto texto que deseja remover os acentos.
      * @return texto sem acentos e apenas com letras e n&uacute;meros.
@@ -104,12 +123,11 @@ public class Operacoes {
     }
 
     /**
-     * Recebe uma List<String> percorre esse lista e armazena em uma string
-     * todas as posi&ccedil;%otilde;es do array separados por um espa&ccedil;o.
+     * Recebe uma List<String> percorre esse lista e armazena em uma string todas as posi&ccedil;%otilde;es do array
+     * separados por um espa&ccedil;o.
      *
      * @param l List<String> contendo as string que ser&atildeo concatenadas.
-     * @return um String contendo todo o conte&uacute;do do array separados por
-     * um espa&ccedil;o.
+     * @return um String contendo todo o conte&uacute;do do array separados por um espa&ccedil;o.
      */
     public static String listToString(List<String> l) {
         StringBuffer buf = new StringBuffer();
@@ -121,8 +139,8 @@ public class Operacoes {
     }
 
     /**
-     * Testa se o diret&oacute;rio informado existe e apaga todos os XMLs
-     * criados pelo FEB. Se n&atilde;o existir cria o diret&oacute;rio.
+     * Testa se o diret&oacute;rio informado existe e apaga todos os XMLs criados pelo FEB. Se n&atilde;o existir cria o
+     * diret&oacute;rio.
      *
      * @return File contendo o diret&oacute;rio informado.
      */
@@ -144,14 +162,12 @@ public class Operacoes {
     }
 
     /**
-     * Informa como uma frase a data e hora da &uacute;ltima
-     * atualiza&ccdil;&atilde;o, se a data for inferior a 01/01/1000, um teste
-     * para verificar se foi informado um endereço para atualização é realizado.
-     * Se não existir endereço retorna um aviso, se existir retorna a mensagem:
-     * "Ainda n&atilde;o foi atualizado!"
+     * Informa como uma frase a data e hora da &uacute;ltima atualiza&ccdil;&atilde;o, se a data for inferior a
+     * 01/01/1000, um teste para verificar se foi informado um endereço para atualização é realizado. Se não existir
+     * endereço retorna um aviso, se existir retorna a mensagem: "Ainda n&atilde;o foi atualizado!"
      *
-     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o,
-     * formatada como: "Dia dd/mm/aaa às hh:mm:ss"
+     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o, formatada como: "Dia dd/mm/aaa às
+     * hh:mm:ss"
      */
     public static String ultimaAtualizacaoFrase(Date data, String url) {
         SimpleDateFormat f = new SimpleDateFormat(
@@ -164,6 +180,7 @@ public class Operacoes {
             return f.format(data);
         }
     }
+
     public static String ultimaAtualizacaoFrase(DateTime data, String url) {
         DateTimeFormatter fmt = DateTimeFormat.forPattern("'Dia' dd/MM/yyyy '&agrave;s' HH:mm:ss");
         if (data == null || testarDataDifZero(data)) {
@@ -176,12 +193,10 @@ public class Operacoes {
     }
 
     /**
-     * Informa a data e hora da &uacute;ltima atualiza&ccdil;&atilde;o, se a
-     * data for inferior a 01/01/1000 retorna a mensagem: "Ainda n&atilde;o foi
-     * atualizado!"
+     * Informa a data e hora da &uacute;ltima atualiza&ccdil;&atilde;o, se a data for inferior a 01/01/1000 retorna a
+     * mensagem: "Ainda n&atilde;o foi atualizado!"
      *
-     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o,
-     * formatada como: "dd/mm/aaa hh:mm:ss"
+     * @return Strign contendo data e hora da ultima atualiza&ccdil;&atilde;o, formatada como: "dd/mm/aaa hh:mm:ss"
      */
     public static String ultimaAtualizacaoSimples(Date data) {
 
@@ -209,8 +224,7 @@ public class Operacoes {
     }
 
     /**
-     * formata a data recebida para o padr&atilde;o do OAI-PMH. Ex:
-     * 2012-04-20T19:09:32Z
+     * formata a data recebida para o padr&atilde;o do OAI-PMH. Ex: 2012-04-20T19:09:32Z
      *
      * @param date Objeto Date para ser formatado
      * @return String contendo a data formatada.
@@ -366,14 +380,15 @@ public class Operacoes {
         }
         return date;
     }
-    
+
     /**
-     * Remove todos os caracteres especiais e espaços e texta se o texto está em branco.
-     * Ex.: Se a String for "?" o resultado será true e se for "texto?" retornará false.
+     * Remove todos os caracteres especiais e espaços e texta se o texto está em branco. Ex.: Se a String for "?" o
+     * resultado será true e se for "texto?" retornará false.
+     *
      * @param text String a ser testada
-     * @return true se o texto sem caracteres especiais estiver em branco e false caso contrário. 
+     * @return true se o texto sem caracteres especiais estiver em branco e false caso contrário.
      */
-    public static boolean isEmptyText(String text){
+    public static boolean isEmptyText(String text) {
         return text.replaceAll("[^0-9A-Za-z]*", "").trim().isEmpty();
     }
 }

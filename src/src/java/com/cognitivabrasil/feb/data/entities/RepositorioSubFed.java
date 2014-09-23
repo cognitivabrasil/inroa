@@ -4,6 +4,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -59,7 +60,7 @@ public class RepositorioSubFed{
      * @return the documentos
      */
     
-    @OneToMany(mappedBy = "repositorioSubFed", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "repositorioSubFed", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Document> getDocumentos() {
         return documentos;
     }

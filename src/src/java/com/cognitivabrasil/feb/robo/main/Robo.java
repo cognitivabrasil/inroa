@@ -46,7 +46,7 @@ public class Robo {
         Long inicioRobo = System.currentTimeMillis();
         long initNumberDocs = docDao.getSizeWithDeleted();
 //TESTA/ATUALIZA SUBFEDERACAO
-        boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI(indexar);
+        boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI();
 
 //TESTA REPOSITORIO
         boolean repAtualizado = repositorio.testa_atualizar_repositorio(indexar);

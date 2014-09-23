@@ -72,7 +72,7 @@
             <property name="dataSource" ref="dataSource" />
             <property name="packagesToScan" value="com.cognitivabrasil.feb.data" />
             <property name="jpaVendorAdapter">
-                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">				</bean>
+                <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
             </property>
             <property name="jpaProperties">
                 <props>
@@ -148,7 +148,6 @@
         <bean id="repositorios" class="com.cognitivabrasil.feb.robo.atualiza.Repositorios" />
         <bean id="subf" class="com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI" />
         <bean id="Indexador" class="com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador"/>
-        <bean id="Objetos" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.Objetos" scope="prototype"/>
         <bean id="subRepositoros" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.SubRepositorios" scope="prototype"/>
         <bean id="importerRep" class="com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep" scope="prototype"/>
         <bean id="importerSubFed" class="com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed" scope="prototype"/>

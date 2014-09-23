@@ -27,6 +27,16 @@ public class OperacoesTest {
     }
     
     @Test
+    public void testStringDateDiffZero(){
+        assertThat(Operacoes.testarDataDifZero("2014-09-22"), equalTo(false));
+        
+        assertThat(Operacoes.testarDataDifZero("1991-01-01"), equalTo(false));
+        String nulo = null;
+        assertThat(Operacoes.testarDataDifZero(nulo), equalTo(true));
+        assertThat(Operacoes.testarDataDifZero("0001-01-01"), equalTo(true));
+    }
+    
+    @Test
     public void testDateFormat(){
         String format = Operacoes.ultimaAtualizacaoFrase(DateTime.parse("1984-08-21T01:01:01Z"), "url");
         assertThat(format, equalTo("Dia 21/08/1984 &agrave;s 01:01:01"));

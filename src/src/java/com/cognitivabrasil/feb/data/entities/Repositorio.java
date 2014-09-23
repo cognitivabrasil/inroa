@@ -6,6 +6,7 @@ import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -102,7 +103,7 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     /**
      * @return the documentos
      */
-    @OneToMany(mappedBy = "repositorio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "repositorio", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     public Set<Document> getDocumentos() {
         return documentos;
     }

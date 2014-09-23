@@ -6,7 +6,6 @@ package com.cognitivabrasil.feb.functionaltests;
 
 import com.cognitivabrasil.feb.data.entities.Mapeamento;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
-import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
@@ -29,6 +28,9 @@ import javax.xml.transform.TransformerException;
 import org.apache.commons.io.FileUtils;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
+import org.joda.time.DateTime;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -56,19 +58,20 @@ import org.xml.sax.SAXException;
 public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
-    RepositoryService repDao;
+    private RepositoryService repDao;
     @Autowired
-    DocumentService docDao;
+    private DocumentService docDao;
     @Autowired
-    FederationService subDao;
+    private FederationService fedService;
     @Autowired
-    MetadataRecordService padDao;
+    private MetadataRecordService padDao;
     @Autowired
-    MappingService mapDao;
-
+    private MappingService mapDao;
     @Autowired
-    ImporterSubfed impSF;
-
+    private ImporterSubfed impSf;
+    
+    @PersistenceContext
+    private EntityManager em;
 
     @Test
     public void testUpdateRepFromXML() throws IOException, ParserConfigurationException, SAXException, TransformerException {
@@ -105,14 +108,15 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         String xmlFedSets = "src/test/resources/fedIFRS-listSets.xml";
         String xmlFedRecords = "src/test/resources/fedIFRS-records.xml";
 
-        SubFederacao subFed = subDao.get("marcos");
+        SubFederacao subFed = fedService.get("marcos");
 
-        subDao.deleteAllDocs(subFed);
+        fedService.deleteAllDocs(subFed);
 
         ParserListSets parserListSets = new ParserListSets();
         File xmlFedSetsFile = new File(xmlFedSets);
 
-        Set<String> listaSubrep = parserListSets.parser(xmlFedSetsFile);//efetua a leitura do xml e insere os objetos na base de dados
+        //efetua a leitura do xml e insere os objetos na base de dados
+        Set<String> listaSubrep = parserListSets.parser(xmlFedSetsFile);
         assert (listaSubrep.size() == 1);
 
         subFed.atualizaListaSubRepositorios(listaSubrep);
@@ -120,13 +124,20 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
 
         int docSizeAfter = docDao.getAll().size();
 
-        subDao.save(subFed);
+        fedService.save(subFed);
 
-        impSF.setInputFile(xmlFedRecords);
-        impSF.setDocDao(docDao);
-        impSF.setSubFed(subFed);
-        impSF.update();
+        impSf.setInputFile(xmlFedRecords);
+        impSf.setDocDao(docDao);
+        impSf.setSubFed(subFed);
+        impSf.update();
 
+        
+        subFed = fedService.get("marcos");
+        subFed.setUltimaAtualizacao(DateTime.now());
+        fedService.save(subFed);
+        
+        em.flush();
+        em.clear();
         int docSizeAfterSubFed = docDao.getAll().size();
         assertThat("Size of Documents after updated Federation", docSizeAfterSubFed, equalTo(docSizeAfter + 2));
     }

@@ -58,7 +58,6 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
         Document doc = new Document();
         log.trace("Going to create documento " + h.getIdentifier());
 
-        log.debug("Armazenando objeto do tipo RepositorioSubFed");
         RepositorioSubFed repSubFed = federation.getRepositoryByName(h.getSetSpec().get(0));
         if (repSubFed == null) {
             throw new IllegalStateException("The repository '"
@@ -67,7 +66,7 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
                     + federation.getName() + "'");
         }
 
-        doc.setRepositorioSubFed(repSubFed); 
+        doc.setRepositorioSubFed(repSubFed);
 
         save(obaa, h, doc);
 

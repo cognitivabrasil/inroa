@@ -180,10 +180,9 @@ public class Repositorios {
 
                 log.info("Ultima Atualizacao: "+ data_ultima_atualizacao + " nome do rep: " + rep.getName());
 
-                // se a data da ultima atualização for inferior a 01/01/1000
-                // apaga todos as informacoes do repositorio
+                // se a data da ultima atualização for inferior a 01/01/0001 apaga todos as informacoes do repositorio
                 if ((data_ultima_atualizacao == null && rep.getDataOrigem() == null)
-                        || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(DateTime.parse(rep.getDataOrigem())))) {
+                        || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(rep.getDataOrigem()))) {
                     log.info("Deletando todos os documentos do repositório: "
                             + rep.getName().toUpperCase());
                     try {
@@ -217,7 +216,7 @@ public class Repositorios {
                     // efetua o Harvester e grava os xmls na pasta temporaria
 
                     // chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
-                    ArrayList<String> caminhoXML = importar.coletaXML_ListRecords(
+                    List<String> caminhoXML = importar.coletaXML_ListRecords(
                             rep.getUrl(), rep.getDataOrigem(), rep.getName(),
                             caminhoDiretorioTemporario, rep.getMetadataPrefix(), set);
                     
@@ -240,7 +239,8 @@ public class Repositorios {
                 }
             }
 
-            rep.setUltimaAtualizacao(DateTime.now()); // atualiza a hora da ultima atualizacao
+            // atualiza a hora da ultima atualizacao
+            rep.setUltimaAtualizacao(DateTime.now());
             Long fim = System.currentTimeMillis();
             Long total = fim - inicio;
 

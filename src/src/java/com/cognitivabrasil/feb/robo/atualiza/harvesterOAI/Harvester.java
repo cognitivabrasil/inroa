@@ -10,6 +10,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.util.Operacoes;
+import java.util.List;
 
 //import util.*;
 
@@ -33,14 +34,15 @@ public class Harvester {
      * @param set nome do conjunto que restringir&aacute; a consulta. Nome da coleção ou da comunidade.
      * @return Retorna um ArrayList de Strings contendo o(s) caminho(s) para o(s) xml(s) salvo(s).
      */
-    public ArrayList<String> coletaXML_ListRecords(String endereco, String dataInicial, String nomeRepositorio, String dirXML, String metadataPrefix, Set<String> set) throws Exception {
+    public List<String> coletaXML_ListRecords(String endereco, String dataInicial, String nomeRepositorio, 
+            String dirXML, String metadataPrefix, Set<String> set) throws Exception {
         this.endereco = endereco;
         this.dataInicial = dataInicial;
         this.metadataPrefix = metadataPrefix;
         int numeroXML = 0;
 
 
-        ArrayList<String> caminhosXML = new ArrayList<>();
+        List<String> caminhosXML = new ArrayList<>();
         //substitui os espacos por underline
         nomeRepositorio = Operacoes.removeAcentuacao(nomeRepositorio);
         nomeRepositorio = nomeRepositorio.replaceAll(" ", "_");
@@ -64,10 +66,10 @@ public class Harvester {
 
     }
 
-    private int coletaXMLSet(ArrayList<String> caminhosXML, String nomeArquivo, int numeroXML, String set) throws Exception {
+    private int coletaXMLSet(List<String> caminhosXML, String nomeArquivo, int numeroXML, String set) throws Exception {
 
         numeroXML++;
-        String caminhoAbsoluto = nomeArquivo + numeroXML + ".xml";
+        String caminhoAbsoluto = nomeArquivo+"-"+ numeroXML + ".xml";
         caminhosXML.add(caminhoAbsoluto);
 
         

@@ -210,6 +210,9 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
         assertThat(r, notNullValue());
 
         docService.save(obaa, h, r);
+        
+        em.flush();
+        em.clear();
 
         long finalNumberDocs = docService.getSizeWithDeleted();
         Document d = docService.get("obaa:identifier");
