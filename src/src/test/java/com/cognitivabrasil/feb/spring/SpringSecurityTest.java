@@ -92,7 +92,7 @@ public class SpringSecurityTest {
     
     @Test
     public void usuarioComPermissaoChangeDatabaseConsegueAlterar() throws Exception {
-        mvc.perform(post("/admin/alterDB").with(csrf()).with(user("myuser").roles("PERM_CHANGE_DATABASE")))
+        mvc.perform(post("/admin/alterDB").with(csrf()).with(user("myuser").roles("CHANGE_DATABASE")))
             .andExpect(authenticated())
             .andExpect(status().isOk());
     }
@@ -101,7 +101,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueAtualizarRepositorios() throws Exception {
         mvc.perform(post("/admin/repositories/1/update")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_CHANGE_DATABASE"))
+                .with(user("testuser").roles("CHANGE_DATABASE"))
         )
         .andExpect(status().isForbidden());
     }
@@ -110,7 +110,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueAtualizarRepositorios() throws Exception {
         mvc.perform(post("/admin/repositories/1/update")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_UPDATE"))
+                .with(user("testuser").roles("UPDATE"))
                 .param("apagar", "false")
         )
         .andExpect(status().isOk());
@@ -120,7 +120,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueAtualizarFederacao() throws Exception {
         mvc.perform(post("/admin/federations/1/update")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_CHANGE_DATABASE"))
+                .with(user("testuser").roles("CHANGE_DATABASE"))
         )
         .andExpect(status().isForbidden());
     }
@@ -129,7 +129,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueAtualizarFederacao() throws Exception {
         mvc.perform(post("/admin/federations/1/update")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_UPDATE"))
+                .with(user("testuser").roles("UPDATE"))
                 .param("apagar", "false")
         )
         .andExpect(status().isOk());
@@ -139,7 +139,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueRecalcularIndice() throws Exception {
         mvc.perform(post("/admin/efetuaRecalculoIndice")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_CHANGE_DATABASE"))
+                .with(user("testuser").roles("CHANGE_DATABASE"))
         )
         .andExpect(status().isForbidden());
     }
@@ -148,7 +148,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueRecalcularIndice() throws Exception {
         mvc.perform(post("/admin/efetuaRecalculoIndice")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_UPDATE"))
+                .with(user("testuser").roles("UPDATE"))
                 .param("apagar", "false")
         )
         .andExpect(status().isOk());
@@ -158,7 +158,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueCriarRepositorio() throws Exception {
         mvc.perform(post("/admin/repositories/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_REP"))
+                .with(user("testuser").roles("MANAGE_REP"))
                 .param("padraoMetadados.id", "1")
 
         )
@@ -169,7 +169,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueCriarRepositorio() throws Exception {
         mvc.perform(post("/admin/repositories/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_USERS"))
+                .with(user("testuser").roles("MANAGE_USERS"))
                 .param("padraoMetadados.id", "1")
 
         )
@@ -180,7 +180,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueCriarFederacao() throws Exception {
         mvc.perform(post("/admin/federations/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_REP"))
+                .with(user("testuser").roles("MANAGE_REP"))
         )
         .andExpect(status().isOk());    
     }
@@ -189,7 +189,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueCriarFederacao() throws Exception {
         mvc.perform(post("/admin/federations/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_USERS"))
+                .with(user("testuser").roles("MANAGE_USERS"))
         )
         .andExpect(status().isForbidden());    
     }
@@ -198,7 +198,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueCriarMapeamento() throws Exception {
         mvc.perform(post("/admin/mapeamentos/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_MAPPINGS"))
+                .with(user("testuser").roles("MANAGE_MAPPINGS"))
         )
         .andExpect(status().isOk());    
     }
@@ -207,7 +207,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueCriarMapeamento() throws Exception {
         mvc.perform(post("/admin/mapeamentos/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_USERS"))
+                .with(user("testuser").roles("MANAGE_USERS"))
         )
         .andExpect(status().isForbidden());    
     }
@@ -216,7 +216,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueCriarMetadados() throws Exception {
         mvc.perform(post("/admin/metadataStandard/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_METADATA"))
+                .with(user("testuser").roles("MANAGE_METADATA"))
         )
         .andExpect(status().isOk());    
     }
@@ -225,7 +225,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueCriarMetadados() throws Exception {
         mvc.perform(post("/admin/metadataStandard/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_USERS"))
+                .with(user("testuser").roles("MANAGE_USERS"))
         )
         .andExpect(status().isForbidden());    
     }    
@@ -234,7 +234,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueApagarTag() throws Exception {
         mvc.perform(post("/admin/statistics/deletetag")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_STATISTICS"))
+                .with(user("testuser").roles("MANAGE_STATISTICS"))
                 .param("tag", "toDelete")
         )
         .andExpect(status().isOk());    
@@ -244,7 +244,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueApagarTag() throws Exception {
         mvc.perform(post("/admin/statistics/deletetag")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_USERS"))
+                .with(user("testuser").roles("MANAGE_USERS"))
                 .param("tag", "toDelete")
         )
         .andExpect(status().isForbidden());    
@@ -254,7 +254,7 @@ public class SpringSecurityTest {
     public void usuarioComPermissaoConsegueCriarUsuario() throws Exception {
         mvc.perform(post("/admin/users/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_USERS"))
+                .with(user("testuser").roles("MANAGE_USERS"))
         )
         .andExpect(status().isOk());    
     }
@@ -263,7 +263,7 @@ public class SpringSecurityTest {
     public void usuarioSemPermissaoNaoConsegueCriarUsuario() throws Exception {
         mvc.perform(post("/admin/users/new")
                 .with(csrf())
-                .with(user("testuser").roles("PERM_MANAGE_METADATA"))
+                .with(user("testuser").roles("MANAGE_METADATA"))
         )
         .andExpect(status().isForbidden());    
     }   

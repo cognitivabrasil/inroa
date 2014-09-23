@@ -58,7 +58,7 @@
             <div class="subtitulo">Informações sobre o mapeamento
                 ${mapeamento.name}</div>
 
-            <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+            <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
 
                 <div class="editar">
                     <c:choose>

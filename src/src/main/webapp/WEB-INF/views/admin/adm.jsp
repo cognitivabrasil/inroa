@@ -75,13 +75,12 @@ Author     : Marcos Nunes
     </head>
     <body id="paginaAdministrativa">
 
-
         <jsp:include page="../cabecalho.jsp">
             <jsp:param value="Ferramenta Administrativa" name="titulo" />
             <jsp:param value="7%" name="tamanho" />
         </jsp:include>
 
-        <c:url var="logoutUrl" value="/j_spring_security_logout" />
+        <c:url var="logoutUrl" value="/logout" />
         <div class="sair">
             <button type="button" id="sair" onclick="location.href = '${logoutUrl}'">Sair</button>
         </div>
@@ -111,7 +110,7 @@ Author     : Marcos Nunes
                     <c:forEach var="rep" items="${repositories}" varStatus="status">
                         <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
 
-                            <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
+                            <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
                                     <c:url var="excluirRepositorio" value="/admin/repositories/${rep.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir reposit&oacute;rio ${rep.name}" name="excluirRep"
@@ -128,7 +127,7 @@ Author     : Marcos Nunes
                                         <div id='textResult${param.id}' class="textoErro">
                                             &nbsp;
                                             ${rep.ultimaAtualizacaoFormatada}
-                                            <security:authorize access="hasRole('PERM_UPDATE')">
+                                            <security:authorize access="hasRole('ROLE_UPDATE')">
                                                 &nbsp;
                                                 <a title="Atualizar agora"
                                                    onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
@@ -143,7 +142,7 @@ Author     : Marcos Nunes
                                         <div class="Value" id="textResult${param.id}">
                                             &nbsp;
                                             ${rep.ultimaAtualizacaoFormatada}
-                                            <security:authorize access="hasRole('PERM_UPDATE')">
+                                            <security:authorize access="hasRole('ROLE_UPDATE')">
                                                 &nbsp;&nbsp; <a title='Atualizar agora'
                                                                 onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
                                                     <img src='../imagens/sincronizar.png' border='0' width='24'
@@ -157,11 +156,11 @@ Author     : Marcos Nunes
                     </c:forEach>
 
                     <security:authorize
-                        access="hasAnyRole('PERM_UPDATE, PERM_MANAGE_REP')">
+                        access="hasAnyRole('ROLE_UPDATE, ROLE_MANAGE_REP')">
 
                         <tr class='center'>
                             <c:url var="newRepositoryUrl" value="/admin/repositories/new" />
-                            <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
+                            <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
 
                                     <a title="Adicionar novo reposit&oacute;rio"
                                        onclick="NewWindow('${newRepositoryUrl}', 'Cadastro', '750', 'total');">
@@ -170,7 +169,7 @@ Author     : Marcos Nunes
                                 </security:authorize></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; 
-                                <security:authorize access="hasRole('PERM_MANAGE_REP')">
+                                <security:authorize access="hasRole('ROLE_MANAGE_REP')">
                                     <a onclick="NewWindow('${newRepositoryUrl}', 'Cadastro', '750', 'total');">
                                         Adicionar novo reposit&oacute;rio 
                                     </a>
@@ -180,7 +179,7 @@ Author     : Marcos Nunes
                             <td>
                                 <div id="textResultTodos">
 
-                                    <security:authorize access="hasRole('PERM_UPDATE')">
+                                    <security:authorize access="hasRole('ROLE_UPDATE')">
 
                                         <a style="text-decoration: none" title="Atualizar todos"
                                            onclick="javaScript:atualizaRepAjax(0, document.getElementById('textResultTodos'));"><img
@@ -210,7 +209,7 @@ Author     : Marcos Nunes
 
                     <c:forEach var="subfed" items="${subDAO.all}" varStatus="status">
                         <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
-                            <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
+                            <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
                                     <c:url var="excluirFederacao" value="/admin/federations/${subfed.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir federa&ccedil;&atilde;o ${subfed.name}"
@@ -227,7 +226,7 @@ Author     : Marcos Nunes
                                     <c:when test="${subfed.isOutdated}">
                                         <div id='textResultSF${subfed.id}' class='textoErro'>
                                             ${subfed.ultimaAtualizacaoFormatada}
-                                            <security:authorize access="hasRole('PERM_UPDATE')">
+                                            <security:authorize access="hasRole('ROLE_UPDATE')">
 
                                                 <a title='Atualizar agora'
                                                    onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">
@@ -242,7 +241,7 @@ Author     : Marcos Nunes
                                     <c:otherwise>
                                         <div id='textResultSF${subfed.id}'>
                                             ${subfed.ultimaAtualizacaoFormatada}
-                                            <security:authorize access="hasRole('PERM_UPDATE')">
+                                            <security:authorize access="hasRole('ROLE_UPDATE')">
                                                 <a title='Atualizar agora'
                                                    onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">
 
@@ -259,11 +258,11 @@ Author     : Marcos Nunes
                     </c:forEach>
 
                     <security:authorize
-                        access="hasAnyRole('PERM_UPDATE, PERM_MANAGE_REP')">
+                        access="hasAnyRole('ROLE_UPDATE, ROLE_MANAGE_REP')">
 
                         <tr class='center'>
                             <c:url var="newFederationUrl" value="/admin/federations/new" />
-                            <td><security:authorize access="hasRole('PERM_MANAGE_REP')">
+                            <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
 
                                     <a title="Adicionar nova federa&ccedil;&atilde;o"
                                        onclick="NewWindow('${newFederationUrl}', 'Cadastro', '750', '650');">
@@ -272,14 +271,14 @@ Author     : Marcos Nunes
                                 </security:authorize></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <security:authorize
-                                    access="hasRole('PERM_MANAGE_REP')">
+                                    access="hasRole('ROLE_MANAGE_REP')">
 
                                     <a
                                         onclick="NewWindow('${newFederationUrl}', 'Cadastro', '750', '650');">
                                         Adicionar nova federa&ccedil;&atilde;o </a>
                                     </security:authorize>
                             </td>
-                            <td><security:authorize access="hasRole('PERM_UPDATE')">
+                            <td><security:authorize access="hasRole('ROLE_UPDATE')">
 
                                     <div id="textResultSF">
                                         <a style="text-decoration: none" title="Atualizar todas"
@@ -353,7 +352,7 @@ Author     : Marcos Nunes
 
 
                             <td>
-                                <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+                                <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
                                     <c:url var="excluirPadrao" value="/admin/metadataStandard/${padraoMet.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir padr&atilde;o de metadados ${padraoMet.name}" name="excluirPadrao"
@@ -372,7 +371,7 @@ Author     : Marcos Nunes
                         </tr>
                     </c:forEach>
 
-                    <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+                    <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
 
                         <tr class='center'>
                             <td><a title="Adicionar novo padr&atilde;o de metadados"
@@ -412,7 +411,7 @@ Author     : Marcos Nunes
 
 
                             <td>
-                                <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+                                <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
                                     <c:url var="excluirMapeamento" value="/admin/mapeamentos/${mapeamento.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir o mapeamento ${mapeamento.name}"
@@ -430,7 +429,7 @@ Author     : Marcos Nunes
                         </tr>
                     </c:forEach>
 
-                    <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+                    <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
 
                         <tr class='center'>
                             <td><a title="Adicionar novo padr&atilde;o de metadados"
@@ -481,7 +480,7 @@ Author     : Marcos Nunes
 
                 <div class="versao">Vers&atilde;o ${version}</div>
 
-                <security:authorize access="hasRole('PERM_UPDATE')">
+                <security:authorize access="hasRole('ROLE_UPDATE')">
 
                     <button id="recalculo" onclick="javascript:NewWindow('confirmaRecalcularIndice', '', '500', '240');">
                         Recalcular o &Iacute;ndice</button>
@@ -491,7 +490,7 @@ Author     : Marcos Nunes
                         return false">
                     Alterar Senha </button>
 
-                <security:authorize access="hasRole('PERM_CHANGE_DATABASE')">
+                <security:authorize access="hasRole('ROLE_CHANGE_DATABASE')">
                     <button id="alterarBase" onclick="javascript:NewWindow('alterDB', '', '650', '500');
                             return false">
                         Alterar Base de Dados</button>
@@ -513,7 +512,7 @@ Author     : Marcos Nunes
 
                     <c:forEach var="user" items="${users}" varStatus="status">
                         <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
-                            <td><security:authorize access="hasRole('PERM_MANAGE_USERS')">
+                            <td><security:authorize access="hasRole('ROLE_MANAGE_USERS')">
                                     <c:url var="delUser" value="/admin/users/${user.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir usu&aacute;rio ${user.username}"
@@ -533,7 +532,7 @@ Author     : Marcos Nunes
                         </tr>
                     </c:forEach>
 
-                    <security:authorize access="hasRole('PERM_MANAGE_USERS')">
+                    <security:authorize access="hasRole('ROLE_MANAGE_USERS')">
                         <tr class='center'>
                             <td><a title="Adicionar novo usuário"
                                    onclick="NewWindow('./users/new', 'Cadastro', '750', '650');">

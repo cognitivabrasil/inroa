@@ -56,7 +56,7 @@
             <div class="subtitulo">Informações sobre o usuario
                 ${user.username}</div>
 
-            <security:authorize access="hasRole('PERM_MANAGE_USERS')">
+            <security:authorize access="hasRole('ROLE_MANAGE_USERS')">
 
                 <div class="editar">
                     <a href="./${user.id}/edit">Editar</a>

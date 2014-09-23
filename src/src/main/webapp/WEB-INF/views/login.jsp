@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="security"
            uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:url var="login" value="/scripts/login.js" />
 
@@ -47,8 +48,8 @@
             </div>
             <div class="clear"></div>
 
-            <c:url var="postLoginUrl" value="/j_spring_security_check" />
-            <FORM name="login" action="${postLoginUrl }" method="post"
+            <c:url var="postLoginUrl" value="/login" />
+            <form:form name="login" action="${postLoginUrl }" method="post"
                   onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="EspacoAntes">&nbsp;</div>
@@ -63,7 +64,7 @@
 
                     <label class="Label"><B>Usu&aacute;rio:&nbsp;</B></label>
                     <div class="Value">
-                        <input name="j_username" id="user" maxlength="20" type="text"
+                        <input name="username" id="user" maxlength="20" type="text"
                                onFocus="this.className='inputSelecionado'"
                                onBlur="this.className=''">
                     </div>
@@ -71,14 +72,14 @@
                 <div class="LinhaEntrada">
                     <label class="Label"><B>Senha:&nbsp;</B></label>
                     <div class="Value">
-                        <input name="j_password" id="passwd" type=password
+                        <input name="password" id="passwd" type=password
                                onFocus="this.className='inputSelecionado'"
                                onBlur="this.className=''">
                     </div>
                 </div>
 
                 <div class="center">
-                    <input name="_spring_security_remember_me" type="checkbox" value=""> Permanecer logado
+                    <input name="remember" type="checkbox" value=""> Permanecer logado
                 </div>
 
                 <div class="LinhaEntrada">
@@ -88,7 +89,7 @@
                     </div>
                 </div>
 
-            </FORM>
+            </form:form>
         </div>
         <%@include file="googleAnalytics"%>
     </BODY>

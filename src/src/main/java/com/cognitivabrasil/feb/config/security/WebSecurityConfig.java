@@ -34,25 +34,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
         .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/users/passwd").authenticated()
             .and()			
-		.authorizeRequests().antMatchers(HttpMethod.POST, "/admin/alterDB").hasRole("PERM_CHANGE_DATABASE")
+		.authorizeRequests().antMatchers(HttpMethod.POST, "/admin/alterDB").hasRole("CHANGE_DATABASE")
             .and()
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/repositories/*/update").hasRole("PERM_UPDATE")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/repositories/*/update").hasRole("UPDATE")
             .and()
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/federations/*/update").hasRole("PERM_UPDATE")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/federations/*/update").hasRole("UPDATE")
             .and()
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/efetuaRecalculoIndice").hasRole("PERM_UPDATE")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/efetuaRecalculoIndice").hasRole("UPDATE")
             .and()            
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/repositories/**").hasRole("PERM_MANAGE_REP")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/repositories/**").hasRole("MANAGE_REP")
             .and()
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/federations/**").hasRole("PERM_MANAGE_REP")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/federations/**").hasRole("MANAGE_REP")
             .and()
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/mapeamentos/**").hasRole("PERM_MANAGE_MAPPINGS")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/mapeamentos/**").hasRole("MANAGE_MAPPINGS")
             .and()          
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/users/**").hasRole("PERM_MANAGE_USERS")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/users/**").hasRole("MANAGE_USERS")
             .and()    
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/metadataStandard/**").hasRole("PERM_MANAGE_METADATA")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/metadataStandard/**").hasRole("MANAGE_METADATA")
             .and()    
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/statistics/**").hasRole("PERM_MANAGE_STATISTICS")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/statistics/**").hasRole("MANAGE_STATISTICS")
             .and()                
 		.authorizeRequests().antMatchers("/admin/**").denyAll() // deny all access not explicitly given
 		    .and()
@@ -69,13 +69,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configureGlobal(AuthenticationManagerBuilder auth)
 			throws Exception {
 	    auth.inMemoryAuthentication().withUser("admin").password("teste").roles(
-	            "PERM_CHANGE_DATABASE",
-	            "PERM_UPDATE",
-	            "PERM_MANAGE_REP",
-	            "PERM_MANAGE_MAPPINGS",
-	            "PERM_MANAGE_METADATA",
-	            "PERM_MANAGE_USERS",
-	            "PERM_MANAGE_STATISTICS"
+	            "CHANGE_DATABASE",
+	            "UPDATE",
+	            "MANAGE_REP",
+	            "MANAGE_MAPPINGS",
+	            "MANAGE_METADATA",
+	            "MANAGE_USERS",
+	            "MANAGE_STATISTICS"
 	           );
 //		auth.userDetailsService(userDetailsService).passwordEncoder(
 //				passwordEncoder);

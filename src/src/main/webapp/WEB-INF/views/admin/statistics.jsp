@@ -66,7 +66,7 @@
                 </c:if>
             </div>
 
-            <security:authorize access="hasRole('PERM_MANAGE_STATISTICS')">
+            <security:authorize access="hasRole('ROLE_MANAGE_STATISTICS')">
                 <c:if test="${not empty termosTagCloud}">
                     <div class="caixaAzul">
                         <div id="msgTagCloud"></div>

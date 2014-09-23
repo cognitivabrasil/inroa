@@ -36,7 +36,7 @@
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             <form:form method="post" modelAttribute="padrao" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
                 <div class="LinhaForm">
-                    <security:authorize access="hasRole('PERM_MANAGE_METADATA')">
+                    <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
                         <div class="Editar">
                             <c:url var="editar" value="/admin/metadataStandard/${padrao.id}/edit" />
                             <input type="button" class="botaoEditar" title="Editar"

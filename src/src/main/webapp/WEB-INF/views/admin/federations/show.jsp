@@ -43,7 +43,7 @@
             <div class="subtitulo">Informa&ccedil;&otilde;es sobre as
                 federa&ccedil;&otilde;es ${federation.name}</div>
 
-            <security:authorize access="hasRole('PERM_MANAGE_REP')">
+            <security:authorize access="hasRole('ROLE_MANAGE_REP')">
                 <div class="editar">
                     <a href="./${federation.id}/edit">Editar</a>
                 </div>
@@ -72,7 +72,7 @@
                     <c:when test="${federation.isOutdated}">
                         <div id="textResultSF${param.id}" class='Value textoErro'>
                             <span> ${federation.ultimaAtualizacaoFormatada} 
-                                <security:authorize access="hasRole('PERM_UPDATE')">
+                                <security:authorize access="hasRole('ROLE_UPDATE')">
 
                                     <a title='Atualizar agora'
                                        onclick="javaScript:atualizaSubfedAjax(${federation.id}, this.parentNode);">
@@ -86,7 +86,7 @@
                     <c:otherwise>
                         <div id="textResultSF${federation.id}" class="Value">
                             <span> ${federation.ultimaAtualizacaoFormatada} 
-                                <security:authorize access="hasRole('PERM_UPDATE')">
+                                <security:authorize access="hasRole('ROLE_UPDATE')">
 
                                     <a title='Atualizar agora'
                                        onclick="javaScript:atualizaSubfedAjax(${federation.id}, this.parentNode);">
@@ -115,7 +115,7 @@
                 </tr>
             </table>
 
-            <security:authorize access="hasRole('PERM_MANAGE_REP')">
+            <security:authorize access="hasRole('ROLE_MANAGE_REP')">
 
                 <div id="removeAtualiza" class="ApagaObjetos">
                     <span> <input type="button" value="Formatar e restaurar"

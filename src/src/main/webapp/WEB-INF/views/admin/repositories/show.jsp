@@ -37,7 +37,7 @@
 
             <!--Informações Gerais-->
             <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
-            <security:authorize access="hasRole('PERM_MANAGE_REP')">
+            <security:authorize access="hasRole('ROLE_MANAGE_REP')">
 
                 <div class="editar">
                     <c:url var="editar" value="/admin/repositories/${repId}/edit" />
@@ -110,7 +110,7 @@
                         <div id='textResult${repId}' class="ValueErro">
                             <span>
                                 ${rep.ultimaAtualizacaoFormatada} &nbsp;&nbsp;
-                                <security:authorize access="hasRole('PERM_UPDATE')">
+                                <security:authorize access="hasRole('ROLE_UPDATE')">
 
                                     <a title="Atualizar agora"
                                        onclick="javaScript:atualizaRepAjax(${repId}, this.parentNode);">
@@ -127,7 +127,7 @@
                         <div class="Value" id="textResult${repId}">
                             <span>
                                 ${rep.proximaAtualizacaoFormatada} &nbsp;&nbsp;
-                                <security:authorize access="hasRole('PERM_UPDATE')">
+                                <security:authorize access="hasRole('ROLE_UPDATE')">
 
                                     <a title='Atualizar agora'
                                        onclick="javaScript:atualizaRepAjax(${repId}, this.parentNode);">
@@ -149,7 +149,7 @@
                     <div>&nbsp; ${repSize}</div>
                 </div>
             </div>
-            <security:authorize access="hasRole('PERM_MANAGE_REP')">
+            <security:authorize access="hasRole('ROLE_MANAGE_REP')">
 
                 <div id="removeAtualiza" class="ApagaObjetos">
                     <span>
