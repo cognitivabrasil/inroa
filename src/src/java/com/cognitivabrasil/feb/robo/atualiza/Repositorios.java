@@ -48,11 +48,9 @@ public class Repositorios {
     /**
      * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o m&etodo respons&aacute;vel por isso.
      *
-     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a
-     * atualiza&ccidil;&atilde;o dos metadados
      * @return true ou false indicando se algum reposit&aacute;rio foi atualizado ou n&atilde;
      */
-    public boolean testa_atualizar_repositorio(Indexador indexar) {
+    public boolean testa_atualizar_repositorio() {
 
         Long inicio = System.currentTimeMillis();
         boolean atualizou = false;
@@ -62,7 +60,7 @@ public class Repositorios {
         for (Repositorio rep : listRep) { // percorre todos os repositorios que
             // precisam ser atualizados
             try { // chama o metodo que atualiza o repositorio
-                if (atualizaRepositorio(repService.get(rep.getId()), indexar) > 0) {
+                if (atualizaRepositorio(repService.get(rep.getId())) > 0) {
                     atualizou = true;
                 }
             } catch (Exception e) {
@@ -110,7 +108,7 @@ public class Repositorios {
                 rep.setUltimaAtualizacao(dateNull);
                 rep.setDataOrigem(null);
             }
-            if (atualizaRepositorio(rep, indexar) > 0) {
+            if (atualizaRepositorio(rep) > 0) {
                 recalcularIndice = true;
             }
             repService.save(rep);
@@ -119,7 +117,7 @@ public class Repositorios {
             List<Repositorio> repositorios = repService.getAll();
             for (Repositorio rep : repositorios) {
                 try {
-                    if (atualizaRepositorio(rep, indexar) > 0) {
+                    if (atualizaRepositorio(rep) > 0) {
                         recalcularIndice = true;
                     }
                     repService.save(rep);
@@ -146,12 +144,10 @@ public class Repositorios {
      * Atualiza o reposit&oacute;rio solicitado.
      *
      * @param idRepositorio id do reposit&oacute;rio que deve ser atualizado.
-     * @param indexar Variavel do tipo Indexador. &Eacute; utilizada para passar os dados para o indice durante a
-     * atualiza&ccidil;&atilde;o dos metadados
      * @param con Conex&atilde;o com a base de dados.
      * @return number of updated documents, -1 in case of error
      */
-    public int atualizaRepositorio(Repositorio rep, Indexador indexar)
+    public int atualizaRepositorio(Repositorio rep)
             throws Exception {
         Long inicio = System.currentTimeMillis();
         Harvester importar = new Harvester();

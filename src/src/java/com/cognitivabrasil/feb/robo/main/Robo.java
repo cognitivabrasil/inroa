@@ -40,25 +40,24 @@ public class Robo {
         Logger log = Logger.getLogger(Robo.class.getName());
 
         log.info(">>>");
-        log.info(">>> Iniciando o Robo.");
+        log.info(">>> Iniciando o Robô.");
         log.info(">>>");
 
         Long inicioRobo = System.currentTimeMillis();
         long initNumberDocs = docDao.getSizeWithDeleted();
-//TESTA/ATUALIZA SUBFEDERACAO
+        // testa/atualiza SUBFEDERACAO
         boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI();
 
-//TESTA REPOSITORIO
-        boolean repAtualizado = repositorio.testa_atualizar_repositorio(indexar);
+        // testa/atualiza REPOSITORIO
+        boolean repAtualizado = repositorio.testa_atualizar_repositorio();
 
         long finalNumberDocs = docDao.getSizeWithDeleted();
 
-//TESTA SE PRECISA RECALCULAR O INDICE
-
+        //testa se precisa recalcular o indice.
         if ((subFedAtualizada || repAtualizado) || (finalNumberDocs != initNumberDocs)) {
             indexar.populateR1();
         } else {
-            log.info("NAO existe atualizaçoes para os repositorios! ");
+            log.info("Não existe atualizaçoes para os repositorios! ");
         }
 
         log.info("Limpando consultas antigas...");
@@ -66,6 +65,6 @@ public class Robo {
 
         Long finalRobo = System.currentTimeMillis();
         Long tempoTotal = (finalRobo - inicioRobo);
-        log.info("Levou " + Operacoes.formatTimeMillis(tempoTotal) + " todo o processo do Robo");
+        log.info("Levou " + Operacoes.formatTimeMillis(tempoTotal) + " todo o processo do Robô");
     }
 }

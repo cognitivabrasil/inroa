@@ -32,17 +32,12 @@ public class ParserIdentify extends DefaultHandler {
      * do arquivo contato.xml
      *
      * @param caminhoXML caminho completo para o arquivo xml que sera lido
-     * @param indexar variavel do tipo Indexador
      * @param idRep id do repositorio na base de dados
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
      */
-    public void parser(
-            File caminhoXML)
-            throws ParserConfigurationException,
-            SAXException,
-            IOException {
+    public void parser(File caminhoXML) throws ParserConfigurationException, SAXException, IOException {
 
         SAXParserFactory spf = SAXParserFactory.newInstance();
         SAXParser parser = spf.newSAXParser();
