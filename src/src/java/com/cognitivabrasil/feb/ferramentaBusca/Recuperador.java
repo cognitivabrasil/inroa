@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  */
 public class Recuperador {
 
-    private final Logger log = Logger.getLogger(Recuperador.class);
+    private static final Logger log = Logger.getLogger(Recuperador.class);
     private static final int rssSizeLimit = 100;
 
     public Recuperador() {
@@ -74,5 +74,4 @@ public class Recuperador {
         return resultadoConsulta;
 
     }
-
 }

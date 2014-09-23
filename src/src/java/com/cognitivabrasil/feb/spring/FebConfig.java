@@ -37,7 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  */
 public class FebConfig {
-	private final Logger logger = Logger.getLogger(FebConfig.class);
+	private static final Logger log = Logger.getLogger(FebConfig.class);
 
 	private StringEncryptor encryptor;
 
@@ -89,7 +89,7 @@ public class FebConfig {
 	 */
 	public void save() throws IOException {
 		if (file == null) {
-			logger.warn("File is null, trying to open.");
+			log.warn("File is null, trying to open.");
 			file = new File(this.filename);
 		}
 		Writer w = new FileWriter(file);
@@ -129,7 +129,7 @@ public class FebConfig {
 				s.close();
 			}
 		} catch (IOException e) {
-			logger.warn("Config file is missing, using defaults.");
+			log.warn("Config file is missing, using defaults.");
 		}
 		host = properties.getProperty("Postgres.host");
 		port = Integer.parseInt(properties.getProperty("Postgres.port"));

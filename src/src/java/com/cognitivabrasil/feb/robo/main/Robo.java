@@ -27,6 +27,7 @@ public class Robo {
     private SearchService searchesDao;
     @Autowired
     private DocumentService docDao;
+    private static final Logger log = Logger.getLogger(Robo.class);
 
     /**
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma
@@ -37,8 +38,7 @@ public class Robo {
      */
     @Transactional
     public void testaUltimaImportacao() {
-        Logger log = Logger.getLogger(Robo.class.getName());
-
+        
         log.info(">>>");
         log.info(">>> Iniciando o Robô.");
         log.info(">>>");

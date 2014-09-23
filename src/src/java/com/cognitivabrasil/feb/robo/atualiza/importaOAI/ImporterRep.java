@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ImporterRep {
 
-    private static final Logger logger = Logger.getLogger(ImporterRep.class);
+    private static final Logger log = Logger.getLogger(ImporterRep.class);
     private XsltConversor conversor;
     private Repositorio rep;
     private File inputXmlFile;
@@ -61,22 +61,22 @@ public class ImporterRep {
         oai = OaiOBAA.fromString(conversor.toObaaFromFile(inputXmlFile));
 
         for (int i = 0; i < oai.getSize(); i++) {
-            logger.debug("Trying to get: " + i);
+            log.debug("Trying to get: " + i);
 
             try {
                 Header header = oai.getHeader(i);
-                logger.debug(header);
+                log.debug(header);
                 // set date to current date (instead of the repository date
                 header.setDatestamp(new Date()); 
                 OBAA metadata = oai.getMetadata(i);
 
                 if ((!header.isDeleted()) && metadata == null) {
-                    logger.error("Não foi possível carregar metadados do objeto " + i + ", provavelmente o XML está mal formado");
+                    log.error("Não foi possível carregar metadados do objeto " + i + ", provavelmente o XML está mal formado");
                 } else {
                     docDao.save(metadata, header, rep);
                 }
             } catch (NullPointerException e) {
-                logger.error("NullPointer ao tentar inserir elemento " + i, e);
+                log.error("NullPointer ao tentar inserir elemento " + i, e);
             }
 
         }

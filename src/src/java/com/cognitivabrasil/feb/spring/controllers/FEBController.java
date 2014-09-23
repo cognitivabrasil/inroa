@@ -49,7 +49,7 @@ public final class FEBController {
     @Autowired
     private DocumentService docDao;
     private final BuscaValidator buscaValidator;
-    private final Logger log = Logger.getLogger(FEBController.class);
+    private static final Logger log = Logger.getLogger(FEBController.class);
     @Autowired
     private SearchService searchesDao;
     @Autowired

@@ -18,7 +18,7 @@ import com.cognitivabrasil.feb.util.Operacoes;
  * @author Marcos
  */
 public class SubRepositorios {
-    Logger log = Logger.getLogger(this.getClass().getName());
+    private static final Logger log = Logger.getLogger(SubRepositorios.class);
     
     @Autowired
     private FederationService subFedDao;

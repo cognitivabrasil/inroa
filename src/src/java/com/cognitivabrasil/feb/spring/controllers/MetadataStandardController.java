@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public final class MetadataStandardController{
     @Autowired
     private MetadataRecordService padraoDao;
-    Logger log = Logger.getLogger(MetadataStandardController.class);
+    private static final Logger log = Logger.getLogger(MetadataStandardController.class);
 
     public MetadataStandardController() {
     }

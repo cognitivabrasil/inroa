@@ -46,7 +46,7 @@ public class ImporterSubfed {
     @PersistenceContext
     private EntityManager em;
     
-    private final Logger log = Logger.getLogger(ImporterSubfed.class);
+    private static final Logger log = Logger.getLogger(ImporterSubfed.class);
 
     /**
      * Sets the input file.

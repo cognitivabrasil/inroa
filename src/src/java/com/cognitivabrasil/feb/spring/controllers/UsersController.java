@@ -66,7 +66,7 @@ class UserPasswordDto {
 class UserPasswordValidator implements Validator {
 
     private Usuario user;
-    Logger log = Logger.getLogger(UserPasswordValidator.class);
+    private static final Logger log = Logger.getLogger(UserPasswordValidator.class);
 
     @Override
     public boolean supports(Class clazz) {

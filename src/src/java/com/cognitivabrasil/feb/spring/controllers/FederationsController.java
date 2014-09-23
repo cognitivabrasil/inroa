@@ -43,7 +43,7 @@ public final class FederationsController {
     SubFederacaoOAI subFedOAI;
 
     private final SubFederacaoValidador subFedValidador;
-    private final Logger log = Logger.getLogger(FederationsController.class);
+    private static final Logger log = Logger.getLogger(FederationsController.class);
 
     public FederationsController() {
         subFedValidador = new SubFederacaoValidador();

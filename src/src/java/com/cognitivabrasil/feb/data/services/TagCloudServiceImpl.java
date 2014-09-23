@@ -22,7 +22,7 @@ public class TagCloudServiceImpl implements TagCloudService {
     private int size;
     SearchService searches;
     private int days;
-    private final Logger log = Logger.getLogger(TagCloudServiceImpl.class);
+    private static final Logger log = Logger.getLogger(TagCloudServiceImpl.class);
 
     @Autowired
     PalavrasOfensivasHibernateDAO badWords;

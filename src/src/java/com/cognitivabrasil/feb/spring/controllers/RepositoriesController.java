@@ -34,7 +34,7 @@ public final class RepositoriesController {
     @Autowired
     private Repositorios atualizadorRep;
 
-    private final Logger log = Logger.getLogger(RepositoriesController.class);
+    private static final Logger log = Logger.getLogger(RepositoriesController.class);
 
     public RepositoriesController() {
         repValidator = new RepositorioValidator();

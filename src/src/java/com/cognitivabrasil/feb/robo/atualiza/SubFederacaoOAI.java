@@ -32,7 +32,7 @@ import org.xml.sax.SAXException;
  */
 public class SubFederacaoOAI {
 
-    Logger log = Logger.getLogger(SubFederacaoOAI.class);
+    private static final Logger log = Logger.getLogger(SubFederacaoOAI.class);
 
     @Autowired
     private FederationService subDao;
@@ -124,10 +124,10 @@ public class SubFederacaoOAI {
 
             // atualizar objetos da subfederacao
             atualizaObjetosSubFed(subFed);
-            
+
             //este get é necessário para atualizar as informações que foram alteradas na base nos processos anteriores.
             subFed = subDao.get(fedName);
-            
+
             subFed.setUltimaAtualizacao(DateTime.now());
             subDao.save(subFed);
 
