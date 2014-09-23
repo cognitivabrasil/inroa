@@ -46,21 +46,22 @@ public class Repositorios {
     private static final Logger log = Logger.getLogger(Repositorios.class);
 
     /**
-     * Testa se algum reposit&oacute;rios precisa ser atualizado, se sim chama o m&etodo respons&aacute;vel por isso.
+     * Atualiza todos os repositórios.
      *
      * @return true ou false indicando se algum reposit&aacute;rio foi atualizado ou n&atilde;
      */
-    public boolean testa_atualizar_repositorio() {
+    public boolean atualizaRepositorios() {
 
         Long inicio = System.currentTimeMillis();
         boolean atualizou = false;
 
-        List<Repositorio> listRep = repService.getOutDated();
+        List<Repositorio> listRep = repService.getAll();
 
         for (Repositorio rep : listRep) { // percorre todos os repositorios que
             // precisam ser atualizados
             try { // chama o metodo que atualiza o repositorio
-                if (atualizaRepositorio(repService.get(rep.getId())) > 0) {
+                int numDocs = atualizaRepositorio(repService.get(rep.getId()));
+                if (numDocs > 0) {
                     atualizou = true;
                 }
             } catch (Exception e) {

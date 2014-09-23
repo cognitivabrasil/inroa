@@ -6,8 +6,6 @@
 package com.cognitivabrasil.feb.data.repositories;
 
 import com.cognitivabrasil.feb.data.entities.Repositorio;
-import java.util.List;
-import org.joda.time.DateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -17,6 +15,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RepositoryRepository extends JpaRepository<Repositorio, Integer> {
 
     public Repositorio findByNameIgnoreCase(String name);
-
-    public List<Repositorio> findByUltimaAtualizacaoLessThanOrUltimaAtualizacaoIsNull(DateTime d);
 }

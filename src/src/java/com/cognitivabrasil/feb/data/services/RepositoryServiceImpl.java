@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.data.entities.Repositorio;
@@ -18,7 +17,8 @@ import org.springframework.stereotype.Service;
  * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
  */
 @Service
-public class RepositoryServiceImpl implements RepositoryService{
+public class RepositoryServiceImpl implements RepositoryService {
+
     @Autowired
     RepositoryRepository rep;
     @Autowired
@@ -51,7 +51,7 @@ public class RepositoryServiceImpl implements RepositoryService{
 
     @Override
     public void updateNotBlank(Repositorio r2) {
-        if(r2.getId() == null) {
+        if (r2.getId() == null) {
             throw new IllegalArgumentException("Cant update a new repository, save it instead");
         }
         Repositorio r = get(r2.getId());
@@ -60,14 +60,7 @@ public class RepositoryServiceImpl implements RepositoryService{
     }
 
     @Override
-    public List<Repositorio> getOutDated() {
-        DateTime date = DateTime.now().minusDays(1).minusHours(4);
-        
-        return rep.findByUltimaAtualizacaoLessThanOrUltimaAtualizacaoIsNull(date);
-    }
-    
-    @Override
-    public Integer size(Repositorio r){
+    public Integer size(Repositorio r) {
         return docService.countFromRep(r);
     }
 }

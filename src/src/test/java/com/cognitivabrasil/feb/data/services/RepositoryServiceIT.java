@@ -166,11 +166,6 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
     }
 
     @Test
-    public void testGetOutDated() {
-        assertThat(repDao.getOutDated(), hasSize(3));
-    }
-
-    @Test
     public void testUpdateDate() {
         Repositorio rep = new Repositorio();
         String date = "1984-08-21T13:32:03Z";

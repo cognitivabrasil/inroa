@@ -21,7 +21,7 @@ public interface RepositoryService {
      */
     List<Repositorio> getAll();
 
-        /**
+    /**
      * Creates or updates the repository.
      *
      * @param r repository to be created or updated.
@@ -52,8 +52,7 @@ public interface RepositoryService {
     Repositorio get(String name);
 
     /**
-     * Updates the repository with the same id as r2 safely, ignoring null and
-     * blank values
+     * Updates the repository with the same id as r2 safely, ignoring null and blank values
      *
      * It does NOT merge the associated Documents.
      *
@@ -63,13 +62,8 @@ public interface RepositoryService {
     void updateNotBlank(Repositorio r2);
 
     /**
-     * Gets the repositories that are outdated.
-     * @return repositories that are outdated
-     */
-    public List<Repositorio> getOutDated();
-    
-    /**
      * Gets the number of documents in the repository, not including those marked as deleted.
+     *
      * @param r The repository
      * @return Document number not including those marked as deleted.
      */

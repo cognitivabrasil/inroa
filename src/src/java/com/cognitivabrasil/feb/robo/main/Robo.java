@@ -49,7 +49,7 @@ public class Robo {
         boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI();
 
         // testa/atualiza REPOSITORIO
-        boolean repAtualizado = repositorio.testa_atualizar_repositorio();
+        boolean repAtualizado = repositorio.atualizaRepositorios();
 
         long finalNumberDocs = docDao.getSizeWithDeleted();
 
