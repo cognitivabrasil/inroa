@@ -60,9 +60,9 @@ img{
     max-width: 1024px;
     max-height: 375px;
     margin: auto;
-    margin-top: 4%;
     border-radius: 7px;
 }
+#page-index.search{margin-top: 4%}
 
 #body
 {
@@ -905,7 +905,6 @@ td{vertical-align:top;}
     padding-left: 10px;
     background-color: #006699;
     color:white;
-    font-family:"Zurich Ex BT", "arial", "sans-serif";
     padding: 0.5%;
     margin: -8px -8px 0 -8px; /*Para remover a borda que tem no body*/
 }
@@ -984,13 +983,6 @@ body.loading .modal {
 */
 .accessibility {
     display: none;
-}
-
-/* Estava com a a tag font no site 
-*/
-.nenhumOa {
-    text-align: center;
-    font-size: 1.2em;
 }
 
 .paginacao {

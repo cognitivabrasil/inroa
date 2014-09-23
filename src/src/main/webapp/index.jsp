@@ -35,7 +35,7 @@
     <body>
         <jsp:include page="barraSuperior.jsp" />
 
-        <div id="page-index">
+        <div id="page-index" class="search">
 
             
             <c:if test="${!empty erro}">

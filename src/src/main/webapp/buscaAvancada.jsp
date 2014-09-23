@@ -27,8 +27,6 @@
         <link rel="StyleSheet" href="${scripts}/vendor/bootstrap-slider/css/slider.css" type="text/css">
         <c:url value="/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" var="bootstrap_theme_css" />
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_theme_css}" />
-        <c:url value="/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css" var="bootstrap_theme_css" />
-        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_theme_css}" />
         <link href="imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
         <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/jsTree/dist/jstree.min.js"></script>
