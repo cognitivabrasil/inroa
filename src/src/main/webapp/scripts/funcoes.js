@@ -3,8 +3,6 @@
 * email: marcosn@gmail.com
 */
 
-rootUrl='/feb/';
-
 function setRootUrl(url) {
     rootUrl = url;
 }

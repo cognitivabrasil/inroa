@@ -18,6 +18,9 @@ Primeira etapa do cadastro de um repositorio
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
+        
+        <c:url var="root" value="/" />
+        <script>rootUrl = "${root}";</script>
 
         <c:url var="favicon" value="/imagens/favicon.ico" />
         <c:url var="css" value="/css/padrao.css" />
@@ -36,9 +39,6 @@ Primeira etapa do cadastro de um repositorio
         <link rel="StyleSheet" href="${css }" type="text/css" />
         <script type="text/javascript" src="${validateJs }"></script>
         <script type="text/javascript" src="${funcoesJs }"></script>
-
-        <c:url var="root" value="/" />
-        <script>setRootUrl(${root});</script>
 
         <script language="JavaScript" type="text/javascript"
                 src="${funcoesMapeamentoJs}">

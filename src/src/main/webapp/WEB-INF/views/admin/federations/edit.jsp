@@ -19,7 +19,7 @@
         <c:url var="css" value="/css/padrao.css" />
         <c:url var="validateJs" value="/scripts/validatejs.js" />
         <c:url var="root" value="/" />
-        <script>rootUrl = ${root};</script>
+        <script>rootUrl = "${root}";</script>
 
         <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>

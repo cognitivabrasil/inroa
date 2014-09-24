@@ -19,7 +19,7 @@
         <link rel="StyleSheet" href="${jstreeCss}" type="text/css">
         
         <c:url var="root" value="/" />
-        <script>rootUrl = ${root};
+        <script>rootUrl = "${root}";
         obaaJson=${obaaJson};</script>
         <c:url var="jquery" value="/scripts/vendor/jquery-1.11.0.min.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>

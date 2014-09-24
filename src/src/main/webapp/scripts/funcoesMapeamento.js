@@ -428,6 +428,7 @@ function selecionaMapeamento(idResultado, idPadrao, mapSelecionado)
     
     var ajax = openAjax(); // Inicia o Ajax.
     
+    //TODO: não funciona na minha máquina (Jorjão), rodando com mvn spring-boot:run .
     ajax.open("GET", rootUrl+"/admin/mapeamentos/listaMapeamentoPadraoSelecionado?idpadrao="+idPadrao+"&mapSelecionado="+mapSelecionado, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
     ajax.onreadystatechange = function()
