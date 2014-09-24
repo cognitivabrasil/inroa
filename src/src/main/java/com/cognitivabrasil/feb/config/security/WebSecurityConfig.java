@@ -36,9 +36,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .and()			
 		.authorizeRequests().antMatchers(HttpMethod.POST, "/admin/alterDB").hasRole("CHANGE_DATABASE")
             .and()
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/repositories/*/update").hasRole("UPDATE")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/repositories/*/update*").hasRole("UPDATE")
             .and()
-        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/federations/*/update").hasRole("UPDATE")
+        .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/federations/*/update*").hasRole("UPDATE")
             .and()
         .authorizeRequests().antMatchers(HttpMethod.POST, "/admin/efetuaRecalculoIndice").hasRole("UPDATE")
             .and()            
@@ -60,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/login")
 			.permitAll()
 			.and()
+		.csrf().disable() // TODO: retirar isto, ver #FEB-500
 	    .logout()
 	    	.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
 

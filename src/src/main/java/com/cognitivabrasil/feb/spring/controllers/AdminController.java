@@ -236,7 +236,7 @@ public class AdminController {
         }
     }
     
-    @RequestMapping("verificaLinkOAI")
+    @RequestMapping("/verificaLinkOAI")
     public @ResponseBody
     String verifyOAI(@RequestParam(value = "link", required = true) String link,
                     @RequestParam boolean federation) {

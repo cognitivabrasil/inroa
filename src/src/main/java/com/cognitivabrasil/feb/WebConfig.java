@@ -10,6 +10,7 @@
 package com.cognitivabrasil.feb;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import ORG.oclc.oai.server.OAIHandler;
 
 /**
  * 
@@ -70,6 +73,22 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         
         return resolver;
+    }
+    
+    /**
+     * Registra servlet para o Oaicat.
+     * 
+     * @return servlet do oaicat.
+     */
+    @Bean
+    public ServletRegistrationBean servletRegistrationBean(){
+        OAIHandler h = new OAIHandler();
+ 
+        ServletRegistrationBean s = new ServletRegistrationBean(h,"/oai/*");
+        
+        s.addInitParameter("properties", "dummy.properties");
+        
+        return s;
     }
 
 }

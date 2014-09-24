@@ -105,7 +105,7 @@
                                 <input type="hidden" name="pager.offset" value="<%= offset%>">
 
                                 <%-- Inclui paginacao antes dos resultados--%>
-                                <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>
+                                <%@include file="../jsp/paginacaoPersonalizada.jsp" %>
 
                                 <div id="body-resultado-interno">
                                     <c:forEach var="doc" items="${documentos}" varStatus="status">
@@ -148,7 +148,7 @@
 
                                 </div>
                                 <%-- Inclui paginacao depois dos resultados--%>
-                                <%@include file="WEB-INF/jsp/paginacaoPersonalizada.jsp" %>
+                                <%@include file="../jsp/paginacaoPersonalizada.jsp" %>
 
                             </pg:pager>
                         </center>
