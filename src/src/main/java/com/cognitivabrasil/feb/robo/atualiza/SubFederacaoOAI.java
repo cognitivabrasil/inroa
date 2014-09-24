@@ -49,7 +49,6 @@ public class SubFederacaoOAI {
      * Atualiza todas as subfedera&ccedil;&otilde;es. Coleta da base os dados das subfedera&ccedil;&otilde;es e chama o
      * m&etodo que efetua a atualia&ccedil;&atilde;o.
      *
-     * @param con Conex&atilde;o com a base de dados local.
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;o.
      */
     public boolean pre_AtualizaSubFedOAI() {
@@ -196,12 +195,11 @@ public class SubFederacaoOAI {
     /**
      * Chama o m&eacute;todo respons&aacute;vel por efetuar o harverter na subfedera&ccedil;&atilde;o e o m&eacute;todo
      * respons&aacute;vel por efetuar o parser nos xmls e inserir na base de dados.
-     *
-     * @param subfed classe da subfedera&ccedil;&atilde;o
-     * @throws Exception
+     * 
+     * @param subFed {@link SubFederacao} que será atualizada.
+     * @throws Exception 
      */
-    public void atualizaObjetosSubFed(SubFederacao subFed)
-            throws Exception {
+    public void atualizaObjetosSubFed(SubFederacao subFed) throws Exception {
 
         Informacoes conf = new Informacoes();
         String caminhoDiretorioTemporario = conf.getCaminho();
@@ -254,8 +252,8 @@ public class SubFederacaoOAI {
     /**
      * Atualiza a subfedera&ccedil;&atilde;o informada e recalcula o &iacute;ndice.
      *
-     * @param idSub Id da subfedera&ccedil;&atilde;o na ser atualizada.
-     * @return true se atualizou e false caso contr&aacute;rio.
+     * @param subFed Subfedera&ccedil;&atilde;o a ser atualizada.
+     * @param apagar Define se os documentos da federação serão removidos antes de atualizar ou não.
      * @throws Exception
      */
     public void atualizaSubfedAdm(SubFederacao subFed, boolean apagar) throws Exception {

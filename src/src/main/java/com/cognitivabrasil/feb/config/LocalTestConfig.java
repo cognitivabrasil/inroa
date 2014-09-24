@@ -32,7 +32,6 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
  *
  * @author Marcos Nunes
  * 
- * @see CloudConfig
  * @see LocalPostgresConfig
  */
 @Configuration

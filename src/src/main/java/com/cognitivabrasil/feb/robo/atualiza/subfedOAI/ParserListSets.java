@@ -29,9 +29,7 @@ public class ParserListSets extends DefaultHandler {
      * Constutor que inicializa os objetos necessarios para fazer o parser
      * do arquivo contato.xml
      *
-     * @param caminhoXML caminho completo para o arquivo xml que sera lido
-     * @param indexar variavel do tipo Indexador
-     * @param idRep id do repositorio na base de dados
+     * @param caminhoXML arquivo xml que sera lido
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException

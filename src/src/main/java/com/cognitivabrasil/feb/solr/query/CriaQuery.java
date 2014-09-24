@@ -10,11 +10,11 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 public class CriaQuery {
 
     /**
-     * Identifica todos os campos onde a busca deve acontecer
+     * Identifica todos os campos onde a busca deve acontecer.
      *
      * @param pesquisa Devolve o String de busca pronto para ser utilizado pelo
      * SORL
-     * @return
+     * @return Retorna uma query Solr com todos os campos preenchidos na classe {@link Consulta}.
      */
     public static String criaQueryCompleta(Consulta pesquisa) {
         String resultado = "";

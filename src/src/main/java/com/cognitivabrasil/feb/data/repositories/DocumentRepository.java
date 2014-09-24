@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <b>ATENTION!</b>
  *
  * Beware the inconsistency between from and until ({@link #from(DateTime, Pageable)},
- * {@link #countFrom(DateTime)}, {@link #until()}, {@link #countUntil(DateTime)},
+ * {@link #countFrom(DateTime)}, {@link #until(DateTime, Pageable) }, {@link #countUntil(DateTime)},
  * {@link #betweenInclusive(DateTime, DateTime, Pageable)},
  * {@link #countBetweenInclusive(DateTime, DateTime)} in this repository.
  *

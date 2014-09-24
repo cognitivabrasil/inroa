@@ -19,7 +19,6 @@ import com.cognitivabrasil.feb.data.entities.Search;
  * @author paulo
  *
  */
-
 //TODO: get days and Max Size from configuration
 @Service
 public class TagCloudServiceImpl implements TagCloudService {
@@ -36,7 +35,7 @@ public class TagCloudServiceImpl implements TagCloudService {
     public void setSearches(SearchService s) {
         searches = s;
     }
-    
+
     @Override
     public Map<String, Integer> getTagCloud() {
         Map<String, Integer> m = new TreeMap<>();
@@ -46,9 +45,9 @@ public class TagCloudServiceImpl implements TagCloudService {
         for (Search s : l) {
 
             if (!badWords.contains(s.getText())) {
-                
+
                 m.put(s.getText(), s.getCount());
-                
+
                 if (m.size() >= getMaxSize()) {
                     break;
                 }
@@ -89,12 +88,9 @@ public class TagCloudServiceImpl implements TagCloudService {
     }
 
     /**
-     * Set delta of days for the tag cloud.
+     * Set delta of days for the tag cloud. E.g, if @{code days} is 7, will generate a tag cloud with searches done in
+     * the last 7 days.
      *
-     * E.g, if
-     *
-     * @{code days} is 7, will generate a tag cloud with searches done in the
-     * last 7 days.
      * @param days
      */
     public void setDays(int days) {

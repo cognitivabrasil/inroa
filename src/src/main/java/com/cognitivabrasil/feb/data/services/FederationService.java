@@ -45,7 +45,7 @@ public interface FederationService {
     /**
      * Deletes a federation.
      *
-     * @param f federation to be deleted
+     * @param s federation to be deleted
      */
     void delete(SubFederacao s);
 

@@ -77,7 +77,7 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
         this.dataXML = dataXML;
         this.dataXMLTemp = null;
     }
-    
+
     @Transient
     public String getDataXMLTemp() {
         return dataXMLTemp;
@@ -128,10 +128,8 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
     }
 
     /**
-     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se a
-     * federa&ccedil;&atilde;o n&atilde;o tiver uma url associada ele informa
-     * que n&atilde;o foi informado um endere&ccedil;o para
-     * sincroniza&ccedil;&atilde;o.
+     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se a federa&ccedil;&atilde;o n&atilde;o tiver uma
+     * url associada ele informa que n&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o.
      *
      * @return String contendo a data neste formato: Dia "x" &agrave;s "y"
      */
@@ -176,7 +174,7 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
         if (this.ultimaAtualizacao == null) {
             return null;
         } else {
-            return getUltimaAtualizacao().plusDays(1); 
+            return getUltimaAtualizacao().plusDays(1);
         }
     }
 
@@ -185,8 +183,7 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
     }
 
     /**
-     * Updates the repository with the same with the data in r2 safely, ignoring
-     * null and blank values
+     * Updates the repository with the same with the data in r2 safely, ignoring null and blank values
      *
      * @param r2 A repository that we want to update.
      * @throws IllegalArgumentException If the ids dont match.
@@ -216,7 +213,8 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
     }
 
     /**
-     * Test if federation is outdated.
+     * Test if federation is outdated. Utilizado na interface gráfica para exibir alerta se a federação está
+     * desatualizada.
      *
      * @return true if it is outdated or false if it is updated.
      */
@@ -226,13 +224,9 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
     }
 
     /**
-     * M&eacute;todo que atualiza a base de dados local com os
-     * reposit&oacute;rios da subfedera&ccedil;&atilde;o
+     * Atualiza a lista de repositórios desta federação, atravéz do conjunto de repositórios recebido como parâmetro.
      *
-     * @param subFed objeto federa&ccedil;&atilde;o
-     * @param listXml ArrayList de Strings contendo o nome dos
-     * reposit&oacute;rios da subfedera&ccedil;&atilde;o
-     * @throws Exception
+     * @param listXml ArrayList de Strings contendo o nome dos reposit&oacute;rios da subfedera&ccedil;&atilde;o.
      */
     public void atualizaListaSubRepositorios(Set<String> listXml) {
 
@@ -244,18 +238,18 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
             repTest.setName(nomeSubRep);
 
             //se nao tiver na base o repositorio, adiciona.
-            if (!listBase.contains(repTest)) { 
+            if (!listBase.contains(repTest)) {
                 listBase.add(repTest);
             }
         }
         List<RepositorioSubFed> delete = new ArrayList<>();
-        for(RepositorioSubFed rep : listBase){
+        for (RepositorioSubFed rep : listBase) {
             //se tiver na base algum repositorio que nao esteja na lista, remove.
-            if(!listXml.contains(rep.getName())){
+            if (!listXml.contains(rep.getName())) {
                 delete.add(rep);
             }
         }
-        for(RepositorioSubFed rep : delete){
+        for (RepositorioSubFed rep : delete) {
             listBase.remove(rep);
         }
     }
@@ -268,7 +262,6 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
         }
         return null;
     }
-
 
     @Override
     public String toStringDetailed() {

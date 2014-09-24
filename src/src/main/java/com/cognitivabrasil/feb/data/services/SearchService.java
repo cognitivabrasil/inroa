@@ -17,9 +17,9 @@ public interface SearchService {
     /**
      * Returns at most @{code limit} distinct searches that occurred after @{code date}.
      *
-     * @param limit
-     * @param date
-     * @return
+     * @param limit maximum number of searches
+     * @param date Searches from this date.
+     * @return List of searches that meet the criteria.
      */
     public List<Search> getSearches(Integer limit, Date date);
 

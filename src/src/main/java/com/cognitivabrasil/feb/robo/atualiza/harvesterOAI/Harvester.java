@@ -26,8 +26,7 @@ public class Harvester {
     /**
      * Metodo que efetua o Harvesting OAI-PHM e salva arquivos xml's com os resultados
      * @param endereco URL do repositório que responde com o padrao OAI-PMH
-     * @param dataInicial data inicial para o filtro da busca. From
-     * @param dataFinal data final para o filtro da busca. Until
+     * @param dataInicial data inicial para o filtro da busca. Atributo From do OAI-PMH.
      * @param nomeRepositorio nome do repositório. Utilizado apenas para salvar o arquivo xml. Ex.: /temp/nomeRepositorio.xml
      * @param dirXML Diretório onde serão salvos os arquivos XML's. Ex.: "c:/pasta" ou "/home/fulano/pasta"
      * @param metadataPrefix metadataPrefix do repositorio.

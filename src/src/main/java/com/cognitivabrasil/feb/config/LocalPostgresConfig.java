@@ -31,7 +31,6 @@ import com.cognitivabrasil.feb.spring.FebConfig;
  * 
  * @author Paulo Schreiner
  * 
- * @see CloudConfig
  * @see LocalTestConfig
  */
 @Configuration

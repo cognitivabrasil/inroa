@@ -31,9 +31,7 @@ public class SubRepositorios {
      * Coleta o XML com os reposit&oacute;rios da subfedera&ccedil;&atilde;o
      * efetua o parser a atualiza a base de dados local.
      *
-     * @param enderecoOAI endere&ccedil;o que responde OAI-PMH da
-     * subfedera&ccedil;&atilde;o
-     * @param subFed objeto federa&ccedil;&atilde;o
+     * @param subFed {@link SubFederacao} que terá seus repositórios atualizados.
      * @throws Exception
      */
     public void atualizaSubRepositorios(SubFederacao subFed) throws Exception {

@@ -31,8 +31,7 @@ public class ParserIdentify extends DefaultHandler {
      * Constutor que inicializa os objetos necessarios para fazer o parser
      * do arquivo contato.xml
      *
-     * @param caminhoXML caminho completo para o arquivo xml que sera lido
-     * @param idRep id do repositorio na base de dados
+     * @param caminhoXML caminho completo para o arquivo xml que será lido.
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException

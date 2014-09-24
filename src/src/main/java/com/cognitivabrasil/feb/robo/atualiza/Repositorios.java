@@ -93,7 +93,6 @@ public class Repositorios {
      *
      * @param idRep id do reposit&oacute;rio a ser atualizado. Se informar zero atualizar&aacute; todos
      * @param apagar informar se deseja apagar toda a base. true apaga e false apenas atualiza.
-     * @author Marcos Nunes
      */
     public void atualizaFerramentaAdm(int idRep, boolean apagar)
             throws Exception {
@@ -149,8 +148,7 @@ public class Repositorios {
     /**
      * Atualiza o reposit&oacute;rio solicitado.
      *
-     * @param idRepositorio id do reposit&oacute;rio que deve ser atualizado.
-     * @param con Conex&atilde;o com a base de dados.
+     * @param rep reposit&oacute;rio que deve ser atualizado.
      * @return number of updated documents, -1 in case of error
      */
     public int atualizaRepositorio(Repositorio rep)

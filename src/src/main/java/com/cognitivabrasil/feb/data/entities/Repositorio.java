@@ -85,8 +85,8 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     /**
      * @param name the name to set
      */
-    public void setName(String nome) {
-        this.name = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
