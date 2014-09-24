@@ -13,10 +13,13 @@ package com.cognitivabrasil.feb.oai;
 import ORG.oclc.oai.server.catalog.AbstractServiceOaiCatalog;
 import ORG.oclc.oai.server.catalog.OaiDocumentService;
 
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.repositories.RepositoryRepository;
 import com.cognitivabrasil.feb.spring.ApplicationContextProvider2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -24,12 +27,10 @@ import java.util.Properties;
 import org.springframework.context.ApplicationContext;
 
 /**
- * DummyOAICatalog is an example of how to implement the AbstractCatalog
- * interface. Pattern an implementation of the AbstractCatalog interface after
- * this class to have OAICat work with your database. Your effort may be
- * minimized by confining your changes to areas identified by "YOUR CODE GOES
- * HERE" comments. In truth, though, you can do things however you want, as long
- * as the non-private methods return what they're supposed to.
+ * DummyOAICatalog is an example of how to implement the AbstractCatalog interface. Pattern an implementation of the
+ * AbstractCatalog interface after this class to have OAICat work with your database. Your effort may be minimized by
+ * confining your changes to areas identified by "YOUR CODE GOES HERE" comments. In truth, though, you can do things
+ * however you want, as long as the non-private methods return what they're supposed to.
  *
  * @author Jeffrey A. Young, OCLC Online Computer Library Center
  */
@@ -42,30 +43,35 @@ public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
     /**
      * Retrieve a list of sets that satisfy the specified criteria
      *
-     * @return a Map object containing "sets" Iterator object (contains
-     * <setSpec/> XML Strings) as well as an optional resumptionMap Map.
+     * @return a Map object containing "sets" Iterator object (contains <setSpec/> XML Strings) as well as an optional
+     *         resumptionMap Map.
      * @exception OAIBadRequestException signals an http status code 400 problem
      */
     @Override
-    public Map listSets() {
+    public Map<String, Iterator<String>> listSets() {
+        ApplicationContext ctx = ApplicationContextProvider2.getApplicationContext();
+        RepositoryRepository rep = ctx.getBean(RepositoryRepository.class);
+
+        List<Repositorio> repositorios = rep.findAll();
 
         // clean out old resumptionTokens
         purge();
-        Map listSetsMap = new HashMap();
+        Map<String, Iterator<String>> listSetsMap = new HashMap<String, Iterator<String>>();
 
-        List sets = new ArrayList();
+        List<String> sets = new ArrayList<String>();
 
-        // TODO: Implement getSets()
-        StringBuilder s = new StringBuilder(200);
-        s.append("<set>\n");
-        s.append("<setSpec>");
-        s.append("notImplemented");
-        s.append("</setSpec>\n");
-        s.append("<setName>");
-        s.append("notImplemented");
-        s.append("</setName>\n");
-        s.append("</set>\n");
-        sets.add(s.toString());
+        for (Repositorio r : repositorios) {
+            StringBuilder s = new StringBuilder(200);
+            s.append("<set>\n");
+            s.append("<setSpec>");
+            s.append(r.getName());
+            s.append("</setSpec>\n");
+            s.append("<setName>");
+            s.append(r.getName());
+            s.append("</setName>\n");
+            s.append("</set>\n");
+            sets.add(s.toString());
+        }
 
         listSetsMap.put("sets", sets.iterator());
         return listSetsMap;
@@ -73,8 +79,7 @@ public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
 
     @Override
     public OaiDocumentService getDocumentService() {
-        ApplicationContext ctx = ApplicationContextProvider2
-                .getApplicationContext();
+        ApplicationContext ctx = ApplicationContextProvider2.getApplicationContext();
         return ctx.getBean(OaiDocumentService.class);
     }
 }
