@@ -3,8 +3,7 @@ FEB
 
 Dependências externas
 ----------------------------------------------------
-* Java 7 
-* Tomcat 7 
+* Java 8 
 * PostgreSQL a partir de 8.4
 * Solr
 
@@ -65,13 +64,13 @@ Rodar o feb
 ----------------------------------------------------
 
 ```
-mvn jetty:run
+mvn spring-boot:run
 ```
 
 Verificação de que está rodando certo
 -----------------------------------------------------------
 
-Acesse o feb em http://localhost:9091.
+Acesse o feb em http://localhost:8080.
 A senha padrão de administrador é *teste*.
 
 
@@ -170,11 +169,4 @@ arquivo template para ver quais variáveis estão disponíveis.
 Altere os arquivos de dentro do diretório src/debian ou o 
 src/Makefile
 
-### Rodando em máquinas com Java 8 como padrão ###
-
-Selecione o Java 7 na linha de comando:
-
-```
-JAVA_HOME=/usr/lib/jvm/java-7-oracle mvn jetty:run
-```
 
