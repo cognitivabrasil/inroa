@@ -4,17 +4,25 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
+import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import static org.hamcrest.Matchers.*;
+
 import org.joda.time.DateTime;
+
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
@@ -29,8 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Marcos Nunes <marcos@cognitivabrasil.com.br>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@ContextConfiguration(classes = { AppConfig.class })
+@ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContextTests {

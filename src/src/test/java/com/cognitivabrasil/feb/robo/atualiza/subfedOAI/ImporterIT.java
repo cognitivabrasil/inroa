@@ -4,17 +4,23 @@
  */
 package com.cognitivabrasil.feb.robo.atualiza.subfedOAI;
 
+import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
+
 import cognitivabrasil.obaa.OaiOBAA;
+
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
@@ -27,8 +33,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  * @author marcos
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@ContextConfiguration(classes = { AppConfig.class })
+@ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager",  defaultRollback = true)
 public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
 

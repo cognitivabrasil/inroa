@@ -4,21 +4,26 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
+import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.entities.Search;
 import com.cognitivabrasil.feb.data.repositories.SearchRepository;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
@@ -32,8 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@ContextConfiguration(classes = { AppConfig.class })
+@ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 @Transactional
 public class SearchesJdbcIT extends AbstractTransactionalJUnit4SpringContextTests {

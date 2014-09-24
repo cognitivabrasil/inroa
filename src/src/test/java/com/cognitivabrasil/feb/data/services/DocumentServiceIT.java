@@ -2,6 +2,7 @@ package com.cognitivabrasil.feb.data.services;
 
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -15,22 +16,29 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
+
 import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.joda.time.DateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,8 +53,8 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContext.xml")
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class})
+@ContextConfiguration(classes = { AppConfig.class })
+@ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
