@@ -125,7 +125,7 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
             f.delete();
         }
 
-        assertFalse(f.exists());
+        assertFalse("Arquivo /tmp/feb.properties não deveria existir mas existe", f.exists());
 
         c.setFile(f);
         c.setDefaultProperties(defaultProperties);
