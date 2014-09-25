@@ -5,6 +5,7 @@
 package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.AppConfig;
+import com.cognitivabrasil.feb.WebConfig;
 import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 

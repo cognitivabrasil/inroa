@@ -3,11 +3,13 @@ package com.cognitivabrasil.feb.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -20,11 +22,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableWebMvcSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//	@Autowired
-//	private PersonDetailsService userDetailsService;
-//
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+    @Autowired
+    private Md5PasswordEncoder md5PasswordEncoder;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -69,16 +74,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth)
 			throws Exception {
-	    auth.inMemoryAuthentication().withUser("admin").password("teste").roles(
-	            "CHANGE_DATABASE",
-	            "UPDATE",
-	            "MANAGE_REP",
-	            "MANAGE_MAPPINGS",
-	            "MANAGE_METADATA",
-	            "MANAGE_USERS",
-	            "MANAGE_STATISTICS"
-	           );
-//		auth.userDetailsService(userDetailsService).passwordEncoder(
-//				passwordEncoder);
+//	    auth.inMemoryAuthentication().withUser("admin").password("teste").roles(
+//	            "CHANGE_DATABASE",
+//	            "UPDATE",
+//	            "MANAGE_REP",
+//	            "MANAGE_MAPPINGS",
+//	            "MANAGE_METADATA",
+//	            "MANAGE_USERS",
+//	            "MANAGE_STATISTICS"
+//	           );
+		auth.userDetailsService(userDetailsService).passwordEncoder(
+				md5PasswordEncoder);
 	}
 }

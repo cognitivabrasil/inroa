@@ -5,6 +5,7 @@
 package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.AppConfig;
+import com.cognitivabrasil.feb.WebConfig;
 import com.cognitivabrasil.feb.data.entities.Mapeamento;
 import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 
@@ -24,6 +25,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  *
@@ -31,7 +33,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { AppConfig.class })
+@ContextConfiguration(classes = { AppConfig.class, WebConfig.class })
+@WebAppConfiguration
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class MapeamentoHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {

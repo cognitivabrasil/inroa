@@ -34,7 +34,6 @@ import ORG.oclc.oai.server.OAIHandler;
  */
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = "com.cognitivabrasil.feb.spring")
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private LocalContainerEntityManagerFactoryBean emf;
