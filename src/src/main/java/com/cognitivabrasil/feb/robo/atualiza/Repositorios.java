@@ -322,7 +322,7 @@ public class Repositorios {
         if (nome.size() > 0) {
             msg = "Erro atualizar os repositorios: ";
             for (String n : nome) {
-                msg += " " + n;
+                msg += " " + n+";";
             }
         } else {
             msg = "Erro ao atualizar o repositorio " + nome.get(0);

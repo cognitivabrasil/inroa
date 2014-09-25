@@ -5,12 +5,10 @@
 package com.cognitivabrasil.feb.robo.atualiza.subfedOAI;
 
 import com.cognitivabrasil.feb.AppConfig;
-import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
 
 import cognitivabrasil.obaa.OaiOBAA;
 
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
-import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -22,10 +20,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
@@ -41,7 +37,7 @@ public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private FederationService subFedDao;
     @Autowired
-    private ImporterSubfed imp = new ImporterSubfed();
+    private ImporterSubfed imp;
     
     @Test
     public void testUpdateFederation() throws Exception{        
