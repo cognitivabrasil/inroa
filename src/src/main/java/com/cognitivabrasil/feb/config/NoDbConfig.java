@@ -44,7 +44,7 @@ public class NoDbConfig {
      */
     @Bean
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).build();
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
     }
 
     /**
@@ -53,7 +53,7 @@ public class NoDbConfig {
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(Database.HSQL);
+        jpaVendorAdapter.setDatabase(Database.H2);
         jpaVendorAdapter.setGenerateDdl(true);
         return jpaVendorAdapter;
     }

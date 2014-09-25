@@ -43,7 +43,7 @@ public class LocalTestConfig {
      */
     @Bean
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).build();
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
     }
 
     /**
@@ -52,7 +52,7 @@ public class LocalTestConfig {
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(Database.HSQL);
+        jpaVendorAdapter.setDatabase(Database.H2);
         jpaVendorAdapter.setGenerateDdl(false);
         jpaVendorAdapter.setShowSql(true);
         return jpaVendorAdapter;
@@ -83,7 +83,6 @@ public class LocalTestConfig {
         dataSourceInitializer.setDataSource(dataSource);
         ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
         databasePopulator.setContinueOnError(false);
-        databasePopulator.addScript(new ClassPathResource("sql/cleanup.sql"));
         databasePopulator.addScript(new ClassPathResource("sql/schema.sql"));
         databasePopulator.addScript(new ClassPathResource("sql/test-data.sql"));
 
