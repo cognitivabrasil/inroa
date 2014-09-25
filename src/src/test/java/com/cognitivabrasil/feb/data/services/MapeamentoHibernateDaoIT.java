@@ -33,8 +33,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { AppConfig.class, WebConfig.class })
-@WebAppConfiguration
+@ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class MapeamentoHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
