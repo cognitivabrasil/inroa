@@ -16,7 +16,7 @@
         <link rel="StyleSheet" media="screen" href="../css/padrao.css" type="text/css"/>
         <script type="text/javascript" src="${funcoesJs}"></script>
         <c:url var="root" value="/" />
-        <script>setRootUrl(${root});</script>
+        <script>setRootUrl("${root}");</script>
         <link href="../imagens/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     </head>
     <body>

@@ -139,9 +139,9 @@ public final class FederationsController {
         long initNumberDocs = docDao.getSizeWithDeleted();
         try {
             if (id > 0) {
-                subFedOAI.atualizaSubfedAdm(subDao.get(id), apagar);
+                subFedOAI.atualizaFederacao(subDao.get(id), apagar);
             } else {
-                subFedOAI.atualizaSubfedAdm(subDao.getAll(), apagar);
+                subFedOAI.atualizaFederacoes(apagar);
             }
 
             return "1";

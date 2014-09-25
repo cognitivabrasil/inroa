@@ -26,7 +26,7 @@
         <link rel="StyleSheet" href="${css }" type="text/css" />
         <script type="text/javascript" src="${funcoesJs }"></script>
         <c:url var="root" value="/" />
-        <script>setRootUrl(${root});</script>
+        <script>setRootUrl("${root}");</script>
     </head>
 
     <body>

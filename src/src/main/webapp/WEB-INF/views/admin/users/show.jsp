@@ -32,7 +32,7 @@
         <script language="JavaScript" type="text/javascript" src="${funcoes}"></script>
         <c:url var="root" value="/" />
         <script>
-            setRootUrl(${root});
+            setRootUrl("${root}");
             $(function() {
                 $( "#alterarSenha" ).button({
                     

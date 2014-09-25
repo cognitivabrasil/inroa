@@ -31,7 +31,7 @@
         <link rel="StyleSheet" href="${css }" type="text/css"/>
         <script language="JavaScript" type="text/javascript" src="${funcoesJs }"></script>
         <c:url var="root" value="/" />
-        <script>setRootUrl(${root});</script>
+        <script>setRootUrl("${root}");</script>
         <script language="JavaScript" type="text/javascript" src="${funcoesMapeamentoJs }"></script>
         <script type="text/javascript" src="${validateJs }"></script>
         <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />

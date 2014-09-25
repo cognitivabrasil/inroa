@@ -22,7 +22,7 @@
         <c:url var="funcoesjs" value="/scripts/funcoes.js" />
         <script language="JavaScript" type="text/javascript" src="${funcoesjs}"></script>
         <c:url var="root" value="/" />
-        <script>setRootUrl(${root});</script>
+        <script>setRootUrl("${root}");</script>
 
 
 

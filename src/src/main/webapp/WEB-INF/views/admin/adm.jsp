@@ -43,7 +43,7 @@ Author     : Marcos Nunes
         src="<feb.spring:url value="/scripts/tabsNavigator.js" htmlEscape="true" />"></script>
 
         <script>
-            setRootUrl(${root});
+            setRootUrl("${root}");
             $(function() {
                 $("#recalculo").button({
                     icons: {
@@ -577,7 +577,7 @@ Author     : Marcos Nunes
                     </table>
                 </div>
             </div>
-            <div class='center hidden' id='loading'> <img src='/feb/imagens/ajax-loader.gif' border='0' alt='Atualizando' align='middle'> <p class='textoErro center'>Aguarde, carregando...</p> </div>
+            <div class='center hidden' id='loading'> <img src='<feb.spring:url value="/imagens/ajax-loader.gif" htmlEscape="true" />' border='0' alt='Atualizando' align='middle'> <p class='textoErro center'>Aguarde, carregando...</p> </div>
         </div>
 
         <div class="mensagemAdm">${mensagem}</div>

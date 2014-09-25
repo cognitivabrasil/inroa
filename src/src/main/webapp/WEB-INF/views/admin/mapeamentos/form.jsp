@@ -31,7 +31,7 @@ Primeira etapa do cadastro de um repositorio
         <script type="text/javascript" src="${validateJs }"></script>
         <script type="text/javascript" src="${funcoesJs }"></script>
         <c:url var="root" value="/" />
-        <script>setRootUrl(${root});</script>
+        <script>setRootUrl("${root}");</script>
 
         <c:url var="codeMirrorJs" value="/scripts/vendor/codemirror/lib/codemirror.js" />
         <script type="text/javascript" src="${codeMirrorJs}"></script>

@@ -46,63 +46,88 @@ public class SubFederacaoOAI {
     private SubRepositorios subRep;
 
     /**
-     * Atualiza todas as subfedera&ccedil;&otilde;es. Coleta da base os dados das subfedera&ccedil;&otilde;es e chama o
-     * m&etodo que efetua a atualia&ccedil;&atilde;o.
+     * Atualiza a subfedera&ccedil;&atilde;o informada.
      *
-     * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;o.
+     * @param fed Federa&ccedil;&atilde;o a ser atualizada.
+     * @param apagar Define se os documentos da federação serão removidos antes de atualizar ou não.
+     * @throws Exception
      */
-    public boolean pre_AtualizaSubFedOAI() {
-        boolean atualizou = false;
-
-        try {
-            List<SubFederacao> listaSubfed = subDao.getAll();
-
-            // percorre todas as federacoes cadastradas
-            for (SubFederacao subFed : listaSubfed) {
-                boolean atualizadoTemp = false;
-
-                if ((subFed.getUltimaAtualizacao() == null && subFed
-                        .getDataXML() == null)) {
-                    log.info("Deletando toda a base de dados da Subfederação: " + subFed.getName().toUpperCase());
-                    subDao.deleteAllDocs(subFed);
-                    log.info("Base deletada!");
-                }
-
-                if (subFed.getUrl().isEmpty()) { // testa se a string url esta
-                    // vazia.
-                    log.error("FEB ERRO: Nao existe uma url associada ao repositorio "
-                            + subFed.getName());
-                } else {
-
-                    Long inicio = System.currentTimeMillis();
-                    try {
-                        atualizaSubFedOAI(subFed);
-                        atualizadoTemp = true;
-                    } catch (Exception e) {
-                        /*
-                         * ATENÇÃO: esse catch está vazio porque já é feito o
-                         * tratamento de exceção dentro do metodo
-                         * atualizaSubFedOAI mas é preciso subir a exceção
-                         * porque se atualizar uma federação só pela ferramenta
-                         * administrativa tem que saber se deu erro.
-                         */
-                    }
-                    Long fim = System.currentTimeMillis();
-                    Long total = fim - inicio;
-                    log.info("Levou: " + Operacoes.formatTimeMillis(total)
-                            + " para atualizar a subfederacao: "
-                            + subFed.getName() + "\n");
-                }
-
-                // se alguma subfederacao foi atualizada entao seta o atualizou como true
-                if (atualizadoTemp) {
-                    atualizou = true;
-                }
-            }
-        } catch (HibernateException h) {
-            log.error("Erro no Hibernate.", h);
+    public void atualizaFederacao(SubFederacao fed, boolean apagar) throws Exception {
+        // Don't really know why, but the following 2 lines solve FEB-219
+        fed.setUltimaAtualizacao(fed.getUltimaAtualizacao());
+        fed.setDataXML(fed.getDataXML());
+        if (apagar) {
+            log.debug("Setar como null a data da última atualização e dataXML para que apague toda a base antes de "
+                    + "atualizar.");
+            fed.setUltimaAtualizacao(null);
+            fed.setDataXML(null);
         }
-        return atualizou;
+
+        if (fed.getUltimaAtualizacao() == null
+                && fed.getDataXML() == null) {
+
+            log.info("Deletando toda a base de dados da Subfederação: " + fed.getName().toUpperCase());
+            subDao.deleteAllDocs(fed);
+            log.info("Base deletada!");
+        }
+
+        // testa se a string url esta vazia.
+        if (fed.getUrl().isEmpty()) {
+            log.error("Não existe uma url associada ao repositório " + fed.getName());
+        } else {
+
+            Long inicio = System.currentTimeMillis();
+            atualizaSubFedOAI(fed);
+            Long fim = System.currentTimeMillis();
+            Long total = fim - inicio;
+            log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + fed.getName());
+            System.out.println("Data xml: " + fed.getDataXML() + " Data ultima atualizacao: " + fed.getUltimaAtualizacao());
+        }
+    }
+
+    /**
+     * Atualiza todas as federa&ccedil;&otilde;es. Coleta da base os dados dasfedera&ccedil;&otilde;es e chama o m&etodo
+     * que efetua a atualia&ccedil;&atilde;o.
+     *
+     * @param apagar boolean que informa se os documentos das federações deve ser apagados e coletados novamente, ou
+     * não.
+     * @throws FederationException Retorna uma exceção que tem como mensagem a lista de federações que não foram
+     * atualizadas por algum erro.
+     */
+    public void atualizaFederacoes(boolean apagar) throws FederationException {
+        List<String> erros = new ArrayList<>();
+        for (SubFederacao subFederacao : subDao.getAll()) {
+            try {
+                atualizaFederacao(subFederacao, apagar);
+            } catch (Exception e) {
+                erros.add(subFederacao.getName());
+                log.error("Erro ao atualizar a federação: "
+                        + subFederacao.getName(), e);
+            }
+        }
+        if (erros.size() > 0) {
+            throw new FederationException(getMensagem(erros));
+        }
+    }
+
+    /**
+     * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome das federa&ccedil;&otilde;es que
+     * n&atilde;o foram atualizadas.
+     *
+     * @param nome List<String> contendo o nome das federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
+     * @return String com a mensagem de erro gerada.
+     */
+    private static String getMensagem(List<String> nome) {
+        String msg;
+        if (nome.size() > 0) {
+            msg = "Erro atualizar as federacoes: ";
+            for (String n : nome) {
+                msg += " " + n;
+            }
+        } else {
+            msg = "Erro ao atualizar a federacao " + nome.get(0);
+        }
+        return msg;
     }
 
     /**
@@ -195,11 +220,11 @@ public class SubFederacaoOAI {
     /**
      * Chama o m&eacute;todo respons&aacute;vel por efetuar o harverter na subfedera&ccedil;&atilde;o e o m&eacute;todo
      * respons&aacute;vel por efetuar o parser nos xmls e inserir na base de dados.
-     * 
+     *
      * @param subFed {@link SubFederacao} que será atualizada.
-     * @throws Exception 
+     * @throws Exception
      */
-    public void atualizaObjetosSubFed(SubFederacao subFed) throws Exception {
+    private void atualizaObjetosSubFed(SubFederacao subFed) throws Exception {
 
         Informacoes conf = new Informacoes();
         String caminhoDiretorioTemporario = conf.getCaminho();
@@ -249,82 +274,4 @@ public class SubFederacaoOAI {
 
     }
 
-    /**
-     * Atualiza a subfedera&ccedil;&atilde;o informada e recalcula o &iacute;ndice.
-     *
-     * @param subFed Subfedera&ccedil;&atilde;o a ser atualizada.
-     * @param apagar Define se os documentos da federação serão removidos antes de atualizar ou não.
-     * @throws Exception
-     */
-    public void atualizaSubfedAdm(SubFederacao subFed, boolean apagar) throws Exception {
-        // Don't really know why, but the following 2 lines solve FEB-219
-        subFed.setUltimaAtualizacao(subFed.getUltimaAtualizacao());
-        subFed.setDataXML(subFed.getDataXML());
-        if (apagar) {
-            log.debug("Setar como null a data da última atualização e dataXML para que apague toda a base antes de atualizar.");
-            subFed.setUltimaAtualizacao(null);
-            subFed.setDataXML(null);
-        }
-
-        if (subFed.getUltimaAtualizacao() == null
-                && subFed.getDataXML() == null) {
-
-            log.info("Deletando toda a base de dados da Subfederação: "
-                    + subFed.getName().toUpperCase());
-            subDao.deleteAllDocs(subFed);
-            log.info("Base deletada!");
-        }
-
-        String url = subFed.getUrl();
-        // testa se a string url esta vazia.
-        if (url.isEmpty()) {
-            log.error("FEB ERRO: Nao existe uma url associada ao repositorio "
-                    + subFed.getName());
-        } else {
-
-            Long inicio = System.currentTimeMillis();
-            atualizaSubFedOAI(subFed);
-            Long fim = System.currentTimeMillis();
-            Long total = fim - inicio;
-            log.info("Levou: " + Operacoes.formatTimeMillis(total)
-                    + " para atualizar a subfederacao: " + subFed.getName()
-                    + "\n");
-        }
-    }
-
-    public void atualizaSubfedAdm(List<SubFederacao> subFed, boolean apagar) throws FederationException {
-        List<String> erros = new ArrayList<>();
-        for (SubFederacao subFederacao : subFed) {
-            try {
-                atualizaSubfedAdm(subFederacao, apagar);
-            } catch (Exception e) {
-                erros.add(subFederacao.getName());
-                log.error("FEB ERRO: Erro ao atualizar a federação: "
-                        + subFederacao.getName(), e);
-            }
-        }
-        if (erros.size() > 0) {
-            throw new FederationException(getMensagem(erros));
-        }
-    }
-
-    /**
-     * Recebe um arrayList de nomes e retorna uma mensagem de erro com o nome das federa&ccedil;&otilde;es que
-     * n&atilde;o foram atualizadas.
-     *
-     * @param nome List<String> contendo o nome das federa&ccedil;&otilde;es que n&atilde;o foram atualizadas.
-     * @return String com a mensagem de erro gerada.
-     */
-    private static String getMensagem(List<String> nome) {
-        String msg;
-        if (nome.size() > 0) {
-            msg = "Erro atualizar as federacoes: ";
-            for (String n : nome) {
-                msg += " " + n;
-            }
-        } else {
-            msg = "Erro ao atualizar a federacao " + nome.get(0);
-        }
-        return msg;
-    }
 }

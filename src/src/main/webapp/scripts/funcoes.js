@@ -1,7 +1,3 @@
-/**
-* Desenvolvido por Marcos Freitas Nunes
-* email: marcosn@gmail.com
-*/
 
 function setRootUrl(url) {
     rootUrl = url;
