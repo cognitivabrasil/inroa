@@ -1,7 +1,5 @@
 package com.cognitivabrasil.feb.data.repositories;
 
-import com.cognitivabrasil.feb.data.entities.Search;
-
 import java.sql.Types;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
+
+import com.cognitivabrasil.feb.data.entities.Search;
 
 /**
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
@@ -33,7 +32,7 @@ public class SearchesJdbcDao extends JdbcDaoSupport {
      * @return Todas as consultas realizadas depois da data informada no limite informado.
      */
     public List<Search> getSearches(Integer i, Date a) {
-        String sql = "SELECT text, COUNT(*) as count from searches WHERE created > ? GROUP BY text HAVING COUNT(*) > 1 ORDER BY count DESC,text LIMIT ?";
+        String sql = "SELECT text, COUNT(*) as c from searches WHERE created > ? GROUP BY text HAVING COUNT(*) > 1 ORDER BY c DESC,text LIMIT ?";
         List<Search> customers;
         customers = getJdbcTemplate().query(sql, new Object[] { a, i }, new int[] { Types.TIMESTAMP, Types.BIGINT },
                 new BeanPropertyRowMapper<>(Search.class));

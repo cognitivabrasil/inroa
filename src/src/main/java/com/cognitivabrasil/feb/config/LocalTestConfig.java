@@ -43,7 +43,7 @@ public class LocalTestConfig {
      */
     @Bean
     public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
+        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).build();
     }
 
     /**
@@ -52,7 +52,7 @@ public class LocalTestConfig {
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(Database.H2);
+        jpaVendorAdapter.setDatabase(Database.HSQL);
         jpaVendorAdapter.setGenerateDdl(false);
         jpaVendorAdapter.setShowSql(true);
         return jpaVendorAdapter;

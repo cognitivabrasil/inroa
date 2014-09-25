@@ -17,7 +17,8 @@ public class Search {
 
     private Integer id;
     private String text;
-    private Integer count;
+    private Integer c;
+    
     private DateTime created;
 
     public Search() {
@@ -26,7 +27,7 @@ public class Search {
     
     public Search(String string, Integer times) {
         this.text = string;
-        this.count = times;
+        this.c = times;
     }
     
     public Search(String string, DateTime created) {
@@ -61,12 +62,27 @@ public class Search {
         this.created = created;
     }    
     
+    /**
+     * getter e setter para o Jdbc mapper setar o count, o nome da coluna não pode ser 'count', então deixei 'c'.
+     * 
+     * Use {@link #getCount()}
+     * @return quantidade de vezes que esta consulta foi executada
+     */
+    @Transient
+    public Integer getC() {
+        return c;
+    }
+
+    public void setC(Integer c) {
+        this.c = c;
+    }
+    
     @Transient
     public Integer getCount() {
-        return count;
+        return c;
     }
 
     public void setCount(Integer times) {
-        this.count = times;
+        this.c = times;
     }
 }

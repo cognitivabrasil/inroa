@@ -1,5 +1,5 @@
 CREATE TABLE consultas (
-    consulta character varying NOT NULL,
+    consulta character varying(100) NOT NULL,
     ids text,
     PRIMARY KEY (consulta)
 );
@@ -37,7 +37,7 @@ CREATE TABLE mapeamentos (
 
 CREATE TABLE repositorios (
     id serial NOT NULL,
-    nome character varying NOT NULL,
+    nome character varying(100) NOT NULL,
     descricao text,
     data_ultima_atualizacao timestamp,
     url_or_ip character varying(200) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE repositorios (
 CREATE TABLE repositorios_subfed (
     id serial NOT NULL,
     id_subfed integer NOT NULL,
-    nome character varying NOT NULL,
+    nome character varying(100) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_subfed) REFERENCES dados_subfederacoes(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
