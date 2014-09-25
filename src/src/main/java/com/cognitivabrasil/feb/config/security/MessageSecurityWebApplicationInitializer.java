@@ -8,5 +8,5 @@ import org.springframework.security.web.context.*;
  * @author Paulo Schreiner
  */
 public class MessageSecurityWebApplicationInitializer
-      extends AbstractSecurityWebApplicationInitializer {
+      {
 }
