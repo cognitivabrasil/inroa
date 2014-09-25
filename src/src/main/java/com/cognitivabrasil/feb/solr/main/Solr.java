@@ -66,7 +66,7 @@ public class Solr {
 
         }
 
-        log.debug("Enviando para o Solrs a lista de documento. (Número de documentos: " + docsSolr.size() + ")");
+        log.debug("Enviando para o Solr a lista de documento. (Número de documentos: " + docsSolr.size() + ")");
 
         //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
         if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {

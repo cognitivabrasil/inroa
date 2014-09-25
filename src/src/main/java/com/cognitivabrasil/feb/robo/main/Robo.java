@@ -8,6 +8,9 @@ import com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI;
 import com.cognitivabrasil.feb.util.Operacoes;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -15,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  */
+@Service
+@EnableScheduling
 public class Robo {
 
     @Autowired
@@ -30,15 +35,15 @@ public class Robo {
     private static final Logger log = Logger.getLogger(Robo.class);
 
     /**
-     * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma
-     * consulta na base de dados, procurando por reposit&oacute;rios que
-     * est&atilde;o desatualizados, quando encontra algum, chama o m&eacute;todo
-     * que atualiza o repositório.
+     * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma consulta na base de dados, procurando por
+     * reposit&oacute;rios que est&atilde;o desatualizados, quando encontra algum, chama o m&eacute;todo que atualiza o
+     * repositório.
      *
      */
+    @Scheduled(cron = "0 30 16 * * *")
     @Transactional
-    public void testaUltimaImportacao() {
-        
+    public void run() {
+
         log.info(">>>");
         log.info(">>> Iniciando o Robô.");
         log.info(">>>");
