@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -32,19 +33,19 @@ import javax.persistence.Transient;
  * For security implementation, a user may have many roles, here is a list of
  * suggested roles and what they mean.
  *
- * PERM_MANAGE_USERS - This user has permission to create other users, delete
+ * ROLE_MANAGE_USERS - This user has permission to create other users, delete
  * them or change them, but he may not give them more permissions than he
  * already has. PERM_UPDATE - Permission to update repositories or
- * sub-federations, or recalculate the index PERM_MANAGE_REP - Permission to
+ * sub-federations, or recalculate the index ROLE_MANAGE_REP - Permission to
  * add, change and delete existing repositories or subfederations
- * PERM_MANAGE_METADATA - Permission to add, change and delete metadata
+ * ROLE_MANAGE_METADATA - Permission to add, change and delete metadata
  * standards PERM_MANAGE_MAPPINGS - Permission do add, change or update mappings
- * PERM_CHANGE_DATABASE - Permission to change the database config
- * PERM_MANAGE_STATISTICS - Permission to delete from statistics' data
+ * ROLE_CHANGE_DATABASE - Permission to change the database config
+ * ROLE_MANAGE_STATISTICS - Permission to delete from statistics' data
  *
  * The main ADMIN user should have all the permissions.
  *
- * @author paulo
+ * @author Paulo Schreiner
  */
 @Entity
 @Table(name = "usuarios")
@@ -227,11 +228,18 @@ public class Usuario implements UserDetails, FebDomainObject {
     }
 
     /**
+     * Retorna os Roles (permissões) do usuário.
+     * 
+     * Utilizado pelo SpringSecurity. Traduz formato antigo (FEB 2, PERM_XXX) para formato novo
+     * (ROLE_XXX).
+     * 
      * @return the permissions
      */
     @Transient
     public Set<String> getPermissions() {
-        return new HashSet<>(Arrays.asList(StringUtils.split(getPermissionsInternal(), ',')));
+        return Arrays.asList(StringUtils.split(getPermissionsInternal(), ',')).stream()
+            .map(s -> s.replaceAll("PERM_", "ROLE_"))
+            .collect(Collectors.toSet());      
     }
 
     /**

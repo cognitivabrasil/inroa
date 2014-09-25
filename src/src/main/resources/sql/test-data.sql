@@ -1,4 +1,6 @@
-INSERT INTO usuarios (id,login,senha,nome,permissions) VALUES (1,'admin','698dc19d489c4e4db73e28a713eab07b','Administrador da federacao','PERM_MANAGE_USERS,PERM_MANAGE_MAPPING');
+INSERT INTO usuarios (id,login,senha,nome,permissions) VALUES (1,'admin','698dc19d489c4e4db73e28a713eab07b',
+	'Administrador da federacao',
+	'ROLE_CHANGE_DATABASE,ROLE_UPDATE,ROLE_MANAGE_REP,ROLE_MANAGE_MAPPINGS,ROLE_MANAGE_METADATA,ROLE_MANAGE_USERS,ROLE_MANAGE_STATISTICS');
 INSERT INTO usuarios (id,login,senha,nome) VALUES (2,'admin2','698dc19d489c4e4db73e28a713eab07b','Administrador da federacao');
 
 INSERT INTO padraometadados (id,nome,metadata_prefix,name_space,atributos) VALUES (1,'lom','oai_lom','lom','');

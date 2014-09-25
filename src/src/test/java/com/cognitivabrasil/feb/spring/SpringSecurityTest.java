@@ -281,21 +281,4 @@ public class SpringSecurityTest {
         mvc.perform(get("/")).andExpect(status().is2xxSuccessful());
     }
 
-    @Test
-    public void loginCorretoAdminFunciona() throws Exception {
-        mvc.perform(formLogin("/login").user("admin").password("teste"))
-                .andExpect(authenticated());
-    }
-
-    @Test
-    @Ignore("TODO")
-    public void loginCorretoAdminPossuiRolesCorretos() throws Exception {
-
-    }
-
-    @Test
-    public void loginIncorretoAdminFalha() throws Exception {
-        mvc.perform(formLogin("/login").user("admin").password("dfdf"))
-                .andExpect(unauthenticated());
-    }
 }
