@@ -139,8 +139,9 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         impSf.update();
 
         DateTime updateTime = DateTime.now();
-        
+        String dataXmlTemp = subFed.getDataXmlTemp();
         subFed = fedService.get("marcos");
+        subFed.setDataXmlTemp(dataXmlTemp);
         subFed.setUltimaAtualizacao(updateTime);
         fedService.save(subFed);
         
@@ -151,6 +152,6 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         assertThat("Size of Documents after updated Federation", docSizeAfterSubFed, equalTo(docSizeAfter + 2));
         subFed = fedService.get("marcos");
         assertThat(subFed.getUltimaAtualizacao(), equalTo(updateTime));
-//        assertThat(subFed.getDataXml(), equalTo("2012-07-20T17:16:14Z"));
+        assertThat(subFed.getDataXml(), equalTo("2012-07-20T17:16:14Z"));
     }
 }

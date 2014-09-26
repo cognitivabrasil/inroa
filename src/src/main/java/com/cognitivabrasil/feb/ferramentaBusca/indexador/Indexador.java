@@ -1,6 +1,5 @@
 /**
- * o pacote indexador correspoonde as classes que fazem a preparaç&atilde;o dos
- * dados
+ * o pacote indexador correspoonde as classes que fazem a preparaç&atilde;o dos dados
  *
  */
 package com.cognitivabrasil.feb.ferramentaBusca.indexador;
@@ -21,8 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
- * Indexador é a classe que faz os processos de contruç&atilde;o da base de
- * dados para preparaç&atilde;o da posterior recuperaç&atilde;o de informações
+ * Indexador é a classe que faz os processos de contruç&atilde;o da base de dados para preparaç&atilde;o da posterior
+ * recuperaç&atilde;o de informações
  *
  * @author Luiz Rossi <lh.rossi@gmail.com>
  * @author Marcos Nunes <marcosn@gmail.com>
@@ -40,25 +39,23 @@ public class Indexador {
     }
 
     /**
-     * Esse metodo deverá ser executado sempre depois da adiç&atilde;o de todos
-     * os documentos na base. Chama o indexador do Solr para atualizar seu
-     * indice de busca.
+     * Esse metodo deverá ser executado sempre depois da adiç&atilde;o de todos os documentos na base. Chama o indexador
+     * do Solr para atualizar seu indice de busca.
      *
      */
     public void populateR1() {
         log.info("Recalculando o indice do Solr...");
 
-         Solr.apagarIndice();
+        Solr.apagarIndice();
         Long inicio = System.currentTimeMillis();
         int numMaxDoc = 10000;
         Solr s = new Solr();
 
-        
         Pageable limit = new PageRequest(0, numMaxDoc);
         Page<Document> docs = docService.getlAll(limit);
         s.indexarBancoDeDados(docs.getContent());
 
-        while (docs.hasNextPage()) {
+        while (docs.hasNext()) {
             docs = docService.getlAll(docs.nextPageable());
             s.indexarBancoDeDados(docs.getContent());
             em.clear();

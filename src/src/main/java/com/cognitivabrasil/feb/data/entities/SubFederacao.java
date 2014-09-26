@@ -29,9 +29,7 @@ public class SubFederacao extends UpdateData {
 
     private static final long serialVersionUID = 7452479917517752879L;
     private Integer id;
-    private String dataXML;
     private String version;
-    private String dataXMLTemp;
     private Set<RepositorioSubFed> repositorios;
 
     public SubFederacao() {

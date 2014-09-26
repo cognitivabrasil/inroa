@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.cognitivabrasil.feb.data.entities.Search;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Tag cloud implementation with a fixed number of words.
@@ -82,6 +83,7 @@ public class TagCloudServiceImpl implements TagCloudService {
      *
      * @param size
      */
+    @Value("30")
     @Override
     public void setMaxSize(int size) {
         this.size = size;
@@ -93,6 +95,7 @@ public class TagCloudServiceImpl implements TagCloudService {
      *
      * @param days
      */
+    @Value("15")
     public void setDays(int days) {
         this.days = days;
     }

@@ -94,10 +94,7 @@ public class Repositorios {
      * @param idRep id do reposit&oacute;rio a ser atualizado. Se informar zero atualizar&aacute; todos
      * @param apagar informar se deseja apagar toda a base. true apaga e false apenas atualiza.
      */
-    public void atualizaFerramentaAdm(int idRep, boolean apagar)
-            throws Exception {
-
-        boolean recalcularIndice = false;
+    public void atualizaFerramentaAdm(int idRep, boolean apagar) throws Exception {
 
         List<String> erros = new ArrayList<>();
 
@@ -113,18 +110,15 @@ public class Repositorios {
                 rep.setUltimaAtualizacao(dateNull);
                 rep.setDataXml(null);
             }
-            if (atualizaRepositorio(rep) > 0) {
-                recalcularIndice = true;
-            }
+            atualizaRepositorio(rep);
+             
             repService.save(rep);
 
         } else {
             List<Repositorio> repositorios = repService.getAll();
             for (Repositorio rep : repositorios) {
                 try {
-                    if (atualizaRepositorio(rep) > 0) {
-                        recalcularIndice = true;
-                    }
+                    atualizaRepositorio(rep);
                     repService.save(rep);
                 } catch (Exception e) {
                     erros.add(rep.getName());
@@ -134,15 +128,12 @@ public class Repositorios {
             }
         }
 
-        if (recalcularIndice) {
-            indexar.populateR1();
-        }
         if (erros.size() > 0) {
             throw new RepositoryException(getMensagem(erros));
             // gera uma exception informando o nome dos repositorios que nao
             // foram atualizados
         }
-
+        log.info("Atualização concluída. O índice não será recalculado automaticamente. Se necessário utilize a opção de recalcular índice.");
     }
 
     /**

@@ -80,7 +80,6 @@ public class SubFederacaoOAI {
             Long fim = System.currentTimeMillis();
             Long total = fim - inicio;
             log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + fed.getName());
-            System.out.println("Data xml: " + fed.getDataXml() + " Data ultima atualizacao: " + fed.getUltimaAtualizacao());
         }
     }
 
@@ -150,9 +149,11 @@ public class SubFederacaoOAI {
             // atualizar objetos da subfederacao
             atualizaObjetosSubFed(subFed);
 
+            //Tenho que salvar a dataXml porque quando eu der o get na federacao vai perder esta informação.
+            String dataXmlTemp = subFed.getDataXmlTemp();
             //este get é necessário para atualizar as informações que foram alteradas na base nos processos anteriores.
             subFed = subDao.get(fedName);
-
+            subFed.setDataXmlTemp(dataXmlTemp);
             subFed.setUltimaAtualizacao(DateTime.now());
             subDao.save(subFed);
 

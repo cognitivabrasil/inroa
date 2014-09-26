@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller("federations")
 @RequestMapping("/admin/federations/*")
 public final class FederationsController {
-
+    
     @Autowired
     private FederationService subDao;
     @Autowired
@@ -41,14 +41,14 @@ public final class FederationsController {
     private Indexador indexar;
     @Autowired
     SubFederacaoOAI subFedOAI;
-
+    
     private final SubFederacaoValidador subFedValidador;
     private static final Logger log = Logger.getLogger(FederationsController.class);
-
+    
     public FederationsController() {
         subFedValidador = new SubFederacaoValidador();
     }
-
+    
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String exibeFed(@PathVariable("id") Integer id, Model model,
             @RequestParam(required = false, value = "r") boolean recarregar) {
@@ -57,9 +57,9 @@ public final class FederationsController {
         Map<String, Integer> repsSize = new HashMap<>();
         Integer fedSize = 0;
         //list rep whith size
-        for(RepositorioSubFed sRep : fed.getRepositorios()){
+        for (RepositorioSubFed sRep : fed.getRepositorios()) {
             Integer sizeRep = docDao.countFromSubRep(sRep);
-            fedSize+=sizeRep;
+            fedSize += sizeRep;
             repsSize.put(sRep.getName(), sizeRep);
         }
         
@@ -70,7 +70,7 @@ public final class FederationsController {
         
         return "admin/federations/show";
     }
-
+    
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String cadastraFed(Model model) {
         SubFederacao subFed = new SubFederacao();
@@ -78,7 +78,7 @@ public final class FederationsController {
         model.addAttribute("federation", subFed);
         return "admin/federations/new";
     }
-
+    
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String salvaFed(
             @ModelAttribute("federation") SubFederacao subfed,
@@ -102,14 +102,14 @@ public final class FederationsController {
             }
         }
     }
-
+    
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String editaFed(
             @PathVariable("id") Integer id, Model model) {
         model.addAttribute("federation", subDao.get(id));
         return "admin/federations/edit";
     }
-
+    
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
     public String edit(@PathVariable("id") Integer id, SubFederacao subfed, BindingResult result,
             ExtendedModelMap model) {
@@ -130,20 +130,20 @@ public final class FederationsController {
             return "admin/federations/edit";
         }
     }
-
+    
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
     public @ResponseBody
     String atualizaFedAjax(@PathVariable("id") Integer id,
             @RequestParam boolean apagar) {
+        
         log.info("Solicitacao de atualizacao pela Ferramenta Administrativa...");
-        long initNumberDocs = docDao.getSizeWithDeleted();
         try {
             if (id > 0) {
                 subFedOAI.atualizaFederacao(subDao.get(id), apagar);
             } else {
                 subFedOAI.atualizaFederacoes(apagar);
             }
-
+            log.info("O índice não será recalculado automaticamente. Se necessário utilize a opção de recalcular índice.");
             return "1";
         } catch (ConnectException c) {
             log.error("Erro ao coletar o xml por OAI-PMH", c);
@@ -154,15 +154,9 @@ public final class FederationsController {
         } catch (Exception e) {
             log.error("Erro ao atualizar uma federação", e);
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
-        } finally {
-            long finalNumberDocs = docDao.getSizeWithDeleted();
-            if (finalNumberDocs != initNumberDocs) {
-                log.info("Foram atualizados: " + (finalNumberDocs - initNumberDocs) + " documentos");
-                indexar.populateR1();
-            }
         }
     }
-
+    
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
     String delete(@PathVariable("id") Integer id, Model model) {

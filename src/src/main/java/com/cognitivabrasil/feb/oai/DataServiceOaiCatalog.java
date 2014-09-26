@@ -1,12 +1,10 @@
 /**
- * Copyright 2006 OCLC Online Computer Library Center Licensed under the Apache
- * License, Version 2.0 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law
- * or agreed to in writing, software distributed under the License is
- * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
+ * Copyright 2006 OCLC Online Computer Library Center Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and limitations under the
+ * License.
  */
 package com.cognitivabrasil.feb.oai;
 
@@ -35,19 +33,19 @@ import org.springframework.context.ApplicationContext;
  * @author Jeffrey A. Young, OCLC Online Computer Library Center
  */
 public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
+
     private static ApplicationContext appContext = null;
-    
+
     public static ApplicationContext getCtx() {
-        if(appContext == null) {
+        if (appContext == null) {
             appContext = ApplicationContextProvider2.getApplicationContext();
         }
         return appContext;
     }
-    
+
     public static void setCtx(ApplicationContext ctx) {
         appContext = ctx;
     }
-    
 
     public DataServiceOaiCatalog(Properties properties) {
         super(properties);
@@ -57,7 +55,7 @@ public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
      * Retrieve a list of sets that satisfy the specified criteria
      *
      * @return a Map object containing "sets" Iterator object (contains <setSpec/> XML Strings) as well as an optional
-     *         resumptionMap Map.
+     * resumptionMap Map.
      * @exception OAIBadRequestException signals an http status code 400 problem
      */
     @Override
@@ -68,9 +66,9 @@ public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
 
         // clean out old resumptionTokens
         purge();
-        Map<String, Iterator<String>> listSetsMap = new HashMap<String, Iterator<String>>();
+        Map<String, Iterator<String>> listSetsMap = new HashMap<>();
 
-        List<String> sets = new ArrayList<String>();
+        List<String> sets = new ArrayList<>();
 
         for (Repositorio r : repositorios) {
             StringBuilder s = new StringBuilder(200);

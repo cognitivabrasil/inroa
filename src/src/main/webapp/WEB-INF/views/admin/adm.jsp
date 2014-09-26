@@ -96,7 +96,7 @@ Author     : Marcos Nunes
             <div id="tabs-1">
                 <table class='repositorios-table' cellpadding=3>
                     <tr>
-                    <caption>Reposit&oacute;rios Cadastrados na Federa&ccedil;&atilde;o</caption>
+                    <caption>Reposit&oacute;rios Cadastrado</caption>
                     </tr>
 
                     <tr style="background-color: #AEC9E3">
@@ -122,7 +122,8 @@ Author     : Marcos Nunes
                             </td>
                             <td>${rep.name}</td>
                             <td>${rep.descricao}</td>
-                            <td><c:choose>
+                            <td>
+                                <c:choose>
                                     <c:when test="${rep.isOutdated}">
                                         <div id='textResult${param.id}' class="textoErro">
                                             &nbsp;
@@ -151,7 +152,8 @@ Author     : Marcos Nunes
                                             </security:authorize>
                                         </div>
                                     </c:otherwise>
-                                </c:choose></td>
+                                </c:choose>
+                            </td>
                         </tr>
                     </c:forEach>
 
