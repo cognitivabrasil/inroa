@@ -16,6 +16,9 @@ import javax.persistence.EntityManagerFactory;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -58,7 +61,7 @@ public class AppConfig {
         encryptor.initialize();
         return encryptor;
     }
-
+    
     @Bean(name = "febInf")
     public Properties febInf() {
         Properties p = new Properties();

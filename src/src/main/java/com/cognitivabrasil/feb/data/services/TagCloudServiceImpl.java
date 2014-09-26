@@ -7,7 +7,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,8 @@ public class TagCloudServiceImpl implements TagCloudService {
 
     @Autowired
     PalavrasOfensivasHibernateDAO badWords;
+    private Map<String, Integer> tagCloudCache;
+    private DateTime lastUpdateDate;
 
     @Autowired
     public void setSearches(SearchService s) {
@@ -39,9 +44,15 @@ public class TagCloudServiceImpl implements TagCloudService {
 
     @Override
     public Map<String, Integer> getTagCloud() {
+        if(tagCloudCache != null && lessThanFiveMinutesAgo()) {
+            return tagCloudCache;
+        }
+        
         Map<String, Integer> m = new TreeMap<>();
+        
+        Date d = getDate();
 
-        List<Search> l = searches.getSearches(getMaxSize(), getDate());
+        List<Search> l = searches.getSearches(getMaxSize(), d);
         log.trace("Tag cloud. Número de resultados: " + l.size() + " Número máximo permitido: " + getMaxSize());
         for (Search s : l) {
 
@@ -55,7 +66,15 @@ public class TagCloudServiceImpl implements TagCloudService {
             }
         }
 
+        lastUpdateDate = new DateTime();
+        tagCloudCache = m;
         return m;
+    }
+
+    private boolean lessThanFiveMinutesAgo() {
+        DateTime now = new DateTime();
+        
+        return lastUpdateDate.isAfter(now.minusMinutes(5));     
     }
 
     @Override

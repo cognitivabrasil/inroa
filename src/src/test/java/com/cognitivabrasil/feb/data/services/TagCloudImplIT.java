@@ -1,10 +1,15 @@
 package com.cognitivabrasil.feb.data.services;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.argThat;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,10 +17,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.ReflectionUtils;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
@@ -30,12 +38,15 @@ import com.cognitivabrasil.feb.data.entities.Search;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TagCloudImplIT  extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     TagCloudServiceImpl tagService;
     
     @Autowired
     PalavrasOfensivasHibernateDAO instance;
+    
+    SearchService search;
 
     @Before
     public void before() {
@@ -54,11 +65,35 @@ public class TagCloudImplIT  extends AbstractTransactionalJUnit4SpringContextTes
 
         l.add(new Search("merdinha", 15));
 
-        SearchService search = mock(SearchService.class);
+        search = mock(SearchService.class);
         when(search.getSearches(argThat(is(3)), argThat(any(Date.class)))).thenReturn(l);
         when(search.getSearches(argThat(is(5)), argThat(any(Date.class)))).thenReturn(l);
 
         tagService.setSearches(search);
+    }
+    
+    @Test
+    public void testCachingCallsOnlyOnceOnSubsequentCalls() {
+        tagService.setMaxSize(3);
+
+        tagService.getTagCloud();
+        tagService.getTagCloud();
+        
+        verify(search, times(1)).getSearches(argThat(is(3)), argThat(any(Date.class)));   
+    }
+    
+    @Test
+    public void testCachingCallsCleansCacheAfter5Minutes() throws NoSuchFieldException, SecurityException {
+        tagService.setMaxSize(3);
+
+        tagService.getTagCloud();
+        
+        ReflectionUtils.setField(TagCloudServiceImpl.class.getDeclaredField("lastUpdateDate"), 
+                tagService, new DateTime().minusMinutes(7));
+        
+        tagService.getTagCloud();
+    
+        verify(search, times(2)).getSearches(argThat(is(3)), argThat(any(Date.class)));   
     }
 
     @Test
