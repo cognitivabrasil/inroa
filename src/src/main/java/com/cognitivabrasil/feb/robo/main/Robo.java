@@ -1,7 +1,9 @@
 package com.cognitivabrasil.feb.robo.main;
 
 import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.SearchService;
+import com.cognitivabrasil.feb.exceptions.FederationException;
 import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.robo.atualiza.Repositorios;
 import com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI;
@@ -30,8 +32,7 @@ public class Robo {
     private SubFederacaoOAI subFed;
     @Autowired
     private SearchService searchesDao;
-    @Autowired
-    private DocumentService docDao;
+
     private static final Logger log = Logger.getLogger(Robo.class);
 
     /**
@@ -49,21 +50,18 @@ public class Robo {
         log.info(">>>");
 
         Long inicioRobo = System.currentTimeMillis();
-        long initNumberDocs = docDao.getSizeWithDeleted();
-        // testa/atualiza SUBFEDERACAO
-        boolean subFedAtualizada = subFed.pre_AtualizaSubFedOAI();
 
-        // testa/atualiza REPOSITORIO
-        boolean repAtualizado = repositorio.atualizaRepositorios();
-
-        long finalNumberDocs = docDao.getSizeWithDeleted();
-
-        //testa se precisa recalcular o indice.
-        if ((subFedAtualizada || repAtualizado) || (finalNumberDocs != initNumberDocs)) {
-            indexar.populateR1();
-        } else {
-            log.info("Não existe atualizaçoes para os repositorios! ");
+        // atualiza SUBFEDERACAO
+        try{
+        subFed.atualizaFederacoes(false);
+        }catch(FederationException f){
+            log.error("Falha na atualização das federações.",f);
         }
+
+        // atualiza REPOSITORIO
+        repositorio.atualizaRepositorios();
+
+        indexar.populateR1();
 
         log.info("Limpando consultas antigas...");
         searchesDao.cleanup();
