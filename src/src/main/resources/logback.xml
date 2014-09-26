@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} |%c{2}:%L| - %m%n</pattern>
+		</encoder>
+		<file>/var/log/feb/feb.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_FILE}.%i</fileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>2MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="SEARCHES"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} |%c{2}:%L| - %m%n</pattern>
+		</encoder>
+		<file>/var/log/feb/searches.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_FILE}.%i</fileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>2MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="UPDATE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<encoder>
+			<pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} |%c{2}:%L| - %m%n</pattern>
+		</encoder>
+		<file>/var/log/feb/update.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_FILE}.%i</fileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>2MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+
+	<logger name="org.springframework" level="WARN" />
+	<logger name="org.hibernate" level="WARN" />
+	
+	<logger name="ORG.oclc.oai.harvester2" level="INFO">
+		<appender-ref ref="UPDATE"/>
+	</logger>
+	
+	<logger name="com.cognitivabrasil.feb.ferramentaBusca.indexador">
+		<appender-ref ref="UPDATE"/>
+	</logger>
+	
+	<logger name="com.cognitivabrasil.feb.solr">
+		<appender-ref ref="UPDATE"/>	
+	</logger>
+	
+	<logger name="com.cognitivabrasil.feb.robo">
+		<appender-ref ref="UPDATE"/>
+	</logger>
+	
+	<logger name="com.cognitivabrasil.feb.spring.controllers.FEBController">
+		<appender-ref ref="SEARCHES"/>
+	</logger>
+	
+	<logger name="com.cognitivabrasil" level="DEBUG" />
+
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE" />
+	</root>
+</configuration>

@@ -35,6 +35,19 @@ import org.springframework.context.ApplicationContext;
  * @author Jeffrey A. Young, OCLC Online Computer Library Center
  */
 public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
+    private static ApplicationContext appContext = null;
+    
+    public static ApplicationContext getCtx() {
+        if(appContext == null) {
+            appContext = ApplicationContextProvider2.getApplicationContext();
+        }
+        return appContext;
+    }
+    
+    public static void setCtx(ApplicationContext ctx) {
+        appContext = ctx;
+    }
+    
 
     public DataServiceOaiCatalog(Properties properties) {
         super(properties);
@@ -49,8 +62,7 @@ public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
      */
     @Override
     public Map<String, Iterator<String>> listSets() {
-        ApplicationContext ctx = ApplicationContextProvider2.getApplicationContext();
-        RepositoryRepository rep = ctx.getBean(RepositoryRepository.class);
+        RepositoryRepository rep = getCtx().getBean(RepositoryRepository.class);
 
         List<Repositorio> repositorios = rep.findAll();
 
@@ -79,7 +91,6 @@ public class DataServiceOaiCatalog extends AbstractServiceOaiCatalog {
 
     @Override
     public OaiDocumentService getDocumentService() {
-        ApplicationContext ctx = ApplicationContextProvider2.getApplicationContext();
-        return ctx.getBean(OaiDocumentService.class);
+        return getCtx().getBean(OaiDocumentService.class);
     }
 }

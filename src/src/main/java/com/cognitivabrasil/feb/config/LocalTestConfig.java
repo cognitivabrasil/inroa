@@ -54,7 +54,7 @@ public class LocalTestConfig {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setDatabase(Database.H2);
         jpaVendorAdapter.setGenerateDdl(false);
-        jpaVendorAdapter.setShowSql(true);
+        jpaVendorAdapter.setShowSql(false);
         return jpaVendorAdapter;
     }
 
