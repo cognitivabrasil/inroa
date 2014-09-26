@@ -1,9 +1,8 @@
 package com.cognitivabrasil.feb.data.entities;
 
-import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
-import com.cognitivabrasil.feb.util.Operacoes;
 
 import java.util.*;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,11 +18,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -35,28 +29,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Entity
 @Table(name = "repositorios")
-public class Repositorio implements java.io.Serializable, FebDomainObject {
+public class Repositorio extends UpdateData{
 
     private static final long serialVersionUID = 1011292251690153763L;
     private Integer id;
-    private String name;
-    private String descricao;
-    private String url;
     private String metadataPrefix;
     private transient Set<Document> documentos;
-    @DateTimeFormat(style = "M-")
-    private DateTime ultimaAtualizacao;
     private String namespace;
     private String colecoesInternal;
     private PadraoMetadados padraoMetadados;
     private Mapeamento mapeamento;
-    private String dataOrigem;
-    private String dataOrigemTemp;
 
     public Repositorio() {
-        name = "";
-        descricao = "";
-        url = "";
+        super();
         metadataPrefix = "";
         documentos = new HashSet<>(0);
         namespace = "";
@@ -71,36 +56,6 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     * @return the name
-     */
-    @Override
-    @Column(name = "nome")
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * @return the descricao
-     */
-    public String getDescricao() {
-        return descricao;
-    }
-
-    /**
-     * @param descricao the descricao to set
-     */
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     /**
@@ -122,29 +77,7 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     public String toString() {
         return getName();
     }
-
-    /**
-     * @param url the url to set
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    /**
-     * @param metadataPrefix the metadataPrefix to set
-     */
-    public void setMetadataPrefix(String metadataPrefix) {
-        this.metadataPrefix = metadataPrefix;
-    }
-
-    /**
-     * @return the url
-     */
-    @Column(name = "url_or_ip")
-    public String getUrl() {
-        return url;
-    }
-
+    
     /**
      * @return the metadataPrefix
      */
@@ -154,56 +87,11 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
     }
 
     /**
-     * Define a data que foi realizada a última atualização. Neste método é copiada a data de {@link #dataOrigemTemp}
-     * para {@link #dataOrigem}.
-     *
-     * @param ultimaAtualizacao
+     * @param metadataPrefix the metadataPrefix to set
      */
-    public void setUltimaAtualizacao(DateTime ultimaAtualizacao) {
-        this.ultimaAtualizacao = ultimaAtualizacao;
-        if (this.dataOrigemTemp != null) {
-            setDataOrigem(getDataOrigemTemp());
-        }
-    }
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @Column(name = "data_ultima_atualizacao")
-    public DateTime getUltimaAtualizacao() {
-        return ultimaAtualizacao;
-    }
-
-    /**
-     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se o
-     * reposit&oacute;rio n&atilde;o tiver uma url associada ele informa que
-     * n&atilde;o foi informado um endere&ccedil;o para
-     * sincroniza&ccedil;&atilde;o.
-     *
-     * @return String contendo a data neste formato: Dia "x" &agrave;s "y"
-     */
-    @Transient
-    public String getUltimaAtualizacaoFormatada() {
-        return Operacoes.ultimaAtualizacaoFrase(getUltimaAtualizacao(),
-                getUrl());
-    }
-
-    @Column(name = "data_xml")
-    public String getDataOrigem() {
-        return dataOrigem;
-    }
-
-    public void setDataOrigem(String dataOrigem) {
-        this.dataOrigem = dataOrigem;
-        this.dataOrigemTemp = null;
-    }
-
-    @Transient
-    public String getDataOrigemTemp() {
-        return dataOrigemTemp;
-    }
-
-    public void setDataOrigemTemp(String dataOrigemTemp) {
-        this.dataOrigemTemp = dataOrigemTemp;
-    }
+    public void setMetadataPrefix(String metadataPrefix) {
+        this.metadataPrefix = metadataPrefix;
+    }   
 
     @Column(name = "name_space")
     public String getNamespace() {
@@ -212,33 +100,6 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
 
     public void setNamespace(String namespace) {
         this.namespace = namespace;
-    }
-
-    @Transient
-    public Date getProximaAtualizacao() {
-        if (ultimaAtualizacao == null) {
-            return null;
-        } else {
-            // soma a periodicidade
-            return ultimaAtualizacao.plusDays(1).toDate();
-        }
-    }
-
-    @Transient
-    public String getProximaAtualizacaoFormatada() {
-        return Operacoes.ultimaAtualizacaoFrase(getProximaAtualizacao(), getUrl());
-    }
-
-    /**
-     * Test if repository is outdated.
-     *
-     * @return true if the repository is outdated or false if the repository is
-     * updated.
-     */
-    @Transient
-    public boolean getIsOutdated() {
-        //TODO: adicionar algumas horas no new Date para garantir que será atualizado mesmo que tenha demorado na última vez.s
-        return getProximaAtualizacao() == null || getProximaAtualizacao().before(new Date());
     }
 
     /**
@@ -312,13 +173,6 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
         return colecoesInternal;
     }
 
-    private boolean notBlank(String s) {
-        return s != null && !(s.equals(""));
-    }
-
-    private boolean notBlank(Set s) {
-        return s != null && !(s.isEmpty());
-    }
 
     /**
      * Updates the repository with the same with the data in r2 safely, ignoring
@@ -381,8 +235,5 @@ public class Repositorio implements java.io.Serializable, FebDomainObject {
         setColecoesInternal(s);
     }
 
-    @Override
-    public String toStringDetailed() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
-    }
+  
 }

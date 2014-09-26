@@ -40,7 +40,7 @@ CREATE TABLE repositorios (
     nome character varying(100) NOT NULL,
     descricao text,
     data_ultima_atualizacao timestamp,
-    url_or_ip character varying(200) NOT NULL,
+    url character varying(200) NOT NULL,
     padrao_metadados integer,
     mapeamento_id integer NOT NULL,
     metadata_prefix character varying(45),

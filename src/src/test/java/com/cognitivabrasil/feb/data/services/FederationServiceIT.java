@@ -5,10 +5,10 @@
 package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.AppConfig;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,10 +28,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
 /**
@@ -43,7 +41,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
+public class FederationServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     FederationService instance;
@@ -52,7 +50,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
     @PersistenceContext
     private EntityManager em;
 
-    public SubfederacaoHibernateDaoIT() {
+    public FederationServiceIT() {
     }
 
     /**
@@ -145,7 +143,7 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
         SubFederacao f = new SubFederacao();
         f.setName("Nova");
         f.setUrl("http://nova");
-        f.setDataXML("2012-03-19T18:01:54Z");
+        f.setDataXml("2012-03-19T18:01:54Z");
 
         Set<String> listaRep = new HashSet<>();
         listaRep.add("marcos");
@@ -181,15 +179,29 @@ public class SubfederacaoHibernateDaoIT extends AbstractTransactionalJUnit4Sprin
         String date = "1984-08-21T05:35:00Z";
         SubFederacao fed = new SubFederacao();
         fed.setName("marcosn");
-        fed.setDataXMLTemp(date);
+        fed.setDataXmlTemp(date);
         fed.setUltimaAtualizacao(DateTime.now());
 
-        assertThat(fed.getDataXML(), equalTo(date));
+        assertThat(fed.getDataXml(), equalTo(date));
         instance.save(fed);
         em.flush();
         em.clear();
         SubFederacao fed2 = instance.get("marcosn");
-        assertThat(fed2.getDataXML(), equalTo(date));
+        assertThat(fed2.getDataXml(), equalTo(date));
+    }
+    
+    @Test
+    public void testSetDataXml(){
+        SubFederacao f = instance.get(1);
+        f.setDataXmlTemp("2014-09-26T14:20:11Z");
+        
+        f.setUltimaAtualizacao(DateTime.now());
+        instance.save(f);
+        
+        em.flush();
+        em.clear();
+        f = instance.get(1);
+        assertThat(f.getDataXml(), equalTo("2014-09-26T14:20:11Z"));
     }
     
     @Test

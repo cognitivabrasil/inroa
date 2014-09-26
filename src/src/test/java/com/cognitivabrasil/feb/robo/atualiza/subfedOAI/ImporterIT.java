@@ -49,7 +49,7 @@ public class ImporterIT extends AbstractTransactionalJUnit4SpringContextTests {
         imp.setSubFed(subFed);
         imp.update();
         
-        assertThat(subFed.getDataXMLTemp(), equalTo("2012-05-15T22:15:22Z"));
+        assertThat(subFed.getDataXmlTemp(), equalTo("2012-05-15T22:15:22Z"));
         
         OaiOBAA oai = imp.getOaiObaa();
         

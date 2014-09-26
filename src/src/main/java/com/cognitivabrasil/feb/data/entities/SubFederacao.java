@@ -4,14 +4,11 @@
  */
 package com.cognitivabrasil.feb.data.entities;
 
-import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
-import com.cognitivabrasil.feb.util.Operacoes;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,12 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 import org.springframework.core.style.ToStringCreator;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -33,27 +25,17 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "dados_subfederacoes")
-public class SubFederacao implements java.io.Serializable, FebDomainObject {
+public class SubFederacao extends UpdateData {
 
     private static final long serialVersionUID = 7452479917517752879L;
     private Integer id;
-    private String name;
-    private String descricao;
-    private String url;
-    @DateTimeFormat(style = "M-")
-    private DateTime ultimaAtualizacao;
     private String dataXML;
     private String version;
     private String dataXMLTemp;
     private Set<RepositorioSubFed> repositorios;
 
     public SubFederacao() {
-        this.id = null;
-        this.name = "";
-        this.descricao = "";
-        this.url = "";
-        this.ultimaAtualizacao = null;
-        this.dataXML = null;
+        super();
         this.repositorios = new HashSet<>();
         this.version = "";
     }
@@ -61,48 +43,11 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    @Column(name = "data_xml")
-    public String getDataXML() {
-        return dataXML;
-    }
-
-    public void setDataXML(String dataXML) {
-        this.dataXML = dataXML;
-        this.dataXMLTemp = null;
-    }
-
-    @Transient
-    public String getDataXMLTemp() {
-        return dataXMLTemp;
-    }
-
-    public void setDataXMLTemp(String dataXMLTemp) {
-        this.dataXMLTemp = dataXMLTemp;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    @Override
-    @Column(name = "nome")
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String nome) {
-        this.name = nome;
     }
 
     public String getVersion() {
@@ -113,41 +58,15 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
         this.version = version;
     }
 
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @Column(name = "data_ultima_atualizacao")
-    public DateTime getUltimaAtualizacao() {
-        return ultimaAtualizacao;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     /**
-     * Retorna a data da &uacute;ltima atualizaç&atilde;o formatada. Se a federa&ccedil;&atilde;o n&atilde;o tiver uma
-     * url associada ele informa que n&atilde;o foi informado um endere&ccedil;o para sincroniza&ccedil;&atilde;o.
+     * Pega a url da federação através do método {@link #getUrl()} e dependendo da versão da federação concatena a
+     * chamada para o protocolo OAI-PMH.
      *
-     * @return String contendo a data neste formato: Dia "x" &agrave;s "y"
+     * @return Retorna a url que responde ao protocolo OAI-PMH.
      */
     @Transient
-    public String getUltimaAtualizacaoFormatada() {
-        return Operacoes.ultimaAtualizacaoFrase(getUltimaAtualizacao(), getUrl());
-    }
-
-    public void setUltimaAtualizacao(DateTime ultimaAtualizacao) {
-        this.ultimaAtualizacao = ultimaAtualizacao;
-        if (dataXMLTemp != null) {
-            this.dataXML = this.dataXMLTemp;
-        }
-    }
-
-    @Transient
     public String getUrlOAIPMH() {
-        String oai = url;
+        String oai = getUrl();
         //se a url não terminar com barra concatena a barra
         if (!oai.endsWith("/")) {
             oai += "/";
@@ -167,19 +86,6 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
 
     public void setRepositorios(Set<RepositorioSubFed> repositorios) {
         this.repositorios = repositorios;
-    }
-
-    @Transient
-    public DateTime getProximaAtualizacao() {
-        if (this.ultimaAtualizacao == null) {
-            return null;
-        } else {
-            return getUltimaAtualizacao().plusDays(1);
-        }
-    }
-
-    private boolean notBlank(String s) {
-        return s != null && !(s.equals(""));
     }
 
     /**
@@ -205,22 +111,6 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
         }
         setVersion(r2.getVersion());
 
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringCreator(this).append("id", this.getId()).append("name", this.getName()).append("descrição", this.getDescricao()).append("url", this.getUrl()).append("última atualização", this.getUltimaAtualizacao()).toString();
-    }
-
-    /**
-     * Test if federation is outdated. Utilizado na interface gráfica para exibir alerta se a federação está
-     * desatualizada.
-     *
-     * @return true if it is outdated or false if it is updated.
-     */
-    @Transient
-    public boolean getIsOutdated() {
-        return getProximaAtualizacao() == null || getProximaAtualizacao().isBeforeNow();
     }
 
     /**
@@ -264,15 +154,10 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
     }
 
     @Override
-    public String toStringDetailed() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         return result;
     }
 
@@ -296,5 +181,15 @@ public class SubFederacao implements java.io.Serializable, FebDomainObject {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringCreator(this)
+                .append("id", this.getId())
+                .append("name", this.getName())
+                .append("descrição", this.getDescricao())
+                .append("url", this.getUrl())
+                .append("última atualização", this.getUltimaAtualizacao()).toString();
     }
 }

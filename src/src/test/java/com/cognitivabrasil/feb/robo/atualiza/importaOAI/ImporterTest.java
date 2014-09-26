@@ -4,7 +4,6 @@
  */
 package com.cognitivabrasil.feb.robo.atualiza.importaOAI;
 
-import com.cognitivabrasil.feb.robo.atualiza.importaOAI.ImporterRep;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertEquals;
@@ -58,7 +57,7 @@ public class ImporterTest {
         imp.setDocDao(docDao);
         imp.update();
 
-        assertThat(r.getDataOrigemTemp(), equalTo("2011-09-12T12:25:51Z"));
+        assertThat(r.getDataXmlTemp(), equalTo("2011-09-12T12:25:51Z"));
 
         OaiOBAA oai = imp.getOaiObaa();
 

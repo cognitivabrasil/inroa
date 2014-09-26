@@ -55,16 +55,15 @@ public class SubFederacaoOAI {
     public void atualizaFederacao(SubFederacao fed, boolean apagar) throws Exception {
         // Don't really know why, but the following 2 lines solve FEB-219
         fed.setUltimaAtualizacao(fed.getUltimaAtualizacao());
-        fed.setDataXML(fed.getDataXML());
+        fed.setDataXml(fed.getDataXml());
         if (apagar) {
             log.debug("Setar como null a data da última atualização e dataXML para que apague toda a base antes de "
                     + "atualizar.");
             fed.setUltimaAtualizacao(null);
-            fed.setDataXML(null);
+            fed.setDataXml(null);
         }
 
-        if (fed.getUltimaAtualizacao() == null
-                && fed.getDataXML() == null) {
+        if (fed.getUltimaAtualizacao() == null && fed.getDataXml() == null) {
 
             log.info("Deletando toda a base de dados da Subfederação: " + fed.getName().toUpperCase());
             subDao.deleteAllDocs(fed);
@@ -73,7 +72,7 @@ public class SubFederacaoOAI {
 
         // testa se a string url esta vazia.
         if (fed.getUrl().isEmpty()) {
-            log.error("Não existe uma url associada ao repositório " + fed.getName());
+            log.error("Não existe uma url associada a federação: " + fed.getName());
         } else {
 
             Long inicio = System.currentTimeMillis();
@@ -81,7 +80,7 @@ public class SubFederacaoOAI {
             Long fim = System.currentTimeMillis();
             Long total = fim - inicio;
             log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar a subfederacao: " + fed.getName());
-            System.out.println("Data xml: " + fed.getDataXML() + " Data ultima atualizacao: " + fed.getUltimaAtualizacao());
+            System.out.println("Data xml: " + fed.getDataXml() + " Data ultima atualizacao: " + fed.getUltimaAtualizacao());
         }
     }
 
@@ -236,7 +235,7 @@ public class SubFederacaoOAI {
             // efetua o Harvester e grava os xmls na pasta temporaria
             Harvester harvesterOAI = new Harvester();
             List<String> caminhosXML = harvesterOAI.coletaXML_ListRecords(
-                    subFed.getUrlOAIPMH(), subFed.getDataXML(),
+                    subFed.getUrlOAIPMH(), subFed.getDataXml(),
                     subFed.getName(), caminhoDiretorioTemporario, "obaa", null);
 
             // efetua o parser do xml e insere os documentos na base

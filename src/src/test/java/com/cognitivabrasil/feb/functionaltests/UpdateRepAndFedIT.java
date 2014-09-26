@@ -29,8 +29,6 @@ import javax.xml.transform.TransformerException;
 import org.apache.commons.io.FileUtils;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.notNullValue;
 import org.joda.time.DateTime;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -40,10 +38,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.SAXException;
@@ -98,9 +94,18 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         imp.setDocDao(docDao);
         int updated = imp.update();
         assertThat(updated, equalTo(2));
+        
+        DateTime updateTime = DateTime.now();
+        rep.setUltimaAtualizacao(updateTime);
 
         repDao.save(rep);
+        em.flush();
+        em.clear();
         int docSizeAfter = docDao.getAll().size();
+        
+        rep = repDao.get("marcos");
+        assertThat(rep.getUltimaAtualizacao(), equalTo(updateTime));
+        assertThat(rep.getDataXml(), equalTo("2012-07-20T17:09:42Z"));
 
         assertEquals("Size of Documents after updated Rep", docSizeBefore + 2, docSizeAfter);
     }
@@ -133,14 +138,19 @@ public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextT
         impSf.setSubFed(subFed);
         impSf.update();
 
+        DateTime updateTime = DateTime.now();
         
         subFed = fedService.get("marcos");
-        subFed.setUltimaAtualizacao(DateTime.now());
+        subFed.setUltimaAtualizacao(updateTime);
         fedService.save(subFed);
+        
         
         em.flush();
         em.clear();
         int docSizeAfterSubFed = docDao.getAll().size();
         assertThat("Size of Documents after updated Federation", docSizeAfterSubFed, equalTo(docSizeAfter + 2));
+        subFed = fedService.get("marcos");
+        assertThat(subFed.getUltimaAtualizacao(), equalTo(updateTime));
+//        assertThat(subFed.getDataXml(), equalTo("2012-07-20T17:16:14Z"));
     }
 }

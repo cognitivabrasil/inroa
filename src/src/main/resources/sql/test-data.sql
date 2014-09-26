@@ -11,16 +11,16 @@ INSERT INTO mapeamentos (id,nome,descricao,xslt,padrao_id) VALUES (1,'Padrao','B
 INSERT INTO mapeamentos (id,nome,descricao,xslt,padrao_id) VALUES (2,'Padrao2','Blabla','xslt',1);
 
 
-INSERT INTO repositorios (id,nome,descricao,url_or_ip,data_ultima_atualizacao,data_xml,metadata_prefix,padrao_metadados,mapeamento_id,name_space) 
+INSERT INTO repositorios (id,nome,descricao,url,data_ultima_atualizacao,data_xml,metadata_prefix,padrao_metadados,mapeamento_id,name_space) 
 VALUES (1,'Cesta','dfsd','http://cesta2.cinted.ufrgs.br/oai/request','2014-04-28 07:51:22.48377','1984-08-21T07:35:00Z','lom',1,1,'lom');
 
-INSERT INTO repositorios (id,nome,descricao,url_or_ip,data_ultima_atualizacao,padrao_metadados,mapeamento_id,metadata_prefix,name_space)
+INSERT INTO repositorios (id,nome,descricao,url,data_ultima_atualizacao,padrao_metadados,mapeamento_id,metadata_prefix,name_space)
 VALUES (2,'Teste2','dfsd','http://','1984-08-21 00:00:00',1,1,'lom','lom');
 
-INSERT INTO repositorios (id,nome,descricao,url_or_ip,data_ultima_atualizacao,padrao_metadados,mapeamento_id,metadata_prefix,name_space) 
+INSERT INTO repositorios (id,nome,descricao,url,data_ultima_atualizacao,padrao_metadados,mapeamento_id,metadata_prefix,name_space) 
 VALUES (3,'Teste3','dfsd','http://','9014-08-21 07:51:22.48377',1,1,'lom','lom');
 
-INSERT INTO repositorios (id,nome,descricao,url_or_ip,data_ultima_atualizacao,padrao_metadados,mapeamento_id,metadata_prefix,name_space)
+INSERT INTO repositorios (id,nome,descricao,url,data_ultima_atualizacao,padrao_metadados,mapeamento_id,metadata_prefix,name_space)
 VALUES (4,'marcos','x','htttp://x','2014-04-01 23:59:59.48377',1,1,'obaa','obaa');
 
 

@@ -118,9 +118,9 @@ public class SubFederacaoTest {
     public void testUpdateDate() {
         SubFederacao fed = new SubFederacao();
         DateTime date = DateTime.parse("1984-08-21T07:35:00Z");
-        fed.setDataXMLTemp("1984-08-21T05:35:00Z");
+        fed.setDataXmlTemp("1984-08-21T05:35:00Z");
         fed.setUltimaAtualizacao(date);
 
-        assertThat(fed.getDataXML(), equalTo("1984-08-21T05:35:00Z"));
+        assertThat(fed.getDataXml(), equalTo("1984-08-21T05:35:00Z"));
     }
 }

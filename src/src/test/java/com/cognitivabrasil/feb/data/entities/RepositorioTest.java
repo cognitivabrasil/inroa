@@ -132,9 +132,9 @@ public class RepositorioTest {
     public void testUpdateDate() {
         Repositorio rep = new Repositorio();
         String date = "1984-08-21T07:35:00Z";
-        rep.setDataOrigemTemp(date);
+        rep.setDataXmlTemp(date);
         rep.setUltimaAtualizacao(DateTime.now());
 
-        assertThat(rep.getDataOrigem(), equalTo(date));
+        assertThat(rep.getDataXml(), equalTo(date));
     }
 }

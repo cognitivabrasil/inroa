@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.hamcrest.Matchers.*;
 
@@ -65,7 +66,7 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
         Repositorio cesta = repDao.get(id);
 
         assertEquals("Cesta", cesta.getName());
-        assertThat(cesta.getDataOrigem(), equalTo("1984-08-21T07:35:00Z"));
+        assertThat(cesta.getDataXml(), equalTo("1984-08-21T07:35:00Z"));
     }
 
     @Test
@@ -178,20 +179,34 @@ public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContex
     public void testUpdateDate() {
         Repositorio rep = new Repositorio();
         String date = "1984-08-21T13:32:03Z";
-        rep.setDataOrigemTemp(date);
+        rep.setDataXmlTemp(date);
         rep.setUltimaAtualizacao(DateTime.now());
         rep.setName("marcosn");
         rep.setNamespace("obaa");
         rep.setUrl("http://url");
         rep.setMapeamento(mapDao.get(1));
 
-        assertThat(rep.getDataOrigem(), equalTo(date));
+        assertThat(rep.getDataXml(), equalTo(date));
         repDao.save(rep);
         em.flush();
         em.clear();
 
         Repositorio rep2 = repDao.get("marcosn");
-        assertThat(rep2.getDataOrigem(), equalTo(date));
+        assertThat(rep2.getDataXml(), equalTo(date));
+    }
+    
+    @Test
+    public void testSetDataXml(){
+        Repositorio r = repDao.get(2);
+        r.setDataXmlTemp("2014-09-26T14:20:11Z");
+        assertThat(r.getDataXml(), equalTo(null));
+        r.setUltimaAtualizacao(DateTime.now());
+        repDao.save(r);
+        
+        em.flush();
+        em.clear();
+        r = repDao.get(2);
+        assertThat(r.getDataXml(), equalTo("2014-09-26T14:20:11Z"));
     }
 
 }

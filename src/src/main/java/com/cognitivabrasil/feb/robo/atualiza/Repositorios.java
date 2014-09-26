@@ -111,7 +111,7 @@ public class Repositorios {
                 DateTime dateNull = null;
                 //TODO: depois de substituir tudo de date para Datetime pode setar null direto. Agora tem dois setUltimaAtualizacao ai da erro.
                 rep.setUltimaAtualizacao(dateNull);
-                rep.setDataOrigem(null);
+                rep.setDataXml(null);
             }
             if (atualizaRepositorio(rep) > 0) {
                 recalcularIndice = true;
@@ -181,8 +181,8 @@ public class Repositorios {
                 log.info("Ultima Atualizacao: "+ data_ultima_atualizacao + " nome do rep: " + rep.getName());
 
                 // se a data da ultima atualização for inferior a 01/01/0001 apaga todos as informacoes do repositorio
-                if ((data_ultima_atualizacao == null && rep.getDataOrigem() == null)
-                        || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(rep.getDataOrigem()))) {
+                if ((data_ultima_atualizacao == null && rep.getDataXml() == null)
+                        || (Operacoes.testarDataDifZero(data_ultima_atualizacao) && Operacoes.testarDataDifZero(rep.getDataXml()))) {
                     log.info("Deletando todos os documentos do repositório: "
                             + rep.getName().toUpperCase());
                     try {
@@ -217,7 +217,7 @@ public class Repositorios {
 
                     // chama o metodo que efetua o HarvesterVerb grava um xml em disco e retorna um arrayList com os caminhos para os XML
                     List<String> caminhoXML = importar.coletaXML_ListRecords(
-                            rep.getUrl(), rep.getDataOrigem(), rep.getName(),
+                            rep.getUrl(), rep.getDataXml(), rep.getName(),
                             caminhoDiretorioTemporario, rep.getMetadataPrefix(), set);
                     
                     //le do xml traduz para o padrao OBAA e armazena na base de dados

@@ -91,7 +91,7 @@ public class ImporterRep {
 
         // TODO: move the conversion to and from String of the date to OaiOBAA class
 
-        rep.setDataOrigemTemp(oai.getResponseDate());
+        rep.setDataXmlTemp(oai.getResponseDate());
 
         return oai.getSize();
 

@@ -118,7 +118,7 @@ public class ImporterSubfed {
                 em.clear();
             }
         }
-        subFed.setDataXMLTemp(oai.getResponseDate());
+        subFed.setDataXmlTemp(oai.getResponseDate());
     }
 
     /**
