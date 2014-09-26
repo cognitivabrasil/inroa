@@ -274,4 +274,10 @@ public class SubFederacaoOAI {
 
     }
 
+    // TODO: apagar! Marcola esqueceu de comitar provavelmente.
+    public boolean pre_AtualizaSubFedOAI() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }
