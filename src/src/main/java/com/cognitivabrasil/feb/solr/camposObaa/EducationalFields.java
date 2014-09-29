@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cognitivabrasil.obaa.OBAA;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EducationalFields {
 
     private static final String cabecalho = "obaa.educational.";
-    private static final Logger log = Logger.getLogger(EducationalFields.class);
+    private static final Logger log = LoggerFactory.getLogger(EducationalFields.class);
 
     public static List<String> getInteractivitytype(OBAA o) {
 

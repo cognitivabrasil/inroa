@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.cognitivabrasil.feb.data.entities.Search;
+
 import org.springframework.beans.factory.annotation.Value;
 
 /**
@@ -30,7 +32,7 @@ public class TagCloudServiceImpl implements TagCloudService {
     private int size;
     SearchService searches;
     private int days;
-    private static final Logger log = Logger.getLogger(TagCloudServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(TagCloudServiceImpl.class);
 
     @Autowired
     PalavrasOfensivasHibernateDAO badWords;

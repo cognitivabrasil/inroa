@@ -6,8 +6,11 @@ package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.data.entities.Usuario;
 import com.cognitivabrasil.feb.data.repositories.UserRepository;
+
 import java.util.List;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("UserService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private static final Logger log = Logger.getLogger(UserServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserRepository userRep;
 

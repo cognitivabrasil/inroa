@@ -25,7 +25,8 @@ import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class Repositorios {
     @Autowired
     private ImporterRep imp;
 
-    private static final Logger log = Logger.getLogger(Repositorios.class);
+    private static final Logger log = LoggerFactory.getLogger(Repositorios.class);
 
     /**
      * Atualiza todos os repositórios.

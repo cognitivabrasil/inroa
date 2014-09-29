@@ -10,7 +10,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -43,7 +44,7 @@ public class Consulta {
     public Boolean hasTactile;
     public String size;
     private final Map<String, String> languages;
-    private static final Logger log = Logger.getLogger(Consulta.class);
+    private static final Logger log = LoggerFactory.getLogger(Consulta.class);
 
     public Consulta() {
         rss = false;

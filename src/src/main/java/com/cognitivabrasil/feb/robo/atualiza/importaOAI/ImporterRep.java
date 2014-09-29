@@ -12,7 +12,8 @@ import java.util.Date;
 import metadata.Header;
 import metadata.XsltConversor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class ImporterRep {
 
-    private static final Logger log = Logger.getLogger(ImporterRep.class);
+    private static final Logger log = LoggerFactory.getLogger(ImporterRep.class);
     private XsltConversor conversor;
     private Repositorio rep;
     private File inputXmlFile;
@@ -73,6 +74,7 @@ public class ImporterRep {
 
             try {
                 Header header = oai.getHeader(i);
+                log.debug(header.toString());
                 // set date to current date (instead of the repository date
                 header.setDatestamp(new Date()); 
                 OBAA metadata = oai.getMetadata(i);

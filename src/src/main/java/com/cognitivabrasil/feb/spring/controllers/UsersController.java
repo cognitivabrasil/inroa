@@ -2,12 +2,16 @@ package com.cognitivabrasil.feb.spring.controllers;
 
 import com.cognitivabrasil.feb.data.entities.Usuario;
 import com.cognitivabrasil.feb.data.services.UserService;
+
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -66,7 +70,7 @@ class UserPasswordDto {
 class UserPasswordValidator implements Validator {
 
     private Usuario user;
-    private static final Logger log = Logger.getLogger(UserPasswordValidator.class);
+    private static final Logger log = LoggerFactory.getLogger(UserPasswordValidator.class);
 
     @Override
     public boolean supports(Class clazz) {
@@ -81,7 +85,7 @@ class UserPasswordValidator implements Validator {
     public void validate(Object target, Errors errors) {
         UserPasswordDto u = (UserPasswordDto) target;
 
-        log.info(user);
+        log.info(user.toString());
         if (!user.authenticate(u.getOldPassword())) {
             errors.rejectValue("oldPassword", "password.incorrect", "Senha informada incorreta.");
         }
@@ -308,7 +312,7 @@ public final class UsersController {
     private UserService userDao;
     @Autowired
     private UserValidator userValidator;
-    private static final Logger log = Logger.getLogger(UsersController.class);
+    private static final Logger log = LoggerFactory.getLogger(UsersController.class);
 
     /**
      * Instantiates a new users controller.

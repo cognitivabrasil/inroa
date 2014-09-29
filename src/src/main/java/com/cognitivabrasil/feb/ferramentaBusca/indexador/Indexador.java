@@ -12,7 +12,8 @@ import com.cognitivabrasil.feb.util.Operacoes;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class Indexador {
 
-    private static final Logger log = Logger.getLogger(Indexador.class);
+    private static final Logger log = LoggerFactory.getLogger(Indexador.class);
     @Autowired
     private DocumentService docService;
     @PersistenceContext

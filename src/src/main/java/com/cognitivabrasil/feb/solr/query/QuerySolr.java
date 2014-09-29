@@ -3,12 +3,16 @@ package com.cognitivabrasil.feb.solr.query;
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Technical;
+
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -22,7 +26,7 @@ public class QuerySolr {
     private final HttpSolrServer serverSolr;
     private SolrQuery query;
     private QueryResponse queryResponse;
-    private static final Logger log = Logger.getLogger(QuerySolr.class);
+    private static final Logger log = LoggerFactory.getLogger(QuerySolr.class);
 
     public QuerySolr() {
         serverSolr = new HttpSolrServer("http://localhost:8983/solr");

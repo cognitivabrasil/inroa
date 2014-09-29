@@ -5,7 +5,8 @@ import ORG.oclc.oai.harvester2.verb.ListSets;
 import java.io.*;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ import com.cognitivabrasil.feb.util.Operacoes;
 @Component
 @Scope("prototype")
 public class SubRepositorios {
-    private static final Logger log = Logger.getLogger(SubRepositorios.class);
+    private static final Logger log = LoggerFactory.getLogger(SubRepositorios.class);
     
     @Autowired
     private FederationService subFedDao;

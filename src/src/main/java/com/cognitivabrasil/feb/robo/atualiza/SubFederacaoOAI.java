@@ -12,14 +12,18 @@ import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.ImporterSubfed;
 import com.cognitivabrasil.feb.robo.atualiza.subfedOAI.SubRepositorios;
 import com.cognitivabrasil.feb.util.Informacoes;
 import com.cognitivabrasil.feb.util.Operacoes;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.parsers.ParserConfigurationException;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.HibernateException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +38,7 @@ import org.xml.sax.SAXException;
 @Service
 public class SubFederacaoOAI {
 
-    private static final Logger log = Logger.getLogger(SubFederacaoOAI.class);
+    private static final Logger log = LoggerFactory.getLogger(SubFederacaoOAI.class);
 
     @Autowired
     private FederationService subDao;

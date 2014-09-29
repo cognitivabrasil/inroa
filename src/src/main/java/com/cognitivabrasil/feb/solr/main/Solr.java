@@ -3,14 +3,18 @@ package com.cognitivabrasil.feb.solr.main;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.solr.indexar.IndexarDados;
 import com.cognitivabrasil.feb.solr.converter.Converter;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.solr.common.SolrInputDocument;
 
 public class Solr {
 
-    private static final Logger log = Logger.getLogger(Solr.class);
+    private static final Logger log = LoggerFactory.getLogger(Solr.class);
     private final Converter convert;
     
     public Solr() {

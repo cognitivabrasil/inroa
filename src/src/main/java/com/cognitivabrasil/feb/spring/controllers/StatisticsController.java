@@ -7,13 +7,14 @@ import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.TagCloudService;
-
 import com.cognitivabrasil.feb.util.Message;
-import java.util.HashMap;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ public final class StatisticsController {
     private FederationService fedDao;
     @Autowired
     private TagCloudService tagCloud;
-    private static final Logger log = Logger.getLogger(StatisticsController.class);
+    private static final Logger log = LoggerFactory.getLogger(StatisticsController.class);
 
     @RequestMapping("/")
     public String statistics(Model model) {

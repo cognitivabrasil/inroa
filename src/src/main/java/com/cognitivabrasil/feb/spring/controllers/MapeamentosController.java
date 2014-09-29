@@ -3,7 +3,8 @@ package com.cognitivabrasil.feb.spring.controllers;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,9 @@ import com.cognitivabrasil.feb.data.services.MappingService;
 import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.spring.dtos.MapeamentoDto;
 import com.cognitivabrasil.feb.spring.validador.MapeamentoValidator;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -37,7 +40,7 @@ public final class MapeamentosController {
     private MetadataRecordService padraoDao;
     @Autowired
     private MapeamentoValidator validator;
-    private static final Logger log = Logger.getLogger(MapeamentosController.class);
+    private static final Logger log = LoggerFactory.getLogger(MapeamentosController.class);
 
     /**
      * Instantiates a new users controller.
