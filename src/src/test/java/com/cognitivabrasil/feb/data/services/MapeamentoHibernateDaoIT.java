@@ -4,28 +4,25 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
-import com.cognitivabrasil.feb.AppConfig;
-import com.cognitivabrasil.feb.WebConfig;
-import com.cognitivabrasil.feb.data.entities.Mapeamento;
-import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
-
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
+
+import com.cognitivabrasil.feb.AppConfig;
+import com.cognitivabrasil.feb.data.entities.Mapeamento;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
 
 /**
  *
@@ -36,6 +33,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@DirtiesContext
 public class MapeamentoHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired

@@ -49,8 +49,9 @@ import com.cognitivabrasil.feb.spring.controllers.FEBController;
 @ContextConfiguration(classes = {AppConfig.class, WebConfig.class})
 @WebAppConfiguration
 @ActiveProfiles("test")
-@Ignore("Da merda nos testes se rodar todos, rodando individual passa")
-public class SpringSecurityIT{
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+public class SpringSecurityIT extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     private WebApplicationContext context;
     

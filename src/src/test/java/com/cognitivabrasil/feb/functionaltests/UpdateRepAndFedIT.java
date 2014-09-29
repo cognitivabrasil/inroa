@@ -29,13 +29,16 @@ import javax.xml.transform.TransformerException;
 import org.apache.commons.io.FileUtils;
 
 import static org.hamcrest.Matchers.equalTo;
+
 import org.joda.time.DateTime;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
@@ -52,7 +55,7 @@ import org.xml.sax.SAXException;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-@Transactional
+@DirtiesContext
 public class UpdateRepAndFedIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired

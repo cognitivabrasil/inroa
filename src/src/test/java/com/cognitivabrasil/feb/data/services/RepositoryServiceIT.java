@@ -4,34 +4,33 @@
  */
 package com.cognitivabrasil.feb.data.services;
 
-import com.cognitivabrasil.feb.AppConfig;
-import com.cognitivabrasil.feb.WebConfig;
-import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
-import com.cognitivabrasil.feb.data.entities.Repositorio;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import static org.hamcrest.Matchers.*;
 
 import org.joda.time.DateTime;
-
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.cognitivabrasil.feb.AppConfig;
+import com.cognitivabrasil.feb.data.entities.PadraoMetadados;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
 
 /**
  *
@@ -42,7 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-@Transactional
+@DirtiesContext
 public class RepositoryServiceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired

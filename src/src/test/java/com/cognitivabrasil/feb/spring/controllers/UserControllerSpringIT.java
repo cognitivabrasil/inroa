@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -26,6 +27,7 @@ import com.cognitivabrasil.feb.AppConfig;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@DirtiesContext
 public class UserControllerSpringIT extends AbstractTransactionalJUnit4SpringContextTests {
     @Autowired
     @InjectMocks

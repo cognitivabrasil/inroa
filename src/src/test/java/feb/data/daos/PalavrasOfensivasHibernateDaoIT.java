@@ -9,6 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -32,6 +33,7 @@ import com.cognitivabrasil.feb.data.services.PalavrasOfensivasHibernateDAO;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@DirtiesContext
 public class PalavrasOfensivasHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests /* extends  AbstractDaoTest */ {
 
     @Autowired

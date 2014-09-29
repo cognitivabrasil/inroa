@@ -16,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -33,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
-@Transactional
+@DirtiesContext
 public class LumeXmlIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired

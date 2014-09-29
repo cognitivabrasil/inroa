@@ -346,7 +346,9 @@
 						<include>**/*IT.java</include>
 						<include>**/*Test.java</include>
 					</includes>
-				</configuration>
+<!-- 				 <runOrder>alphabetical</runOrder> -->
+				 <runOrder>random</runOrder>
+                </configuration>
 			</plugin>
 
 			<!-- <plugin> -->

@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -31,6 +32,7 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@DirtiesContext
 public class PadraoMetadadosHibernateDaoIT extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired

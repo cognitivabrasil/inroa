@@ -5,27 +5,30 @@
  */
 package com.cognitivabrasil.feb.spring.controllers;
 
-import com.cognitivabrasil.feb.AppConfig;
-import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.services.SearchService;
-import java.util.Map;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
-import org.joda.time.DateTime;
 import static org.junit.Assert.assertThat;
+
+import java.util.Map;
+
+import org.joda.time.DateTime;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.ui.ExtendedModelMap;
+
+import com.cognitivabrasil.feb.AppConfig;
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.services.SearchService;
 
 /**
  *
@@ -35,6 +38,7 @@ import org.springframework.ui.ExtendedModelMap;
 @ContextConfiguration(classes = { AppConfig.class })
 @ActiveProfiles("test")
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTests {
     
     @Autowired
@@ -48,6 +52,7 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
     
     @Before
     public void setUp() {
+        
         response = new MockHttpServletResponse();
         request = new MockHttpServletRequest();
         model = new ExtendedModelMap();

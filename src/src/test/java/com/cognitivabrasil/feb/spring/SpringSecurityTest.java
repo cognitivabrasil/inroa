@@ -19,9 +19,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -42,8 +45,10 @@ import com.cognitivabrasil.feb.spring.controllers.FEBController;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class, WebConfig.class})
 @WebAppConfiguration
-@ActiveProfiles("nodb")
-public class SpringSecurityTest {
+@ActiveProfiles("test")
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+public class SpringSecurityTest extends AbstractTransactionalJUnit4SpringContextTests  {
 
     @Mock
     private Indexador indexador;
