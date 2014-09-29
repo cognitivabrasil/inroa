@@ -1,4 +1,4 @@
-package com.cognitivabrasil.feb.robo.main;
+package com.cognitivabrasil.feb.robo;
 
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.exceptions.FederationException;
@@ -41,7 +41,7 @@ public class Robo {
      * repositório.
      *
      */
-    @Scheduled(cron = "0 0 2 * * *")
+    @Scheduled(cron = "0 30 14 * * *")
     @Transactional
     public void run() {
 

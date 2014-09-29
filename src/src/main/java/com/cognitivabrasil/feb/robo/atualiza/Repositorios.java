@@ -41,8 +41,6 @@ import org.xml.sax.SAXException;
 public class Repositorios {
 
     @Autowired
-    private Indexador indexar;
-    @Autowired
     private RepositoryService repService;
     @Autowired
     private DocumentService docService;
@@ -56,20 +54,18 @@ public class Repositorios {
      *
      * @return true ou false indicando se algum reposit&aacute;rio foi atualizado ou n&atilde;
      */
-    public boolean atualizaRepositorios() {
+    public void atualizaRepositorios() {
 
         Long inicio = System.currentTimeMillis();
-        boolean atualizou = false;
+        
 
         List<Repositorio> listRep = repService.getAll();
 
         for (Repositorio rep : listRep) { // percorre todos os repositorios que
             // precisam ser atualizados
             try { // chama o metodo que atualiza o repositorio
-                int numDocs = atualizaRepositorio(repService.get(rep.getId()));
-                if (numDocs > 0) {
-                    atualizou = true;
-                }
+                atualizaRepositorio(repService.get(rep.getId()));
+                
             } catch (Exception e) {
                 // TODO: Isso é um BUG! Tem que dar catch só nas excessões conhecidas
 
@@ -84,7 +80,6 @@ public class Repositorios {
         Long fim = System.currentTimeMillis();
         Long total = fim - inicio;
         log.info("Levou: " + Operacoes.formatTimeMillis(total) + " para atualizar os repositórios");
-        return atualizou;
     }
 
     /**
@@ -112,8 +107,6 @@ public class Repositorios {
                 rep.setDataXml(null);
             }
             atualizaRepositorio(rep);
-             
-            repService.save(rep);
 
         } else {
             List<Repositorio> repositorios = repService.getAll();
@@ -235,7 +228,8 @@ public class Repositorios {
             rep.setUltimaAtualizacao(DateTime.now());
             Long fim = System.currentTimeMillis();
             Long total = fim - inicio;
-
+            repService.save(rep);
+            
             log.info("Atualizou " + updated + " objetos em:" + Operacoes.formatTimeMillis(total));
             return updated;
 
