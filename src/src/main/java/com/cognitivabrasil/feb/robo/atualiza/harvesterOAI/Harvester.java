@@ -17,7 +17,6 @@ import com.cognitivabrasil.feb.util.Operacoes;
 
 import java.util.List;
 
-//import util.*;
 
 // http://alcme.oclc.org/oaicat/
 // http://www.oclc.org/research/software/oai/harvester2.htm
