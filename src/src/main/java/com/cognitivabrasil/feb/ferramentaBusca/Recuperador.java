@@ -5,7 +5,9 @@ import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
 
 import java.util.List;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Recuperador pelo SOLR
@@ -14,7 +16,7 @@ import org.apache.log4j.Logger;
  */
 public class Recuperador {
 
-    private static final Logger log = Logger.getLogger(Recuperador.class);
+    private static final Logger log = LoggerFactory.getLogger(Recuperador.class);
     private static final int rssSizeLimit = 100;
 
     public Recuperador() {

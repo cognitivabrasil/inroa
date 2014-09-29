@@ -8,7 +8,9 @@ import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.robo.atualiza.Repositorios;
 import com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI;
 import com.cognitivabrasil.feb.util.Operacoes;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -33,7 +35,7 @@ public class Robo {
     @Autowired
     private SearchService searchesDao;
 
-    private static final Logger log = Logger.getLogger(Robo.class);
+    private static final Logger log = LoggerFactory.getLogger(Robo.class);
 
     /**
      * Principal m&eacute;todo do rob&ocirc;. Este m&eacute;todo efetua uma consulta na base de dados, procurando por

@@ -1,14 +1,18 @@
 package com.cognitivabrasil.feb.ferramentaAdministrativa.validarOAI;
 
 import ORG.oclc.oai.harvester2.verb.Identify;
+
 import com.cognitivabrasil.feb.util.Informacoes;
 import com.cognitivabrasil.feb.util.Operacoes;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,7 +20,7 @@ import org.apache.log4j.Logger;
  */
 public class VerificaLinkOAI {
 
-    private static final Logger log = Logger.getLogger(VerificaLinkOAI.class);
+    private static final Logger log = LoggerFactory.getLogger(VerificaLinkOAI.class);
 
     /**
      * Verifica se o link OAI-PMH é v&atilde;lido ou n&atilde;o. Coleta o XML com a identificação do repositório efetua
@@ -50,7 +54,7 @@ public class VerificaLinkOAI {
                 log.error("FEB ERRO: O caminho informado não é um diretório. E não pode ser criado em: '" + caminhoDiretorioTemporario + "'");
             }
         } catch (Exception e) {
-            log.error(e);
+            log.error("Ocorreu um erro imprevisto: " + e);
             return false;
             //colocar aqui os tratamentos para o oai-pmh
         }

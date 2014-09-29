@@ -3,8 +3,11 @@ package com.cognitivabrasil.feb.data.entities;
 import ORG.oclc.oai.models.OaiDocument;
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Location;
+
 import com.cognitivabrasil.feb.data.interfaces.DocumentoFebInterface;
+
 import java.util.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,7 +17,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -32,7 +37,7 @@ import org.joda.time.DateTime;
 public class Document implements java.io.Serializable,
         DocumentoFebInterface, OaiDocument {
 
-    private static final Logger log = Logger.getLogger(Document.class);
+    private static final Logger log = LoggerFactory.getLogger(Document.class);
     private static final long serialVersionUID = 61217365141633065L;
     private int id;
     private String obaaEntry;

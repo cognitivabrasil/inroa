@@ -24,7 +24,8 @@ import javax.xml.transform.TransformerException;
 
 import metadata.Header;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -50,7 +51,7 @@ public class ImporterSubfed {
     @PersistenceContext
     private EntityManager em;
     
-    private static final Logger log = Logger.getLogger(ImporterSubfed.class);
+    private static final Logger log = LoggerFactory.getLogger(ImporterSubfed.class);
 
     /**
      * Sets the input file.

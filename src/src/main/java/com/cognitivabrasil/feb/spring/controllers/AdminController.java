@@ -14,11 +14,15 @@ import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.validador.InfoBDValidator;
 import com.cognitivabrasil.feb.util.Operacoes;
+
 import java.io.IOException;
 import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -55,7 +59,7 @@ public class AdminController {
     @Autowired @Qualifier("febInf")
     private Properties febInfo;
     
-    private final static Logger log = Logger.getLogger(AdminController.class);
+    private final static Logger log = LoggerFactory.getLogger(AdminController.class);
 
     public AdminController() {
     }

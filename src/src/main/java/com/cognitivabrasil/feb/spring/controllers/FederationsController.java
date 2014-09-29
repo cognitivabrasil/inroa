@@ -12,10 +12,13 @@ import com.cognitivabrasil.feb.exceptions.FederationException;
 import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI;
 import com.cognitivabrasil.feb.spring.validador.SubFederacaoValidador;
+
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
@@ -43,7 +46,7 @@ public final class FederationsController {
     SubFederacaoOAI subFedOAI;
     
     private final SubFederacaoValidador subFedValidador;
-    private static final Logger log = Logger.getLogger(FederationsController.class);
+    private static final Logger log = LoggerFactory.getLogger(FederationsController.class);
     
     public FederationsController() {
         subFedValidador = new SubFederacaoValidador();

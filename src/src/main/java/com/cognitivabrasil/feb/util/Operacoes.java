@@ -15,18 +15,23 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
+
 import metadata.TextElement;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.xml.sax.InputSource;
+
 import ptstemmer.Stemmer;
 import ptstemmer.exceptions.PTStemmerException;
 
@@ -38,7 +43,7 @@ import ptstemmer.exceptions.PTStemmerException;
  */
 public class Operacoes {
 
-    private static final Logger log = Logger.getLogger(Operacoes.class);
+    private static final Logger log = LoggerFactory.getLogger(Operacoes.class);
 
     public Operacoes() {
     } // public para o Spring

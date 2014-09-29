@@ -1,15 +1,20 @@
 package com.cognitivabrasil.feb.robo.atualiza.harvesterOAI;
 
 import ORG.oclc.oai.harvester2.verb.ListRecords;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Set;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.util.Operacoes;
+
 import java.util.List;
 
 //import util.*;
@@ -21,7 +26,7 @@ public class Harvester {
     private String endereco;
     private String dataInicial;
     private String metadataPrefix;
-    private static final Logger log = Logger.getLogger(Repositorio.class);
+    private static final Logger log = LoggerFactory.getLogger(Repositorio.class);
 
     /**
      * Metodo que efetua o Harvesting OAI-PHM e salva arquivos xml's com os resultados

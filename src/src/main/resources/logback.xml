@@ -2,7 +2,6 @@
 <configuration>
 	<include resource="org/springframework/boot/logging/logback/base.xml" />
 
-
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<encoder>
@@ -51,27 +50,27 @@
 
 	<logger name="org.springframework" level="WARN" />
 	<logger name="org.hibernate" level="WARN" />
-	
+
 	<logger name="ORG.oclc.oai.harvester2" level="INFO">
-		<appender-ref ref="UPDATE"/>
+		<appender-ref ref="UPDATE" />
 	</logger>
-	
+
 	<logger name="com.cognitivabrasil.feb.ferramentaBusca.indexador">
-		<appender-ref ref="UPDATE"/>
+		<appender-ref ref="UPDATE" />
 	</logger>
-	
+
 	<logger name="com.cognitivabrasil.feb.solr">
-		<appender-ref ref="UPDATE"/>	
+		<appender-ref ref="UPDATE" />
 	</logger>
-	
+
 	<logger name="com.cognitivabrasil.feb.robo">
-		<appender-ref ref="UPDATE"/>
+		<appender-ref ref="UPDATE" />
 	</logger>
-	
+
 	<logger name="com.cognitivabrasil.feb.spring.controllers.FEBController">
-		<appender-ref ref="SEARCHES"/>
+		<appender-ref ref="SEARCHES" />
 	</logger>
-	
+
 	<logger name="com.cognitivabrasil" level="DEBUG" />
 
 	<root level="INFO">

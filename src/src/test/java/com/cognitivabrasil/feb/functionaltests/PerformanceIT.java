@@ -28,7 +28,8 @@ import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -56,7 +57,7 @@ import org.xml.sax.SAXException;
 @Transactional
 public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests {
 
-    Logger log = Logger.getLogger(PerformanceIT.class);
+    Logger log = LoggerFactory.getLogger(PerformanceIT.class);
 
     @Autowired
     RepositoryService repDao;

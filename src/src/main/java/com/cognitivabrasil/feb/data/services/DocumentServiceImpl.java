@@ -7,16 +7,21 @@ package com.cognitivabrasil.feb.data.services;
 
 import ORG.oclc.oai.server.catalog.OaiDocumentService;
 import cognitivabrasil.obaa.OBAA;
+
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.repositories.DocumentRepository;
+
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
 import metadata.Header;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +40,7 @@ public class DocumentServiceImpl implements DocumentService, OaiDocumentService 
     @Autowired
     private DocumentRepository docRep;
     
-    private static final Logger log = Logger.getLogger(DocumentServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(DocumentServiceImpl.class);
 
     @Override
     public Document get(String e) {

@@ -9,7 +9,9 @@ import com.cognitivabrasil.feb.data.services.MetadataRecordService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.robo.atualiza.Repositorios;
 import com.cognitivabrasil.feb.spring.validador.RepositorioValidator;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +36,7 @@ public final class RepositoriesController {
     @Autowired
     private Repositorios atualizadorRep;
 
-    private static final Logger log = Logger.getLogger(RepositoriesController.class);
+    private static final Logger log = LoggerFactory.getLogger(RepositoriesController.class);
 
     public RepositoriesController() {
         repValidator = new RepositorioValidator();

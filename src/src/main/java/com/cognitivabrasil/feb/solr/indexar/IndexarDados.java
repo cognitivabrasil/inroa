@@ -8,19 +8,23 @@ import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
 import cognitivabrasil.obaa.OBAA;
+
 import com.cognitivabrasil.feb.solr.converter.Converter;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrException;
 
 public class IndexarDados {
 
     private static final String solrURL = "http://localhost:8983/solr/";
-    private static final Logger log = Logger.getLogger(IndexarDados.class);
+    private static final Logger log = LoggerFactory.getLogger(IndexarDados.class);
 
     /**
      * Apaga todo o indice do Solr
