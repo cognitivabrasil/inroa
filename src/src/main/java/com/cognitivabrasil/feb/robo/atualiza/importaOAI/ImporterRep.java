@@ -73,7 +73,6 @@ public class ImporterRep {
 
             try {
                 Header header = oai.getHeader(i);
-                log.debug(header);
                 // set date to current date (instead of the repository date
                 header.setDatestamp(new Date()); 
                 OBAA metadata = oai.getMetadata(i);

@@ -1,7 +1,5 @@
 package com.cognitivabrasil.feb.robo.main;
 
-import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.exceptions.FederationException;
 import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
