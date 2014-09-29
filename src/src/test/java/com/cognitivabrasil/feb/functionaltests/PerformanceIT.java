@@ -179,8 +179,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             StopWatch stop = new StopWatch();
             stop.start("XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
             File arquivoXML = new File(caminho);
-            System.out.println("FEB: Lendo XML " + caminho.substring(caminho.lastIndexOf("/") + 1));
-
+            
             ImporterSubfed imp = new ImporterSubfed();
             imp.setInputFile(arquivoXML);
             imp.setSubFed(subFed);
@@ -191,7 +190,7 @@ public class PerformanceIT extends AbstractTransactionalJUnit4SpringContextTests
             subDao.save(subFed);
 
             stop.stop();
-            System.out.println("XML " + stop.prettyPrint());
+            log.debug("XML " + stop.prettyPrint());
 
         }
 

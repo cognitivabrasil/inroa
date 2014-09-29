@@ -119,7 +119,6 @@ public class XsltFeb2ToFeb3IT {
     public void resourceDescription() {
         OBAA l = oai.getMetadata(1);
         boolean found = false;
-        System.out.println(l.toXml());
         for (Contribute c : l.getLifeCycle().getContribute()) {
             Role r = c.getRole();
 
