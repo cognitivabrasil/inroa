@@ -119,6 +119,34 @@ public class OaicatTest {
         servlet.init(c);
 
     }
+    
+    @Test
+    public void listRecordsSemDataFunciona() throws ServletException, IOException {
+        List<OaiDocument> documents = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            OaiDocument d = new FakeOaiDocument(i);
+            documents.add(d);
+        }
+
+        when(service.count(any(), any())).thenReturn(documents.size() + 100);
+        when(service.find(any(), any(), anyInt(), anyInt())).thenReturn(documents.iterator());
+
+        request = new MockHttpServletRequest();
+        request.addParameter("verb", "ListRecords");
+        request.addParameter("metadataPrefix", "obaa");
+
+        servlet.doGet(request, response);
+
+        String resumptionToken = getResumptionToken(response.getContentAsString());
+
+        String[] parts = resumptionToken.split("\\|", 4);
+
+        assertThat(Integer.valueOf(parts[0]), equalTo(10));
+        assertThat(parts[1], equalTo("obaa"));
+        assertThat(parts[2], equalTo(""));
+        assertThat(parts[3], equalTo(""));
+    }
 
     @Test
     public void resumptionTokenMantemFromEUntil() throws ServletException, IOException {
