@@ -11,6 +11,9 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +32,7 @@ import org.springframework.ui.ExtendedModelMap;
 import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.services.SearchService;
+import com.cognitivabrasil.feb.data.services.TagCloudService;
 
 /**
  *
@@ -45,6 +49,12 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
     FEBController controller;
     @Autowired
     SearchService searchService;
+    
+    @Autowired
+    TagCloudService tagCloudService;
+    
+    @PersistenceContext
+    EntityManager em;
     
     private MockHttpServletResponse response;
     private MockHttpServletRequest request;
@@ -65,6 +75,8 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
         searchService.save("marcos", DateTime.now());
         searchService.save("nunes", DateTime.now());
         searchService.save("nunes", DateTime.now());
+        
+        em.flush();
         String result = controller.index(model, response, request, "x");
         
         assertThat(result, equalTo("index"));
@@ -75,5 +87,6 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
         Map<String, Integer> tagCloud = (Map<String, Integer>) model.get("termos");
         assertThat(tagCloud, notNullValue());
         assertThat(tagCloud.size(), equalTo(2));
+        
     }
 }

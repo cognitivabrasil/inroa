@@ -17,6 +17,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SearchServiceImpl implements SearchService {
+    private static final Logger log = LoggerFactory.getLogger(SearchServiceImpl.class);
 
     @Autowired
     private SearchesJdbcDao searchesJdbc;
@@ -39,6 +42,8 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<Search> getSearches(Integer limit, Date date) {
+        log.debug("In getSearches");
+        log.debug("searchesJdbc.getSearches(" + limit + ", " + date + ")");
         return searchesJdbc.getSearches(limit, date);
     }
 

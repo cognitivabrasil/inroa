@@ -40,30 +40,30 @@ VALUES (4,'marcos','http://','2012-03-09 07:51:22.48377','2012-03-09 07:51:22.48
 INSERT INTO repositorios_subfed (id,nome,id_subfed) VALUES (1,'RepUfrgs1',1);
 
 INSERT INTO documentos (id,obaa_entry, id_repositorio,created,deleted)
-VALUES (1,'oai:cesta2.cinted.ufrgs.br:123456789/57',1,'2012-03-09 07:51:22.48377','false');
+VALUES (1,'oai:cesta2.cinted.ufrgs.br:123456789/57',1,'2012-03-09 07:51:22.48377',0);
 
 INSERT INTO documentos (id,obaa_entry, id_repositorio,created,deleted)
-VALUES (2,'dois',1,'2012-03-09 07:51:22.48377','false');
+VALUES (2,'dois',1,'2012-03-09 07:51:22.48377',0);
  
 INSERT INTO documentos (id,obaa_entry, id_repositorio,created,deleted)
-VALUES (3,'tres',1,'2012-03-09 07:51:22.48377','false');
+VALUES (3,'tres',1,'2012-03-09 07:51:22.48377',0);
  
 INSERT INTO documentos (id,obaa_entry, id_repositorio,created,deleted)
-VALUES (4,'quatro',1,'2012-03-09 07:51:22.48377','true');
+VALUES (4,'quatro',1,'2012-03-09 07:51:22.48377',1);
  
 INSERT INTO documentos (id,obaa_entry, id_repositorio,created,deleted)
-VALUES (5,'cinco',1,'2012-03-09 07:51:22.48377','false');
+VALUES (5,'cinco',1,'2012-03-09 07:51:22.48377',0);
  
 INSERT INTO documentos (id,obaa_entry, id_rep_subfed,created,deleted)
-VALUES (6,'cinco2',1,'2012-03-09 07:51:22.48377','false');
+VALUES (6,'cinco2',1,'2012-03-09 07:51:22.48377',0);
 INSERT INTO documentos (id,obaa_entry, id_rep_subfed,created,deleted)
-VALUES (7,'cinco3',1,'2012-03-09 07:51:22.48377','false');
+VALUES (7,'cinco3',1,'2012-03-09 07:51:22.48377',0);
 
-INSERT INTO searches (text,created) VALUES ('jorjao','2012-07-09 12:06:02');
-INSERT INTO searches (text,created) VALUES ('jorjao','2012-07-09 12:06:01');
-INSERT INTO searches (text,created) VALUES ('jorjao','2012-07-09 12:06:00');
-INSERT INTO searches (text,created) VALUES ('teste','2012-07-09 12:06:06');
-INSERT INTO searches (text,created) VALUES ('teste','2012-07-09 12:06:07');
-INSERT INTO searches (text,created) VALUES ('bla','2012-06-29 12:06:01');
-INSERT INTO searches (text,created) VALUES ('bla','9999-06-29 12:06:02');
-INSERT INTO searches (text,created) VALUES ('jorjao','2011-12-09 12:06:01');
+INSERT INTO searches (id, text,created) VALUES (1, 'jorjao','2012-07-09 12:06:02');
+INSERT INTO searches (id, text,created) VALUES (2, 'jorjao','2012-07-09 12:06:01');
+INSERT INTO searches (id, text,created) VALUES (3, 'jorjao','2012-07-09 12:06:00');
+INSERT INTO searches (id, text,created) VALUES (4, 'teste','2012-07-09 12:06:06');
+INSERT INTO searches (id, text,created) VALUES (5, 'teste','2012-07-09 12:06:07');
+INSERT INTO searches (id, text,created) VALUES (6, 'bla','2012-06-29 12:06:01');
+INSERT INTO searches (id, text,created) VALUES (7 ,'bla','9999-06-29 12:06:02');
+INSERT INTO searches (id, text,created) VALUES (8, 'jorjao','2011-12-09 12:06:01');

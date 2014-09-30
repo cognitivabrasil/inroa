@@ -4,8 +4,57 @@ FEB
 Dependências externas
 ----------------------------------------------------
 * Java 8 
-* PostgreSQL a partir de 8.4
+* SQL
+ - PostgreSQL a partir de 8.4
+ ou
+ - Oracle XE 11g
 * Solr
+
+Instalação e configuração do Oracle XE
+-----------------------------------------------------------
+Instruções completas em:
+
+https://registry.hub.docker.com/u/alexeiled/docker-oracle-xe-11g/
+
+Modo rápido:
+
+```
+ sudo docker run -d -p 49160:22 -p 49161:1521 -p 49162:8080 alexeiled/docker-oracle-xe-11g
+```
+
+### Instalar Oracle SQL Developer ###
+http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html
+
+```
+cd /opt
+sudo unzip sqldeveloper-*-no-jre.zip -d /opt/
+sudo chmod +x /opt/sqldeveloper/sqldeveloper.sh
+sudo ln -s /opt/sqldeveloper/sqldeveloper.sh /usr/bin/sqldeveloper
+sudo chmod +x /opt/sqldeveloper/sqldeveloper/bin/sqldeveloper
+```
+
+editar /opt/sqldeveloper/sqldeveloper.sh:
+```
+#!/bin/bash
+cd /opt/sqldeveloper/sqldeveloper/bin
+./sqldeveloper "$@"
+```
+
+Rodar:
+```
+sudo sqldeveloper
+```
+
+### Criar base Oracle ###
+
+De dentro do sqldeveloper, conecte na base _xe_ no _localhost_
+na porta _49161_ com username _system_ e senha _oracle_.
+
+Importe, nessa ordem, os arquivos:
+  1. schema.sql
+  2. data.sql
+  3. oracle\_schema.sql
+
 
 Criação da base de dados PostgreSQL
 ----------------------------------------------------
@@ -24,6 +73,11 @@ Isso irá criar uma base de dados *federacao* com senha
 
 **IMPORTANTE! MUDE A SENHA USAR A INSTALAÇÃO PARA QUALQUER
 COISA ALÉM DE DESENVOLVIMENTO**
+
+## Rodando com o Postgres ##
+
+Para rodar com o Postgres, é necessário ativar o perfil
+_postgres_ do Spring, que irá carregar os beans necessários.
 
 Configuração do Solr
 ----------------------------------------------------
@@ -115,6 +169,7 @@ REGRA 2: Se necessário for
 base necessária
 	* atualizar os arquivos debian/postinst para atualizar
 a base em caso de upgrade via instalador, caso possível
+	* Manter o schema.sql e o postgres\_schema.sql sincronizados.
 	* obrigatório fazer um BUMP da versão minor ou major.
 
 

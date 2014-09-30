@@ -8,11 +8,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +23,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -45,7 +48,8 @@ public class PadraoMetadados implements java.io.Serializable, FebDomainObject {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PADRAOMETADADOS_SEQ")
+    @SequenceGenerator(name="PADRAOMETADADOS_SEQ", sequenceName="PADRAOMETADADOS_SEQ")        
     public Integer getId() {
         return id;
     }

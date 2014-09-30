@@ -2,6 +2,7 @@ package com.cognitivabrasil.feb.data.entities;
 
 import java.util.Objects;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 import org.springframework.core.style.ToStringCreator;
 
 /**
@@ -29,7 +32,8 @@ public class RepositorioSubFed{
     private Set<Document> documentos;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPOSITORIOS_SUBFED_SEQ")
+    @SequenceGenerator(name="REPOSITORIOS_SUBFED_SEQ", sequenceName="REPOSITORIOS_SUBFED_SEQ")
     public int getId() {
         return id;
     }

@@ -9,6 +9,8 @@
  *******************************************************************************/
 package com.cognitivabrasil.feb.config;
 
+import java.sql.SQLException;
+
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
@@ -16,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -34,8 +39,8 @@ import com.cognitivabrasil.feb.spring.FebConfig;
  * @see LocalTestConfig
  */
 @Configuration
-@Profile({ "postgres", "development" })
-public class LocalPostgresConfig {
+@Profile({ "default", "oracle" })
+public class LocalOracleConfig {
     @Autowired
     private FebConfig febConfig;
 
@@ -45,14 +50,14 @@ public class LocalPostgresConfig {
      * Usa informações hardcoded.
      * 
      * @return conexão ao postgreSQL
+     * @throws SQLException 
      */
     @Bean
-    public DataSource dataSource() {
-        org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
-        dataSource.setUrl("jdbc:postgresql://" + febConfig.getHost() + "/" + febConfig.getDatabase());
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUsername(febConfig.getUsername());
-        dataSource.setPassword(febConfig.getPassword());
+    public DataSource dataSource() throws SQLException {
+        oracle.jdbc.pool.OracleDataSource dataSource = new oracle.jdbc.pool.OracleDataSource();
+        dataSource.setURL("jdbc:oracle:thin:@localhost:49161:xe");
+        dataSource.setUser("system");
+        dataSource.setPassword("oracle");
         return dataSource;
     }
 
@@ -62,8 +67,8 @@ public class LocalPostgresConfig {
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-        jpaVendorAdapter.setDatabase(Database.POSTGRESQL);
-        jpaVendorAdapter.setGenerateDdl(true);
+        jpaVendorAdapter.setDatabase(Database.ORACLE);
+        jpaVendorAdapter.setGenerateDdl(false);
         jpaVendorAdapter.setShowSql(false);
         return jpaVendorAdapter;
     }
@@ -72,13 +77,16 @@ public class LocalPostgresConfig {
      * Cria um EntityManagerFactory que escaneia o pacote com.cognitivabrasil.gofun.entities.
      * 
      * @return Um entity manager factory
+     * @throws SQLException 
      */
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws SQLException {
         LocalContainerEntityManagerFactoryBean lemfb = new LocalContainerEntityManagerFactoryBean();
         lemfb.setDataSource(dataSource());
         lemfb.setJpaVendorAdapter(jpaVendorAdapter());
         lemfb.setPackagesToScan("com.cognitivabrasil.feb.data.entities");
         return lemfb;
     }
+    
+
 }

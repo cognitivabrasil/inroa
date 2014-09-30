@@ -5,6 +5,7 @@
 package com.cognitivabrasil.feb.data.services;
 
 import com.cognitivabrasil.feb.data.entities.Usuario;
+import com.cognitivabrasil.feb.data.repositories.MappingRepository;
 import com.cognitivabrasil.feb.data.repositories.UserRepository;
 
 import java.util.List;
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserRepository userRep;
+    
+    @Autowired
+    private MappingRepository mappingRep;
 
     @Override
     public Usuario authenticate(String login, String password) {
@@ -78,6 +82,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String login)
             throws UsernameNotFoundException {
         log.debug("Trying to get user \"" + login + "\"");
+        
+        List<Usuario> l = getAll();
+        
+        log.debug("All: " + l);   
+       
         Usuario d = get(login);
 
         if (d == null) {

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.cognitivabrasil.feb.data.interfaces.FebDomainObject;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import metadata.MetadataConversorInterface;
 
 /**
@@ -26,7 +29,7 @@ import metadata.MetadataConversorInterface;
  *
  */
 @Entity
-@Table(name = "mapeamentos")
+@Table(name = "MAPEAMENTOS")
 public class Mapeamento implements MetadataConversorInterface, FebDomainObject {
 
     private Integer id;
@@ -40,7 +43,8 @@ public class Mapeamento implements MetadataConversorInterface, FebDomainObject {
      * @return the id
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MAPEAMENTOS_SEQ")
+    @SequenceGenerator(name="MAPEAMENTOS_SEQ", sequenceName="MAPEAMENTOS_SEQ")        
     public Integer getId() {
         return id;
     }
