@@ -79,37 +79,46 @@ public class Harvester {
         //efetua por OAI-PMH o verbo lisRecord com a url, a data inicial, o set e o metadataPrefix recebidos como parametro
         ListRecords listRecords = new ListRecords(this.endereco, this.dataInicial, null, set, this.metadataPrefix);
         
-        ListRecords listRecordsResume; //cria uma variavel do tipo ListRecords para efetuar o ResumptionToken se necessario
+        //cria uma variavel do tipo ListRecords para efetuar o ResumptionToken se necessario
+        ListRecords listRecordsResume; 
 
-        Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(caminhoAbsoluto), "UTF-8")); //escreve um arquivo xml em UTF-8 no caminho setado no configuracao.java
+        //escreve um arquivo xml em UTF-8 no caminho setado no configuracao.java
+        Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(caminhoAbsoluto), "UTF-8")); 
 
-        String resumption = listRecords.getResumptionToken(); //solicita a tag ResumptionToken recebida no xml
+        //solicita a tag ResumptionToken recebida no xml
+        String resumption = listRecords.getResumptionToken();
 
-        listRecords.getDocument(); //lista o registros retornados
+        //lista o registros retornados
+        listRecords.getDocument();
                 
-        out.write(listRecords.toString()); //imprime no arquivo os registros transformados para string
-        out.close();//fecha o arquivo xml que estava sendo escrito
+        //imprime no arquivo os registros transformados para string
+        out.write(listRecords.toString());
+        //fecha o arquivo xml que estava sendo escrito
+        out.close();
 
-        while (!resumption.isEmpty()) { //enquanto existir resumptionToken segue efetuando harvester
+        //enquanto existir resumptionToken segue efetuando harvester
+        while (!resumption.isEmpty()) { 
             numeroXML++;
 
-            caminhoAbsoluto = nomeArquivo + numeroXML + ".xml"; //cria um novo nome de arquivo com o numeroXML incrementado
-            caminhosXML.add(caminhoAbsoluto); //adiciona o endereço do xml no arrayList
+            //cria um novo nome de arquivo com o numeroXML incrementado
+            caminhoAbsoluto = nomeArquivo + numeroXML + ".xml";
+            //adiciona o endereço do xml no arrayList
+            caminhosXML.add(caminhoAbsoluto);
+            //cria o arquivo xml
             Writer outResume = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(caminhoAbsoluto), "UTF-8")); //cria o arquivo xml
-
+                    new FileOutputStream(caminhoAbsoluto), "UTF-8"));
             listRecordsResume = new ListRecords(this.endereco, resumption);
 
-            resumption = listRecordsResume.getResumptionToken(); //armazena na variavel resumption o proximo ResumptionToken
+            //armazena na variavel resumption o proximo ResumptionToken
+            resumption = listRecordsResume.getResumptionToken();
             listRecordsResume.getDocument();
 
-            outResume.write(listRecordsResume.toString()); //imprime no arquivo o resultado
-            outResume.close(); //fecha o arquivo xml
+            //imprime no arquivo o resultado
+            outResume.write(listRecordsResume.toString());
+            //fecha o arquivo xml
+            outResume.close();
 
         }
         return numeroXML;
     }
 }
-
-
