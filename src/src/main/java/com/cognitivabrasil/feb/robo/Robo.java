@@ -6,8 +6,8 @@ import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.robo.atualiza.Repositorios;
 import com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI;
 import com.cognitivabrasil.feb.util.Operacoes;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrException;
+import org.hibernate.HibernateException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,10 +67,14 @@ public class Robo {
         indexar.populateR1();
         }catch(SolrException e){
             log.error("Ocorreu um erro ao recalcular o indice! Teste se o serviço Solr está rodando no servidor.",e);
-        }
+         }
 
         log.info("Limpando consultas antigas...");
+        try{
         searchesDao.cleanup();
+        }catch(HibernateException e){
+            log.error("Ocorreu ao limpar as consultas antigas da base de dados.");
+        }
 
         Long finalRobo = System.currentTimeMillis();
         Long tempoTotal = (finalRobo - inicioRobo);
