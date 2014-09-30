@@ -31,6 +31,7 @@ import org.hibernate.HibernateException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.SAXException;
 
 /**
@@ -136,6 +137,7 @@ public class Repositorios {
      * @param rep reposit&oacute;rio que deve ser atualizado.
      * @return number of updated documents, -1 in case of error
      */
+    @Transactional
     public int atualizaRepositorio(Repositorio rep)
             throws Exception {
         Long inicio = System.currentTimeMillis();

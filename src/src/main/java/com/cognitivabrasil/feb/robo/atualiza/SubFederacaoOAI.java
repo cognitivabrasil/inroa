@@ -29,6 +29,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateSystemException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.SAXException;
 
 /**
@@ -56,6 +57,7 @@ public class SubFederacaoOAI {
      * @param apagar Define se os documentos da federação serão removidos antes de atualizar ou não.
      * @throws Exception
      */
+    @Transactional
     public void atualizaFederacao(SubFederacao fed, boolean apagar) throws Exception {
         // Don't really know why, but the following 2 lines solve FEB-219
         fed.setUltimaAtualizacao(fed.getUltimaAtualizacao());

@@ -6,6 +6,8 @@ import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.robo.atualiza.Repositorios;
 import com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI;
 import com.cognitivabrasil.feb.util.Operacoes;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.common.SolrException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,11 +59,15 @@ public class Robo {
         }catch(FederationException f){
             log.error("Falha na atualização das federações.",f);
         }
-
+        
         // atualiza REPOSITORIO
         repositorio.atualizaRepositorios();
 
+        try{
         indexar.populateR1();
+        }catch(SolrException e){
+            log.error("Ocorreu um erro ao recalcular o indice! Teste se o serviço Solr está rodando no servidor.",e);
+        }
 
         log.info("Limpando consultas antigas...");
         searchesDao.cleanup();
