@@ -25,20 +25,32 @@ Modo rápido:
 ### Instalar Oracle SQL Developer ###
 http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html
 
+Baixar a última versão: "Other Platforms"
+Obs: Tem que aceitar a licença e logar no sistema para poder efetuar o download do instalador.
+
+Instalar do diretório /opt:
 ```
-cd /opt
 sudo unzip sqldeveloper-*-no-jre.zip -d /opt/
 sudo chmod +x /opt/sqldeveloper/sqldeveloper.sh
 sudo ln -s /opt/sqldeveloper/sqldeveloper.sh /usr/bin/sqldeveloper
 sudo chmod +x /opt/sqldeveloper/sqldeveloper/bin/sqldeveloper
 ```
 
-editar /opt/sqldeveloper/sqldeveloper.sh:
+Editar /opt/sqldeveloper/sqldeveloper.sh:
 ```
 #!/bin/bash
 cd /opt/sqldeveloper/sqldeveloper/bin
 ./sqldeveloper "$@"
 ```
+
+Editar o product.conf e definir o JavaHome:
+Ex:
+```
+sudo vim ~/.sqldeveloper/4.0.0/product.conf
+
+SetJavaHome /usr/lib/jvm/java-7-oracle
+```
+
 
 Rodar:
 ```

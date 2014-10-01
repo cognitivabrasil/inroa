@@ -70,10 +70,10 @@ public class SubFederacao extends UpdateData {
     public String getUrlOAIPMH() {
         String oai = getUrl();
         //se a url não terminar com barra concatena a barra
-        if (!oai.endsWith("/")) {
+        if (oai!=null && !oai.endsWith("/")) {
             oai += "/";
         }
-        if (version.equals("2.1")) {
+        if (version!=null && version.equals("2.1")) {
             return oai + "OAIHandler";
         } else {
             return oai + "oai";
