@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller("federations")
 @RequestMapping("/admin/federations/*")
 public final class FederationsController {
+    private static final Logger log = LoggerFactory.getLogger(FederationsController.class);
     
     @Autowired
     private FederationService subDao;
@@ -45,12 +46,9 @@ public final class FederationsController {
     @Autowired
     SubFederacaoOAI subFedOAI;
     
-    private final SubFederacaoValidador subFedValidador;
-    private static final Logger log = LoggerFactory.getLogger(FederationsController.class);
-    
-    public FederationsController() {
-        subFedValidador = new SubFederacaoValidador();
-    }
+    @Autowired
+    private SubFederacaoValidador subFedValidador;
+  
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String exibeFed(@PathVariable("id") Integer id, Model model,
@@ -87,6 +85,9 @@ public final class FederationsController {
             @ModelAttribute("federation") SubFederacao subfed,
             Model model, BindingResult result) {
         subFedValidador.validate(subfed, result);
+        
+        log.debug("Salvando federação: " + subfed.getDescricao());
+        
         if (result.hasErrors()) {
             model.addAttribute("federation", subfed);
             return "admin/federations/new";
