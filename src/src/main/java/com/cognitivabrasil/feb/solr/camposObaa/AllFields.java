@@ -12,6 +12,10 @@ public class AllFields {
 
         all.addAll(GeneralFields.getAll(o));
 
+        if (o.getAccessibility() != null) {
+            all.addAll(AccessibilityFields.getAll(o));
+        }
+
         if (o.getEducational() != null) {
             all.addAll(EducationalFields.getAll(o));
         }
