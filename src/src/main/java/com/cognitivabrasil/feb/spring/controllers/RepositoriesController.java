@@ -145,7 +145,7 @@ public final class RepositoriesController {
             @PathVariable Integer id,
             BindingResult result,
             Model model) {
-        log.debug("Id padrao:" + rep.getPadraoMetadados().getMapeamentos());
+        
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
             //pega da base o padrao de metadados para que se possa listar os mapeamentos na interface
