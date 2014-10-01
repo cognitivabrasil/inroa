@@ -45,12 +45,28 @@ cd /opt/sqldeveloper/sqldeveloper/bin
 
 Editar o product.conf e definir o JavaHome:
 Ex:
+
+De dentro do sqldeveloper, conecte na base _xe_ no _localhost_
+na porta _49161_ com username _system_ e senha _oracle_.
+
+Importe, nessa ordem, os arquivos:
+  1. schema.sql
+  2. data.sql
+  3. oracle\_schema.sql
+
+
+Criação da base de dados PostgreSQL
+----------------------------------------------------
+
+É preciso criar o usuário, importar o esquema da base
+e popular o banco de dados com os dados iniciais, e fazer 
+mesmo com a base de teste:
+
 ```
 sudo vim ~/.sqldeveloper/4.0.0/product.conf
 
 SetJavaHome /usr/lib/jvm/java-7-oracle
 ```
-
 
 Rodar:
 ```
