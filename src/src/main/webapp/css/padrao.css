@@ -384,6 +384,12 @@ a:hover{
     text-align:right;
     width:40%;
 }
+/*isso estraga a exibição na busca avançada. Os repositorios ficam fora do lugar.*/
+.LinhaEntrada label{
+    float:left;
+    text-align:right;
+    width:40%;
+}
 .LinhaEntrada .LabelLeft{
     float:left;
     text-align:left;
@@ -487,6 +493,10 @@ a:hover{
     color:red;
     font-weight: bold;
 }
+div.error,span.error {color: red; margin-left: 180px;}
+label.error{color:red;}
+input.error,textarea.error{border-color: red;}
+label.error,input.error{margin-top: 5px;}
 .TextoDivAlerta{
     color:#EE2037;
     font-size:100%;

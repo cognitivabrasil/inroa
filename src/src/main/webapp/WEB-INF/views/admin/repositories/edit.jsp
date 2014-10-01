@@ -21,60 +21,57 @@
         <c:url var="css" value="/css/padrao.css" />
         <c:url var="validateJs" value="/scripts/validatejs.js" />
         <c:url var="funcoesJs" value="/scripts/funcoes.js" />
-        
+
         <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
-        <c:url var="validateOAI" value="/scripts/validateOAI.js" />
-        <script type="text/javascript" src="${validateOAI}"></script>
-        
-        <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
+
         <link rel="StyleSheet" href="${css }" type="text/css"/>
         <script language="JavaScript" type="text/javascript" src="${funcoesJs }"></script>
         <c:url var="root" value="/" />
         <script>setRootUrl("${root}");</script>
-        <script language="JavaScript" type="text/javascript" src="${funcoesMapeamentoJs }"></script>
+        <c:url var="newRepJs" value="/scripts/admin/repositories/new.js" />
+        <script language="JavaScript" type="text/javascript" src="${newRepJs}"></script>
         <script type="text/javascript" src="${validateJs }"></script>
         <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
     </head>
 
-    <body onload="verificaMapOnLoad('${repModel.padraoMetadados.id}', '${repModel.mapeamento.id}', 'resultado');">
+    <body>
         <div id="page">
-
-            <script type="text/javascript">
-                var myForm = new Validate();
-                myForm.addRules({id:'name',option:'required',error:'* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
-                myForm.addRules({id:'descricao',option:'required',error:'* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
-                myForm.addRules({id:'padraoMetadados.id',option:'required',error:'* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
-                myForm.addRules({id:'mapeamento.id',option:'isNotEmpty',error:'* Deve ser selecionado um mapeamento!'});
-                myForm.addRules({id:'metadataPrefix',option:'required',error:'* Deve ser informado o MetadataPrefix!'});
-                myForm.addRules({id:'url',option:'urlcomip',error:'* Deve ser informada uma url <b>v&aacute;lida</b> que responda com protocolo OAI-PMH! Come&ccedil;ando por http://'});
-                myForm.addRules({id : 'url', option : 'required', error : '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
-            </script>
-
-            <div class="subTitulo-center">&nbsp;Editanto reposit&oacute;rio ${repModel.name}</div>
-            <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
             
-            <form:form method="post" modelAttribute="repModel" acceptCharset="utf-8" onsubmit="return myForm.Apply('MensagemErro')">
+            <c:choose>
+                <c:when test="${empty repModel.id}">
+                    <c:set var="titulo" value="Entre com as informa&ccedil;&otilde;es para cadastrar um novo 
+                           reposit&oacute;rio"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="titulo" value="Editanto reposit&oacute;rio ${repModel.name}"/>
+                </c:otherwise>
+            </c:choose>
+            <div class="subTitulo-center">${titulo}</div>
+            <div class="subtitulo">Informa&ccedil;&otilde;es gerais</div>
 
-                <div class="TextoDivAlerta" id="MensagemErro"><!--Aqui o script colocara a mensagem de erro, se ocorrer-->
+            <form:form method="post" modelAttribute="repModel" acceptCharset="utf-8" 
+                       onsubmit="return myForm.Apply('MensagemErro')">
+
+                <div class="TextoDivAlerta" id="MensagemErro">
+                    <!--Aqui o script colocara a mensagem de erro, se ocorrer-->
                     <c:out value="${erro}"/>
                 </div>
+
+
                 <div class="LinhaEntrada">
                     <form:errors path="name" cssClass="ValueErro" />
-                    <div class="Label">
-                        Nome/Sigla:
-                    </div>
-                    <div class="Value">
-                        <form:input path="name" maxlength="45" />                        
+                    <form:label path="name" cssErrorClass="error">Nome/Sigla:</form:label>
+                        <div class="Value">
+                        <form:input path="name" maxlength="45" cssErrorClass="error" />
                     </div>
                 </div>
+
                 <div class="LinhaEntrada">
                     <form:errors path="descricao" cssClass="ValueErro" />
-                    <div class="Label">
-                        Descri&ccedil;&atilde;o:
-                    </div>
-                    <div class="Value">                        
-                        <form:input path="descricao" maxlength="455" />
+                    <form:label path="descricao" cssErrorClass="error">Descri&ccedil;&atilde;o:</form:label>
+                        <div class="Value">
+                        <form:input path="descricao" maxlength="455" cssErrorClass="error" />
                     </div>
                 </div>
 
@@ -84,11 +81,10 @@
 
                 <div class="LinhaEntrada">
                     <form:errors path="url" cssClass="ValueErro" />
-                    <div class="Label">
-                        URL que responde OAI-PMH:
-                    </div>
-                    <div class="Value">
-                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" />
+                    <form:label path="url" cssErrorClass="error">URL que responde OAI-PMH:</form:label>
+                        <div class="Value">
+                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" 
+                                    cssErrorClass="error"/>
                         &nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
                 </div>
@@ -101,50 +97,47 @@
                     <div class="Comentario">
                         Ex: com1;com2;com3
                     </div>
-                    <div class="Label">
-                        Cole&ccedil;&otilde;es ou Comunidades:
-                    </div>
-                    <div class="Value">
+                    <form:label path="colecoesString" cssErrorClass="error">Cole&ccedil;&otilde;es ou Comunidades:</form:label>                    
+                        <div class="Value">
                         <form:input path="colecoesString" maxlength="45" />
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
                     <form:errors path="padraoMetadados.id" cssClass="ValueErro" />
-                    <div class="Label">
-                        Padr&atilde;o de metadados utilizado:
-                    </div>
-                    <div class="Value">
-                        <select name="padraoMetadados.id" id="padraoMetadados.id" onChange="selecionaMapeamento('resultado', this.value, ${repModel.mapeamento.id});">
-                            <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
-                                <option value="${padraoMet.id}" ${padraoMet.id==repModel.padraoMetadados.id ? 'selected':''}> ${fn:toUpperCase(padraoMet.name)}                           
-                                </c:forEach>
-                        </select>
+                    <form:label path="padraoMetadados.id" cssErrorClass="error">Padr&atilde;o de metadados utilizado:</form:label>
+                        <div class="Value">
+                        <c:url var="mapeamentoUrl" value="/admin/mapeamentos/listaMapeamentoPadraoSelecionado?mapSelecionado=${repModel.mapeamento.id}&idpadrao="/>
+                        <form:select id="padraoMetadados" path="padraoMetadados.id" items="${padraoMetadados}" 
+                                     itemValue="id" itemLabel="name" cssErrorClass="error" url="${mapeamentoUrl}"/>
+
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
                     <form:errors path="mapeamento.id" cssClass="ValueErro" />
-                    <div class="Label">
-                        Tipo de mapeamento:
-                    </div>
-                    <div id="resultado">
-                        <c:forEach var="map" items="${repModel.padraoMetadados.mapeamentos}">
-                            <div class="ValueIndex"><input type="radio" ${map.id == repModel.mapeamento.id ? 'checked=true':''} id="mapeamento.id" name="mapeamento.id" value="${map.id}">${map.name} (${map.description})</div>
-                            </c:forEach>
+                    <form:label path="mapeamento.id" cssErrorClass="error">Mapeamento:</form:label>
+                        <div id="resultadoMap">
 
+                        <c:forEach var="map" items="${repModel.padraoMetadados.mapeamentos}">
+                            <div class="ValueIndex">
+                                <input id="mapeamento.id" type="radio" name="mapeamento.id" value="${map.id}"
+                                       ${map.id == repModel.mapeamento.id ? 'checked=true':''} />
+                                ${map.name} (${map.description})
+                            </div>
+                        </c:forEach>
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
                     <div> &nbsp;</div>
                     <form:errors path="metadataPrefix" cssClass="ValueErro" />
-                    <div class="Label">MetadataPrefix:</div>
+                    <form:label path="metadataPrefix" cssErrorClass="error">MetadataPrefix:</form:label>
                     <div class="Value">
                         <form:input path="metadataPrefix" maxlength="45" />
                     </div>
                     <form:errors path="namespace" cssClass="ValueErro" />
-                    <div class="Label">NameSpace:</div>
+                    <form:label path="namespace" cssErrorClass="error">NameSpace:</form:label>
                     <div class="Value">
                         <form:input path="namespace" maxlength="45" />
                     </div>

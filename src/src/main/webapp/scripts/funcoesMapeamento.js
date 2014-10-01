@@ -3,8 +3,8 @@
  *
  * Funcoes utilizadas pelo mapeamento dinamico
  */
-botao='';
-linhaComposto=0;
+botao = '';
+linhaComposto = 0;
 
 idOrigem = '';
 idDestino = '';
@@ -12,15 +12,15 @@ idOrigemComp = '';
 idDestinoComp = '';
 padraoMet = '';
 tipoMapeamento = '';
-totals =0;
+totals = 0;
 
-function addMap(idDivOrigem, idDivDestino, padraoMetadados, tipoMap){
-    processo(idDivDestino, 0, "comboBox", "", "","");
-    processo(idDivOrigem, padraoMetadados, "comboOrigem", "", "","");
+function addMap(idDivOrigem, idDivDestino, padraoMetadados, tipoMap) {
+    processo(idDivDestino, 0, "comboBox", "", "", "");
+    processo(idDivOrigem, padraoMetadados, "comboOrigem", "", "", "");
 
-    var link  = document.getElementById("salvar");
+    var link = document.getElementById("salvar");
     idOrigem = 'atribOrigem';
-    idDestino ='atrb'+idDivDestino;
+    idDestino = 'atrb' + idDivDestino;
     padraoMet = padraoMetadados;
     tipoMapeamento = tipoMap;
     idOrigemComp = '';
@@ -35,8 +35,8 @@ function addMap(idDivOrigem, idDivDestino, padraoMetadados, tipoMap){
  * inputDestino: id do input do destino. &Eacute; passado por variavel global.
  * inpOrgigemComplementar: id do input do mapeamento complementar origem. &Eacute; passado por variavel global.
  * inpDestinoComplementar: id do input do mapeamento complementar destino. &Eacute; passado por variavel global.
-*/
-function salvarNovoMapeamento(){
+ */
+function salvarNovoMapeamento() {
     //pegando valores de variaveis globais
     var inputOrigem = idOrigem;
     var inputDestino = idDestino;
@@ -50,17 +50,17 @@ function salvarNovoMapeamento(){
     var destino = document.getElementById(inputDestino).value;
     var compOrigem = '';
     var compDestino = '';
-    if(!inputOrigemComplementar == ''){
+    if (!inputOrigemComplementar == '') {
         compOrigem = document.getElementById(inputOrigemComplementar).value;
-        compDestino= document.getElementById(inputDestinoComplementar).value;
+        compDestino = document.getElementById(inputDestinoComplementar).value;
     }
-    salvarAjax('result'+totals, origem, destino, compOrigem, compDestino, padrao, tipoMap);
+    salvarAjax('result' + totals, origem, destino, compOrigem, compDestino, padrao, tipoMap);
 }
 
 /**
  * Remove linha da tabela cujo id &eacute; 'tabela'
  * @param linha linha a ser removida
-*/
+ */
 function removeItem(linha)
 {
     var tbl = document.getElementById('tabela');
@@ -76,18 +76,18 @@ function cancelar(idDivResult, valorAnterior)
 {
     var exibeResultado = document.getElementById(idDivResult);
     exibeResultado.innerHTML = valorAnterior;
-    botao.disabled=0; //desbloquear o botao editar
+    botao.disabled = 0; //desbloquear o botao editar
 }
 
 function exibeSelect(idDivResult, idMap, bot)
 {
-    botao.disabled=0;
+    botao.disabled = 0;
     botao = bot;
-    botao.disabled=1; //bloquear o botao editar
+    botao.disabled = 1; //bloquear o botao editar
     var valorAnterior = document.getElementById(idDivResult).innerHTML
-    
- 
-    processo(idDivResult, idMap, "comboBox", "", valorAnterior,"");
+
+
+    processo(idDivResult, idMap, "comboBox", "", valorAnterior, "");
 }
 
 function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
@@ -95,19 +95,19 @@ function salvarBase(idDivResultado, idMap, input, idTipoMapeamento)
     var novo = "";
     novo = document.getElementById(input).value
 
-    processo(idDivResultado, idMap, "salvar", novo,"",idTipoMapeamento)
+    processo(idDivResultado, idMap, "salvar", novo, "", idTipoMapeamento)
 
-    botao.disabled=0; //desbloquear o botao editar
+    botao.disabled = 0; //desbloquear o botao editar
 }
 
-function novoTipos(div){
-    
+function novoTipos(div) {
+
     document.getElementById(div).innerHTML = "";
 }
 
-function exibeText(idDivResult, idTipoMapeamento, bot){
+function exibeText(idDivResult, idTipoMapeamento, bot) {
     botao = bot;
-    botao.disabled=1; //bloquear o botao editar
+    botao.disabled = 1; //bloquear o botao editar
     var valorAnterior = document.getElementById(idDivResult).innerHTML
     processo(idDivResult, "", "text", "", valorAnterior, idTipoMapeamento)
 }
@@ -115,7 +115,7 @@ function exibeText(idDivResult, idTipoMapeamento, bot){
 /**
  * Apaga todos os atributos da tabela mapeamentos cujo, destino_id &eacute; zero.
  */
-function apagarMapeamentoBranco(){
+function apagarMapeamentoBranco() {
     processo("msgerro", "", "apagarBranco", "", "", "");
 // fechando a janela atual ( popup )
 //window.close();
@@ -126,8 +126,8 @@ function apagarMapeamentoBranco(){
  * Seta a vari&aacute;vel global totals com a linha informada
  * @param linha n&uacute;mero da linha que deseja armazenar na vari&aacute;vel global.
  */
-function setLinha(linha){
-    totals = linha-1;
+function setLinha(linha) {
+    totals = linha - 1;
 }
 /**
  * Função que adiciona nova linha na tabela sem recarregar a p&aacute;gina.
@@ -135,36 +135,37 @@ function setLinha(linha){
  * @param idPadrao id do padr&atilde;o de metadados.
  * @param tipoMap id do tipomapeamento
  */
-function adicionaMap(linhaReal,idPadrao, tipoMap){
- 
+function adicionaMap(linhaReal, idPadrao, tipoMap) {
     totals++
-        
+
     var tbl = document.getElementById("tabela")
     var novaLinha = tbl.insertRow(-1);
     var novaCelula;
     var cl = "";
 
-    if(totals%2==0) cl = "price-yes";
+    if (totals % 2 == 0)
+        cl = "price-yes";
 
-    else cl = "price-no";
+    else
+        cl = "price-no";
 
     novaCelula = novaLinha.insertCell(0);
     novaCelula.align = "center";
     novaCelula.style.className = "price-yes";
-    novaCelula.innerHTML = "<div class='center' id=result"+totals+">Javascript n&atilde;o est&aacute; funcionando</div>";
-    
+    novaCelula.innerHTML = "<div class='center' id=result" + totals + ">Javascript n&atilde;o est&aacute; funcionando</div>";
+
     novaCelula.className = cl;
 
     novaCelula = novaLinha.insertCell(1);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = "<div class='center' id=destino"+totals+">Javascript n&atilde;o est&aacute; funcionando</div>"
+    novaCelula.innerHTML = "<div class='center' id=destino" + totals + ">Javascript n&atilde;o est&aacute; funcionando</div>"
 
 
     novaCelula = novaLinha.insertCell(2);
     novaCelula.align = "left";
     novaCelula.className = cl;
-    novaCelula.innerHTML = '<input type="button" class="BotaoMapeamento" size="30" name="addMap" id="addMap" value="+ Mapeamento Complementar" onclick="setMapeamentoComposto(\''+linhaReal+'\', \''+cl+'\');"/>';
+    novaCelula.innerHTML = '<input type="button" class="BotaoMapeamento" size="30" name="addMap" id="addMap" value="+ Mapeamento Complementar" onclick="setMapeamentoComposto(\'' + linhaReal + '\', \'' + cl + '\');"/>';
 
 
     novaCelula = novaLinha.insertCell(3);
@@ -178,7 +179,7 @@ function adicionaMap(linhaReal,idPadrao, tipoMap){
                                 <img src="../imagens/ico24_deletar.gif" border="0" width="24" height="24" alt="Excluir" align="middle">\n\
                             </a>';
 
-    addMap('result'+totals, 'destino'+totals, idPadrao, tipoMap); //chama a funcao que adiciona os selects por ajax
+    addMap('result' + totals, 'destino' + totals, idPadrao, tipoMap); //chama a funcao que adiciona os selects por ajax
 }
 
 /**
@@ -186,7 +187,7 @@ function adicionaMap(linhaReal,idPadrao, tipoMap){
  * @param linha numero da linha que será inserido
  * @param cl cor da linha. Deve ser passado uma class do css.
  */
-function setMapeamentoComposto(linha, cl){
+function setMapeamentoComposto(linha, cl) {
     //adicionar linha com os divs antes.
     linhaComposto = linha;
     linhaComposto++;
@@ -197,12 +198,12 @@ function setMapeamentoComposto(linha, cl){
     novaCelula = novaLinha.insertCell(0);
     novaCelula.align = "center";
     novaCelula.className = cl;
-    novaCelula.innerHTML = "<div class='center' id=resultComplementar"+linha+">origem</div>";
+    novaCelula.innerHTML = "<div class='center' id=resultComplementar" + linha + ">origem</div>";
 
     novaCelula = novaLinha.insertCell(1);
     novaCelula.align = "center";
     novaCelula.className = cl;
-    novaCelula.innerHTML = "<div class='center' id=destinoComplementar"+linha+">destino</div>"
+    novaCelula.innerHTML = "<div class='center' id=destinoComplementar" + linha + ">destino</div>"
 
     novaCelula = novaLinha.insertCell(2);
     novaCelula.align = "left";
@@ -215,18 +216,18 @@ function setMapeamentoComposto(linha, cl){
     novaCelula.className = cl;
     novaCelula.innerHTML = '';
 
-    processo('resultComplementar'+linha, 0, "comboBox", "", "","");
-    processo('destinoComplementar'+linha, 0, "textComp", "", "","");
-    var link  = document.getElementById("salvar");
-    
-    idOrigemComp = 'atrbresultComplementar'+linha;
+    processo('resultComplementar' + linha, 0, "comboBox", "", "", "");
+    processo('destinoComplementar' + linha, 0, "textComp", "", "", "");
+    var link = document.getElementById("salvar");
+
+    idOrigemComp = 'atrbresultComplementar' + linha;
     idDestinoComp = 'geral';
     link.onclick = salvarNovoMapeamento
 }
 
 /**
  * Remove a linha complementar que tinha sido adicionada.
-*/
+ */
 function removeComplementar()
 {
     var tbl = document.getElementById('tabela');
@@ -249,7 +250,7 @@ function removeLinha(nomeTabela, linha)
 /**
  * Função utilizada pelo mapeamento dinamico com ajax.
  * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodará sem que a pagina principal seja recarregada.
-*/
+ */
 function processo(idResultado, idMapOuIdPadrao, acao, novoValor, valorAnterior, idTipoMapeamento)
 {
 
@@ -258,17 +259,17 @@ function processo(idResultado, idMapOuIdPadrao, acao, novoValor, valorAnterior, 
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "respostaAjax.jsp?tipo="+acao+"&idMapOuIdPadrao="+idMapOuIdPadrao+"&idResultado="+idResultado+"&novo="+novoValor+"&valorAnterior="+valorAnterior+"&idTipMap="+idTipoMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    ajax.open("POST", "respostaAjax.jsp?tipo=" + acao + "&idMapOuIdPadrao=" + idMapOuIdPadrao + "&idResultado=" + idResultado + "&novo=" + novoValor + "&valorAnterior=" + valorAnterior + "&idTipMap=" + idTipoMapeamento, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
-    ajax.onreadystatechange = function()
+    ajax.onreadystatechange = function ()
     {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        if (ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
             exibeResultado.innerHTML = "Aguarde...";
         }
-        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        if (ajax.readyState == 4) // Quando estiver tudo pronto.
         {
-            if(ajax.status == 200)
+            if (ajax.status == 200)
             {
                 var resultado = ajax.responseText;
                 exibeResultado.innerHTML = resultado;
@@ -303,28 +304,28 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
 
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "salvarBaseAjax.jsp?origem="+origem+"&destino="+destino+"&origemcomplementar="+origemComplementar+"&destinocomplementar="+destinoComplementar+"&padrao="+padrao+"&tipoMap="+tipoMap, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+    ajax.open("POST", "salvarBaseAjax.jsp?origem=" + origem + "&destino=" + destino + "&origemcomplementar=" + origemComplementar + "&destinocomplementar=" + destinoComplementar + "&padrao=" + padrao + "&tipoMap=" + tipoMap, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
 
-    ajax.onreadystatechange = function()
+    ajax.onreadystatechange = function ()
     {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        if (ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
             exibeResultado.innerHTML = "Aguarde...";
         }
-        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        if (ajax.readyState == 4) // Quando estiver tudo pronto.
         {
-            if(ajax.status == 200)
+            if (ajax.status == 200)
             {
                 var resultado = ajax.responseText;
                 //exibeResultado.innerHTML = resultado;
-                if(isNaN(parseInt(resultado))){
+                if (isNaN(parseInt(resultado))) {
                     alert("Erro ao salvar o mapeamento na base de dados. Verifique o log.");
-                }else{
+                } else {
                     alert("Salvo!");
                 }
                 document.location.reload();
-                
-            //exibeResultado.innerHTML = "<p class='textoErro'>Erro. N&atilde;o foram informados todos os valores. Ou ocorreu erro com a conexao postgre</p>";
+
+                //exibeResultado.innerHTML = "<p class='textoErro'>Erro. N&atilde;o foram informados todos os valores. Ou ocorreu erro com a conexao postgre</p>";
             }
             else
             {
@@ -346,10 +347,10 @@ function salvarAjax(idResultado, origem, destino, origemComplementar, destinoCom
  * @param linha numero da linha que sera excluida
  */
 function confirmaExclusao(id, tabelaBase, idResultado, idTabela, linha) {
-    if( confirm( 'Deseja realmente exluir?' ) ) {
+    if (confirm('Deseja realmente exluir?')) {
         excluirAjax(id, tabelaBase, idResultado, idTabela, linha);
     } else {
-    
+
     }
 }
 
@@ -363,42 +364,42 @@ function confirmaExclusao(id, tabelaBase, idResultado, idTabela, linha) {
  */
 function excluirAjax(idMapeamento, tabela, idResultado, idTabela, linha)
 {
-    
+
     //div onde sera adicionado o resultado
     var exibeResultado = document.getElementById(idResultado);
 
     var ajax = openAjax(); // Inicia o Ajax.
-    
+
     var gambi = "";
-    if(tabela=="padraometadados"){
+    if (tabela == "padraometadados") {
         gambi = "mapeamentos/";
     }
-    ajax.open("POST", gambi+"deletaBaseAjax.jsp?idmap="+idMapeamento+"&tabela="+tabela, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
-                       
-    
-    ajax.onreadystatechange = function()
+    ajax.open("POST", gambi + "deletaBaseAjax.jsp?idmap=" + idMapeamento + "&tabela=" + tabela, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
+
+
+    ajax.onreadystatechange = function ()
     {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        if (ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
             exibeResultado.innerHTML = "Aguarde...";
         }
-        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        if (ajax.readyState == 4) // Quando estiver tudo pronto.
         {
-            if(ajax.status == 200)
+            if (ajax.status == 200)
             {
                 var resultado = ajax.responseText;
                 //exibeResultado.innerHTML = resultado;
-                if(isNaN(parseInt(resultado))){
+                if (isNaN(parseInt(resultado))) {
                     exibeResultado.innerHTML = resultado;
-                }else{
-                    if(parseInt(resultado)>0){
+                } else {
+                    if (parseInt(resultado) > 0) {
                         exibeResultado.innerHTML = "Exclu&iacute;do com sucesso.";
                         removeLinha(idTabela, linha);
                     }
-                    else{
+                    else {
                         exibeResultado.innerHTML = "Ocorreu algum erro ao excluir da base de dados.";
                     }
-                }                    
+                }
             }
             else
             {
@@ -410,72 +411,29 @@ function excluirAjax(idMapeamento, tabela, idResultado, idTabela, linha)
 
 
 }
-
-
-/**
- * Fun&ccedil;&atilde;o utilizada para apresentar os tipos de mapeamentos disponiveis para o padrao selecionado.
- * Esta fun&ccedil;&atilde;o deve ser chamamada da pasta raiz.
- * Quando chamada, ela repassa os dados, utilizando ajax, para o arquivo jsp que rodar&aacute; sem que a pagina principal seja recarregada.
-*/
-function selecionaMapeamento(idResultado, idPadrao, mapSelecionado)
-{
-    if(mapSelecionado==undefined){
-        mapSelecionado=0;
-    }
- 
-    //div onde sera adicionado o resultado
-    var exibeResultado = document.getElementById(idResultado);
-    
-    var ajax = openAjax(); // Inicia o Ajax.
-    
-    //TODO: não funciona na minha máquina (Jorjão), rodando com mvn spring-boot:run .
-    ajax.open("GET", rootUrl+"/admin/mapeamentos/listaMapeamentoPadraoSelecionado?idpadrao="+idPadrao+"&mapSelecionado="+mapSelecionado, true); // Envia o termo da busca como uma querystring, nos possibilitando o filtro na busca.
-
-    ajax.onreadystatechange = function()
-    {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
-        {
-            exibeResultado.innerHTML = "Aguarde...";
-        }
-        if(ajax.readyState == 4) // Quando estiver tudo pronto.
-        {
-            if(ajax.status == 200)
-            {
-                var resultado = ajax.responseText;
-                exibeResultado.innerHTML = resultado;
-            }
-            else
-            {
-                exibeResultado.innerHTML = "Erro nas funções do Ajax";
-            }
-        }
-    }
-    ajax.send(null); // submete
-}
-
 
 /**
  * Função que preenche a descricao do mapeamento utilizando ajax para consultar na base de dados.
  * @param id id do t do mapeamento
  * @param idDiv div onde o status e o resultado ser&atilde;o apresentado.
-*/
+ */
 function preencheDescricaoTM(id, idDiv)
 {
 
     var exibeResultado = document.getElementById(idDiv);
     var ajax = openAjax(); // Inicia o Ajax.
 
-    ajax.open("POST", "consultadescricao.jsp?id="+id, true); // Envia o termo da busca como uma querystring
+    ajax.open("POST", "consultadescricao.jsp?id=" + id, true); // Envia o termo da busca como uma querystring
 
-    ajax.onreadystatechange = function()
+    ajax.onreadystatechange = function ()
     {
-        if(ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
+        if (ajax.readyState == 1) // Quando estiver carregando, exibe: carregando...
         {
             exibeResultado.innerHTML = "Aguarde...";
         }
-        if(ajax.readyState == 4) // Quando estiver tudo pronto.
+        if (ajax.readyState == 4) // Quando estiver tudo pronto.
         {
-            if(ajax.status == 200)
+            if (ajax.status == 200)
             {
                 var resultado = ajax.responseText;
                 exibeResultado.innerHTML = resultado;

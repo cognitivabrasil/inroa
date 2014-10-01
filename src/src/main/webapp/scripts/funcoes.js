@@ -268,22 +268,6 @@ function updateSubnodeAjax(link, showResults)
     ajax.send(null); // submete
 }
 
-
-/**
- * Esta função é utilizada para chamar a função selecionaMapeamento() quando o padrao de metadados recebido como parâmetro tiver algum valor
- * @param idPadraoSelecionado id do Padrao de metadados selecionado no form
- * @param mapeamentoSelecionado id do mapeamento selecionado no form
- * @param idResultado id do div que recebera os resultados do ajax.
- */
-function verificaMapOnLoad (idPadraoSelecionado, mapeamentoSelecionado, idResultado){
-    if(idPadraoSelecionado!=""){
-        if(mapeamentoSelecionado==""){
-            mapeamentoSelecionado=0;
-        }
-        selecionaMapeamento(idResultado, idPadraoSelecionado, mapeamentoSelecionado);
-    }    
-}
-
 /**
  * Quando chamada adiciona no div informado um input password com o nome "senhaCriptografada" e o id "senhabd". Muda o css class do div que contem a repetição de senha e apaga o seu valor.
  * @param idSenha div onde será colocado o input

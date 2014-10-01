@@ -57,7 +57,7 @@ public final class RepositoriesController {
         model.addAttribute("repId", id);
         model.addAttribute("repSize", size);
         model.addAttribute("recarregar", recarregar);
-        
+
         return "admin/repositories/show";
     }
 
@@ -71,7 +71,7 @@ public final class RepositoriesController {
         Repositorio rep = new Repositorio();
         rep.setUrl("http://");
         model.addAttribute("repModel", rep);
-        model.addAttribute("padraoMetadadosDAO", padraoDao);
+        model.addAttribute("padraoMetadados", padraoDao.getAll());
         return "admin/repositories/new";
     }
 
@@ -79,8 +79,7 @@ public final class RepositoriesController {
      * Actually saves the repository.
      *
      * @param rep the rep
-     * @return to the admin page in case of success, to repository creation page
-     * otherwise
+     * @return to the admin page in case of success, to repository creation page otherwise
      */
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String newDo(
@@ -90,20 +89,27 @@ public final class RepositoriesController {
 
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
+            //pega da base o padrao de metadados para que se possa listar os mapeamentos na interface
+            Integer idPadrao = rep.getPadraoMetadados().getId();
+            if (idPadrao != null) {
+                rep.setPadraoMetadados(padraoDao.get(idPadrao));
+            }
             model.addAttribute("repModel", rep);
-            model.addAttribute("padraoMetadadosDAO", padraoDao);
-            model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
+            model.addAttribute("padraoMetadados", padraoDao.getAll());
             return "admin/repositories/new";
         } else {
-            if (repDao.get(rep.getName()) != null) { //se retornar algo é porque já existe um atualizadorRep com esse nome
-                result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); //nao esta dentro da classe validator pq só executa isso quando for um atualizadorRep novo, quando editar não.
+             //se retornar algo é porque já existe um atualizadorRep com esse nome
+            if (repDao.get(rep.getName()) != null) {
+                //nao esta dentro da classe validator pq só executa isso quando for um atualizadorRep novo, quando editar não.
+                result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); 
 
                 model.addAttribute("mapSelecionado", rep.getMapeamento().getId());
                 model.addAttribute("repModel", rep);
-                model.addAttribute("padraoMetadadosDAO", padraoDao);
+                model.addAttribute("padraoMetadados", padraoDao.getAll());
                 model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
                 return "admin/repositories/new";
-            } else { //se retornar null é porque nao tem nenhum atualizadorRep com esse nome
+            } else { 
+                //se retornar null é porque nao tem nenhum atualizadorRep com esse nome
                 repDao.save(rep); //salva o novo atualizadorRep return
                 return "redirect:/admin/fechaRecarrega";
             }
@@ -121,7 +127,7 @@ public final class RepositoriesController {
             Model model) {
 
         model.addAttribute("repModel", repDao.get(id));
-        model.addAttribute("padraoMetadadosDAO", padraoDao);
+        model.addAttribute("padraoMetadados", padraoDao.getAll());
         model.addAttribute("idRep", id);
         return "admin/repositories/edit";
     }
@@ -139,11 +145,16 @@ public final class RepositoriesController {
             @PathVariable Integer id,
             BindingResult result,
             Model model) {
-
+        log.debug("Id padrao:" + rep.getPadraoMetadados().getMapeamentos());
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
+            //pega da base o padrao de metadados para que se possa listar os mapeamentos na interface
+            Integer idPadrao = rep.getPadraoMetadados().getId();
+            if (idPadrao != null) {
+                rep.setPadraoMetadados(padraoDao.get(idPadrao));
+            }
             model.addAttribute("repModel", rep);
-            model.addAttribute("padraoMetadadosDAO", padraoDao);
+            model.addAttribute("padraoMetadados", padraoDao.getAll());
             model.addAttribute("idRep", id);
             return "admin/repositories/edit";
         } else {
@@ -156,8 +167,7 @@ public final class RepositoriesController {
      * Ajax method to update (harvest new items) a repository.
      *
      * @param id the repository id
-     * @param apagar if true, delete everything and starts from sratch, if false
-     * harvests only new items
+     * @param apagar if true, delete everything and starts from sratch, if false harvests only new items
      * @return "1" in case of success, error string otherwise
      */
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
@@ -181,7 +191,7 @@ public final class RepositoriesController {
         String name = obj.getName();
         log.info("Deletando o repositório: " + name);
         repDao.delete(obj);
-        log.info("Repositório "+name+" deletado com sucesso.");
+        log.info("Repositório " + name + " deletado com sucesso.");
         return "ok";
     }
 

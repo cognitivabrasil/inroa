@@ -11,14 +11,14 @@ Primeira etapa do cadastro de um repositorio
     "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
-        
+
         <c:url var="root" value="/" />
         <script>rootUrl = "${root}";</script>
 
@@ -33,38 +33,26 @@ Primeira etapa do cadastro de um repositorio
         <script type="text/javascript" src="${validateOAI}"></script>
 
 
-        <c:url var="funcoesMapeamentoJs" value="/scripts/funcoesMapeamento.js" />
+
 
         <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
         <link rel="StyleSheet" href="${css }" type="text/css" />
-        <script type="text/javascript" src="${validateJs }"></script>
-        <script type="text/javascript" src="${funcoesJs }"></script>
+        <script type="text/javascript" src="${validateJs}"></script>
+        <script type="text/javascript" src="${funcoesJs}"></script>
 
-        <script language="JavaScript" type="text/javascript"
-                src="${funcoesMapeamentoJs}">
-            //funcoes javascript que chamam o ajax
-        </script>
-        <script type="text/javascript">
-            var myForm = new Validate();
-            myForm.addRules({id: 'name', option: 'required', error: '* Voc&ecirc; deve informar o nome do reposit&oacute;rio!'});
-            myForm.addRules({id: 'descricao', option: 'required', error: '* Deve ser informarmada uma descri&ccedil;&atilde;o!'});
-            myForm.addRules({id: 'padraoMetadados', option: 'required', error: '* Deve ser informado o padr&atilde;o dos metadados do repositorio!'});
-            myForm.addRules({id: 'mapeamento.id', option: 'required', error: '* Deve ser selecionado um mapeamento!'});
-            myForm.addRules({id: 'metadataPrefix', option: 'required', error: '* Deve ser informado o MetadataPrefix!'});
-            myForm.addRules({id: 'url', option: 'required', error: '* Deve ser informada uma url que responda ao protocolo OAI-PMH!'});
-        </script>
+        <c:url var="newRepJs" value="/scripts/admin/repositories/new.js" />
+        <script language="JavaScript" type="text/javascript" src="${newRepJs}"></script>
+
 
     </head>
-    <body
-        onload="verificaMapOnLoad('${padraoSelecionado}', '${mapSelecionado}', 'resultado');">
+    <body>
 
         <div id="page">
 
             <div class="subTitulo-center">&nbsp;Entre com as
                 informa&ccedil;&otilde;es para cadastrar um novo reposit&oacute;rio</div>
             <div class="EspacoAntes">&nbsp;</div>
-            <form:form method="post" modelAttribute="repModel"
-                       acceptCharset="utf-8"
+            <form:form method="post" modelAttribute="repModel" acceptCharset="utf-8"
                        onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="TextoDivAlerta" id="MensagemErro">
@@ -75,79 +63,95 @@ Primeira etapa do cadastro de um repositorio
                     reposit&oacute;rio</div>
                 <div class="LinhaEntrada">
                     <form:errors path="name" cssClass="ValueErro" />
-                    <div class="Label">Nome/Sigla:</div>
-                    <div class="Value">
-                        <form:input path="name" maxlength="45"/>
+                    <form:label path="name" cssErrorClass="error">Nome/Sigla:</form:label>
+                        <div class="Value">
+                        <form:input path="name" maxlength="45" cssErrorClass="error" />
                     </div>
                 </div>
+
                 <div class="LinhaEntrada">
                     <form:errors path="descricao" cssClass="ValueErro" />
-                    <div class="Label">Descri&ccedil;&atilde;o:</div>
-                    <div class="Value">
-                        <form:input path="descricao" maxlength="455"/>
+                    <form:label path="descricao" cssErrorClass="error">Descri&ccedil;&atilde;o:</form:label>
+                        <div class="Value">
+                        <form:input path="descricao" maxlength="455" cssErrorClass="error" />
                     </div>
                 </div>
 
-                <div class="subtitle">Sincroniza&ccedil;&atilde;o dos metadados</div>
+                <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
+                <div class="EspacoAntes">&nbsp;</div>
+
+
                 <div class="LinhaEntrada">
                     <form:errors path="url" cssClass="ValueErro" />
-                    <div class="Comentario">Ex: http://url.do.repositorio/request</div>
-                    <div class="msgError"></div>
-                    <div class="Label">URL que responde OAI-PMH:</div>
-                    <div class="Value">
-                        <form:input path="url" maxlength="200"  />
-                        &nbsp;
-                        <div id="resultadoTesteOAI" class="linkCantoDireito"></div>
+                    <form:label path="url" cssErrorClass="error">URL que responde OAI-PMH:</form:label>
+                        <div class="Value">
+                        <form:input path="url" maxlength="200" onFocus="this.className='inputSelecionado'" 
+                                    cssErrorClass="error"/>
+                        &nbsp;<div id="resultadoTesteOAI" class="linkCantoDireito"></div>
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
-                    <div class="Comentario">Se for mais de uma separar por ponto e
-                        v&iacute;rgula.</div>
-                    <div class="Comentario">Ex: com1;com2;com3</div>
-                    <form:errors path="colecoes" cssClass="ValueErro" />
-                    <div class="Label">Cole&ccedil;&otilde;es ou Comunidades
-                        (opcional):</div>
-                    <div class="Value">
-                        <form:input path="colecoesString" maxlength="45"/>
+                    <form:errors path="colecoesString" cssClass="ValueErro" />
+                    <div class="Comentario">
+                        Se for mais de uma separar por ponto e v&iacute;rgula.
+                    </div>
+                    <div class="Comentario">
+                        Ex: com1;com2;com3
+                    </div>
+                    <form:label path="colecoesString" cssErrorClass="error">Cole&ccedil;&otilde;es ou Comunidades:</form:label>                    
+                        <div class="Value">
+                        <form:input path="colecoesString" maxlength="45" />
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
                     <form:errors path="padraoMetadados.id" cssClass="ValueErro" />
-                    <div class="Label">Padr&atilde;o de metadados utilizado:</div>
-                    <div class="Value">
-                        <select name="padraoMetadados.id" id="padraoMetadados"
+                    <form:label path="padraoMetadados.id" cssErrorClass="error">Padr&atilde;o de metadados utilizado:</form:label>
+                        <div class="Value">
+                        <c:url var="mapeamentoUrl" value="/admin/mapeamentos/listaMapeamentoPadraoSelecionado?mapSelecionado=0&idpadrao="/>
 
+                        <form:select id="padraoMetadados" path="padraoMetadados.id" title="Padrão de metadados" 
+                                     cssErrorClass="error" url="${mapeamentoUrl}">
+                            <form:option value="0">Selecione</form:option>
+                            <form:options items="${padraoMetadados}" itemValue="id" itemLabel="name" />
+                        </form:select>
 
-                                onChange="selecionaMapeamento('resultado', this.value, 0);">
-
-                            <c:if test="${empty padraoSelecionado || padraoSelecionado==0}">
-                                <option value="0" selected>Selecione
-                                </c:if>
-                                <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}">
-
-                                <option value="${padraoMet.id}"
-                                        ${padraoMet.id==padraoSelecionado ? 'selected':''}>
-                                    ${fn:toUpperCase(padraoMet.name)}
-                                </c:forEach>
-                        </select>
                     </div>
                 </div>
 
                 <div class="LinhaEntrada">
                     <form:errors path="mapeamento.id" cssClass="ValueErro" />
-                    <div class="Label">Mapeamento:</div>
-                    <div id='resultado'>
-                        <div class="Value">Selecione um padr&atilde;o</div>
-                        <input type="hidden" id="mapeamento.id" name="mapeamento.id"
-                               value=""> <input type="hidden" id="metadataPrefix"
-                               name="metadataPrefix" value=""> <input type="hidden"
-                               id="namespace" name="namespace" value="">
+                    <form:label path="mapeamento.id" cssErrorClass="error">Mapeamento:</form:label>
+                        <div id='resultadoMap'>
+                        <c:choose>
+                            <c:when test="${empty repModel.padraoMetadados.mapeamentos}">
+                                <div class="Value">Selecione um padr&atilde;o</div>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="map" items="${repModel.padraoMetadados.mapeamentos}">
+                                    <div class="ValueIndex">
+                                        <input id="mapeamento.id" name="mapeamento.id"  type="radio" value="${map.id}"
+                                               ${map.id == repModel.mapeamento.id ? 'checked=true':''} >
+                                        ${map.name} (${map.description})
+                                    </div>
+                                </c:forEach>
+                                <div> &nbsp;</div>
+                                <form:errors path="metadataPrefix" cssClass="ValueErro" />
+                                <form:label path="metadataPrefix" cssErrorClass="error">MetadataPrefix:</form:label>
+                                    <div class="Value">
+                                    <form:input path="metadataPrefix" maxlength="45" />
+                                </div>
+                                <form:errors path="namespace" cssClass="ValueErro" />
+                                <form:label path="namespace" cssErrorClass="error">NameSpace:</form:label>
+                                    <div class="Value">
+                                    <form:input path="namespace" maxlength="45" />
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+
                     </div>
 
-
-                    <div class="Espaco">&nbsp;</div>
                 </div>
 
                 <div class="LinhaEntrada">
