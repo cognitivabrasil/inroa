@@ -73,11 +73,11 @@ public class AppConfig {
     @Bean(name = "defaultProperties")
     public Properties febConfigDefaultProperties() {
         Properties p = new Properties();
-        p.setProperty("Postgres.username", "feb");
-        p.setProperty("Postgres.password", "feb@RNP");
-        p.setProperty("Postgres.database", "federacao");
-        p.setProperty("Postgres.host", "127.0.0.1");
-        p.setProperty("Postgres.port", "5432");
+        p.setProperty("Database.username", "feb");
+        p.setProperty("Database.password", "feb@RNP");
+        p.setProperty("Database.database", "federacao");
+        p.setProperty("Database.host", "127.0.0.1");
+        p.setProperty("Database.port", "5432");
 
         return p;
     }

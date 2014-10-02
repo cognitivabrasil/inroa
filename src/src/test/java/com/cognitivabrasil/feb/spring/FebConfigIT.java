@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -51,11 +52,12 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         c = initFebConfig();
 
         defaultProperties = new Properties();
-        defaultProperties.setProperty("Postgres.port", "3333");
-        defaultProperties.setProperty("Postgres.password", "pwd");
-        defaultProperties.setProperty("Postgres.database", "db");
-        defaultProperties.setProperty("Postgres.username", "user");
-        defaultProperties.setProperty("Postgres.host", "127.0.0.1");
+        defaultProperties.setProperty("Database.type", "Postgres");
+        defaultProperties.setProperty("Database.port", "3333");
+        defaultProperties.setProperty("Database.password", "pwd");
+        defaultProperties.setProperty("Database.database", "db");
+        defaultProperties.setProperty("Database.username", "user");
+        defaultProperties.setProperty("Database.host", "127.0.0.1");
 
     }
 
@@ -75,6 +77,24 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         assertThat(c.getPassword(), equalTo("feb@RNP"));
         assertThat(c.getDatabase(), equalTo("federacao"));
 
+    }
+    
+    @Test
+    public void loadFromFilePostgresDatabaseType() {
+        c.setFile(new File("src/main/resources/feb.properties"));
+        c.setDefaultProperties(new Properties());
+        c.postConstruct();
+
+        assertThat(c.getDatabaseType(), equalTo(Database.POSTGRESQL));    
+    }
+    
+    @Test
+    public void loadFromFileOracleDatabaseType() {
+        c.setFile(new File("src/main/resources/feb-oracle.properties"));
+        c.setDefaultProperties(new Properties());
+        c.postConstruct();
+
+        assertThat(c.getDatabaseType(), equalTo(Database.ORACLE));    
     }
 
     /**
@@ -109,8 +129,8 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         Properties p = new Properties();
         p.load(new StringReader(w.toString()));
 
-        assertThat((String) p.getProperty("Postgres.port"), equalTo("5432"));
-        assertThat((String) p.getProperty("Postgres.password"), startsWith("ENC("));
+        assertThat((String) p.getProperty("Database.port"), equalTo("5432"));
+        assertThat((String) p.getProperty("Database.password"), startsWith("ENC("));
     }
 
     /**

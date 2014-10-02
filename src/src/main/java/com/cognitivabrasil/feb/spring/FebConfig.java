@@ -18,6 +18,7 @@ import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.vendor.Database;
 
 /**
  * This class represents the FEB (database) configuration.
@@ -51,6 +52,8 @@ public class FebConfig {
     private String database;
     private String filename;
 
+    private Database databaseType;
+
     @Autowired
     public void setEncryptor(StringEncryptor e) {
         encryptor = e;
@@ -58,11 +61,11 @@ public class FebConfig {
 
     protected void save(Writer w) throws IOException {
         Properties n = new Properties();
-        n.setProperty("Postgres.host", host);
-        n.setProperty("Postgres.port", port.toString());
-        n.setProperty("Postgres.username", username);
-        n.setProperty("Postgres.database", database);
-        n.setProperty("Postgres.password", "ENC(" + encryptor.encrypt(password)
+        n.setProperty("Database.host", host);
+        n.setProperty("Database.port", port.toString());
+        n.setProperty("Database.username", username);
+        n.setProperty("Database.database", database);
+        n.setProperty("Database.password", "ENC(" + encryptor.encrypt(password)
                 + ")");
 
         n.store(w, null);
@@ -126,11 +129,19 @@ public class FebConfig {
         } catch (IOException e) {
             log.warn("Config file is missing, using defaults.");
         }
-        host = properties.getProperty("Postgres.host");
-        port = Integer.parseInt(properties.getProperty("Postgres.port"));
-        username = properties.getProperty("Postgres.username");
-        database = properties.getProperty("Postgres.database");
-        password = properties.getProperty("Postgres.password");
+        
+        if(properties.getProperty("Database.type", "Postgres").equals("Oracle")) {
+            databaseType = Database.ORACLE;
+        }
+        else {
+            databaseType = Database.POSTGRESQL;
+        }
+        
+        host = properties.getProperty("Database.host");
+        port = Integer.parseInt(properties.getProperty("Database.port"));
+        username = properties.getProperty("Database.username");
+        database = properties.getProperty("Database.database");
+        password = properties.getProperty("Database.password");
     }
 
     public String getHost() {
@@ -199,5 +210,12 @@ public class FebConfig {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
+    }
+
+    /**
+     * @return o tipo da base de dados (Postgresql ou Oracle).
+     */
+    public Database getDatabaseType() {
+        return databaseType;
     }
 }
