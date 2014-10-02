@@ -47,9 +47,11 @@ public class Robo {
     @Transactional
     public void run() {
 
-        log.info(">>>");
-        log.info(">>> Iniciando o Robô.");
-        log.info(">>>");
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>");
+        log.info(">>");
+        log.info(">> Iniciando o Robô.");
+        log.info(">>");
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>");
 
         Long inicioRobo = System.currentTimeMillis();
 
