@@ -4,8 +4,71 @@ FEB
 Dependências externas
 ----------------------------------------------------
 * Java 8 
-* PostgreSQL a partir de 8.4
+* SQL
+ - PostgreSQL a partir de 8.4
+ ou
+ - Oracle XE 11g
 * Solr
+
+Instalação e configuração do Oracle XE
+-----------------------------------------------------------
+Instruções completas em:
+
+https://registry.hub.docker.com/u/alexeiled/docker-oracle-xe-11g/
+
+Modo rápido:
+
+```
+ sudo docker run -d -p 49160:22 -p 49161:1521 -p 49162:8080 alexeiled/docker-oracle-xe-11g
+```
+
+### Instalar Oracle SQL Developer ###
+http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html
+
+Baixar a última versão: "Other Platforms"
+Obs: Tem que aceitar a licença e logar no sistema para poder efetuar o download do instalador.
+
+Instalar do diretório /opt:
+
+```
+sudo unzip sqldeveloper-*-no-jre.zip -d /opt/
+sudo chmod +x /opt/sqldeveloper/sqldeveloper.sh
+sudo ln -s /opt/sqldeveloper/sqldeveloper.sh /usr/bin/sqldeveloper
+sudo chmod +x /opt/sqldeveloper/sqldeveloper/bin/sqldeveloper
+```
+
+Editar /opt/sqldeveloper/sqldeveloper.sh:
+
+```
+#!/bin/bash
+cd /opt/sqldeveloper/sqldeveloper/bin
+./sqldeveloper "$@"
+```
+
+Editar o product.conf e definir o JavaHome:
+Ex:
+
+```
+sudo vim ~/.sqldeveloper/4.0.0/product.conf
+
+SetJavaHome /usr/lib/jvm/java-7-oracle
+```
+
+Rodar:
+```
+sudo sqldeveloper
+```
+
+### Criar base Oracle ###
+
+De dentro do sqldeveloper, conecte na base _xe_ no _localhost_
+na porta _49161_ com username _system_ e senha _oracle_.
+
+Importe, nessa ordem, os arquivos:
+  1. schema.sql
+  2. data.sql
+  3. oracle\_schema.sql
+
 
 Criação da base de dados PostgreSQL
 ----------------------------------------------------
@@ -24,6 +87,30 @@ Isso irá criar uma base de dados *federacao* com senha
 
 **IMPORTANTE! MUDE A SENHA USAR A INSTALAÇÃO PARA QUALQUER
 COISA ALÉM DE DESENVOLVIMENTO**
+
+Escolhendo base de dados
+-----------------------------------------------------------------
+
+A base de dados será escolhida da seguinte forma:
+
+1. Se houver uma variavel de ambiente FEB\_DATABASE\_TYPE o feb
+vai utilizar as informações das variáveis de ambiente para tentar
+conectar na base e ignorar outras.
+2. Se não houve variáveis de ambiente, mas houver um arquivo 
+/etc/feb/feb.properties o Feb vai utilizar informações deste arquivo.
+3. Se não houver nem variáveis de ambiente nem o arquivo, o Feb vai
+tentar se conectar na base padrão.
+
+### Variáveis de ambiente ###
+
+FEB\_DATABASE\_TYPE - tipo da base: "Oracle" ou "Postgres"
+FEB\_DATABASE\_HOST - host da base
+FEB\_DATABASE\_PORT - porta da base
+FEB\_DATABASE\_DATABASE - nome da base
+FEB\_DATABASE\_USERNAME - nome de usuário para se conectar
+FEB\_DATABASE\_PASSWORD - senha para se conectar
+
+
 
 Configuração do Solr
 ----------------------------------------------------
@@ -115,6 +202,7 @@ REGRA 2: Se necessário for
 base necessária
 	* atualizar os arquivos debian/postinst para atualizar
 a base em caso de upgrade via instalador, caso possível
+	* Manter o schema.sql e o postgres\_schema.sql sincronizados.
 	* obrigatório fazer um BUMP da versão minor ou major.
 
 

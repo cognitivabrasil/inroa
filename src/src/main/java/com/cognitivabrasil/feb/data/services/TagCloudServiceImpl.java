@@ -50,11 +50,17 @@ public class TagCloudServiceImpl implements TagCloudService {
             return tagCloudCache;
         }
         
+        log.debug("buscando tagCloud...");
+        
         Map<String, Integer> m = new TreeMap<>();
         
         Date d = getDate();
 
+        log.debug("searches.getSearches(" + getMaxSize() + ", " + d + ")");
         List<Search> l = searches.getSearches(getMaxSize(), d);
+        
+        log.debug("Got searches: " + l);
+
         log.trace("Tag cloud. Número de resultados: " + l.size() + " Número máximo permitido: " + getMaxSize());
         for (Search s : l) {
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 import org.springframework.core.style.ToStringCreator;
 
 /**
@@ -39,7 +42,8 @@ public class SubFederacao extends UpdateData {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DADOS_SUBFEDERACOES_SEQ")
+    @SequenceGenerator(name="DADOS_SUBFEDERACOES_SEQ", sequenceName="DADOS_SUBFEDERACOES_SEQ")
     public Integer getId() {
         return this.id;
     }
@@ -66,10 +70,10 @@ public class SubFederacao extends UpdateData {
     public String getUrlOAIPMH() {
         String oai = getUrl();
         //se a url não terminar com barra concatena a barra
-        if (!oai.endsWith("/")) {
+        if (oai!=null && !oai.endsWith("/")) {
             oai += "/";
         }
-        if (version.equals("2.1")) {
+        if (version!=null && version.equals("2.1")) {
             return oai + "OAIHandler";
         } else {
             return oai + "oai";

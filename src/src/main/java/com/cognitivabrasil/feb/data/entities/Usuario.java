@@ -23,6 +23,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -65,7 +66,8 @@ public class Usuario implements UserDetails, FebDomainObject {
      * @return the id
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIOS_SEQ")
+    @SequenceGenerator(name="USUARIOS_SEQ", sequenceName="USUARIOS_SEQ")
     public Integer getId() {
         return id;
     }

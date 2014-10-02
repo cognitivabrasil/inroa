@@ -5,7 +5,6 @@ echo "Creating user"
 sudo -u postgres psql -c "CREATE USER feb WITH PASSWORD 'feb@RNP'" > /dev/null
 echo "Criando base local..."
 sudo -u postgres createdb -O feb -E 'UTF-8' federacao
-sudo -u postgres psql federacao < ./src/main/resources/sql/schema.sql > /dev/null
 sudo -u postgres psql federacao < ./src/main/resources/sql/postgres_schema.sql > /dev/null
 echo "Populando base com dados iniciais..."
 sudo -u postgres psql federacao < ./src/main/resources/sql/data.sql > /dev/null

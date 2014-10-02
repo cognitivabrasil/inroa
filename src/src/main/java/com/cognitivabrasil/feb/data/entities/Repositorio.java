@@ -3,7 +3,6 @@ package com.cognitivabrasil.feb.data.entities;
 
 import java.util.*;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -49,7 +49,8 @@ public class Repositorio extends UpdateData{
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPOSITORIOS_SEQ")
+    @SequenceGenerator(name="REPOSITORIOS_SEQ", sequenceName="REPOSITORIOS_SEQ")
     public Integer getId() {
         return this.id;
     }
@@ -108,7 +109,7 @@ public class Repositorio extends UpdateData{
      */
     @Transient
     public Set<String> getColecoes() {
-        if (colecoesInternal.isEmpty()) {
+        if (colecoesInternal == null || colecoesInternal.isEmpty()) {
             return new HashSet<>();
         } else {
             return new HashSet<>(Arrays.asList(colecoesInternal.split(";")));
