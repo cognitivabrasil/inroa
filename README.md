@@ -70,6 +70,27 @@ Importe, nessa ordem, os arquivos:
   3. oracle\_schema.sql
 
 
+### Erros comuns no Oracle ###
+
+#### ORA-01653: unable to extend table SYSTEM.DOCUMENTOS by 1024 in tablespace SYSTEM ####
+
+Se o sistema falhar com a exceção java.sql.SQLException: _ORA-01653: unable to extend table SYSTEM.DOCUMENTOS by 1024 in tablespace SYSTEM_ provavelmente está faltando espaço no banco de dados.
+
+Para listar as bases por ordem de ocupação:
+
+```
+select * from dba_tablespace_usage_metrics order by used_percent desc;
+```
+
+Se a base SYSTEM aparecer com quase 100%, aumente o tamanho dela, por exemplo:
+
+```
+ALTER DATABASE
+  DATAFILE '/u01/app/oracle/oradata/XE/system.dbf'
+  RESIZE 50000M
+```
+
+
 Criação da base de dados PostgreSQL
 ----------------------------------------------------
 
