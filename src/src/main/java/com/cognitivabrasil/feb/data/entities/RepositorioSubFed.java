@@ -32,8 +32,8 @@ public class RepositorioSubFed{
     private Set<Document> documentos;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPOSITORIOS_SUBFED_SEQ")
-    @SequenceGenerator(name="REPOSITORIOS_SUBFED_SEQ", sequenceName="REPOSITORIOS_SUBFED_SEQ")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPOSITORIOS_SUBFED_ID_SEQ")
+    @SequenceGenerator(name="REPOSITORIOS_SUBFED_ID_SEQ", sequenceName="REPOSITORIOS_SUBFED_ID_SEQ")
     public int getId() {
         return id;
     }

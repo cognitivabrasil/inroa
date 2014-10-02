@@ -42,8 +42,8 @@ public class SubFederacao extends UpdateData {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DADOS_SUBFEDERACOES_SEQ")
-    @SequenceGenerator(name="DADOS_SUBFEDERACOES_SEQ", sequenceName="DADOS_SUBFEDERACOES_SEQ")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DADOS_SUBFEDERACOES_ID_SEQ")
+    @SequenceGenerator(name="DADOS_SUBFEDERACOES_ID_SEQ", sequenceName="DADOS_SUBFEDERACOES_ID_SEQ")
     public Integer getId() {
         return this.id;
     }

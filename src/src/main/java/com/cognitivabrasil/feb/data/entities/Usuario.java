@@ -66,8 +66,8 @@ public class Usuario implements UserDetails, FebDomainObject {
      * @return the id
      */
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIOS_SEQ")
-    @SequenceGenerator(name="USUARIOS_SEQ", sequenceName="USUARIOS_SEQ")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="USUARIOS_ID_SEQ")
+    @SequenceGenerator(name="USUARIOS_ID_SEQ", sequenceName="USUARIOS_ID_SEQ")
     public Integer getId() {
         return id;
     }

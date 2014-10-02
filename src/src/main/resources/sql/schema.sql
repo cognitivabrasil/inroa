@@ -7,7 +7,7 @@ CREATE TABLE consultas (
 );
 
 
-CREATE SEQUENCE DADOS_SUBFEDERACOES_SEQ INCREMENT BY 1 START WITH 100;
+CREATE SEQUENCE DADOS_SUBFEDERACOES_ID_SEQ INCREMENT BY 1 START WITH 100;
 CREATE TABLE dados_subfederacoes (
     id INT NOT NULL,
     nome VARCHAR(400) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE dados_subfederacoes (
 );
 
 
-CREATE SEQUENCE padraometadados_SEQ INCREMENT BY 1 START WITH 100;
+CREATE SEQUENCE padraometadados_ID_SEQ INCREMENT BY 1 START WITH 100;
 CREATE TABLE padraometadados (
     id INT NOT NULL,
     nome character varying(45) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE padraometadados (
     PRIMARY KEY (id)
 );
 
-CREATE SEQUENCE mapeamentos_SEQ INCREMENT BY 1 START WITH 100;
+CREATE SEQUENCE mapeamentos_ID_SEQ INCREMENT BY 1 START WITH 100;
 CREATE TABLE mapeamentos (
     id INT NOT NULL,
     nome character varying(45) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE mapeamentos (
 );
 
 
-CREATE SEQUENCE repositorios_SEQ INCREMENT BY 1 START WITH 100;
+CREATE SEQUENCE repositorios_ID_SEQ INCREMENT BY 1 START WITH 100;
 
 CREATE TABLE repositorios (
     id INT NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE repositorios (
     FOREIGN KEY (mapeamento_id) REFERENCES mapeamentos(id)
 );
 
-CREATE SEQUENCE repositorios_subfed_SEQ INCREMENT BY 1 START WITH 100;
+CREATE SEQUENCE repositorios_subfed_ID_SEQ INCREMENT BY 1 START WITH 100;
 
 CREATE TABLE repositorios_subfed (
     id INT NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE repositorios_subfed (
     FOREIGN KEY (id_subfed) REFERENCES dados_subfederacoes(id) ON DELETE CASCADE
 );
 
-CREATE SEQUENCE documentos_SEQ INCREMENT BY 1 START WITH 100;
+CREATE SEQUENCE documentos_ID_SEQ INCREMENT BY 1 START WITH 100;
 CREATE TABLE documentos (
     id INT NOT NULL,
     titulo VARCHAR(300),
@@ -89,7 +89,7 @@ CREATE TABLE documentos (
     FOREIGN KEY (id_rep_subfed) REFERENCES repositorios_subfed(id) ON DELETE CASCADE
 );
 
-CREATE SEQUENCE usuarios_SEQ INCREMENT BY 1 START WITH 100;
+CREATE SEQUENCE usuarios_ID_SEQ INCREMENT BY 1 START WITH 100;
 
 CREATE TABLE usuarios (
     id INT NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE usuarios (
     PRIMARY KEY (id)
 );
 
-CREATE SEQUENCE searches_seq INCREMENT BY 1 START WITH 100;
+CREATE SEQUENCE searches_ID_SEQ INCREMENT BY 1 START WITH 100;
 CREATE TABLE searches (
     id INT NOT NULL,
     text VARCHAR(400),

@@ -49,8 +49,8 @@ public class Repositorio extends UpdateData{
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPOSITORIOS_SEQ")
-    @SequenceGenerator(name="REPOSITORIOS_SEQ", sequenceName="REPOSITORIOS_SEQ")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="REPOSITORIOS_ID_SEQ")
+    @SequenceGenerator(name="REPOSITORIOS_ID_SEQ", sequenceName="REPOSITORIOS_ID_SEQ")
     public Integer getId() {
         return this.id;
     }

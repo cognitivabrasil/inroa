@@ -56,8 +56,8 @@ public class Document implements java.io.Serializable,
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DOCUMENTOS_SEQ")
-    @SequenceGenerator(name="DOCUMENTOS_SEQ", sequenceName="DOCUMENTOS_SEQ")    
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DOCUMENTOS_ID_SEQ")
+    @SequenceGenerator(name="DOCUMENTOS_ID_SEQ", sequenceName="DOCUMENTOS_ID_SEQ")    
     public int getId() {
         return this.id;
     }

@@ -43,8 +43,8 @@ public class Mapeamento implements MetadataConversorInterface, FebDomainObject {
      * @return the id
      */
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MAPEAMENTOS_SEQ")
-    @SequenceGenerator(name="MAPEAMENTOS_SEQ", sequenceName="MAPEAMENTOS_SEQ")        
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MAPEAMENTOS_ID_SEQ")
+    @SequenceGenerator(name="MAPEAMENTOS_ID_SEQ", sequenceName="MAPEAMENTOS_ID_SEQ")        
     public Integer getId() {
         return id;
     }

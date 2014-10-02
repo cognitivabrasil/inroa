@@ -38,8 +38,8 @@ public class Search {
     }
     
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEARCHES_SEQ")
-    @SequenceGenerator(name="SEARCHES_SEQ", sequenceName="SEARCHES_SEQ")    
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEARCHES_ID_SEQ")
+    @SequenceGenerator(name="SEARCHES_ID_SEQ", sequenceName="SEARCHES_ID_SEQ")    
     public Integer getId() {
         return this.id;
     }

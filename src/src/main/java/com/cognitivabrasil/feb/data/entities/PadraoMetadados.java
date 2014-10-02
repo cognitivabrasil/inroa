@@ -48,8 +48,8 @@ public class PadraoMetadados implements java.io.Serializable, FebDomainObject {
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PADRAOMETADADOS_SEQ")
-    @SequenceGenerator(name="PADRAOMETADADOS_SEQ", sequenceName="PADRAOMETADADOS_SEQ")        
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PADRAOMETADADOS_ID_SEQ")
+    @SequenceGenerator(name="PADRAOMETADADOS_ID_SEQ", sequenceName="PADRAOMETADADOS_ID_SEQ")        
     public Integer getId() {
         return id;
     }
