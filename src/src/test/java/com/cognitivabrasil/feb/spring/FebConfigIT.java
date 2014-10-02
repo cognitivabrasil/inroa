@@ -43,6 +43,8 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
 
     private FebConfig initFebConfig() {
         FebConfig conf = new FebConfig();
+        conf.setFebEnvironmentVariables(new FebEnvironmentVariables());
+
         conf.setEncryptor(stringEncryptor);
         return conf;
     }
@@ -50,6 +52,7 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
     @Before
     public void before() {
         c = initFebConfig();
+
 
         defaultProperties = new Properties();
         defaultProperties.setProperty("Database.type", "Postgres");
@@ -152,6 +155,8 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         c.setFile(f);
         c.setDefaultProperties(defaultProperties);
         c.postConstruct();
+        
+        c.setDatabaseType(Database.ORACLE);
 
         c.save();
         // now, open it and check
@@ -161,12 +166,32 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         c.setDefaultProperties(new Properties());
         c.postConstruct();
 
+        assertThat(c.getDatabaseType(), equalTo(Database.ORACLE));
         assertThat(c.getPort(), equalTo(3333));
         assertThat(c.getDatabase(), equalTo("db"));
         assertThat(c.getPassword(), equalTo("pwd"));
         assertThat(c.getHost(), equalTo("127.0.0.1"));
 
         f.delete();
+    }
+    
+    @Test 
+    public void environmentHasPriority() {
+        FebEnvironmentVariables env = new FebEnvironmentVariables();
+        
+        env.setDatabaseType("Oracle");
+        env.setDatabaseDatabase("EnvironmentDB");
+        env.setDatabaseHost("host");
+        env.setDatabasePort("200");
+        env.setDatabaseUsername("user");
+        env.setDatabasePassword("pass");
+        
+        c.setFebEnvironmentVariables(env);
+        c.setFile(new File("src/main/resources/feb.properties"));
+        c.setDefaultProperties(defaultProperties);
+        c.postConstruct();
+        
+        assertThat(c.getDatabase(), equalTo("EnvironmentDB"));
     }
 
     @Test

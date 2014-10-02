@@ -88,10 +88,29 @@ Isso irá criar uma base de dados *federacao* com senha
 **IMPORTANTE! MUDE A SENHA USAR A INSTALAÇÃO PARA QUALQUER
 COISA ALÉM DE DESENVOLVIMENTO**
 
-## Rodando com o Postgres ##
+Escolhendo base de dados
+-----------------------------------------------------------------
 
-Para rodar com o Postgres, é necessário ativar o perfil
-_postgres_ do Spring, que irá carregar os beans necessários.
+A base de dados será escolhida da seguinte forma:
+
+1. Se houver uma variavel de ambiente FEB\_DATABASE\_TYPE o feb
+vai utilizar as informações das variáveis de ambiente para tentar
+conectar na base e ignorar outras.
+2. Se não houve variáveis de ambiente, mas houver um arquivo 
+/etc/feb/feb.properties o Feb vai utilizar informações deste arquivo.
+3. Se não houver nem variáveis de ambiente nem o arquivo, o Feb vai
+tentar se conectar na base padrão.
+
+### Variáveis de ambiente ###
+
+FEB\_DATABASE\_TYPE - tipo da base: "Oracle" ou "Postgres"
+FEB\_DATABASE\_HOST - host da base
+FEB\_DATABASE\_PORT - porta da base
+FEB\_DATABASE\_DATABASE - nome da base
+FEB\_DATABASE\_USERNAME - nome de usuário para se conectar
+FEB\_DATABASE\_PASSWORD - senha para se conectar
+
+
 
 Configuração do Solr
 ----------------------------------------------------

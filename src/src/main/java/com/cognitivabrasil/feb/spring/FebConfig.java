@@ -16,9 +16,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.vendor.Database;
+
+import com.cognitivabrasil.feb.AppConfig;
 
 /**
  * This class represents the FEB (database) configuration.
@@ -26,10 +29,12 @@ import org.springframework.orm.jpa.vendor.Database;
  * It has accessors for the common database parameters. It should be used as a managed bean, and it has to be configured
  * to receive, by injection, a {@link File} and a {@link Properties}.
  *
- * It will try to load the properties from the File, but if it doesn't exist, it will use those in the Properties. The
- * password will be saved ENCRYPTED in the file.
+ * It will try to load the properties the Envirnoment, if not available it will try to load it from the File, 
+ * and finally it will use those in the Properties (default) ( {@link AppConfig#febConfigDefaultProperties()} ).
  *
  * To save the file, you have to make sure that the destination folder is writable by the Servlet container.
+ * 
+ * @see FebEnvironmentVariables
  *
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
  *
@@ -38,7 +43,7 @@ import org.springframework.orm.jpa.vendor.Database;
 //TODO: fazer ter configuração padrão
 public class FebConfig {
 
-    private static final Logger log = Logger.getLogger(FebConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(FebConfig.class);
 
     private StringEncryptor encryptor;
 
@@ -54,13 +59,22 @@ public class FebConfig {
 
     private Database databaseType;
 
+    private FebEnvironmentVariables environmentVariables;
+
     @Autowired
     public void setEncryptor(StringEncryptor e) {
         encryptor = e;
     }
+    
+    @Autowired
+    public void setFebEnvironmentVariables(FebEnvironmentVariables env) {
+        log.debug("Environment variables = " + env);
+        environmentVariables = env;
+    }
 
     protected void save(Writer w) throws IOException {
         Properties n = new Properties();
+        n.setProperty("Database.type", databaseType == Database.ORACLE ? "Oracle" : "Postgres");
         n.setProperty("Database.host", host);
         n.setProperty("Database.port", port.toString());
         n.setProperty("Database.username", username);
@@ -120,7 +134,14 @@ public class FebConfig {
     public void postConstruct() {
         Properties p = new EncryptableProperties(encryptor);
         try {
-            if (file != null) {
+            if(environmentVariables.getDatabaseType() != null) {
+                log.info("Utilizando informações de variáveis do ambiente para configuração...");
+                
+                properties = environmentVariables.getProperties();
+            }
+            else if (file != null) {
+                log.info("Usando informações de arquivo de configuração...");
+                
                 InputStream s = new FileInputStream(file);
                 p.load(s);
                 properties = p;
@@ -217,5 +238,9 @@ public class FebConfig {
      */
     public Database getDatabaseType() {
         return databaseType;
+    }
+
+    public void setDatabaseType(Database t) {
+        databaseType = t;
     }
 }
