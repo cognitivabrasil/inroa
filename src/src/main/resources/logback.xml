@@ -59,7 +59,7 @@
 		<appender-ref ref="UPDATE" />
 	</logger>
 
-	<logger name="com.cognitivabrasil.feb.solr">
+	<logger name="com.cognitivabrasil.feb.solr" level="DEBUG">
 		<appender-ref ref="UPDATE" />
 	</logger>
 
@@ -71,7 +71,7 @@
 		<appender-ref ref="SEARCHES" />
 	</logger>
 
-	<logger name="com.cognitivabrasil" level="DEBUG" />
+	<logger name="com.cognitivabrasil" level="INFO" />
 
 	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
