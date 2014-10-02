@@ -1,0 +1,87 @@
+/*!
+ * Página desenvolvida baseada em:
+ * Start Bootstrap - Landing Page Bootstrap Theme (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+
+html { 
+    height: 100%; /* forces page height to equal inner window height. */
+    background: url(../imagens/bg.jpg) no-repeat;
+    background-position: center;
+}
+
+body { 
+    position: absolute;
+    top:0; bottom:0;
+    left:0; right:0;
+    background: url(../imagens/hex.png) repeat-x;
+}
+
+.intro-message {
+    position: relative;
+    padding-bottom: 20%;
+}
+
+@media(max-width:767px) {
+    .intro-message {
+        padding-bottom: 15%;
+    }
+}
+
+footer {
+    padding: 3px;
+    background-color: #f1f1f1;
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    margin-bottom:0px;
+}
+
+footer a {
+    font-family: "Open Sans",Arial,Helvetica,sans-serif;
+    color: #606060 !important;
+    font-weight: 700;
+}
+
+#wrapper-barra-brasil {
+    height: 100%;
+}
+
+#logo{    
+    margin-bottom: 20px;
+}
+
+#searchBox {
+    -webkit-box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow:    0px 20px 20px rgba(0, 0, 0, 0.2);
+    box-shadow:         0px 20px 20px rgba(0, 0, 0, 0.2);
+}
+
+#searchBox input,#searchBox button{
+    font-size: 20px;
+    height: 45px;
+}
+
+#barra-brasil {
+    margin-bottom: 20px;    
+}
+
+#lnkAvancada {
+    float: right;
+    margin-right: 120px;
+    margin-top: 10px;
+    color: #a6e1ec;
+    font-size: 18px;
+}
+
+@media (min-width: 1200px){
+    .container {
+        width: 800px;
+    }
+}
+
+/*tirar o texto de 'buscar' em dispositivos médios*/
+/*remover o botão de busca em dispositivos pequenos*/

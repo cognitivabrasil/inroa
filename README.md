@@ -78,7 +78,7 @@ e popular o banco de dados com os dados iniciais, e fazer
 mesmo com a base de teste:
 
 ```
-cd src/sql
+cd src/
 sh create.sh
 ```
 
