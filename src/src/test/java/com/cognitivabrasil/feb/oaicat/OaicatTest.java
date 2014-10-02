@@ -137,6 +137,9 @@ public class OaicatTest {
         request.addParameter("metadataPrefix", "obaa");
 
         servlet.doGet(request, response);
+        
+        System.out.println("======================================");
+        System.out.println(response.getContentAsString());
 
         String resumptionToken = getResumptionToken(response.getContentAsString());
 

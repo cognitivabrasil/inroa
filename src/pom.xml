@@ -111,7 +111,7 @@
 		<dependency>
 			<groupId>cognitivabrasil</groupId>
 			<artifactId>oaicat</artifactId>
-			<version>1.4</version>
+			<version>1.5</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>slf4j-log4j12</artifactId>
