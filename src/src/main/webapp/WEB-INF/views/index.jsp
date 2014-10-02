@@ -3,6 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <c:url var="images" value="/imagens" />
 <c:url var="index" value="/" />
 <c:url var="adm" value="/admin" />
@@ -21,9 +22,9 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        
-        
-        
+
+
+
 
         <title>Infraestrutura Nacional de Repositórios de Objetos de Aprendizagem</title>
 
@@ -35,7 +36,7 @@
 
         <!-- Custom Fonts -->
         <link rel="StyleSheet" href="${fontawsome}" type="text/css">
-        
+
         <!--conferir as fontes do designer-->
         <!--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
 
@@ -45,7 +46,7 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
+
 
     </head>
 
@@ -71,17 +72,19 @@
                     <div class="intro-message">
 
                         <img id="logo" src="${images}/logo.png" alt="" />
+                        
+                        <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">
+                            <div id="searchBox" class="input-group">
 
-                        <div id="searchBox" class="input-group">
-
-                            <input type="text" class="form-control" placeholder="Termo de busca" value="" />
-                            <span class="input-group-btn">
-                                <button class="btn btn-success" type="submit">
-                                    <i class="fa fa-search"> Buscar</i></button>
-                            </span>
-                        </div>
-                        <!-- /.input-group -->
-
+                                <form:input path="consulta" type="text" class="form-control" placeholder="Termo de busca" value="" />
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success" type="submit">
+                                        <i class="fa fa-search"> Buscar</i></button>
+                                </span>
+                            </div>
+                            <!-- /.input-group -->                            
+                        </form:form>
+                            
                         <a id="lnkAvancada" href="./buscaAvancada">Busca Avançada</a>
                     </div>
                 </div>
@@ -110,8 +113,8 @@
 
     <%@include file="googleAnalytics"%>
 
-    
-        
+
+
     <!-- jQuery Version 1.11.0 -->
     <!--<script src="scripts/jquery-1.11.0.js"></script>-->
     <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
