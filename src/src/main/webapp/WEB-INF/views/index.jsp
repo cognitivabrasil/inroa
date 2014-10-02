@@ -3,7 +3,13 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<c:url var="images" value="/imagens" />
+<c:url var="index" value="/" />
+<c:url var="adm" value="/admin" />
+<c:url var="scripts" value="/scripts" />
+<c:url var="css" value="/css/main.css" />
+<c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
+<c:url var="fontawsome" value="/css/font-awesome-4.2.0/css/font-awesome.min.css" />
 
 <html lang="pt-BR">
 
@@ -15,16 +21,22 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
+        
+        
+        
+
         <title>Infraestrutura Nacional de Repositórios de Objetos de Aprendizagem</title>
 
         <!-- Bootstrap Core CSS -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="StyleSheet" href="${bootstrap}" type="text/css">
 
         <!-- Custom CSS -->
-        <link href="css/main.css" rel="stylesheet">
+        <link rel="StyleSheet" href="${css}" type="text/css">
 
         <!-- Custom Fonts -->
-        <link href="font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link rel="StyleSheet" href="${fontawsome}" type="text/css">
+        
+        <!--conferir as fontes do designer-->
         <!--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -33,6 +45,7 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        
 
     </head>
 
@@ -57,7 +70,7 @@
                 <div class="col-lg-12">
                     <div class="intro-message">
 
-                        <img id="logo" src="imagens/logo.png" alt="" />
+                        <img id="logo" src="${images}/logo.png" alt="" />
 
                         <div id="searchBox" class="input-group">
 
@@ -77,32 +90,38 @@
         <!-- /.container -->
 
         <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <ul class="list-inline">
-                            <li>
-                                <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
-                            </li>
-                            <li class="footer-menu-divider">&sdot;</li>
-                            <li>
-                                <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
-                            </li>
-                        </ul>
-                    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 
-        <!-- jQuery Version 1.11.0 -->
-        <script src="scripts/jquery-1.11.0.js"></script>
+    <%@include file="googleAnalytics"%>
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="scripts/bootstrap.min.js"></script>
+    
+        
+    <!-- jQuery Version 1.11.0 -->
+    <!--<script src="scripts/jquery-1.11.0.js"></script>-->
+    <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
 
-        <!-- Barra do Governo Federal -->
-        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
-    </body>
+    <!-- Bootstrap Core JavaScript -->
+    <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
+    <script src="scripts/bootstrap.min.js"></script>
+
+    <!-- Barra do Governo Federal -->
+    <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+</body>
 
 </html>
