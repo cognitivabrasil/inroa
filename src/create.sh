@@ -10,4 +10,6 @@ echo "Populando base com dados iniciais..."
 sudo -u postgres psql federacao < ./src/main/resources/sql/data.sql > /dev/null
 echo "Criando diretorio de log..."
 sudo mkdir /var/log/feb > /dev/null
-sudo chown tomcat7:tomcat7 /var/log/feb > /dev/null
+echo "ATENÇÃO!!!
+echo "  Dar permissão de escrita no diretório: '/var/log/feb' para o usuário que executa o servidor web."
+echo "  Ex: sudo chown tomcat7:tomcat7 /var/log/feb > /dev/null"

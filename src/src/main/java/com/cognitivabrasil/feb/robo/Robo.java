@@ -12,6 +12,7 @@ import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class Robo {
      * repositório.
      *
      */
-    @Scheduled(cron = "0 0 2 * * *")
+    @Scheduled(cron = "0 27 12 * * *")
     @Transactional
     public void run() {
 
@@ -74,7 +75,7 @@ public class Robo {
         log.info("Limpando consultas antigas...");
         try{
         searchesDao.cleanup();
-        }catch(HibernateException e){
+        }catch(HibernateException | JpaSystemException e){
             log.error("Ocorreu ao limpar as consultas antigas da base de dados.");
         }
 

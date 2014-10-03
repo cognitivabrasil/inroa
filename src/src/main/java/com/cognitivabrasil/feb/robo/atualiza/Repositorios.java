@@ -137,7 +137,6 @@ public class Repositorios {
      * @param rep reposit&oacute;rio que deve ser atualizado.
      * @return number of updated documents, -1 in case of error
      */
-    @Transactional
     public int atualizaRepositorio(Repositorio rep)
             throws Exception {
         Long inicio = System.currentTimeMillis();

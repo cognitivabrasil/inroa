@@ -57,7 +57,6 @@ public class SubFederacaoOAI {
      * @param apagar Define se os documentos da federação serão removidos antes de atualizar ou não.
      * @throws Exception
      */
-    @Transactional
     public void atualizaFederacao(SubFederacao fed, boolean apagar) throws Exception {
         // Don't really know why, but the following 2 lines solve FEB-219
         fed.setUltimaAtualizacao(fed.getUltimaAtualizacao());
@@ -143,8 +142,7 @@ public class SubFederacaoOAI {
      * @param subFed classe da subfedera&ccedil;&atilde;o.
      * @return true ou false indicando se alguma subfedera&ccedil;&atilde;o foi atualizada ou n&atilde;o.
      */
-    private void atualizaSubFedOAI(SubFederacao subFed)
-            throws Exception {
+    private void atualizaSubFedOAI(SubFederacao subFed) throws Exception {
         String fedName = subFed.getName();
         log.info("Atualizando subfederacao: " + fedName);
         try {
