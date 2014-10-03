@@ -9,6 +9,8 @@
  *******************************************************************************/
 package com.cognitivabrasil.feb;
 
+import java.util.List;
+
 import javax.servlet.Filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.BeanNameViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.cognitivabrasil.feb.config.LoggingHandlerExceptionResolver;
 
 import ORG.oclc.oai.server.OAIHandler;
 
@@ -39,6 +45,9 @@ import ORG.oclc.oai.server.OAIHandler;
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private LocalContainerEntityManagerFactoryBean emf;
+    
+    @Autowired
+    private LoggingHandlerExceptionResolver exceptionResolver;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -62,11 +71,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
     }
     
-//    @Bean
-//    public BeanNameViewResolver beanNameViewResolver() {
-//        return new BeanNameViewResolver();
-//    }
+    @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+        exceptionResolvers.add(exceptionResolver);
+    }
     
+
     @Bean
     public Filter characterEncodingFilter() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
