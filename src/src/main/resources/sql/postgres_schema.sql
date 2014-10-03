@@ -1,8 +1,3 @@
-CREATE TABLE consultas (
-    consulta character varying(100) NOT NULL,
-    ids text,
-    PRIMARY KEY (consulta)
-);
 
 CREATE TABLE dados_subfederacoes (
     id serial NOT NULL,
@@ -93,7 +88,6 @@ CREATE TABLE searches (
     PRIMARY KEY (id)
 ); 
 
-ALTER TABLE public.consultas OWNER TO feb;
 ALTER TABLE public.dados_subfederacoes OWNER TO feb;
 ALTER TABLE public.documentos OWNER TO feb;
 ALTER TABLE public.mapeamentos OWNER TO feb;
