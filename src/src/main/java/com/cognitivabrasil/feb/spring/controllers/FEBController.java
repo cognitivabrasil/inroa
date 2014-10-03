@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.naming.ConfigurationException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,10 +31,13 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
 /**
  * Controller geral para o FEB
@@ -42,7 +46,7 @@ import org.springframework.web.bind.annotation.*;
  * @author Marcos Nunes <marcosn@gmail.com>
  */
 @Controller("feb")
-public final class FEBController {
+public final class FEBController implements ErrorController  {
 
     @Autowired
     private UserService userDao;
@@ -61,6 +65,22 @@ public final class FEBController {
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
+    }
+    
+    @RequestMapping("/error")
+    public ModelAndView error(Model model, HttpServletResponse response, HttpServletRequest request) {
+        log.info("Error");
+        
+        
+        ModelAndView mv = new ModelAndView("errors/error404");
+        
+      
+        return mv;
+    }
+    
+    @Override
+    public String getErrorPath() {
+        return "/error";
     }
 
     @RequestMapping("/")
@@ -111,9 +131,9 @@ public final class FEBController {
             log.warn("O id " + id + " solicitado não existe!");
             return "";
         } else if (d.isDeleted()) {
-            response.sendError(410, "O documento solicitado foi deletado.");
+            response.setStatus(410);
 
-            return "empty";
+            return "errors/error410";
         } else {
             d.getMetadata().setLocale("pt-BR");
             model.addAttribute("obaaEntry", d.getObaaEntry());
@@ -366,4 +386,6 @@ public final class FEBController {
         }
         return newCookie;
     }
+
+
 }
