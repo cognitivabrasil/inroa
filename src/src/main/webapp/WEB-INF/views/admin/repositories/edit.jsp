@@ -33,6 +33,8 @@
         <script language="JavaScript" type="text/javascript" src="${newRepJs}"></script>
         <script type="text/javascript" src="${validateJs }"></script>
         <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
+        <c:url var="validateOAI" value="/scripts/validateOAI.js" />
+        <script type="text/javascript" src="${validateOAI}"></script>
     </head>
 
     <body>
