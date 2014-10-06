@@ -57,10 +57,14 @@ public class SubFederacaoOAI {
      * @param apagar Define se os documentos da federação serão removidos antes de atualizar ou não.
      * @throws Exception
      */
+    @Transactional
     public void atualizaFederacao(SubFederacao fed, boolean apagar) throws Exception {
         // Don't really know why, but the following 2 lines solve FEB-219
         fed.setUltimaAtualizacao(fed.getUltimaAtualizacao());
         fed.setDataXml(fed.getDataXml());
+        
+       fed = subDao.get(fed.getId());
+        
         if (apagar) {
             log.debug("Setar como null a data da última atualização e dataXML para que apague toda a base antes de "
                     + "atualizar.");
@@ -97,6 +101,7 @@ public class SubFederacaoOAI {
      * @throws FederationException Retorna uma exceção que tem como mensagem a lista de federações que não foram
      * atualizadas por algum erro.
      */
+    @Transactional
     public void atualizaFederacoes(boolean apagar) throws FederationException {
         List<String> erros = new ArrayList<>();
         for (SubFederacao subFederacao : subDao.getAll()) {

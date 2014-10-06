@@ -9,9 +9,12 @@ package com.cognitivabrasil.feb.data.services;
 import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
 import com.cognitivabrasil.feb.data.repositories.FederationRepository;
 import com.cognitivabrasil.feb.data.entities.SubFederacao;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -61,6 +64,7 @@ public class FederationServiceImpl implements FederationService{
     }
     
     @Override
+    @Transactional
     public void deleteAllDocs(SubFederacao fed){
         for(RepositorioSubFed rep : fed.getRepositorios()){
             docService.deleteAllFromRep(rep);
