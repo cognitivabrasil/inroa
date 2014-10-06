@@ -67,7 +67,7 @@ Author     : Marcos Nunes
                 <li><a href="#tabs-3">Metadados</a></li>
                 <li><a href="#tabs-4">Ger&ecirc;ncia</a></li>
                     <c:url var="estatistics" value="/admin/statistics/" />
-                <li id="estatisticas"><a href="${estatistics}">Estat&iacute;sticas</a></li>
+                <li><a href="${estatistics}">Estat&iacute;sticas</a></li>
 
             </ul>
             <div id="tabs-1">
@@ -389,8 +389,8 @@ Author     : Marcos Nunes
                                 &nbsp;
                                 <c:url var="exibeMapeamento" value="/admin/mapeamentos/${mapeamento.id}" />
                                 <input type="button" class="botaoEditar"
-                                              title="Editar / Visualizar" name="editar" id="editarMap"
-                                              onclick="NewTab('${exibeMapeamento}');" />
+                                       title="Editar / Visualizar" name="editar" id="editarMap"
+                                       onclick="NewTab('${exibeMapeamento}');" />
                             </td>
                             <td>${mapeamento.name}</td>
                             <td>${mapeamento.description}</td>
@@ -452,7 +452,8 @@ Author     : Marcos Nunes
 
                 <security:authorize access="hasRole('ROLE_UPDATE')">
                     <c:url var="reindex" value="/admin/confirmaRecalcularIndice"/>
-                    <button id="recalculo" onclick="javascript:NewWindow('${reindex}', '', '500', '240');">
+                    <button id="recalculo" onclick="javascript:NewWindow('${reindex}', '', '500', '300');
+                            return false">
                         Recalcular o &Iacute;ndice</button>
                     </security:authorize>
 
@@ -465,8 +466,9 @@ Author     : Marcos Nunes
                     <c:url var="alterDb" value="/admin/alterDB"/>
                     <button id="alterarBase" onclick="javascript:NewWindow('${alterDb}', '', '650', '500');
                             return false">
-                        Alterar Base de Dados</button>
-                    </security:authorize>
+                        Alterar Base de Dados
+                    </button>
+                </security:authorize>
 
 
                 <table id='tbListUser' class='admin-table zebra' cellpadding=3>
