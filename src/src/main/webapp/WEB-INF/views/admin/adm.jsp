@@ -20,8 +20,11 @@ Author     : Marcos Nunes
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FEB - Ferramenta Administrativa</title>
 
-        <c:url var="lapiz32" value="/imagens/Lapiz-32x32.png" />
+        <c:url var="imgLapiz" value="/imagens/Lapiz-32x32.png" />
         <c:url var="imgAdd" value="/imagens/add-24x24.png" />
+        <c:url var="imgDeletar" value="/imagens/ico24_deletar.gif"/>
+        <c:url var="imgSincronizar" value="/imagens/sincronizar.png"/>
+        <c:url var="imgErroSincronizar" value="/imagens/erro_sincronizar.png"/>
 
         <link rel="StyleSheet"
               href="<feb.spring:url value="/css/Theme/jquery-ui-1.8.22.custom.css" htmlEscape="true" />"
@@ -46,7 +49,6 @@ Author     : Marcos Nunes
             setRootUrl("${root}");
         </script>
         <script type="text/javascript" src='<feb.spring:url value="/scripts/admin/admin.js" htmlEscape="true" />'></script>
-
     </head>
     <body id="paginaAdministrativa">
 
@@ -72,23 +74,26 @@ Author     : Marcos Nunes
                 <table class='admin-table zebra' cellpadding=3>
                     <caption>Reposit&oacute;rios Cadastrado</caption>
 
-                        <th width="10%">Opera&ccedil;&otilde;es</th>
-                        <th width="30%">Nome</th>
-                        <th width="40%">Descri&ccedil;&atilde;o</th>
-                        <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
+                    <th width="10%">Opera&ccedil;&otilde;es</th>
+                    <th width="30%">Nome</th>
+                    <th width="40%">Descri&ccedil;&atilde;o</th>
+                    <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
 
-                        <c:forEach var="rep" items="${repositories}" varStatus="status">
+                    <c:forEach var="rep" items="${repositories}" varStatus="status">
                         <tr>
 
-                            <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
+                            <td>
+                                <security:authorize access="hasRole('ROLE_MANAGE_REP')">
                                     <c:url var="excluirRepositorio" value="/admin/repositories/${rep.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir reposit&oacute;rio ${rep.name}" name="excluirRep"
                                            id="excluirRep" href="${excluirRepositorio}" />
 
-                                </security:authorize> &nbsp; <input type="button" class="botaoEditar"
-                                              title="Editar / Visualizar" name="editar" id="editarRep"
-                                              onclick="NewWindow('repositories/${rep.id}', '', '850', 'total');">
+                                </security:authorize> 
+                                &nbsp; 
+                                <input type="button" class="botaoEditar"
+                                       title="Editar / Visualizar" name="editar" id="editarRep"
+                                       onclick="NewWindow('repositories/${rep.id}', '', '850', 'total');">
                             </td>
                             <td>${rep.name}</td>
                             <td>${rep.descricao}</td>
@@ -103,7 +108,7 @@ Author     : Marcos Nunes
                                                 <a title="Atualizar agora"
                                                    onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
 
-                                                    <img src='../imagens/erro_sincronizar.png' border='0'
+                                                    <img src='${imgErroSincronizar}' border='0'
                                                          width='24' height='24' alt='Atualizar' align='middle' />
                                                 </a>
                                             </security:authorize>
@@ -155,7 +160,7 @@ Author     : Marcos Nunes
 
                                         <a style="text-decoration: none" title="Atualizar todos"
                                            onclick="javaScript:atualizaRepAjax(0, document.getElementById('textResultTodos'));"><img
-                                                src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+                                                src="${imgSincronizar}"
                                                 border="0" width="24" height="24" alt="Visualizar"
                                                 align="middle"> Atualizar todos agora
                                         </a>
@@ -168,23 +173,27 @@ Author     : Marcos Nunes
 
                 <table class='admin-table zebra' cellpadding=3>
                     <caption>Federa&ccedil;&otilde;es Cadastradas</caption>
-                    
-                        <th width="10%">Opera&ccedil;&otilde;es</th>
-                        <th width="20%">Nome</th>
-                        <th width="50%">Descri&ccedil;&atilde;o</th>
-                        <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
-                    
+
+                    <th width="10%">Opera&ccedil;&otilde;es</th>
+                    <th width="20%">Nome</th>
+                    <th width="50%">Descri&ccedil;&atilde;o</th>
+                    <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
+
                     <c:forEach var="subfed" items="${subDAO.all}" varStatus="status">
                         <tr>
-                            <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
+                            <td>
+                                <security:authorize access="hasRole('ROLE_MANAGE_REP')">
                                     <c:url var="excluirFederacao" value="/admin/federations/${subfed.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir federa&ccedil;&atilde;o ${subfed.name}"
                                            name="excluirFed" id="excluirFed" href="${excluirFederacao}" />
 
-                                </security:authorize> &nbsp; <input type="button" class="botaoEditar"
-                                              title="Editar / Visualizar" name="editar" id="editarSubfed"
-                                              onclick="NewWindow('./federations/${subfed.id}', '', '750', '560');">
+                                </security:authorize> 
+                                &nbsp; 
+                                <c:url var="federationsEdit" value="/admin/federations/${subfed.id}"/>
+                                <input type="button" id="editarSubfed" class="botaoEditar" 
+                                       title="Editar / Visualizar" name="editar"                                           
+                                       onclick="NewWindow('${federationsEdit}', '', '750', '560');">
 
                             </td>
                             <td>${subfed.name}</td>
@@ -198,7 +207,7 @@ Author     : Marcos Nunes
                                                 <a title='Atualizar agora'
                                                    onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">
                                                     <img
-                                                        src="<feb.spring:url value="/imagens/erro_sincronizar.png" htmlEscape="true" />"
+                                                        src="${imgErroSincronizar}"
                                                         border="0" width="24" height="24" alt="Visualizar"
                                                         align="middle">
                                                 </a>
@@ -213,7 +222,7 @@ Author     : Marcos Nunes
                                                    onclick="javaScript:atualizaSubfedAjax(${subfed.id}, this.parentNode);">
 
                                                     <img
-                                                        src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+                                                        src="${imgSincronizar}"
                                                         border="0" width="24" height="24" alt="Visualizar"
                                                         align="middle">
                                                 </a>
@@ -237,24 +246,26 @@ Author     : Marcos Nunes
                                     </a>
                                 </security:authorize></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
-                                &nbsp;&nbsp; <security:authorize
-                                    access="hasRole('ROLE_MANAGE_REP')">
+                                &nbsp;&nbsp; 
+                                <security:authorize access="hasRole('ROLE_MANAGE_REP')">
 
-                                    <a
-                                        onclick="NewWindow('${newFederationUrl}', 'Cadastro', '750', '650');">
-                                        Adicionar nova federa&ccedil;&atilde;o </a>
-                                    </security:authorize>
+                                    <a onclick="NewWindow('${newFederationUrl}', 'Cadastro', '750', '650');">
+                                        Adicionar nova federa&ccedil;&atilde;o 
+                                    </a>
+                                </security:authorize>
                             </td>
-                            <td><security:authorize access="hasRole('ROLE_UPDATE')">
+                            <td>
+                                <security:authorize access="hasRole('ROLE_UPDATE')">
 
                                     <div id="textResultSF">
                                         <a style="text-decoration: none" title="Atualizar todas"
-                                           onclick="javaScript:atualizaSubfedAjax(0, document.getElementById('textResultSF'));"><img
-                                                src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
-                                                border="0" width="24" height="24" alt="Visualizar"
-                                                align="middle"> Atualizar todas agora</a>
+                                           onclick="javaScript:atualizaSubfedAjax(0, document.getElementById('textResultSF'));">
+                                            <img src="${imgSincronizar}" border="0" width="24" height="24" align="middle"> 
+                                            Atualizar todas agora
+                                        </a>
                                     </div>
-                                </security:authorize></td>
+                                </security:authorize>
+                            </td>
                         </tr>
                     </security:authorize>
                 </table>
@@ -265,14 +276,14 @@ Author     : Marcos Nunes
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
                             <td>
-                                <img src="${lapiz32}" border="0" width="32" height="32" alt="Laudar" align="middle">
+                                <img src="${imgLapiz}" border="0" width="32" height="32" alt="Laudar" align="middle">
                             </td>
                             <td>&nbsp;Visualizar / Editar</td>
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
 
                             <td><img
-                                    src="<feb.spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
+                                    src="${imgDeletar}"
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
                             <td>&nbsp;Remover</td>
@@ -280,7 +291,7 @@ Author     : Marcos Nunes
                             <td><h1>&nbsp;&nbsp;</h1></td>
 
                             <td><img
-                                    src="<feb.spring:url value="/imagens/sincronizar.png" htmlEscape="true" />"
+                                    src="${imgSincronizar}"
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
                             <td>&nbsp;Atualizar Reposit&oacute;rio/Federa&ccedil;&aacute;o</td>
@@ -301,11 +312,11 @@ Author     : Marcos Nunes
                 <!--Insere codigo que lista os padroes de metadados-->
                 <table class='admin-table zebra' id='padroes' cellpadding=3>
                     <caption>Padr&otilde;es de Metadados Cadastrados</caption>
-                    
-                        <th width="10%">Opera&ccedil;&otilde;es</th>
-                        <th width="20%">Nome</th>
-                        <th width="50%">Metadata Prefix</th>
-                        <th width="20%">Namespace</th>
+
+                    <th width="10%">Opera&ccedil;&otilde;es</th>
+                    <th width="20%">Nome</th>
+                    <th width="50%">Metadata Prefix</th>
+                    <th width="20%">Namespace</th>
 
                     <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}"
                                varStatus="status">
@@ -321,9 +332,10 @@ Author     : Marcos Nunes
 
                                 </security:authorize>
                                 &nbsp;
+                                <c:url var="exibePadrao" value="/admin/metadataStandard/${padraoMet.id}" />
                                 <input type="button" class="botaoEditar"
                                        title="Editar / Visualizar" name="editar" id="editarPadrao"
-                                       onclick="NewWindow('./metadataStandard/${padraoMet.id}', 'editaPadrao', '650', '400');" />
+                                       onclick="NewWindow('${exibePadrao}', 'editaPadrao', '650', '400');" />
                             </td>
                             <td>${padraoMet.name}</td>
                             <td>${padraoMet.metadataPrefix}</td>
@@ -342,9 +354,10 @@ Author     : Marcos Nunes
                                 </a>
                             </td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
-                                &nbsp;&nbsp; <a
-                                    onclick="NewTab('${newMetadata}');">
-                                    Adicionar novo padr&atilde;o </a>
+                                &nbsp;&nbsp; 
+                                <a onclick="NewTab('${newMetadata}');">
+                                    Adicionar novo padr&atilde;o 
+                                </a>
                             </td>
                             <td><div id='msgerro' class='textoErro left'></div></td>
                         </tr>
@@ -357,10 +370,10 @@ Author     : Marcos Nunes
                 <table class='admin-table zebra' cellpadding=3>
                     <caption>Mapeamentos Cadastrados</caption>
 
-                        <th width="10%">Opera&ccedil;&otilde;es</th>
-                        <th width="20%">Nome</th>
-                        <th width="50%">Descrição</th>
-                        <th width="20%">Padrão Metadados</th>
+                    <th width="10%">Opera&ccedil;&otilde;es</th>
+                    <th width="20%">Nome</th>
+                    <th width="50%">Descrição</th>
+                    <th width="20%">Padrão Metadados</th>
 
                     <c:forEach var="mapeamento" items="${mapeamentos}"
                                varStatus="status">
@@ -373,9 +386,11 @@ Author     : Marcos Nunes
                                            name="excluirMap" id="excluirMap"
                                            href="${excluirMapeamento}" />
                                 </security:authorize>
-                                &nbsp; <input type="button" class="botaoEditar"
+                                &nbsp;
+                                <c:url var="exibeMapeamento" value="/admin/mapeamentos/${mapeamento.id}" />
+                                <input type="button" class="botaoEditar"
                                               title="Editar / Visualizar" name="editar" id="editarMap"
-                                              onclick="NewTab('./mapeamentos/${mapeamento.id}');" />
+                                              onclick="NewTab('${exibeMapeamento}');" />
                             </td>
                             <td>${mapeamento.name}</td>
                             <td>${mapeamento.description}</td>
@@ -408,14 +423,14 @@ Author     : Marcos Nunes
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
                             <td>
-                                <img src="${lapiz32}" border="0" width="32" height="32" alt="Laudar" align="middle">
+                                <img src="${imgLapiz}" border="0" width="32" height="32" alt="Laudar" align="middle">
                             </td>
                             <td>&nbsp;Visualizar / Editar</td>
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
 
                             <td><img
-                                    src="<feb.spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
+                                    src="${imgDeletar}"
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
                             <td>&nbsp;Remover</td>
@@ -457,10 +472,10 @@ Author     : Marcos Nunes
                 <table id='tbListUser' class='admin-table zebra' cellpadding=3>
                     <caption>Usu&aacute;rios</caption>
 
-                        <th width="10%">Opera&ccedil;&otilde;es</th>
-                        <th width="20%">Login</th>
-                        <th width="50%">Nome</th>
-                        <th width="20%">Perfil</th>
+                    <th width="10%">Opera&ccedil;&otilde;es</th>
+                    <th width="20%">Login</th>
+                    <th width="50%">Nome</th>
+                    <th width="20%">Perfil</th>
 
                     <c:forEach var="user" items="${users}" varStatus="status">
                         <tr>
@@ -511,14 +526,14 @@ Author     : Marcos Nunes
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
                             <td>
-                                <img src="${lapiz32}" border="0" width="32" height="32" alt="Laudar" align="middle">
+                                <img src="${imgLapiz}" border="0" width="32" height="32" alt="Laudar" align="middle">
                             </td>
                             <td>&nbsp;Visualizar / Editar</td>
 
                             <td><h1>&nbsp;&nbsp;</h1></td>
 
                             <td><img
-                                    src="<feb.spring:url value="/imagens/ico24_deletar.gif" htmlEscape="true" />"
+                                    src="${imgDeletar}"
                                     border="0" width="24" height="24" alt="Visualizar" align="middle">
                             </td>
                             <td>&nbsp;Remover</td>
@@ -533,11 +548,6 @@ Author     : Marcos Nunes
                         </tr>
                     </table>
                 </div>
-            </div>
-            <div class='center hidden' id='loading'> 
-                <c:url var="imgLoader" value="/imagens/ajax-loader.gif"/>
-                <img src='${imgLoader}' border='0' alt='Atualizando' align='middle'> 
-                <p class='textoErro center'>Aguarde, carregando...</p> 
             </div>
         </div>
 
@@ -554,6 +564,5 @@ Author     : Marcos Nunes
             </div>
         </div>
 
-        <%@include file="../googleAnalytics"%>
-    </BODY>
+    </body>
 </html>
