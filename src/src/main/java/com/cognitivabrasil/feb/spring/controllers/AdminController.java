@@ -59,6 +59,9 @@ public class AdminController {
     @Autowired @Qualifier("febInf")
     private Properties febInfo;
     
+    @Autowired @Qualifier("gitProperties")
+    private Properties gitProperties;
+    
     private final static Logger log = LoggerFactory.getLogger(AdminController.class);
 
     public AdminController() {
@@ -71,7 +74,10 @@ public class AdminController {
         model.addAttribute("subDAO", subDao);
         model.addAttribute("padraoMetadadosDAO", padraoDao);
         model.addAttribute("users", userDao.getAll());
-        model.addAttribute("version", febInfo.getProperty("feb.version"));
+        model.addAttribute("version", febInfo.getProperty("info.build.version"));
+        model.addAttribute("gitBranch", gitProperties.getProperty("git.branch"));
+        model.addAttribute("gitCommitId", gitProperties.getProperty("git.commit.id").substring(0, 12));
+        model.addAttribute("gitCommitTime", gitProperties.getProperty("git.commit.time"));
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
