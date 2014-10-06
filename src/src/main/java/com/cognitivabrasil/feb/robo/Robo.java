@@ -44,7 +44,7 @@ public class Robo {
      * repositório.
      *
      */
-    @Scheduled(cron = "0 27 12 * * *")
+    @Scheduled(cron = "0 0 2 * * *")
     @Transactional
     public void run() {
 

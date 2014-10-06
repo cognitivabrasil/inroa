@@ -545,7 +545,7 @@ td{vertical-align:top;}
 .admin-table td{
     vertical-align: middle;
 }
-.admin-table .footer{background-color: transparent !important}
+.admin-table .footer{background-color: transparent !important; border-top: 2px solid #AEC9E3;border-bottom: 2px solid #AEC9E3}
 .admin-table tr{text-align: center}
 .col2
 {

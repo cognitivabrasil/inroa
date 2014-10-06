@@ -119,9 +119,10 @@ Author     : Marcos Nunes
                                             &nbsp;
                                             ${rep.ultimaAtualizacaoFormatada}
                                             <security:authorize access="hasRole('ROLE_UPDATE')">
-                                                &nbsp;&nbsp; <a title='Atualizar agora'
-                                                                onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
-                                                    <img src='../imagens/sincronizar.png' border='0' width='24'
+                                                &nbsp;&nbsp; 
+                                                <a title='Atualizar agora'
+                                                   onclick="javaScript:atualizaRepAjax(${rep.id}, this.parentNode);">
+                                                    <img src='${imgSincronizar}' border='0' width='24'
                                                          height='24' alt='Atualizar' align='middle'>
                                                 </a>
                                             </security:authorize>
@@ -321,8 +322,6 @@ Author     : Marcos Nunes
                     <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}"
                                varStatus="status">
                         <tr>
-
-
                             <td>
                                 <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
                                     <c:url var="excluirPadrao" value="/admin/metadataStandard/${padraoMet.id}/delete" />
@@ -402,13 +401,14 @@ Author     : Marcos Nunes
                     <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
 
                         <tr class='footer'>
+                            <c:url var="novoMapeamento" value="/admin/mapeamentos/new"/>
                             <td><a title="Adicionar novo padr&atilde;o de metadados"
-                                   onclick="NewTab('./mapeamentos/new');">
+                                   onclick="NewTab('${novoMapeamento}');">
                                     <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
                                 </a></td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <a
-                                    onclick="NewTab('./mapeamentos/new');">
+                                    onclick="NewTab('${novoMapeamento}');">
                                     Adicionar novo mapeamento </a>
                             </td>
                             <td><div id='msgerro' class='textoErro left'></div></td>
