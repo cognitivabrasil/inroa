@@ -10,6 +10,7 @@
 package com.cognitivabrasil.feb;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
@@ -74,11 +75,19 @@ public class AppConfig {
     }
     
     @Bean(name = "febInf")
-    public Properties febInf() {
-        Properties p = new Properties();
-
-        // TODO: carregar do arquivo ou usar spring-boot actuator
-        return p;
+    public Properties febInf() throws IOException {
+        Properties properties = new Properties();
+        properties.load(getClass().getClassLoader().getResourceAsStream("application.properties"));
+        
+        return properties;
+    }
+    
+    @Bean(name = "gitProperties")
+    public Properties gitProperties() throws IOException {
+        Properties properties = new Properties();
+        properties.load(getClass().getClassLoader().getResourceAsStream("git.properties"));
+        
+        return properties;
     }
     
    

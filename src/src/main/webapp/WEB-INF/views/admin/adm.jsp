@@ -448,7 +448,10 @@ Author     : Marcos Nunes
             </div>
             <div id="tabs-4">
 
-                <div class="versao">Vers&atilde;o ${version}</div>
+                <div class="versao">Vers&atilde;o <b>${version}</b></div>
+                <div class="versao">Branch <b>${gitBranch}</b></div>
+                <div class="versao">Commit <b>${gitCommitId} - ${gitCommitTime}</b></div>
+                
 
                 <security:authorize access="hasRole('ROLE_UPDATE')">
                     <c:url var="reindex" value="/admin/confirmaRecalcularIndice"/>
