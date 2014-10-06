@@ -38,7 +38,7 @@
                 <span class="left bold">Número total de objetos:</span> <fmt:formatNumber value="${totalObj}" />
 
                 <c:if test="${!empty repositories}">
-                    <table class="repositorios-table zebraTable">
+                    <table class="admin-table zebraTable">
                         <caption class="estatisticasTitulo">Repositórios</caption>
                         <tr>
                             <th> Repositório</th><th>Documentos</th>
@@ -53,7 +53,7 @@
                 </c:if>
 
                 <c:if test="${!empty federations}">
-                    <table class="repositorios-table zebraTable">
+                    <table class="admin-table zebraTable">
                         <caption class="estatisticasTitulo">Federações</caption>
                         <tr><th> Federa&ccedil;&atilde;o</th><th>Documentos</th></tr>
                                 <c:forEach var="map" items="${federations}">
@@ -70,7 +70,7 @@
                 <c:if test="${not empty termosTagCloud}">
                     <div class="caixaAzul">
                         <div id="msgTagCloud"></div>
-                        <table class="repositorios-table zebraTable acessos">
+                        <table class="admin-table zebraTable acessos">
                             <caption class="estatisticasTitulo">Termos da <i>tag cloud</i></caption>
                             <tr><th>Termo</th><th>Quantidade de buscas</th><th>Deletar</th></tr>
                                     <c:url var="deleteTag" value="/admin/statistics/deletetag?tag="/>
@@ -94,7 +94,7 @@
             <%--
             <div class="fedsGrande caixaAzul">
                 <div class="estatisticasTitulo">Federações</div>
-                <table class="repositorios-table zebraTable">
+                <table class="admin-table zebraTable">
                     <tr><th> Federa&ccedil;&atilde;o</th><th>N&uacute;mero de objetos</th></tr>
                             <c:forEach var="feds" items="${federacoes}" varStatus="status">
                         <tr><td>${feds.name}</td><td class="col2">${feds.size}</td></tr>

@@ -44,33 +44,8 @@ Author     : Marcos Nunes
 
         <script>
             setRootUrl("${root}");
-            $(function() {
-                $("#recalculo").button({
-                    icons: {
-                        primary: "ui-icon-arrowrefresh-1-n"
-                    }
-                })
-
-                $("#alterarSenha").button({
-                    icons: {
-                        primary: "ui-icon-key"
-                    }
-                })
-
-                $("#alterarBase").button({
-                    icons: {
-                        primary: "ui-icon-suitcase"
-                    }
-                })
-
-                $("#sair").button({
-                    icons: {
-                        primary: "ui-icon-close"
-                    }
-                })
-            });
         </script>
-        <script type="text/javascript" src='<feb.spring:url value="/scripts/admin.js" htmlEscape="true" />'></script>
+        <script type="text/javascript" src='<feb.spring:url value="/scripts/admin/admin.js" htmlEscape="true" />'></script>
 
     </head>
     <body id="paginaAdministrativa">
@@ -94,21 +69,16 @@ Author     : Marcos Nunes
 
             </ul>
             <div id="tabs-1">
-                <table class='repositorios-table' cellpadding=3>
-                    <tr>
+                <table class='admin-table zebra' cellpadding=3>
                     <caption>Reposit&oacute;rios Cadastrado</caption>
-                    </tr>
 
-                    <tr style="background-color: #AEC9E3">
                         <th width="10%">Opera&ccedil;&otilde;es</th>
-
                         <th width="30%">Nome</th>
                         <th width="40%">Descri&ccedil;&atilde;o</th>
                         <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
 
-                    </tr>
-                    <c:forEach var="rep" items="${repositories}" varStatus="status">
-                        <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
+                        <c:forEach var="rep" items="${repositories}" varStatus="status">
+                        <tr>
 
                             <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
                                     <c:url var="excluirRepositorio" value="/admin/repositories/${rep.id}/delete" />
@@ -160,7 +130,7 @@ Author     : Marcos Nunes
                     <security:authorize
                         access="hasAnyRole('ROLE_UPDATE, ROLE_MANAGE_REP')">
 
-                        <tr class='center'>
+                        <tr class='footer'>
                             <c:url var="newRepositoryUrl" value="/admin/repositories/new" />
                             <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
 
@@ -196,21 +166,16 @@ Author     : Marcos Nunes
                     </security:authorize>
                 </table>
 
-                <table class='repositorios-table' cellpadding=3>
-                    <tr>
+                <table class='admin-table zebra' cellpadding=3>
                     <caption>Federa&ccedil;&otilde;es Cadastradas</caption>
-                    </tr>
-
-                    <tr style="background-color: #AEC9E3">
+                    
                         <th width="10%">Opera&ccedil;&otilde;es</th>
-
                         <th width="20%">Nome</th>
                         <th width="50%">Descri&ccedil;&atilde;o</th>
                         <th width="20%">&Uacute;ltima atualiza&ccedil;&atilde;o</th>
-                    </tr>
-
+                    
                     <c:forEach var="subfed" items="${subDAO.all}" varStatus="status">
-                        <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
+                        <tr>
                             <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
                                     <c:url var="excluirFederacao" value="/admin/federations/${subfed.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
@@ -262,7 +227,7 @@ Author     : Marcos Nunes
                     <security:authorize
                         access="hasAnyRole('ROLE_UPDATE, ROLE_MANAGE_REP')">
 
-                        <tr class='center'>
+                        <tr class='footer'>
                             <c:url var="newFederationUrl" value="/admin/federations/new" />
                             <td><security:authorize access="hasRole('ROLE_MANAGE_REP')">
 
@@ -334,23 +299,17 @@ Author     : Marcos Nunes
 
             <div id="tabs-3">
                 <!--Insere codigo que lista os padroes de metadados-->
-                <table class='repositorios-table' id='padroes' cellpadding=3>
-                    <tr>
+                <table class='admin-table zebra' id='padroes' cellpadding=3>
                     <caption>Padr&otilde;es de Metadados Cadastrados</caption>
-                    </tr>
-
-                    <tr style="background-color: #AEC9E3">
+                    
                         <th width="10%">Opera&ccedil;&otilde;es</th>
-
-
                         <th width="20%">Nome</th>
                         <th width="50%">Metadata Prefix</th>
                         <th width="20%">Namespace</th>
 
-                    </tr>
                     <c:forEach var="padraoMet" items="${padraoMetadadosDAO.all}"
                                varStatus="status">
-                        <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
+                        <tr>
 
 
                             <td>
@@ -374,15 +333,17 @@ Author     : Marcos Nunes
                     </c:forEach>
 
                     <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
-
-                        <tr class='center'>
-                            <td><a title="Adicionar novo padr&atilde;o de metadados"
-                                   onclick="NewTab('./metadataStandard/new');">
+                        <c:url var="newMetadata" value="/admin/metadataStandard/new" />
+                        <tr class='footer'>
+                            <td>
+                                <a title="Adicionar novo padr&atilde;o de metadados"
+                                   onclick="NewTab('${newMetadata}');">
                                     <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                                </a></td>
+                                </a>
+                            </td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <a
-                                    onclick="NewTab('./metadataStandard/new');">
+                                    onclick="NewTab('${newMetadata}');">
                                     Adicionar novo padr&atilde;o </a>
                             </td>
                             <td><div id='msgerro' class='textoErro left'></div></td>
@@ -393,25 +354,17 @@ Author     : Marcos Nunes
 
                 <!--Insere codigo que lista os mapeamentos-->
 
-                <table class='repositorios-table' id='padroes' cellpadding=3>
-                    <tr>
+                <table class='admin-table zebra' cellpadding=3>
                     <caption>Mapeamentos Cadastrados</caption>
-                    </tr>
 
-                    <tr style="background-color: #AEC9E3">
                         <th width="10%">Opera&ccedil;&otilde;es</th>
-
-
                         <th width="20%">Nome</th>
                         <th width="50%">Descrição</th>
                         <th width="20%">Padrão Metadados</th>
 
-                    </tr>
                     <c:forEach var="mapeamento" items="${mapeamentos}"
                                varStatus="status">
-                        <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
-
-
+                        <tr>
                             <td>
                                 <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
                                     <c:url var="excluirMapeamento" value="/admin/mapeamentos/${mapeamento.id}/delete" />
@@ -433,7 +386,7 @@ Author     : Marcos Nunes
 
                     <security:authorize access="hasRole('ROLE_MANAGE_METADATA')">
 
-                        <tr class='center'>
+                        <tr class='footer'>
                             <td><a title="Adicionar novo padr&atilde;o de metadados"
                                    onclick="NewTab('./mapeamentos/new');">
                                     <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
@@ -483,47 +436,46 @@ Author     : Marcos Nunes
                 <div class="versao">Vers&atilde;o ${version}</div>
 
                 <security:authorize access="hasRole('ROLE_UPDATE')">
-
-                    <button id="recalculo" onclick="javascript:NewWindow('confirmaRecalcularIndice', '', '500', '240');">
+                    <c:url var="reindex" value="/admin/confirmaRecalcularIndice"/>
+                    <button id="recalculo" onclick="javascript:NewWindow('${reindex}', '', '500', '240');">
                         Recalcular o &Iacute;ndice</button>
                     </security:authorize>
 
-                <button id="alterarSenha" onclick="javascript:NewWindow('./users/passwd', '', '700', '400');
+                <c:url var="passwdUser" value="/admin/users/passwd"/>
+                <button id="alterarSenha" onclick="javascript:NewWindow('${passwdUser}', '', '700', '400');
                         return false">
                     Alterar Senha </button>
 
                 <security:authorize access="hasRole('ROLE_CHANGE_DATABASE')">
-                    <button id="alterarBase" onclick="javascript:NewWindow('alterDB', '', '650', '500');
+                    <c:url var="alterDb" value="/admin/alterDB"/>
+                    <button id="alterarBase" onclick="javascript:NewWindow('${alterDb}', '', '650', '500');
                             return false">
                         Alterar Base de Dados</button>
                     </security:authorize>
 
 
-                <table id='tbListUser' class='repositorios-table' cellpadding=3>
-                    <tr>
+                <table id='tbListUser' class='admin-table zebra' cellpadding=3>
                     <caption>Usu&aacute;rios</caption>
-                    </tr>
 
-                    <tr style="background-color: #AEC9E3">
                         <th width="10%">Opera&ccedil;&otilde;es</th>
-
                         <th width="20%">Login</th>
                         <th width="50%">Nome</th>
                         <th width="20%">Perfil</th>
-                    </tr>
 
                     <c:forEach var="user" items="${users}" varStatus="status">
-                        <tr class="${status.index % 2 == 0? 'price-yes' : 'price-no'}">
-                            <td><security:authorize access="hasRole('ROLE_MANAGE_USERS')">
+                        <tr>
+                            <td>
+                                <security:authorize access="hasRole('ROLE_MANAGE_USERS')">
                                     <c:url var="delUser" value="/admin/users/${user.id}/delete" />
                                     <input type="button" class="botaoExcluir delete_link"
                                            title="excluir usu&aacute;rio ${user.username}"
                                            name="excluirUsario" id="excluirUsario" href="${delUser}" />
                                 </security:authorize> &nbsp; 
                                 <c:if test="${userAdministrator || username == user.username}">
+                                    <c:url var="showUser" value="/admin/users"/>
                                     <input type="button" class="botaoEditar"
                                            title="Editar / Visualizar" name="editar" id="editarSubfed"
-                                           onclick="NewWindow('./users/${user.id}', '', '750', '560');">
+                                           onclick="NewWindow('${showUser}/${user.id}', '', '750', '560');">
                                 </c:if>
 
                             </td>
@@ -535,14 +487,17 @@ Author     : Marcos Nunes
                     </c:forEach>
 
                     <security:authorize access="hasRole('ROLE_MANAGE_USERS')">
-                        <tr class='center'>
-                            <td><a title="Adicionar novo usuário"
-                                   onclick="NewWindow('./users/new', 'Cadastro', '750', '650');">
+                        <tr class='footer'>
+                            <c:url var="newUser" value="/admin/users/new"/>
+                            <td>
+                                <a title="Adicionar novo usuário"
+                                   onclick="NewWindow('${newUser}', 'Cadastro', '750', '650');">
                                     <img src="${imgAdd}" border="0" width="24" height="24" alt="Visualizar" align="middle">
-                                </a></td>
+                                </a>
+                            </td>
                             <td colspan="2" class="left bold" style="font-size: 110%">
                                 &nbsp;&nbsp; <a
-                                    onclick="NewWindow('./users/new', 'Cadastro', '750', '650');">
+                                    onclick="NewWindow('${newUser}', 'Cadastro', '750', '650');">
                                     Adicionar novo usuário </a>
                             </td>
                             <td></td>
@@ -579,7 +534,11 @@ Author     : Marcos Nunes
                     </table>
                 </div>
             </div>
-            <div class='center hidden' id='loading'> <img src='<feb.spring:url value="/imagens/ajax-loader.gif" htmlEscape="true" />' border='0' alt='Atualizando' align='middle'> <p class='textoErro center'>Aguarde, carregando...</p> </div>
+            <div class='center hidden' id='loading'> 
+                <c:url var="imgLoader" value="/imagens/ajax-loader.gif"/>
+                <img src='${imgLoader}' border='0' alt='Atualizando' align='middle'> 
+                <p class='textoErro center'>Aguarde, carregando...</p> 
+            </div>
         </div>
 
         <div class="mensagemAdm">${mensagem}</div>

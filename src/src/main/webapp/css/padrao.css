@@ -535,19 +535,18 @@ td{vertical-align:top;}
 .ValignTop{vertical-align:top;}
 .middle{vertical-align:middle;}
 
-.repositorios-table
+.admin-table
 {
     width: 100%;
     padding: 2px;
     margin:10px 0;
 }
-.repositorios-table th{
-    color: white;
-}
-.repositorios-table td{
+.admin-table th{color: white;background-color: #AEC9E3}
+.admin-table td{
     vertical-align: middle;
 }
-
+.admin-table .footer{background-color: transparent !important}
+.admin-table tr{text-align: center}
 .col2
 {
     width: 25%;
@@ -1000,7 +999,7 @@ body.loading .modal {
 
 }
 /*css3 tabela com linhas coloridas*/
-table.zebra tbody tr:nth-child(odd) {background: white}
+table.zebra tbody tr:nth-child(odd) {background: transparent}
 table.zebra tbody tr:nth-child(even) {background: #D7EBFF}
 a#alterarSenha{color: none}
 #tbListUser td{height: 26px}

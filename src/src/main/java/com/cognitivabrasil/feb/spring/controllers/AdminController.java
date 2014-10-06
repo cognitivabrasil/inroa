@@ -77,7 +77,7 @@ public class AdminController {
         String name = auth.getName(); //get logged in username
 
         model.addAttribute("username", name);
-        model.addAttribute("userAdministrator", request.isUserInRole("PERM_MANAGE_USERS"));
+        model.addAttribute("userAdministrator", request.isUserInRole("ROLE_MANAGE_USERS"));
         
         return "admin/adm";
     }
