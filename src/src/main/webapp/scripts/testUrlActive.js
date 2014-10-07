@@ -1,6 +1,6 @@
 $(function() {
-    var imgTrue = "<img class='imgchecklink' src='" + rootUrl + "imagens/check.png' border='0' alt='Link correto' title='link ativo' align='middle'>";
-    var imgFalse = "<img class='imgchecklink' src='" + rootUrl + "imagens/error.png' border='0' alt='Link quebrado' title='link quebrado' align='middle'>";
+    var imgTrue = "<img class='imgchecklink' src='" + rootUrl + "imagens/check.png' border='0' alt='Link correto' title='link ativo'>";
+    var imgFalse = "<img class='imgchecklink' src='" + rootUrl + "imagens/error.png' border='0' alt='Link quebrado' title='link quebrado'>";
 
     var checkUrlInternal = function(url, parentNode) {
         $.getJSON(rootUrl + "verificaURL", {url:url}, function(resultado) {
@@ -18,7 +18,7 @@ $(function() {
 
   
     $(".verifyUrl").each(function() {
-        var parentDiv = $(this).parent("div");
+        var thisElem = $(this);
         var url = $(this).attr('href');
         if (url) {
             $.ajax({
@@ -26,9 +26,10 @@ $(function() {
                 url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22" + url + "%22&format=json",
                 success: function(resultado) {
                     if (resultado.query.results) {
-                        parentDiv.append(imgTrue);
+                        thisElem.append(imgTrue)
+//                        parentDiv.append(imgTrue);
                     } else {
-                        checkUrlInternal(url,parentDiv);
+                        checkUrlInternal(url,thisElem);
                     }
                 },
                 timeout: 5000
@@ -36,7 +37,7 @@ $(function() {
                 if (status == "timeout") {
                     console.log("timeout yql!");
                 }
-                checkUrlInternal(url,parentDiv);
+                checkUrlInternal(url,thisElem);
             });           
         }
     });

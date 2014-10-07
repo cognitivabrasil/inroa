@@ -113,13 +113,11 @@
 
 
     <!-- jQuery Version 1.11.0 -->
-    <!--<script src="scripts/jquery-1.11.0.js"></script>-->
     <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
-    <script src="scripts/bootstrap.min.js"></script>
-
+    
     <!-- Barra do Governo Federal -->
     <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 </body>

@@ -191,7 +191,7 @@ public final class FEBController implements ErrorController  {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
                 log.debug("Resultou em: " + consulta.getSizeResult() + " documentos. Offset: " + consulta.getOffset());
-                return "consulta";
+                return "resultado";
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
