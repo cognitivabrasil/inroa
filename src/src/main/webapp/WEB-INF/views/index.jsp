@@ -9,7 +9,7 @@
 <c:url var="adm" value="/admin" />
 <c:url var="scripts" value="/scripts" />
 <c:url var="css" value="/css/main.css" />
-<c:url var="index" value="/css/index.css" />
+<c:url var="index" value="/css/busca.css" />
 <c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
 <c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
 
