@@ -17,8 +17,8 @@
 <c:url var="css" value="/css/main.css" />
 <c:url var="avancada" value="/css/buscaAvancada.css" />
 <c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
-<c:url var="fontawsome" value="/css/font-awesome-4.2.0/css/font-awesome.min.css" />
-<c:url var="fontawsome" value="/css/fonts.css" />
+<c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
+<c:url var="fonts" value="/css/fonts.css" />
 
 
 <html>
@@ -29,10 +29,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-
-
-
-
 
         <title>Infraestrutura Nacional de Repositórios de Objetos de Aprendizagem</title>
 
@@ -80,7 +76,7 @@
                 <div class="col-lg-12">
                     <div class="intro-message">
 
-                        <a href="index.html">
+                        <a href="${index}">
                             <img id="logo" src="imagens/logo.png" alt=""/>
                         </a>
                     </div>
@@ -89,61 +85,95 @@
                 <!--./col-lg-12-->
             </div>
             <!--./row-->
-            <div class="row field">
-                <div class="col-lg-6">
-                    <span class="textWhite">Texto para a busca</span>
+
+            <c:if test="${!empty erro}">
+                <div class="DivErro" id="MensagemErro">${erro}</div>
+            </c:if>
+
+            <form:form method="POST" modelAttribute="buscaModel" acceptCharset="utf-8"> 
+
+
+                <div class="row field">
+                    <!--                    <div class="col-lg-12">
+                    <%--<form:errors path="consulta" cssClass="error" />--%>
+                </div>-->
+
+                    <div class="col-lg-6">
+                        <span class="textWhite">Texto para a busca</span>
+                    </div>
+                    <!--/.col-lg-6-->
+
+                    <div class="col-lg-6">                   
+
+                        <form:input class="form-control shadow" path="consulta" cssErrorClass="form-control shadow error"/>
+                    </div>
+                    <!--/.col-lg-6-->
                 </div>
-                <!--/.col-lg-6-->
+                <!--/.row-->
 
-                <div class="col-lg-6">
-                    <input class="form-control shadow" />
+                <div class="row field">
+                    <div class="col-lg-6">
+                        <span class="textWhite">Autor</span>
+                    </div>
+                    <!--/.col-lg-6-->
+
+                    <div class="col-lg-6">
+                        <form:input class="form-control shadow" path="autor"/>
+                    </div>
+                    <!--/.col-lg-6-->
                 </div>
-                <!--/.col-lg-6-->
-            </div>
-            <!--/.row-->
+                <!--/.row-->
 
-            <div class="row field">
-                <div class="col-lg-6">
-                    <span class="textWhite">Autor</span>
-                </div>
-                <!--/.col-lg-6-->
+                <div class="row field">
+                    <div class="col-lg-6">
+                        <span class="textWhite">Local</span>
+                    </div>
+                    <!--/.col-lg-6-->
 
-                <div class="col-lg-6">
-                    <input class="form-control shadow" />
-                </div>
-                <!--/.col-lg-6-->
-            </div>
-            <!--/.row-->
+                    <div class="col-lg-6">
 
-            <div class="row field">
-                <div class="col-lg-6">
-                    <span class="textWhite">Local</span>
-                </div>
-                <!--/.col-lg-6-->
+                        <div class="row locais shadow">
+                            <div class="col-lg-6">
+                                <h5 class="miniTitulo">Repositórios</h5>
+                                <div class="checkboxList Value">
 
-                <div class="col-lg-6">
+                                    <div id="tree_repositories">
+                                        <ul>
+                                            <form:checkboxes itemValue="id" path="repositorios" cssClass="hidden" element="li" items="${repositories}"/>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="row locais shadow">
-                        <div class="col-lg-6">
-                            <div class="checkboxList Value">
-                                - Repositórios:
-                                <div id="tree_repositories">
-                                    <ul>
-                                        <form:checkboxes itemValue="id" path="repositorios" cssClass="hidden" element="li" items="${repositories}"/>
-                                    </ul>
+                            <div class="col-lg-6">
+                                <h5 class="miniTitulo">Federações</h5>
+                                <div class="checkboxList Value">
+
+                                    <div id="tree_repositories">
+                                        <ul>
+                                            <form:checkboxes itemValue="id" path="repositorios" cssClass="hidden" element="li" items="${repositories}"/>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="submitButton" class="row">
+                                <div class="col-lg-12 text-right">
+                                    <button class="btn btn-success" type="submit">
+                                        <i class="fa fa-search"> Buscar</i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-6">
-                            asdfff
-                        </div>
                     </div>
-                </div>
-                <!--/.col-lg-6-->
-            </div>
-            <!--/.row-->
+                    <!--/.col-lg-6-->
 
+                </div>
+                <!--/.row-->
+            </form:form> 
+                <div>
+                    <a class="lnkInTheHex text-right" href="${index}">Retornar para a busca padrão</a>
+                </div>
         </div>
         <!-- /.container -->
 
@@ -167,189 +197,14 @@
         </footer>
 
 
-        <div id="page-index">
-            <c:if test="${!empty erro}">
-                <div class="DivErro" id="MensagemErro">${erro}</div>
-            </c:if>
+        <!-- jQuery Version 1.11.0 -->
+        <!--<script src="scripts/jquery-1.11.0.js"></script>-->
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
 
-            <form:form method="POST" modelAttribute="buscaModel" acceptCharset="utf-8">   
-                <div id="index">
-                    <a href="${index}">
-                        <img src="${logoReduzido}" alt="Logo FEB_reduzido" class="logo"/>
-                    </a>
+        <!-- Bootstrap Core JavaScript -->
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
 
-                    <div class="clear"> </div>
-                    <div class="EspacoAntes">&nbsp;</div>
-                    <%--<form:errors path="*" cssClass="ValueErro" />--%>
-
-                    <div id="buscaAvancada">
-                        <div class="LinhaEntrada">
-                            <form:errors path="consulta" cssClass="ValueErro" />
-                            <label class="LabelLeft" for="consulta" >
-                                <strong>Texto</strong> para a busca
-                            </label>
-                            <div class="Value">
-                                <form:input path="consulta"/>
-                            </div>
-                        </div>  
-
-                        <div class="LinhaEntrada">
-                            <label class="LabelLeft" for="autor" >
-                                Pesquisar objetos <strong>de autoria</strong> de
-                            </label>
-                            <div class="Value">
-                                <form:input path="autor"/>
-                            </div>
-                        </div>
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Pesquisar <b>tamanho</b> de objetos
-                            </div>
-                            <div class="Value">
-                                <form:input path="size"/>
-                            </div>
-                        </div>
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Pesquisar <b>formato</b> de objetos
-                            </div>
-                            <div class="Value">
-                                <form:select path="format" items="${buscaModel.mimeTypes}"/>
-                            </div>
-                        </div>
-
-                        <div class="LinhaEntrada">
-                            <form:errors path="idioma" cssClass="ValueErro" />
-                            <div class="LabelLeft">
-                                <b>Idioma</b>
-                            </div>
-                            <div class="Value">
-                                <form:select path="idioma" items="${buscaModel.languages}"/>
-                            </div>
-                        </div> 
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                <b>Custo</b>
-                            </div>
-                            <div class="Value">
-                                <form:radiobutton path="cost" value="false"/> Grátis
-                                <form:radiobutton path="cost" value="true"/> Pagos
-                                <form:radiobutton path="cost" value=""/> Ambos
-                            </div>
-                        </div> 
-
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft"> 
-                                Objetos com <b>visual</b>
-                            </div>
-                            <div class="Value">
-                                <form:radiobutton path="hasVisual" value="true"/> Sim
-                                <form:radiobutton path="hasVisual" value="false"/> Não
-                                <form:radiobutton path="hasVisual" value=""/> Ambos
-                            </div>
-                        </div> 
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Objetos <b>auditivos</b>
-                            </div>
-                            <div class="Value">
-                                <form:radiobutton path="hasAuditory" value="true"/> Sim
-                                <form:radiobutton path="hasAuditory" value="false"/> Não
-                                <form:radiobutton path="hasAuditory" value=""/> Ambos
-                            </div>
-                        </div>
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Objetos <b>textuais</b>
-                            </div>
-                            <div class="Value">
-                                <form:radiobutton path="hasText" value="true"/> Sim
-                                <form:radiobutton path="hasText" value="false"/> Não
-                                <form:radiobutton path="hasText" value=""/> Ambos
-                            </div>
-                        </div>
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Objetos <b>táteis</b>
-                            </div>
-                            <div class="Value">
-                                <form:radiobutton path="hasTactile" value="true"/> Sim
-                                <form:radiobutton path="hasTactile" value="false"/> Não
-                                <form:radiobutton path="hasTactile" value=""/> Ambos
-                            </div>
-                        </div>
-
-
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Faixa etária:
-                            </div>
-                            <div class="Value slider-margin">
-                                <form:input path="ageRange" class="span2" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="[0,20]"/>
-                                <input id="adultAge" name="adultAge" type="checkbox" value="true"/> 19 ou +
-                            </div>
-                        </div>
-                        <div class="LinhaEntrada">
-                            <div class="LabelLeft">
-                                Local para busca
-                            </div>
-                            <div class="checkboxList Value">
-                                - Repositórios:
-                                <div id="tree_repositories">
-                                    <ul>
-                                        <form:checkboxes itemValue="id" path="repositorios" cssClass="hidden" element="li" items="${repositories}"/>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class='checkboxList Value'>
-                                <c:if test="${!empty federations}">
-                                    - Federa&ccedil;&otilde;es
-                                    <div id="tree_federations">
-                                        <ul>
-                                            <c:forEach var="subFed" items="${federations}">
-
-                                                <li>
-                                                    ${fn:toUpperCase(subFed.name)}
-                                                    <ul>
-                                                        <form:checkboxes itemValue="id" itemLabel="name" path="repSubfed" cssClass="hidden" element="li" items="${subFed.repositorios}"/>
-                                                    </ul>
-                                                </li>
-                                            </c:forEach>
-                                        </ul>
-                                    </div>
-                                </c:if>
-                            </div>
-
-                        </div>
-                        <div class="LinhaEntrada">
-                            <div class="Buttons">
-                                <input class="BOTAO" type="submit" value="Consultar"/>
-                            </div>
-                        </div>
-                        <div class="EspacoAntes">&nbsp;</div>
-                        <div>
-                            <a href="${index}">Retornar a busca padr&atilde;o</a>
-                        </div>
-                    </div>
-                </form:form>
-            </div>
-
-            <!-- jQuery Version 1.11.0 -->
-            <!--<script src="scripts/jquery-1.11.0.js"></script>-->
-            <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
-
-            <!-- Bootstrap Core JavaScript -->
-            <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
-            <script src="scripts/bootstrap.min.js"></script>
-
-            <!-- Barra do Governo Federal -->
-            <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        <!-- Barra do Governo Federal -->
+        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
     </body>
 </html>

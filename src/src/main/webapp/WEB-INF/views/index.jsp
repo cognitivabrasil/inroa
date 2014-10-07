@@ -82,7 +82,7 @@
                             <!-- /.input-group -->                            
                         </form:form>
                             
-                        <a id="lnkAvancada" href="./buscaAvancada">Busca Avançada</a>
+                        <a id="lnkAvancada" class="lnkInTheHex" href="./buscaAvancada">Busca Avançada</a>
                     </div>
                 </div>
             </div>

@@ -64,12 +64,15 @@ footer a {
     margin-bottom: 20px;    
 }
 
-#lnkAvancada {
+.lnkInTheHex {
     float: right;
-    margin-right: 120px;
     margin-top: 10px;
     color: #a6e1ec;
     font-size: 18px;
+}
+
+#lnkAvancada{
+    margin-right: 120px;
 }
 
 @media (min-width: 1200px){
