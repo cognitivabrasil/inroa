@@ -69,6 +69,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
+        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+        registry.addResourceHandler("/imagens/**").addResourceLocations("/imagens/");
+        registry.addResourceHandler("/scripts/**").addResourceLocations("/scripts/");
     }
     
     @Override
