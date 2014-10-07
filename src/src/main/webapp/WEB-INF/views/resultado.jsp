@@ -90,7 +90,7 @@
                 <!--/.col-lg-9-->
             </div>
             <!--/#preResult .row-->
-            
+
             <div class="row">
                 <div id="result" class="shadow">
                     <c:if test="${empty documentos}">
@@ -137,47 +137,23 @@
         </div>
         <!-- /.container -->
 
-        <!-- Footer -->
-<!--    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li>
-                            <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
-                        </li>
-                        <li class="footer-menu-divider">|</li>
-                        <li>
-                            <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>-->
-<div class="footer">
-            <div class="container">
-                <p class="text-muted">Place sticky footer content here.</p>
-            </div>
-        </div>
+        <!-- jQuery Version 1.11.0 -->
+        <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js"/>
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
 
-    <!-- jQuery Version 1.11.0 -->
-    <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js"/>
-    <script language="javascript" type="text/javascript" src='${jquery}'></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <c:url var="bootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js"/>
-    <script language="javascript" type="text/javascript" src='${bootstrap}'></script>
+        <!-- Bootstrap Core JavaScript -->
+        <c:url var="bootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js"/>
+        <script language="javascript" type="text/javascript" src='${bootstrap}'></script>
 
 
-    <!-- Barra do Governo Federal -->
-    <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
+        <!-- Barra do Governo Federal -->
+        <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
 
-    <c:url var="root" value="/" />
-    <script>rootUrl = "${root}";</script>
+        <c:url var="root" value="/" />
+        <script>rootUrl = "${root}";</script>
 
-    <c:url var="validateURL" value="/scripts/testUrlActive.js" />
-    <script type="text/javascript" src="${validateURL}"></script>
-</body>
+        <c:url var="validateURL" value="/scripts/testUrlActive.js" />
+        <script type="text/javascript" src="${validateURL}"></script>
+    </body>
 
 </html>

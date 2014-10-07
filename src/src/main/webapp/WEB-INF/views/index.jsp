@@ -9,6 +9,7 @@
 <c:url var="adm" value="/admin" />
 <c:url var="scripts" value="/scripts" />
 <c:url var="css" value="/css/main.css" />
+<c:url var="index" value="/css/index.css" />
 <c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
 <c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
 
@@ -30,6 +31,7 @@
 
         <!-- Custom CSS -->
         <link rel="StyleSheet" href="${css}" type="text/css">
+        <link rel="StyleSheet" href="${index}" type="text/css">
 
         <!-- Custom Fonts -->
         <link rel="StyleSheet" href="${fontawsome}" type="text/css">
@@ -48,7 +50,7 @@
     </head>
 
     <body>
-
+        <div id="wrap"></div>
         <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;"> 
             <ul id="menu-barra-temp" style="list-style:none;">
                 <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
@@ -61,7 +63,7 @@
             </ul>
         </div>
         <!-- /#barra-brasil -->
-
+        
         <div class="container text-center">
 
             <div class="row">
@@ -90,7 +92,7 @@
         <!-- /.container -->
 
         <!-- Footer -->
-    <footer>
+    <div class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -106,7 +108,7 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
 
     <%@include file="googleAnalytics"%>
 
