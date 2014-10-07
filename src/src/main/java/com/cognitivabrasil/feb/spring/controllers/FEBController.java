@@ -1,16 +1,5 @@
 package com.cognitivabrasil.feb.spring.controllers;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.data.services.FederationService;
-import com.cognitivabrasil.feb.data.services.RepositoryService;
-import com.cognitivabrasil.feb.data.services.SearchService;
-import com.cognitivabrasil.feb.data.services.UserService;
-import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
-import com.cognitivabrasil.feb.data.services.TagCloudService;
-import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -20,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.naming.ConfigurationException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,9 +23,25 @@ import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
+
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.data.services.FederationService;
+import com.cognitivabrasil.feb.data.services.RepositoryService;
+import com.cognitivabrasil.feb.data.services.SearchService;
+import com.cognitivabrasil.feb.data.services.TagCloudService;
+import com.cognitivabrasil.feb.data.services.UserService;
+import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
+import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
 
 /**
  * Controller geral para o FEB
@@ -69,8 +73,7 @@ public final class FEBController implements ErrorController  {
     
     @RequestMapping("/error")
     public ModelAndView error(Model model, HttpServletResponse response, HttpServletRequest request) {
-        log.info("Error");
-        
+            
         
         ModelAndView mv = new ModelAndView("errors/error404");
         
