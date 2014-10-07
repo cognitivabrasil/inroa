@@ -147,6 +147,10 @@ cd src/solr
 java -jar start.jar
 ```
 
+Você pode configurar o Solr pelo arquivo de configuração ou com a veriável de ambiente
+FEB\_SOLR\_URL, que deverá conter uma url de acesso ao Solr, por exemplo, 
+http://localhost:8983/solr/
+
 Para deploy, o melhor é usar o pacote solr.
 
 Caso você tenha instalado o SOLR no tomcat com o

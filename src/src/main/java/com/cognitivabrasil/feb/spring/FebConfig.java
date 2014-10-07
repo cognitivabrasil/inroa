@@ -61,6 +61,8 @@ public class FebConfig {
 
     private FebEnvironmentVariables environmentVariables;
 
+    private String solrUrl;
+
     @Autowired
     public void setEncryptor(StringEncryptor e) {
         encryptor = e;
@@ -81,6 +83,8 @@ public class FebConfig {
         n.setProperty("Database.database", database);
         n.setProperty("Database.password", "ENC(" + encryptor.encrypt(password)
                 + ")");
+        n.setProperty("Solr.url", solrUrl);
+
 
         n.store(w, null);
     }
@@ -163,6 +167,7 @@ public class FebConfig {
         username = properties.getProperty("Database.username");
         database = properties.getProperty("Database.database");
         password = properties.getProperty("Database.password");
+        solrUrl = properties.getProperty("Solr.url");
     }
 
     public String getHost() {
@@ -226,6 +231,8 @@ public class FebConfig {
         setUsername(febConf.getUsername());
         setPort(febConf.getPort());
         setHost(febConf.getHost());
+        setDatabaseType(febConf.getDatabaseType());
+        setSolrUrl(febConf.getSolrUrl());
     }
 
     @Override
@@ -246,6 +253,10 @@ public class FebConfig {
 
     // TODO: ler do arquivo/variaveis de ambiente
     public String getSolrUrl() {
-        return "http://localhost:8983/solr/";
+        return solrUrl;
+    }
+
+    public void setSolrUrl(String url) {
+        solrUrl = url;        
     }
 }

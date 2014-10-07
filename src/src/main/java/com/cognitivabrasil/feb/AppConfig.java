@@ -47,7 +47,8 @@ import com.cognitivabrasil.feb.spring.FebEnvironmentVariables;
  */
 @Configuration
 @ComponentScan(basePackages = { "com.cognitivabrasil.feb.spring", "com.cognitivabrasil.feb.config",
-        "com.cognitivabrasil.feb.data", "com.cognitivabrasil.feb.robo", "com.cognitivabrasil.feb.ferramentaBusca" })
+        "com.cognitivabrasil.feb.data", "com.cognitivabrasil.feb.robo", "com.cognitivabrasil.feb.ferramentaBusca",
+        "com.cognitivabrasil.feb.solr"})
 @EnableJpaRepositories("com.cognitivabrasil.feb.data.repositories")
 public class AppConfig {
     private static final Logger log = LoggerFactory.getLogger(AppConfig.class);
@@ -112,6 +113,7 @@ public class AppConfig {
         p.setProperty("FEB_DATABASE_DATABASE", "");
         p.setProperty("FEB_DATABASE_USERNAME", "");
         p.setProperty("FEB_DATABASE_PASSWORD", "");
+        p.setProperty("FEB_SOLR_URL", "http://localhost:8983/solr/");
 
         
         s.setProperties(p);
@@ -127,6 +129,8 @@ public class AppConfig {
         p.setProperty("Database.database", "federacao");
         p.setProperty("Database.host", "127.0.0.1");
         p.setProperty("Database.port", "5432");
+        p.setProperty("Solr.url", "http://localhost:8983/solr/");
+
 
         return p;
     }
