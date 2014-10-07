@@ -35,7 +35,7 @@
         <script type="text/javascript" src="${shBrushXml}"></script>
 
         <!-- Include *at least* the core style and default theme -->
-        <c:url var="shCore" value="/css/shCore.css" />
+        <c:url var="shCore" value="/css/vendor/shCore.css" />
         <link href="${shCore}" rel="stylesheet" type="text/css" />
         <c:url var="shTheme" value="/css/shThemeDefault.css" />
 

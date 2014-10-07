@@ -10,7 +10,7 @@
 <c:url var="scripts" value="/scripts" />
 <c:url var="css" value="/css/main.css" />
 <c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
-<c:url var="fontawsome" value="/css/font-awesome-4.2.0/css/font-awesome.min.css" />
+<c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
 
 <html lang="pt-BR">
 
@@ -21,9 +21,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-
-
-
 
 
         <title>Infraestrutura Nacional de Repositórios de Objetos de Aprendizagem</title>

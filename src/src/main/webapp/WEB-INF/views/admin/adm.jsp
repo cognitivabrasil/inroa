@@ -27,7 +27,7 @@ Author     : Marcos Nunes
         <c:url var="imgErroSincronizar" value="/imagens/erro_sincronizar.png"/>
 
         <link rel="StyleSheet"
-              href="<feb.spring:url value="/css/Theme/jquery-ui-1.8.22.custom.css" htmlEscape="true" />"
+              href="<feb.spring:url value="/css/vendor/Theme/jquery-ui-1.8.22.custom.css" htmlEscape="true" />"
               type="text/css">
         <link rel="StyleSheet"
               href="<feb.spring:url value="/css/padrao.css" htmlEscape="true" />"

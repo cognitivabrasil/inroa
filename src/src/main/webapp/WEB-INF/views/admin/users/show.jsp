@@ -22,7 +22,7 @@
         <c:url var="funcoes" value="/scripts/funcoes.js" />
         <link rel="StyleSheet" href="${css}" type="text/css">
         <link href="${favicon }" rel="shortcut icon" type="image/x-icon" />
-        <c:url var="jqueryUi" value="/css/Theme/jquery-ui-1.8.22.custom.css" />
+        <c:url var="jqueryUi" value="/css/vendor/Theme/jquery-ui-1.8.22.custom.css" />
         <link rel="StyleSheet" href="${jqueryUi}" type="text/css"/>
         <c:url var="jUi" value="/scripts/vendor/jquery-1.7.2.js" />
         <script language="javascript" type="text/javascript" src='${jUi}'></script>
