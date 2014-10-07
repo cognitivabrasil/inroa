@@ -33,6 +33,10 @@ public class Indexador {
     private static final Logger log = LoggerFactory.getLogger(Indexador.class);
     @Autowired
     private DocumentService docService;
+    
+    @Autowired
+    private Solr solr;
+    
     @PersistenceContext
     private EntityManager em;
 
@@ -47,18 +51,17 @@ public class Indexador {
     public void populateR1() {
         log.info("Recalculando o indice do Solr...");
 
-        Solr.apagarIndice();
+        solr.apagarIndice();
         Long inicio = System.currentTimeMillis();
         int numMaxDoc = 10000;
-        Solr s = new Solr();
 
         Pageable limit = new PageRequest(0, numMaxDoc);
         Page<Document> docs = docService.getlAll(limit);
-        s.indexarBancoDeDados(docs.getContent());
+        solr.indexarBancoDeDados(docs.getContent());
 
         while (docs.hasNext()) {
             docs = docService.getlAll(docs.nextPageable());
-            s.indexarBancoDeDados(docs.getContent());
+            solr.indexarBancoDeDados(docs.getContent());
             em.clear();
         }
 

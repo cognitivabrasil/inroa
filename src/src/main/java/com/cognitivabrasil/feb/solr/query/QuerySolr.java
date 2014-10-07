@@ -7,12 +7,15 @@ import cognitivabrasil.obaa.Technical.Technical;
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.spring.FebConfig;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -28,8 +31,8 @@ public class QuerySolr {
     private QueryResponse queryResponse;
     private static final Logger log = LoggerFactory.getLogger(QuerySolr.class);
 
-    public QuerySolr() {
-        serverSolr = new HttpSolrServer("http://localhost:8983/solr");
+    public QuerySolr(FebConfig c) {
+        serverSolr = new HttpSolrServer(c.getSolrUrl());
         query = new SolrQuery();
         queryResponse = new QueryResponse();
 

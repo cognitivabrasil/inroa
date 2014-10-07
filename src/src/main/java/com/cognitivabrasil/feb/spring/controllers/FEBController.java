@@ -66,6 +66,9 @@ public final class FEBController implements ErrorController  {
     private SearchService searchesDao;
     @Autowired
     private TagCloudService tagCloud;
+    
+    @Autowired
+    private Recuperador recuperador;
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
@@ -180,8 +183,7 @@ public final class FEBController implements ErrorController  {
                     consulta.setOffset(offset);
                 }
 
-                Recuperador rec = new Recuperador();
-                List<Document> docs = rec.busca(consulta);
+                List<Document> docs = recuperador.busca(consulta);
                 log.trace("Carregou " + docs.size() + " documentos.");
                 model.addAttribute("documentos", docs);
 
@@ -226,8 +228,7 @@ public final class FEBController implements ErrorController  {
             return "buscaAvancada";
         } else {
             try {
-                Recuperador rec = new Recuperador();
-                List<Document> docs = rec.buscaAvancada(consulta);
+                List<Document> docs = recuperador.buscaAvancada(consulta);
                 model.addAttribute("documentos", docs);
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
@@ -313,7 +314,6 @@ public final class FEBController implements ErrorController  {
                 xml += "<error code=\"limitExceeded\">The maximum is 100</error> ";
             } else {
 
-                Recuperador rep = new Recuperador();
                 Consulta c = new Consulta();
                 if (query != null) {
                     String encodedQuery = URLDecoder.decode(query, "UTF-8");
@@ -329,7 +329,7 @@ public final class FEBController implements ErrorController  {
                 if (autor != null) {
                     c.setAutor(autor);
                 }
-                List<Document> docs = rep.busca(c);
+                List<Document> docs = recuperador.busca(c);
 
                 xml += "<ListRecords "
                         + "query=\"" + c.getConsulta() + "\" ";

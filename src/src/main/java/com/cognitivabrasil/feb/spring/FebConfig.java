@@ -243,4 +243,9 @@ public class FebConfig {
     public void setDatabaseType(Database t) {
         databaseType = t;
     }
+
+    // TODO: ler do arquivo/variaveis de ambiente
+    public String getSolrUrl() {
+        return "http://localhost:8983/solr/";
+    }
 }
