@@ -101,9 +101,9 @@ public final class FEBController implements ErrorController  {
 
         model.addAttribute("buscaModel", new Consulta());
         
-        Map<String, Integer> termos = tagCloud.getTagCloud();
+//        Map<String, Integer> termos = tagCloud.getTagCloud();
 
-        model.addAttribute("termos", termos);
+        model.addAttribute("termos", "");
 
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
