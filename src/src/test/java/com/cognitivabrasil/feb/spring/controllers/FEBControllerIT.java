@@ -47,11 +47,6 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
     
     @Autowired
     FEBController controller;
-    @Autowired
-    SearchService searchService;
-    
-    @Autowired
-    TagCloudService tagCloudService;
     
     @PersistenceContext
     EntityManager em;
@@ -70,23 +65,12 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
     
     @Test
     public void testIndex(){
-        searchService.save("marcos", DateTime.now());
-        searchService.save("marcos", DateTime.now());
-        searchService.save("marcos", DateTime.now());
-        searchService.save("nunes", DateTime.now());
-        searchService.save("nunes", DateTime.now());
         
-        em.flush();
         String result = controller.index(model, response, request, "x");
         
         assertThat(result, equalTo("index"));
         
         Consulta c = (Consulta) model.get("buscaModel");
-        assertThat(c, notNullValue());
-                
-        Map<String, Integer> tagCloud = (Map<String, Integer>) model.get("termos");
-        assertThat(tagCloud, notNullValue());
-        assertThat(tagCloud.size(), equalTo(2));
-        
+        assertThat(c, notNullValue());        
     }
 }
