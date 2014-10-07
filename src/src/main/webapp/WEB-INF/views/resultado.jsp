@@ -137,58 +137,23 @@
                             <c:forEach var="resumo" items="${doc.shortDescriptions}">
                                 <div class="atributo">${resumo}</div>
                             </c:forEach>   
-                        </div> 
-                        <div class="atributo">
-                            Localização: 
-                            <c:forEach var="localizacao" items="${doc.locationHttp}">
-                                <c:if test="${localizacao.value}">
-                                    <br />
-                                    <a class="verifyUrl" href="${localizacao.key}" target="_new">${localizacao.key}</a>
-                                </c:if>
-                            </c:forEach>
+
+                            <div class="atributo">
+                                Localização: 
+                                <c:forEach var="localizacao" items="${doc.locationHttp}">
+                                    <c:if test="${localizacao.value}">
+                                        <br />
+                                        <a class="verifyUrl" href="${localizacao.key}" target="_new">${localizacao.key}</a>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
+                            <div class="atributo">
+                                Repositório: ${doc.nomeRep}
+                            </div>
                         </div>
-                        <div class="atributo">
-                            Repositório: ${doc.nomeRep}
-                        </div>
+                        <!--/.resultadoConsulta-->
                     </c:forEach>
-                    <div class="resultadoConsulta">
-                        <div class="titulo"> <a> Um estudo sobre polinômios e sua abordagem no ensino</a></div>
-                        <div class="atributo">
-                            Este trabalho tem como o objetivo de estudar Polinômios além do que foi estudado na Graduação, fazer um breve estudo de como se está ensinando Polinômios de acordo com alguns livros didáticos e, principalmente, propor algumas atividades que contribuam para o trabalho dos professores, despertando assim o interesse dos alunos pelo estudo da Algebra.
-                            TCC (graduação) - Universidade Federal de Santa Catarina, Centro de Ciências Físicas e Matemáticas, Curso de Matemática.
-                        </div>
 
-                        <div class="atributo">
-                            Localização: 
-                            <br />
-                            <a href="http://repositorio.ufsc.br/xmlui/handle/123456789/94973">
-                                http://repositorio.ufsc.br/xmlui/handle/123456789/94973
-                            </a>
-                        </div>
-
-                        <div class="atributo">
-                            Repositório: Subfederação UFSC / Repositório UFSC
-                        </div>
-                    </div>
-                    <!--/.resultadoConsulta-->
-
-                    <div class="resultadoConsulta">
-                        <div class="titulo"> <a> Um estudo sobre polinômios e sua abordagem no ensino</a></div>
-                        <div class="atributo">
-                            Este trabalho tem como o objetivo de estudar Polinômios além do que foi estudado na Graduação, fazer um breve estudo de como se está ensinando Polinômios de acordo com alguns livros didáticos e, principalmente, propor algumas atividades que contribuam para o trabalho dos professores, despertando assim o interesse dos alunos pelo estudo da Algebra.
-                            TCC (graduação) - Universidade Federal de Santa Catarina, Centro de Ciências Físicas e Matemáticas, Curso de Matemática.
-                        </div>
-
-                        <div class="atributo">
-                            Localização: 
-                            <a href="http://repositorio.ufsc.br/xmlui/handle/123456789/94973">http://repositorio.ufsc.br/xmlui/handle/123456789/94973</a>
-                        </div>
-
-                        <div class="atributo">
-                            Repositório: Subfederação UFSC / Repositório UFSC
-                        </div>
-                    </div>
-                    <!--/.resultadoConsulta-->
                 </div>
                 <!--/#result-->
             </div>
@@ -215,12 +180,12 @@
             </div>
         </div>
     </footer>
-    
+
     <c:url var="imgTrue" value="/imagens/check.png"/>
     <img id="imgUrlTrue" class='imgchecklink' src="${imgTrue}" border='0' alt='Link correto' title='link ativo'>
-    
-       <!-- jQuery Version 1.11.0 -->
-       <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js"/>
+
+    <!-- jQuery Version 1.11.0 -->
+    <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js"/>
     <script language="javascript" type="text/javascript" src='${jquery}'></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -230,7 +195,7 @@
 
     <!-- Barra do Governo Federal -->
     <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
-    
+
     <c:url var="root" value="/" />
     <script>rootUrl = "${root}";</script>
 
