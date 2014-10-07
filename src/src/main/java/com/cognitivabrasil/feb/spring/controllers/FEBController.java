@@ -389,6 +389,4 @@ public final class FEBController implements ErrorController  {
         }
         return newCookie;
     }
-
-
 }
