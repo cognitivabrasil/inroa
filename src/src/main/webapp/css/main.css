@@ -8,7 +8,7 @@
 
 html { 
     height: 100%; /* forces page height to equal inner window height. */
-    background: url(./images/bg.jpg) no-repeat;
+    background: url(../imagens/bg.jpg) no-repeat;
     background-position: center;
 }
 
@@ -16,12 +16,7 @@ body {
     position: absolute;
     top:0; bottom:0;
     left:0; right:0;
-    background: url(./images/hex.png) repeat-x;
-}
-
-.intro-message {
-    position: relative;
-    padding-bottom: 20%;
+    background: url(../imagens/hex.png) repeat-x;
 }
 
 @media(max-width:767px) {
@@ -54,10 +49,10 @@ footer a {
     margin-bottom: 20px;
 }
 
-#searchBox {
-    -webkit-box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow:    0px 20px 20px rgba(0, 0, 0, 0.2);
-    box-shadow:         0px 20px 20px rgba(0, 0, 0, 0.2);
+.shadow {
+    -webkit-box-shadow: 0px 40px 40px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow:    0px 40px 40px rgba(0, 0, 0, 0.2);
+    box-shadow:         0px 40px 40px rgba(0, 0, 0, 0.2);
 }
 
 #searchBox input,#searchBox button{
@@ -80,6 +75,19 @@ footer a {
 @media (min-width: 1200px){
     .container {
         width: 800px;
+    }
+
+    /*configurar corretamente para funcionar com o bootstrap!!*/
+    .vbottom {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+    }
+
+    /*configurar corretamente para funcionar com o bootstrap!!*/
+    .relative {
+        position:relative;
     }
 }
 
