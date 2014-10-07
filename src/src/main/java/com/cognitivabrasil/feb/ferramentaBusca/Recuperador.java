@@ -3,24 +3,29 @@ package com.cognitivabrasil.feb.ferramentaBusca;
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
+import com.cognitivabrasil.feb.spring.FebConfig;
 
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Recuperador pelo SOLR
  *
  * @author Daniel Epstein
  */
+@Service
 public class Recuperador {
 
     private static final Logger log = LoggerFactory.getLogger(Recuperador.class);
     private static final int rssSizeLimit = 100;
 
-    public Recuperador() {
-    }
+    @Autowired
+    private FebConfig config;
+    
 
     /**
      * Envia para o Solr uma consulta
@@ -38,7 +43,7 @@ public class Recuperador {
             limit = consulta.getLimit();
         }
 
-        QuerySolr q = new QuerySolr();
+        QuerySolr q = new QuerySolr(config);
         log.debug(consulta.getConsulta());
         q.pesquisaSimples(consulta.getConsulta(), consulta.getOffset(), limit);
         consulta.setSizeResult(q.getNumDocs());
@@ -66,7 +71,7 @@ public class Recuperador {
             limit = consulta.getLimit();
         }
 
-        QuerySolr q = new QuerySolr();
+        QuerySolr q = new QuerySolr(config);
         log.debug(consulta.getConsulta());
         q.pesquisaCompleta(consulta, consulta.getOffset(), limit);
         consulta.setSizeResult(q.getNumDocs());

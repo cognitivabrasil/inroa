@@ -6,16 +6,22 @@ import com.cognitivabrasil.feb.solr.converter.Converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.solr.common.SolrInputDocument;
 
+@Service
 public class Solr {
 
     private static final Logger log = LoggerFactory.getLogger(Solr.class);
     private final Converter convert;
+    
+    @Autowired
+    private IndexarDados indexarDados;
     
     public Solr() {
         convert = new Converter();
@@ -26,8 +32,8 @@ public class Solr {
      *
      * @return True se deu certo. False se houve alguma falha.
      */
-    public static boolean apagarIndice() {
-        return IndexarDados.apagarIndice();
+    public boolean apagarIndice() {
+        return indexarDados.apagarIndice();
     }
 
     /**
@@ -73,10 +79,10 @@ public class Solr {
         log.debug("Enviando para o Solr a lista de documento. (Número de documentos: " + docsSolr.size() + ")");
 
         //Tenta fazer o upload para o Solr. Se não conseguiu, faz upload de um por um
-        if (!IndexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
+        if (!indexarDados.indexarColecaoSolrInputDocument(docsSolr)) {
             log.error("Erro ao mandar a lista de documentos para o Solr, será enviado um a um.");
             for (int d = 0; d < docsSolr.size(); d++) {
-                IndexarDados.indexarSolrInputDocument(docsSolr.get(d));
+                indexarDados.indexarSolrInputDocument(docsSolr.get(d));
             }
         }
     }

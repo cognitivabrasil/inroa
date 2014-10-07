@@ -10,6 +10,7 @@ import org.apache.solr.common.SolrInputDocument;
 import cognitivabrasil.obaa.OBAA;
 
 import com.cognitivabrasil.feb.solr.converter.Converter;
+import com.cognitivabrasil.feb.spring.FebConfig;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -18,21 +19,26 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrException;
 
+@Service
 public class IndexarDados {
 
-    private static final String solrURL = "http://localhost:8983/solr/";
     private static final Logger log = LoggerFactory.getLogger(IndexarDados.class);
+    
+    @Autowired
+    private FebConfig config;
 
     /**
      * Apaga todo o indice do Solr
      *
      * @return True se o indice foi apagado
      */
-    public static boolean apagarIndice() {
-        SolrServer server = new HttpSolrServer(solrURL);
+    public boolean apagarIndice() {
+        SolrServer server = new HttpSolrServer(config.getSolrUrl());
         try {
             UpdateResponse response = server.deleteByQuery("*:*");
             if (response.getStatus() == 400) {
@@ -56,7 +62,7 @@ public class IndexarDados {
      * <Field:Metadados>
      * @return True se todos os objetos foram indexados
      */
-    public static boolean indexarObjeto(List<List<String>> objeto) {
+    public boolean indexarObjeto(List<List<String>> objeto) {
         SolrInputDocument doc = Converter.listToSolrInputDocument(objeto);
         return indexarSolrInputDocument(doc);
     }
@@ -67,7 +73,7 @@ public class IndexarDados {
      * @param objeto Objeto a ser indexado
      * @return True se o objeto foi indexado com sucesso
      */
-    public static boolean indexarOBAA(OBAA objeto) {
+    public boolean indexarOBAA(OBAA objeto) {
         return indexarObjeto(Converter.OBAAToList(objeto));
     }
 
@@ -77,8 +83,8 @@ public class IndexarDados {
      * @param docs Colecao de documentos no formato SOLR
      * @return True se todos os objetos foram indexados.
      */
-    public static boolean indexarColecaoSolrInputDocument(Collection<SolrInputDocument> docs) {
-        SolrServer server = new HttpSolrServer(solrURL);
+    public boolean indexarColecaoSolrInputDocument(Collection<SolrInputDocument> docs) {
+        SolrServer server = new HttpSolrServer(config.getSolrUrl());
         try {
             UpdateResponse response = server.add(docs);
 
@@ -102,14 +108,14 @@ public class IndexarDados {
      * @param docs Documento ja no formato SOLR a ser indexado
      * @return True se o documento foi indexado
      */
-    public static boolean indexarSolrInputDocument(SolrInputDocument docs) {
+    public boolean indexarSolrInputDocument(SolrInputDocument docs) {
         Set<SolrInputDocument> col = new HashSet<>();
         col.add(docs);
         return indexarColecaoSolrInputDocument(col);
     }
 
     public boolean indexarColecaoSolrInputDocument2(Collection<SolrInputDocument> docs) {
-        SolrServer server = new HttpSolrServer(solrURL);
+        SolrServer server = new HttpSolrServer(config.getSolrUrl());
         try {
             server.add(docs);
 
