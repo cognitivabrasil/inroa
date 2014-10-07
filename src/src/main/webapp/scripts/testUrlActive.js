@@ -3,7 +3,7 @@ $(function() {
     var imgFalse = "<img class='imgchecklink' src='" + rootUrl + "imagens/error.png' border='0' alt='Link quebrado' title='link quebrado' align='middle'>";
 
     var checkUrlInternal = function(url, parentNode) {
-        $.getJSON(rootUrl + "verificaURL?url=" + url, "", function(resultado) {
+        $.getJSON(rootUrl + "verificaURL", {url:url}, function(resultado) {
             if (resultado) {
                 parentNode.append(imgTrue);
             } else if (!url.match(/.swf$/)) {

@@ -449,7 +449,7 @@ Author     : Marcos Nunes
             <div id="tabs-4">
 
                 <div class="versao">Vers&atilde;o <b>${version}</b></div>
-                <div class="versao">Branch <b>${gitBranch}</b></div>
+                <!--<div class="versao">Branch <b>${gitBranch}</b></div>-->
                 <div class="versao">Commit <b>${gitCommitId} - ${gitCommitTime}</b></div>
                 
 
