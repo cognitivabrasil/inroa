@@ -126,6 +126,8 @@
                                 Repositório: ${doc.nomeRep}
                             </div>
                         </div>
+
+                        <hr />
                         <!--/.resultadoConsulta-->
                     </c:forEach>
 
