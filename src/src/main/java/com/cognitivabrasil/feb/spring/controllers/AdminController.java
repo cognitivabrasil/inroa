@@ -38,8 +38,8 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  */
-@Controller("admin")
-@RequestMapping("/admin/*")
+@RequestMapping("/admin")
+@Controller
 public class AdminController {
 
     @Autowired
@@ -67,7 +67,7 @@ public class AdminController {
     public AdminController() {
     }
 
-    @RequestMapping("/")
+    @RequestMapping(method = RequestMethod.GET)
     public String admin(Model model, HttpServletRequest request) {
         model.addAttribute("repositories", repDao.getAll());
         model.addAttribute("mapeamentos", mapDao.getAll());
