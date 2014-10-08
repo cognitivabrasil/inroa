@@ -9,7 +9,6 @@ import com.cognitivabrasil.feb.data.entities.SubFederacao;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.exceptions.FederationException;
-import com.cognitivabrasil.feb.ferramentaBusca.indexador.Indexador;
 import com.cognitivabrasil.feb.robo.atualiza.SubFederacaoOAI;
 import com.cognitivabrasil.feb.spring.validador.SubFederacaoValidador;
 
@@ -35,26 +34,24 @@ import org.springframework.web.bind.annotation.*;
 @Controller("federations")
 @RequestMapping("/admin/federations/*")
 public final class FederationsController {
+
     private static final Logger log = LoggerFactory.getLogger(FederationsController.class);
-    
+
     @Autowired
     private FederationService subDao;
     @Autowired
     private DocumentService docDao;
     @Autowired
-    private Indexador indexar;
-    @Autowired
     SubFederacaoOAI subFedOAI;
-    
+
     @Autowired
     private SubFederacaoValidador subFedValidador;
-  
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String exibeFed(@PathVariable("id") Integer id, Model model,
             @RequestParam(required = false, value = "r") boolean recarregar) {
         SubFederacao fed = subDao.get(id);
-        
+
         Map<String, Integer> repsSize = new HashMap<>();
         Integer fedSize = 0;
         //list rep whith size
@@ -63,15 +60,15 @@ public final class FederationsController {
             fedSize += sizeRep;
             repsSize.put(sRep.getName(), sizeRep);
         }
-        
+
         model.addAttribute("fedSize", fedSize);
         model.addAttribute("mapRepSize", repsSize);
         model.addAttribute("federation", fed);
         model.addAttribute("recarregar", recarregar);
-        
+
         return "admin/federations/show";
     }
-    
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String cadastraFed(Model model) {
         SubFederacao subFed = new SubFederacao();
@@ -79,15 +76,15 @@ public final class FederationsController {
         model.addAttribute("federation", subFed);
         return "admin/federations/new";
     }
-    
+
     @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String salvaFed(
             @ModelAttribute("federation") SubFederacao subfed,
             Model model, BindingResult result) {
         subFedValidador.validate(subfed, result);
-        
+
         log.debug("Salvando federação: " + subfed.getDescricao());
-        
+
         if (result.hasErrors()) {
             model.addAttribute("federation", subfed);
             return "admin/federations/new";
@@ -106,14 +103,14 @@ public final class FederationsController {
             }
         }
     }
-    
+
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String editaFed(
             @PathVariable("id") Integer id, Model model) {
         model.addAttribute("federation", subDao.get(id));
         return "admin/federations/edit";
     }
-    
+
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
     public String edit(@PathVariable("id") Integer id, SubFederacao subfed, BindingResult result,
             ExtendedModelMap model) {
@@ -134,12 +131,12 @@ public final class FederationsController {
             return "admin/federations/edit";
         }
     }
-    
+
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
     public @ResponseBody
     String atualizaFedAjax(@PathVariable("id") Integer id,
             @RequestParam boolean apagar) {
-        
+
         log.info("Solicitacao de atualizacao pela Ferramenta Administrativa...");
         try {
             if (id > 0) {
@@ -160,7 +157,7 @@ public final class FederationsController {
             return "Ocorreu um erro ao atualizar. Exception: " + e.toString();
         }
     }
-    
+
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
     String delete(@PathVariable("id") Integer id, Model model) {

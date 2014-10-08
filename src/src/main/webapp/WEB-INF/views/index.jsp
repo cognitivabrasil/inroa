@@ -128,11 +128,7 @@
                 </div>
             </div>
         </div>
-
-        <%@include file="googleAnalytics"%>
-
-
-
+        
         <!-- jQuery Version 1.11.0 -->
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
 
@@ -143,6 +139,8 @@
 
         <!-- Barra do Governo Federal -->
         <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        
+        <%@include file="googleAnalytics"%>
     </body>
 
 </html>

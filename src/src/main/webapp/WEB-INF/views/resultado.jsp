@@ -156,6 +156,7 @@
 
         <c:url var="validateURL" value="/scripts/testUrlActive.js" />
         <script type="text/javascript" src="${validateURL}"></script>
+        <%@include file="googleAnalytics"%>
     </body>
 
 </html>
