@@ -1,4 +1,5 @@
 $(function() {
+    
     $("input:checked").each(function() {
         var container = $(this).parent("li");
         var content = container.html();
@@ -9,6 +10,7 @@ $(function() {
         container.html(link);
     });
 
+ console.log($('#tree_federations'));
     $('#tree_federations').jstree({
         "core": {
             "themes": {"icons": false}

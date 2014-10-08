@@ -19,7 +19,6 @@
 <c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
 <c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
 <c:url var="fonts" value="/css/fonts.css" />
-<c:url var="cssBusca" value="/css/busca.css" />
 
 
 <html>
@@ -44,6 +43,8 @@
         <!-- Custom Fonts -->
         <link rel="StyleSheet" href="${fontawsome}" type="text/css">
         <link rel="StyleSheet" href="${fonts}" type="text/css">
+
+        <link rel="StyleSheet" href="${scripts}/vendor/jsTree/dist/themes/default/style.min.css" type="text/css">
 
         <!--conferir as fontes do designer-->
         <!--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
@@ -100,12 +101,12 @@
                     <%--<form:errors path="consulta" cssClass="error" />--%>
                 </div>-->
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <span class="textWhite">Texto para a busca</span>
                     </div>
                     <!--/.col-lg-6-->
 
-                    <div class="col-lg-6">                   
+                    <div class="col-lg-8">                   
 
                         <form:input class="form-control shadow" path="consulta" cssErrorClass="form-control shadow error"/>
                     </div>
@@ -114,12 +115,12 @@
                 <!--/.row-->
 
                 <div class="row field">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <span class="textWhite">Autor</span>
                     </div>
                     <!--/.col-lg-6-->
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
                         <form:input class="form-control shadow" path="autor"/>
                     </div>
                     <!--/.col-lg-6-->
@@ -127,37 +128,46 @@
                 <!--/.row-->
 
                 <div class="row field">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <span class="textWhite">Local</span>
                     </div>
                     <!--/.col-lg-6-->
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
 
                         <div class="row locais shadow">
                             <div class="col-lg-6">
                                 <h5 class="miniTitulo">Repositórios</h5>
-                                <div class="checkboxList Value">
-
-                                    <div id="tree_repositories">
-                                        <ul>
-                                            <form:checkboxes itemValue="id" path="repositorios" cssClass="hidden" element="li" items="${repositories}"/>
-                                        </ul>
-                                    </div>
+                                <div id="tree_repositories">
+                                    <ul>
+                                        <form:checkboxes itemValue="id" path="repositorios" cssClass="hidden" 
+                                                         element="li" items="${repositories}"/>
+                                    </ul>
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
-                                <h5 class="miniTitulo">Federações</h5>
-                                <div class="checkboxList Value">
+                            <c:if test="${!empty federations}">
+                                <div class="col-lg-6">
+                                    <h5 class="miniTitulo">Federações</h5>
 
-                                    <div id="tree_repositories">
+                                    <div id="tree_federations">
                                         <ul>
-                                            <form:checkboxes itemValue="id" path="repositorios" cssClass="hidden" element="li" items="${repositories}"/>
+                                            <c:forEach var="subFed" items="${federations}">
+                                                <c:if test="${not empty subFed.repositorios}">
+                                                    <li>
+                                                        ${fn:toUpperCase(subFed.name)}
+                                                        <ul>
+                                                            <form:checkboxes itemValue="id" itemLabel="name" 
+                                                                             path="repSubfed" cssClass="hidden" element="li" 
+                                                                             items="${subFed.repositorios}"/>
+                                                        </ul>
+                                                    </li>
+                                                </c:if>
+                                            </c:forEach>
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </c:if>
 
                             <div id="submitButton" class="row">
                                 <div class="col-lg-12 text-right">
@@ -173,40 +183,22 @@
                 </div>
                 <!--/.row-->
             </form:form> 
-                <div>
-                    <a class="lnkInTheHex text-right" href="${index}">Retornar para a busca padrão</a>
-                </div>
-        </div>
-        <!-- /.container -->
-
-        <!-- Footer -->
-        <div class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <ul class="list-inline">
-                            <li>
-                                <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
-                            </li>
-                            <li class="footer-menu-divider">|</li>
-                            <li>
-                                <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div>
+                <a class="lnkInTheHex text-right" href="${index}">Retornar para a busca padrão</a>
             </div>
         </div>
+        <!-- /.container -->
 
 
         <!-- jQuery Version 1.11.0 -->
         <!--<script src="scripts/jquery-1.11.0.js"></script>-->
-        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
-
-        <!-- Barra do Governo Federal -->
+        <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/jsTree/dist/jstree.min.js"></script>
+        <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancada.js"></script>
+        <!-- Barra do Governo Federal -->       
         <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
     </body>
 </html>

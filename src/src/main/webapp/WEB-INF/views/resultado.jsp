@@ -147,7 +147,7 @@
 
 
         <!-- Barra do Governo Federal -->
-        <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
+        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 
         <c:url var="root" value="/" />
         <script>rootUrl = "${root}";</script>

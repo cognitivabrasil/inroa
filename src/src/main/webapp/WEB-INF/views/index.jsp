@@ -121,7 +121,7 @@
     <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
     
     <!-- Barra do Governo Federal -->
-    <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
+    <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 </body>
 
 </html>

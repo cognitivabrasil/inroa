@@ -29,10 +29,6 @@ body {
     }
 }
 
-#wrapper-barra-brasil {
-    height: 100%;
-}
-
 #logo{    
     margin-bottom: 20px;
 }
@@ -51,6 +47,8 @@ body {
 #barra-brasil {
     margin-bottom: 20px;    
 }
+
+#barra-brasil *{min-height: 100%}
 
 .lnkInTheHex {
     float: right;
