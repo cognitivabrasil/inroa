@@ -1,0 +1,15 @@
+Instalação do FEB:
+
+1. Configure base de dados conforme passado anteriormente.
+2. Crie a pasta /etc/feb e copie o arquivo feb-oracle.properties
+para /etc/feb/feb.properties
+3. Descomprima o arquivo solr.tar.gz e execute o Solr na mesma máquina
+onde vai rodar o FEB:
+	java -jar start.jar
+4. Por fim, inicie o FEB:
+	a. Você pode fazer o deploy do feb.war para um container com
+suporte a Java 8 e Servlet 3.0
+	OU
+	b. Você pode executar o .war diretamente com o comando
+	java -jar feb.war
+	que vai rodar o serviço na porta 8080.

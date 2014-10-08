@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-@Component
+//@Component
 public class LoggingHandlerExceptionResolver implements HandlerExceptionResolver, Ordered {
     private static final Logger log = LoggerFactory.getLogger(LoggingHandlerExceptionResolver.class);
     
@@ -22,7 +22,7 @@ public class LoggingHandlerExceptionResolver implements HandlerExceptionResolver
     @Override
     public ModelAndView resolveException(HttpServletRequest aReq, HttpServletResponse aRes, Object aHandler,
             Exception e) {
-        log.info(e.toString());
+        log.info("Tratando erro: " + e.toString());
         
                
         ModelAndView mv = new ModelAndView("errors/errorGeneric");
