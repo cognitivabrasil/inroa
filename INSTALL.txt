@@ -13,3 +13,32 @@ suporte a Java 8 e Servlet 3.0
 	b. Você pode executar o .war diretamente com o comando
 	java -jar feb.war
 	que vai rodar o serviço na porta 8080.
+
+Verificação de que está rodando certo
+-----------------------------------------------------------
+
+Acesse o feb em http://localhost:8080/admin/
+A senha padrão de administrador é *teste*.
+
+
+
+Adicionar Repositório Cognix como repositório de testes
+--------------------------------------------------------
+
+Entre na ferramenta administrativa e adicione um novo repositório.
+Para o LUME os dados são:
+
+Nome: Cognix
+Descrição: Repositório Cognix
+
+URL: http://feb.ufrgs.br/repositorio/oai
+Comunidades: (vazio)
+Padrão metadados: OBAA
+Mapeamento: OBAA Padrão
+MetadataPrefix e Namespace: obaa
+Periodicidade: 1
+
+Após adicionar, rode a atualização manual e gere o índice.
+
+Por fim, acesse o feb e faça uma busca por 'matemática'.
+
