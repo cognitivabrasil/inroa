@@ -200,5 +200,6 @@
         <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancada.js"></script>
         <!-- Barra do Governo Federal -->       
         <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        <%@include file="googleAnalytics"%>
     </body>
 </html>

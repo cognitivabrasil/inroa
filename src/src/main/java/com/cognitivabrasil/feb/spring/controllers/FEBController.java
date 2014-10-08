@@ -7,7 +7,6 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +37,6 @@ import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
-import com.cognitivabrasil.feb.data.services.TagCloudService;
 import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
@@ -64,8 +62,6 @@ public final class FEBController implements ErrorController  {
     private static final Logger log = LoggerFactory.getLogger(FEBController.class);
     @Autowired
     private SearchService searchesDao;
-    @Autowired
-    private TagCloudService tagCloud;
     
     @Autowired
     private Recuperador recuperador;
@@ -233,7 +229,7 @@ public final class FEBController implements ErrorController  {
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
-                return "consulta";
+                return "resultado";
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");

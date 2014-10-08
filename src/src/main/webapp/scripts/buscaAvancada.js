@@ -10,7 +10,6 @@ $(function() {
         container.html(link);
     });
 
- console.log($('#tree_federations'));
     $('#tree_federations').jstree({
         "core": {
             "themes": {"icons": false}
