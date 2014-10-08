@@ -46,8 +46,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private LocalContainerEntityManagerFactoryBean emf;
     
-//    @Autowired
-//    private LoggingHandlerExceptionResolver exceptionResolver;
+    @Autowired
+    private LoggingHandlerExceptionResolver exceptionResolver;
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -74,10 +74,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/scripts/**").addResourceLocations("/scripts/");
     }
     
-//    @Override
-//    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-//        exceptionResolvers.add(exceptionResolver);
-//    }
+    @Override
+    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+        exceptionResolvers.add(exceptionResolver);
+    }
     
 
     @Bean
