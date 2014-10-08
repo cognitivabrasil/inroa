@@ -136,7 +136,7 @@
                     <div class="col-lg-8">
 
                         <div class="row locais shadow">
-                            <div class="col-lg-6">
+                            <div class="col-lg-5">
                                 <h5 class="miniTitulo">Repositórios</h5>
                                 <div id="tree_repositories">
                                     <ul>
@@ -147,7 +147,7 @@
                             </div>
 
                             <c:if test="${!empty federations}">
-                                <div class="col-lg-6">
+                                <div class="col-lg-7">
                                     <h5 class="miniTitulo">Federações</h5>
 
                                     <div id="tree_federations">
@@ -191,13 +191,16 @@
 
 
         <!-- jQuery Version 1.11.0 -->
-        <!--<script src="scripts/jquery-1.11.0.js"></script>-->
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
+        <!-- JS Tree -->
         <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/jsTree/dist/jstree.min.js"></script>
+        
+        <!-- CUSTOM JS -->
         <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancada.js"></script>
+        
         <!-- Barra do Governo Federal -->       
         <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
         <%@include file="googleAnalytics"%>

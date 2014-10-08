@@ -1,6 +1,6 @@
-$(function() {
-    
-    $("input:checked").each(function() {
+$(function () {
+
+    $("input:checked").each(function () {
         var container = $(this).parent("li");
         var content = container.html();
         var link = $("<a></a>");
@@ -26,17 +26,17 @@ $(function() {
         "plugins": ["themes", "checkbox"]
     });
 
-    $('#tree_federations').on("changed.jstree", function(e, data) {
+    $('#tree_federations').on("changed.jstree", function (e, data) {
         $("#tree_federations input:checked").prop("checked", false);
         setChecked(data.selected);
     });
 
-    $('#tree_repositories').on("changed.jstree", function(e, data) {
+    $('#tree_repositories').on("changed.jstree", function (e, data) {
         $("#tree_repositories input:checked").prop("checked", false);
         setChecked(data.selected);
     });
 
-    var setChecked = function(x) {
+    var setChecked = function (x) {
         for (i = 0, j = x.length; i < j; i++) {
             var selected = $("#" + x[i] + " input:checkbox");
             selected.prop("checked", true);
@@ -44,7 +44,7 @@ $(function() {
     };
 
     $("#ageRange").slider({});
-    $("#adultAge").click(function() {
+    $("#adultAge").click(function () {
         if (this.checked) {
             console.log("checked");
             $("#ageRange").slider("disable");
