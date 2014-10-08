@@ -12,6 +12,7 @@
 <c:url var="index" value="/css/busca.css" />
 <c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
 <c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
+<c:url var="fonts" value="/css/fonts.css" />
 
 <html lang="pt-BR">
 
@@ -35,6 +36,7 @@
 
         <!-- Custom Fonts -->
         <link rel="StyleSheet" href="${fontawsome}" type="text/css">
+        <link rel="StyleSheet" href="${fonts}" type="text/css">
 
         <!--conferir as fontes do designer-->
         <!--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
@@ -83,18 +85,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">
-                        <div id="searchBox" class="shadow input-group">
+
+                        <div class="searchBox shadow input-group">
 
                             <form:input path="consulta" type="text" class="form-control" placeholder="Termo de busca" value="" />
 
-                            <span class="input-group-btn">
-                                <a href="resultadoBusca.html">
-                                    <button class="btn btn-success" type="submit">
-                                        <i class="fa fa-search"> Buscar</i></button>
-                                </a>
+                            <span class="input-group-btn hidden-xs">
+                                <button class="btn btn-success" type="submit">
+                                    <i class="fa fa-search visible-lg"> Buscar</i>
+                                    <i class="fa fa-search visible-md visible-sm"></i>
+                                </button>
                             </span>
                         </div>
                         <!-- /.input-group -->
+
                     </form:form>
 
                     <a id="lnkAvancada" class="lnkInTheHex" href="./buscaAvancada">Busca Avançada</a>
@@ -134,6 +138,8 @@
 
         <!-- Bootstrap Core JavaScript -->
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
+        <!--Custom JS-->
+        <script language="javascript" type="text/javascript" src='${scripts}/toggleSearch.js'></script>
 
         <!-- Barra do Governo Federal -->
         <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
