@@ -20,28 +20,25 @@ $(function() {
     $(".verifyUrl").each(function() {
         var thisElem = $(this);
         var url = $(this).attr('href');
-        console.log(url);
-        checkUrlInternal(url,thisElem);
-
-//        if (url) {
-//            $.ajax({
-//                dataType: "json",
-//                url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22" + url + "%22&format=json",
-//                success: function(resultado) {
-//                    if (resultado.query.results) {
-//                        thisElem.append(imgTrue)
-////                        parentDiv.append(imgTrue);
-//                    } else {
-//                        checkUrlInternal(url,thisElem);
-//                    }
-//                },
-//                timeout: 5000
-//            }).fail(function(xhr, status) {
-//                if (status == "timeout") {
-//                    console.log("timeout yql!");
-//                }
-//                checkUrlInternal(url,thisElem);
-//            });           
-//        }
+        if (url) {
+            $.ajax({
+                dataType: "json",
+                url: "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22" + url + "%22&format=json",
+                success: function(resultado) {
+                    if (resultado.query.results) {
+                        thisElem.append(imgTrue)
+//                        parentDiv.append(imgTrue);
+                    } else {
+                        checkUrlInternal(url,thisElem);
+                    }
+                },
+                timeout: 5000
+            }).fail(function(xhr, status) {
+                if (status == "timeout") {
+                    console.log("timeout yql!");
+                }
+                checkUrlInternal(url,thisElem);
+            });           
+        }
     });
 });
