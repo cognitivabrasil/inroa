@@ -19,6 +19,7 @@
 <c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
 <c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
 <c:url var="fonts" value="/css/fonts.css" />
+<c:url var="cssBusca" value="/css/busca.css" />
 
 
 <html>
@@ -38,6 +39,7 @@
         <!-- Custom CSS -->
         <link rel="StyleSheet" href="${css}" type="text/css">
         <link rel="StyleSheet" href="${avancada}" type="text/css">
+        <link rel="StyleSheet" href="${cssBusca}" type="text/css">
 
         <!-- Custom Fonts -->
         <link rel="StyleSheet" href="${fontawsome}" type="text/css">
@@ -178,7 +180,7 @@
         <!-- /.container -->
 
         <!-- Footer -->
-        <footer>
+        <div class="footer">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -186,7 +188,7 @@
                             <li>
                                 <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
                             </li>
-                            <li class="footer-menu-divider">&sdot;</li>
+                            <li class="footer-menu-divider">|</li>
                             <li>
                                 <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
                             </li>
@@ -194,7 +196,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
 
 
         <!-- jQuery Version 1.11.0 -->

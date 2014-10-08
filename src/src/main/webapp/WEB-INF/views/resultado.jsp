@@ -90,39 +90,14 @@
                 <!--/.col-lg-9-->
             </div>
             <!--/#preResult .row-->
-            <!-- Pagination Bar -->               
-            <div class="row pagination-centered">
-                <ul class="pagination">
-                    <c:if test="${documents.hasPreviousPage()}">
-                        <li>                        
-                            <a href="${docUrl}/page/${documents.number-1}" title="Ir para página anterior">Anterior</a>
 
-                        </li>           
-                    </c:if>                                                                        
-
-                    <c:forEach var="paginasDisponiveis" items="${pages}">
-                        <c:choose>  
-                            <c:when test="${paginasDisponiveis == documents.number}">
-                                <li class="active">
-                                    <a href="${docUrl}/page/${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
-                                </li>
-                            </c:when>
-                            <c:otherwise>
-                                <li>
-                                    <a href="${docUrl}/page/${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
-                                </li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:if test="${documents.hasNextPage()}">
-                        <li>                        
-                            <a href="${docUrl}/page/${documents.number+1}" title="Ir para próxima página">Próxima</a>
-                        </li>
-                    </c:if>
-                </ul>                            
-            </div>
             <div class="row">
                 <div id="result" class="shadow">
+                    <c:if test="${empty documentos}">
+                        <div class="resultadoConsulta text-center">
+                            Nenhum resultado encontrato!
+                        </div>
+                    </c:if>
                     <c:forEach var="doc" items="${documentos}" varStatus="status">
                         <c:url var="exibeMetadados" value="objetos/${doc.id}"/>
                         <div class="resultadoConsulta">
@@ -162,45 +137,23 @@
         </div>
         <!-- /.container -->
 
-        <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li>
-                            <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
-                        </li>
-                        <li class="footer-menu-divider">|</li>
-                        <li>
-                            <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+        <!-- jQuery Version 1.11.0 -->
+        <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js"/>
+        <script language="javascript" type="text/javascript" src='${jquery}'></script>
 
-    <c:url var="imgTrue" value="/imagens/check.png"/>
-    <img id="imgUrlTrue" class='imgchecklink' src="${imgTrue}" border='0' alt='Link correto' title='link ativo'>
-
-    <!-- jQuery Version 1.11.0 -->
-    <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js"/>
-    <script language="javascript" type="text/javascript" src='${jquery}'></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <c:url var="bootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js"/>
-    <script language="javascript" type="text/javascript" src='${bootstrap}'></script>
+        <!-- Bootstrap Core JavaScript -->
+        <c:url var="bootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js"/>
+        <script language="javascript" type="text/javascript" src='${bootstrap}'></script>
 
 
-    <!-- Barra do Governo Federal -->
-    <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        <!-- Barra do Governo Federal -->
+        <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
 
-    <c:url var="root" value="/" />
-    <script>rootUrl = "${root}";</script>
+        <c:url var="root" value="/" />
+        <script>rootUrl = "${root}";</script>
 
-    <c:url var="validateURL" value="/scripts/testUrlActive.js" />
-    <script type="text/javascript" src="${validateURL}"></script>
-</body>
+        <c:url var="validateURL" value="/scripts/testUrlActive.js" />
+        <script type="text/javascript" src="${validateURL}"></script>
+    </body>
 
 </html>
