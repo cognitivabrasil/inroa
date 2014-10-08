@@ -63,65 +63,80 @@
             </ul>
         </div>
         <!-- /#barra-brasil -->
-        
-        <div class="container text-center">
 
-            <div class="row">
+        <div class="container">
+
+            <div class="row text-center">
                 <div class="col-lg-12">
                     <div class="intro-message">
 
-                        <img id="logo" src="${images}/logo.png" alt="" />
-                        
-                        <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">
-                            <div id="searchBox" class="input-group">
+                        <a href="index.html">
+                            <img id="logo" src="${images}/logo.png" alt="" />
+                        </a>
+                    </div>
+                    <!--/.intro-message-->
+                </div>
+                <!--./col-lg-12-->
+            </div>
+            <!--./row-->
 
-                                <form:input path="consulta" type="text" class="form-control" placeholder="Termo de busca" value="" />
-                                <span class="input-group-btn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">
+                        <div id="searchBox" class="shadow input-group">
+
+                            <form:input path="consulta" type="text" class="form-control" placeholder="Termo de busca" value="" />
+
+                            <span class="input-group-btn">
+                                <a href="resultadoBusca.html">
                                     <button class="btn btn-success" type="submit">
                                         <i class="fa fa-search"> Buscar</i></button>
-                                </span>
-                            </div>
-                            <!-- /.input-group -->                            
-                        </form:form>
-                            
-                        <a id="lnkAvancada" class="lnkInTheHex" href="./buscaAvancada">Busca Avançada</a>
-                    </div>
+                                </a>
+                            </span>
+                        </div>
+                        <!-- /.input-group -->
+                    </form:form>
+
+                    <a id="lnkAvancada" class="lnkInTheHex" href="./buscaAvancada">Busca Avançada</a>
                 </div>
+                <!--/.col-lg-12-->
             </div>
+            <!--/.row-->
+
         </div>
         <!-- /.container -->
 
         <!-- Footer -->
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li>
-                            <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li>
-                            <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
-                        </li>
-                    </ul>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="list-inline">
+                            <li>
+                                <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
+                            </li>
+                            <li class="footer-menu-divider">&sdot;</li>
+                            <li>
+                                <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <%@include file="googleAnalytics"%>
-
+        <%@include file="googleAnalytics"%>
 
 
-    <!-- jQuery Version 1.11.0 -->
-    <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
-    
-    <!-- Barra do Governo Federal -->
-    <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
-</body>
+        <!-- jQuery Version 1.11.0 -->
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
+
+        <!-- Barra do Governo Federal -->
+        <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
+    </body>
 
 </html>
