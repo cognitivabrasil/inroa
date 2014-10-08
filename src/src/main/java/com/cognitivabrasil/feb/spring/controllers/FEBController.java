@@ -48,7 +48,7 @@ import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
  * @author Marcos Nunes <marcosn@gmail.com>
  */
 @Controller("feb")
-public final class FEBController implements ErrorController  {
+public final class FEBController {
 
     @Autowired
     private UserService userDao;
@@ -70,20 +70,20 @@ public final class FEBController implements ErrorController  {
         buscaValidator = new BuscaValidator();
     }
     
-    @RequestMapping("/error")
-    public ModelAndView error(Model model, HttpServletResponse response, HttpServletRequest request) {
-            
-        
-        ModelAndView mv = new ModelAndView("errors/error404");
-        
-      
-        return mv;
-    }
-    
-    @Override
-    public String getErrorPath() {
-        return "/error";
-    }
+//    @RequestMapping("/error")
+//    public ModelAndView error(Model model, HttpServletResponse response, HttpServletRequest request) {
+//            
+//        
+//        ModelAndView mv = new ModelAndView("errors/error404");
+//        
+//      
+//        return mv;
+//    }
+//    
+//    @Override
+//    public String getErrorPath() {
+//        return "/error";
+//    }
 
     @RequestMapping("/")
     public String inicio(Model model, HttpServletResponse response, HttpServletRequest request, 
@@ -363,14 +363,21 @@ public final class FEBController implements ErrorController  {
     @RequestMapping("verificaURL")
     public @ResponseBody
     String verifyURL(@RequestParam String url) {
+        log.debug("Trying URL: " + url);
         try {
-            URL u = new URL(url);
+            Thread.sleep(4000);
+     /*       URL u = new URL(url);
             HttpURLConnection huc = (HttpURLConnection) u.openConnection();
             huc.setRequestMethod("HEAD");          
             huc.connect();
-            int code = huc.getResponseCode();
+            int code = huc.getResponseCode();*/
+            int code = 200;
             return String.valueOf(code >= 200 && code < 400);
-        } catch (IOException e) {
+//        } catch (IOException e) {
+//            return "false";
+//        }
+        }catch(Exception e) {
+            log.error(e.toString());
             return "false";
         }
     }

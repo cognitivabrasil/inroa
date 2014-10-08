@@ -71,7 +71,7 @@
 		<appender-ref ref="SEARCHES" />
 	</logger>
 
-	<logger name="com.cognitivabrasil" level="INFO" />
+	<logger name="com.cognitivabrasil" level="DEBUG" />
 
 	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
