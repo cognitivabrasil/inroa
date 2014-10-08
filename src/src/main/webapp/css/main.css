@@ -53,7 +53,7 @@ body {
 
 @media (min-width: 1200px){
     .container {
-        width: 1050px;
+        width: 1100px;
     }
 
     /*configurar corretamente para funcionar com o bootstrap!!*/
