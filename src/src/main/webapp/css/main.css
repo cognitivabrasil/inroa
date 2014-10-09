@@ -14,11 +14,6 @@ body {
     font-family: 'Open Sans';
 }
 
-@media(max-width:767px) {
-    .intro-message {
-        padding-bottom: 15%;
-    }
-}
 
 #logo{    
     margin: 0 auto 20px auto;
@@ -48,8 +43,28 @@ body {
     font-size: 18px;
 }
 
-#lnkAvancada{
-    margin-right: 120px;
+.lnkInTheHex:hover{
+    color: whitesmoke;
+}
+
+/*telas pequenas*/
+@media(max-width:767px) {
+    
+    .intro-message {
+        padding-bottom: 15%;
+    }
+    
+    #lnkAvancada{
+        margin-right: 10px;
+    }
+    
+}
+
+/*telas médias*/
+@media(min-width:768px) and (max-width: 1199px){
+    #lnkAvancada{
+        margin-right: 50px;
+    }
 }
 
 /*telas grandes*/
@@ -69,5 +84,9 @@ body {
     /*configurar corretamente para funcionar com o bootstrap!!*/
     .relative {
         position:relative;
+    }
+
+    #lnkAvancada{
+        margin-right: 120px;
     }
 }
