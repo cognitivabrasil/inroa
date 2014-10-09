@@ -89,4 +89,9 @@ body {
     #lnkAvancada{
         margin-right: 120px;
     }
+    
+    .breakWord {
+        word-wrap: break-word;
+    }
+    
 }

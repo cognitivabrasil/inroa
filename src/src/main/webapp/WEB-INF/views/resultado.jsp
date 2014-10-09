@@ -7,6 +7,7 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8" />
     <jsp:directive.page pageEncoding="UTF-8" />
 
+    <c:url var="imagens" value="/imagens" />
 
     <head>
         <meta charset="utf-8" />
@@ -57,13 +58,13 @@
         </div>
         <!-- /#barra-brasil -->
 
-        <div class="container text-center">
+        <div class="container">
 
-            <div class="row">
+            <div class="row text-center">
                 <div class="col-lg-12">
                     <div class="intro-message">
                         <a href="index.html">
-                            <img id="logo" src="imagens/logo.png" alt=""/>
+                            <img id="logo" src="${imagens}/logo.png" alt=""/>
                         </a>
                     </div>
                     <!--/.intro-message-->
@@ -94,13 +95,13 @@
             <div class="row">
                 <div id="5" class="">
                     <c:if test="${empty documentos}">
-                        <div class="resultadoConsulta text-center">
-                            Nenhum resultado encontrato!
+                        <div class="resultadoConsulta text-center well text-info">
+                            <h4>Nenhum resultado encontrato</h4>
                         </div>
                     </c:if>
                     <c:forEach var="doc" items="${documentos}" varStatus="status">
                         <c:url var="exibeMetadados" value="objetos/${doc.id}"/>
-                        <div class="well text-left shadow">
+                        <div class="well shadow">
                             <c:if test="${empty doc.titles}">
                                 <div class="titulo"><a href='${exibeMetadados}'>T&iacute;tulo n&atilde;o informado.</a></div>
                             </c:if>
@@ -118,7 +119,7 @@
                                 <c:forEach var="localizacao" items="${doc.locationHttp}">
                                     <c:if test="${localizacao.value}">
                                         <br />
-                                        <a class="verifyUrl" href="${localizacao.key}" target="_new">${localizacao.key}</a>
+                                        <a class="verifyUrl breakWord" href="${localizacao.key}" target="_new">${localizacao.key}</a>
                                     </c:if>
                                 </c:forEach>
                             </div>
