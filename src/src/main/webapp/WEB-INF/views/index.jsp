@@ -88,7 +88,10 @@
 
                         <div class="searchBox shadow input-group">
 
-                            <form:input path="consulta" type="text" class="form-control" placeholder="Termo de busca" value="" />
+                            <div class="form-group">
+                                <label class="sr-only" for="consulta">Termo de busca</label>
+                                <form:input path="consulta" type="text" cssClass="form-control" placeholder="Termo de busca" value="" required="required" />
+                            </div>
 
                             <span class="input-group-btn hidden-xs">
                                 <button class="btn btn-success" type="submit">
@@ -97,7 +100,7 @@
                                 </button>
                             </span>
                         </div>
-                        <!-- /.input-group -->
+                        <!-- /.serachBox .input-group -->
 
                     </form:form>
 
@@ -128,7 +131,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- jQuery Version 1.11.0 -->
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
 
@@ -139,7 +142,7 @@
 
         <!-- Barra do Governo Federal -->
         <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
-        
+
         <%@include file="googleAnalytics"%>
     </body>
 
