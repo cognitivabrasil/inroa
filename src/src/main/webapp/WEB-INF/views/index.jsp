@@ -36,7 +36,20 @@
 
         <!-- Custom Fonts -->
         <link rel="StyleSheet" href="${fontawsome}" type="text/css">
-        <link rel="StyleSheet" href="${fonts}" type="text/css">
+        <link rel="StyleSheet" href="${fonts}" type="text/css">      
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="${images}/favicon.ico" />
+
+        <!-- Tela de inicio para webclip apple -->
+        <link rel="apple-touch-startup-image" href="${images}/inroa.png" />
+
+        <!--Para parecer um aplicativo standalone em dispositivos apple-->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <!-- Favicon Apple-->
+        <link rel="apple-touch-icon" href="${images}/favicon.ico">
+
 
         <!--conferir as fontes do designer-->
         <!--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
@@ -86,10 +99,12 @@
                 <div class="col-lg-12">
                     <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">
 
+                        <form:errors path="consulta" element="div" cssClass="alert alert-danger text-center" />
+
                         <div class="searchBox shadow input-group">
 
                             <div class="form-group">
-                                <label class="sr-only" for="consulta">Termo de busca</label>
+                                <label class="sr-only" for="consulta">Termo de busca</label>                                
                                 <form:input path="consulta" type="text" cssClass="form-control" placeholder="Termo de busca" value="" required="required" />
                             </div>
 
