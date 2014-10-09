@@ -86,7 +86,7 @@
                     <div class="intro-message">
 
                         <a href="index.html">
-                            <img id="logo" src="${images}/logo.png" alt="" />
+                            <img id="logo" class="img-responsive" src="${images}/logo.png" alt="" />
                         </a>
                     </div>
                     <!--/.intro-message-->

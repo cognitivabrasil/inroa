@@ -45,6 +45,9 @@
         <link rel="StyleSheet" href="${fonts}" type="text/css">
 
         <link rel="StyleSheet" href="${scripts}/vendor/jsTree/dist/themes/default/style.min.css" type="text/css">
+        
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="${images}/favicon.ico" />
 
         <!--conferir as fontes do designer-->
         <!--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->

@@ -21,7 +21,7 @@ body {
 }
 
 #logo{    
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
 }
 
 .shadow {
