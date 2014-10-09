@@ -130,7 +130,7 @@
         </div>
         
         <!-- jQuery Version 1.11.0 -->
-        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.7.2.js'></script>
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
