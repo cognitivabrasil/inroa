@@ -22,8 +22,7 @@ public class LoggingHandlerExceptionResolver implements HandlerExceptionResolver
     @Override
     public ModelAndView resolveException(HttpServletRequest aReq, HttpServletResponse aRes, Object aHandler,
             Exception e) {
-        log.info(e.toString());
-        
+        log.warn("Tratando exceção em requisição", e);
                
         ModelAndView mv = new ModelAndView("errors/errorGeneric");
         mv.addObject("stacktrace", e);
