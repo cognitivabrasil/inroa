@@ -76,7 +76,9 @@ public class AdminController {
         model.addAttribute("users", userDao.getAll());
         model.addAttribute("version", febInfo.getProperty("info.build.version"));
         model.addAttribute("gitBranch", gitProperties.getProperty("git.branch"));
-        model.addAttribute("gitCommitId", gitProperties.getProperty("git.commit.id").substring(0, 12));
+        
+        String commitId = gitProperties.getProperty("git.commit.id");
+        model.addAttribute("gitCommitId", commitId != null ? commitId.substring(0, 12) : null);
         model.addAttribute("gitCommitTime", gitProperties.getProperty("git.commit.time"));
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
