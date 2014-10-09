@@ -96,21 +96,29 @@
             <form:form method="POST" modelAttribute="buscaModel" acceptCharset="utf-8"> 
 
 
-                <div class="row field">
-                    <!--                    <div class="col-lg-12">
-                    <%--<form:errors path="consulta" cssClass="error" />--%>
-                </div>-->
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <form:errors path="consulta" element="div" cssClass="alert alert-danger text-center" />
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+                
+                <div class="row field">              
+
 
                     <div class="col-lg-4">
-                        <span class="textWhite">Texto para a busca</span>
+                        <form:label cssClass="textWhite" path="consulta" cssErrorClass="">
+                            Texto para a busca
+                        </form:label>
                     </div>
-                    <!--/.col-lg-6-->
+                    <!--/.col-lg-4-->
 
-                    <div class="col-lg-8">                   
 
-                        <form:input class="form-control shadow" path="consulta" cssErrorClass="form-control shadow error"/>
+                    <div class="col-lg-8">
+                        <form:input cssClass="form-control shadow" path="consulta" cssErrorClass="form-control shadow"/>
                     </div>
-                    <!--/.col-lg-6-->
+                    <!--/.col-lg-8-->
                 </div>
                 <!--/.row-->
 
@@ -197,10 +205,10 @@
         <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
         <!-- JS Tree -->
         <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/jsTree/dist/jstree.min.js"></script>
-        
+
         <!-- CUSTOM JS -->
         <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancada.js"></script>
-        
+
         <!-- Barra do Governo Federal -->       
         <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
         <%@include file="googleAnalytics"%>
