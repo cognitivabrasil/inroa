@@ -1,5 +1,15 @@
 $(function () {
 
+    /**
+     * Sempre ao submeter o form será aberta a arvore para que se possa selecionar os checkbox do form.
+     */
+    $('form').submit(function () {
+        $("#tree_federations").hide();
+        $("#tree_federations").jstree('open_all');
+        var arr = $("#tree_federations").jstree('get_selected');
+        setChecked(arr);
+    });
+
     $("input:checked").each(function () {
         var container = $(this).parent("li");
         var content = container.html();
@@ -38,6 +48,7 @@ $(function () {
 
     var setChecked = function (x) {
         for (i = 0, j = x.length; i < j; i++) {
+            console.log("#" + x[i] + " input:checkbox");
             var selected = $("#" + x[i] + " input:checkbox");
             selected.prop("checked", true);
         }
