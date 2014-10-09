@@ -92,7 +92,7 @@
             <!--/#preResult .row-->
 
             <div class="row">
-                <div id="result" class="shadow">
+                <div id="5" class="">
                     <c:if test="${empty documentos}">
                         <div class="resultadoConsulta text-center">
                             Nenhum resultado encontrato!
@@ -100,7 +100,7 @@
                     </c:if>
                     <c:forEach var="doc" items="${documentos}" varStatus="status">
                         <c:url var="exibeMetadados" value="objetos/${doc.id}"/>
-                        <div class="resultadoConsulta">
+                        <div class="well text-left shadow">
                             <c:if test="${empty doc.titles}">
                                 <div class="titulo"><a href='${exibeMetadados}'>T&iacute;tulo n&atilde;o informado.</a></div>
                             </c:if>
@@ -126,9 +126,8 @@
                                 Repositório: ${doc.nomeRep}
                             </div>
                         </div>
-
-                        <hr />
                         <!--/.resultadoConsulta-->
+                        
                     </c:forEach>
 
                 </div>
