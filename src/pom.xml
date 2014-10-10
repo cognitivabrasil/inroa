@@ -334,19 +334,6 @@
 			<version>1.5.0</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>2.10.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-neo4j</artifactId>
-		</dependency>
 
 		<!--É utilizado no harvester, na classe XSLTUtil -->
 		<dependency>
@@ -360,7 +347,6 @@
 
 
 	<build>
-		<finalName>feb</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
