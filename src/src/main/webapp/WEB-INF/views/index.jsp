@@ -97,6 +97,9 @@
 
             <div class="row">
                 <div class="col-lg-12">
+                    <c:if test="${!empty erro}">
+                        <div class="alert alert-danger text-center">${erro}</div>
+                    </c:if>
                     <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">
 
                         <form:errors path="consulta" element="div" cssClass="alert alert-danger text-center" />

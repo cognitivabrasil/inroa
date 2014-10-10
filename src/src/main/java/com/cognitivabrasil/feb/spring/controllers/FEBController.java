@@ -40,6 +40,7 @@ import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
+import org.apache.solr.client.solrj.SolrServerException;
 
 /**
  * Controller geral para o FEB
@@ -48,7 +49,7 @@ import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
  * @author Marcos Nunes <marcosn@gmail.com>
  */
 @Controller("feb")
-public final class FEBController implements ErrorController  {
+public final class FEBController implements ErrorController {
 
     @Autowired
     private UserService userDao;
@@ -62,43 +63,40 @@ public final class FEBController implements ErrorController  {
     private static final Logger log = LoggerFactory.getLogger(FEBController.class);
     @Autowired
     private SearchService searchesDao;
-    
+
     @Autowired
     private Recuperador recuperador;
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
     }
-    
+
     @RequestMapping("/error")
     public ModelAndView error(Model model, HttpServletResponse response, HttpServletRequest request) {
-            
-        
+
         ModelAndView mv = new ModelAndView("errors/error404");
-        
-      
+
         return mv;
     }
-    
+
     @Override
     public String getErrorPath() {
         return "/error";
     }
 
     @RequestMapping("/")
-    public String inicio(Model model, HttpServletResponse response, HttpServletRequest request, 
+    public String inicio(Model model, HttpServletResponse response, HttpServletRequest request,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
         return index(model, response, request, cookie);
     }
 
     @RequestMapping("/index")
-    public String index(Model model, HttpServletResponse response, HttpServletRequest request, 
+    public String index(Model model, HttpServletResponse response, HttpServletRequest request,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("buscaModel", new Consulta());
-        
-//        Map<String, Integer> termos = tagCloud.getTagCloud();
 
+//        Map<String, Integer> termos = tagCloud.getTagCloud();
         model.addAttribute("termos", "");
 
         if (StringUtils.isEmpty(cookie)) {
@@ -188,6 +186,13 @@ public final class FEBController implements ErrorController  {
                 }
                 log.debug("Resultou em: " + consulta.getSizeResult() + " documentos. Offset: " + consulta.getOffset());
                 return "resultado";
+            } catch (SolrServerException e) {
+                model.addAttribute("erro",
+                        "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
+                //TODO: erro GRAVE, deve enviar um aviso ao administrador.
+                
+                log.error("Erro ao efetuar a consulta no Solr, possivelmente o serviço está parado. ", e);
+                return "index";
             } catch (Exception e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
@@ -244,8 +249,7 @@ public final class FEBController implements ErrorController  {
      *
      * @param login Passado por HTTP
      * @param password Passado por HTTP
-     * @return Redirect para adm caso autentique, permanece nesta página com uma
-     * mensagem de erro caso contrário
+     * @return Redirect para adm caso autentique, permanece nesta página com uma mensagem de erro caso contrário
      */
     @RequestMapping("/login")
     public String logando(
@@ -270,26 +274,20 @@ public final class FEBController implements ErrorController  {
     }
 
     /**
-     * Webservice com a funcionalidade de utilizar o sistema de consulta do FEB
-     * retornando os documentos no formato XML. Utiliza os mesmos métodos da
-     * ferramenta de busca principal do FEB. Retorna um xml FEB com os objetos
-     * no padrão de metadados OBAA. Existe uma tag de erro que contém um code e
-     * uma mensagem: <error code="code">Message</error> códigos existentes:
-     * "badQuery" - Caso a consulta não tenha sido informada "limitExceeded" -
-     * Caso o limite informado seja superior a 100, que é o limite máximo
-     * permitido (este limite máximo existe para que as consultar por webservice
-     * não comprometam o desempenho da base de dados). "UnsupportedEncoding" -
-     * Caso ocorra um erro ao codificar a query em utf-8
+     * Webservice com a funcionalidade de utilizar o sistema de consulta do FEB retornando os documentos no formato XML.
+     * Utiliza os mesmos métodos da ferramenta de busca principal do FEB. Retorna um xml FEB com os objetos no padrão de
+     * metadados OBAA. Existe uma tag de erro que contém um code e uma mensagem: <error code="code">Message</error>
+     * códigos existentes: "badQuery" - Caso a consulta não tenha sido informada "limitExceeded" - Caso o limite
+     * informado seja superior a 100, que é o limite máximo permitido (este limite máximo existe para que as consultar
+     * por webservice não comprometam o desempenho da base de dados). "UnsupportedEncoding" - Caso ocorra um erro ao
+     * codificar a query em utf-8. "InternalServerError" - Caso ocorra um erro interno no servidor de busca (Solr).
      *
      * @param query String que será utilizada para buscar documentos.
      * @param autor String contendo o nome do autor que será utilizado na busca.
      * @param limit Número de resultados por resposta. O máximo é 100.
-     * @param offset Utilizado em conjunto com o limit. Se o limit for 5 e o
-     * offset 0, retornará os 5 primeiros objetos, alterando o offset para 1
-     * retornará os próximos 5 resultados. Isto é utilizado para efetuar uma
-     * paginação.
-     * @return XML FEB contendo os documentos, no padrão de metadados OBAA,
-     * referentes a consulta.
+     * @param offset Utilizado em conjunto com o limit. Se o limit for 5 e o offset 0, retornará os 5 primeiros objetos,
+     * alterando o offset para 1 retornará os próximos 5 resultados. Isto é utilizado para efetuar uma paginação.
+     * @return XML FEB contendo os documentos, no padrão de metadados OBAA, referentes a consulta.
      */
     @RequestMapping(value = "obaaconsulta", method = RequestMethod.GET, produces = "text/xml;charset=UTF-8")
     public @ResponseBody
@@ -350,12 +348,15 @@ public final class FEBController implements ErrorController  {
             String error = "<FEB>"
                     + "<error code=\"UnsupportedEncoding\">Unsupported Encoding to UTF-8. Error: " + u + "</error></FEB>";
             return error;
+        } catch (SolrServerException e) {
+            String error = "<FEB>"
+                    + "<error code=\"InternalServerError\">There is an internal server searching error.</error></FEB>";
+            return error;
         }
     }
 
     /**
-     * Verificador de URL, recebe como entrada uma url e retorna um boolean
-     * informando se ela está ativa ou não.
+     * Verificador de URL, recebe como entrada uma url e retorna um boolean informando se ela está ativa ou não.
      *
      * @param url URL a ser testada, deve iniciar com http://
      * @return true se a url estiver ativa e false caso contrário
@@ -366,7 +367,7 @@ public final class FEBController implements ErrorController  {
         try {
             URL u = new URL(url);
             HttpURLConnection huc = (HttpURLConnection) u.openConnection();
-            huc.setRequestMethod("HEAD");          
+            huc.setRequestMethod("HEAD");
             huc.connect();
             int code = huc.getResponseCode();
             return String.valueOf(code >= 200 && code < 400);

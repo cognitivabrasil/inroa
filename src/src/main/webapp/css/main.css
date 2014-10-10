@@ -96,3 +96,9 @@ body {
     }
     
 }
+
+.titulo{
+    font-weight:bold;
+    font-size:105%;
+    margin-bottom:1%;
+}

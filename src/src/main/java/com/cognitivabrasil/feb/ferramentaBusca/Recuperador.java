@@ -6,6 +6,7 @@ import com.cognitivabrasil.feb.solr.query.QuerySolr;
 import com.cognitivabrasil.feb.spring.FebConfig;
 
 import java.util.List;
+import org.apache.solr.client.solrj.SolrServerException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +33,9 @@ public class Recuperador {
      *
      * @param consulta Consulta efetuada
      * @return Lista de documentos reais que correspondem ao resultado da busca
+     * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?) 
      */
-    public List<Document> busca(Consulta consulta) {
+    public List<Document> busca(Consulta consulta) throws SolrServerException {
 
         List<Document> resultadoConsulta;
         int limit;

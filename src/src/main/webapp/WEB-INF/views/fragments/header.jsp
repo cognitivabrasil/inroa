@@ -18,3 +18,5 @@
 <!-- Custom Fonts -->
 <c:url var="cssFontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
 <link href="${cssFontawsome}" rel="stylesheet" type="text/css" />
+<c:url var="fonts" value="/css/fonts.css" />
+<link rel="StyleSheet" href="${fonts}" type="text/css"> 

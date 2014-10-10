@@ -10,14 +10,13 @@ $(function() {
                 .addClass("error")
                 .html("Ocorreu um erro ao carregar o documento. Tente novamente mais tarde. ");
     }).done(function() {
-        $("ul.well").find("ul.well").each(function() {
-            $(this).removeClass("well");
+        $("li.well").find("li.well").each(function() {
+            $(this).removeClass("well shadow");
         });
+        
     });
 
 });
-
-var firstUl = true;
 
 /**
  * Build a html tree from a Obaa json. Developed in java script to get faster.
@@ -26,18 +25,14 @@ var firstUl = true;
  */
 function buildList(json) {
 
-    var html = '<ul';
-    if (firstUl) {
-        html += '>';
-    } else {
-        html += ' class="well">';
-    }
-    firstUl = false;
+    var html = '<ul>';
 
     for (var i in json) {
 
         if (typeof (json[i].children) === 'object') { // An array will return 'object'
-            html += '<li>';
+            
+            
+            html += '<li class="well shadow">';
 
             html += '<span class="title">' + json[i].label + '</span>';
 
