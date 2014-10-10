@@ -25,7 +25,7 @@
     </head>
     <body>
 
-        <jsp:include page="cabecalho.jsp"/>
+        <jsp:include page="fragments/cabecalho.jsp"/>
 
 
         <div class="container">
