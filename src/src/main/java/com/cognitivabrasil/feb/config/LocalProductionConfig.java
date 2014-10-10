@@ -15,6 +15,8 @@ import javax.naming.ConfigurationException;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,6 +41,8 @@ import com.cognitivabrasil.feb.spring.FebConfig;
 @Configuration
 @Profile({ "default", "oracle", "postgres", "development" })
 public class LocalProductionConfig {
+    private static final Logger log = LoggerFactory.getLogger(LocalProductionConfig.class);
+    
     @Autowired
     private FebConfig febConfig;
 
@@ -55,8 +59,12 @@ public class LocalProductionConfig {
     public DataSource dataSource() throws SQLException, ConfigurationException {
         if (febConfig.getDatabaseType() == Database.ORACLE) {
             oracle.jdbc.pool.OracleDataSource dataSource = new oracle.jdbc.pool.OracleDataSource();
-            dataSource.setURL("jdbc:oracle:thin:@" + febConfig.getHost() + ":" + 
-                    febConfig.getPort() + ":" + febConfig.getDatabase());
+            
+            String url = "jdbc:oracle:thin:@" + febConfig.getHost() + ":" + 
+                    febConfig.getPort() + "/" + febConfig.getDatabase();
+            log.info(url);
+            
+            dataSource.setURL(url);
             dataSource.setUser(febConfig.getUsername());
             dataSource.setPassword(febConfig.getPassword());
             return dataSource;
