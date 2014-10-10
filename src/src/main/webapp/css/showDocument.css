@@ -15,7 +15,8 @@ and open the template in the editor.
 
 #obaaTree .title{font-weight: 700; font-size:120%; color:#428BCA; font-family: 'Open Sans'}
 #obaaTree li{margin-top: 0.8em;}
-#obaaTree ul{list-style-type: none;}
+#obaaTree ul{list-style-type: none;padding-left: 0}
 #obaaTree .name{font-weight: bold; text-align: right}
+
 .footerButton{margin-bottom: 5px;}
 .value{word-wrap:break-word;}

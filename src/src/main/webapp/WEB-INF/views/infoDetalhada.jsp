@@ -52,7 +52,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="tituloPrincipal well">
+                    <div class="tituloPrincipal well shadow">
                         <div class="tituloObj">${title}</div>
                         <div class="identificadorObj">Objeto ${obaaEntry}</div>
                     </div>
