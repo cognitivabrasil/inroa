@@ -34,17 +34,18 @@
 
         <!-- Bootstrap Core CSS -->
         <link rel="StyleSheet" href="${bootstrap}" type="text/css">
+        
+         <!-- Custom Fonts -->
+        <link rel="StyleSheet" href="${fontawsome}" type="text/css">
+        <link rel="StyleSheet" href="${fonts}" type="text/css">
+        
+        <!--jsTree css-->
+        <link rel="StyleSheet" href="${scripts}/vendor/jsTree/dist/themes/default/style.min.css" type="text/css">
 
         <!-- Custom CSS -->
         <link rel="StyleSheet" href="${css}" type="text/css">
         <link rel="StyleSheet" href="${avancada}" type="text/css">
         <link rel="StyleSheet" href="${cssBusca}" type="text/css">
-
-        <!-- Custom Fonts -->
-        <link rel="StyleSheet" href="${fontawsome}" type="text/css">
-        <link rel="StyleSheet" href="${fonts}" type="text/css">
-
-        <link rel="StyleSheet" href="${scripts}/vendor/jsTree/dist/themes/default/style.min.css" type="text/css">
         
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="${images}/favicon.ico" />
@@ -158,7 +159,7 @@
                             </div>
 
                             <c:if test="${!empty federations}">
-                                <div class="col-lg-7">
+                                <div class="col-lg-7 overflowHidden">
                                     <h5 class="miniTitulo">Federações</h5>
 
                                     <div id="tree_federations">

@@ -22,7 +22,7 @@ $(function () {
 
     $('#tree_federations').jstree({
         "core": {
-            "themes": {"icons": false}
+            "themes": {"icons": false,'responsive': true}
         },
         "plugins": ["checkbox"]
     });
