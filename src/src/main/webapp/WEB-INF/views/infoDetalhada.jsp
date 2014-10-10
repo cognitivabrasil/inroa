@@ -69,17 +69,9 @@
                 </a>
             </div>
         </div>
-                    
-        <!-- jQuery Version 1.11.0 -->
-        <c:url var="jquery" value="/scripts/vendor/jquery-1.11.0.min.js" />
-        <script language="javascript" type="text/javascript" src='${jquery}'></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <c:url var="bootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js"/>
-        <script language="javascript" type="text/javascript" src='${bootstrap}'></script>
+                
+        <jsp:include page="fragments/scripts.jsp"/>
         
-        <!-- Barra do Governo Federal -->
-        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
         
         <c:url var="showJs" value="/scripts/showMetadata.js" />
         <script type="text/javascript" src="${showJs}" ></script>
@@ -91,7 +83,6 @@
             }
         </script>
         <script>
-
             (function (d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id))
