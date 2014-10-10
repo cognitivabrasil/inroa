@@ -5,18 +5,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 
 
 <html lang="pt-BR">
     <head>
-        
+
         <jsp:include page="fragments/header.jsp"/>
 
         <c:url value="/css/showDocument.css" var="show_doc_css_url" />
         <link rel="stylesheet" type="text/css" media="screen" href="${show_doc_css_url}" /> 
-        
+
         <c:url var="root" value="/" />
         <c:url var="linkJson" value="/objetos/${docId}/json" />
         <script>
@@ -29,28 +28,28 @@
         <jsp:include page="cabecalho.jsp"/>
 
         <div class="col-md-12">
-            
-            <div class="socialBookmarks">
-                <div class="socialBookmark">
-                    <div id="fb-root"></div>
-                    <div class="fb-share-button" data-type="button_count"></div>
+
+            <div class="row">
+                <div class="col-lg-12 text-right">
+                    <span>
+                        
+                        <div class="fb-share-button" data-type="button_count"></div>
+                    </span>
+
+
+                    <span>
+                        <g:plusone size="medium"></g:plusone>
+                    </span>
+
+                    <span>
+                        <a href="http://twitter.com/share" class="twitter-share-button"
+                           data-count="horizontal">Tweet</a>
+                        <script type="text/javascript"
+                        src="http://platform.twitter.com/widgets.js"></script>
+                    </span>
                 </div>
-
-
-                <div class="socialBookmark">
-                    <g:plusone size="medium"></g:plusone>
-                </div>
-
-                <div class="socialBookmark">
-                    <a href="http://twitter.com/share" class="twitter-share-button"
-                       data-count="horizontal">Tweet</a>
-                    <script type="text/javascript"
-                    src="http://platform.twitter.com/widgets.js"></script>
-                </div>
-
-
             </div>
-            <div class="clear"></div>
+
             <div class="tituloPrincipal col-md-12">
                 <div class="tituloObj row">${title}</div>
                 <div class="identificadorObj row">Objeto ${obaaEntry}</div>
@@ -69,7 +68,7 @@
                 </a>
             </div>
         </div>
-                    
+
         <!-- jQuery Version 1.11.0 -->
         <c:url var="jquery" value="/scripts/vendor/jquery-1.11.0.min.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>
@@ -77,10 +76,10 @@
         <!-- Bootstrap Core JavaScript -->
         <c:url var="bootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js"/>
         <script language="javascript" type="text/javascript" src='${bootstrap}'></script>
-        
+
         <!-- Barra do Governo Federal -->
         <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
-        
+
         <c:url var="showJs" value="/scripts/showMetadata.js" />
         <script type="text/javascript" src="${showJs}" ></script>
 
@@ -90,6 +89,8 @@
                 lang: 'pt-BR';
             }
         </script>
+        
+        <div id="fb-root"></div>
         <script>
 
             (function (d, s, id) {
@@ -102,7 +103,7 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-        
+
         <%@include file="googleAnalytics"%>
     </body>
 </html>

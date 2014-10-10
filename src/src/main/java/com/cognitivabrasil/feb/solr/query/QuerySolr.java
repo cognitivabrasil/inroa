@@ -52,11 +52,12 @@ public class QuerySolr {
      * da pesquisa eh armazenado na variavel queryResponse e pode ser utilizado posteriormente
      *
      * @param pesquisa Os termos que serao pesquisados
-     * @param offset Posicao do primeiro resultado a aparecer
-     * @param limit Numero de resultados desejados
-     * @return True se tudo correu bem e false se nao foi possivel fazer a pesquisa (server offline?)
+     * @param offset Posição do primeiro resultado a aparecer
+     * @param limit Número de resultados desejados
+     * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
      */
-    public boolean pesquisaSimples(String pesquisa, int offset, int limit) {
+    
+    public void pesquisaSimples(String pesquisa, int offset, int limit) throws SolrServerException {
 
         query = new SolrQuery();
 
@@ -66,13 +67,7 @@ public class QuerySolr {
 
         query.setQuery(pesquisa);
 
-        try {
-            queryResponse = serverSolr.query(query);
-            return true;
-        } catch (SolrServerException ex) {
-            log.error("Erro durante a pesquisa ao acessar o servidor SOLR ", ex);
-            return false;
-        }
+        queryResponse = serverSolr.query(query);
 
     }
 
