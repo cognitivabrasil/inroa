@@ -78,6 +78,23 @@
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade in" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Aguarde, carregando...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped active"  role="progressbar" style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- jQuery Version 1.11.0 -->
         <c:url var="jquery" value="/scripts/vendor/jquery-1.11.0.min.js" />
         <script language="javascript" type="text/javascript" src='${jquery}'></script>

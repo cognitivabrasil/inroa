@@ -9,7 +9,7 @@
 
 <!--bootstrap-->
 <c:url value="/scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" var="bootstrap_css" />
-<link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_css}" />
+<link rel="stylesheet" type="text/css" media="screen" href="http://getbootstrap.com/dist/css/bootstrap.min.css" />
 
 <!--main css-->
 <c:url value="/css/main.css" var="app_css_url" />
