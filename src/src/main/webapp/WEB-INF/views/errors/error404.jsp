@@ -5,19 +5,21 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:url var="images" value="/imagens" />
 <c:url var="index" value="/" />
+<c:url var="error_css" value="/css/error.css" />
 
 
 <html lang="pt-BR">
     <head>
 
         <jsp:include page="../fragments/header.jsp"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="${error_css}" />
 
     </head>
 
     <body>
         <jsp:include page="../cabecalho.jsp"/>
         <div class="container">
-            <div class="well">
+            <div class="well text-center txtError">
                 <h1>Ooops, a página solicitada não foi encontrada.</h1>
                 Clique <a href="${index}">aqui</a> e volte para a ferramenta de busca.
             </div>
