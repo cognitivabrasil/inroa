@@ -43,3 +43,13 @@ body {
 buscaAvancada.css
 */
 .checkboxList span{display: block;width: 100%; position: relative; margin: 5px 0 0 21px;}
+
+/*Se estiver em dispositivo com tela pequena, diminui a fonte das arvores de repositorio e federações*/
+@media (max-width: 768px){
+    .jstree-default-responsive .jstree-anchor {
+        font-weight: 400;
+        font-size: 0.9em;
+    }
+    .jstree-default-responsive .jstree-anchor label{font-weight: 400}
+    #tree_federations.jstree-default-responsive .jstree-anchor label{font-size: 0.7em}
+}

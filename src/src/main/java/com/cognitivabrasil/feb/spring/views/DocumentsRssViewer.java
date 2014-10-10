@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.feed.AbstractRssFeedView;
 
 import com.cognitivabrasil.feb.data.entities.Autor;
@@ -17,7 +20,9 @@ import com.rometools.rome.feed.rss.Content;
 import com.rometools.rome.feed.rss.Image;
 import com.rometools.rome.feed.rss.Item;
 
+@Component("rssViewer")
 public class DocumentsRssViewer extends AbstractRssFeedView {
+    private final Logger log = LoggerFactory.getLogger(DocumentsRssViewer.class);
 	
 	private static String getBaseUrl(HttpServletRequest req) {
 	 	String scheme = req.getScheme();             // http

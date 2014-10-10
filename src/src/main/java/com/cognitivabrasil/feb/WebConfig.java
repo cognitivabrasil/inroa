@@ -16,23 +16,23 @@ import javax.servlet.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.BeanNameViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
-import com.cognitivabrasil.feb.config.LoggingHandlerExceptionResolver;
 
 import ORG.oclc.oai.server.OAIHandler;
+
+import com.cognitivabrasil.feb.config.LoggingHandlerExceptionResolver;
+import com.cognitivabrasil.feb.spring.controllers.RssController;
 
 /**
  * 
@@ -79,6 +79,24 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         exceptionResolvers.add(exceptionResolver);
     }
     
+    /**
+     * Configura os view resolvers do Spring MVC.
+     * 
+     * Cria um view resolvers:
+      <ol>
+      <li>baseado em nomes de bean , que escanea o projeto por beans que implementem {@link View}, torna eles
+      disponíveis como views nos controllers (usado pelo {@link RssController})</li>
+      <li>baseado em .jsps</li>
+      </ol>
+     * 
+     * @see org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#configureViewResolvers(org.springframework.web.servlet.config.annotation.ViewResolverRegistry)
+     */
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.beanName();
+        registry.jsp("/WEB-INF/views/", ".jsp");
+    };
+    
 
     @Bean
     public Filter characterEncodingFilter() {
@@ -86,17 +104,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
-    }
-    
-    @Bean
-    public InternalResourceViewResolver internalResourceViewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/views/");
-        resolver.setSuffix(".jsp");
-        
-        return resolver;
-    }
-    
+    } 
+     
     /**
      * Registra servlet para o Oaicat.
      * 

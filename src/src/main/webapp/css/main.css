@@ -14,6 +14,7 @@ body {
     font-family: 'Open Sans';
 }
 
+.overflowHidden{overflow: hidden}
 
 #logo{    
     margin: 0 auto 20px auto;
