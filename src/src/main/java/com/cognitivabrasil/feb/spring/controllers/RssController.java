@@ -2,6 +2,8 @@ package com.cognitivabrasil.feb.spring.controllers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,12 +18,14 @@ import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
 @Controller
 @RequestMapping("/rss")
 public class RssController {
+    private static final Logger log = LoggerFactory.getLogger(RssController.class);
+    
     @Autowired
     private Recuperador recuperador;
 
     @RequestMapping(value = "/feed", method = RequestMethod.GET)
     public ModelAndView getFeedInRss(@ModelAttribute("buscaModel") Consulta consulta) {
-
+        log.debug("trying to get feed: {}", consulta);
 
         consulta.setRss(true);
         List<Document> items = recuperador.buscaAvancada(consulta);
@@ -29,7 +33,7 @@ public class RssController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("rssViewer");
         mav.addObject("feedContent", items);
-
+        
         return mav;
     }
 }
