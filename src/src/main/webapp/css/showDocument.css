@@ -8,15 +8,14 @@ and open the template in the editor.
     Author     : Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
 */
 
-.tituloPrincipal{margin-bottom:2%;background-color:#AEC9E3}
 .tituloPrincipal .tituloObj{margin-left:5%;font-weight:bold}
 .tituloPrincipal .identificadorObj{margin-left:7%;color:#32618F;font-weight:bold;font-size: 1em}
 .socialBookmarks {float: right;margin-top: 1px;margin-right: 30px;margin-bottom: 15px}
 .socialBookmark {float: right}
 
-#obaaTree .title{text-decoration: underline; font-size:120%;}
+#obaaTree .title{font-weight: 700; font-size:120%; color:#428BCA; font-family: 'Open Sans'}
 #obaaTree li{margin-top: 0.8em;}
 #obaaTree ul{list-style-type: none;}
-#obaaTree .name{font-weight: bold}
+#obaaTree .name{font-weight: bold; text-align: right}
 .footerButton{margin-bottom: 5px;}
 .value{word-wrap:break-word;}

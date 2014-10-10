@@ -27,12 +27,12 @@
 
         <jsp:include page="cabecalho.jsp"/>
 
-        <div class="col-md-12">
 
+        <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-right">
                     <span>
-                        
+
                         <div class="fb-share-button" data-type="button_count"></div>
                     </span>
 
@@ -50,22 +50,31 @@
                 </div>
             </div>
 
-            <div class="tituloPrincipal col-md-12">
-                <div class="tituloObj row">${title}</div>
-                <div class="identificadorObj row">Objeto ${obaaEntry}</div>
-
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tituloPrincipal well">
+                        <div class="tituloObj">${title}</div>
+                        <div class="identificadorObj">Objeto ${obaaEntry}</div>
+                    </div>
+                </div>
             </div>
 
-            <div id="obaaTree" class="col-md-12" src="${linkJson}">
-                <c:url var="imgLoader" value="/imagens/ajax-loader.gif"/>
-                <div class="text-center"><img src='${imgLoader}' border='0' alt='Carregando' align='middle'> Aguarde, carregando...</div>
+            <div class="row">
+                <div id="obaaTree" class="col-lg-12" src="${linkJson}">
+                    <c:url var="imgLoader" value="/imagens/ajax-loader.gif"/>
+                    <div class="text-center"><img src='${imgLoader}' border='0' alt='Carregando' align='middle'> Aguarde, carregando...</div>
+                </div>
             </div>
 
-            <div class="footerButton">
-                <a class="btn btn-default" href="javascript:history.go(-1)">
-                    <span class="glyphicon glyphicon-arrow-left"></span>
-                    <span class='gliphycon-text'>Voltar</span>
-                </a>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footerButton">
+                        <a class="btn btn-default shadow" href="javascript:history.go(-1)">
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                            <span class='gliphycon-text'>Voltar</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -89,7 +98,7 @@
                 lang: 'pt-BR';
             }
         </script>
-        
+
         <div id="fb-root"></div>
         <script>
 
