@@ -81,7 +81,7 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
    <field name="obaa.technical.size" type="text_general" indexed="true" stored="true"/>
    <field name="obaa.technical.intendedenduserrole" type="text_general" indexed="true" stored="true"/>
    <field name="obaa.technical.duration" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.technical.supportedplatforms" type="text_general" indexed="true" stored="true"/>
+   <field name="obaa.technical.supportedplatforms" type="text_general" indexed="true" stored="true" multiValued="true"/>
    <field name="obaa.technical.location" type="text_general" indexed="false" stored="true"  multiValued="true"/>
 
 

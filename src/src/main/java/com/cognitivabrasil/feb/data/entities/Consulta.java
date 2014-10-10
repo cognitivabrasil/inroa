@@ -229,7 +229,7 @@ public class Consulta {
     }
 
     public boolean hasAuthor() {
-        return !autor.equals("");
+        return !isBlank(autor);
     }
 
     public boolean isRss() {
