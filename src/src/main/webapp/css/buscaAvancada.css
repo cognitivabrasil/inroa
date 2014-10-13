@@ -14,10 +14,7 @@ body {
     color: whitesmoke;
     font-weight: 300;
     font-size: 25px;
-}
-
-.field{
-    margin-bottom: 15px;
+    padding-top: 0 !important;
 }
 
 .locais {
