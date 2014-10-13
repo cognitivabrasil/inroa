@@ -1,22 +1,25 @@
-$(function() {
+$(function () {
     $('#loadingModal').modal('show');
     var url = $("#obaaTree").attr("src");
-    $.getJSON(url, function(data) {
+
+    $.getJSON(url, function (data) {
         var html = buildList(data);
         $("#obaaTree").html(html);
-    }).fail(function(jqxhr, textStatus, error) {
-        var err = textStatus + ", " + error;
-        console.log("Request Failed: " + err);
-        $("#obaaTree .text-center")
-                .addClass("error")
-                .html("Ocorreu um erro ao carregar o documento. Tente novamente mais tarde. ");
-    }).done(function() {
-        $("li.well").find("li.well").each(function() {
-            $(this).removeClass("well shadow");
-        });
-        $('#loadingModal').modal('hide');
-        
-    });
+    })
+            .fail(function (jqxhr, textStatus, error) {
+                var err = textStatus + ", " + error;
+                console.log("Request Failed: " + err);
+                $("#obaaTree .text-center")
+                        .addClass("error")
+                        .html("Ocorreu um erro ao carregar o documento. Tente novamente mais tarde. ");
+            })
+            .done(function () {
+                $("li.well").find("li.well").each(function () {
+                    $(this).removeClass("well shadow");
+                });
+                $('#loadingModal').modal('hide');
+
+            });
 
 });
 
@@ -32,8 +35,8 @@ function buildList(json) {
     for (var i in json) {
 
         if (typeof (json[i].children) === 'object') { // An array will return 'object'
-            
-            
+
+
             html += '<li class="well shadow">';
 
             html += '<span class="title">' + json[i].label + '</span>';
@@ -45,7 +48,7 @@ function buildList(json) {
             if (json[i].value && json[i].value !== "NULL") {
                 html += '<li class="row">';
                 html += '<span class="name col-md-2 col-xs-12">' + json[i].label + '</span><span class="value col-md-10 col-xs-12">';
-                 if (json[i].value.match("^http[s]?://")) {
+                if (json[i].value.match("^http[s]?://")) {
                     html += '<a class="link-interno" href="' + json[i].value + '">' + json[i].value + '</a>';
                 }
                 else {

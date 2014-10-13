@@ -61,8 +61,7 @@
 
             <div class="row">
                 <div id="obaaTree" class="col-lg-12" src="${linkJson}">
-                    <c:url var="imgLoader" value="/imagens/ajax-loader.gif"/>
-                    <div class="text-center"><img src='${imgLoader}' border='0' alt='Carregando' align='middle'> Aguarde, carregando...</div>
+                    <!--conteúdo dos metadados dos OAs-->
                 </div>
             </div>
 
