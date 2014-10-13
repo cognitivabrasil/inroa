@@ -29,61 +29,49 @@
 
     <body>
         <jsp:include page="fragments/cabecalho.jsp"/>
-        
+
         <div class="container">
 
             <c:if test="${!empty erro}">
                 <div class="DivErro" id="MensagemErro">${erro}</div>
             </c:if>
 
-            <form:form method="POST" modelAttribute="buscaModel" acceptCharset="utf-8"> 
+            <form:form method="POST" modelAttribute="buscaModel" class="form-horizontal" role="form" acceptCharset="utf-8">
 
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
+                    <div class="col-md-offset-3 col-md-9">
                         <form:errors path="consulta" element="div" cssClass="alert alert-danger text-center" />
                     </div>
-                    <div class="col-md-1"></div>
                 </div>
-                
-                <div class="row field">              
 
+                <!--Texto para busca-->
+                <div class="form-group">
+                    <form:label cssClass="textWhite col-md-3 control-label" path="consulta" cssErrorClass="">
+                        Texto para a busca
+                    </form:label>
 
-                    <div class="col-md-4">
-                        <form:label cssClass="textWhite" path="consulta" cssErrorClass="">
-                            Texto para a busca
-                        </form:label>
-                    </div>
-                    <!--/.col-md-4-->
-
-
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <form:input cssClass="form-control shadow" path="consulta" cssErrorClass="form-control shadow"/>
                     </div>
-                    <!--/.col-md-8-->
+
                 </div>
-                <!--/.row-->
 
-                <div class="row field">
-                    <div class="col-md-4">
-                        <span class="textWhite">Autor</span>
-                    </div>
-                    <!--/.col-md-6-->
+                <div class="form-group">
+                    <form:label cssClass="textWhite col-md-3 control-label" path="autor" cssErrorClass="">
+                        Autor
+                    </form:label>
 
-                    <div class="col-md-8">
+                    <div class="col-md-9">
                         <form:input class="form-control shadow" path="autor"/>
                     </div>
-                    <!--/.col-md-6-->
                 </div>
-                <!--/.row-->
 
-                <div class="row field">
-                    <div class="col-md-4">
-                        <span class="textWhite">Local</span>
-                    </div>
-                    <!--/.col-md-6-->
+                <div class="form-group">
+                    <form:label cssClass="textWhite col-md-3 control-label" path="repositorios" cssErrorClass="">
+                        Local
+                    </form:label>
 
-                    <div class="col-md-8">
+                    <div class="col-md-9">
 
                         <div class="row locais shadow">
                             <div class="col-md-5">
@@ -128,11 +116,11 @@
                             </div>
                         </div>
                     </div>
-                    <!--/.col-md-6-->
-
+                    <!--/.col-md-8-->
                 </div>
-                <!--/.row-->
-            </form:form> 
+
+
+            </form:form>
             <div>
                 <a class="lnkInTheHex text-right" href="${index}">Retornar para a busca padrão</a>
             </div>
@@ -140,7 +128,7 @@
         <!-- /.container -->
 
         <jsp:include page="fragments/scripts.jsp"/>
- 
+
         <!-- JS Tree -->
         <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/jsTree/dist/jstree.min.js"></script>
 
