@@ -17,7 +17,7 @@
     </head>
 
     <body>
-        <jsp:include page="../cabecalho.jsp"/>
+        <jsp:include page="../fragments/cabecalho.jsp"/>
         <div class="container">
             <div class="well text-center txtError">
                 <h1>Ooops, ocorreu um erro no sistema.</h1>

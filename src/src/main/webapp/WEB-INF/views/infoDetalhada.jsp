@@ -31,12 +31,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-right">
-                    <span>
-
-                        <div class="fb-share-button" data-type="button_count"></div>
-                    </span>
-
-
+                    
                     <span>
                         <g:plusone size="medium"></g:plusone>
                     </span>
@@ -47,9 +42,12 @@
                         <script type="text/javascript"
                         src="http://platform.twitter.com/widgets.js"></script>
                     </span>
+                    <span>
+                        <div class="fb-share-button" data-type="button_count"></div>
+                    </span>
                 </div>
             </div>
-
+            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tituloPrincipal well shadow">
