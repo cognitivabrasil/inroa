@@ -7,92 +7,30 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:url var="images" value="/imagens" />
 <c:url var="index" value="/" />
 <c:url var="adm" value="/admin" />
 <c:url var="scripts" value="/scripts" />
-<c:url var="css" value="/css/main.css" />
-<c:url var="avancada" value="/css/buscaAvancada.css" />
-<c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
-<c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
-<c:url var="fonts" value="/css/fonts.css" />
 
 
 <html>
     <head>
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <title>Infraestrutura Nacional de Repositórios de Objetos de Aprendizagem</title>
-
-        <!-- Bootstrap Core CSS -->
-        <link rel="StyleSheet" href="${bootstrap}" type="text/css">
-        
-         <!-- Custom Fonts -->
-        <link rel="StyleSheet" href="${fontawsome}" type="text/css">
-        <link rel="StyleSheet" href="${fonts}" type="text/css">
-        
         <!--jsTree css-->
         <link rel="StyleSheet" href="${scripts}/vendor/jsTree/dist/themes/default/style.min.css" type="text/css">
 
-        <!-- Custom CSS -->
-        <link rel="StyleSheet" href="${css}" type="text/css">
+        <jsp:include page="fragments/htmlHeader.jsp"/>
+
+        <!--css especifico da busca avançada-->
+        <c:url var="avancada" value="/css/buscaAvancada.css" />
         <link rel="StyleSheet" href="${avancada}" type="text/css">
-        <link rel="StyleSheet" href="${cssBusca}" type="text/css">
-        
-        <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="${images}/favicon.ico" />
-
-        <!--conferir as fontes do designer-->
-        <!--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-
     </head>
 
     <body>
-        <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;"> 
-            <ul id="menu-barra-temp" style="list-style:none;">
-                <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
-                    <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
-                </li> 
-
-                <li>
-                    <a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#barra-brasil -->
-
+        <jsp:include page="fragments/cabecalho.jsp"/>
+        
         <div class="container">
-
-            <!--logotipo-->
-            <div class="row text-center">
-                <div class="col-md-12">
-                    <div class="intro-message">
-
-                        <a href="${index}">
-                            <img id="logo" src="imagens/logo.png" alt=""/>
-                        </a>
-                    </div>
-                    <!--/.intro-message-->
-                </div>
-                <!--./col-md-12-->
-            </div>
-            <!--./row-->
 
             <c:if test="${!empty erro}">
                 <div class="DivErro" id="MensagemErro">${erro}</div>
@@ -201,12 +139,8 @@
         </div>
         <!-- /.container -->
 
-
-        <!-- jQuery Version 1.11.0 -->
-        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
+        <jsp:include page="fragments/scripts.jsp"/>
+ 
         <!-- JS Tree -->
         <script language="JavaScript" type="text/javascript" src="${scripts}/vendor/jsTree/dist/jstree.min.js"></script>
 

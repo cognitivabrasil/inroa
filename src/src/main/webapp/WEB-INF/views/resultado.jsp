@@ -9,68 +9,17 @@
     <c:url var="imagens" value="/imagens" />
 
     <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+        <jsp:include page="fragments/htmlHeader.jsp"/>
 
-        <title>Infraestrutura Nacional de Repositórios de Objetos de Aprendizagem</title>
-
-        <!-- Bootstrap Core CSS -->
-        <c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
-        <link rel="StyleSheet" href="${bootstrap}" type="text/css" />
-
-        <!-- Custom CSS -->
-        <c:url var="cssMain" value="/css/main.css" />
-        <link href="${cssMain}" rel="stylesheet" />
         <c:url var="cssResult" value="/css/result.css" />
         <link href="${cssResult}" rel="stylesheet" />
 
-        <!-- Custom Fonts -->
-        <c:url var="cssFontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
-        <link href="${cssFontawsome}" rel="stylesheet" type="text/css" />
-
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
     </head>
 
     <body>
-
-        <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;"> 
-            <ul id="menu-barra-temp" style="list-style:none;">
-                <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
-                    <a href="http://brasil.gov.br" 
-                       style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
-                </li> 
-
-                <li>
-                    <a style="font-family:sans,sans-serif; text-decoration:none; color:white;" 
-                       href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#barra-brasil -->
-
+        <jsp:include page="fragments/cabecalho.jsp"/>
         <div class="container">
 
-            <div class="row text-center">
-                <div class="col-lg-12">
-                    <div class="intro-message">
-                        <a href="index.html">
-                            <img id="logo" src="${imagens}/logo.png" alt=""/>
-                        </a>
-                    </div>
-                    <!--/.intro-message-->
-                </div>
-                <!--/.col-lg-12-->
-            </div>
-            <!--/.row-->
             <div id="preResult" class="row relative">
 
                 <div class="col-lg-3">
@@ -127,7 +76,7 @@
                             </div>
                         </div>
                         <!--/.resultadoConsulta-->
-                        
+
                     </c:forEach>
 
                 </div>

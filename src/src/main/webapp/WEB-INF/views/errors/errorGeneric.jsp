@@ -11,7 +11,7 @@
 <html lang="pt-BR">
     <head>
 
-        <jsp:include page="../fragments/header.jsp"/>
+        <jsp:include page="../fragments/htmlHeader.jsp"/>
         <link rel="stylesheet" type="text/css" media="screen" href="${error_css}" />
 
     </head>
