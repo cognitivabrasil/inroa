@@ -39,6 +39,7 @@ import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
+import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
 import org.apache.solr.client.solrj.SolrServerException;
 
@@ -185,6 +186,12 @@ public final class FEBController implements ErrorController {
                 if (offset == null && !StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
+                
+                PaginationDto pagination = new PaginationDto();
+                pagination.setSize(consulta.getSizeResult());
+                pagination.setCurrentPage(0);
+                model.addAttribute("pagination", pagination);
+                
                 log.debug("Resultou em: " + consulta.getSizeResult() + " documentos. Offset: " + consulta.getOffset());
                 return "resultado";
             } catch (SolrServerException e) {

@@ -83,6 +83,39 @@
                 <!--/#result-->
             </div>
             <!--/.row-->
+            <c:url var="docUrl" value="/consulta"/>
+             <!-- Pagination Bar -->               
+                <div class="row text-center">
+                    <ul class="pagination shadow">
+                      <c:if test="${pagination.hasPreviousPage()}">
+                        <li>                        
+                          <a href="${docUrl}/page/${pagination.previousPage}" title="Ir para página anterior">Anterior</a>
+                          
+                        </li>           
+                      </c:if>                                                                        
+                        
+                      <c:forEach var="paginasDisponiveis" items="${pagination.pages}">
+                          <c:choose>  
+                            <c:when test="${paginasDisponiveis == pagination.currentPage}">
+                                <li class="active">
+                                     <a href="${docUrl}/page/${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li>
+                                     <a href="${docUrl}/page/${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
+                                </li>
+                            </c:otherwise>
+                          </c:choose>
+                      </c:forEach>
+                                
+                      <c:if test="${pagination.hasNextPage()}">
+                        <li>                        
+                          <a href="${docUrl}/page/${pagination.nextPage}" title="Ir para próxima página">Próxima</a>
+                        </li>
+                      </c:if>
+                    </ul>                            
+                </div>
 
         </div>
         <!-- /.container -->
