@@ -79,8 +79,9 @@
 
         <div class="container">
 
+            <!--logotipo-->
             <div class="row text-center">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <div class="intro-message">
 
                         <a href="${index}">
@@ -89,7 +90,7 @@
                     </div>
                     <!--/.intro-message-->
                 </div>
-                <!--./col-lg-12-->
+                <!--./col-md-12-->
             </div>
             <!--./row-->
 
@@ -99,56 +100,55 @@
 
             <form:form method="POST" modelAttribute="buscaModel" acceptCharset="utf-8"> 
 
-
                 <div class="row">
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-10">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
                         <form:errors path="consulta" element="div" cssClass="alert alert-danger text-center" />
                     </div>
-                    <div class="col-lg-1"></div>
+                    <div class="col-md-1"></div>
                 </div>
                 
                 <div class="row field">              
 
 
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         <form:label cssClass="textWhite" path="consulta" cssErrorClass="">
                             Texto para a busca
                         </form:label>
                     </div>
-                    <!--/.col-lg-4-->
+                    <!--/.col-md-4-->
 
 
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <form:input cssClass="form-control shadow" path="consulta" cssErrorClass="form-control shadow"/>
                     </div>
-                    <!--/.col-lg-8-->
+                    <!--/.col-md-8-->
                 </div>
                 <!--/.row-->
 
                 <div class="row field">
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         <span class="textWhite">Autor</span>
                     </div>
-                    <!--/.col-lg-6-->
+                    <!--/.col-md-6-->
 
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <form:input class="form-control shadow" path="autor"/>
                     </div>
-                    <!--/.col-lg-6-->
+                    <!--/.col-md-6-->
                 </div>
                 <!--/.row-->
 
                 <div class="row field">
-                    <div class="col-lg-4">
+                    <div class="col-md-4">
                         <span class="textWhite">Local</span>
                     </div>
-                    <!--/.col-lg-6-->
+                    <!--/.col-md-6-->
 
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
 
                         <div class="row locais shadow">
-                            <div class="col-lg-5">
+                            <div class="col-md-5">
                                 <h5 class="miniTitulo">Repositórios</h5>
                                 <div id="tree_repositories">
                                     <ul>
@@ -159,7 +159,7 @@
                             </div>
 
                             <c:if test="${!empty federations}">
-                                <div class="col-lg-7 overflowHidden">
+                                <div class="col-md-7 overflowHidden">
                                     <h5 class="miniTitulo">Federações</h5>
 
                                     <div id="tree_federations">
@@ -182,7 +182,7 @@
                             </c:if>
 
                             <div id="submitButton" class="row">
-                                <div class="col-lg-12 text-right">
+                                <div class="col-md-12 text-right">
                                     <button class="btn btn-success" type="submit">
                                         <i class="fa fa-search"> Buscar</i>
                                     </button>
@@ -190,7 +190,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--/.col-lg-6-->
+                    <!--/.col-md-6-->
 
                 </div>
                 <!--/.row-->

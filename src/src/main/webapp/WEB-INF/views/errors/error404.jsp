@@ -4,36 +4,29 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:url var="images" value="/imagens" />
-<c:url var="logoReduzido" value="/imagens/Logo FEB_reduzido.png" />
 <c:url var="index" value="/" />
-<c:url var="adm" value="/admin" />
-<c:url var="scripts" value="/scripts" />
-<c:url var="css" value="/css/padrao.css" />
+<c:url var="error_css" value="/css/error.css" />
 
-<%
-    request.setCharacterEncoding("UTF-8");
-    response.setCharacterEncoding("UTF-8");
-%>
-<html>
-    <c:url var="favicon" value="/imagens/favicon.ico" />
-    <link href="${favicon}" rel="shortcut icon" type="image/x-icon" />
-    <c:url var="index" value="/" />
-    
+
+<html lang="pt-BR">
     <head>
-        <title>Página não encontrada</title>
-        <style>
-            body {margin: 50px;}
-        </style>
+
+        <jsp:include page="../fragments/header.jsp"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="${error_css}" />
+
     </head>
 
     <body>
-        <c:url var="logo" value="/imagens/Logo FEB_reduzido.png" />
-        <a href="${index}">
-            <img src="${logo}" alt="logo" width="15%"/>
-        </a>
+        <jsp:include page="../cabecalho.jsp"/>
+        <div class="container">
+            <div class="well text-center txtError">
+                <h1>Ooops, a página solicitada não foi encontrada.</h1>
+                Clique <a href="${index}">aqui</a> e volte para a ferramenta de busca.
+            </div>
+        </div>
 
-        <h1>Ooops, a página solicitada não foi encontrada.</h1>
-        Clique <a href="${index}">aqui</a> e volte para a ferramenta de busca.
+
+        <jsp:include page="../fragments/scripts.jsp"/>            
     </body>
 
 </html>

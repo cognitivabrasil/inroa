@@ -25,7 +25,7 @@
     </head>
     <body>
 
-        <jsp:include page="cabecalho.jsp"/>
+        <jsp:include page="fragments/cabecalho.jsp"/>
 
 
         <div class="container">
@@ -78,7 +78,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
+         <!--Modal--> 
         <div class="modal fade in" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -94,18 +94,9 @@
                 </div>
             </div>
         </div>
-
-        <!-- jQuery Version 1.11.0 -->
-        <c:url var="jquery" value="/scripts/vendor/jquery-1.11.0.min.js" />
-        <script language="javascript" type="text/javascript" src='${jquery}'></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <c:url var="bootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js"/>
-        <script language="javascript" type="text/javascript" src='${bootstrap}'></script>
-
-        <!-- Barra do Governo Federal -->
-        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
-
+                
+        <jsp:include page="fragments/scripts.jsp"/>
+        
         <c:url var="showJs" value="/scripts/showMetadata.js" />
         <script type="text/javascript" src="${showJs}" ></script>
 
@@ -118,7 +109,6 @@
 
         <div id="fb-root"></div>
         <script>
-
             (function (d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id))

@@ -14,7 +14,7 @@ $(function() {
         $("li.well").find("li.well").each(function() {
             $(this).removeClass("well shadow");
         });
-//        $('#loadingModal').modal('hide');
+        $('#loadingModal').modal('hide');
         
     });
 

@@ -123,7 +123,8 @@ public final class FEBController implements ErrorController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, Model model, @CookieValue(value = "feb.cookie", required = false) String cookie)
+    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, 
+            Model model, @CookieValue(value = "feb.cookie", required = false) String cookie)
             throws IOException {
         Document d = docDao.get(id);
         if (d == null) {
