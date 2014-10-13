@@ -17,7 +17,7 @@
     </head>
 
     <body>
-        <jsp:include page="../cabecalho.jsp"/>
+        <jsp:include page="../fragments/cabecalho.jsp"/>
         <div class="container">
             <div class="well text-center txtError">
                 <h1>O documento solicitado foi deletado.</h1>
