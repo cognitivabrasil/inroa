@@ -20,7 +20,7 @@
 
 <div class="container">
     <div class="row text-center">
-        <div class="col-lg-12">
+        <div class="col-md-12">
             <div class="intro-message">
                 <a href="${index}">
                     <img id="logo" src="${imgLogo}" alt=""/>
@@ -28,7 +28,7 @@
             </div>
             <!--/.intro-message-->
         </div>
-        <!--/.col-lg-12-->
+        <!--/.col-md-12-->
     </div>
     <!--/.row-->
 </div>
