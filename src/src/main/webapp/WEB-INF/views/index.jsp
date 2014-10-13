@@ -18,82 +18,20 @@
 
     <head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        <jsp:include page="fragments/htmlHeader.jsp"/>
 
-
-        <title>Infraestrutura Nacional de Repositórios de Objetos de Aprendizagem</title>
-
-        <!-- Bootstrap Core CSS -->
-        <link rel="StyleSheet" href="${bootstrap}" type="text/css">
-
-        <!-- Custom CSS -->
-        <link rel="StyleSheet" href="${css}" type="text/css">
+        <!-- index CSS -->
         <link rel="StyleSheet" href="${index}" type="text/css">
-
-        <!-- Custom Fonts -->
-        <link rel="StyleSheet" href="${fontawsome}" type="text/css">
-        <link rel="StyleSheet" href="${fonts}" type="text/css">      
-
-        <!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="${images}/favicon.ico" />
-
-        <!-- Tela de inicio para webclip apple -->
-        <link rel="apple-touch-startup-image" href="${images}/inroa.png" />
 
         <!--Para parecer um aplicativo standalone em dispositivos apple-->
         <meta name="apple-mobile-web-app-capable" content="yes">
 
-        <!-- Favicon Apple-->
-        <link rel="apple-touch-icon" href="${images}/favicon.ico">
-
-
-        <!--conferir as fontes do designer-->
-        <!--<link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">-->
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-
     </head>
 
     <body>
-        <div id="wrap"></div>
-        <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;"> 
-            <ul id="menu-barra-temp" style="list-style:none;">
-                <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
-                    <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
-                </li> 
-
-                <li>
-                    <a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#barra-brasil -->
+        <jsp:include page="fragments/cabecalho.jsp"/>
 
         <div class="container">
-
-            <div class="row text-center">
-                <div class="col-lg-12">
-                    <div class="intro-message">
-
-                        <a href="index.html">
-                            <img id="logo" class="img-responsive" src="${images}/logo.png" alt="" />
-                        </a>
-                    </div>
-                    <!--/.intro-message-->
-                </div>
-                <!--./col-lg-12-->
-            </div>
-            <!--./row-->
 
             <div class="row">
                 <div class="col-lg-12">
@@ -108,7 +46,8 @@
 
                             <div class="form-group">
                                 <label class="sr-only" for="consulta">Termo de busca</label>                                
-                                <form:input path="consulta" type="text" cssClass="form-control" placeholder="Termo de busca" value="" required="required" />
+                                <form:input path="consulta" type="text" cssClass="form-control" 
+                                            placeholder="Termo de busca" value="" required="required" />
                             </div>
 
                             <span class="input-group-btn hidden-xs">
@@ -150,11 +89,8 @@
             </div>
         </div>
 
-        <!-- jQuery Version 1.11.0 -->
-        <script language="javascript" type="text/javascript" src='${scripts}/vendor/jquery-1.11.0.min.js'></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <script language="javascript" type="text/javascript" src='${scripts}/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js'></script>
+        <jsp:include page="fragments/scripts.jsp"/>
+        
         <!--Custom JS-->
         <script language="javascript" type="text/javascript" src='${scripts}/toggleSearch.js'></script>
 

@@ -11,7 +11,7 @@
 <html lang="pt-BR">
     <head>
 
-        <jsp:include page="fragments/header.jsp"/>
+        <jsp:include page="fragments/htmlHeader.jsp"/>
 
         <c:url value="/css/showDocument.css" var="show_doc_css_url" />
         <link rel="stylesheet" type="text/css" media="screen" href="${show_doc_css_url}" /> 
@@ -103,7 +103,9 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
         </script>
-
+        
+        <!-- Barra do Governo Federal -->       
+        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
         <%@include file="googleAnalytics"%>
     </body>
 </html>
