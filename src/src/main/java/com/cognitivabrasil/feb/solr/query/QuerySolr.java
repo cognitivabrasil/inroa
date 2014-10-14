@@ -125,7 +125,7 @@ public class QuerySolr {
 
         List<Document> retorno = new ArrayList<>();
         SolrDocumentList list = queryResponse.getResults();
-
+        
         for (int i = 0; i < offset && i < list.size(); i++) {
 
             //O valor de numDoc eh o documento a ser apresentado

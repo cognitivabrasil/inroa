@@ -84,9 +84,16 @@ public class AppConfig {
     }
     
     @Bean(name = "gitProperties")
-    public Properties gitProperties() throws IOException {
+    public Properties gitProperties() {
         Properties properties = new Properties();
-        properties.load(getClass().getClassLoader().getResourceAsStream("git.properties"));
+        
+        try {
+            properties.load(getClass().getClassLoader().getResourceAsStream("git.properties"));
+        }
+        catch(IOException | NullPointerException e) {
+            log.error("Não foi possível ler o arquivo git.properties, não irá mostrar informações " +
+                    "a respeito do git na página de admin. Erro foi: ", e);
+        }
         
         return properties;
     }

@@ -286,7 +286,7 @@ public class DocumentServiceIT extends AbstractTransactionalJUnit4SpringContextT
             ids.add(doc.getId());
         }
 
-        while (docs.hasNextPage()) {
+        while (docs.hasNext()) {
             docs = docService.getlAll(docs.nextPageable());
             for (Document doc : docs.getContent()) {
                 ids.add(doc.getId());
