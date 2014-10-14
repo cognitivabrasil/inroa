@@ -10,9 +10,6 @@
 <c:url var="scripts" value="/scripts" />
 <c:url var="css" value="/css/main.css" />
 <c:url var="index" value="/css/busca.css" />
-<c:url var="bootstrap" value="scripts/vendor/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
-<c:url var="fontawsome" value="/css/vendor/font-awesome-4.2.0/css/font-awesome.min.css" />
-<c:url var="fonts" value="/css/fonts.css" />
 
 <html lang="pt-BR">
 
@@ -74,12 +71,17 @@
         <div class="footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                        <ul class="list-inline">
+                    <div class="col-xs-2">
+                        <a href="http://capes.gov.br/">
+                            <img src="${images}/logo-capes-rodape.png" alt="logotipo capes"/> 
+                        </a>
+                    </div>
+
+                    <div class="col-xs-offset-2 col-xs-8">
+                        <ul class="list-inline list-footer">
                             <li>
-                                <a href="http://feb.ufrgs.br">Página antiga do projeto</a>
+                                <a href="http://feb.ufrgs.br">Site do projeto</a>
                             </li>
-                            <li class="footer-menu-divider">&sdot;</li>
                             <li>
                                 <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
                             </li>
@@ -90,7 +92,7 @@
         </div>
 
         <jsp:include page="fragments/scripts.jsp"/>
-        
+
         <!--Custom JS-->
         <script language="javascript" type="text/javascript" src='${scripts}/toggleSearch.js'></script>
 

@@ -102,3 +102,11 @@ body {
     font-size:105%;
     margin-bottom:1%;
 }
+
+.list-footer {
+    text-align: right;
+}
+
+.list-footer li:not(:first-child) {
+    border-left: 2px solid #e0e0e0;
+}
