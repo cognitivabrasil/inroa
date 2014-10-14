@@ -91,9 +91,11 @@ Author     : Marcos Nunes
 
                                 </security:authorize> 
                                 &nbsp; 
+                                
+                                <c:url var="repositoriesEdit" value="/admin/repositories/${rep.id}"/>
                                 <input type="button" class="botaoEditar"
                                        title="Editar / Visualizar" name="editar" id="editarRep"
-                                       onclick="NewWindow('repositories/${rep.id}', '', '850', 'total');">
+                                       onclick="NewWindow('${repositoriesEdit}', '', '850', 'total');">
                             </td>
                             <td>${rep.name}</td>
                             <td>${rep.descricao}</td>
