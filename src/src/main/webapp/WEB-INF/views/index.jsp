@@ -38,7 +38,7 @@
                     <c:if test="${!empty erro}">
                         <div class="alert alert-danger text-center">${erro}</div>
                     </c:if>
-                    <form:form method="get" modelAttribute="buscaModel" action="consulta" acceptCharset="utf-8">
+                    <form:form method="get" modelAttribute="buscaModel" action="resultado" acceptCharset="utf-8">
 
                         <form:errors path="consulta" element="div" cssClass="alert alert-danger text-center" />
 

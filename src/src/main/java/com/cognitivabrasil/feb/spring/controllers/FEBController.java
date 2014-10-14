@@ -124,7 +124,7 @@ public final class FEBController implements ErrorController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request, 
+    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request,
             Model model, @CookieValue(value = "feb.cookie", required = false) String cookie)
             throws IOException {
         Document d = docDao.get(id);
@@ -159,11 +159,11 @@ public final class FEBController implements ErrorController {
         return d.getMetadata().getJson();
     }
 
-    @RequestMapping("/consulta")
+    @RequestMapping("/resultado")
     public String consulta(HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
             BindingResult result, Model model,
-            @RequestParam(value = "pager.offset", required = false) Integer offset,
+            @RequestParam(required = false) Integer page,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("buscaModel", consulta);
         log.debug("");
@@ -175,30 +175,30 @@ public final class FEBController implements ErrorController {
             return "index";
         } else {
             try {
-                if (offset != null) {
-                    consulta.setOffset(offset);
+                if (page == null) {
+                    page = 0;
+                } else {
+                    consulta.setOffsetByPage(page);
                 }
 
                 List<Document> docs = recuperador.busca(consulta);
                 log.trace("Carregou " + docs.size() + " documentos.");
                 model.addAttribute("documentos", docs);
 
-                if (offset == null && !StringUtils.isEmpty(cookie)) {
+                if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
-                
-                PaginationDto pagination = new PaginationDto();
-                pagination.setSize(consulta.getSizeResult());
-                pagination.setCurrentPage(0);
+
+                PaginationDto pagination = new PaginationDto(consulta.getLimit(), consulta.getSizeResult(), page);
                 model.addAttribute("pagination", pagination);
-                
+
                 log.debug("Resultou em: " + consulta.getSizeResult() + " documentos. Offset: " + consulta.getOffset());
                 return "resultado";
             } catch (SolrServerException e) {
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
                 //TODO: erro GRAVE, deve enviar um aviso ao administrador.
-                
+
                 log.error("Erro ao efetuar a consulta no Solr, possivelmente o serviço está parado. ", e);
                 return "index";
             } catch (Exception e) {
@@ -211,7 +211,8 @@ public final class FEBController implements ErrorController {
     }
 
     @RequestMapping(value = "/buscaAvancada", method = RequestMethod.GET)
-    public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, @CookieValue(value = "feb.cookie", required = false) String cookie) {
+    public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, 
+            @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("repositories", repDao.getAll());
         model.addAttribute("federations", subDao.getAll());
@@ -223,11 +224,12 @@ public final class FEBController implements ErrorController {
         return "buscaAvancada";
     }
 
-    @RequestMapping(value = "/buscaAvancada", method = RequestMethod.POST)
+    @RequestMapping(value = "/resultadoav")
     public String consultaAvancada(
             HttpServletRequest request,
             @ModelAttribute("buscaModel") Consulta consulta,
             BindingResult result, Model model,
+            @RequestParam(required = false) Integer page,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
         model.addAttribute("buscaModel", consulta);
         buscaValidator.validate(consulta, result);
@@ -237,8 +239,17 @@ public final class FEBController implements ErrorController {
             return "buscaAvancada";
         } else {
             try {
+                 if (page == null) {
+                    page = 0;
+                } else {
+                    consulta.setOffsetByPage(page);
+                }
+                 
                 List<Document> docs = recuperador.buscaAvancada(consulta);
                 model.addAttribute("documentos", docs);
+                PaginationDto pagination = new PaginationDto(consulta.getLimit(), consulta.getSizeResult(), page);
+                model.addAttribute("pagination", pagination);
+                model.addAttribute("avancada", true);
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }

@@ -36,7 +36,8 @@
                 <div class="DivErro" id="MensagemErro">${erro}</div>
             </c:if>
 
-            <form:form method="POST" modelAttribute="buscaModel" class="form-horizontal" role="form" acceptCharset="utf-8">
+            <form:form method="POST" action="resultadoav" modelAttribute="buscaModel" class="form-horizontal"
+                       role="form" acceptCharset="utf-8">
 
                 <div class="row">
                     <div class="col-md-offset-3 col-md-9">
@@ -136,7 +137,7 @@
         <script language="JavaScript" type="text/javascript" src="${scripts}/buscaAvancada.js"></script>
 
         <!-- Barra do Governo Federal -->       
-        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
         <%@include file="googleAnalytics"%>
     </body>
 </html>

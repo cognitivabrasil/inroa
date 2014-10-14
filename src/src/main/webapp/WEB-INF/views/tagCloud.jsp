@@ -19,7 +19,7 @@
 
 <div id="tagcloud">
     <c:forEach var="consulta" items="${termos}" varStatus="key">
-    <spring:url var="buscaConsulta" value="/consulta?consulta=${consulta.key}" htmlEscape="true"/>
+    <spring:url var="buscaConsulta" value="/resultado?consulta=${consulta.key}" htmlEscape="true"/>
         <a href="${buscaConsulta}" rel="${consulta.value}"><c:out value="${consulta.key}"/></a>
 
     </c:forEach>

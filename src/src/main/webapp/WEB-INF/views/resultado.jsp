@@ -83,27 +83,35 @@
                 <!--/#result-->
             </div>
             <!--/.row-->
-            <c:url var="docUrl" value="/consulta"/>
+            <c:choose>
+                <c:when test="${avancada}">
+                    <c:url var="docUrl" value="/resultadoav?${buscaModel.urlEncoded}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:url var="docUrl" value="/resultado?${buscaModel.urlEncoded}"/>
+                </c:otherwise>
+            </c:choose>
+            
              <!-- Pagination Bar -->               
                 <div class="row text-center">
                     <ul class="pagination shadow">
                       <c:if test="${pagination.hasPreviousPage()}">
                         <li>                        
-                          <a href="${docUrl}/page/${pagination.previousPage}" title="Ir para página anterior">Anterior</a>
+                          <a href="${docUrl}&page=${pagination.previousPage}" title="Ir para página anterior">Anterior</a>
                           
                         </li>           
                       </c:if>                                                                        
-                        
+                       
                       <c:forEach var="paginasDisponiveis" items="${pagination.pages}">
                           <c:choose>  
                             <c:when test="${paginasDisponiveis == pagination.currentPage}">
                                 <li class="active">
-                                     <a href="${docUrl}/page/${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
+                                     <a href="${docUrl}&page=${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
                                 </li>
                             </c:when>
                             <c:otherwise>
                                 <li>
-                                     <a href="${docUrl}/page/${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
+                                     <a href="${docUrl}&page=${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
                                 </li>
                             </c:otherwise>
                           </c:choose>
@@ -111,7 +119,7 @@
                                 
                       <c:if test="${pagination.hasNextPage()}">
                         <li>                        
-                          <a href="${docUrl}/page/${pagination.nextPage}" title="Ir para próxima página">Próxima</a>
+                          <a href="${docUrl}&page=${pagination.nextPage}" title="Ir para próxima página">Próxima</a>
                         </li>
                       </c:if>
                     </ul>                            
@@ -128,16 +136,14 @@
         <c:url var="bootstrap" value="/scripts/vendor/bootstrap-3.1.1-dist/js/bootstrap.min.js"/>
         <script language="javascript" type="text/javascript" src='${bootstrap}'></script>
 
-
-        <!-- Barra do Governo Federal -->
-        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
-
         <c:url var="root" value="/" />
         <script>rootUrl = "${root}";</script>
 
         <c:url var="validateURL" value="/scripts/testUrlActive.js" />
         <script type="text/javascript" src="${validateURL}"></script>
         <%@include file="googleAnalytics"%>
+        <!-- Barra do Governo Federal -->
+        <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
     </body>
 
 </html>

@@ -241,8 +241,7 @@ public class Consulta {
     }
 
     /**
-     * Retorna o valor de inicio para busca. Utilizado para
-     * pagina&ccedil;&atilde;o dos resultados
+     * Retorna o valor de inicio para busca. Utilizado para pagina&ccedil;&atilde;o dos resultados
      *
      * @return inteiro com o valor inicial
      */
@@ -251,11 +250,10 @@ public class Consulta {
     }
 
     /**
-     * Valor inicial para busca. Utilizado para pagina&ccedil;&atilde;o dos
-     * resultados
+     * Valor inicial para busca. Utilizado para pagina&ccedil;&atilde;o dos resultados
      *
-     * @param limit Valor inicial para busca, inicio = 5 informa que necessita
-     * dos resultados da consulta apartir do resultado 5.
+     * @param limit Valor inicial para busca, inicio = 5 informa que necessita dos resultados da consulta apartir do
+     * resultado 5.
      */
     public void setLimit(int limit) {
         this.limit = limit;
@@ -272,6 +270,18 @@ public class Consulta {
      */
     public void setOffset(int offset) {
         this.offset = offset;
+    }
+
+    /**
+     * Define o offset de acordo com a página exibida. O offset é a quantidade de resultados para a busca, então o seu
+     * resultado é a multiplicação da página atual pelo limite de resultados exibidos na página.
+     *
+     * @param page
+     */
+    public void setOffsetByPage(int page) {
+        if (page > 0) {
+            this.offset = page * getLimit();
+        }
     }
 
     public int getSizeResult() {
@@ -308,7 +318,7 @@ public class Consulta {
             if (isNotBlank(ageRange)) {
                 encoded += "&ageRange=" + URLEncoder.encode(ageRange, "UTF-8");
             }
-            if (adultAge!=null) {
+            if (adultAge != null) {
                 encoded += "&adultAge=" + URLEncoder.encode(adultAge.toString(), "UTF-8");
             }
             if (isNotBlank(difficult)) {
@@ -317,19 +327,19 @@ public class Consulta {
             if (isNotBlank(size)) {
                 encoded += "&size=" + URLEncoder.encode(size, "UTF-8");
             }
-            if (cost!=null) {
+            if (cost != null) {
                 encoded += "&cost=" + URLEncoder.encode(cost.toString(), "UTF-8");
             }
-            if (hasVisual!=null) {
+            if (hasVisual != null) {
                 encoded += "&hasVisual=" + URLEncoder.encode(hasVisual.toString(), "UTF-8");
             }
-            if (hasAuditory!=null) {
+            if (hasAuditory != null) {
                 encoded += "&hasAuditory=" + URLEncoder.encode(hasAuditory.toString(), "UTF-8");
             }
-            if (hasText!=null) {
+            if (hasText != null) {
                 encoded += "&hasText=" + URLEncoder.encode(hasText.toString(), "UTF-8");
             }
-            if (hasTactile!=null) {
+            if (hasTactile != null) {
                 encoded += "&hasTactile=" + URLEncoder.encode(hasTactile.toString(), "UTF-8");
             }
             for (Integer i : getRepositorios()) {
@@ -347,5 +357,5 @@ public class Consulta {
             // UTF 8 is always supported
             throw new RuntimeException("FATAL", e);
         }
-    }   
+    }
 }
