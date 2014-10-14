@@ -114,6 +114,10 @@ public class PaginationDto {
      * @return 
      */
     public List getPages() {
+        
+        if (getSize()==0){
+            return new ArrayList();
+        }
         int divisor = ITENS_PAGINATION / 2;
 
         int sobraDePaginasDireita = 0;
