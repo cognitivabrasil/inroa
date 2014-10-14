@@ -23,7 +23,7 @@
         <div class="col-md-12">
             <div class="intro-message">
                 <a href="${index}">
-                    <img id="logo" src="${imgLogo}" alt=""/>
+                    <img id="logo" src="${imgLogo}" class="img-responsive" alt=""/>
                 </a>
             </div>
             <!--/.intro-message-->

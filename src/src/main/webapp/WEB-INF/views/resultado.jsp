@@ -143,7 +143,7 @@
         <script type="text/javascript" src="${validateURL}"></script>
         <%@include file="googleAnalytics"%>
         <!-- Barra do Governo Federal -->
-        <!--<script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>-->
+        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
     </body>
 
 </html>
