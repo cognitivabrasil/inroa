@@ -264,32 +264,13 @@ public final class FEBController implements ErrorController {
     }
 
     /**
-     * Método para realizar o login.
+     * Apenas encaminha para a tela de login.
      *
-     * @param login Passado por HTTP
-     * @param password Passado por HTTP
-     * @return Redirect para adm caso autentique, permanece nesta página com uma mensagem de erro caso contrário
+     * @return login.
      */
-    @RequestMapping("/login")
-    public String logando(
-            @RequestParam(value = "login", required = false) String login,
-            @RequestParam(value = "senha", required = false) String password,
-            HttpSession session, Model model) {
-
-        if (userDao.authenticate(login, password) != null) {
-
-            session.setAttribute("usuario", login); // armazena na sessao o
-            // login
-            session.setMaxInactiveInterval(900); // seta o tempo de validade da
-            // session
-            return "redirect:/admin/";
-
-        } else {
-            if (login != null) {
-                model.addAttribute("erro", "Usuário ou senha incorretos!");
-            }
+    @RequestMapping(method = RequestMethod.GET, value = "/login")
+    public String login() {
             return "login";
-        }
     }
 
     /**

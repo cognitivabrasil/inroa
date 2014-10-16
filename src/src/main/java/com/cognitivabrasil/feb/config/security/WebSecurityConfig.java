@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 		.csrf().disable() // TODO: retirar isto, ver #FEB-500
 	    .logout()
-	    	.logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+	    	.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 
 	}
 
