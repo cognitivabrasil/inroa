@@ -11,7 +11,6 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -41,6 +40,9 @@ import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import org.apache.solr.client.solrj.SolrServerException;
 
 /**
@@ -211,7 +213,7 @@ public final class FEBController implements ErrorController {
     }
 
     @RequestMapping(value = "/buscaAvancada", method = RequestMethod.GET)
-    public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request, 
+    public String buscaAvancada(Model model, HttpServletResponse response, HttpServletRequest request,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("repositories", repDao.getAll());
@@ -239,12 +241,12 @@ public final class FEBController implements ErrorController {
             return "buscaAvancada";
         } else {
             try {
-                 if (page == null) {
+                if (page == null) {
                     page = 0;
                 } else {
                     consulta.setOffsetByPage(page);
                 }
-                 
+
                 List<Document> docs = recuperador.buscaAvancada(consulta);
                 model.addAttribute("documentos", docs);
                 PaginationDto pagination = new PaginationDto(consulta.getLimit(), consulta.getSizeResult(), page);
@@ -270,7 +272,7 @@ public final class FEBController implements ErrorController {
      */
     @RequestMapping(method = RequestMethod.GET, value = "/login")
     public String login() {
-            return "login";
+        return "login";
     }
 
     /**
@@ -374,6 +376,24 @@ public final class FEBController implements ErrorController {
         } catch (IOException e) {
             return "false";
         }
+    }
+
+    public boolean verifyUrl(String url) {
+        try {
+            URL u = new URL(url);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(u.openStream()));
+            boolean result =  reader.ready();
+            reader.close();
+            return result;
+
+        } catch (MalformedURLException e) {
+            System.out.println("MalformedURLException");
+            return false;
+        } catch (IOException e) {
+            System.out.println("IOException");
+            return false;
+        }
+
     }
 
     private Cookie addCookie(HttpServletResponse response, HttpServletRequest request) {
