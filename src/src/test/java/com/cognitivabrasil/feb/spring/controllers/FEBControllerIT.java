@@ -33,6 +33,9 @@ import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.TagCloudService;
+import java.io.IOException;
+import org.junit.Ignore;
+import org.springframework.util.StopWatch;
 
 /**
  *
@@ -72,5 +75,19 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
         
         Consulta c = (Consulta) model.get("buscaModel");
         assertThat(c, notNullValue());        
+    }
+    
+    @Test
+    @Ignore("Não deve rodar sempre, pois usa a internet.")
+    public void testVerificaUrl() throws IOException{
+//        String url = "http://feb.ufrgs.br/repositorio/documents/230";
+        String url = "http://releases.ubuntu.com/14.04.1/ubuntu-14.04.1-desktop-amd64.iso";
+//        String url = "http://hdl.handle.net/123456789/41";
+        StopWatch stop = new StopWatch();
+        stop.start("url: "+url);
+        Boolean result = controller.verifyUrl(url);
+        assertThat(result, equalTo(true));
+        stop.stop();
+        System.out.println("XML " + stop.prettyPrint());
     }
 }

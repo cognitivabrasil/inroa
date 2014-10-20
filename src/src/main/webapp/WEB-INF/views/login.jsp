@@ -22,14 +22,14 @@
             var myForm = new Validate();
 
             myForm.addRules({
-                id : 'user',
-                option : 'required',
-                error : '* Voc&ecirc; deve informar o seu nome de usu&aacute;rio!'
+                id: 'user',
+                option: 'required',
+                error: '* Voc&ecirc; deve informar o seu nome de usu&aacute;rio!'
             });
             myForm.addRules({
-                id : 'passwd',
-                option : 'required',
-                error : '* Voc&ecirc; deve informar sua senha!'
+                id: 'passwd',
+                option: 'required',
+                error: '* Voc&ecirc; deve informar sua senha!'
             });
         </script>
 
@@ -42,7 +42,7 @@
             <jsp:include page="cabecalho.jsp">
                 <jsp:param value="Digite seu usu&aacute;rio e sua senha para acessar o sistema" name="titulo" />
             </jsp:include>
-            
+
             <div class="linkCantoEsquerdo">
                 <a href="index">Ferramenta de Busca</a>
             </div>
@@ -50,31 +50,30 @@
 
             <c:url var="postLoginUrl" value="/login" />
             <form:form name="login" action="${postLoginUrl }" method="post"
-                  onsubmit="return myForm.Apply('MensagemErro')">
+                       onsubmit="return myForm.Apply('MensagemErro')">
 
                 <div class="EspacoAntes">&nbsp;</div>
                 <div class="textoErro" id="MensagemErro">
-                    <!--Aqui o script colocara a mensagem de erro, se ocorrer-->
-                    <c:out value="${erro}" />
-                    <c:if test="${param.error == true }">
-                        Erro ao efetuar o login.
+                    <c:if test="${param.error!=null}">
+                        <div th:if="${param.error}" class="alert alert-error">Usuário e senha inválidos. </div>
                     </c:if>
+
                 </div>
                 <div class="LinhaEntrada">
 
                     <label class="Label"><B>Usu&aacute;rio:&nbsp;</B></label>
                     <div class="Value">
                         <input name="username" id="user" maxlength="20" type="text"
-                               onFocus="this.className='inputSelecionado'"
-                               onBlur="this.className=''">
+                               onFocus="this.className = 'inputSelecionado'"
+                               onBlur="this.className = ''">
                     </div>
                 </div>
                 <div class="LinhaEntrada">
                     <label class="Label"><B>Senha:&nbsp;</B></label>
                     <div class="Value">
                         <input name="password" id="passwd" type=password
-                               onFocus="this.className='inputSelecionado'"
-                               onBlur="this.className=''">
+                               onFocus="this.className = 'inputSelecionado'"
+                               onBlur="this.className = ''">
                     </div>
                 </div>
 
