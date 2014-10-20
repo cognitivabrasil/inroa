@@ -363,7 +363,7 @@ public final class FEBController implements ErrorController {
      * @param url URL a ser testada, deve iniciar com http://
      * @return true se a url estiver ativa e false caso contrário
      */
-    @RequestMapping("verificaURL")
+    @RequestMapping("verificaURLOld")
     public @ResponseBody
     String verifyURL(@RequestParam String url) {
         try {
@@ -378,19 +378,23 @@ public final class FEBController implements ErrorController {
         }
     }
 
-    public boolean verifyUrl(String url) {
+    /**
+     * Verificador de URL, recebe como entrada uma url e retorna um boolean informando se ela está ativa ou não.
+     *
+     * @param url URL a ser testada, deve iniciar com http://
+     * @return true se a url estiver ativa e false caso contrário
+     */
+    @RequestMapping("verificaUrl")
+    public @ResponseBody boolean verifyUrl(@RequestParam String url) {
         try {
+            log.debug("testando url: "+url);
             URL u = new URL(url);
             BufferedReader reader = new BufferedReader(new InputStreamReader(u.openStream()));
             boolean result =  reader.ready();
             reader.close();
             return result;
 
-        } catch (MalformedURLException e) {
-            System.out.println("MalformedURLException");
-            return false;
         } catch (IOException e) {
-            System.out.println("IOException");
             return false;
         }
 

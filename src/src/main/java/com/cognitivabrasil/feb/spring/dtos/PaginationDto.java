@@ -115,7 +115,7 @@ public class PaginationDto {
      */
     public List getPages() {
         
-        if (getSize()==0){
+        if (getSize()<=itenToPresent){
             return new ArrayList();
         }
         int divisor = ITENS_PAGINATION / 2;
