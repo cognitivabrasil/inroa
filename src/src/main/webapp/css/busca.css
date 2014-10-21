@@ -8,7 +8,14 @@ html{height: 100%}
     position: absolute;
     bottom: 0;
     width: 100%;
-    
     background-color: #f1f1f1;
     padding: 3px;
+}
+.list-footer {
+    text-align: right;
+    margin-bottom: 0;
+}
+
+.list-footer li:not(:first-child) {
+    border-left: 2px solid #e0e0e0;
 }
