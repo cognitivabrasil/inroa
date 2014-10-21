@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.jasypt.encryption.StringEncryptor;
@@ -63,6 +64,8 @@ public class FebConfig {
 
     private String solrUrl;
 
+    private String logHome;
+
     @Autowired
     public void setEncryptor(StringEncryptor e) {
         encryptor = e;
@@ -84,6 +87,8 @@ public class FebConfig {
         n.setProperty("Database.password", "ENC(" + encryptor.encrypt(password)
                 + ")");
         n.setProperty("Solr.url", solrUrl);
+        n.setProperty("FEB_LOG_HOME", solrUrl);
+
 
 
         n.store(w, null);
@@ -168,6 +173,13 @@ public class FebConfig {
         database = properties.getProperty("Database.database");
         password = properties.getProperty("Database.password");
         solrUrl = properties.getProperty("Solr.url");
+        
+        if(!StringUtils.isBlank(environmentVariables.getLogHome())) {
+            logHome = environmentVariables.getLogHome();
+        }
+        else {
+            logHome = properties.getProperty("FEB_LOG_HOME");
+        }
     }
 
     public String getHost() {
@@ -233,6 +245,12 @@ public class FebConfig {
         setHost(febConf.getHost());
         setDatabaseType(febConf.getDatabaseType());
         setSolrUrl(febConf.getSolrUrl());
+        setLogHome(febConf.getLogHome());
+    }
+
+    private void setLogHome(String logHome2) {
+        logHome = logHome2;
+        
     }
 
     @Override
@@ -258,5 +276,14 @@ public class FebConfig {
 
     public void setSolrUrl(String url) {
         solrUrl = url;        
+    }
+
+    public String getLogHome() {
+        if(StringUtils.isBlank(logHome)) {
+            return "/var/log/feb";
+        }
+        else {
+            return logHome;
+        }
     }
 }

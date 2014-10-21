@@ -38,8 +38,19 @@ public class FebEnvironmentVariables {
     @Value("${FEB_DATABASE_PASSWORD}")
     private String databasePassword;
     
-    @Value("${FEB_SOLR_URL")
+    @Value("${FEB_SOLR_URL}")
     private String solrUrl;
+    
+    @Value("${FEB_LOG_HOME}")
+    private String logHome;
+
+    public String getLogHome() {
+        return logHome;
+    }
+
+    public void setLogHome(String logHome) {
+        this.logHome = logHome;
+    }
 
     public String getSolrUrl() {
         return solrUrl;
@@ -127,7 +138,12 @@ public class FebEnvironmentVariables {
         p.setProperty("Database.username", getDatabaseUsername());
         p.setProperty("Database.database", getDatabaseDatabase());
         p.setProperty("Database.password", getDatabasePassword());
+        
         p.setProperty("Solr.url", getSolrUrl());
+        
+        if(getLogHome() != null) {
+            p.setProperty("FEB_LOG_HOME", getLogHome());
+        }
 
         return p;
     }
