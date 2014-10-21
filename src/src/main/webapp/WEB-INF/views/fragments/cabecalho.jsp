@@ -3,7 +3,8 @@
 <c:url var="imgLogo" value="/imagens/logo.png" />
 <c:url var="index" value="/" />
 
-<div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;"> 
+<jsp:include page="barraEstatica.jsp"/>
+<!--<div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;"> 
     <ul id="menu-barra-temp" style="list-style:none;">
         <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
             <a href="http://brasil.gov.br" 
@@ -15,7 +16,7 @@
                href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
         </li>
     </ul>
-</div>
+</div>-->
 <!-- /#barra-brasil -->
 
 <div class="container">

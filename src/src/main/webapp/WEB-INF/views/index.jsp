@@ -96,9 +96,9 @@
         <!--Custom JS-->
         <script language="javascript" type="text/javascript" src='${scripts}/toggleSearch.js'></script>
 
-        <!-- Barra do Governo Federal -->
-        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
-
+        
+        <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>
+        
         <%@include file="googleAnalytics"%>
     </body>
 

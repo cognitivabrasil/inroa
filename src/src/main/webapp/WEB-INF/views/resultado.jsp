@@ -142,8 +142,7 @@
         <c:url var="validateURL" value="/scripts/testUrlActive.js" />
         <script type="text/javascript" src="${validateURL}"></script>
         <%@include file="googleAnalytics"%>
-        <!-- Barra do Governo Federal -->
-        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>
     </body>
 
 </html>

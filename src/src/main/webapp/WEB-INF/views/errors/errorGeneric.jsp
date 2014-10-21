@@ -29,8 +29,7 @@
         <!-- ${stacktrace} -->
 
         <jsp:include page="../fragments/scripts.jsp"/>
-        <!-- Barra do Governo Federal -->
-        <script defer="defer" async="async" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+        <jsp:include page="../fragments/scriptsBarraGoverno.jsp"/>
     </body>
 
 </html>
