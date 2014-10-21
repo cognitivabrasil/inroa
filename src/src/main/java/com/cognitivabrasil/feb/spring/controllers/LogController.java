@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cognitivabrasil.feb.spring.FebConfig;
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Controller para baixar logs.
@@ -30,7 +32,7 @@ public class LogController {
      */
     @RequestMapping(value = "{file_name}", method = RequestMethod.GET)
     @ResponseBody
-    public FileSystemResource getFile(@PathVariable("file_name") String fileName) {
+    public FileSystemResource getFile(@PathVariable("file_name") String fileName,HttpServletResponse response) {
         /* só permite baixar os 3 arquivos de log, evita ataques de passar .. para tentar
          * ler qualquer arquivo do filesystem.
          */
@@ -44,6 +46,14 @@ public class LogController {
             String[] file = fileName.split("-");
             return new FileSystemResource(new File(config.getLogHome() + "/" + file[0] + ".log."+file[1]));
         }        
-        else { return null; }
+        else { 
+            try{
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+            }catch(IOException e){
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                return null;
+            } 
+        }
     }
 }
