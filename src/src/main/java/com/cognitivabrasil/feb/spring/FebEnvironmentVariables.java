@@ -138,8 +138,12 @@ public class FebEnvironmentVariables {
         p.setProperty("Database.username", getDatabaseUsername());
         p.setProperty("Database.database", getDatabaseDatabase());
         p.setProperty("Database.password", getDatabasePassword());
+        
         p.setProperty("Solr.url", getSolrUrl());
-        p.setProperty("FEB_LOG_HOME", getLogHome());
+        
+        if(getLogHome() != null) {
+            p.setProperty("FEB_LOG_HOME", getLogHome());
+        }
 
         return p;
     }
