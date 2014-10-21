@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	
+	<property name="logFileHome" value="${FEB_LOG_HOME:-/var/log/feb}"/>
 
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<encoder>
 			<pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} |%c{2}:%L| - %m%n</pattern>
 		</encoder>
-		<file>/var/log/feb/feb.log</file>
+		<file>${logFileHome}/feb.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 			<fileNamePattern>${LOG_FILE}.%i</fileNamePattern>
 		</rollingPolicy>
@@ -22,7 +24,7 @@
 		<encoder>
 			<pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} |%c{2}:%L| - %m%n</pattern>
 		</encoder>
-		<file>/var/log/feb/searches.log</file>
+		<file>${logFileHome}/searches.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 			<fileNamePattern>${LOG_FILE}.%i</fileNamePattern>
 		</rollingPolicy>
@@ -37,7 +39,7 @@
 		<encoder>
 			<pattern>[%-5p] %d{yyyy-MM-dd HH:mm:ss} |%c{2}:%L| - %m%n</pattern>
 		</encoder>
-		<file>/var/log/feb/update.log</file>
+		<file>${logFileHome}/update.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
 			<fileNamePattern>${LOG_FILE}.%i</fileNamePattern>
 		</rollingPolicy>

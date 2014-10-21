@@ -172,6 +172,9 @@ a desenvolver.
 	sudo chown tomcat7 /var/log/feb/
 ```
 
+Você também pode especificar o diretório dos logs do FEB com
+a variável de ambiente FEB\_LOG\_HOME ou no arquivo feb.properties.
+
 Rodar o feb
 ----------------------------------------------------
 
