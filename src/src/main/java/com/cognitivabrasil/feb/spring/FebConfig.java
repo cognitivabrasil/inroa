@@ -30,11 +30,11 @@ import com.cognitivabrasil.feb.AppConfig;
  * It has accessors for the common database parameters. It should be used as a managed bean, and it has to be configured
  * to receive, by injection, a {@link File} and a {@link Properties}.
  *
- * It will try to load the properties the Envirnoment, if not available it will try to load it from the File, 
- * and finally it will use those in the Properties (default) ( {@link AppConfig#febConfigDefaultProperties()} ).
+ * It will try to load the properties the Envirnoment, if not available it will try to load it from the File, and
+ * finally it will use those in the Properties (default) ( {@link AppConfig#febConfigDefaultProperties()} ).
  *
  * To save the file, you have to make sure that the destination folder is writable by the Servlet container.
- * 
+ *
  * @see FebEnvironmentVariables
  *
  * @author Paulo Schreiner <paulo@cognitivabrasil.com.br>
@@ -70,7 +70,7 @@ public class FebConfig {
     public void setEncryptor(StringEncryptor e) {
         encryptor = e;
     }
-    
+
     @Autowired
     public void setFebEnvironmentVariables(FebEnvironmentVariables env) {
         log.debug("Environment variables = " + env);
@@ -88,8 +88,6 @@ public class FebConfig {
                 + ")");
         n.setProperty("Solr.url", solrUrl);
         n.setProperty("FEB_LOG_HOME", solrUrl);
-
-
 
         n.store(w, null);
     }
@@ -143,14 +141,13 @@ public class FebConfig {
     public void postConstruct() {
         Properties p = new EncryptableProperties(encryptor);
         try {
-            if(environmentVariables.getDatabaseType() != null) {
+            if (environmentVariables.getDatabaseType() != null) {
                 log.info("Utilizando informações de variáveis do ambiente para configuração...");
-                
+
                 properties = environmentVariables.getProperties();
-            }
-            else if (file != null) {
+            } else if (file != null) {
                 log.info("Usando informações de arquivo de configuração...");
-                
+
                 InputStream s = new FileInputStream(file);
                 p.load(s);
                 properties = p;
@@ -159,25 +156,23 @@ public class FebConfig {
         } catch (IOException e) {
             log.warn("Config file is missing, using defaults.");
         }
-        
-        if(properties.getProperty("Database.type", "Postgres").equals("Oracle")) {
+
+        if (properties.getProperty("Database.type", "Postgres").equals("Oracle")) {
             databaseType = Database.ORACLE;
-        }
-        else {
+        } else {
             databaseType = Database.POSTGRESQL;
         }
-        
+
         host = properties.getProperty("Database.host");
         port = Integer.parseInt(properties.getProperty("Database.port"));
         username = properties.getProperty("Database.username");
         database = properties.getProperty("Database.database");
         password = properties.getProperty("Database.password");
         solrUrl = properties.getProperty("Solr.url");
-        
-        if(!StringUtils.isBlank(environmentVariables.getLogHome())) {
+
+        if (!StringUtils.isBlank(environmentVariables.getLogHome())) {
             logHome = environmentVariables.getLogHome();
-        }
-        else {
+        } else {
             logHome = properties.getProperty("FEB_LOG_HOME");
         }
     }
@@ -250,7 +245,7 @@ public class FebConfig {
 
     private void setLogHome(String logHome2) {
         logHome = logHome2;
-        
+
     }
 
     @Override
@@ -275,15 +270,10 @@ public class FebConfig {
     }
 
     public void setSolrUrl(String url) {
-        solrUrl = url;        
+        solrUrl = url;
     }
 
     public String getLogHome() {
-        if(StringUtils.isBlank(logHome)) {
-            return "/var/log/feb";
-        }
-        else {
-            return logHome;
-        }
+        return logHome;
     }
 }
