@@ -121,6 +121,7 @@ public class AppConfig {
         p.setProperty("FEB_DATABASE_USERNAME", "");
         p.setProperty("FEB_DATABASE_PASSWORD", "");
         p.setProperty("FEB_SOLR_URL", "http://localhost:8983/solr/");
+        p.setProperty("FEB_LOG_HOME", "/var/log/feb");
 
         
         s.setProperties(p);
