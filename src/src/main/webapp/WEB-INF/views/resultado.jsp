@@ -102,16 +102,16 @@
                         </li>           
                       </c:if>                                                                        
                        
-                      <c:forEach var="paginasDisponiveis" items="${pagination.pages}">
+                      <c:forEach var="page" items="${pagination.pages}">
                           <c:choose>  
-                            <c:when test="${paginasDisponiveis == pagination.currentPage}">
+                            <c:when test="${page == pagination.currentPage}">
                                 <li class="active">
-                                     <a href="${docUrl}&page=${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
+                                     <a href="${docUrl}&page=${page}"><span text="${item.number}">${page+1}</span></a>
                                 </li>
                             </c:when>
                             <c:otherwise>
                                 <li>
-                                     <a href="${docUrl}&page=${paginasDisponiveis}"><span text="${item.number}">${paginasDisponiveis+1}</span></a>
+                                     <a href="${docUrl}&page=${page}"><span text="${item.number}">${page+1}</span></a>
                                 </li>
                             </c:otherwise>
                           </c:choose>

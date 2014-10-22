@@ -103,7 +103,7 @@ public class PaginationDto {
      * @return 
      */
     public int getPreviousPage() {
-        if (currentPage > 1) {
+        if (currentPage >= 1) {
             return currentPage - 1;
         }
         return currentPage;
@@ -113,7 +113,7 @@ public class PaginationDto {
      * Retorna uma lista com o número das páginas que serão exibidas na paginação.
      * @return 
      */
-    public List getPages() {
+    public List<Integer> getPages() {
         
         if (getSize()<=itenToPresent){
             return new ArrayList();
@@ -148,14 +148,13 @@ public class PaginationDto {
                     pagesAvaliable.add(page - divisor - i);
                 }
             }
-            sobraDePaginasDireita = sobraDePaginasDireita - i + 1;
+            
             for (i = 1; i <= sobraDePaginasEsquerda; i++) {
                 float nextPage = page + divisor + i;
                 if (nextPage < numeroPaginas) {
                     pagesAvaliable.add(page + divisor + i);
                 }
             }
-            sobraDePaginasEsquerda = sobraDePaginasEsquerda - i + 1;
         }
         Collections.sort(pagesAvaliable);
         return pagesAvaliable;
