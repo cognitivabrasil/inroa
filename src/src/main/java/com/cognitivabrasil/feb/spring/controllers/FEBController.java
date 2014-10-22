@@ -146,7 +146,7 @@ public final class FEBController implements ErrorController {
             if (!titles.isEmpty()) {
                 title = titles.get(0);
             }
-
+            
             model.addAttribute("title", title);
             model.addAttribute("docId", d.getId());
             return "infoDetalhada";
