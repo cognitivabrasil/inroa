@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
+<c:url var="images" value="/imagens" />
+
 <html lang="pt-BR" xmlns:jsp="http://java.sun.com/JSP/Page"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
@@ -127,6 +129,30 @@
 
         </div>
         <!-- /.container -->
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <a href="http://capes.gov.br/">
+                            <img src="${images}/logo-capes-rodape.png" alt="logotipo capes"/> 
+                        </a>
+                    </div>
+
+                    <div class="col-xs-offset-2 col-xs-8">
+                        <ul class="list-inline list-footer">
+                            <li>
+                                <a href="http://siteinroa.capes.gov.br/">Site do projeto</a>
+                            </li>
+                            <li>
+                                <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- jQuery Version 1.11.0 -->
         <c:url var="jquery" value="/scripts/vendor/jquery-1.7.2.js"/>

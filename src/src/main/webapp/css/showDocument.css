@@ -21,3 +21,10 @@ and open the template in the editor.
 .footerButton{margin-bottom: 5px;}
 .value{word-wrap:break-word;}
 .fb-share-button{vertical-align: top;}
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    padding: 3px;
+}

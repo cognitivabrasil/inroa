@@ -59,6 +59,9 @@ body {
         margin-right: 10px;
     }
     
+    .footer{
+        display: none;
+    }
 }
 
 /*telas médias*/
@@ -101,4 +104,26 @@ body {
     font-weight:bold;
     font-size:105%;
     margin-bottom:1%;
+}
+
+.footer .row{
+    margin: 6px;
+}
+
+.footer a {
+    color: #606060 !important;
+    font-weight: 700;
+}
+
+.list-footer {
+    text-align: right;
+    margin-bottom: 0;
+}
+
+.list-footer li:not(:first-child) {
+    border-left: 2px solid #e0e0e0;
+}
+
+object[type=application\/gas-events-bb]{
+    display:none;
 }

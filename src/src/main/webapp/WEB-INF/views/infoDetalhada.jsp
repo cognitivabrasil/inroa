@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 
+<c:url var="images" value="/imagens" />
 
 <html lang="pt-BR">
     <head>
@@ -87,6 +88,30 @@
                             <div class="progress-bar progress-bar-striped active"  role="progressbar" style="width: 100%">
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         
+         <!-- Footer -->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <a href="http://capes.gov.br/">
+                            <img src="${images}/logo-capes-rodape.png" alt="logotipo capes"/> 
+                        </a>
+                    </div>
+
+                    <div class="col-xs-offset-2 col-xs-8">
+                        <ul class="list-inline list-footer">
+                            <li>
+                                <a href="http://siteinroa.capes.gov.br/">Site do projeto</a>
+                            </li>
+                            <li>
+                                <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
