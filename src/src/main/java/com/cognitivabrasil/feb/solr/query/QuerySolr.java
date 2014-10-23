@@ -81,19 +81,12 @@ public class QuerySolr {
      */
     public void pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
 
-        String campos = CriaQuery.criaQueryCompleta(pesquisa);
-
-        query = new SolrQuery();
-
-        query.setQuery(campos);
+        query = CriaQuery.criaQueryCompleta(pesquisa);
 
         query.setStart(offset);
         query.setRows(limit);
 
-        query.setRequestHandler("/feb_avancado");
-
-        //Para definir que espaco em branco sera considerado OR e nao +
-        query.set(QueryParsing.OP, "OR");
+        query.setRequestHandler("/feb");
 
         queryResponse = serverSolr.query(query);
 
