@@ -17,7 +17,7 @@ public class PaginationDto {
 
     public static final int ITENS_PAGINATION = 5;
     private final int size;
-    private int currentPage;
+    private final int currentPage;
     private final int itenToPresent;
 
     /**
@@ -30,6 +30,7 @@ public class PaginationDto {
     public PaginationDto(int itenToPresent, int size) {
         this.itenToPresent = itenToPresent;
         this.size = size;
+        this.currentPage = 0;
     }
 
     /**
@@ -51,7 +52,7 @@ public class PaginationDto {
      * @return boolean informando se tem página anterior.
      */
     public boolean hasPreviousPage() {
-        return getCurrentPage() > 0;
+        return currentPage > 0;
     }
 
     /**
@@ -80,14 +81,6 @@ public class PaginationDto {
      */
     public int getCurrentPage() {
         return currentPage;
-    }
-
-    /**
-     * Define qual é a página atual.
-     * @param currentPage Inteiro que diz se é a página 1, 2, 3, etc.
-     */
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
     }
 
     /**

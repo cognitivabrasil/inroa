@@ -8,6 +8,8 @@ package com.cognitivabrasil.feb.spring.dtos;
 import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
@@ -95,5 +97,30 @@ public class PaginationDtoTest {
         list.add(7);
         list.add(8);
         assertThat(pagination.getPages(), equalTo(list));
+    }
+    
+    @Test
+    public void testLastPage(){
+        PaginationDto pagination = new PaginationDto(5, 20, 4);
+        assertThat(pagination.hasPreviousPage(), equalTo(true));
+        assertThat(pagination.hasNextPage(), equalTo(false));
+    }
+        
+    @Test
+    public void testEmpty(){
+        PaginationDto pagination = new PaginationDto(5, 5);
+        assertThat(pagination.getPages(), notNullValue());
+        assertThat(pagination.getPages(), hasSize(0));
+        assertThat(pagination.hasPreviousPage(), equalTo(false));
+        assertThat(pagination.hasNextPage(), equalTo(false));
+    }
+
+    
+    @Test
+    public void testMiddlePage(){
+        PaginationDto pagination = new PaginationDto(10, 50, 3);
+        assertThat(pagination.hasPreviousPage(), equalTo(true));
+        assertThat(pagination.hasNextPage(), equalTo(true));
+        assertThat(pagination.getPages(), hasSize(5));
     }
 }
