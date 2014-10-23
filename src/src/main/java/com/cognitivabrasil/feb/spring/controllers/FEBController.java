@@ -38,6 +38,7 @@ import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
+import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
 import java.io.BufferedReader;
@@ -69,9 +70,17 @@ public final class FEBController implements ErrorController {
 
     @Autowired
     private Recuperador recuperador;
+    
+    @Autowired
+    private FebConfig config;
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
+    }
+    
+    @ModelAttribute("analyticsId")
+    public String populateOrigin() {
+        return config.getAnalyticsId();
     }
 
     @RequestMapping("/error")
@@ -98,9 +107,6 @@ public final class FEBController implements ErrorController {
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
         model.addAttribute("buscaModel", new Consulta());
-
-//        Map<String, Integer> termos = tagCloud.getTagCloud();
-        model.addAttribute("termos", "");
 
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);

@@ -122,8 +122,8 @@ public class AppConfig {
         p.setProperty("FEB_DATABASE_PASSWORD", "");
         p.setProperty("FEB_SOLR_URL", "http://localhost:8983/solr/");
         p.setProperty("FEB_LOG_HOME", "/var/log/feb");
+        p.setProperty("FEB_ANALYTICS_ID", "");
 
-        
         s.setProperties(p);
              
         return s;
@@ -138,7 +138,7 @@ public class AppConfig {
         p.setProperty("Database.host", "127.0.0.1");
         p.setProperty("Database.port", "5432");
         p.setProperty("Solr.url", "http://localhost:8983/solr/");
-
+        p.setProperty("Analytics.id", "");
 
         return p;
     }

@@ -110,6 +110,6 @@
                 <div class="suporte">
                 Problemas para utilizar este sistema? Suporte técnico <a href="http://cognitivabrasil.com.br/">Cognitiva Brasil</a>: <a href="mailto:contato@cognitivabrasil.com.br">contato@cognitivabrasil.com.br</a>
             </div>
-        <%@include file="googleAnalytics"%>
+        
     </body>
 </html>

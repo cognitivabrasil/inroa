@@ -43,6 +43,9 @@ public class FebEnvironmentVariables {
     
     @Value("${FEB_LOG_HOME}")
     private String logHome;
+    
+    @Value("${FEB_ANALYTICS_ID}")
+    private String analyticsId;
 
     public String getLogHome() {
         return logHome;
@@ -108,6 +111,14 @@ public class FebEnvironmentVariables {
         this.databaseType = databaseType;
     }
 
+    public String getAnalyticsId() {
+        return analyticsId;
+    }
+
+    public void setAnalyticsId(String analyticsId) {
+        this.analyticsId = analyticsId;
+    }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE, false);
@@ -140,6 +151,7 @@ public class FebEnvironmentVariables {
         p.setProperty("Database.password", getDatabasePassword());
         
         p.setProperty("Solr.url", getSolrUrl());
+        p.setProperty("Analytics.id", getAnalyticsId());
         
         if(getLogHome() != null) {
             p.setProperty("FEB_LOG_HOME", getLogHome());

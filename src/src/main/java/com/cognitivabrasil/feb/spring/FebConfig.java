@@ -66,6 +66,8 @@ public class FebConfig {
 
     private String logHome;
 
+    private String analyticsId;
+
     @Autowired
     public void setEncryptor(StringEncryptor e) {
         encryptor = e;
@@ -88,6 +90,7 @@ public class FebConfig {
                 + ")");
         n.setProperty("Solr.url", solrUrl);
         n.setProperty("FEB_LOG_HOME", solrUrl);
+        n.setProperty("Analytics.id", analyticsId);
 
         n.store(w, null);
     }
@@ -168,7 +171,18 @@ public class FebConfig {
         username = properties.getProperty("Database.username");
         database = properties.getProperty("Database.database");
         password = properties.getProperty("Database.password");
-        solrUrl = properties.getProperty("Solr.url");
+
+        if (!StringUtils.isBlank(environmentVariables.getSolrUrl())) {
+            solrUrl = environmentVariables.getSolrUrl();
+        } else {
+            solrUrl = properties.getProperty("Solr.url");
+        }
+
+        if (!StringUtils.isBlank(environmentVariables.getAnalyticsId())) {
+            analyticsId = environmentVariables.getAnalyticsId();
+        } else {
+            analyticsId = properties.getProperty("Analytics.id");
+        }
 
         if (!StringUtils.isBlank(environmentVariables.getLogHome())) {
             logHome = environmentVariables.getLogHome();
@@ -241,6 +255,7 @@ public class FebConfig {
         setDatabaseType(febConf.getDatabaseType());
         setSolrUrl(febConf.getSolrUrl());
         setLogHome(febConf.getLogHome());
+        setAnalyticsId(febConf.getAnalyticsId());
     }
 
     private void setLogHome(String logHome2) {
@@ -276,4 +291,13 @@ public class FebConfig {
     public String getLogHome() {
         return logHome;
     }
+
+    public String getAnalyticsId() {
+        return analyticsId;
+    }
+
+    public void setAnalyticsId(String analyticsId) {
+        this.analyticsId = analyticsId;
+    }
+
 }

@@ -143,6 +143,8 @@
         </script>
         
         <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>
-        <%@include file="googleAnalytics"%>
+        <jsp:include page="fragments/googleAnalytics.jsp">
+            <jsp:param name="analyticsId" value="${analyticsId}" />
+        </jsp:include>
     </body>
 </html>

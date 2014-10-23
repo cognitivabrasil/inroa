@@ -62,6 +62,7 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         defaultProperties.setProperty("Database.username", "user");
         defaultProperties.setProperty("Database.host", "127.0.0.1");
         defaultProperties.setProperty("Solr.url", "http://default");
+        defaultProperties.setProperty("Analytics.id", "UA-marcos");
 
 
     }
@@ -109,6 +110,14 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         c.postConstruct();
 
         assertThat(c.getSolrUrl(), equalTo("http://localhost:8983/solr/"));    
+    }
+    
+    @Test
+    public void loadFromFileCarregAnalyticsIdCorretamente() {
+        c.setFile(new File("src/main/resources/feb.properties"));
+        c.setDefaultProperties(new Properties());
+        c.postConstruct();
+        assertThat(c.getAnalyticsId(), equalTo("UA-4253018-30"));    
     }
 
     /**
@@ -169,6 +178,7 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         
         c.setDatabaseType(Database.ORACLE);
         c.setSolrUrl("newSolrUrl");
+        c.setAnalyticsId("analytics-id");
 
         c.save();
         // now, open it and check
@@ -184,6 +194,7 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         assertThat(c.getPassword(), equalTo("pwd"));
         assertThat(c.getHost(), equalTo("127.0.0.1"));
         assertThat(c.getSolrUrl(), equalTo("newSolrUrl"));
+        assertThat(c.getAnalyticsId(), equalTo("analytics-id"));
 
         f.delete();
     }
@@ -199,6 +210,7 @@ public class FebConfigIT extends AbstractTransactionalJUnit4SpringContextTests{
         env.setDatabaseUsername("user");
         env.setDatabasePassword("pass");
         env.setSolrUrl("anyUrl");
+        env.setAnalyticsId("analytics-id");
         
         c.setFebEnvironmentVariables(env);
         c.setFile(new File("src/main/resources/feb.properties"));

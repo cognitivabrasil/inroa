@@ -167,7 +167,7 @@
 
         <c:url var="validateURL" value="/scripts/testUrlActive.js" />
         <script type="text/javascript" src="${validateURL}"></script>
-        <%@include file="googleAnalytics"%>
+        <jsp:include page="fragments/googleAnalytics.jsp">             <jsp:param name="analyticsId" value="${analyticsId}" />         </jsp:include>
         <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>
     </body>
 
