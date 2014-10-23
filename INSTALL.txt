@@ -24,7 +24,7 @@ A senha padrão de administrador é *teste*.
 
 
 
-Adicionar Federação da UFRGS como repositório de testes
+Adicionar repositório da SEB como teste
 --------------------------------------------------------
 
 Entre na ferramenta administrativa e adicione um novo repositório.
