@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Classe que auxilia a páginação no resultado da busca.
+ *
  * @author Marcos Freitas Nunes <marcos@cognitivabrasil.com.br>
  */
 public class PaginationDto {
@@ -19,6 +20,7 @@ public class PaginationDto {
     private final int size;
     private final int currentPage;
     private final int itenToPresent;
+    private List<Integer> pagesAvaliable;
 
     /**
      * Construtor mínimo. Inicializa apenas o número total de resultados e a quantidade que é exibida na tela de
@@ -77,7 +79,8 @@ public class PaginationDto {
 
     /**
      * Retorna a página atual.
-     * @return 
+     *
+     * @return
      */
     public int getCurrentPage() {
         return currentPage;
@@ -85,7 +88,8 @@ public class PaginationDto {
 
     /**
      * Retorna o número da próxima página.
-     * @return 
+     *
+     * @return
      */
     public int getNextPage() {
         return currentPage + 1;
@@ -93,7 +97,8 @@ public class PaginationDto {
 
     /**
      * Retorna o número da página anterior.
-     * @return 
+     *
+     * @return
      */
     public int getPreviousPage() {
         if (currentPage >= 1) {
@@ -104,19 +109,23 @@ public class PaginationDto {
 
     /**
      * Retorna uma lista com o número das páginas que serão exibidas na paginação.
-     * @return 
+     *
+     * @return
      */
     public List<Integer> getPages() {
+        if (pagesAvaliable != null) {
+            return pagesAvaliable;
+        }
         
-        if (getSize()<=itenToPresent){
+        if (getSize() <= itenToPresent) {
             return new ArrayList();
         }
         int divisor = ITENS_PAGINATION / 2;
 
         int sobraDePaginasDireita = 0;
         int sobraDePaginasEsquerda = 0;
-        List<Integer> pagesAvaliable = new ArrayList<>();
-        float numeroPaginas = (float) getSize()/itenToPresent;
+        pagesAvaliable = new ArrayList<>();
+        float numeroPaginas = (float) getSize() / itenToPresent;
         int page = getCurrentPage();
         pagesAvaliable.add(page);
         for (int i = 1; i <= divisor; i++) {
@@ -141,7 +150,7 @@ public class PaginationDto {
                     pagesAvaliable.add(page - divisor - i);
                 }
             }
-            
+
             for (i = 1; i <= sobraDePaginasEsquerda; i++) {
                 float nextPage = page + divisor + i;
                 if (nextPage < numeroPaginas) {

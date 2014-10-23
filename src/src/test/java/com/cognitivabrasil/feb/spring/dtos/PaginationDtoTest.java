@@ -117,10 +117,71 @@ public class PaginationDtoTest {
 
     
     @Test
-    public void testMiddlePage(){
+    public void testPages(){
         PaginationDto pagination = new PaginationDto(10, 50, 3);
         assertThat(pagination.hasPreviousPage(), equalTo(true));
         assertThat(pagination.hasNextPage(), equalTo(true));
         assertThat(pagination.getPages(), hasSize(5));
+        List<Integer> list = new ArrayList();        
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        assertThat(pagination.getPages(), equalTo(list));
+        
+        pagination = new PaginationDto(10, 50, 2);
+        assertThat(pagination.getPages(), equalTo(list));
+        
+        pagination = new PaginationDto(10, 50, 1);
+        assertThat(pagination.getPages(), equalTo(list));
+        
+        pagination = new PaginationDto(10, 50, 0);
+        assertThat(pagination.getPages(), equalTo(list));
+        
+        pagination = new PaginationDto(10, 50, 4);
+        assertThat(pagination.getPages(), equalTo(list));
+    }
+    
+    @Test
+    public void testPagesNavigation(){
+        PaginationDto pagination = new PaginationDto(10, 215, 0);
+        assertThat(pagination.hasPreviousPage(), equalTo(false));
+        assertThat(pagination.hasNextPage(), equalTo(true));
+        assertThat(pagination.getPages(), hasSize(5));
+        List<Integer> list = new ArrayList();
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        assertThat(pagination.getPages(), equalTo(list));
+        
+        pagination = new PaginationDto(10, 215, 4);
+        list = new ArrayList();
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);        
+        assertThat(pagination.getPages(), equalTo(list));    
+        
+        pagination = new PaginationDto(10, 215, 20);
+        list = new ArrayList();
+        list.add(17);
+        list.add(18);
+        list.add(19);
+        list.add(20);
+        list.add(21);
+        assertThat(pagination.getPages(), equalTo(list));
+        
+        pagination = new PaginationDto(10, 215, 21);
+        list = new ArrayList();
+        list.add(17);
+        list.add(18);
+        list.add(19);
+        list.add(20);
+        list.add(21);
+        assertThat(pagination.getPages(), equalTo(list));
     }
 }
