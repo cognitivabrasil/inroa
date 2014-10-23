@@ -80,7 +80,7 @@
                     <div class="col-xs-offset-2 col-xs-8">
                         <ul class="list-inline list-footer">
                             <li>
-                                <a href="http://feb.ufrgs.br">Site do projeto</a>
+                                <a href="http://siteinroa.capes.gov.br/">Site do projeto</a>
                             </li>
                             <li>
                                 <a href="http://www.rnp.br/pesquisa-e-desenvolvimento/grupos-trabalho">GTs RNP</a>
