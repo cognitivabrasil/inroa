@@ -103,8 +103,7 @@ cd src/
 sh create.sh
 ```
 
-Isso irá criar uma base de dados *federacao* com senha
-*feb@RNP* e um usuário *feb*.
+Isso irá criar uma base de dados *federacao* com senha *feb@RNP* e um usuário *feb*.
 
 **IMPORTANTE! MUDE A SENHA USAR A INSTALAÇÃO PARA QUALQUER
 COISA ALÉM DE DESENVOLVIMENTO**
@@ -174,6 +173,19 @@ a desenvolver.
 
 Você também pode especificar o diretório dos logs do FEB com
 a variável de ambiente FEB\_LOG\_HOME ou no arquivo feb.properties.
+
+Google Analytics
+----------------------------------------------------
+Você pode controlar as estatísticas de uso do sistema com o Google analytics, para isso é necessário
+definir o id no Google Analytics na variável de ambiente *FEB\_ANALYTICS\_ID* ou no arquivo feb.properties com a variável *Analytics.id*.
+
+Exemplo do feb.properties
+
+```
+Analytics.id=UA-4253018-30
+```
+
+Se não for definido o Analytics id na variável de ambiente e nem no feb.properties, nenhum script do Google Analytics será inserido no código.
 
 Rodar o feb
 ----------------------------------------------------

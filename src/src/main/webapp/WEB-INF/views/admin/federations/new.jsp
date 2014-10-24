@@ -120,6 +120,5 @@
 
 
         </div>
-        <%@include file="../../googleAnalytics"%>
     </body>
 </html>

@@ -167,6 +167,5 @@ Primeira etapa do cadastro de um repositorio
             </form:form>
 
         </div>
-        <%@include file="../../googleAnalytics"%>
     </body>
 </html>
