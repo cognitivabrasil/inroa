@@ -127,3 +127,16 @@ body {
 object[type=application\/gas-events-bb]{
     display:none;
 }
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background-color: #f1f1f1;
+    padding: 3px;
+}
+
+body{
+    /*margem para o rodapé*/
+    margin-bottom: 32px;
+}

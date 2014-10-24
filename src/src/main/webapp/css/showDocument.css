@@ -22,9 +22,10 @@ and open the template in the editor.
 .value{word-wrap:break-word;}
 .fb-share-button{vertical-align: top;}
 
-.footer {
+/*footer alterado para fixo em todas as páginas analisar se vai continuar assim*/
+/*.footer {
     bottom: 0;
     width: 100%;
     background-color: #f1f1f1;
     padding: 3px;
-}
+}*/

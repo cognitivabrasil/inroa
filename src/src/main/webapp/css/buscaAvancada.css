@@ -48,24 +48,3 @@ buscaAvancada.css
     .jstree-default-responsive .jstree-anchor label{font-weight: 400}
     #tree_federations.jstree-default-responsive .jstree-anchor label{font-size: 0.7em}
 }
-
-/*Solução para enquadrar o rodapé de acordo com o conteúdo da busca avança, se mudar o conteúdo, tem que mudar aqui*/
-@media (min-height: 590px) and (min-width: 992px){
-    .footer {
-        position: absolute;
-        bottom: 0;
-    }
-}
-
-@media (min-height: 730px) and (min-width: 374px){
-    .footer {
-        position: absolute;
-        bottom: 0;
-    }
-}
-
-.footer {
-    width: 100%;
-    background-color: #f1f1f1;
-    padding: 3px;
-}
