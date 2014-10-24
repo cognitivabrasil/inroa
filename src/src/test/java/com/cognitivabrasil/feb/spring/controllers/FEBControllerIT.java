@@ -78,7 +78,7 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
     }
     
     @Test
-    @Ignore("Não deve rodar, pois usa a internet para testar o link.")
+    @Ignore("Não deve rodar, pois usa a internet para testar o link. Apenas para algum links no futuro")
     public void testVerificaUrl() throws IOException{
         String url = "http://feb.ufrgs.br/repositorio/documents/230";
 //        String url = "http://objetoseducacionais2.mec.gov.br/bitstream/handle/mec/17405/046.%20Jogos.mpg?sequence=3";
