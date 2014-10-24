@@ -94,7 +94,5 @@
 
             </form:form>
         </div>
-
-        <%@include file="../googleAnalytics"%>
     </body>
 </html>

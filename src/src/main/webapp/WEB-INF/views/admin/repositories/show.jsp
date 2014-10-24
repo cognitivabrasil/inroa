@@ -160,7 +160,7 @@
             </security:authorize>
         </div>
 
-        <%@include file="../../googleAnalytics"%>
+        
     </body>
 
 </html>

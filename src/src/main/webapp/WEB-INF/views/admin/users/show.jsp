@@ -78,7 +78,6 @@
                 <c:url var="chPass" value="/admin/users/passwd"/>
             <a id="alterarSenha" href="${chPass}">
                 Alterar Senha </a>
-
-            <%@include file="../../googleAnalytics"%>
+            
     </body>
 </html>
