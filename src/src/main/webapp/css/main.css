@@ -134,6 +134,7 @@ object[type=application\/gas-events-bb]{
     width: 100%;
     background-color: #f1f1f1;
     padding: 3px;
+    z-index: 2;
 }
 
 body{
