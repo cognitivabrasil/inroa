@@ -30,7 +30,7 @@ public class RssController {
         log.debug("trying to get feed: {}", consulta);
 
         consulta.setRss(true);
-        List<Document> items = recuperador.busca(consulta);
+        List<Document> items = recuperador.busca(consulta).getDocuments();
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("rssViewer");

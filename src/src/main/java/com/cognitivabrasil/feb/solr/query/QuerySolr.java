@@ -53,10 +53,10 @@ public class QuerySolr {
      * @param pesquisa Um Objeto consulta com todas as informacoes da busca (String, campos, etc)
      * @param offset Posicao do primeiro resultado a aparecer
      * @param limit Numero de resultados desejados
+     * @return 
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
      */
-    public void pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
-
+    public QueryResponse pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
         query = CriaQuery.criaQueryCompleta(pesquisa);
 
         query.setStart(offset);
@@ -65,7 +65,8 @@ public class QuerySolr {
         query.setRequestHandler("/feb");
 
         queryResponse = serverSolr.query(query);
-
+        
+        return queryResponse;
     }
 
     /**

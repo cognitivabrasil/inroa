@@ -62,6 +62,36 @@ public class Consulta {
         languages.put("fr", "Francês");
     }
 
+    /**
+     * Cria nova consulta com base em anterior.
+     * @param consulta Consulta a ser duplicada
+     */
+    public Consulta(Consulta consulta) {
+        rss = false;
+        limit = 10;
+        offset = 0;
+        sizeResult = 0;
+
+        languages = new HashMap<>();
+        languages.put("", "Todos");
+        languages.put("pt", "Português");
+        languages.put("en", "Inglês");
+        languages.put("es", "Espanhol");
+        languages.put("fr", "Francês");
+        
+        setConsulta(consulta.getConsulta());
+        setAutor(consulta.getAutor());
+        setFederacoes(new HashSet<>(consulta.getFederacoes()));
+        setRepSubfed(new HashSet<>(consulta.getRepSubfed()));
+        setRepositorios(new HashSet<>(consulta.getRepositorios()));
+        setIdioma(consulta.getIdioma());
+        
+        if(consulta.getFormat() != null) {
+            setFormat(new ArrayList<>(consulta.getFormat()));
+        }
+
+    }
+
     public boolean isEmpty() {
         return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
                 && isBlankList(format) && isBlank(ageRange) && adultAge == null && isBlank(difficult)

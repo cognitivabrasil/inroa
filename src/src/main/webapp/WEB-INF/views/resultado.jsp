@@ -23,6 +23,27 @@
         <div class="container">
 
             <div id="preResult" class="row relative">
+            
+            <!--  facets -->
+            <h2>Facets</h2>
+            <div>
+            	<c:forEach var="facet" items="${facets}">
+            	<div>
+            	${facet.name}
+            	
+            	<ul>
+            	<c:forEach var="value" items="${facet.values}">
+            		<c:url var="facetActivate" value="/resultado?${value.consulta.urlEncoded}"/>
+            		<li><a href="${facetActivate}">${value.name} - ${value.count} - ${value.active}</a></li>
+            	</c:forEach>
+            	</ul>
+            	
+            	</div>
+            	
+            	</c:forEach>
+            
+            
+            </div>
 
                 <div class="col-lg-3">
                     <a href="index.html">

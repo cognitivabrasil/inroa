@@ -38,12 +38,15 @@ import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
+import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+
 import org.apache.solr.client.solrj.SolrServerException;
 
 /**
@@ -189,9 +192,11 @@ public final class FEBController implements ErrorController {
                     consulta.setOffsetByPage(page);
                 }
 
-                List<Document> docs = recuperador.busca(consulta);
+                ResultadoBusca rBusca = recuperador.busca(consulta);
+                List<Document> docs = rBusca.getDocuments();
                 log.trace("Carregou " + docs.size() + " documentos.");
                 model.addAttribute("documentos", docs);
+                model.addAttribute("facets", rBusca.getFacets());
 
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
@@ -294,7 +299,7 @@ public final class FEBController implements ErrorController {
                 if (autor != null) {
                     c.setAutor(autor);
                 }
-                List<Document> docs = recuperador.busca(c);
+                List<Document> docs = recuperador.busca(c).getDocuments();
 
                 xml += "<ListRecords "
                         + "query=\"" + c.getConsulta() + "\" ";

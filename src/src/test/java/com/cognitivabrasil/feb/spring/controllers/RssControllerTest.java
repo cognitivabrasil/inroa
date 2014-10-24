@@ -41,7 +41,7 @@ import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.WebConfig;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
-import org.apache.solr.client.solrj.SolrServerException;
+import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class, WebConfig.class })
@@ -76,8 +76,10 @@ public class RssControllerTest extends AbstractTransactionalJUnit4SpringContextT
         d.setMetadata(metadata);
         
         items.add(d);
+        ResultadoBusca r = new ResultadoBusca();
+        r.setDocuments(items);
         
-        when(recuperador.busca(any())).thenReturn(items);
+        when(recuperador.busca(any())).thenReturn(r);
         
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }

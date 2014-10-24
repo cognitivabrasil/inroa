@@ -2,12 +2,18 @@ package com.cognitivabrasil.feb.ferramentaBusca;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.solr.query.Facet;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
 import com.cognitivabrasil.feb.spring.FebConfig;
 
+import java.util.ArrayList;
 import java.util.List;
-import org.apache.solr.client.solrj.SolrServerException;
+import java.util.stream.Collectors;
 
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.FacetField.Count;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +41,7 @@ public class Recuperador {
      * @return Lista de documentos reais que correspondem ao resultado da busca
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?) 
      */
-    public List<Document> busca(Consulta consulta) throws SolrServerException {
+    public ResultadoBusca busca(Consulta consulta) throws SolrServerException {
 
         List<Document> resultadoConsulta;
         int limit;
@@ -47,12 +53,22 @@ public class Recuperador {
 
         QuerySolr q = new QuerySolr(config);
         log.debug(consulta.getConsulta());
-        q.pesquisaCompleta(consulta, consulta.getOffset(), limit);
+        QueryResponse response = q.pesquisaCompleta(consulta, consulta.getOffset(), limit);
         consulta.setSizeResult(q.getNumDocs());
         resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), limit);
         log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
+        
+        ResultadoBusca r = new ResultadoBusca();
+        r.setDocuments(resultadoConsulta);
+        
+        List<FacetField> facets = response.getFacetFields();
+        
+        List<Facet> facetsProcessed = facets.stream().map(f -> new Facet(f, consulta)).collect(Collectors.toList());
+        
+           
+        r.setFacets(facetsProcessed);
 
-        return resultadoConsulta;
+        return r;
 
     }
 
