@@ -176,8 +176,8 @@ a variável de ambiente FEB\_LOG\_HOME ou no arquivo feb.properties.
 
 Google Analytics
 ----------------------------------------------------
-Você pode controlar as estatísticas de uso do sistema com o Google analytics, para isso de ser
-definido o id no Google Analytics na variável de ambiente *FEB\_ANALYTICS\_ID* ou no arquivo feb.properties com a variável *Analytics.id*.
+Você pode controlar as estatísticas de uso do sistema com o Google analytics, para isso é necessário
+definir o id no Google Analytics na variável de ambiente *FEB\_ANALYTICS\_ID* ou no arquivo feb.properties com a variável *Analytics.id*.
 
 Exemplo do feb.properties
 
