@@ -232,52 +232,7 @@ public final class FEBController implements ErrorController {
         return "buscaAvancada";
     }
 
-    @RequestMapping(value = "/resultadoav")
-    public String consultaAvancada(
-            HttpServletRequest request,
-            @ModelAttribute("buscaModel") Consulta consulta,
-            BindingResult result, Model model,
-            @RequestParam(required = false) Integer page,
-            @CookieValue(value = "feb.cookie", required = false) String cookie) {
-        model.addAttribute("buscaModel", consulta);
-        buscaValidator.validate(consulta, result);
-        if (result.hasErrors()) {
-            model.addAttribute("repositories", repDao.getAll());
-            model.addAttribute("federations", subDao.getAll());
-            return "buscaAvancada";
-        } else {
-            try {
-                if (page == null) {
-                    page = 0;
-                } else {
-                    consulta.setOffsetByPage(page);
-                }
 
-                List<Document> docs = recuperador.buscaAvancada(consulta);
-                model.addAttribute("documentos", docs);
-                PaginationDto pagination = new PaginationDto(consulta.getLimit(), consulta.getSizeResult(), page);
-                model.addAttribute("pagination", pagination);
-                model.addAttribute("avancada", true);
-                if (!StringUtils.isEmpty(cookie)) {
-                    searchesDao.save(consulta.getConsulta(), new Date());
-                }
-                return "resultado";
-            } catch (SolrServerException e) {
-                model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                //TODO: erro GRAVE, deve enviar um aviso ao administrador.
-
-                log.error("Erro ao efetuar a consulta no Solr, possivelmente o serviço está parado. ", e);
-                model.addAttribute("repositories", repDao.getAll());
-                model.addAttribute("federations", subDao.getAll());
-                model.addAttribute("buscaModel", new Consulta());
-                return "buscaAvancada";
-            } catch (Exception e) {
-                model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                log.error("FEB ERRO: Erro ao efetuar a consula.", e);
-                return "buscaAvancada";
-            }
-        }
-    }
 
     /**
      * Apenas encaminha para a tela de login.

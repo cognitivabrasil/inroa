@@ -1,25 +1,24 @@
 package com.cognitivabrasil.feb.solr.query;
 
-import cognitivabrasil.obaa.General.General;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.Technical.Technical;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.spring.FebConfig;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.search.QueryParsing;
 
 public class QuerySolr {
 
@@ -44,29 +43,6 @@ public class QuerySolr {
         serverSolr = new HttpSolrServer(url);
         query = new SolrQuery();
         queryResponse = new QueryResponse();
-
-    }
-
-    /**
-     * Realiza a query no SOLR nos campos padroes definidos no schema.xml (titulo, keywords e description). O resultado
-     * da pesquisa eh armazenado na variavel queryResponse e pode ser utilizado posteriormente
-     *
-     * @param pesquisa Os termos que serao pesquisados
-     * @param offset Posição do primeiro resultado a aparecer
-     * @param limit Número de resultados desejados
-     * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
-     */
-    public void pesquisaSimples(String pesquisa, int offset, int limit) throws SolrServerException {
-
-        query = new SolrQuery();
-
-        query.setRequestHandler("/feb");
-        query.setStart(offset);
-        query.setRows(limit);
-
-        query.setQuery(pesquisa);
-
-        queryResponse = serverSolr.query(query);
 
     }
 

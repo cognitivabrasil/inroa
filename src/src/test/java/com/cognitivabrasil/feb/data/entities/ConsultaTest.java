@@ -1,7 +1,9 @@
 package com.cognitivabrasil.feb.data.entities;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 
 /*
@@ -79,7 +81,7 @@ public class ConsultaTest {
     @Test
     public void testNotEmpty7() {
         Consulta c = new Consulta();
-        c.setFormat(".pdf");
+        c.addFormat(".pdf");
         assertThat(c.isEmpty(), equalTo(false));
     }
 
@@ -145,5 +147,13 @@ public class ConsultaTest {
         
         assertThat(c.getStartAgeRange(), equalTo(2));
         assertThat(c.getEndAgeRange(), equalTo(8));
+    }
+    
+    @Test
+    public void testGetUrlEncodedSimple() {
+        Consulta c = new Consulta();
+        c.setConsulta("matemática");
+        
+        assertThat(c.getUrlEncoded(), containsString("consulta=matem"));
     }
 }

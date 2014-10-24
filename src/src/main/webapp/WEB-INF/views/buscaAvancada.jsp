@@ -36,7 +36,7 @@
                 <div class="alert alert-danger text-center">${erro}</div>
             </c:if>
 
-            <form:form method="POST" action="resultadoav" modelAttribute="buscaModel" class="form-horizontal"
+            <form:form method="GET" action="resultado" modelAttribute="buscaModel" class="form-horizontal"
                        role="form" acceptCharset="utf-8">
 
                 <div class="row">

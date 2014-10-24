@@ -1,5 +1,8 @@
 package com.cognitivabrasil.feb.solr.query;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.solr.client.solrj.SolrQuery;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
@@ -15,13 +18,12 @@ public class CriaQuery {
     /**
      * Identifica todos os campos onde a busca deve acontecer.
      *
-     * @param pesquisa Devolve o String de busca pronto para ser utilizado pelo
-     * SORL
+     * @param pesquisa Devolve o String de busca pronto para ser utilizado pelo SORL
      * @return Retorna uma query Solr com todos os campos preenchidos na classe {@link Consulta}.
      */
     public static SolrQuery criaQueryCompleta(Consulta pesquisa) {
         SolrQuery query = new SolrQuery();
-        
+
         String resultado = "";
 
         if (!isBlank(pesquisa.getConsulta())) {
@@ -32,22 +34,25 @@ public class CriaQuery {
             // boost de 100 é extremamente alto para dar prioridade absoluta ao autor caso presente
             resultado += " obaa.lifecycle.entity:(" + pesquisa.getAutor() + ")^100.0";
         }
-        
+
         query.setQuery(resultado);
 
-        
         if (pesquisa.getHasAuditory() != null) {
-            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hasauditory:(" + pesquisa.getHasAuditory() + ")");
+            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hasauditory:("
+                    + pesquisa.getHasAuditory() + ")");
         }
         if (pesquisa.getHasVisual() != null) {
-            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hasvisual:(" + pesquisa.getHasVisual() + ")");
+            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hasvisual:(" + pesquisa.getHasVisual()
+                    + ")");
         }
         if (pesquisa.getHasText() != null) {
-            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hastext:(" + pesquisa.getHasText() + ")");
+            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hastext:(" + pesquisa.getHasText()
+                    + ")");
         }
 
         if (pesquisa.getHasTactile() != null) {
-            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hastactile:(" + pesquisa.getHasTactile() + ")");
+            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hastactile:("
+                    + pesquisa.getHasTactile() + ")");
         }
 
         if (pesquisa.getCost() != null) {
@@ -57,14 +62,13 @@ public class CriaQuery {
             query.addFilterQuery("obaa.general.language:(" + pesquisa.getIdioma() + ")");
         }
 
-        if (!isBlank(pesquisa.getFormat())) {
-            query.addFilterQuery("obaa.technical.format:\"" + pesquisa.getFormat() + "\"");
+        if (!isBlankList(pesquisa.getFormat())) {
+            query.addFilterQuery("{!tag=format}" + orQueryQuoted("obaa.technical.format", pesquisa.getFormat()));
         }
 
         if (!isBlank(pesquisa.getDifficult())) {
             query.addFilterQuery("obaa.educational.difficulty:(" + pesquisa.getDifficult() + ")");
         }
-
 
         /**
          * FEDERACOES, REPOSITORIOS E SUBFEDERACOE *
@@ -97,7 +101,28 @@ public class CriaQuery {
             query.addFilterQuery(q);
         }
 
-        
         return query;
+    }
+
+    /**
+     * Gera uma query para o Solr delimitada por OR
+     * @param obaaField campo para o qual queremos a query
+     * @param values valores aceitados no campo (qualquer um deles)
+     * @return query pronta para ser adicionada a um QueryFilter do Solr
+     */
+    private static String orQueryQuoted(String obaaField, List<String> values) {
+        return values.stream().map(s -> obaaField + ":" + quote(s)).collect(Collectors.joining(" OR "));
+    }
+    
+    /**
+     * @param s String para ser quoted
+     * @return a string delimitada por aspas
+     */
+    private static String quote(String s) {
+        return "\"" + s + "\"";
+    }
+
+    private static boolean isBlankList(List<String> format2) {
+        return format2 == null || format2.isEmpty();
     }
 }

@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,7 +63,7 @@ public class RssControllerTest extends AbstractTransactionalJUnit4SpringContextT
     private MockMvc mockMvc;
 
     @Before
-    public void setup() throws SolrServerException{
+    public void setup() throws SolrServerException {
         MockitoAnnotations.initMocks(this);
         
         List<Document> items = new ArrayList<>();
@@ -76,7 +77,7 @@ public class RssControllerTest extends AbstractTransactionalJUnit4SpringContextT
         
         items.add(d);
         
-        when(recuperador.buscaAvancada(any())).thenReturn(items);
+        when(recuperador.busca(any())).thenReturn(items);
         
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }

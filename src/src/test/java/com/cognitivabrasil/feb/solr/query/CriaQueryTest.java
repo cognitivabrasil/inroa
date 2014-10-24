@@ -3,6 +3,9 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.junit.Assert.assertThat;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Test;
 
@@ -13,12 +16,27 @@ public class CriaQueryTest {
     @Test
     public void usaFilterQueryParaTechnicalFormat() {
         Consulta c = new Consulta();
-        c.setFormat("application/pdf");
+        c.addFormat("application/pdf");
         c.setConsulta("consulta");
         
         SolrQuery query = CriaQuery.criaQueryCompleta(c);
         
-        assertThat(query.getFilterQueries(), hasItemInArray("obaa.technical.format:\"application/pdf\""));
+        assertThat(query.getFilterQueries(), hasItemInArray("{!tag=format}obaa.technical.format:\"application/pdf\""));
+    }
+    
+    @Test
+    public void filtrarPorMultiplosFormados() {
+        Consulta c = new Consulta();
+        c.addFormat("application/pdf");
+        c.addFormat("application/zip");
+
+        c.setConsulta("consulta");
+        
+        SolrQuery query = CriaQuery.criaQueryCompleta(c);
+        
+        assertThat(query.getFilterQueries(), 
+                hasItemInArray("{!tag=format}obaa.technical.format:\"application/pdf\" OR " 
+                        + "obaa.technical.format:\"application/zip\""));
     }
     
     @Test
@@ -43,4 +61,24 @@ public class CriaQueryTest {
         
         assertThat(query.getQuery(), equalTo("consulta"));
     }
+    
+//    @Test
+//    public void filtroPorFederacao() {
+//        Consulta c = new Consulta();
+//        
+//        c.setConsulta("consulta");
+//        
+//        
+//        
+//        Set<Integer> federacoes = new HashSet<>();
+//        federacoes.add(3);
+//        
+//        c.setFederacoes(federacoes );
+//        
+//        SolrQuery query = CriaQuery.criaQueryCompleta(c);
+//
+//        
+//        assertThat(query.getFilterQueries(), hasItemInArray("obaa.federacao:3"));
+//
+//    }
 }

@@ -4,9 +4,11 @@ import com.cognitivabrasil.feb.util.Informacoes;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,7 +35,7 @@ public class Consulta {
     private int offset;
     private int sizeResult;
     private String idioma;
-    private String format;
+    private List<String> format;
     private String ageRange;
     private Boolean adultAge;
     private String difficult;
@@ -62,9 +64,13 @@ public class Consulta {
 
     public boolean isEmpty() {
         return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
-                && isBlank(format) && isBlank(ageRange) && adultAge == null && isBlank(difficult)
+                && isBlankList(format) && isBlank(ageRange) && adultAge == null && isBlank(difficult)
                 && isBlank(size) && cost == null && hasVisual == null
                 && hasAuditory == null && hasText == null && hasTactile == null;
+    }
+
+    private boolean isBlankList(List<String> format2) {
+        return format2 == null || format2.isEmpty();
     }
 
     public String getConsulta() {
@@ -132,11 +138,11 @@ public class Consulta {
         this.idioma = idioma;
     }
 
-    public String getFormat() {
+    public List<String> getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(List<String> format) {
         this.format = format;
     }
 
@@ -312,8 +318,10 @@ public class Consulta {
             if (isNotBlank(idioma)) {
                 encoded += "&idioma=" + URLEncoder.encode(idioma, "UTF-8");
             }
-            if (isNotBlank(format)) {
-                encoded += "&format=" + URLEncoder.encode(format, "UTF-8");
+            if (!isBlankList(format)) {
+                for(String f : format) {
+                    encoded += "&format=" + URLEncoder.encode(f, "UTF-8");
+                }
             }
             if (isNotBlank(ageRange)) {
                 encoded += "&ageRange=" + URLEncoder.encode(ageRange, "UTF-8");
@@ -357,5 +365,12 @@ public class Consulta {
             // UTF 8 is always supported
             throw new RuntimeException("FATAL", e);
         }
+    }
+
+    public void addFormat(String f) {
+        if(format == null) {
+            format = new ArrayList<String>();
+        }
+        format.add(f);
     }
 }

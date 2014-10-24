@@ -47,34 +47,6 @@ public class Recuperador {
 
         QuerySolr q = new QuerySolr(config);
         log.debug(consulta.getConsulta());
-        q.pesquisaSimples(consulta.getConsulta(), consulta.getOffset(), limit);
-        consulta.setSizeResult(q.getNumDocs());
-        resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), limit);
-        log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
-
-        return resultadoConsulta;
-
-    }
-
-    /**
-     * Busca avancada que sera enviada para o SOLR
-     *
-     * @param consulta Consulta realizada
-     * @return Lista de documentos reais que correspondem ao resultado da busca
-     */
-    public List<Document> buscaAvancada(Consulta consulta) throws SolrServerException {
-
-        List<Document> resultadoConsulta;
-
-        int limit;
-        if (consulta.isRss()) {
-            limit = rssSizeLimit;
-        } else {
-            limit = consulta.getLimit();
-        }
-
-        QuerySolr q = new QuerySolr(config);
-        log.debug(consulta.getConsulta());
         q.pesquisaCompleta(consulta, consulta.getOffset(), limit);
         consulta.setSizeResult(q.getNumDocs());
         resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), limit);
@@ -83,4 +55,7 @@ public class Recuperador {
         return resultadoConsulta;
 
     }
+
+
+
 }
