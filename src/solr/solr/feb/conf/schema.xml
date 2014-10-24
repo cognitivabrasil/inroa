@@ -45,45 +45,45 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
 <!-- Metadados do Objeto -->
    <field name="obaa.general.identifier.entry" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
    <field name="obaa.general.title" type="text_general" indexed="true" stored="true" multiValued="true"/>
-  <field name="obaa.general.language" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="obaa.general.language" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="obaa.general.description" type="text_general" indexed="true" stored="true" multiValued="true" />
   <field name="obaa.general.keyword" type="text_general" indexed="true" stored="true" multiValued="true"/>
   
-  <field name="obaa.general.structure.language" type="text_general" indexed="true" stored="true" />
-  <field name="obaa.general.structure.text" type="text_general" indexed="true" stored="true" />
-<field name="obaa.general.structure.translated" type="text_general" indexed="true" stored="true" />
+  <field name="obaa.general.structure.language" type="string" indexed="true" stored="true" />
+  <field name="obaa.general.structure.text" type="string" indexed="true" stored="true" />
+<field name="obaa.general.structure.translated" type="string" indexed="true" stored="true" />
   
-  <field name="obaa.general.aggregation_level.country" type="text_general" indexed="true" stored="true" />
-  <field name="obaa.general.aggregation_level.language" type="text_general" indexed="true" stored="true" />
-  <field name="obaa.general.aggregation_level.text" type="text_general" indexed="true" stored="true" />
-<field name="obaa.general.aggregation_level.translated" type="text_general" indexed="true" stored="true" />
+  <field name="obaa.general.aggregation_level.country" type="string" indexed="true" stored="true" />
+  <field name="obaa.general.aggregation_level.language" type="string" indexed="true" stored="true" />
+  <field name="obaa.general.aggregation_level.text" type="string" indexed="true" stored="true" />
+<field name="obaa.general.aggregation_level.translated" type="string" indexed="true" stored="true" />
   
-  <field name="obaa.lifecycle.status" type="text_general" indexed="true" stored="true" />
+  <field name="obaa.lifecycle.status" type="string" indexed="true" stored="true" />
   <field name="obaa.lifecycle.entity" type="text_general" indexed="true" stored="true" multiValued="true"/>
 
 
  <!-- <field name="obaa.metametadata.contribute.entity" type="string" indexed="true" stored="true" /> -->
 
 <!--*********       EDUCATIONAL **************-->
-   <field name="obaa.educational.interactivitytype" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.educational.learningresourcetype" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.educational.intendedenduserrole" type="text_general" indexed="true" stored="true"  multiValued="true"/>
-   <field name="obaa.educational.context" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.educational.typicalagerange" type="text_general" indexed="true" stored="true" multiValued="true"/>
-  <field name="obaa.educational.difficulty" type="text_general" indexed="true" stored="true"/>
+   <field name="obaa.educational.interactivitytype" type="string" indexed="true" stored="true"/>
+   <field name="obaa.educational.learningresourcetype" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.educational.intendedenduserrole" type="string" indexed="true" stored="true"  multiValued="true"/>
+   <field name="obaa.educational.context" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.educational.typicalagerange" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="obaa.educational.difficulty" type="string" indexed="true" stored="true"/>
   
   <!-- Adicionado novo 'typicalagerange' -->
-   <field name="obaa.educational.mintypicalagerange" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.educational.maxtypicalagerange" type="text_general" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.educational.mintypicalagerange" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.educational.maxtypicalagerange" type="string" indexed="true" stored="true" multiValued="true"/>
    
    
 <!--*********       TECHNICAL **************-->
-   <field name="obaa.technical.format" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.technical.size" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.technical.intendedenduserrole" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.technical.duration" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.technical.supportedplatforms" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.technical.location" type="text_general" indexed="false" stored="true"  multiValued="true"/>
+   <field name="obaa.technical.format" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.technical.size" type="string" indexed="true" stored="true"/>
+   <field name="obaa.technical.intendedenduserrole" type="string" indexed="true" stored="true"/>
+   <field name="obaa.technical.duration" type="string" indexed="true" stored="true"/>
+   <field name="obaa.technical.supportedplatforms" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.technical.location" type="string" indexed="false" stored="true"  multiValued="true"/>
 
 
 <!--*********       RIGHTS  **************-->
@@ -93,10 +93,10 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
    <field name="obaa.rights.description" type="text_general" indexed="true" stored="true"/>
 
 <!--*********       accessibility  **************-->
-   <field name="obaa.accessibility.resourcedescription.primary.hasvisual" type="text_general" indexed="true" stored="true"/>
-<field name="obaa.accessibility.resourcedescription.primary.hasauditory" type="text_general" indexed="true" stored="true"/>
-<field name="obaa.accessibility.resourcedescription.primary.hastactile" type="text_general" indexed="true" stored="true"/>
-<field name="obaa.accessibility.resourcedescription.primary.hastext" type="text_general" indexed="true" stored="true"/>
+   <field name="obaa.accessibility.resourcedescription.primary.hasvisual" type="string" indexed="true" stored="true"/>
+<field name="obaa.accessibility.resourcedescription.primary.hasauditory" type="string" indexed="true" stored="true"/>
+<field name="obaa.accessibility.resourcedescription.primary.hastactile" type="string" indexed="true" stored="true"/>
+<field name="obaa.accessibility.resourcedescription.primary.hastext" type="string" indexed="true" stored="true"/>
 
 
 <!--*********       segmentinformationtable  **************-->
