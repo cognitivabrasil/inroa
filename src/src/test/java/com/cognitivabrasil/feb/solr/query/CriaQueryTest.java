@@ -3,9 +3,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Test;
 

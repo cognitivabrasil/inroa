@@ -32,15 +32,10 @@ public class FacetCount {
         name = v.getName();
         count = v.getCount();
         
-        log.debug("isActive? {} - formats: {}", name, consulta.getFormat());
+                
         
-        if(consulta.getFormat() != null) {
-            isActive = consulta.getFormat().contains(name);
-        }
-        else {
-            isActive = false;
-        }
-        
+        isActive = consulta.isActive("format", name);
+                
         setNewConsulta(new Consulta(consulta));
     }
     
@@ -50,10 +45,10 @@ public class FacetCount {
      */
     private void setNewConsulta(Consulta c) {
         if(isActive) {
-            c.getFormat().remove(name);
+            c.removeFacetFilter("format", name);
         }
         else {
-            c.addFormat(name);
+            c.addFacetFilter("format", name);
         }
         consulta = c;
     }

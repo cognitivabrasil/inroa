@@ -21,6 +21,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 /**
  *
  * @author Marcos Nunes <marcosn@gmail.com>
+ * @author Paulo Schreiner
  */
 public class Consulta {
 
@@ -396,6 +397,38 @@ public class Consulta {
             throw new RuntimeException("FATAL", e);
         }
     }
+    
+    public void addFacetFilter(String fieldName, Object value) {
+        switch(fieldName) {
+        case "format" :
+            addFormat((String)value);
+            break;
+        }
+    }    
+    
+    public void removeFacetFilter(String fieldName, Object value) {
+        switch(fieldName) {
+        case "format" :
+            if(getFormat() != null) {
+                getFormat().remove(value);
+            }
+            break;
+        }
+    }    
+
+    public boolean isActive(String fieldName, Object value) {
+        switch(fieldName) {
+        case "format" :
+            if(getFormat() == null || (!getFormat().contains(value))) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        log.error("Não deveria chegar aqui, fieldName: {}, value: {}", fieldName, value);
+        return false;
+    }
 
     public void addFormat(String f) {
         if(format == null) {
@@ -403,4 +436,5 @@ public class Consulta {
         }
         format.add(f);
     }
+
 }
