@@ -50,7 +50,8 @@ buscaAvancada.css
 }
 
 /*Solução para enquadrar o rodapé de acordo com o conteúdo da busca avança, se mudar o conteúdo, tem que mudar aqui*/
-@media (min-height: 590px) and (min-width: 992px){
+/*footer alterado para fixo em todas as páginas analisar se vai continuar assim*/
+/*@media (min-height: 590px) and (min-width: 992px){
     .footer {
         position: absolute;
         bottom: 0;
@@ -68,4 +69,4 @@ buscaAvancada.css
     width: 100%;
     background-color: #f1f1f1;
     padding: 3px;
-}
+}*/
