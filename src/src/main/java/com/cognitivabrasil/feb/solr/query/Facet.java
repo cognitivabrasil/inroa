@@ -26,7 +26,7 @@ public class Facet {
         name = facetField.getName();
         valueCount = facetField.getValueCount();
         
-        values = facetField.getValues().stream().map(v -> new FacetCount(v, consulta)).collect(Collectors.toList());
+        values = facetField.getValues().stream().map(v -> new FacetCount(v, name, consulta)).collect(Collectors.toList());
     }
 
     /**

@@ -74,7 +74,7 @@ public class ConsultaTest {
     @Test
     public void testNotEmpty6() {
         Consulta c = new Consulta();
-        c.setDifficult("dificil");
+        c.addFacetFilter("difficulty", "dificil");
         assertThat(c.isEmpty(), equalTo(false));
     }
 

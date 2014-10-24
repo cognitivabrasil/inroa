@@ -66,8 +66,8 @@ public class CriaQuery {
             query.addFilterQuery("{!tag=format}" + orQueryQuoted("obaa.technical.format", pesquisa.getFormat()));
         }
 
-        if (!isBlank(pesquisa.getDifficult())) {
-            query.addFilterQuery("obaa.educational.difficulty:(" + pesquisa.getDifficult() + ")");
+        if (!isBlankList(pesquisa.getDifficulty())) {
+            query.addFilterQuery("{!tag=difficulty}" + orQueryQuoted("obaa.educational.difficulty", pesquisa.getDifficulty()));
         }
 
         /**

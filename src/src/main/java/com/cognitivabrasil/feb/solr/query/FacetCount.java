@@ -20,6 +20,7 @@ public class FacetCount {
     
     private Consulta consulta;
     private final String name;
+    private final String fieldName;
     private final Long count;
 
     private final boolean isActive;
@@ -28,27 +29,37 @@ public class FacetCount {
      * @param v Obtido do SOLR
      * @param consulta a consulta atual
      */
-    public FacetCount(Count v, Consulta consulta) {
+    public FacetCount(Count v, String fieldName, Consulta consulta) {
         name = v.getName();
+        this.fieldName = getShortName(fieldName);
         count = v.getCount();
         
                 
         
-        isActive = consulta.isActive("format", name);
+        isActive = consulta.isActive(this.fieldName, name);
                 
         setNewConsulta(new Consulta(consulta));
     }
     
+    /**
+     * @param fieldName2
+     * @return o nome "curto" do campo, pe, obaa.technical.format retorna "format"
+     */
+    private String getShortName(String fieldName2) {
+        String[] r = fieldName2.split("\\.");
+        return r[r.length-1];
+    }
+
     /**
      * Gera uma nova consulta.
      * @param c consulta atual
      */
     private void setNewConsulta(Consulta c) {
         if(isActive) {
-            c.removeFacetFilter("format", name);
+            c.removeFacetFilter(fieldName, name);
         }
         else {
-            c.addFacetFilter("format", name);
+            c.addFacetFilter(fieldName, name);
         }
         consulta = c;
     }

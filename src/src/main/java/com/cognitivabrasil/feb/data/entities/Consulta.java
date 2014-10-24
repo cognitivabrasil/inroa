@@ -25,7 +25,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  */
 public class Consulta {
 
-    //TODO: deve ter transferida para spring.dtos
+    // TODO: deve ter transferida para spring.dtos
     private String consulta;
     private Set<Integer> repositorios;
     private Set<Integer> federacoes;
@@ -39,7 +39,7 @@ public class Consulta {
     private List<String> format;
     private String ageRange;
     private Boolean adultAge;
-    private String difficult;
+    private List<String> difficulty;
     public Boolean cost;
     public Boolean hasVisual;
     public Boolean hasAuditory;
@@ -65,6 +65,7 @@ public class Consulta {
 
     /**
      * Cria nova consulta com base em anterior.
+     * 
      * @param consulta Consulta a ser duplicada
      */
     public Consulta(Consulta consulta) {
@@ -79,24 +80,26 @@ public class Consulta {
         languages.put("en", "Inglês");
         languages.put("es", "Espanhol");
         languages.put("fr", "Francês");
-        
+
         setConsulta(consulta.getConsulta());
         setAutor(consulta.getAutor());
         setFederacoes(new HashSet<>(consulta.getFederacoes()));
         setRepSubfed(new HashSet<>(consulta.getRepSubfed()));
         setRepositorios(new HashSet<>(consulta.getRepositorios()));
         setIdioma(consulta.getIdioma());
-        
-        if(consulta.getFormat() != null) {
+
+        if (consulta.getFormat() != null) {
             setFormat(new ArrayList<>(consulta.getFormat()));
+        }
+        if (consulta.getDifficulty() != null) {
+            setDifficulty(new ArrayList<>(consulta.getDifficulty()));
         }
 
     }
 
     public boolean isEmpty() {
-        return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
-                && isBlankList(format) && isBlank(ageRange) && adultAge == null && isBlank(difficult)
-                && isBlank(size) && cost == null && hasVisual == null
+        return isBlank(consulta) && isBlank(autor) && isBlank(idioma) && isBlankList(format) && isBlank(ageRange)
+                && adultAge == null && isBlankList(difficulty) && isBlank(size) && cost == null && hasVisual == null
                 && hasAuditory == null && hasText == null && hasTactile == null;
     }
 
@@ -112,7 +115,8 @@ public class Consulta {
         try {
             byte[] bytes = consulta.getBytes();
             this.consulta = new String(bytes, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        }
+        catch (UnsupportedEncodingException e) {
             log.error("Não foi possível codificar em utf-8 a string: " + consulta, e);
         }
     }
@@ -144,7 +148,7 @@ public class Consulta {
     }
 
     public void setRepSubfed(Set<Integer> repSubfed) {
-        //o form envia valoes em branco e o spring seta como null na lista, ai tem que remover
+        // o form envia valoes em branco e o spring seta como null na lista, ai tem que remover
         repSubfed.removeAll(Collections.singleton(null));
         this.repSubfed = repSubfed;
     }
@@ -209,12 +213,12 @@ public class Consulta {
         this.adultAge = adultAge;
     }
 
-    public String getDifficult() {
-        return difficult;
+    public List<String> getDifficulty() {
+        return difficulty;
     }
 
-    public void setDifficult(String difficult) {
-        this.difficult = difficult;
+    public void setDifficulty(List<String> difficult) {
+        this.difficulty = difficult;
     }
 
     public Boolean getCost() {
@@ -290,7 +294,7 @@ public class Consulta {
      * Valor inicial para busca. Utilizado para pagina&ccedil;&atilde;o dos resultados
      *
      * @param limit Valor inicial para busca, inicio = 5 informa que necessita dos resultados da consulta apartir do
-     * resultado 5.
+     *            resultado 5.
      */
     public void setLimit(int limit) {
         this.limit = limit;
@@ -341,6 +345,8 @@ public class Consulta {
      * @return the consulta params in an URL encoded form
      */
     public String getUrlEncoded() {
+        log.debug("getUrlEncoded {}", this);
+        
         try {
             String encoded = "consulta=" + URLEncoder.encode(consulta, "UTF-8");
             if (isNotBlank(autor)) {
@@ -350,7 +356,7 @@ public class Consulta {
                 encoded += "&idioma=" + URLEncoder.encode(idioma, "UTF-8");
             }
             if (!isBlankList(format)) {
-                for(String f : format) {
+                for (String f : format) {
                     encoded += "&format=" + URLEncoder.encode(f, "UTF-8");
                 }
             }
@@ -360,8 +366,10 @@ public class Consulta {
             if (adultAge != null) {
                 encoded += "&adultAge=" + URLEncoder.encode(adultAge.toString(), "UTF-8");
             }
-            if (isNotBlank(difficult)) {
-                encoded += "&difficult=" + URLEncoder.encode(difficult, "UTF-8");
+            if (!isBlankList(difficulty)) {
+                for (String d : difficulty) {
+                    encoded += "&difficulty=" + URLEncoder.encode(d, "UTF-8");
+                }
             }
             if (isNotBlank(size)) {
                 encoded += "&size=" + URLEncoder.encode(size, "UTF-8");
@@ -392,34 +400,54 @@ public class Consulta {
             }
 
             return encoded;
-        } catch (UnsupportedEncodingException e) {
+        }
+        catch (UnsupportedEncodingException e) {
             // UTF 8 is always supported
             throw new RuntimeException("FATAL", e);
         }
     }
-    
+
     public void addFacetFilter(String fieldName, Object value) {
-        switch(fieldName) {
-        case "format" :
-            addFormat((String)value);
+        switch (fieldName) {
+        case "format":
+            addFormat((String) value);
+            break;
+        case "difficulty":
+            if(difficulty == null) {
+                difficulty = new ArrayList<>();
+            }
+            difficulty.add((String)value);
             break;
         }
-    }    
-    
+        
+    }
+
     public void removeFacetFilter(String fieldName, Object value) {
-        switch(fieldName) {
-        case "format" :
-            if(getFormat() != null) {
+        switch (fieldName) {
+        case "format":
+            if (getFormat() != null) {
                 getFormat().remove(value);
             }
             break;
+        case "difficulty":
+            if (getDifficulty() != null) {
+                getDifficulty().remove(value);
+            }
+            break;
         }
-    }    
+    }
 
     public boolean isActive(String fieldName, Object value) {
-        switch(fieldName) {
-        case "format" :
-            if(getFormat() == null || (!getFormat().contains(value))) {
+        switch (fieldName) {
+        case "format":
+            if (getFormat() == null || (!getFormat().contains(value))) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        case "difficulty":
+            if (getDifficulty() == null || (!getDifficulty().contains(value))) {
                 return false;
             }
             else {
@@ -431,7 +459,7 @@ public class Consulta {
     }
 
     public void addFormat(String f) {
-        if(format == null) {
+        if (format == null) {
             format = new ArrayList<String>();
         }
         format.add(f);
