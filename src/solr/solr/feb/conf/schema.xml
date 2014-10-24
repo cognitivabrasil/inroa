@@ -38,7 +38,8 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
 <field name="obaa.repositorio" type="int" indexed="true" stored="true"/>
 <field name="obaa.federacao" type="int" indexed="true" stored="true"/>
 <field name="obaa.subFederacao" type="int" indexed="true" stored="true"/>
-<field name="obaa.repName" type="text_general" indexed="true" stored="true"/>
+<!-- repName é do tipo String para não ser tokenizado, não fazemos BUSCA por repName, somente filtro -->
+<field name="obaa.repName" type="string" indexed="true" stored="true"/>
 
 
 <!-- Metadados do Objeto -->
