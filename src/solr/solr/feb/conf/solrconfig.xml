@@ -890,7 +890,7 @@
     -->
   <requestHandler name="/feb" class="solr.SearchHandler">
      <lst name="defaults">
-       <str name="echoParams">explicit</str>
+       <str name="echoParams">all</str>
 
 <!--        VelocityResponseWriter settings -->
 <!--        <str name="wt">velocity</str> -->
@@ -916,6 +916,9 @@
        </str>
        <str name="mlt.fl">obaa.general.title,obaa.general.description,obaa.general.keyword</str>
        <int name="mlt.count">3</int>
+       
+       <str name="facet">on</str>
+       <str name="facet.field">{!ex=format}obaa.technical.format</str>
 
        <!-- Faceting defaults -->
 <!--       <str name="facet">on</str>
