@@ -38,26 +38,28 @@ public class CriaQuery {
         query.setQuery(resultado);
 
         if (pesquisa.getHasAuditory() != null) {
-            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hasauditory:("
-                    + pesquisa.getHasAuditory() + ")");
+            query.addFilterQuery("{!tag=hasauditory}" + 
+            		orQueryQuotedBoolean("obaa.accessibility.resourcedescription.primary.hasauditory", pesquisa.getHasAuditory()));
         }
         if (pesquisa.getHasVisual() != null) {
-            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hasvisual:(" + pesquisa.getHasVisual()
-                    + ")");
+            query.addFilterQuery("{!tag=hasvisual}" + 
+            		orQueryQuotedBoolean("obaa.accessibility.resourcedescription.primary.hasvisual", pesquisa.getHasVisual()));
         }
         if (pesquisa.getHasText() != null) {
-            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hastext:(" + pesquisa.getHasText()
-                    + ")");
+            query.addFilterQuery("{!tag=hastext}" + 
+            		orQueryQuotedBoolean("obaa.accessibility.resourcedescription.primary.hastext", pesquisa.getHasText()));
         }
 
         if (pesquisa.getHasTactile() != null) {
-            query.addFilterQuery("obaa.accessibility.resourcedescription.primary.hastactile:("
-                    + pesquisa.getHasTactile() + ")");
+            query.addFilterQuery("{!tag=hastactile}" + 
+            		orQueryQuotedBoolean("obaa.accessibility.resourcedescription.primary.hastactile", pesquisa.getHasTactile()));
         }
 
         if (pesquisa.getCost() != null) {
-            query.addFilterQuery("obaa.rights.cost:(" + pesquisa.getCost() + ")");
+            query.addFilterQuery("{!tag=cost}" + 
+            		orQueryQuotedBoolean("obaa.rights.cost", pesquisa.getCost()));
         }
+        
         if (!isBlank(pesquisa.getIdioma())) {
             query.addFilterQuery("obaa.general.language:(" + pesquisa.getIdioma() + ")");
         }
@@ -113,6 +115,11 @@ public class CriaQuery {
     private static String orQueryQuoted(String obaaField, List<String> values) {
         return values.stream().map(s -> obaaField + ":" + quote(s)).collect(Collectors.joining(" OR "));
     }
+    
+    private static String orQueryQuotedBoolean(String obaaField, List<Boolean> values) {
+        return values.stream().map(s -> obaaField + ":" + quote(s.toString())).collect(Collectors.joining(" OR "));
+    }
+    
     
     /**
      * @param s String para ser quoted

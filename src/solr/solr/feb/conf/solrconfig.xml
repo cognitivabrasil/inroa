@@ -921,6 +921,9 @@
        <str name="facet.field">{!ex=format}obaa.technical.format</str>
        <str name="facet.field">{!ex=difficulty}obaa.educational.difficulty</str>
        
+       <str name="facet.field">{!ex=hasvisual}obaa.accessibility.resourcedescription.primary.hasvisual</str>
+       
+       
 
        <!-- Faceting defaults -->
 <!--       <str name="facet">on</str>

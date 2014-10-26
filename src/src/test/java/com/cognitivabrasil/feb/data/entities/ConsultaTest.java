@@ -67,7 +67,7 @@ public class ConsultaTest {
     @Test
     public void testNotEmpty5() {
         Consulta c = new Consulta();
-        c.setCost(true);
+        c.addCost(true);
         assertThat(c.isEmpty(), equalTo(false));
     }
 
@@ -88,21 +88,21 @@ public class ConsultaTest {
     @Test
     public void testNotEmpty8() {
         Consulta c = new Consulta();
-        c.setHasAuditory(true);
+        c.addHasAuditory(true);
         assertThat(c.isEmpty(), equalTo(false));
     }
 
     @Test
     public void testNotEmpty9() {
         Consulta c = new Consulta();
-        c.setHasText(Boolean.FALSE);
+        c.addHasText(Boolean.FALSE);
         assertThat(c.isEmpty(), equalTo(false));
     }
 
     @Test
     public void testNotEmpty10() {
         Consulta c = new Consulta();
-        c.setHasVisual(true);
+        c.addHasVisual(true);
         assertThat(c.isEmpty(), equalTo(false));
     }
 

@@ -40,11 +40,11 @@ public class Consulta {
     private String ageRange;
     private Boolean adultAge;
     private List<String> difficulty;
-    public Boolean cost;
-    public Boolean hasVisual;
-    public Boolean hasAuditory;
-    public Boolean hasText;
-    public Boolean hasTactile;
+    public List<Boolean> cost;
+    public List<Boolean> hasVisual;
+    public List<Boolean> hasAuditory;
+    public List<Boolean> hasText;
+    public List<Boolean> hasTactile;
     public String size;
     private final Map<String, String> languages;
     private static final Logger log = LoggerFactory.getLogger(Consulta.class);
@@ -94,6 +94,22 @@ public class Consulta {
         if (consulta.getDifficulty() != null) {
             setDifficulty(new ArrayList<>(consulta.getDifficulty()));
         }
+        if (consulta.getCost() != null) {
+            setCost(new ArrayList<>(consulta.getCost()));
+        }
+        if (consulta.getHasVisual() != null) {
+            setHasVisual(new ArrayList<>(consulta.getHasVisual()));
+        }
+        if (consulta.getHasAuditory() != null) {
+            setHasAuditory(new ArrayList<>(consulta.getHasAuditory()));
+        }
+        if (consulta.getHasText() != null) {
+            setHasText(new ArrayList<>(consulta.getHasText()));
+        }
+        if (consulta.getHasTactile() != null) {
+            setHasTactile(new ArrayList<>(consulta.getHasTactile()));
+        }
+        
 
     }
 
@@ -103,7 +119,7 @@ public class Consulta {
                 && hasAuditory == null && hasText == null && hasTactile == null;
     }
 
-    private boolean isBlankList(List<String> format2) {
+    private <T extends Object> boolean isBlankList(List<T> format2) {
         return format2 == null || format2.isEmpty();
     }
 
@@ -221,43 +237,75 @@ public class Consulta {
         this.difficulty = difficult;
     }
 
-    public Boolean getCost() {
+    public List<Boolean> getCost() {
         return cost;
     }
 
-    public void setCost(Boolean cost) {
+    public void setCost(List<Boolean> cost) {
         this.cost = cost;
     }
+    public void addCost(boolean b) {
+    	if(cost == null) {
+    		cost = new ArrayList<>();
+    	}
+    	cost.add(b);
+    }
 
-    public Boolean getHasVisual() {
+    public List<Boolean> getHasVisual() {
         return hasVisual;
     }
 
-    public void setHasVisual(Boolean hasVisual) {
+    public void setHasVisual(List<Boolean> hasVisual) {
         this.hasVisual = hasVisual;
     }
+    public void addHasVisual(boolean b) {
+    	if(hasVisual == null) {
+    		hasVisual = new ArrayList<>();
+    	}
+    	hasVisual.add(b);
+    }
 
-    public Boolean getHasAuditory() {
+    public List<Boolean> getHasAuditory() {
         return hasAuditory;
     }
 
-    public void setHasAuditory(Boolean hasAuditory) {
+    public void setHasAuditory(List<Boolean> hasAuditory) {
         this.hasAuditory = hasAuditory;
     }
+    public void addHasAuditory(boolean b) {
+    	if(hasAuditory == null) {
+    		hasAuditory = new ArrayList<>();
+    	}
+    	hasAuditory.add(b);
+    }
 
-    public Boolean getHasText() {
+    public List<Boolean> getHasText() {
         return hasText;
     }
 
-    public void setHasText(Boolean hasText) {
+    public void setHasText(List<Boolean> hasText) {
         this.hasText = hasText;
     }
-
-    public Boolean getHasTactile() {
-        return hasTactile;
+    
+    public void addHasText(boolean b) {
+    	if(hasText == null) {
+    		hasText = new ArrayList<>();
+    	}
+    	hasText.add(b);
     }
 
-    public void setHasTactile(Boolean hasTactile) {
+    public List<Boolean> getHasTactile() {
+        return hasTactile;
+    }
+    
+    public void addHasTactile(boolean b) {
+    	if(hasTactile == null) {
+    		hasTactile = new ArrayList<>();
+    	}
+    	hasTactile.add(b);
+    }
+
+    public void setHasTactile(List<Boolean> hasTactile) {
         this.hasTactile = hasTactile;
     }
 
@@ -377,8 +425,10 @@ public class Consulta {
             if (cost != null) {
                 encoded += "&cost=" + URLEncoder.encode(cost.toString(), "UTF-8");
             }
-            if (hasVisual != null) {
-                encoded += "&hasVisual=" + URLEncoder.encode(hasVisual.toString(), "UTF-8");
+            if (!isBlankList(hasVisual)) {
+            	for(Boolean v : hasVisual) {
+            		encoded += "&hasVisual=" + URLEncoder.encode(v.toString(), "UTF-8");
+            	}
             }
             if (hasAuditory != null) {
                 encoded += "&hasAuditory=" + URLEncoder.encode(hasAuditory.toString(), "UTF-8");
@@ -407,7 +457,7 @@ public class Consulta {
         }
     }
 
-    public void addFacetFilter(String fieldName, Object value) {
+    public void addFacetFilter(String fieldName, String value) {
         switch (fieldName) {
         case "format":
             addFormat((String) value);
@@ -418,11 +468,18 @@ public class Consulta {
             }
             difficulty.add((String)value);
             break;
+        case "hasvisual":
+            if(hasVisual == null) {
+            	hasVisual = new ArrayList<>();
+            }
+            hasVisual.add(Boolean.valueOf((String)value));
+            break;
         }
+        
         
     }
 
-    public void removeFacetFilter(String fieldName, Object value) {
+    public void removeFacetFilter(String fieldName, String value) {
         switch (fieldName) {
         case "format":
             if (getFormat() != null) {
@@ -434,10 +491,15 @@ public class Consulta {
                 getDifficulty().remove(value);
             }
             break;
+        case "hasvisual":
+            if (getHasVisual() != null) {
+                getHasVisual().remove(Boolean.valueOf(value));
+            }
+            break;
         }
     }
 
-    public boolean isActive(String fieldName, Object value) {
+    public boolean isActive(String fieldName, String value) {
         switch (fieldName) {
         case "format":
             if (getFormat() == null || (!getFormat().contains(value))) {
@@ -448,6 +510,13 @@ public class Consulta {
             }
         case "difficulty":
             if (getDifficulty() == null || (!getDifficulty().contains(value))) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        case "hasvisual":
+            if (getHasVisual() == null || (!getHasVisual().contains(Boolean.valueOf(value)))) {
                 return false;
             }
             else {
