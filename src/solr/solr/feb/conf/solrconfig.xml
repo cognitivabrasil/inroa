@@ -922,6 +922,12 @@
        <str name="facet.field">{!ex=difficulty}obaa.educational.difficulty</str>
        
        <str name="facet.field">{!ex=hasvisual}obaa.accessibility.resourcedescription.primary.hasvisual</str>
+       <str name="facet.field">{!ex=hasauditory}obaa.accessibility.resourcedescription.primary.hasauditory</str>
+       <str name="facet.field">{!ex=hastext}obaa.accessibility.resourcedescription.primary.hastext</str>
+       <str name="facet.field">{!ex=hastactile}obaa.accessibility.resourcedescription.primary.hastactile</str>
+       <str name="facet.field">{!ex=cost}obaa.rights.cost</str>
+              
+       
        
        
 

@@ -422,23 +422,34 @@ public class Consulta {
             if (isNotBlank(size)) {
                 encoded += "&size=" + URLEncoder.encode(size, "UTF-8");
             }
-            if (cost != null) {
-                encoded += "&cost=" + URLEncoder.encode(cost.toString(), "UTF-8");
+ 
+            if (!isBlankList(cost)) {
+            	for(Boolean v : cost) {
+            		encoded += "&cost=" + URLEncoder.encode(v.toString(), "UTF-8");
+            	}
             }
             if (!isBlankList(hasVisual)) {
             	for(Boolean v : hasVisual) {
             		encoded += "&hasVisual=" + URLEncoder.encode(v.toString(), "UTF-8");
             	}
             }
-            if (hasAuditory != null) {
-                encoded += "&hasAuditory=" + URLEncoder.encode(hasAuditory.toString(), "UTF-8");
+            if (!isBlankList(hasAuditory)) {
+            	for(Boolean v : hasAuditory) {
+            		encoded += "&hasAuditory=" + URLEncoder.encode(v.toString(), "UTF-8");
+            	}
             }
-            if (hasText != null) {
-                encoded += "&hasText=" + URLEncoder.encode(hasText.toString(), "UTF-8");
+            if (!isBlankList(hasText)) {
+            	for(Boolean v : hasText) {
+            		encoded += "&hasText=" + URLEncoder.encode(v.toString(), "UTF-8");
+            	}
             }
-            if (hasTactile != null) {
-                encoded += "&hasTactile=" + URLEncoder.encode(hasTactile.toString(), "UTF-8");
+            if (!isBlankList(hasTactile)) {
+            	for(Boolean v : hasTactile) {
+            		encoded += "&hasTactile=" + URLEncoder.encode(v.toString(), "UTF-8");
+            	}
             }
+            
+
             for (Integer i : getRepositorios()) {
                 encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
             }
@@ -469,10 +480,23 @@ public class Consulta {
             difficulty.add((String)value);
             break;
         case "hasvisual":
-            if(hasVisual == null) {
-            	hasVisual = new ArrayList<>();
-            }
-            hasVisual.add(Boolean.valueOf((String)value));
+        	addHasVisual(Boolean.valueOf((String)value));
+
+            break;
+        case "hasauditory":
+        	addHasAuditory(Boolean.valueOf((String)value));
+
+            break;
+        case "hastactile":
+        	addHasTactile(Boolean.valueOf((String)value));
+            break;
+        case "hastext":
+        	addHasText(Boolean.valueOf((String)value));
+
+            break;
+        case "cost":
+        	addCost(Boolean.valueOf((String)value));
+
             break;
         }
         
@@ -495,8 +519,25 @@ public class Consulta {
             if (getHasVisual() != null) {
                 getHasVisual().remove(Boolean.valueOf(value));
             }
+        case "hasauditory":
+            if (getHasAuditory() != null) {
+            	getHasAuditory().remove(Boolean.valueOf(value));
+            }
+        case "hastactile":
+            if (getHasTactile() != null) {
+            	getHasTactile().remove(Boolean.valueOf(value));
+            }
+        case "hastext":
+            if (getHasText() != null) {
+            	getHasText().remove(Boolean.valueOf(value));
+            }
+        case "cost":
+            if (getCost() != null) {
+            	getCost().remove(Boolean.valueOf(value));
+            }
             break;
         }
+        
     }
 
     public boolean isActive(String fieldName, String value) {
@@ -516,12 +557,16 @@ public class Consulta {
                 return true;
             }
         case "hasvisual":
-            if (getHasVisual() == null || (!getHasVisual().contains(Boolean.valueOf(value)))) {
-                return false;
-            }
-            else {
-                return true;
-            }
+        	return getHasVisual() != null && getHasVisual().contains(Boolean.valueOf(value));
+        case "hasauditory":
+        	return getHasAuditory() != null && getHasAuditory().contains(Boolean.valueOf(value));
+        case "hastactile":
+        	return getHasTactile() != null && getHasTactile().contains(Boolean.valueOf(value));
+        case "hastext":
+        	return getHasText() != null && getHasText().contains(Boolean.valueOf(value));
+        case "cost":
+        	return getCost() != null && getCost().contains(Boolean.valueOf(value));
+          
         }
         log.error("Não deveria chegar aqui, fieldName: {}, value: {}", fieldName, value);
         return false;
