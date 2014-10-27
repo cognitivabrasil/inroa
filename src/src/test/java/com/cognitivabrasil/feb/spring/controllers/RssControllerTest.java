@@ -40,6 +40,7 @@ import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.WebConfig;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
+import org.apache.solr.client.solrj.SolrServerException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class, WebConfig.class })
@@ -61,7 +62,7 @@ public class RssControllerTest extends AbstractTransactionalJUnit4SpringContextT
     private MockMvc mockMvc;
 
     @Before
-    public void setup() {
+    public void setup() throws SolrServerException{
         MockitoAnnotations.initMocks(this);
         
         List<Document> items = new ArrayList<>();
