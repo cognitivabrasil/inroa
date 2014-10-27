@@ -49,5 +49,13 @@ public class Facet {
     public String getName() {
         return name;
     }
+    
+    public String getVarName() {
+        return name.replaceAll("\\.", "_");
+    }
+    
+    public boolean isActive() {
+        return getValues().stream().anyMatch(f -> f.isActive());
+    }
 
 }

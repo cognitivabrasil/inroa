@@ -25,7 +25,7 @@
                    <c:set var="suggestion" value="${results.suggestion }"/>
         
         <c:if test="${suggestion.misspelled}">
-                    <div id="spellcheck" class="row relative">
+                    <div id="spellcheck" class="alert alert-info text-center">
                     
                     
            <c:url var="suggestionQuery" value="/resultado?${suggestion.urlEncoded}"/>
@@ -38,26 +38,7 @@
 
             <div id="preResult" class="row relative">
             
-            <!--  facets -->
-            <h2>Facets</h2>
-            <div>
-            	<c:forEach var="facet" items="${facets}">
-            	<div>
-            	${facet.name}
-            	
-            	<ul>
-            	<c:forEach var="value" items="${facet.values}">
-            		<c:url var="facetActivate" value="/resultado?${value.consulta.urlEncoded}"/>
-            		<li><a href="${facetActivate}">${value.name} - ${value.count} - ${value.active}</a></li>
-            	</c:forEach>
-            	</ul>
-            	
-            	</div>
-            	
-            	</c:forEach>
-            
-            
-            </div>
+ 
 
                 <div class="col-lg-3">
                     <a href="index.html">
@@ -77,49 +58,106 @@
             </div>
             <!--/#preResult .row-->
 
-            <div class="row">
-                <div id="5" class="">
-                    <c:if test="${empty documentos}">
-                        <div class="resultadoConsulta text-center well text-info">
-                            <h4>Nenhum resultado encontrato</h4>
-                        </div>
-                    </c:if>
-                    <c:forEach var="doc" items="${documentos}" varStatus="status">
-                        <c:url var="exibeMetadados" value="objetos/${doc.id}"/>
-                        <div class="well shadow">
-                            <c:if test="${empty doc.titles}">
-                                <div class="titulo"><a href='${exibeMetadados}'>T&iacute;tulo n&atilde;o informado.</a></div>
-                            </c:if>
-                            <c:forEach var="titulo" items="${doc.titles}">
-                                <div class="titulo">
-                                    <a href='${exibeMetadados}'>${titulo}</a>
-                                </div>
-                            </c:forEach>
-                            <c:forEach var="resumo" items="${doc.shortDescriptions}">
-                                <div class="atributo">${resumo}</div>
-                            </c:forEach>   
 
-                            <div class="atributo">
-                                Localização: 
-                                <c:forEach var="localizacao" items="${doc.locationHttp}">
-                                    <c:if test="${localizacao.value}">
-                                        <br />
-                                        <a class="verifyUrl breakWord" href="${localizacao.key}" target="_new">${localizacao.key}</a>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-                            <div class="atributo">
-                                Repositório: ${doc.nomeRep}
-                            </div>
-                        </div>
-                        <!--/.resultadoConsulta-->
 
-                    </c:forEach>
 
-                </div>
-                <!--/#result-->
-            </div>
-            <!--/.row-->
+		<div class="row">
+
+			<!--  facets -->
+			<div id="facets" class="col-md-3">
+
+				<c:forEach var="facet" items="${facets}">
+
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion"
+										href="#collapse${facet.varName}">${facet.name}</a>
+								</h4>
+							</div>
+							<c:choose>
+							<c:when test="${facet.active}">
+								<c:set var="facetActive" value="in"/>
+							</c:when>
+							<c:otherwise>
+								<c:set var="facetActive" value=""/>
+							</c:otherwise>
+							</c:choose>
+							<div id="collapse${facet.varName}" class="panel-collapse collapse ${facetActive}">
+		
+
+								<div class="panel-body">
+										<c:forEach var="value" items="${facet.values}">
+																<c:choose>
+									<c:when test="${value.active}">
+										<c:set var="active" value="active" />
+									</c:when>
+									<c:otherwise>
+										<c:set var="active" value="" />
+									</c:otherwise>
+								</c:choose>
+										
+										
+											<c:url var="facetActivate"
+												value="/resultado?${value.consulta.urlEncoded}" />
+											<a class="btn btn-primary ${active}" href="${facetActivate}">${value.name} -
+													${value.count}</a>
+										</c:forEach>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</c:forEach>
+
+
+			</div>
+
+			<div id="5" class="col-md-9">
+				<c:if test="${empty documentos}">
+					<div class="resultadoConsulta text-center well text-info">
+						<h4>Nenhum resultado encontrato</h4>
+					</div>
+				</c:if>
+				<c:forEach var="doc" items="${documentos}" varStatus="status">
+					<c:url var="exibeMetadados" value="objetos/${doc.id}" />
+					<div class="well shadow">
+						<c:if test="${empty doc.titles}">
+							<div class="titulo">
+								<a href='${exibeMetadados}'>T&iacute;tulo n&atilde;o
+									informado.</a>
+							</div>
+						</c:if>
+						<c:forEach var="titulo" items="${doc.titles}">
+							<div class="titulo">
+								<a href='${exibeMetadados}'>${titulo}</a>
+							</div>
+						</c:forEach>
+						<c:forEach var="resumo" items="${doc.shortDescriptions}">
+							<div class="atributo">${resumo}</div>
+						</c:forEach>
+
+						<div class="atributo">
+							Localização:
+							<c:forEach var="localizacao" items="${doc.locationHttp}">
+								<c:if test="${localizacao.value}">
+									<br />
+									<a class="verifyUrl breakWord" href="${localizacao.key}"
+										target="_new">${localizacao.key}</a>
+								</c:if>
+							</c:forEach>
+						</div>
+						<div class="atributo">Repositório: ${doc.nomeRep}</div>
+					</div>
+					<!--/.resultadoConsulta-->
+
+				</c:forEach>
+
+			</div>
+			<!--/#result-->
+		</div>
+		<!--/.row-->
             <c:choose>
                 <c:when test="${avancada}">
                     <c:url var="docUrl" value="/resultadoav?${buscaModel.urlEncoded}"/>
