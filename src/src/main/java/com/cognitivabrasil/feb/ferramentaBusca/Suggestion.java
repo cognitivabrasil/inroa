@@ -33,6 +33,9 @@ public class Suggestion {
      * @return texto da sugestão
      */
     public String getText() {
+        if(spellCheckResponse == null) {
+            return null;
+        }
         return spellCheckResponse.getCollatedResult();
     }
     
