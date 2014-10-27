@@ -195,6 +195,7 @@ public final class FEBController implements ErrorController {
                 ResultadoBusca rBusca = recuperador.busca(consulta);
                 List<Document> docs = rBusca.getDocuments();
                 log.trace("Carregou " + docs.size() + " documentos.");
+                model.addAttribute("results", rBusca);
                 model.addAttribute("documentos", docs);
                 model.addAttribute("facets", rBusca.getFacets());
 

@@ -112,6 +112,10 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
    
    <!-- Campos da Busca Padrao  -->
    <field name="obaaQueryFields" type="text_general" indexed="true" stored="false" multiValued="true"/>
+   
+   <!-- campos para sugestão de spellcheck -->
+   <field name="suggest" type="text_suggest" indexed="true" stored="false" multiValued="true"/>
+   
 
 
    <!-- PARA ARMAZENAR OS CAMPOS QUE NAO FORAM INDEXADOS MAS QUEREMOS QUE APAREÇA PARA O USUÁRIO -->
@@ -147,6 +151,9 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
    <copyField source="obaa.general.keyword" dest="obaaQueryFields"/>
    <copyField source="obaa.general.description" dest="obaaQueryFields"/>
    
+    <copyField source="obaa.general.title" dest="suggest"/>
+   <copyField source="obaa.general.keyword" dest="suggest"/>
+   <copyField source="obaa.general.description" dest="suggest"/>
    
    
 	<!-- Daqui pra baixo são os tipos, stemmers, linguagem, etc. Altere apenas se souber bem o que está fazendo!!! -->
@@ -262,6 +269,16 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
         <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>
     </fieldType>
+
+	<fieldType name="text_suggest" class="solr.TextField"
+		positionIncrementGap="100">
+		<analyzer>
+        	<tokenizer class="solr.StandardTokenizerFactory"/>
+			<filter class="solr.StopFilterFactory" ignoreCase="true"
+				words="stopwords.txt" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
 
     <!-- A text field with defaults appropriate for English: it
          tokenizes with StandardTokenizer, removes English stop words

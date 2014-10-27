@@ -21,6 +21,20 @@
     <body>
         <jsp:include page="fragments/cabecalho.jsp"/>
         <div class="container">
+        
+                   <c:set var="suggestion" value="${results.suggestion }"/>
+        
+        <c:if test="${suggestion.misspelled}">
+                    <div id="spellcheck" class="row relative">
+                    
+                    
+           <c:url var="suggestionQuery" value="/resultado?${suggestion.urlEncoded}"/>
+                    
+           Você quis dizer <a href="${suggestionQuery}">${suggestion.text}</a>?
+           
+            
+            </div>
+            </c:if>
 
             <div id="preResult" class="row relative">
             

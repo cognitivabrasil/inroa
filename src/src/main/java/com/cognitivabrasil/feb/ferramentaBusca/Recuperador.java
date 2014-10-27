@@ -65,8 +65,11 @@ public class Recuperador {
         
         List<Facet> facetsProcessed = facets.stream().map(f -> new Facet(f, consulta)).collect(Collectors.toList());
         
+        r.setSpellCheckResponse(response.getSpellCheckResponse());
            
         r.setFacets(facetsProcessed);
+        
+        r.setConsulta(consulta);
 
         return r;
 

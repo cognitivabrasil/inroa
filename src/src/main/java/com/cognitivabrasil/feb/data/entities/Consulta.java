@@ -83,6 +83,7 @@ public class Consulta {
 
         setConsulta(consulta.getConsulta());
         setAutor(consulta.getAutor());
+        setConsulta(consulta.getConsulta());
         setFederacoes(new HashSet<>(consulta.getFederacoes()));
         setRepSubfed(new HashSet<>(consulta.getRepSubfed()));
         setRepositorios(new HashSet<>(consulta.getRepositorios()));
@@ -132,6 +133,7 @@ public class Consulta {
     }
 
     public void setConsulta(String consulta) {
+        if(consulta == null) { return; }
         try {
             byte[] bytes = consulta.getBytes();
             this.consulta = new String(bytes, "UTF-8");
