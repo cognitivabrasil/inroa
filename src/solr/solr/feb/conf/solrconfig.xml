@@ -926,6 +926,10 @@
        <str name="facet.field">{!ex=hastext}obaa.accessibility.resourcedescription.primary.hastext</str>
        <str name="facet.field">{!ex=hastactile}obaa.accessibility.resourcedescription.primary.hastactile</str>
        <str name="facet.field">{!ex=cost}obaa.rights.cost</str>
+       
+       <str name="facet.field">{!ex=agerangeint}obaa.educational.typicalagerangeint</str>
+       <str name="f.obaa.educational.typicalagerangeint.facet.sort">index</str>
+       
               
        
        

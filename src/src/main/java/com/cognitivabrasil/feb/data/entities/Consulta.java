@@ -37,7 +37,6 @@ public class Consulta {
     private int sizeResult;
     private String idioma;
     private List<String> format;
-    private String ageRange;
     private Boolean adultAge;
     private List<String> difficulty;
     public List<Boolean> cost;
@@ -47,6 +46,7 @@ public class Consulta {
     public List<Boolean> hasTactile;
     public String size;
     private final Map<String, String> languages;
+    private List<Integer> ageRangeInt;
     private static final Logger log = LoggerFactory.getLogger(Consulta.class);
 
     public Consulta() {
@@ -110,11 +110,15 @@ public class Consulta {
             setHasTactile(new ArrayList<>(consulta.getHasTactile()));
         }
         
+        if (consulta.getAgeRangeInt() != null) {
+            setAgeRangeInt(new ArrayList<>(consulta.getAgeRangeInt()));
+        }
+        
 
     }
 
     public boolean isEmpty() {
-        return isBlank(consulta) && isBlank(autor) && isBlank(idioma) && isBlankList(format) && isBlank(ageRange)
+        return isBlank(consulta) && isBlank(autor) && isBlank(idioma) && isBlankList(format) && isBlankList(ageRangeInt)
                 && adultAge == null && isBlankList(difficulty) && isBlank(size) && cost == null && hasVisual == null
                 && hasAuditory == null && hasText == null && hasTactile == null;
     }
@@ -197,29 +201,6 @@ public class Consulta {
         this.format = format;
     }
 
-    public String getAgeRange() {
-        if (isAdultAge() != null && isAdultAge()) {
-            return "19 - 100";
-        }
-        if (ageRange != null) {
-            return ageRange.replaceAll(" ", "").replaceFirst(":|,", " - ");
-        }
-        return ageRange;
-    }
-
-    public void setAgeRange(String ageRange) {
-        this.ageRange = ageRange;
-    }
-
-    public int getStartAgeRange() {
-        String[] start = getAgeRange().split(" - ");
-        return Integer.parseInt(start[0]);
-    }
-
-    public int getEndAgeRange() {
-        String[] start = getAgeRange().split(" - ");
-        return Integer.parseInt(start[1]);
-    }
 
     public Boolean isAdultAge() {
         return adultAge;
@@ -408,12 +389,6 @@ public class Consulta {
                     encoded += "&format=" + URLEncoder.encode(f, "UTF-8");
                 }
             }
-            if (isNotBlank(ageRange)) {
-                encoded += "&ageRange=" + URLEncoder.encode(ageRange, "UTF-8");
-            }
-            if (adultAge != null) {
-                encoded += "&adultAge=" + URLEncoder.encode(adultAge.toString(), "UTF-8");
-            }
             if (!isBlankList(difficulty)) {
                 for (String d : difficulty) {
                     encoded += "&difficulty=" + URLEncoder.encode(d, "UTF-8");
@@ -447,6 +422,11 @@ public class Consulta {
             	for(Boolean v : hasTactile) {
             		encoded += "&hasTactile=" + URLEncoder.encode(v.toString(), "UTF-8");
             	}
+            }
+            if (!isBlankList(ageRangeInt)) {
+                for(Integer v : ageRangeInt) {
+                    encoded += "&ageRangeInt=" + URLEncoder.encode(v.toString(), "UTF-8");
+                }
             }
             
 
@@ -498,6 +478,10 @@ public class Consulta {
         	addCost(Boolean.valueOf((String)value));
 
             break;
+        case "typicalagerangeint":
+            addAgeRangeInt(Integer.valueOf((String)value));
+
+            break;
         }
         
         
@@ -536,6 +520,11 @@ public class Consulta {
             	getCost().remove(Boolean.valueOf(value));
             }
             break;
+        case "typicalagerangeint":
+            if (getAgeRangeInt() != null) {
+                getAgeRangeInt().remove(Integer.valueOf(value));
+            }
+            break;
         }
         
     }
@@ -566,6 +555,8 @@ public class Consulta {
         	return getHasText() != null && getHasText().contains(Boolean.valueOf(value));
         case "cost":
         	return getCost() != null && getCost().contains(Boolean.valueOf(value));
+        case "typicalagerangeint":
+            return getAgeRangeInt() != null && getAgeRangeInt().contains(Integer.valueOf(value));
           
         }
         log.error("Não deveria chegar aqui, fieldName: {}, value: {}", fieldName, value);
@@ -579,4 +570,18 @@ public class Consulta {
         format.add(f);
     }
 
+    public List<Integer> getAgeRangeInt() {
+        return ageRangeInt;
+    }
+    
+    public void setAgeRangeInt(List<Integer> ar) {
+        ageRangeInt = ar;
+    }
+
+    public void addAgeRangeInt(Integer i) {
+        if (ageRangeInt == null) {
+            ageRangeInt = new ArrayList<Integer>();
+        }
+        ageRangeInt.add(i);
+    }
 }

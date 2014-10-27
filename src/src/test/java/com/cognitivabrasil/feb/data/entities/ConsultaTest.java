@@ -43,12 +43,6 @@ public class ConsultaTest {
         assertThat(c.isEmpty(), equalTo(false));
     }
 
-    @Test
-    public void testNotEmpty2() {
-        Consulta c = new Consulta();
-        c.setAgeRange("age");
-        assertThat(c.isEmpty(), equalTo(false));
-    }
 
     @Test
     public void testNotEmpty3() {
@@ -120,35 +114,7 @@ public class ConsultaTest {
         assertThat(c.isEmpty(), equalTo(false));
     }
     
-    @Test
-    public void testFormatAgeRange(){
-        Consulta c = new Consulta();
-        c.setAgeRange("2:8");
-        
-        assertThat(c.getAgeRange(), equalTo("2 - 8"));
-        
-        c.setAgeRange("2 : 8");
-        
-        assertThat(c.getAgeRange(), equalTo("2 - 8"));
-        
-        c.setAgeRange(" 2 : 8 ");
-        
-        assertThat(c.getAgeRange(), equalTo("2 - 8"));
-        
-        c.setAgeRange(" 2,8 ");
-        
-        assertThat(c.getAgeRange(), equalTo("2 - 8"));
-    }
-    
-    @Test
-    public void testGetStartAgeRange(){
-        Consulta c = new Consulta();
-        c.setAgeRange("2:8");
-        
-        assertThat(c.getStartAgeRange(), equalTo(2));
-        assertThat(c.getEndAgeRange(), equalTo(8));
-    }
-    
+      
     @Test
     public void testGetUrlEncodedSimple() {
         Consulta c = new Consulta();

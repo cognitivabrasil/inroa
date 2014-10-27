@@ -39,25 +39,25 @@ public class CriaQuery {
 
         if (pesquisa.getHasAuditory() != null) {
             query.addFilterQuery("{!tag=hasauditory}" + 
-            		orQueryQuotedBoolean("obaa.accessibility.resourcedescription.primary.hasauditory", pesquisa.getHasAuditory()));
+            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hasauditory", pesquisa.getHasAuditory()));
         }
         if (pesquisa.getHasVisual() != null) {
             query.addFilterQuery("{!tag=hasvisual}" + 
-            		orQueryQuotedBoolean("obaa.accessibility.resourcedescription.primary.hasvisual", pesquisa.getHasVisual()));
+            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hasvisual", pesquisa.getHasVisual()));
         }
         if (pesquisa.getHasText() != null) {
             query.addFilterQuery("{!tag=hastext}" + 
-            		orQueryQuotedBoolean("obaa.accessibility.resourcedescription.primary.hastext", pesquisa.getHasText()));
+            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hastext", pesquisa.getHasText()));
         }
 
         if (pesquisa.getHasTactile() != null) {
             query.addFilterQuery("{!tag=hastactile}" + 
-            		orQueryQuotedBoolean("obaa.accessibility.resourcedescription.primary.hastactile", pesquisa.getHasTactile()));
+            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hastactile", pesquisa.getHasTactile()));
         }
 
-        if (pesquisa.getCost() != null) {
+        if (!isBlankList(pesquisa.getCost())) {
             query.addFilterQuery("{!tag=cost}" + 
-            		orQueryQuotedBoolean("obaa.rights.cost", pesquisa.getCost()));
+            		orQueryQuoted("obaa.rights.cost", pesquisa.getCost()));
         }
         
         if (!isBlank(pesquisa.getIdioma())) {
@@ -71,6 +71,13 @@ public class CriaQuery {
         if (!isBlankList(pesquisa.getDifficulty())) {
             query.addFilterQuery("{!tag=difficulty}" + orQueryQuoted("obaa.educational.difficulty", pesquisa.getDifficulty()));
         }
+        
+        if (!isBlankList(pesquisa.getAgeRangeInt())) {
+            query.addFilterQuery("{!tag=agerangeint}" + orQueryQuoted("obaa.educational.typicalagerangeint", pesquisa.getAgeRangeInt()));
+        }
+
+        
+        
 
         /**
          * FEDERACOES, REPOSITORIOS E SUBFEDERACOE *
@@ -112,14 +119,10 @@ public class CriaQuery {
      * @param values valores aceitados no campo (qualquer um deles)
      * @return query pronta para ser adicionada a um QueryFilter do Solr
      */
-    private static String orQueryQuoted(String obaaField, List<String> values) {
-        return values.stream().map(s -> obaaField + ":" + quote(s)).collect(Collectors.joining(" OR "));
-    }
-    
-    private static String orQueryQuotedBoolean(String obaaField, List<Boolean> values) {
+    private static <T extends Object> String orQueryQuoted(String obaaField, List<T> values) {
         return values.stream().map(s -> obaaField + ":" + quote(s.toString())).collect(Collectors.joining(" OR "));
     }
-    
+     
     
     /**
      * @param s String para ser quoted
@@ -129,7 +132,7 @@ public class CriaQuery {
         return "\"" + s + "\"";
     }
 
-    private static boolean isBlankList(List<String> format2) {
+    private static <T extends Object> boolean isBlankList(List<T> format2) {
         return format2 == null || format2.isEmpty();
     }
 }

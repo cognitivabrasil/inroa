@@ -75,6 +75,9 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
   <!-- Adicionado novo 'typicalagerange' -->
    <field name="obaa.educational.mintypicalagerange" type="string" indexed="true" stored="true" multiValued="true"/>
    <field name="obaa.educational.maxtypicalagerange" type="string" indexed="true" stored="true" multiValued="true"/>
+  <!-- para fazer filtros por agerange armazenamos todas as idades (inteiros) dentro da range -->
+   <field name="obaa.educational.typicalagerangeint" type="int" indexed="true" stored="false" multiValued="true"/>
+   
    
    
 <!--*********       TECHNICAL **************-->
