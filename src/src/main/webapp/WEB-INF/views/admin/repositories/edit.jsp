@@ -65,7 +65,7 @@
                     <form:errors path="name" cssClass="ValueErro" />
                     <form:label path="name" cssErrorClass="error">Nome/Sigla:</form:label>
                         <div class="Value">
-                        <form:input path="name" maxlength="45" cssErrorClass="error" />
+                        <form:input path="name" maxlength="${repModel.maxSizeName}" cssErrorClass="error" />
                     </div>
                 </div>
 

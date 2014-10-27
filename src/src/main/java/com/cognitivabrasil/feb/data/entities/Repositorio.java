@@ -30,7 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Entity
 @Table(name = "repositorios")
 public class Repositorio extends UpdateData{
-
+    //Limite máximo de caracteres no nome do repositorio;
+    public static final Integer LIMIT_NAME = 25;
     private static final long serialVersionUID = 1011292251690153763L;
     private Integer id;
     private String metadataPrefix;
@@ -235,6 +236,10 @@ public class Repositorio extends UpdateData{
     public void setColecoesString(String s) {
         setColecoesInternal(s);
     }
-
+    
+    @Transient
+    public int getMaxSizeName(){
+        return LIMIT_NAME;
+    }
   
 }

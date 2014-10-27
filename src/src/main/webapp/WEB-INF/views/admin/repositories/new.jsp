@@ -65,7 +65,7 @@ Primeira etapa do cadastro de um repositorio
                     <form:errors path="name" cssClass="ValueErro" />
                     <form:label path="name" cssErrorClass="error">Nome/Sigla:</form:label>
                         <div class="Value">
-                        <form:input path="name" maxlength="45" cssErrorClass="error" />
+                        <form:input path="name" maxlength="${repModel.maxSizeName}" cssErrorClass="error" />
                     </div>
                 </div>
 
@@ -80,7 +80,7 @@ Primeira etapa do cadastro de um repositorio
                 <div class="subtitulo">Sincroniza&ccedil;&atilde;o dos metadados</div>
                 <div class="EspacoAntes">&nbsp;</div>
 
-
+                
                 <div class="LinhaEntrada">
                     <form:errors path="url" cssClass="ValueErro" />
                     <form:label path="url" cssErrorClass="error">URL que responde OAI-PMH:</form:label>

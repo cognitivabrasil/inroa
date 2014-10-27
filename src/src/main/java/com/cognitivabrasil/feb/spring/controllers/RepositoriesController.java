@@ -29,9 +29,9 @@ import org.springframework.web.bind.annotation.*;
 public final class RepositoriesController {
 
     @Autowired
-    private RepositoryService repDao;
+    private RepositoryService repServ;
     @Autowired
-    private MetadataRecordService padraoDao;
+    private MetadataRecordService padraoServ;
     private final RepositorioValidator repValidator;
     @Autowired
     private Repositorios atualizadorRep;
@@ -51,8 +51,8 @@ public final class RepositoriesController {
     public String show(@PathVariable Integer id,
             Model model,
             @RequestParam(required = false, value = "r") boolean recarregar) {
-        Repositorio rep = repDao.get(id);
-        Integer size = repDao.size(rep);
+        Repositorio rep = repServ.get(id);
+        Integer size = repServ.size(rep);
         model.addAttribute("rep", rep);
         model.addAttribute("repId", id);
         model.addAttribute("repSize", size);
@@ -71,7 +71,7 @@ public final class RepositoriesController {
         Repositorio rep = new Repositorio();
         rep.setUrl("http://");
         model.addAttribute("repModel", rep);
-        model.addAttribute("padraoMetadados", padraoDao.getAll());
+        model.addAttribute("padraoMetadados", padraoServ.getAll());
         return "admin/repositories/new";
     }
 
@@ -90,27 +90,24 @@ public final class RepositoriesController {
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
             //pega da base o padrao de metadados para que se possa listar os mapeamentos na interface
-            Integer idPadrao = rep.getPadraoMetadados().getId();
-            if (idPadrao != null) {
-                rep.setPadraoMetadados(padraoDao.get(idPadrao));
+            if (rep.getPadraoMetadados() != null && rep.getPadraoMetadados().getId() != null) {
+                rep.setPadraoMetadados(padraoServ.get(rep.getPadraoMetadados().getId()));
             }
             model.addAttribute("repModel", rep);
-            model.addAttribute("padraoMetadados", padraoDao.getAll());
+            model.addAttribute("padraoMetadados", padraoServ.getAll());
             return "admin/repositories/new";
         } else {
-             //se retornar algo é porque já existe um atualizadorRep com esse nome
-            if (repDao.get(rep.getName()) != null) {
+            //se retornar algo é porque já existe um atualizadorRep com esse nome
+            if (repServ.get(rep.getName()) != null) {
                 //nao esta dentro da classe validator pq só executa isso quando for um atualizadorRep novo, quando editar não.
-                result.rejectValue("nome", "invalid.nome", "Já existe um repositório com esse nome."); 
+                result.rejectValue("name", "invalid.name", "Já existe um repositório com esse nome");
 
-                model.addAttribute("mapSelecionado", rep.getMapeamento().getId());
                 model.addAttribute("repModel", rep);
-                model.addAttribute("padraoMetadados", padraoDao.getAll());
-                model.addAttribute("padraoSelecionado", rep.getPadraoMetadados().getId());
+                model.addAttribute("padraoMetadados", padraoServ.getAll());
                 return "admin/repositories/new";
-            } else { 
+            } else {
                 //se retornar null é porque nao tem nenhum atualizadorRep com esse nome
-                repDao.save(rep); //salva o novo atualizadorRep return
+                repServ.save(rep); //salva o novo atualizadorRep return
                 return "redirect:/admin/fechaRecarrega";
             }
         }
@@ -126,8 +123,8 @@ public final class RepositoriesController {
             @PathVariable Integer id,
             Model model) {
 
-        model.addAttribute("repModel", repDao.get(id));
-        model.addAttribute("padraoMetadados", padraoDao.getAll());
+        model.addAttribute("repModel", repServ.get(id));
+        model.addAttribute("padraoMetadados", padraoServ.getAll());
         model.addAttribute("idRep", id);
         return "admin/repositories/edit";
     }
@@ -145,20 +142,20 @@ public final class RepositoriesController {
             @PathVariable Integer id,
             BindingResult result,
             Model model) {
-        
+
         repValidator.validate(rep, result);
         if (result.hasErrors()) {
             //pega da base o padrao de metadados para que se possa listar os mapeamentos na interface
             Integer idPadrao = rep.getPadraoMetadados().getId();
             if (idPadrao != null) {
-                rep.setPadraoMetadados(padraoDao.get(idPadrao));
+                rep.setPadraoMetadados(padraoServ.get(idPadrao));
             }
             model.addAttribute("repModel", rep);
-            model.addAttribute("padraoMetadados", padraoDao.getAll());
+            model.addAttribute("padraoMetadados", padraoServ.getAll());
             model.addAttribute("idRep", id);
             return "admin/repositories/edit";
         } else {
-            repDao.updateNotBlank(rep);
+            repServ.updateNotBlank(rep);
             return "redirect:/admin/repositories/" + id + "?r=true";
         }
     }
@@ -187,10 +184,10 @@ public final class RepositoriesController {
     @RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
     public @ResponseBody
     String delete(@PathVariable("id") Integer id, Model model) {
-        Repositorio obj = repDao.get(id);
+        Repositorio obj = repServ.get(id);
         String name = obj.getName();
         log.info("Deletando o repositório: " + name);
-        repDao.delete(obj);
+        repServ.delete(obj);
         log.info("Repositório " + name + " deletado com sucesso.");
         return "ok";
     }
