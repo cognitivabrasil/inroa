@@ -33,7 +33,7 @@
         <div class="container">
 
             <c:if test="${!empty erro}">
-                <div class="DivErro" id="MensagemErro">${erro}</div>
+                <div class="alert alert-danger text-center">${erro}</div>
             </c:if>
 
             <form:form method="POST" action="resultadoav" modelAttribute="buscaModel" class="form-horizontal"

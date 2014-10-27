@@ -70,14 +70,14 @@ public final class FEBController implements ErrorController {
 
     @Autowired
     private Recuperador recuperador;
-    
+
     @Autowired
     private FebConfig config;
 
     public FEBController() {
         buscaValidator = new BuscaValidator();
     }
-    
+
     @ModelAttribute("analyticsId")
     public String populateOrigin() {
         return config.getAnalyticsId();
@@ -152,7 +152,7 @@ public final class FEBController implements ErrorController {
             if (!titles.isEmpty()) {
                 title = titles.get(0);
             }
-            
+
             model.addAttribute("title", title);
             model.addAttribute("docId", d.getId());
             return "infoDetalhada";
@@ -262,10 +262,18 @@ public final class FEBController implements ErrorController {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
                 return "resultado";
+            } catch (SolrServerException e) {
+                model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
+                //TODO: erro GRAVE, deve enviar um aviso ao administrador.
+
+                log.error("Erro ao efetuar a consulta no Solr, possivelmente o serviço está parado. ", e);
+                model.addAttribute("repositories", repDao.getAll());
+                model.addAttribute("federations", subDao.getAll());
+                model.addAttribute("buscaModel", new Consulta());
+                return "buscaAvancada";
             } catch (Exception e) {
-                model.addAttribute("erro",
-                        "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                log.error("FEB ERRO: Erro ao efetuar a consula na base de dados.", e);
+                model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
+                log.error("FEB ERRO: Erro ao efetuar a consula.", e);
                 return "buscaAvancada";
             }
         }
@@ -364,11 +372,14 @@ public final class FEBController implements ErrorController {
     }
 
     /**
-     * Verificador de URL, recebe como entrada uma url e retorna um boolean informando se ela está ativa ou não.
+     * Verificador de URL, recebe como entrada uma url e retorna um boolean informando se ela está ativa ou não. Usar o
+     * {@link #verifyUrl(java.lang.String)}.
+     *
      *
      * @param url URL a ser testada, deve iniciar com http://
      * @return true se a url estiver ativa e false caso contrário
      */
+    @Deprecated
     @RequestMapping("verificaURLOld")
     public @ResponseBody
     String verifyURL(@RequestParam String url) {
@@ -391,12 +402,13 @@ public final class FEBController implements ErrorController {
      * @return true se a url estiver ativa e false caso contrário
      */
     @RequestMapping("verificaUrl")
-    public @ResponseBody boolean verifyUrl(@RequestParam String url) {
+    public @ResponseBody
+    boolean verifyUrl(@RequestParam String url) {
         try {
-            log.debug("testando url: "+url);
+            log.debug("testando url: " + url);
             URL u = new URL(url);
             BufferedReader reader = new BufferedReader(new InputStreamReader(u.openStream()));
-            boolean result =  reader.ready();
+            boolean result = reader.ready();
             reader.close();
             return result;
 

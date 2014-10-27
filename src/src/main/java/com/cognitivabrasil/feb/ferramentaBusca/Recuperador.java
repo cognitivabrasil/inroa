@@ -62,7 +62,7 @@ public class Recuperador {
      * @param consulta Consulta realizada
      * @return Lista de documentos reais que correspondem ao resultado da busca
      */
-    public List<Document> buscaAvancada(Consulta consulta) {
+    public List<Document> buscaAvancada(Consulta consulta) throws SolrServerException {
 
         List<Document> resultadoConsulta;
 

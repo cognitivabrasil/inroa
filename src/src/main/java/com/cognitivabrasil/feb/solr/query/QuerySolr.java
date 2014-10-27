@@ -56,7 +56,6 @@ public class QuerySolr {
      * @param limit Número de resultados desejados
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
      */
-    
     public void pesquisaSimples(String pesquisa, int offset, int limit) throws SolrServerException {
 
         query = new SolrQuery();
@@ -78,9 +77,9 @@ public class QuerySolr {
      * @param pesquisa Um Objeto consulta com todas as informacoes da busca (String, campos, etc)
      * @param offset Posicao do primeiro resultado a aparecer
      * @param limit Numero de resultados desejados
-     * @return True se tudo correu bem e false se nao foi possivel fazer a pesquisa (server offline?)
+     * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
      */
-    public boolean pesquisaCompleta(Consulta pesquisa, int offset, int limit) {
+    public void pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
 
         String campos = CriaQuery.criaQueryCompleta(pesquisa);
 
@@ -96,14 +95,7 @@ public class QuerySolr {
         //Para definir que espaco em branco sera considerado OR e nao +
         query.set(QueryParsing.OP, "OR");
 
-        try {
-            queryResponse = serverSolr.query(query);
-            return true;
-
-        } catch (SolrServerException ex) {
-            log.error("Ocorreu um erro durante a pesquisa", ex);
-            return false;
-        }
+        queryResponse = serverSolr.query(query);
 
     }
 
@@ -125,7 +117,7 @@ public class QuerySolr {
 
         List<Document> retorno = new ArrayList<>();
         SolrDocumentList list = queryResponse.getResults();
-        
+
         for (int i = 0; i < offset && i < list.size(); i++) {
 
             //O valor de numDoc eh o documento a ser apresentado
@@ -164,7 +156,7 @@ public class QuerySolr {
 
             if (list.get(numDoc).getFieldValues("obaa.technical.location") != null) {
                 for (Object o : list.get(numDoc).getFieldValues("obaa.technical.location")) {
-                    log.debug((String) o);
+                    log.trace((String) o);
                     obaa.getTechnical().addLocation((String) o);
                 }
             }

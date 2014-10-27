@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
+import org.apache.solr.client.solrj.SolrServerException;
 
 @Controller
 @RequestMapping("/rss")
@@ -24,7 +25,7 @@ public class RssController {
     private Recuperador recuperador;
 
     @RequestMapping(value = "/feed", method = RequestMethod.GET)
-    public ModelAndView getFeedInRss(@ModelAttribute("buscaModel") Consulta consulta) {
+    public ModelAndView getFeedInRss(@ModelAttribute("buscaModel") Consulta consulta) throws SolrServerException{
         log.debug("trying to get feed: {}", consulta);
 
         consulta.setRss(true);
@@ -34,6 +35,6 @@ public class RssController {
         mav.setViewName("rssViewer");
         mav.addObject("feedContent", items);
         
-        return mav;
+        return mav;        
     }
 }
