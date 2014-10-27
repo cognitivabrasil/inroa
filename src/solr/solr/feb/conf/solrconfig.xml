@@ -994,6 +994,23 @@
      </arr>
   </requestHandler>
 
+	<requestHandler name="/suggest"
+		class="org.apache.solr.handler.component.SearchHandler">
+		<lst name="defaults">
+			<str name="echoParams">none</str>
+			<str name="wt">json</str>
+			<str name="indent">false</str>
+			<str name="spellcheck">true</str>
+			<str name="spellcheck.dictionary">suggestDictionary</str>
+			<str name="spellcheck.onlyMorePopular">true</str>
+			<str name="spellcheck.count">5</str>
+			<str name="spellcheck.collate">false</str>
+		</lst>
+		<arr name="components">
+			<str>suggest</str>
+		</arr>
+	</requestHandler>
+
   
   <!-- Update Request Handler.  
        
@@ -1332,6 +1349,17 @@
        </lst>
       -->
   </searchComponent>
+
+	<searchComponent class="solr.SpellCheckComponent" name="suggest">
+		<lst name="spellchecker">
+			<str name="name">suggestDictionary</str>
+			<str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+			<str name="lookupImpl">org.apache.solr.spelling.suggest.fst.FSTLookupFactory</str>
+			<str name="field">suggest</str>
+			<float name="threshold">0.</float>
+			<str name="buildOnCommit">true</str>
+		</lst>
+	</searchComponent>
 
   <!-- A request handler for demonstrating the spellcheck component.  
 
