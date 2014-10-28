@@ -85,7 +85,7 @@ public class Recuperador {
         QueryResponse r = q.autosuggest(partial);
         
         SpellCheckResponse spellCheckResponse = r.getSpellCheckResponse();
-        if (!spellCheckResponse.isCorrectlySpelled()) {
+        if (spellCheckResponse != null && (!spellCheckResponse.isCorrectlySpelled())) {
             for (org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion suggestion : r.getSpellCheckResponse().getSuggestions()) {
                 log.debug("Got suggestions: {}", suggestion.getAlternatives());
                 auto.addAll(suggestion.getAlternatives());
