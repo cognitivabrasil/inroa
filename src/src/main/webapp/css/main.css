@@ -16,6 +16,24 @@ body {
 
 .overflowHidden{overflow: hidden}
 
+.titulo a em {
+	font-weight: 900;
+	font-style: normal;
+	background-color: yellow;
+}
+
+.atributo em {
+	font-weight: bold;
+	font-style: normal;
+	background-color: yellow;
+}
+
+.keywords em {
+	font-weight: bold;
+	font-style: normal;
+	color: yellow;
+}
+
 #logo{    
     margin: 0 auto 20px auto;
 }

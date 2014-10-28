@@ -31,10 +31,6 @@
         <jsp:include page="fragments/cabecalho.jsp"/>
 
         <div class="container">
-        
-        		<h1><spring:message code="obaa.technical.format" text="obaa.technical.format"/></h1>
-				<h1><spring:message code="test"/></h1>
-
             <div class="row">
                 <div class="col-lg-12">
                     <c:if test="${!empty erro}">
@@ -53,7 +49,7 @@
                             </div>
 
                             <span class="input-group-btn hidden-xs">
-                                <button class="btn btn-success" type="submit">
+                                <button id="busca" class="btn btn-success" type="submit">
                                     <i class="fa fa-search visible-lg"> Buscar</i>
                                     <i class="fa fa-search visible-md visible-sm"></i>
                                 </button>
@@ -97,9 +93,14 @@
         </div>
 
         <jsp:include page="fragments/scripts.jsp"/>
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/typeahead.bundle.js'></script>
+        
 
         <!--Custom JS-->
         <script language="javascript" type="text/javascript" src='${scripts}/toggleSearch.js'></script>
+        
+        <script language="javascript" type="text/javascript" src='${scripts}/autosuggest.js'></script>
+        
 
         
         <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>

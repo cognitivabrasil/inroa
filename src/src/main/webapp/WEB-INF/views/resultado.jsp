@@ -142,6 +142,15 @@
 							<div class="atributo">${resumo}</div>
 						</c:forEach>
 
+						<c:if test="${not empty doc.keywords}">
+							<div class="keywords">
+								Palavras-chave:
+								<c:forEach var="keyword" items="${doc.keywords}">
+									<span class="label label-default">${keyword}</span>
+								</c:forEach>
+							</div>
+						</c:if>
+
 						<div class="atributo">
 							Localização:
 							<c:forEach var="localizacao" items="${doc.locationHttp}">

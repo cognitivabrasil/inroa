@@ -930,51 +930,32 @@
        <str name="facet.field">{!ex=agerangeint}obaa.educational.typicalagerangeint</str>
        <str name="f.obaa.educational.typicalagerangeint.facet.sort">index</str>
        
-              
-       
-       
-       
-
-       <!-- Faceting defaults -->
-<!--       <str name="facet">on</str>
-       <str name="facet.field">cat</str>
-       <str name="facet.field">manu_exact</str>
-       <str name="facet.field">content_type</str>
-       <str name="facet.field">author_s</str>
-       <str name="facet.query">ipod</str>
-       <str name="facet.query">GB</str>
-       <str name="facet.mincount">1</str>
-       <str name="facet.pivot">cat,inStock</str>
-       <str name="facet.range.other">after</str>
-       <str name="facet.range">price</str>
-       <int name="f.price.facet.range.start">0</int>
-       <int name="f.price.facet.range.end">600</int>
-       <int name="f.price.facet.range.gap">50</int>
-       <str name="facet.range">popularity</str>
-       <int name="f.popularity.facet.range.start">0</int>
-       <int name="f.popularity.facet.range.end">10</int>
-       <int name="f.popularity.facet.range.gap">3</int>
-       <str name="facet.range">manufacturedate_dt</str>
-       <str name="f.manufacturedate_dt.facet.range.start">NOW/YEAR-10YEARS</str>
-       <str name="f.manufacturedate_dt.facet.range.end">NOW</str>
-       <str name="f.manufacturedate_dt.facet.range.gap">+1YEAR</str>
-       <str name="f.manufacturedate_dt.facet.range.other">before</str>
-       <str name="f.manufacturedate_dt.facet.range.other">after</str>
--->
+   
+ 
        <!-- Highlighting defaults -->
        <str name="hl">on</str>
        <str name="hl.fl">obaa.general.title obaa.general.description obaa.general.keyword</str>
        <str name="hl.encoder">html</str>
-       <str name="hl.simple.pre">&lt;b&gt;</str>
-       <str name="hl.simple.post">&lt;/b&gt;</str>
-       <str name="f.title.hl.fragsize">0</str>
-       <str name="f.title.hl.alternateField">title</str>
-       <str name="f.name.hl.fragsize">0</str>
-       <str name="f.name.hl.alternateField">name</str>
-       <str name="f.content.hl.snippets">3</str>
-       <str name="f.content.hl.fragsize">200</str>
-       <str name="f.content.hl.alternateField">content</str>
-       <str name="f.content.hl.maxAlternateFieldLength">750</str>
+       <str name="hl.simple.pre">&lt;em&gt;</str>
+       <str name="hl.simple.post">&lt;/em&gt;</str>
+<!--        <str name="hl.mergeContiguous">true</str> -->
+       <str name="hl.fragmenter">regex</str>
+       <str name="hl.regex.pattern">\w[^\.!\?]{20,400}[\.!\?]</str>
+       
+       <str name="f.obaa.general.description.hl.fragsize">150</str>
+       <str name="f.obaa.general.description.hl.alternateField">obaa.general.description</str>
+       <str name="f.obaa.general.description.hl.snippets">3</str>
+       
+       <str name="f.obaa.general.title.hl.fragsize">750</str>
+       <str name="f.obaa.general.title.hl.alternateField">obaa.general.title</str>
+       <str name="f.obaa.general.title.hl.snippets">1</str>
+       
+       <str name="f.obaa.general.keyword.hl.fragsize">100</str>
+       <str name="f.obaa.general.keyword.hl.snippets">1</str>
+       <str name="f.obaa.general.keyword.hl.fragmenter">gap</str>
+       <str name="f.obaa.general.keyword.hl.preserveMulti">true</str>
+       
+
 
        <!-- Spell checking defaults -->
        <str name="spellcheck">on</str>

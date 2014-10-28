@@ -91,7 +91,9 @@ public class QuerySolr {
     }
 
     /**
-     * Transoforma a resposta fornecida pelo SOLR em Documentos Reais
+     * Transoforma a resposta fornecida pelo SOLR em Documentos Reais, com hit higlighting e snippets.
+     * 
+     * Vai retornar somente as palavras-chave que 
      *
      * @param start Posicao do primeiro resultado da busca a ser transformado em Document
      * @param offset Numero de resultados da busca a ser transformado em Document
@@ -121,20 +123,47 @@ public class QuerySolr {
             obaa.setTechnical(new Technical());
 
             if (list.get(numDoc).getFieldValues("obaa.general.title") != null) {
-                for (Object o : list.get(numDoc).getFieldValues("obaa.general.title")) {
-                    obaa.getGeneral().addTitle((String) o);
+                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry"); // id is the
+                // uniqueKey field
+
+                if (queryResponse.getHighlighting().get(id) != null) {
+                    if (queryResponse.getHighlighting().get(id).get("obaa.general.title") != null) {
+                        for (String snippet : queryResponse.getHighlighting().get(id).get("obaa.general.title")) {
+                            obaa.getGeneral().addTitle(snippet);
+                        }
+                    }
                 }
             }
 
             if (list.get(numDoc).getFieldValues("obaa.general.description") != null) {
-                for (Object o : list.get(numDoc).getFieldValues("obaa.general.description")) {
-                    obaa.getGeneral().addDescription((String) o);
+
+                /*
+                 * for (Object o : list.get(numDoc).getFieldValues("obaa.general.description")) {
+                 * obaa.getGeneral().addDescription((String) o); }
+                 */
+
+                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry"); // id is the
+                                                                                                      // uniqueKey field
+
+                if (queryResponse.getHighlighting().get(id) != null) {
+                    if (queryResponse.getHighlighting().get(id).get("obaa.general.description") != null) {
+                        for (String snippet : queryResponse.getHighlighting().get(id).get("obaa.general.description")) {
+                            obaa.getGeneral().addDescription(snippet.replaceFirst("^\\.", ""));
+                        }
+                    }
                 }
             }
 
             if (list.get(numDoc).getFieldValues("obaa.general.keyword") != null) {
-                for (Object o : list.get(numDoc).getFieldValues("obaa.general.keyword")) {
-                    obaa.getGeneral().addKeyword((String) o);
+                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry"); // id is the
+                // uniqueKey field
+
+                if (queryResponse.getHighlighting().get(id) != null) {
+                    if (queryResponse.getHighlighting().get(id).get("obaa.general.keyword") != null) {
+                        for (String snippet : queryResponse.getHighlighting().get(id).get("obaa.general.keyword")) {
+                            obaa.getGeneral().addKeyword(snippet);
+                        }
+                    }
                 }
             }
 
