@@ -14,6 +14,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,26 @@ public class Recuperador {
 
         return r;
 
+    }
+    
+    public List<String> autosuggest(String partial) {
+        log.debug("Autosuggest for {}", partial);
+        
+        List<String> auto = new ArrayList<>();
+        
+        QuerySolr q = new QuerySolr(config);
+        QueryResponse r = q.autosuggest(partial);
+        
+        SpellCheckResponse spellCheckResponse = r.getSpellCheckResponse();
+        if (!spellCheckResponse.isCorrectlySpelled()) {
+            for (org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion suggestion : r.getSpellCheckResponse().getSuggestions()) {
+                log.debug("Got suggestions: {}", suggestion.getAlternatives());
+                auto.addAll(suggestion.getAlternatives());
+            }
+        }
+
+        
+        return auto;
     }
 
 

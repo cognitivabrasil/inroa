@@ -29,6 +29,7 @@
         <jsp:include page="fragments/cabecalho.jsp"/>
 
         <div class="container">
+       
 
             <div class="row">
                 <div class="col-lg-12">
@@ -43,12 +44,12 @@
 
                             <div class="form-group">
                                 <label class="sr-only" for="consulta">Termo de busca</label>                                
-                                <form:input path="consulta" type="text" cssClass="form-control" 
+                                <form:input id="consulta" path="consulta" type="text" cssClass="form-control " 
                                             placeholder="Termo de busca" value="" required="required" />
                             </div>
 
                             <span class="input-group-btn hidden-xs">
-                                <button class="btn btn-success" type="submit">
+                                <button id="busca" class="btn btn-success" type="submit">
                                     <i class="fa fa-search visible-lg"> Buscar</i>
                                     <i class="fa fa-search visible-md visible-sm"></i>
                                 </button>
@@ -63,6 +64,7 @@
                 <!--/.col-lg-12-->
             </div>
             <!--/.row-->
+
             
         </div>
         <!-- /.container -->
@@ -95,7 +97,10 @@
 
         <!--Custom JS-->
         <script language="javascript" type="text/javascript" src='${scripts}/toggleSearch.js'></script>
+        
+        <script src="${scripts}/vendor/typeahead.bundle.js"></script>    
 
+        <script src="${scripts}/autosuggest.js"></script>    
         
         <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>
         <jsp:include page="fragments/googleAnalytics.jsp">

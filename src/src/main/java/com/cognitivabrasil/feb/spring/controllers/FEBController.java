@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -160,6 +161,23 @@ public final class FEBController implements ErrorController {
             model.addAttribute("docId", d.getId());
             return "infoDetalhada";
         }
+    }
+    
+    @RequestMapping("/suggestion")
+    @ResponseBody
+    public String getSuggestions(@RequestParam("query") String query) {
+        List<String> auto = recuperador.autosuggest(query);
+        
+        String json = "[ ";
+        
+        
+         
+        json += auto.stream().map(val -> "{ \"value\": \"" + val + "\" } ").collect(Collectors.joining(", "));
+        
+        
+        json += " ]";
+        
+        return json;
     }
 
     @RequestMapping("/objetos/{id}/json")

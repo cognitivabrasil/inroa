@@ -68,6 +68,20 @@ public class QuerySolr {
         
         return queryResponse;
     }
+    public QueryResponse autosuggest(String auto) {
+        query.setRequestHandler("/suggest");
+        query.setQuery(auto);
+        
+        try {
+            queryResponse = serverSolr.query(query);
+        }
+        catch (SolrServerException e) {
+            log.error("Ocorreu um erro durante o autosuggest", e);
+            return null;
+        }
+        
+        return queryResponse;
+    }
 
     /**
      * @return Numero de documentos retornados da busca
