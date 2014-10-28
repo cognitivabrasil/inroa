@@ -10,6 +10,7 @@
 package com.cognitivabrasil.feb;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.Filter;
 
@@ -21,6 +22,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -28,6 +30,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import ORG.oclc.oai.server.OAIHandler;
 
@@ -64,6 +68,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         OpenEntityManagerInViewInterceptor interceptor = new OpenEntityManagerInViewInterceptor();
         interceptor.setEntityManagerFactory(emf.getObject());
         registry.addWebRequestInterceptor(interceptor);
+        
+        registry.addInterceptor(localeChangeInterceptor());
     }
 
     @Override
@@ -120,6 +126,21 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         s.addInitParameter("properties", "dummy.properties");
         
         return s;
+    }
+    
+    @Bean
+    public LocaleResolver localeResolver() {
+        SessionLocaleResolver l = new SessionLocaleResolver();
+        l.setDefaultLocale(Locale.forLanguageTag("pt"));
+        
+        return l;
+    }
+    
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
     }
 
 }

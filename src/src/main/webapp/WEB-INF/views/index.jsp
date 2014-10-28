@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,7 +31,9 @@
         <jsp:include page="fragments/cabecalho.jsp"/>
 
         <div class="container">
-       
+        
+        		<h1><spring:message code="obaa.technical.format" text="obaa.technical.format"/></h1>
+				<h1><spring:message code="test"/></h1>
 
             <div class="row">
                 <div class="col-lg-12">
@@ -44,12 +48,12 @@
 
                             <div class="form-group">
                                 <label class="sr-only" for="consulta">Termo de busca</label>                                
-                                <form:input id="consulta" path="consulta" type="text" cssClass="form-control " 
+                                <form:input path="consulta" type="text" cssClass="form-control" 
                                             placeholder="Termo de busca" value="" required="required" />
                             </div>
 
                             <span class="input-group-btn hidden-xs">
-                                <button id="busca" class="btn btn-success" type="submit">
+                                <button class="btn btn-success" type="submit">
                                     <i class="fa fa-search visible-lg"> Buscar</i>
                                     <i class="fa fa-search visible-md visible-sm"></i>
                                 </button>
@@ -64,7 +68,6 @@
                 <!--/.col-lg-12-->
             </div>
             <!--/.row-->
-
             
         </div>
         <!-- /.container -->
@@ -97,10 +100,7 @@
 
         <!--Custom JS-->
         <script language="javascript" type="text/javascript" src='${scripts}/toggleSearch.js'></script>
-        
-        <script src="${scripts}/vendor/typeahead.bundle.js"></script>    
 
-        <script src="${scripts}/autosuggest.js"></script>    
         
         <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>
         <jsp:include page="fragments/googleAnalytics.jsp">

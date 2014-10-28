@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE HTML>
 <c:url var="images" value="/imagens" />
 
@@ -62,8 +64,7 @@
 
 
 		<div class="row">
-
-			<!--  facets -->
+				<!--  facets -->
 			<div id="facets" class="col-md-3">
 
 				<c:forEach var="facet" items="${facets}">
@@ -73,7 +74,9 @@
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent="#accordion"
-										href="#collapse${facet.varName}">${facet.name}</a>
+										href="#collapse${facet.varName}">
+										<spring:message code="${facet.name}" text="${facet.name}"/>
+									</a>
 								</h4>
 							</div>
 							<c:choose>
@@ -101,8 +104,9 @@
 										
 											<c:url var="facetActivate"
 												value="/resultado?${value.consulta.urlEncoded}" />
-											<a class="btn btn-primary ${active}" href="${facetActivate}">${value.name} -
-													${value.count}</a>
+											<a class="btn btn-primary ${active}" href="${facetActivate}">
+											<spring:message code="${value.name}" text="${value.name}"/>
+													<span class="badge">${value.count}</span></a>
 										</c:forEach>
 								</div>
 							</div>
