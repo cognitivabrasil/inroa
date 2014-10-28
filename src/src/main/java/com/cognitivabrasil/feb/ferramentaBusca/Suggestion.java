@@ -15,6 +15,10 @@ public class Suggestion {
     private final Consulta consulta;
     private final SpellCheckResponse spellCheckResponse;
 
+    /**
+     * @param spellCheckResponse resposta do Solr para o spellcheck
+     * @param consulta que gerou esta resposta
+     */
     public Suggestion(SpellCheckResponse spellCheckResponse, Consulta consulta) {
         this.spellCheckResponse = spellCheckResponse;
         this.consulta = new Consulta(consulta);
@@ -39,6 +43,9 @@ public class Suggestion {
         return spellCheckResponse.getCollatedResult();
     }
     
+    /**
+     * @return se há correções disponíveis
+     */
     public boolean isMisspelled() {
         return getText() != null;
     }

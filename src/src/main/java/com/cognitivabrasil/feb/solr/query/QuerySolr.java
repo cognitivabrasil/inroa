@@ -20,11 +20,12 @@ import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
 import com.cognitivabrasil.feb.spring.FebConfig;
 
+// TODO: converter para bean
 public class QuerySolr {
 
-    private final HttpSolrServer serverSolr;
-    private SolrQuery query;
-    private QueryResponse queryResponse;
+    private final HttpSolrServer serverSolr; // TODO: deve ser injetado
+    private SolrQuery query; // TODO: remover variável, criar locais
+    private QueryResponse queryResponse; // TODO: remover variáveis, criar locais
     private static final Logger log = LoggerFactory.getLogger(QuerySolr.class);
 
     public QuerySolr(FebConfig c) {
@@ -68,6 +69,12 @@ public class QuerySolr {
         
         return queryResponse;
     }
+    
+    /**
+     * Faz uma busca no handler de auto-suggest do Solr.
+     * @param auto string de busca (o que o usuário digitou no field)
+     * @return resultado da consulta, com as sugestões do autosuggest.
+     */
     public QueryResponse autosuggest(String auto) {
         query.setRequestHandler("/suggest");
         query.setQuery(auto);
@@ -85,7 +92,9 @@ public class QuerySolr {
 
     /**
      * @return Numero de documentos retornados da busca
+     * @deprecated não há por que usar
      */
+    @Deprecated
     public int getNumDocs() {
         return (int) queryResponse.getResults().getNumFound();
     }

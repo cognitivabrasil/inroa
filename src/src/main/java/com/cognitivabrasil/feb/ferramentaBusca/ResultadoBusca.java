@@ -18,6 +18,7 @@ public class ResultadoBusca {
     private List<Facet> facets;
     private SpellCheckResponse spellCheckResponse;
     private Consulta consulta;
+    private int resultSize;
     
 
     public Consulta getConsulta() {
@@ -50,6 +51,14 @@ public class ResultadoBusca {
     
     public Suggestion getSuggestion() {
         return new Suggestion(spellCheckResponse, consulta);
+    }
+
+    public void setResultSize(int numDocs) {
+        this.resultSize = numDocs;
+    }
+    
+    public int getResultSize() {
+        return resultSize;
     }
     
 }

@@ -71,6 +71,8 @@ public class Recuperador {
         r.setFacets(facetsProcessed);
         
         r.setConsulta(consulta);
+        
+        r.setResultSize(q.getNumDocs());
 
         return r;
 

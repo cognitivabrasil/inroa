@@ -1,5 +1,6 @@
 package com.cognitivabrasil.feb.data.entities;
 
+import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.util.Informacoes;
 
 import java.io.UnsupportedEncodingException;
@@ -356,10 +357,18 @@ public class Consulta {
         }
     }
 
+    /**
+     * @deprecated use {@link ResultadoBusca#getResultSize()} 
+     */
+    @Deprecated
     public int getSizeResult() {
         return sizeResult;
     }
 
+    /**
+     * @deprecated use {@link ResultadoBusca#setResultSize(int)}
+     */
+    @Deprecated
     public void setSizeResult(int sizeResult) {
         this.sizeResult = sizeResult;
     }

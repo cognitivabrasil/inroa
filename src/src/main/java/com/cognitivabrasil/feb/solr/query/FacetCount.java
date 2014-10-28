@@ -27,6 +27,7 @@ public class FacetCount {
     
     /**
      * @param v Obtido do SOLR
+     * @param fieldName nome do campo para o qual está sendo realizado o faceting, eg, obaa.technical.format
      * @param consulta a consulta atual
      */
     public FacetCount(Count v, String fieldName, Consulta consulta) {
