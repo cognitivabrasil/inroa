@@ -30,9 +30,6 @@ public class Recuperador {
 
     private static final Logger log = LoggerFactory.getLogger(Recuperador.class);
     private static final int rssSizeLimit = 100;
-
-    @Autowired
-    private FebConfig config;
     
     @Autowired
     private QuerySolr q;
