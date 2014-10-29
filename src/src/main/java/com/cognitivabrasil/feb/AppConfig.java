@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
@@ -168,6 +169,13 @@ public class AppConfig {
         c.setDefaultProperties(febConfigDefaultProperties());
 
         return c;
+    }
+    
+    
+    @Bean
+    public HttpSolrServer serverSolr() {
+        HttpSolrServer server = new HttpSolrServer(febConfig().getSolrUrl());
+        return server;
     }
 
 }

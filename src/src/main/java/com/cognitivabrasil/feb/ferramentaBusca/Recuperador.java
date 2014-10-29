@@ -1,18 +1,11 @@
 package com.cognitivabrasil.feb.ferramentaBusca;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.solr.query.Facet;
-import com.cognitivabrasil.feb.solr.query.QuerySolr;
-import com.cognitivabrasil.feb.spring.FebConfig;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.slf4j.Logger;
@@ -20,10 +13,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.solr.query.Facet;
+import com.cognitivabrasil.feb.solr.query.QuerySolr;
+import com.cognitivabrasil.feb.spring.FebConfig;
+
 /**
  * Recuperador pelo SOLR
  *
  * @author Daniel Epstein
+ * @author Paulo Schreiner
  */
 @Service
 public class Recuperador {
@@ -33,6 +33,9 @@ public class Recuperador {
 
     @Autowired
     private FebConfig config;
+    
+    @Autowired
+    private QuerySolr q;
     
 
     /**
@@ -52,11 +55,10 @@ public class Recuperador {
             limit = consulta.getLimit();
         }
 
-        QuerySolr q = new QuerySolr(config);
         log.debug(consulta.getConsulta());
         QueryResponse response = q.pesquisaCompleta(consulta, consulta.getOffset(), limit);
-        consulta.setSizeResult(q.getNumDocs());
-        resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), limit);
+        consulta.setSizeResult(QuerySolr.getNumDocs(response));
+        resultadoConsulta = QuerySolr.getDocumentosReais(response, consulta.getOffset(), limit);
         log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
         
         ResultadoBusca r = new ResultadoBusca();
@@ -72,7 +74,7 @@ public class Recuperador {
         
         r.setConsulta(consulta);
         
-        r.setResultSize(q.getNumDocs());
+        r.setResultSize(QuerySolr.getNumDocs(response));
 
         return r;
 
@@ -83,7 +85,6 @@ public class Recuperador {
         
         List<String> auto = new ArrayList<>();
         
-        QuerySolr q = new QuerySolr(config);
         QueryResponse r = q.autosuggest(partial);
         
         SpellCheckResponse spellCheckResponse = r.getSpellCheckResponse();

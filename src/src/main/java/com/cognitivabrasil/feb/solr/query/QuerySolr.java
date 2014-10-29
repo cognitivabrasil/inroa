@@ -10,6 +10,8 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.General.General;
@@ -18,34 +20,15 @@ import cognitivabrasil.obaa.Technical.Technical;
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
-import com.cognitivabrasil.feb.spring.FebConfig;
 
-// TODO: converter para bean
+@Service
 public class QuerySolr {
-
-    private final HttpSolrServer serverSolr; // TODO: deve ser injetado
-    private SolrQuery query; // TODO: remover variável, criar locais
-    private QueryResponse queryResponse; // TODO: remover variáveis, criar locais
     private static final Logger log = LoggerFactory.getLogger(QuerySolr.class);
 
-    public QuerySolr(FebConfig c) {
-        serverSolr = new HttpSolrServer(c.getSolrUrl());
-        query = new SolrQuery();
-        queryResponse = new QueryResponse();
 
-    }
-
-    /**
-     * Realiza a busca em uma url determinada do Solr (se for utilizado a url padrao a funcao nao precisa de parametros)
-     *
-     * @param url URL do SOLR
-     */
-    public QuerySolr(String url) {
-        serverSolr = new HttpSolrServer(url);
-        query = new SolrQuery();
-        queryResponse = new QueryResponse();
-
-    }
+    @Autowired
+    private HttpSolrServer serverSolr;
+    
 
     /**
      * Realiza a busca avancada. A funcao verifica quais campos foram escolhidos e realiza a busca neles PERGUNTA:
@@ -58,16 +41,14 @@ public class QuerySolr {
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
      */
     public QueryResponse pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
-        query = CriaQuery.criaQueryCompleta(pesquisa);
+        SolrQuery query = CriaQuery.criaQueryCompleta(pesquisa);
 
         query.setStart(offset);
         query.setRows(limit);
 
         query.setRequestHandler("/feb");
 
-        queryResponse = serverSolr.query(query);
-        
-        return queryResponse;
+        return serverSolr.query(query);
     }
     
     /**
@@ -76,27 +57,21 @@ public class QuerySolr {
      * @return resultado da consulta, com as sugestões do autosuggest.
      */
     public QueryResponse autosuggest(String auto) {
+        SolrQuery query = new SolrQuery(); 
+        
         query.setRequestHandler("/suggest");
         query.setQuery(auto);
         
         try {
-            queryResponse = serverSolr.query(query);
+            QueryResponse queryResponse = serverSolr.query(query);
+            return queryResponse;
+
         }
         catch (SolrServerException e) {
             log.error("Ocorreu um erro durante o autosuggest", e);
             return null;
         }
         
-        return queryResponse;
-    }
-
-    /**
-     * @return Numero de documentos retornados da busca
-     * @deprecated não há por que usar
-     */
-    @Deprecated
-    public int getNumDocs() {
-        return (int) queryResponse.getResults().getNumFound();
     }
 
     /**
@@ -108,7 +83,7 @@ public class QuerySolr {
      * @param offset Numero de resultados da busca a ser transformado em Document
      * @return Lista de DocumentosReais construida a partir da busca.
      */
-    public List<Document> getDocumentosReais(int start, int offset) {
+    public static List<Document> getDocumentosReais(QueryResponse queryResponse, int start, int offset) {
 
         List<Document> retorno = new ArrayList<>();
         SolrDocumentList list = queryResponse.getResults();
@@ -197,5 +172,14 @@ public class QuerySolr {
 
         return retorno;
     }
+    
+    /**
+         * @return Numero de documentos retornados da busca
+         * @deprecated não há por que usar
+         */
+        @Deprecated
+        public static int getNumDocs(QueryResponse queryResponse) {
+            return (int) queryResponse.getResults().getNumFound();
+        }
 
 }

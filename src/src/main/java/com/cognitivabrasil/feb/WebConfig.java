@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import javax.servlet.Filter;
 
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +37,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import ORG.oclc.oai.server.OAIHandler;
 
 import com.cognitivabrasil.feb.config.LoggingHandlerExceptionResolver;
+import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.controllers.RssController;
 
 /**
@@ -142,5 +144,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         lci.setParamName("lang");
         return lci;
     }
+
 
 }
