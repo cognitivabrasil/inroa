@@ -12,12 +12,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import scala.remote;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  *
@@ -28,40 +31,28 @@ public class Consulta {
 
     // TODO: deve ter transferida para spring.dtos
     private String consulta;
-    private Set<Integer> repositorios;
-    private Set<Integer> federacoes;
-    private Set<Integer> repSubfed;
     private String autor;
     private boolean rss;
     private int limit;
     private int offset;
     private int sizeResult;
     private String idioma;
-    private List<String> format;
     private Boolean adultAge;
-    private List<String> difficulty;
-    public List<Boolean> cost;
-    public List<Boolean> hasVisual;
-    public List<Boolean> hasAuditory;
-    public List<Boolean> hasText;
-    public List<Boolean> hasTactile;
+    
+    Map<String, List<? extends Object>> booleanParams; 
+
     public String size;
-    private final Map<String, String> languages;
-    private List<Integer> ageRangeInt;
+
     private static final Logger log = LoggerFactory.getLogger(Consulta.class);
 
     public Consulta() {
+        booleanParams = new HashMap<>();
+        
         rss = false;
         limit = 10;
         offset = 0;
         sizeResult = 0;
 
-        languages = new HashMap<>();
-        languages.put("", "Todos");
-        languages.put("pt", "Português");
-        languages.put("en", "Inglês");
-        languages.put("es", "Espanhol");
-        languages.put("fr", "Francês");
     }
 
     /**
@@ -70,59 +61,35 @@ public class Consulta {
      * @param consulta Consulta a ser duplicada
      */
     public Consulta(Consulta consulta) {
+        booleanParams = new HashMap<>();
+
         rss = false;
         limit = 10;
         offset = 0;
         sizeResult = 0;
 
-        languages = new HashMap<>();
-        languages.put("", "Todos");
-        languages.put("pt", "Português");
-        languages.put("en", "Inglês");
-        languages.put("es", "Espanhol");
-        languages.put("fr", "Francês");
 
-        setConsulta(consulta.getConsulta());
         setAutor(consulta.getAutor());
         setConsulta(consulta.getConsulta());
-        setFederacoes(new HashSet<>(consulta.getFederacoes()));
-        setRepSubfed(new HashSet<>(consulta.getRepSubfed()));
-        setRepositorios(new HashSet<>(consulta.getRepositorios()));
+
         setIdioma(consulta.getIdioma());
-
-        if (consulta.getFormat() != null) {
-            setFormat(new ArrayList<>(consulta.getFormat()));
-        }
-        if (consulta.getDifficulty() != null) {
-            setDifficulty(new ArrayList<>(consulta.getDifficulty()));
-        }
-        if (consulta.getCost() != null) {
-            setCost(new ArrayList<>(consulta.getCost()));
-        }
-        if (consulta.getHasVisual() != null) {
-            setHasVisual(new ArrayList<>(consulta.getHasVisual()));
-        }
-        if (consulta.getHasAuditory() != null) {
-            setHasAuditory(new ArrayList<>(consulta.getHasAuditory()));
-        }
-        if (consulta.getHasText() != null) {
-            setHasText(new ArrayList<>(consulta.getHasText()));
-        }
-        if (consulta.getHasTactile() != null) {
-            setHasTactile(new ArrayList<>(consulta.getHasTactile()));
-        }
         
-        if (consulta.getAgeRangeInt() != null) {
-            setAgeRangeInt(new ArrayList<>(consulta.getAgeRangeInt()));
+        for(String key : consulta.getBooleanParams().keySet()) {
+            booleanParams.put(key, (List<? extends Object>) ((ArrayList)consulta.getBooleanParams().get(key)).clone());
+            
         }
-        
-
     }
 
+    protected Map<String, List<? extends Object>>  getBooleanParams() {
+        return booleanParams;
+    }
+
+    /**
+     * @return verdadeiro se a consulta não tiver nem consulta nem autor (mesmo 
+     * se ela tiver filtros).
+     */
     public boolean isEmpty() {
-        return isBlank(consulta) && isBlank(autor) && isBlank(idioma) && isBlankList(format) && isBlankList(ageRangeInt)
-                && adultAge == null && isBlankList(difficulty) && isBlank(size) && cost == null && hasVisual == null
-                && hasAuditory == null && hasText == null && hasTactile == null;
+        return isBlank(consulta) && isBlank(autor);
     }
 
     private <T extends Object> boolean isBlankList(List<T> format2) {
@@ -134,14 +101,7 @@ public class Consulta {
     }
 
     public void setConsulta(String consulta) {
-        if(consulta == null) { return; }
-        try {
-            byte[] bytes = consulta.getBytes();
-            this.consulta = new String(bytes, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e) {
-            log.error("Não foi possível codificar em utf-8 a string: " + consulta, e);
-        }
+        this.consulta = consulta;
     }
 
     public String getAutor() {
@@ -152,40 +112,41 @@ public class Consulta {
         this.autor = autor;
     }
 
-    public Set<Integer> getFederacoes() {
-        if (federacoes == null) {
-            federacoes = new HashSet<>();
+    public List<Integer> getFederacoes() {
+        if (booleanParams.get("federacoes") == null) {
+            setFederacoes(new ArrayList<>());
         }
-        return federacoes;
+        return (List<Integer>) booleanParams.get("federacoes");
     }
 
-    public void setFederacoes(Set<Integer> federacoes) {
-        this.federacoes = federacoes;
+    public void setFederacoes(List<Integer> federacoes) {
+        booleanParams.put("federacoes", federacoes);
     }
 
-    public Set<Integer> getRepSubfed() {
-        if (repSubfed == null) {
-            repSubfed = new HashSet<>();
+    public List<Integer> getRepSubfed() {
+        if (booleanParams.get("repSubfed") == null) {
+            setRepSubfed(new ArrayList<>());
         }
-        return repSubfed;
+        return (List<Integer>) booleanParams.get("repSubfed");
     }
 
-    public void setRepSubfed(Set<Integer> repSubfed) {
+    public void setRepSubfed(List<Integer> repSubfed) {
         // o form envia valoes em branco e o spring seta como null na lista, ai tem que remover
         repSubfed.removeAll(Collections.singleton(null));
-        this.repSubfed = repSubfed;
+        booleanParams.put("repSubfed",repSubfed);
     }
 
-    public Set<Integer> getRepositorios() {
-        if (repositorios == null) {
-            repositorios = new HashSet<>();
+    public List<Integer> getRepositorios() {
+        if (booleanParams.get("repositorios") == null) {
+            setRepositorios(new ArrayList<>());
         }
-        return repositorios;
+        return (List<Integer>) booleanParams.get("repositorios");
     }
 
-    public void setRepositorios(Set<Integer> repositorios) {
+    public void setRepositorios(List<Integer> repositorios) {
         repositorios.removeAll(Collections.singleton(null));
-        this.repositorios = repositorios;
+
+        booleanParams.put("repositorios", repositorios);
     }
 
     public String getIdioma() {
@@ -197,11 +158,11 @@ public class Consulta {
     }
 
     public List<String> getFormat() {
-        return format;
+        return (List<String>)booleanParams.get("format");
     }
 
     public void setFormat(List<String> format) {
-        this.format = format;
+        booleanParams.put("format", format);
     }
 
 
@@ -214,83 +175,83 @@ public class Consulta {
     }
 
     public List<String> getDifficulty() {
-        return difficulty;
+        return (List<String>)booleanParams.get("difficulty");
     }
 
-    public void setDifficulty(List<String> difficult) {
-        this.difficulty = difficult;
+    public void setDifficulty(List<String> difficulty) {
+        booleanParams.put("difficulty", difficulty);
     }
 
     public List<Boolean> getCost() {
-        return cost;
+        return (List<Boolean>)booleanParams.get("cost");
     }
 
     public void setCost(List<Boolean> cost) {
-        this.cost = cost;
+        booleanParams.put("cost", cost);
     }
     public void addCost(boolean b) {
-    	if(cost == null) {
-    		cost = new ArrayList<>();
+    	if(getCost() == null) {
+    		setCost(new ArrayList<>());
     	}
-    	cost.add(b);
+    	getCost().add(b);
     }
 
     public List<Boolean> getHasVisual() {
-        return hasVisual;
+        return (List<Boolean>)booleanParams.get("hasVisual");
     }
 
     public void setHasVisual(List<Boolean> hasVisual) {
-        this.hasVisual = hasVisual;
+        booleanParams.put("hasVisual", hasVisual);
     }
     public void addHasVisual(boolean b) {
-    	if(hasVisual == null) {
-    		hasVisual = new ArrayList<>();
+    	if(getHasVisual() == null) {
+    		setHasVisual(new ArrayList<>());
     	}
-    	hasVisual.add(b);
+    	getHasVisual().add(b);
     }
 
     public List<Boolean> getHasAuditory() {
-        return hasAuditory;
+        return (List<Boolean>)booleanParams.get("hasAuditory");
     }
 
     public void setHasAuditory(List<Boolean> hasAuditory) {
-        this.hasAuditory = hasAuditory;
+        booleanParams.put("hasAuditory", hasAuditory);
     }
     public void addHasAuditory(boolean b) {
-    	if(hasAuditory == null) {
-    		hasAuditory = new ArrayList<>();
+    	if(getHasAuditory() == null) {
+    		setHasAuditory(new ArrayList<>());
     	}
-    	hasAuditory.add(b);
+    	getHasAuditory().add(b);
     }
 
     public List<Boolean> getHasText() {
-        return hasText;
+        return (List<Boolean>)booleanParams.get("hasText");
     }
 
     public void setHasText(List<Boolean> hasText) {
-        this.hasText = hasText;
+        booleanParams.put("hasText", hasText);
     }
     
     public void addHasText(boolean b) {
-    	if(hasText == null) {
-    		hasText = new ArrayList<>();
+    	if(getHasText() == null) {
+    		setHasText(new ArrayList<>());
     	}
-    	hasText.add(b);
+    	getHasText().add(b);
     }
 
     public List<Boolean> getHasTactile() {
-        return hasTactile;
+        return (List<Boolean>)booleanParams.get("hasTactile");
     }
     
     public void addHasTactile(boolean b) {
-    	if(hasTactile == null) {
-    		hasTactile = new ArrayList<>();
+    	if(getHasTactile() == null) {
+    		setHasTactile(new ArrayList<>());
     	}
-    	hasTactile.add(b);
+    	getHasTactile().add(b);
     }
 
     public void setHasTactile(List<Boolean> hasTactile) {
-        this.hasTactile = hasTactile;
+        booleanParams.put("hasTactile", hasTactile);
     }
 
     public String getSize() {
@@ -373,14 +334,6 @@ public class Consulta {
         this.sizeResult = sizeResult;
     }
 
-    public Map<String, String> getLanguages() {
-        return languages;
-    }
-
-    public Map<String, String> getMimeTypes() {
-        return Informacoes.getMimeType();
-    }
-
     /**
      * @return the consulta params in an URL encoded form
      */
@@ -395,60 +348,16 @@ public class Consulta {
             if (isNotBlank(idioma)) {
                 encoded += "&idioma=" + URLEncoder.encode(idioma, "UTF-8");
             }
-            if (!isBlankList(format)) {
-                for (String f : format) {
-                    encoded += "&format=" + URLEncoder.encode(f, "UTF-8");
-                }
-            }
-            if (!isBlankList(difficulty)) {
-                for (String d : difficulty) {
-                    encoded += "&difficulty=" + URLEncoder.encode(d, "UTF-8");
-                }
-            }
             if (isNotBlank(size)) {
                 encoded += "&size=" + URLEncoder.encode(size, "UTF-8");
             }
- 
-            if (!isBlankList(cost)) {
-            	for(Boolean v : cost) {
-            		encoded += "&cost=" + URLEncoder.encode(v.toString(), "UTF-8");
-            	}
-            }
-            if (!isBlankList(hasVisual)) {
-            	for(Boolean v : hasVisual) {
-            		encoded += "&hasVisual=" + URLEncoder.encode(v.toString(), "UTF-8");
-            	}
-            }
-            if (!isBlankList(hasAuditory)) {
-            	for(Boolean v : hasAuditory) {
-            		encoded += "&hasAuditory=" + URLEncoder.encode(v.toString(), "UTF-8");
-            	}
-            }
-            if (!isBlankList(hasText)) {
-            	for(Boolean v : hasText) {
-            		encoded += "&hasText=" + URLEncoder.encode(v.toString(), "UTF-8");
-            	}
-            }
-            if (!isBlankList(hasTactile)) {
-            	for(Boolean v : hasTactile) {
-            		encoded += "&hasTactile=" + URLEncoder.encode(v.toString(), "UTF-8");
-            	}
-            }
-            if (!isBlankList(ageRangeInt)) {
-                for(Integer v : ageRangeInt) {
-                    encoded += "&ageRangeInt=" + URLEncoder.encode(v.toString(), "UTF-8");
-                }
-            }
             
-
-            for (Integer i : getRepositorios()) {
-                encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
-            }
-            for (Integer i : getFederacoes()) {
-                encoded += "&federacoes=" + URLEncoder.encode(i.toString(), "UTF-8");
-            }
-            for (Integer i : getRepSubfed()) {
-                encoded += "&repSubfed=" + URLEncoder.encode(i.toString(), "UTF-8");
+            for(String key : booleanParams.keySet()) {
+                if (!isBlankList(booleanParams.get(key))) {
+                    for(Object v : booleanParams.get(key)) {
+                        encoded += "&" + key + "=" + URLEncoder.encode(v.toString(), "UTF-8");
+                    }
+                }
             }
 
             return encoded;
@@ -458,141 +367,52 @@ public class Consulta {
             throw new RuntimeException("FATAL", e);
         }
     }
+    
+    public void add(String fieldName, Object value) {
+        addFacetFilter(fieldName, value);
+    }
 
-    public void addFacetFilter(String fieldName, String value) {
-        switch (fieldName) {
-        case "format":
-            addFormat((String) value);
-            break;
-        case "difficulty":
-            if(difficulty == null) {
-                difficulty = new ArrayList<>();
-            }
-            difficulty.add((String)value);
-            break;
-        case "hasvisual":
-        	addHasVisual(Boolean.valueOf((String)value));
-
-            break;
-        case "hasauditory":
-        	addHasAuditory(Boolean.valueOf((String)value));
-
-            break;
-        case "hastactile":
-        	addHasTactile(Boolean.valueOf((String)value));
-            break;
-        case "hastext":
-        	addHasText(Boolean.valueOf((String)value));
-
-            break;
-        case "cost":
-        	addCost(Boolean.valueOf((String)value));
-
-            break;
-        case "typicalagerangeint":
-            addAgeRangeInt(Integer.valueOf((String)value));
-
-            break;
+    public void addFacetFilter(String fieldName, Object value) {
+           
+        if(booleanParams.get(fieldName) == null) {
+            booleanParams.put(fieldName , new ArrayList<>());
         }
-        
-        
+        List<Object> l = (List<Object>) booleanParams.get(fieldName);
+        l.add(value);
     }
 
     public void removeFacetFilter(String fieldName, String value) {
-        switch (fieldName) {
-        case "format":
-            if (getFormat() != null) {
-                getFormat().remove(value);
-            }
-            break;
-        case "difficulty":
-            if (getDifficulty() != null) {
-                getDifficulty().remove(value);
-            }
-            break;
-        case "hasvisual":
-            if (getHasVisual() != null) {
-                getHasVisual().remove(Boolean.valueOf(value));
-            }
-        case "hasauditory":
-            if (getHasAuditory() != null) {
-            	getHasAuditory().remove(Boolean.valueOf(value));
-            }
-        case "hastactile":
-            if (getHasTactile() != null) {
-            	getHasTactile().remove(Boolean.valueOf(value));
-            }
-        case "hastext":
-            if (getHasText() != null) {
-            	getHasText().remove(Boolean.valueOf(value));
-            }
-        case "cost":
-            if (getCost() != null) {
-            	getCost().remove(Boolean.valueOf(value));
-            }
-            break;
-        case "typicalagerangeint":
-            if (getAgeRangeInt() != null) {
-                getAgeRangeInt().remove(Integer.valueOf(value));
-            }
-            break;
-        }
-        
+        if(booleanParams.get(fieldName) !=null) {
+            List<Object> l = booleanParams.get(fieldName).stream().filter(o -> !o.toString().equals(value)).collect(Collectors.toList());
+            booleanParams.put(fieldName, l);
+        }   
     }
 
     public boolean isActive(String fieldName, String value) {
-        switch (fieldName) {
-        case "format":
-            if (getFormat() == null || (!getFormat().contains(value))) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        case "difficulty":
-            if (getDifficulty() == null || (!getDifficulty().contains(value))) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        case "hasvisual":
-        	return getHasVisual() != null && getHasVisual().contains(Boolean.valueOf(value));
-        case "hasauditory":
-        	return getHasAuditory() != null && getHasAuditory().contains(Boolean.valueOf(value));
-        case "hastactile":
-        	return getHasTactile() != null && getHasTactile().contains(Boolean.valueOf(value));
-        case "hastext":
-        	return getHasText() != null && getHasText().contains(Boolean.valueOf(value));
-        case "cost":
-        	return getCost() != null && getCost().contains(Boolean.valueOf(value));
-        case "typicalagerangeint":
-            return getAgeRangeInt() != null && getAgeRangeInt().contains(Integer.valueOf(value));
-          
+        if(booleanParams.get(fieldName) == null) {
+            return false;
         }
-        log.error("Não deveria chegar aqui, fieldName: {}, value: {}", fieldName, value);
-        return false;
+        else {
+            return booleanParams.get(fieldName).stream().anyMatch(o -> o.toString().equals(value));
+        }
     }
 
     public void addFormat(String f) {
-        if (format == null) {
-            format = new ArrayList<String>();
+        if (getFormat() == null) {
+            setFormat(new ArrayList<String>());
         }
-        format.add(f);
+        getFormat().add(f);
     }
 
     public List<Integer> getAgeRangeInt() {
-        return ageRangeInt;
+        return (List<Integer>)booleanParams.get("ageRangeInt");
     }
     
     public void setAgeRangeInt(List<Integer> ar) {
-        ageRangeInt = ar;
+        booleanParams.put("ageRangeInt",ar);
     }
 
     public void addAgeRangeInt(Integer i) {
-        if (ageRangeInt == null) {
-            ageRangeInt = new ArrayList<Integer>();
-        }
-        ageRangeInt.add(i);
+        add("ageRangeInt", i);
     }
 }

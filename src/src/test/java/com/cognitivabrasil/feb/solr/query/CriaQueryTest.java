@@ -59,23 +59,16 @@ public class CriaQueryTest {
         assertThat(query.getQuery(), equalTo("consulta"));
     }
     
-//    @Test
-//    public void filtroPorFederacao() {
-//        Consulta c = new Consulta();
-//        
-//        c.setConsulta("consulta");
-//        
-//        
-//        
-//        Set<Integer> federacoes = new HashSet<>();
-//        federacoes.add(3);
-//        
-//        c.setFederacoes(federacoes );
-//        
-//        SolrQuery query = CriaQuery.criaQueryCompleta(c);
-//
-//        
-//        assertThat(query.getFilterQueries(), hasItemInArray("obaa.federacao:3"));
-//
-//    }
+    @Test
+    public void filtrarPorAuditory() {
+        Consulta c = new Consulta();
+        c.addHasAuditory(true);
+
+        c.setConsulta("consulta");
+        
+        SolrQuery query = CriaQuery.criaQueryCompleta(c);
+        
+        assertThat(query.getFilterQueries(), 
+                hasItemInArray("{!tag=hasauditory}obaa.accessibility.resourcedescription.primary.hasauditory:\"true\""));
+    }
 }
