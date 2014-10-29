@@ -383,7 +383,12 @@ public class Consulta {
 
     public void removeFacetFilter(String fieldName, String value) {
         if(booleanParams.get(fieldName) !=null) {
-            List<Object> l = booleanParams.get(fieldName).stream().filter(o -> !o.toString().equals(value)).collect(Collectors.toList());
+            List<Object> l = new ArrayList<>();
+            for(Object o : booleanParams.get(fieldName)) {
+                if(!o.toString().equals(value)) {
+                    l.add(o);
+                }
+            }
             booleanParams.put(fieldName, l);
         }   
     }
