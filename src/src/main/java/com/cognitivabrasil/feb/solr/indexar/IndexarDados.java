@@ -1,36 +1,35 @@
 package com.cognitivabrasil.feb.solr.indexar;
 
-import java.util.List;
-
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.SolrInputDocument;
-
-import cognitivabrasil.obaa.OBAA;
-
-import com.cognitivabrasil.feb.solr.converter.Converter;
-import com.cognitivabrasil.feb.spring.FebConfig;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.common.SolrException;
+import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.common.SolrException;
 
+import com.cognitivabrasil.feb.solr.converter.Converter;
+
+/**
+ * Bean responsável por atualizar o índice do Solr.
+ * 
+ * @author Daniel Epstein
+ * @author Paulo Schreiner
+ */
 @Service
 public class IndexarDados {
-
     private static final Logger log = LoggerFactory.getLogger(IndexarDados.class);
     
     @Autowired
-    private FebConfig config;
+    private SolrServer server;
 
     /**
      * Apaga todo o indice do Solr
@@ -38,7 +37,6 @@ public class IndexarDados {
      * @return True se o indice foi apagado
      */
     public boolean apagarIndice() {
-        SolrServer server = new HttpSolrServer(config.getSolrUrl());
         try {
             UpdateResponse response = server.deleteByQuery("*:*");
             if (response.getStatus() == 400) {
@@ -50,9 +48,8 @@ public class IndexarDados {
             return true;
         } catch (SolrServerException | IOException e) {
             log.error("Nao foi possivel se conectar ao servidor solr", e);
+            return false;
         }
-        return true;
-
     }
 
     /**
@@ -75,7 +72,6 @@ public class IndexarDados {
      * @return True se todos os objetos foram indexados.
      */
     public boolean indexarColecaoSolrInputDocument(Collection<SolrInputDocument> docs) {
-        SolrServer server = new HttpSolrServer(config.getSolrUrl());
         try {
             UpdateResponse response = server.add(docs);
 
@@ -103,20 +99,5 @@ public class IndexarDados {
         Set<SolrInputDocument> col = new HashSet<>();
         col.add(docs);
         return indexarColecaoSolrInputDocument(col);
-    }
-
-    public boolean indexarColecaoSolrInputDocument2(Collection<SolrInputDocument> docs) {
-        SolrServer server = new HttpSolrServer(config.getSolrUrl());
-        try {
-            server.add(docs);
-
-            server.commit();
-
-            return true;
-        } catch (SolrServerException | IOException e) {
-            log.error("Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente", e);
-            throw new SolrException(SolrException.ErrorCode.SERVICE_UNAVAILABLE,
-                    "Nao foi possivel se conectar ao servidor solr ou o documento não está configurado corretamente");
-        }
     }
 }
