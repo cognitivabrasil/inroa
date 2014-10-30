@@ -57,7 +57,7 @@ public class QuerySolrTest {
                                 .build()
                         ).addHighlighting().build();
         
-        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 0, 1);
+        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 1);
         
         assertThat(l.get(0).getTitles(), hasItems("Title 1", "Title 2"));
     }
@@ -74,7 +74,7 @@ public class QuerySolrTest {
                                 .build()
                         ).addHighlighting().build();
         
-        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 0, 1);
+        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 1);
         
         assertThat(l.get(0).getDescriptions(), hasItems("Desc 1"));
     }
@@ -91,7 +91,7 @@ public class QuerySolrTest {
                                 .build()
                         ).addHighlighting().build();
         
-        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 0, 1);
+        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 1);
         
         assertThat(l.get(0).getKeywords(), hasItems("Key 1"));
     }
@@ -108,7 +108,7 @@ public class QuerySolrTest {
                                 .build()
                         ).addHighlighting().build();
         
-        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 0, 1);
+        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 1);
         
         assertThat(l.get(0).getLocation().get(0).getText(), equalTo("http://location"));
     }

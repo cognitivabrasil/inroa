@@ -38,6 +38,31 @@ public class FacetCountTest {
     
     
     @Test
+    public void problemaComCamelCase() {
+        Count c = fakeCount(10L, "true");
+        
+        Consulta cons = new Consulta();
+        cons.addHasVisual(true);
+        
+        FacetCount fc = new FacetCount(c, "obaa.accessibility.resourcedescription.primary.hasvisual", cons);
+        
+        assertThat(fc.isActive(), equalTo(true));
+    }
+    
+    @Test
+    public void problemaComCamelCase2() {
+        Count c = fakeCount(10L, "true");
+        
+        Consulta cons = new Consulta();
+        
+        FacetCount fc = new FacetCount(c, "obaa.accessibility.resourcedescription.primary.hasvisual", cons);
+        
+        assertThat(fc.isActive(), equalTo(false));
+        assertThat(fc.getConsulta().getHasVisual(), hasItem(true));
+    }
+    
+    
+    @Test
     public void seEstaAtivoDesativa() {
         Count c = fakeCount(10L, "fakeFormat");
         

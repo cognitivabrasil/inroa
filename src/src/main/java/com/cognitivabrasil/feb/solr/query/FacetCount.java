@@ -1,5 +1,8 @@
 package com.cognitivabrasil.feb.solr.query;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,20 @@ public class FacetCount {
 
     private final boolean isActive;
     
+    private static final Map<String, String> fieldShortNameTranslation;
+    
+    static {
+        fieldShortNameTranslation = new HashMap<>();
+        fieldShortNameTranslation.put("obaa.accessibility.resourcedescription.primary.hasvisual", "hasVisual");
+        fieldShortNameTranslation.put("obaa.accessibility.resourcedescription.primary.hasauditory", "hasAuditory");
+        fieldShortNameTranslation.put("obaa.accessibility.resourcedescription.primary.hastext", "hasText");
+        fieldShortNameTranslation.put("obaa.accessibility.resourcedescription.primary.hastactile", "hasTactile");
+        fieldShortNameTranslation.put("obaa.educational.typicalagerangeint", "ageRangeInt");
+
+        fieldShortNameTranslation.put("obaa.subFederacao", "repSubfed");
+
+    }
+    
     /**
      * @param v Obtido do SOLR
      * @param fieldName nome do campo para o qual está sendo realizado o faceting, eg, obaa.technical.format
@@ -43,10 +60,18 @@ public class FacetCount {
     }
     
     /**
+     * Usa uma tabela uma tabela de tradução ou heurística para retornar um nome "curto" deste field.
+     * 
+     * Esse nome é usado na classe {@link Consulta}, e nos gets.
+     * 
      * @param fieldName2
      * @return o nome "curto" do campo, pe, obaa.technical.format retorna "format"
      */
     private String getShortName(String fieldName2) {
+        if(fieldShortNameTranslation.get(fieldName2) != null) {
+            return fieldShortNameTranslation.get(fieldName2);
+        }
+        
         String[] r = fieldName2.split("\\.");
         return r[r.length-1];
     }

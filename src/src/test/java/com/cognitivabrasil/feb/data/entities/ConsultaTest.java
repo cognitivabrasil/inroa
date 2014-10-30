@@ -231,4 +231,10 @@ public class ConsultaTest {
         
         assertThat(c.getUrlEncoded(), containsString("repositorios=1"));
     }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void testOnlyAcceptsValidArguments() {
+        Consulta c = new Consulta();
+        c.add("hasaudio", true);
+    }
 }

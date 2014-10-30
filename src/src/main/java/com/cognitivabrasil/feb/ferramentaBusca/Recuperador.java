@@ -55,7 +55,7 @@ public class Recuperador {
         log.debug(consulta.getConsulta());
         QueryResponse response = q.pesquisaCompleta(consulta, consulta.getOffset(), limit);
         consulta.setSizeResult(QuerySolr.getNumDocs(response));
-        resultadoConsulta = QuerySolr.getDocumentosReais(response, consulta.getOffset(), limit);
+        resultadoConsulta = QuerySolr.getDocumentosReais(response, limit);
         log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
         
         ResultadoBusca r = new ResultadoBusca();

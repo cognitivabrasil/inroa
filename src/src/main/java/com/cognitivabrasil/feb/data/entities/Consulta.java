@@ -39,7 +39,24 @@ public class Consulta {
     private String idioma;
     private Boolean adultAge;
     
-    Map<String, List<? extends Object>> booleanParams; 
+    private Map<String, List<? extends Object>> booleanParams; 
+    private static final Map<String, Class> validParams; 
+    
+    static {
+        validParams = new HashMap<>(); 
+        validParams.put("hasVisual", Boolean.class);
+        validParams.put("hasAuditory", Boolean.class);
+        validParams.put("hasText", Boolean.class);
+        validParams.put("hasTactile", Boolean.class);
+        validParams.put("cost", Boolean.class);
+        validParams.put("format", String.class);
+        validParams.put("difficulty", String.class);
+        validParams.put("ageRangeInt", Integer.class);
+        validParams.put("federacoes", Integer.class);
+        validParams.put("repSubfed", Integer.class);
+        validParams.put("repositorios", Integer.class);
+    }
+
 
     public String size;
 
@@ -368,17 +385,43 @@ public class Consulta {
         }
     }
     
+    /**
+     * @see #addFacetFilter(String, Object)
+     */
     public void add(String fieldName, Object value) {
         addFacetFilter(fieldName, value);
     }
 
-    public void addFacetFilter(String fieldName, Object value) {
+    /**
+     * Adiciona um filtro à consulta.
+     * 
+     * Valida os campos antes de adicionar, e converte o tipo do value quando necessário
+     * para Integer ou Boolean.
+     * 
+     * @param fieldName nome do campo a ser adicionado
+     * @param value valor a ser adicionado
+     * @throws IllegalArgumentException quando o campo adicionado não é válido
+     */
+    public void addFacetFilter(String fieldName, Object value) throws IllegalArgumentException {
+        if(validParams.get(fieldName) == null) {
+            throw new IllegalArgumentException("Field " + fieldName + " is not valid for Consulta");
+        }
+        
            
         if(booleanParams.get(fieldName) == null) {
             booleanParams.put(fieldName , new ArrayList<>());
         }
         List<Object> l = (List<Object>) booleanParams.get(fieldName);
-        l.add(value);
+        
+        if(validParams.get(fieldName) == Boolean.class) {
+            l.add(Boolean.valueOf(value.toString()));
+        }
+        else if(validParams.get(fieldName) == Integer.class) {
+            l.add(Integer.valueOf(value.toString()));
+        }
+        else {
+            l.add(value);
+        }
     }
 
     public void removeFacetFilter(String fieldName, String value) {
