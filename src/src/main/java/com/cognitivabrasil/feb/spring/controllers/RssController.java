@@ -2,6 +2,7 @@ package com.cognitivabrasil.feb.spring.controllers;
 
 import java.util.List;
 
+import org.apache.solr.client.solrj.SolrServerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,11 @@ public class RssController {
     private Recuperador recuperador;
 
     @RequestMapping(value = "/feed", method = RequestMethod.GET)
-    public ModelAndView getFeedInRss(@ModelAttribute("buscaModel") Consulta consulta) throws SolrServerException{
+    public ModelAndView getFeedInRss(@ModelAttribute("buscaModel") Consulta consulta) throws SolrServerException {
         log.debug("trying to get feed: {}", consulta);
 
         consulta.setRss(true);
-        List<Document> items = recuperador.buscaAvancada(consulta);
+        List<Document> items = recuperador.busca(consulta).getDocuments();
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("rssViewer");

@@ -1,74 +1,34 @@
 package com.cognitivabrasil.feb.solr.query;
 
-import cognitivabrasil.obaa.General.General;
-import cognitivabrasil.obaa.OBAA;
-import cognitivabrasil.obaa.Technical.Technical;
-
-import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.data.entities.Repositorio;
-import com.cognitivabrasil.feb.spring.FebConfig;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.search.QueryParsing;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.General.General;
+import cognitivabrasil.obaa.Technical.Technical;
+
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+
+@Service
 public class QuerySolr {
-
-    private final HttpSolrServer serverSolr;
-    private SolrQuery query;
-    private QueryResponse queryResponse;
     private static final Logger log = LoggerFactory.getLogger(QuerySolr.class);
 
-    public QuerySolr(FebConfig c) {
-        serverSolr = new HttpSolrServer(c.getSolrUrl());
-        query = new SolrQuery();
-        queryResponse = new QueryResponse();
 
-    }
-
-    /**
-     * Realiza a busca em uma url determinada do Solr (se for utilizado a url padrao a funcao nao precisa de parametros)
-     *
-     * @param url URL do SOLR
-     */
-    public QuerySolr(String url) {
-        serverSolr = new HttpSolrServer(url);
-        query = new SolrQuery();
-        queryResponse = new QueryResponse();
-
-    }
-
-    /**
-     * Realiza a query no SOLR nos campos padroes definidos no schema.xml (titulo, keywords e description). O resultado
-     * da pesquisa eh armazenado na variavel queryResponse e pode ser utilizado posteriormente
-     *
-     * @param pesquisa Os termos que serao pesquisados
-     * @param offset Posição do primeiro resultado a aparecer
-     * @param limit Número de resultados desejados
-     * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
-     */
-    public void pesquisaSimples(String pesquisa, int offset, int limit) throws SolrServerException {
-
-        query = new SolrQuery();
-
-        query.setRequestHandler("/feb");
-        query.setStart(offset);
-        query.setRows(limit);
-
-        query.setQuery(pesquisa);
-
-        queryResponse = serverSolr.query(query);
-
-    }
+    @Autowired
+    private HttpSolrServer serverSolr;
+    
 
     /**
      * Realiza a busca avancada. A funcao verifica quais campos foram escolhidos e realiza a busca neles PERGUNTA:
@@ -77,43 +37,53 @@ public class QuerySolr {
      * @param pesquisa Um Objeto consulta com todas as informacoes da busca (String, campos, etc)
      * @param offset Posicao do primeiro resultado a aparecer
      * @param limit Numero de resultados desejados
+     * @return 
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
      */
-    public void pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
-
-        String campos = CriaQuery.criaQueryCompleta(pesquisa);
-
-        query = new SolrQuery();
-
-        query.setQuery(campos);
+    public QueryResponse pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
+        SolrQuery query = CriaQuery.criaQueryCompleta(pesquisa);
 
         query.setStart(offset);
         query.setRows(limit);
 
-        query.setRequestHandler("/feb_avancado");
+        query.setRequestHandler("/feb");
 
-        //Para definir que espaco em branco sera considerado OR e nao +
-        query.set(QueryParsing.OP, "OR");
-
-        queryResponse = serverSolr.query(query);
-
+        return serverSolr.query(query);
     }
-
+    
     /**
-     * @return Numero de documentos retornados da busca
+     * Faz uma busca no handler de auto-suggest do Solr.
+     * @param auto string de busca (o que o usuário digitou no field)
+     * @return resultado da consulta, com as sugestões do autosuggest.
      */
-    public int getNumDocs() {
-        return (int) queryResponse.getResults().getNumFound();
+    public QueryResponse autosuggest(String auto) {
+        SolrQuery query = new SolrQuery(); 
+        
+        query.setRequestHandler("/suggest");
+        query.setQuery(auto);
+        
+        try {
+            QueryResponse queryResponse = serverSolr.query(query);
+            return queryResponse;
+
+        }
+        catch (SolrServerException e) {
+            log.error("Ocorreu um erro durante o autosuggest", e);
+            return null;
+        }
+        
     }
 
     /**
-     * Transoforma a resposta fornecida pelo SOLR em Documentos Reais
+     * Transoforma a resposta fornecida pelo SOLR em Documentos Reais, com hit higlighting e snippets.
+     * 
+     * Vai retornar somente as palavras-chave que 
      *
      * @param start Posicao do primeiro resultado da busca a ser transformado em Document
      * @param offset Numero de resultados da busca a ser transformado em Document
      * @return Lista de DocumentosReais construida a partir da busca.
      */
-    public List<Document> getDocumentosReais(int start, int offset) {
+    public static List<Document> getDocumentosReais(QueryResponse queryResponse, int start, int offset) {
 
         List<Document> retorno = new ArrayList<>();
         SolrDocumentList list = queryResponse.getResults();
@@ -137,20 +107,47 @@ public class QuerySolr {
             obaa.setTechnical(new Technical());
 
             if (list.get(numDoc).getFieldValues("obaa.general.title") != null) {
-                for (Object o : list.get(numDoc).getFieldValues("obaa.general.title")) {
-                    obaa.getGeneral().addTitle((String) o);
+                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry"); // id is the
+                // uniqueKey field
+
+                if (queryResponse.getHighlighting().get(id) != null) {
+                    if (queryResponse.getHighlighting().get(id).get("obaa.general.title") != null) {
+                        for (String snippet : queryResponse.getHighlighting().get(id).get("obaa.general.title")) {
+                            obaa.getGeneral().addTitle(snippet);
+                        }
+                    }
                 }
             }
 
             if (list.get(numDoc).getFieldValues("obaa.general.description") != null) {
-                for (Object o : list.get(numDoc).getFieldValues("obaa.general.description")) {
-                    obaa.getGeneral().addDescription((String) o);
+
+                /*
+                 * for (Object o : list.get(numDoc).getFieldValues("obaa.general.description")) {
+                 * obaa.getGeneral().addDescription((String) o); }
+                 */
+
+                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry"); // id is the
+                                                                                                      // uniqueKey field
+
+                if (queryResponse.getHighlighting().get(id) != null) {
+                    if (queryResponse.getHighlighting().get(id).get("obaa.general.description") != null) {
+                        for (String snippet : queryResponse.getHighlighting().get(id).get("obaa.general.description")) {
+                            obaa.getGeneral().addDescription(snippet.replaceFirst("^\\.", ""));
+                        }
+                    }
                 }
             }
 
             if (list.get(numDoc).getFieldValues("obaa.general.keyword") != null) {
-                for (Object o : list.get(numDoc).getFieldValues("obaa.general.keyword")) {
-                    obaa.getGeneral().addKeyword((String) o);
+                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry"); // id is the
+                // uniqueKey field
+
+                if (queryResponse.getHighlighting().get(id) != null) {
+                    if (queryResponse.getHighlighting().get(id).get("obaa.general.keyword") != null) {
+                        for (String snippet : queryResponse.getHighlighting().get(id).get("obaa.general.keyword")) {
+                            obaa.getGeneral().addKeyword(snippet);
+                        }
+                    }
                 }
             }
 
@@ -175,5 +172,14 @@ public class QuerySolr {
 
         return retorno;
     }
+    
+    /**
+         * @return Numero de documentos retornados da busca
+         * @deprecated não há por que usar
+         */
+        @Deprecated
+        public static int getNumDocs(QueryResponse queryResponse) {
+            return (int) queryResponse.getResults().getNumFound();
+        }
 
 }

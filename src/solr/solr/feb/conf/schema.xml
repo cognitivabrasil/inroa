@@ -38,51 +38,55 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
 <field name="obaa.repositorio" type="int" indexed="true" stored="true"/>
 <field name="obaa.federacao" type="int" indexed="true" stored="true"/>
 <field name="obaa.subFederacao" type="int" indexed="true" stored="true"/>
-<field name="obaa.repName" type="text_general" indexed="true" stored="true"/>
+<!-- repName é do tipo String para não ser tokenizado, não fazemos BUSCA por repName, somente filtro -->
+<field name="obaa.repName" type="string" indexed="true" stored="true"/>
 
 
 <!-- Metadados do Objeto -->
    <field name="obaa.general.identifier.entry" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
    <field name="obaa.general.title" type="text_general" indexed="true" stored="true" multiValued="true"/>
-  <field name="obaa.general.language" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="obaa.general.language" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="obaa.general.description" type="text_general" indexed="true" stored="true" multiValued="true" />
   <field name="obaa.general.keyword" type="text_general" indexed="true" stored="true" multiValued="true"/>
   
-  <field name="obaa.general.structure.language" type="text_general" indexed="true" stored="true" />
-  <field name="obaa.general.structure.text" type="text_general" indexed="true" stored="true" />
-<field name="obaa.general.structure.translated" type="text_general" indexed="true" stored="true" />
+  <field name="obaa.general.structure.language" type="string" indexed="true" stored="true" />
+  <field name="obaa.general.structure.text" type="string" indexed="true" stored="true" />
+<field name="obaa.general.structure.translated" type="string" indexed="true" stored="true" />
   
-  <field name="obaa.general.aggregation_level.country" type="text_general" indexed="true" stored="true" />
-  <field name="obaa.general.aggregation_level.language" type="text_general" indexed="true" stored="true" />
-  <field name="obaa.general.aggregation_level.text" type="text_general" indexed="true" stored="true" />
-<field name="obaa.general.aggregation_level.translated" type="text_general" indexed="true" stored="true" />
+  <field name="obaa.general.aggregation_level.country" type="string" indexed="true" stored="true" />
+  <field name="obaa.general.aggregation_level.language" type="string" indexed="true" stored="true" />
+  <field name="obaa.general.aggregation_level.text" type="string" indexed="true" stored="true" />
+<field name="obaa.general.aggregation_level.translated" type="string" indexed="true" stored="true" />
   
-  <field name="obaa.lifecycle.status" type="text_general" indexed="true" stored="true" />
+  <field name="obaa.lifecycle.status" type="string" indexed="true" stored="true" />
   <field name="obaa.lifecycle.entity" type="text_general" indexed="true" stored="true" multiValued="true"/>
 
 
  <!-- <field name="obaa.metametadata.contribute.entity" type="string" indexed="true" stored="true" /> -->
 
 <!--*********       EDUCATIONAL **************-->
-   <field name="obaa.educational.interactivitytype" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.educational.learningresourcetype" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.educational.intendedenduserrole" type="text_general" indexed="true" stored="true"  multiValued="true"/>
-   <field name="obaa.educational.context" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.educational.typicalagerange" type="text_general" indexed="true" stored="true" multiValued="true"/>
-  <field name="obaa.educational.difficulty" type="text_general" indexed="true" stored="true"/>
+   <field name="obaa.educational.interactivitytype" type="string" indexed="true" stored="true"/>
+   <field name="obaa.educational.learningresourcetype" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.educational.intendedenduserrole" type="string" indexed="true" stored="true"  multiValued="true"/>
+   <field name="obaa.educational.context" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.educational.typicalagerange" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="obaa.educational.difficulty" type="string" indexed="true" stored="true"/>
   
   <!-- Adicionado novo 'typicalagerange' -->
-   <field name="obaa.educational.mintypicalagerange" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.educational.maxtypicalagerange" type="text_general" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.educational.mintypicalagerange" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.educational.maxtypicalagerange" type="string" indexed="true" stored="true" multiValued="true"/>
+  <!-- para fazer filtros por agerange armazenamos todas as idades (inteiros) dentro da range -->
+   <field name="obaa.educational.typicalagerangeint" type="int" indexed="true" stored="false" multiValued="true"/>
+   
    
    
 <!--*********       TECHNICAL **************-->
-   <field name="obaa.technical.format" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.technical.size" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.technical.intendedenduserrole" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.technical.duration" type="text_general" indexed="true" stored="true"/>
-   <field name="obaa.technical.supportedplatforms" type="text_general" indexed="true" stored="true" multiValued="true"/>
-   <field name="obaa.technical.location" type="text_general" indexed="false" stored="true"  multiValued="true"/>
+   <field name="obaa.technical.format" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.technical.size" type="string" indexed="true" stored="true"/>
+   <field name="obaa.technical.intendedenduserrole" type="string" indexed="true" stored="true"/>
+   <field name="obaa.technical.duration" type="string" indexed="true" stored="true"/>
+   <field name="obaa.technical.supportedplatforms" type="string" indexed="true" stored="true" multiValued="true"/>
+   <field name="obaa.technical.location" type="string" indexed="false" stored="true"  multiValued="true"/>
 
 
 <!--*********       RIGHTS  **************-->
@@ -92,10 +96,10 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
    <field name="obaa.rights.description" type="text_general" indexed="true" stored="true"/>
 
 <!--*********       accessibility  **************-->
-   <field name="obaa.accessibility.resourcedescription.primary.hasvisual" type="text_general" indexed="true" stored="true"/>
-<field name="obaa.accessibility.resourcedescription.primary.hasauditory" type="text_general" indexed="true" stored="true"/>
-<field name="obaa.accessibility.resourcedescription.primary.hastactile" type="text_general" indexed="true" stored="true"/>
-<field name="obaa.accessibility.resourcedescription.primary.hastext" type="text_general" indexed="true" stored="true"/>
+   <field name="obaa.accessibility.resourcedescription.primary.hasvisual" type="string" indexed="true" stored="true"/>
+<field name="obaa.accessibility.resourcedescription.primary.hasauditory" type="string" indexed="true" stored="true"/>
+<field name="obaa.accessibility.resourcedescription.primary.hastactile" type="string" indexed="true" stored="true"/>
+<field name="obaa.accessibility.resourcedescription.primary.hastext" type="string" indexed="true" stored="true"/>
 
 
 <!--*********       segmentinformationtable  **************-->
@@ -108,6 +112,10 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
    
    <!-- Campos da Busca Padrao  -->
    <field name="obaaQueryFields" type="text_general" indexed="true" stored="false" multiValued="true"/>
+   
+   <!-- campos para sugestão de spellcheck -->
+   <field name="suggest" type="text_suggest" indexed="true" stored="false" multiValued="true"/>
+   
 
 
    <!-- PARA ARMAZENAR OS CAMPOS QUE NAO FORAM INDEXADOS MAS QUEREMOS QUE APAREÇA PARA O USUÁRIO -->
@@ -143,6 +151,9 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
    <copyField source="obaa.general.keyword" dest="obaaQueryFields"/>
    <copyField source="obaa.general.description" dest="obaaQueryFields"/>
    
+    <copyField source="obaa.general.title" dest="suggest"/>
+   <copyField source="obaa.general.keyword" dest="suggest"/>
+   <copyField source="obaa.general.description" dest="suggest"/>
    
    
 	<!-- Daqui pra baixo são os tipos, stemmers, linguagem, etc. Altere apenas se souber bem o que está fazendo!!! -->
@@ -259,6 +270,16 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
       </analyzer>
     </fieldType>
 
+	<fieldType name="text_suggest" class="solr.TextField"
+		positionIncrementGap="100">
+		<analyzer>
+        	<tokenizer class="solr.StandardTokenizerFactory"/>
+			<filter class="solr.StopFilterFactory" ignoreCase="true"
+				words="stopwords.txt" />
+			<filter class="solr.LowerCaseFilterFactory" />
+		</analyzer>
+	</fieldType>
+
     <!-- A text field with defaults appropriate for English: it
          tokenizes with StandardTokenizer, removes English stop words
          (lang/stopwords_en.txt), down cases, protects words from protwords.txt, and
@@ -329,7 +350,7 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
                 words="lang/stopwords_en.txt"
                 enablePositionIncrements="true"
                 />
-        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" catenateAll="0" splitOnCaseChange="1"/>
+        <filter class="solr.WordDelimiterFilterFactory" preserveOriginal="1" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" catenateAll="0" splitOnCaseChange="1"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
         <filter class="solr.PorterStemFilterFactory"/>
@@ -342,7 +363,7 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
                 words="lang/stopwords_en.txt"
                 enablePositionIncrements="true"
                 />
-        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="1"/>
+        <filter class="solr.WordDelimiterFilterFactory" preserveOriginal="1" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="1"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
         <filter class="solr.PorterStemFilterFactory"/>
@@ -356,7 +377,7 @@ multiValued = Se o campo pode possuir mais de um valor (por exemplo, o mesmo OA 
         <tokenizer class="solr.WhitespaceTokenizerFactory"/>
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="false"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt"/>
-        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="0" generateNumberParts="0" catenateWords="1" catenateNumbers="1" catenateAll="0"/>
+        <filter class="solr.WordDelimiterFilterFactory" preserveOriginal="1" generateWordParts="0" generateNumberParts="0" catenateWords="1" catenateNumbers="1" catenateAll="0"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
         <filter class="solr.EnglishMinimalStemFilterFactory"/>

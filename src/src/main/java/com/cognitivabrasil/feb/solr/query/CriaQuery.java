@@ -1,6 +1,12 @@
 package com.cognitivabrasil.feb.solr.query;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.solr.client.solrj.SolrQuery;
+
 import com.cognitivabrasil.feb.data.entities.Consulta;
+
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
@@ -12,87 +18,115 @@ public class CriaQuery {
     /**
      * Identifica todos os campos onde a busca deve acontecer.
      *
-     * @param pesquisa Devolve o String de busca pronto para ser utilizado pelo
-     * SORL
+     * @param pesquisa Devolve o String de busca pronto para ser utilizado pelo SORL
      * @return Retorna uma query Solr com todos os campos preenchidos na classe {@link Consulta}.
      */
-    public static String criaQueryCompleta(Consulta pesquisa) {
+    public static SolrQuery criaQueryCompleta(Consulta pesquisa) {
+        SolrQuery query = new SolrQuery();
+
         String resultado = "";
 
         if (!isBlank(pesquisa.getConsulta())) {
-            resultado = "obaaQueryFields:(" + pesquisa.getConsulta() + ")";
+            resultado = pesquisa.getConsulta();
         }
 
         if (pesquisa.hasAuthor()) {
-            resultado += " AND obaa.lifecycle.entity:(" + pesquisa.getAutor() + ")";
+            // boost de 100 é extremamente alto para dar prioridade absoluta ao autor caso presente
+            resultado += " obaa.lifecycle.entity:(" + pesquisa.getAutor() + ")^100.0";
         }
+
+        query.setQuery(resultado);
+
         if (pesquisa.getHasAuditory() != null) {
-            resultado += " AND obaa.accessibility.resourcedescription.primary.hasauditory:(" + pesquisa.getHasAuditory() + ")";
+            query.addFilterQuery("{!tag=hasauditory}" + 
+            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hasauditory", pesquisa.getHasAuditory()));
         }
         if (pesquisa.getHasVisual() != null) {
-            resultado += " AND obaa.accessibility.resourcedescription.primary.hasvisual:(" + pesquisa.getHasVisual() + ")";
+            query.addFilterQuery("{!tag=hasvisual}" + 
+            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hasvisual", pesquisa.getHasVisual()));
         }
         if (pesquisa.getHasText() != null) {
-            resultado += " AND obaa.accessibility.resourcedescription.primary.hastext:(" + pesquisa.getHasText() + ")";
+            query.addFilterQuery("{!tag=hastext}" + 
+            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hastext", pesquisa.getHasText()));
         }
 
         if (pesquisa.getHasTactile() != null) {
-            resultado += " AND obaa.accessibility.resourcedescription.primary.hastactile:(" + pesquisa.getHasTactile() + ")";
+            query.addFilterQuery("{!tag=hastactile}" + 
+            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hastactile", pesquisa.getHasTactile()));
         }
 
-        if (pesquisa.getCost() != null) {
-            resultado += " AND obaa.rights.cost:(" + pesquisa.getCost() + ")";
+        if (!isBlankList(pesquisa.getCost())) {
+            query.addFilterQuery("{!tag=cost}" + 
+            		orQueryQuoted("obaa.rights.cost", pesquisa.getCost()));
         }
+        
         if (!isBlank(pesquisa.getIdioma())) {
-            resultado += " AND obaa.general.language:(" + pesquisa.getIdioma() + ")";
+            query.addFilterQuery("obaa.general.language:(" + pesquisa.getIdioma() + ")");
         }
 
-        if (!isBlank(pesquisa.getFormat())) {
-            resultado += " AND obaa.technical.format:(" + pesquisa.getFormat() + ")";
+        if (!isBlankList(pesquisa.getFormat())) {
+            query.addFilterQuery("{!tag=format}" + orQueryQuoted("obaa.technical.format", pesquisa.getFormat()));
         }
 
-        if (!isBlank(pesquisa.getDifficult())) {
-            resultado += " AND obaa.educational.difficulty:(" + pesquisa.getDifficult() + ")";
+        if (!isBlankList(pesquisa.getDifficulty())) {
+            query.addFilterQuery("{!tag=difficulty}" + orQueryQuoted("obaa.educational.difficulty", pesquisa.getDifficulty()));
+        }
+        
+        if (!isBlankList(pesquisa.getAgeRangeInt())) {
+            query.addFilterQuery("{!tag=agerangeint}" + orQueryQuoted("obaa.educational.typicalagerangeint", pesquisa.getAgeRangeInt()));
         }
 
-        if (!isBlank(pesquisa.getSize())) {
-            resultado += " OR obaa.technical.size:(" + pesquisa.getSize() + ")";
-        }
+        
+        
+
         /**
          * FEDERACOES, REPOSITORIOS E SUBFEDERACOE *
          */
 
         if (!pesquisa.getFederacoes().isEmpty()) {
-            resultado += " AND obaa.federacao:(";
-            for (int feds : pesquisa.getFederacoes()) {
-                resultado += " " + feds;
-            }
-            resultado += ")";
+            String q = "obaa.federacao:(";
+            q += pesquisa.getFederacoes().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
+            q += ")";
+            query.addFilterQuery(q);
         }
 
         if (!pesquisa.getRepSubfed().isEmpty()) {
-            resultado += " AND obaa.subFederacao:(";
-            for (int subFeds : pesquisa.getRepSubfed()) {
-                resultado += " " + subFeds;
-            }
-            resultado += ")";
+            String q = "obaa.subFederacao:(";
+            q += pesquisa.getRepSubfed().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
+            q += ")";
+            query.addFilterQuery(q);
         }
 
         if (!pesquisa.getRepositorios().isEmpty()) {
-            resultado += " AND obaa.repositorio:(";
-            for (int repos : pesquisa.getRepositorios()) {
-                resultado += " " + repos;
-            }
-            resultado += ")";
+            String q = "obaa.repositorio:(";
+            q += pesquisa.getRepositorios().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
+            q += ")";
+            query.addFilterQuery(q);
         }
 
-        if (resultado.startsWith(" OR ")) {
-            resultado = resultado.substring(3);
-        }
-        if (resultado.startsWith(" AND ")) {
-            resultado = resultado.substring(4);
-        }
-        
-        return resultado;
+        return query;
+    }
+
+    /**
+     * Gera uma query para o Solr delimitada por OR
+     * @param obaaField campo para o qual queremos a query
+     * @param values valores aceitados no campo (qualquer um deles)
+     * @return query pronta para ser adicionada a um QueryFilter do Solr
+     */
+    private static <T extends Object> String orQueryQuoted(String obaaField, List<T> values) {
+        return values.stream().map(s -> obaaField + ":" + quote(s.toString())).collect(Collectors.joining(" OR "));
+    }
+     
+    
+    /**
+     * @param s String para ser quoted
+     * @return a string delimitada por aspas
+     */
+    private static String quote(String s) {
+        return "\"" + s + "\"";
+    }
+
+    private static <T extends Object> boolean isBlankList(List<T> format2) {
+        return format2 == null || format2.isEmpty();
     }
 }

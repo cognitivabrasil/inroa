@@ -54,51 +54,72 @@ public class EducationalFields {
         return typical;
     }
     
-    /*
-    
-    public static List<String> getTypicalagerange(OBAA o) {
 
-        List<String> typical = new ArrayList<String>();
-        typical.add(cabecalho + "typicalagerange");
-        typical.addAll(o.getEducational().getTypicalAgeRanges());
-        if (o.getEducational().getTypicalAgeRanges().size()>0)
-        {
-            log.debug(o.getEducational().getTypicalAgeRanges());
+    public static List<String> getTypicalAgeRangeInt(OBAA o) {
+        List<String> typical = new ArrayList<>();
+        typical.add(cabecalho + "typicalagerangeint");
+        
+        int min = getMintypicalagerange(o);
+        int max = getMaxtypicalagerange(o);
+        
+        if(min > max || min < 0 || max < 0) {
+            return typical;
         }
+        
+        for(int age = min; age <= max; age++) {
+            typical.add(String.valueOf(age));
+        }
+
         return typical;
     }
-    */
 
+    /**
+     * @param o
+     * @return idade mínima no range, ou -1 caso não haja.
+     */
     public static int getMintypicalagerange(OBAA o) {
-
         int min = -1;
 
-        if (o.getEducational().getTypicalAgeRanges().size()>0
-                && o.getEducational() != null &&
+        if (o.getEducational() != null && o.getEducational().getTypicalAgeRanges().size()>0
+                && 
                 o.getEducational().getTypicalAgeRanges() != null) {
                         log.debug("IdadeMinima");
 
-            String[] idades = o.getEducational().getTypicalAgeRanges().get(0).split("-");
+                        String ageRange = o.getEducational().getTypicalAgeRanges().get(0);
+                        
+                        ageRange = ageRange.replaceAll("[^\\d-]", "");
+                        String[] idades = ageRange.split("-");
+
             //Adicionamos e removemos o espaco em branco que tem depois do digito de idade
-            min = Integer.parseInt(idades[0].substring(0, idades[0].length() - 1));
+            min = Integer.parseInt(idades[0]);
         }
 
         return min;
     }
 
+    /**
+     * @param o
+     * @return max age in range, but never more than 20, or -1 if not available
+     */
     public static int getMaxtypicalagerange(OBAA o) {
-
         int max = -1;
 
         if (o.getEducational() != null &&
                 o.getEducational().getTypicalAgeRanges() != null
                 && !o.getEducational().getTypicalAgeRanges().isEmpty()) {
-            String[] idades = o.getEducational().getTypicalAgeRanges().get(0).split("-");
+            String ageRange = o.getEducational().getTypicalAgeRanges().get(0);
+            
+            ageRange = ageRange.replaceAll("[^\\d-]", "");
+            
+            String[] idades = ageRange.split("-");
             //Adicionamos e removemos o espaco em branco que tem antes e depois do digito de idade
-            idades[1] = idades[1].substring(1);
-            max = Integer.parseInt(idades[1].substring(0, idades[1].indexOf(" ")));
+            max = Integer.parseInt(idades[1]);
         }
 
+        if(max > 20) {
+            return 20;
+        }
+        
         return max;
     }
 
@@ -129,6 +150,8 @@ public class EducationalFields {
         all.add(getInteractivitytype(o));
         all.add(getLearningresourcetype(o));
         all.add(getTypicalagerange(o));
+        all.add(getTypicalAgeRangeInt(o));
+        
         return all;
     }
 }

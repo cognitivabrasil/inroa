@@ -26,11 +26,6 @@ public class Converter {
         return documento;
     }
 
-    public static SolrInputDocument stringToSolrInputDocument(String objeto) {
-        SolrInputDocument documento = new SolrInputDocument();
-
-        return documento;
-    }
 
     public static List<List<String>> OBAAToList(OBAA o) {
         return com.cognitivabrasil.feb.solr.camposObaa.AllFields.getAll(o);
@@ -52,7 +47,7 @@ public class Converter {
      * nenhum, passar o valor -1)
      * @return Documento SOLR pronto para ser indexado
      */
-    public SolrInputDocument OBAAToSolrInputDocument(OBAA o, String entry, int id, int rep, int subFeb, int federacao, String nomeRep) {
+    public static SolrInputDocument OBAAToSolrInputDocument(OBAA o, String entry, int id, int rep, int subFeb, int federacao, String nomeRep) {
         SolrInputDocument doc = listToSolrInputDocument(com.cognitivabrasil.feb.solr.camposObaa.AllFields.getAll(o));
 
         doc.addField("obaa.general.identifier.entry", entry);

@@ -1,70 +1,99 @@
 package com.cognitivabrasil.feb.data.entities;
 
+import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.util.Informacoes;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import scala.remote;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  *
  * @author Marcos Nunes <marcosn@gmail.com>
+ * @author Paulo Schreiner
  */
 public class Consulta {
 
-    //TODO: deve ter transferida para spring.dtos
+    // TODO: deve ter transferida para spring.dtos
     private String consulta;
-    private Set<Integer> repositorios;
-    private Set<Integer> federacoes;
-    private Set<Integer> repSubfed;
     private String autor;
     private boolean rss;
     private int limit;
     private int offset;
     private int sizeResult;
     private String idioma;
-    private String format;
-    private String ageRange;
     private Boolean adultAge;
-    private String difficult;
-    public Boolean cost;
-    public Boolean hasVisual;
-    public Boolean hasAuditory;
-    public Boolean hasText;
-    public Boolean hasTactile;
+    
+    Map<String, List<? extends Object>> booleanParams; 
+
     public String size;
-    private final Map<String, String> languages;
+
     private static final Logger log = LoggerFactory.getLogger(Consulta.class);
 
     public Consulta() {
+        booleanParams = new HashMap<>();
+        
         rss = false;
         limit = 10;
         offset = 0;
         sizeResult = 0;
 
-        languages = new HashMap<>();
-        languages.put("", "Todos");
-        languages.put("pt", "Português");
-        languages.put("en", "Inglês");
-        languages.put("es", "Espanhol");
-        languages.put("fr", "Francês");
     }
 
+    /**
+     * Cria nova consulta com base em anterior.
+     * 
+     * @param consulta Consulta a ser duplicada
+     */
+    public Consulta(Consulta consulta) {
+        booleanParams = new HashMap<>();
+
+        rss = false;
+        limit = 10;
+        offset = 0;
+        sizeResult = 0;
+
+
+        setAutor(consulta.getAutor());
+        setConsulta(consulta.getConsulta());
+
+        setIdioma(consulta.getIdioma());
+        
+        for(String key : consulta.getBooleanParams().keySet()) {
+            booleanParams.put(key, (List<? extends Object>) ((ArrayList)consulta.getBooleanParams().get(key)).clone());
+            
+        }
+    }
+
+    protected Map<String, List<? extends Object>>  getBooleanParams() {
+        return booleanParams;
+    }
+
+    /**
+     * @return verdadeiro se a consulta não tiver nem consulta nem autor (mesmo 
+     * se ela tiver filtros).
+     */
     public boolean isEmpty() {
-        return isBlank(consulta) && isBlank(autor) && isBlank(idioma)
-                && isBlank(format) && isBlank(ageRange) && adultAge == null && isBlank(difficult)
-                && isBlank(size) && cost == null && hasVisual == null
-                && hasAuditory == null && hasText == null && hasTactile == null;
+        return isBlank(consulta) && isBlank(autor);
+    }
+
+    private <T extends Object> boolean isBlankList(List<T> format2) {
+        return format2 == null || format2.isEmpty();
     }
 
     public String getConsulta() {
@@ -72,12 +101,7 @@ public class Consulta {
     }
 
     public void setConsulta(String consulta) {
-        try {
-            byte[] bytes = consulta.getBytes();
-            this.consulta = new String(bytes, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            log.error("Não foi possível codificar em utf-8 a string: " + consulta, e);
-        }
+        this.consulta = consulta;
     }
 
     public String getAutor() {
@@ -88,40 +112,41 @@ public class Consulta {
         this.autor = autor;
     }
 
-    public Set<Integer> getFederacoes() {
-        if (federacoes == null) {
-            federacoes = new HashSet<>();
+    public List<Integer> getFederacoes() {
+        if (booleanParams.get("federacoes") == null) {
+            setFederacoes(new ArrayList<>());
         }
-        return federacoes;
+        return (List<Integer>) booleanParams.get("federacoes");
     }
 
-    public void setFederacoes(Set<Integer> federacoes) {
-        this.federacoes = federacoes;
+    public void setFederacoes(List<Integer> federacoes) {
+        booleanParams.put("federacoes", federacoes);
     }
 
-    public Set<Integer> getRepSubfed() {
-        if (repSubfed == null) {
-            repSubfed = new HashSet<>();
+    public List<Integer> getRepSubfed() {
+        if (booleanParams.get("repSubfed") == null) {
+            setRepSubfed(new ArrayList<>());
         }
-        return repSubfed;
+        return (List<Integer>) booleanParams.get("repSubfed");
     }
 
-    public void setRepSubfed(Set<Integer> repSubfed) {
-        //o form envia valoes em branco e o spring seta como null na lista, ai tem que remover
+    public void setRepSubfed(List<Integer> repSubfed) {
+        // o form envia valoes em branco e o spring seta como null na lista, ai tem que remover
         repSubfed.removeAll(Collections.singleton(null));
-        this.repSubfed = repSubfed;
+        booleanParams.put("repSubfed",repSubfed);
     }
 
-    public Set<Integer> getRepositorios() {
-        if (repositorios == null) {
-            repositorios = new HashSet<>();
+    public List<Integer> getRepositorios() {
+        if (booleanParams.get("repositorios") == null) {
+            setRepositorios(new ArrayList<>());
         }
-        return repositorios;
+        return (List<Integer>) booleanParams.get("repositorios");
     }
 
-    public void setRepositorios(Set<Integer> repositorios) {
+    public void setRepositorios(List<Integer> repositorios) {
         repositorios.removeAll(Collections.singleton(null));
-        this.repositorios = repositorios;
+
+        booleanParams.put("repositorios", repositorios);
     }
 
     public String getIdioma() {
@@ -132,37 +157,14 @@ public class Consulta {
         this.idioma = idioma;
     }
 
-    public String getFormat() {
-        return format;
+    public List<String> getFormat() {
+        return (List<String>)booleanParams.get("format");
     }
 
-    public void setFormat(String format) {
-        this.format = format;
+    public void setFormat(List<String> format) {
+        booleanParams.put("format", format);
     }
 
-    public String getAgeRange() {
-        if (isAdultAge() != null && isAdultAge()) {
-            return "19 - 100";
-        }
-        if (ageRange != null) {
-            return ageRange.replaceAll(" ", "").replaceFirst(":|,", " - ");
-        }
-        return ageRange;
-    }
-
-    public void setAgeRange(String ageRange) {
-        this.ageRange = ageRange;
-    }
-
-    public int getStartAgeRange() {
-        String[] start = getAgeRange().split(" - ");
-        return Integer.parseInt(start[0]);
-    }
-
-    public int getEndAgeRange() {
-        String[] start = getAgeRange().split(" - ");
-        return Integer.parseInt(start[1]);
-    }
 
     public Boolean isAdultAge() {
         return adultAge;
@@ -172,52 +174,84 @@ public class Consulta {
         this.adultAge = adultAge;
     }
 
-    public String getDifficult() {
-        return difficult;
+    public List<String> getDifficulty() {
+        return (List<String>)booleanParams.get("difficulty");
     }
 
-    public void setDifficult(String difficult) {
-        this.difficult = difficult;
+    public void setDifficulty(List<String> difficulty) {
+        booleanParams.put("difficulty", difficulty);
     }
 
-    public Boolean getCost() {
-        return cost;
+    public List<Boolean> getCost() {
+        return (List<Boolean>)booleanParams.get("cost");
     }
 
-    public void setCost(Boolean cost) {
-        this.cost = cost;
+    public void setCost(List<Boolean> cost) {
+        booleanParams.put("cost", cost);
+    }
+    public void addCost(boolean b) {
+    	if(getCost() == null) {
+    		setCost(new ArrayList<>());
+    	}
+    	getCost().add(b);
     }
 
-    public Boolean getHasVisual() {
-        return hasVisual;
+    public List<Boolean> getHasVisual() {
+        return (List<Boolean>)booleanParams.get("hasVisual");
     }
 
-    public void setHasVisual(Boolean hasVisual) {
-        this.hasVisual = hasVisual;
+    public void setHasVisual(List<Boolean> hasVisual) {
+        booleanParams.put("hasVisual", hasVisual);
+    }
+    public void addHasVisual(boolean b) {
+    	if(getHasVisual() == null) {
+    		setHasVisual(new ArrayList<>());
+    	}
+    	getHasVisual().add(b);
     }
 
-    public Boolean getHasAuditory() {
-        return hasAuditory;
+    public List<Boolean> getHasAuditory() {
+        return (List<Boolean>)booleanParams.get("hasAuditory");
     }
 
-    public void setHasAuditory(Boolean hasAuditory) {
-        this.hasAuditory = hasAuditory;
+    public void setHasAuditory(List<Boolean> hasAuditory) {
+        booleanParams.put("hasAuditory", hasAuditory);
+    }
+    public void addHasAuditory(boolean b) {
+    	if(getHasAuditory() == null) {
+    		setHasAuditory(new ArrayList<>());
+    	}
+    	getHasAuditory().add(b);
     }
 
-    public Boolean getHasText() {
-        return hasText;
+    public List<Boolean> getHasText() {
+        return (List<Boolean>)booleanParams.get("hasText");
     }
 
-    public void setHasText(Boolean hasText) {
-        this.hasText = hasText;
+    public void setHasText(List<Boolean> hasText) {
+        booleanParams.put("hasText", hasText);
+    }
+    
+    public void addHasText(boolean b) {
+    	if(getHasText() == null) {
+    		setHasText(new ArrayList<>());
+    	}
+    	getHasText().add(b);
     }
 
-    public Boolean getHasTactile() {
-        return hasTactile;
+    public List<Boolean> getHasTactile() {
+        return (List<Boolean>)booleanParams.get("hasTactile");
+    }
+    
+    public void addHasTactile(boolean b) {
+    	if(getHasTactile() == null) {
+    		setHasTactile(new ArrayList<>());
+    	}
+    	getHasTactile().add(b);
     }
 
-    public void setHasTactile(Boolean hasTactile) {
-        this.hasTactile = hasTactile;
+    public void setHasTactile(List<Boolean> hasTactile) {
+        booleanParams.put("hasTactile", hasTactile);
     }
 
     public String getSize() {
@@ -253,7 +287,7 @@ public class Consulta {
      * Valor inicial para busca. Utilizado para pagina&ccedil;&atilde;o dos resultados
      *
      * @param limit Valor inicial para busca, inicio = 5 informa que necessita dos resultados da consulta apartir do
-     * resultado 5.
+     *            resultado 5.
      */
     public void setLimit(int limit) {
         this.limit = limit;
@@ -284,26 +318,28 @@ public class Consulta {
         }
     }
 
+    /**
+     * @deprecated use {@link ResultadoBusca#getResultSize()} 
+     */
+    @Deprecated
     public int getSizeResult() {
         return sizeResult;
     }
 
+    /**
+     * @deprecated use {@link ResultadoBusca#setResultSize(int)}
+     */
+    @Deprecated
     public void setSizeResult(int sizeResult) {
         this.sizeResult = sizeResult;
-    }
-
-    public Map<String, String> getLanguages() {
-        return languages;
-    }
-
-    public Map<String, String> getMimeTypes() {
-        return Informacoes.getMimeType();
     }
 
     /**
      * @return the consulta params in an URL encoded form
      */
     public String getUrlEncoded() {
+        log.debug("getUrlEncoded {}", this);
+        
         try {
             String encoded = "consulta=" + URLEncoder.encode(consulta, "UTF-8");
             if (isNotBlank(autor)) {
@@ -312,50 +348,76 @@ public class Consulta {
             if (isNotBlank(idioma)) {
                 encoded += "&idioma=" + URLEncoder.encode(idioma, "UTF-8");
             }
-            if (isNotBlank(format)) {
-                encoded += "&format=" + URLEncoder.encode(format, "UTF-8");
-            }
-            if (isNotBlank(ageRange)) {
-                encoded += "&ageRange=" + URLEncoder.encode(ageRange, "UTF-8");
-            }
-            if (adultAge != null) {
-                encoded += "&adultAge=" + URLEncoder.encode(adultAge.toString(), "UTF-8");
-            }
-            if (isNotBlank(difficult)) {
-                encoded += "&difficult=" + URLEncoder.encode(difficult, "UTF-8");
-            }
             if (isNotBlank(size)) {
                 encoded += "&size=" + URLEncoder.encode(size, "UTF-8");
             }
-            if (cost != null) {
-                encoded += "&cost=" + URLEncoder.encode(cost.toString(), "UTF-8");
-            }
-            if (hasVisual != null) {
-                encoded += "&hasVisual=" + URLEncoder.encode(hasVisual.toString(), "UTF-8");
-            }
-            if (hasAuditory != null) {
-                encoded += "&hasAuditory=" + URLEncoder.encode(hasAuditory.toString(), "UTF-8");
-            }
-            if (hasText != null) {
-                encoded += "&hasText=" + URLEncoder.encode(hasText.toString(), "UTF-8");
-            }
-            if (hasTactile != null) {
-                encoded += "&hasTactile=" + URLEncoder.encode(hasTactile.toString(), "UTF-8");
-            }
-            for (Integer i : getRepositorios()) {
-                encoded += "&repositorios=" + URLEncoder.encode(i.toString(), "UTF-8");
-            }
-            for (Integer i : getFederacoes()) {
-                encoded += "&federacoes=" + URLEncoder.encode(i.toString(), "UTF-8");
-            }
-            for (Integer i : getRepSubfed()) {
-                encoded += "&repSubfed=" + URLEncoder.encode(i.toString(), "UTF-8");
+            
+            for(String key : booleanParams.keySet()) {
+                if (!isBlankList(booleanParams.get(key))) {
+                    for(Object v : booleanParams.get(key)) {
+                        encoded += "&" + key + "=" + URLEncoder.encode(v.toString(), "UTF-8");
+                    }
+                }
             }
 
             return encoded;
-        } catch (UnsupportedEncodingException e) {
+        }
+        catch (UnsupportedEncodingException e) {
             // UTF 8 is always supported
             throw new RuntimeException("FATAL", e);
         }
+    }
+    
+    public void add(String fieldName, Object value) {
+        addFacetFilter(fieldName, value);
+    }
+
+    public void addFacetFilter(String fieldName, Object value) {
+           
+        if(booleanParams.get(fieldName) == null) {
+            booleanParams.put(fieldName , new ArrayList<>());
+        }
+        List<Object> l = (List<Object>) booleanParams.get(fieldName);
+        l.add(value);
+    }
+
+    public void removeFacetFilter(String fieldName, String value) {
+        if(booleanParams.get(fieldName) !=null) {
+            List<Object> l = new ArrayList<>();
+            for(Object o : booleanParams.get(fieldName)) {
+                if(!o.toString().equals(value)) {
+                    l.add(o);
+                }
+            }
+            booleanParams.put(fieldName, l);
+        }   
+    }
+
+    public boolean isActive(String fieldName, String value) {
+        if(booleanParams.get(fieldName) == null) {
+            return false;
+        }
+        else {
+            return booleanParams.get(fieldName).stream().anyMatch(o -> o.toString().equals(value));
+        }
+    }
+
+    public void addFormat(String f) {
+        if (getFormat() == null) {
+            setFormat(new ArrayList<String>());
+        }
+        getFormat().add(f);
+    }
+
+    public List<Integer> getAgeRangeInt() {
+        return (List<Integer>)booleanParams.get("ageRangeInt");
+    }
+    
+    public void setAgeRangeInt(List<Integer> ar) {
+        booleanParams.put("ageRangeInt",ar);
+    }
+
+    public void addAgeRangeInt(Integer i) {
+        add("ageRangeInt", i);
     }
 }

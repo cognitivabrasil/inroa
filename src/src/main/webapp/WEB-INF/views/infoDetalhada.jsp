@@ -8,6 +8,7 @@
 <!DOCTYPE HTML>
 
 <c:url var="images" value="/imagens" />
+<c:url var="test" value="" />
 
 <html lang="pt-BR">
     <head>
@@ -29,10 +30,10 @@
         <jsp:include page="fragments/cabecalho.jsp"/>
 
 
-        <div class="container">
+        <div class="container">                        
             <div class="row">
                 <div class="col-lg-12 text-right">
-                    
+
                     <span>
                         <g:plusone size="medium"></g:plusone>
                     </span>
@@ -48,7 +49,7 @@
                     </span>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tituloPrincipal well shadow">
@@ -76,7 +77,7 @@
             </div>
         </div>
 
-         <!--Modal--> 
+        <!--Modal--> 
         <div class="modal fade in" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -92,8 +93,8 @@
                 </div>
             </div>
         </div>
-         
-         <!-- Footer -->
+
+        <!-- Footer -->
         <div class="footer">
             <div class="container">
                 <div class="row">
@@ -116,9 +117,9 @@
                 </div>
             </div>
         </div>
-                
+
         <jsp:include page="fragments/scripts.jsp"/>
-        
+
         <c:url var="showJs" value="/scripts/showMetadata.js" />
         <script type="text/javascript" src="${showJs}" ></script>
 
@@ -130,18 +131,17 @@
         </script>
 
         <div id="fb-root"></div>
-        <script>
-            (function (d, s, id) {
+        <script>(function (d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id))
                     return;
                 js = d.createElement(s);
                 js.id = id;
-                js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1";
+                js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.0";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-        </script>
-        
+                </script>
+
         <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>
         <jsp:include page="fragments/googleAnalytics.jsp">
             <jsp:param name="analyticsId" value="${analyticsId}" />

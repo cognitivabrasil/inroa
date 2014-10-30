@@ -1,7 +1,10 @@
 package com.cognitivabrasil.feb.data.entities;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 /*
@@ -38,15 +41,9 @@ public class ConsultaTest {
     public void testNotEmpty() {
         Consulta c = new Consulta();
         c.setSize("2");
-        assertThat(c.isEmpty(), equalTo(false));
+        assertThat(c.isEmpty(), equalTo(true));
     }
 
-    @Test
-    public void testNotEmpty2() {
-        Consulta c = new Consulta();
-        c.setAgeRange("age");
-        assertThat(c.isEmpty(), equalTo(false));
-    }
 
     @Test
     public void testNotEmpty3() {
@@ -65,85 +62,173 @@ public class ConsultaTest {
     @Test
     public void testNotEmpty5() {
         Consulta c = new Consulta();
-        c.setCost(true);
-        assertThat(c.isEmpty(), equalTo(false));
+        c.addCost(true);
+        assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty6() {
         Consulta c = new Consulta();
-        c.setDifficult("dificil");
-        assertThat(c.isEmpty(), equalTo(false));
+        c.addFacetFilter("difficulty", "dificil");
+        assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty7() {
         Consulta c = new Consulta();
-        c.setFormat(".pdf");
-        assertThat(c.isEmpty(), equalTo(false));
+        c.addFormat(".pdf");
+        assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty8() {
         Consulta c = new Consulta();
-        c.setHasAuditory(true);
-        assertThat(c.isEmpty(), equalTo(false));
+        c.addHasAuditory(true);
+        assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty9() {
         Consulta c = new Consulta();
-        c.setHasText(Boolean.FALSE);
-        assertThat(c.isEmpty(), equalTo(false));
+        c.addHasText(Boolean.FALSE);
+        assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty10() {
         Consulta c = new Consulta();
-        c.setHasVisual(true);
-        assertThat(c.isEmpty(), equalTo(false));
+        c.addHasVisual(true);
+        assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty11() {
         Consulta c = new Consulta();
         c.setIdioma("pt-BR");
-        assertThat(c.isEmpty(), equalTo(false));
+        assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty12() {
         Consulta c = new Consulta();
         c.setAdultAge(Boolean.TRUE);
-        assertThat(c.isEmpty(), equalTo(false));
+        assertThat(c.isEmpty(), equalTo(true));
+    }
+    
+      
+    @Test
+    public void testGetUrlEncodedSimple() {
+        Consulta c = new Consulta();
+        c.setConsulta("matemática");
+        
+        assertThat(c.getUrlEncoded(), containsString("consulta=matem"));
     }
     
     @Test
-    public void testFormatAgeRange(){
+    public void testHasAuditory() {
         Consulta c = new Consulta();
-        c.setAgeRange("2:8");
+        c.setConsulta("bla");
+        c.addHasAuditory(true);
         
-        assertThat(c.getAgeRange(), equalTo("2 - 8"));
-        
-        c.setAgeRange("2 : 8");
-        
-        assertThat(c.getAgeRange(), equalTo("2 - 8"));
-        
-        c.setAgeRange(" 2 : 8 ");
-        
-        assertThat(c.getAgeRange(), equalTo("2 - 8"));
-        
-        c.setAgeRange(" 2,8 ");
-        
-        assertThat(c.getAgeRange(), equalTo("2 - 8"));
+        assertThat(c.getUrlEncoded(), containsString("hasAuditory=true"));
     }
     
     @Test
-    public void testGetStartAgeRange(){
+    public void testHasVisual() {
         Consulta c = new Consulta();
-        c.setAgeRange("2:8");
+        c.setConsulta("bla");
+        c.addHasVisual(false);
         
-        assertThat(c.getStartAgeRange(), equalTo(2));
-        assertThat(c.getEndAgeRange(), equalTo(8));
+        assertThat(c.getUrlEncoded(), containsString("hasVisual=false"));
+    }
+    
+    @Test
+    public void testCost() {
+        Consulta c = new Consulta();
+        c.setConsulta("bla");
+        c.addCost(true);
+        
+        assertThat(c.getUrlEncoded(), containsString("cost=true"));
+    }
+    
+    @Test
+    public void testAgeRange() {
+        Consulta c = new Consulta();
+        c.setConsulta("bla");
+        c.addAgeRangeInt(12);
+        
+        assertThat(c.getUrlEncoded(), containsString("ageRangeInt=12"));
+    }
+    
+    @Test
+    public void testHasAuditoryNotSet() {
+        Consulta c = new Consulta();
+        c.setConsulta("bla");
+        
+        assertThat(c.getUrlEncoded(), not(containsString("hasAuditory")));
+    }
+    
+    @Test
+    public void testIsActive() {
+        Consulta c = new Consulta();
+        c.setConsulta("bla");
+        
+        c.addCost(true);
+        c.addCost(false);
+        c.addFormat("bogus");
+        
+        assertTrue(c.isActive("cost", "true"));
+        assertTrue(c.isActive("cost", "false"));
+        assertTrue(c.isActive("format", "bogus"));
+
+        
+        assertFalse(c.isActive("hasvisual", "true"));
+        assertFalse(c.isActive("format", "bogus2"));
+    }
+    
+    @Test
+    public void removeFacetFilterTest() {
+        Consulta c = new Consulta();
+        c.setConsulta("bla");
+        
+        c.addCost(true);
+        c.addCost(false);
+        c.addFormat("bogus");
+        
+        c.removeFacetFilter("cost", "false");
+        c.removeFacetFilter("format", "bogus");
+        
+        assertTrue(c.isActive("cost", "true"));
+        
+        assertFalse(c.isActive("cost", "false"));
+        assertFalse(c.isActive("format", "bogus"));
+    }
+    
+    @Test
+    public void copyWorks() {
+        Consulta c = new Consulta();
+        c.setConsulta("bla");
+        
+        c.addCost(true);
+        c.addCost(false);
+        c.addFormat("bogus");
+        
+        Consulta c2 = new Consulta(c);
+        
+        c2.removeFacetFilter("format", "bogus");
+        c2.addFacetFilter("format", "meuFormat");
+        
+        assertTrue(c.isActive("format", "bogus"));
+        assertFalse(c.isActive("format", "meuFormat"));
+    }
+    
+    @Test
+    public void testAddRepository() {
+        Consulta c = new Consulta();
+        c.setConsulta("bla");
+
+        c.add("repositorios", 1);
+        
+        assertThat(c.getUrlEncoded(), containsString("repositorios=1"));
     }
 }

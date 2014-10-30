@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,7 +31,6 @@
         <jsp:include page="fragments/cabecalho.jsp"/>
 
         <div class="container">
-
             <div class="row">
                 <div class="col-lg-12">
                     <c:if test="${!empty erro}">
@@ -48,7 +49,7 @@
                             </div>
 
                             <span class="input-group-btn hidden-xs">
-                                <button class="btn btn-success" type="submit">
+                                <button id="busca" class="btn btn-success" type="submit">
                                     <i class="fa fa-search visible-lg"> Buscar</i>
                                     <i class="fa fa-search visible-md visible-sm"></i>
                                 </button>
@@ -92,9 +93,14 @@
         </div>
 
         <jsp:include page="fragments/scripts.jsp"/>
+        <script language="javascript" type="text/javascript" src='${scripts}/vendor/typeahead.bundle.js'></script>
+        
 
         <!--Custom JS-->
         <script language="javascript" type="text/javascript" src='${scripts}/toggleSearch.js'></script>
+        
+        <script language="javascript" type="text/javascript" src='${scripts}/autosuggest.js'></script>
+        
 
         
         <jsp:include page="fragments/scriptsBarraGoverno.jsp"/>

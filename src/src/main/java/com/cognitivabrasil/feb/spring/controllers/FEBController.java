@@ -7,6 +7,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -38,12 +39,15 @@ import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
+import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+
 import org.apache.solr.client.solrj.SolrServerException;
 
 /**
@@ -158,6 +162,23 @@ public final class FEBController implements ErrorController {
             return "infoDetalhada";
         }
     }
+    
+    @RequestMapping("/suggestion")
+    @ResponseBody
+    public String getSuggestions(@RequestParam("query") String query) {
+        List<String> auto = recuperador.autosuggest(query);
+        
+        String json = "[ ";
+        
+        
+         
+        json += auto.stream().map(val -> "{ \"value\": \"" + val + "\" } ").collect(Collectors.joining(", "));
+        
+        
+        json += " ]";
+        
+        return json;
+    }
 
     @RequestMapping("/objetos/{id}/json")
     public @ResponseBody
@@ -189,9 +210,12 @@ public final class FEBController implements ErrorController {
                     consulta.setOffsetByPage(page);
                 }
 
-                List<Document> docs = recuperador.busca(consulta);
+                ResultadoBusca rBusca = recuperador.busca(consulta);
+                List<Document> docs = rBusca.getDocuments();
                 log.trace("Carregou " + docs.size() + " documentos.");
+                model.addAttribute("results", rBusca);
                 model.addAttribute("documentos", docs);
+                model.addAttribute("facets", rBusca.getFacets());
 
                 if (!StringUtils.isEmpty(cookie)) {
                     searchesDao.save(consulta.getConsulta(), new Date());
@@ -232,52 +256,7 @@ public final class FEBController implements ErrorController {
         return "buscaAvancada";
     }
 
-    @RequestMapping(value = "/resultadoav")
-    public String consultaAvancada(
-            HttpServletRequest request,
-            @ModelAttribute("buscaModel") Consulta consulta,
-            BindingResult result, Model model,
-            @RequestParam(required = false) Integer page,
-            @CookieValue(value = "feb.cookie", required = false) String cookie) {
-        model.addAttribute("buscaModel", consulta);
-        buscaValidator.validate(consulta, result);
-        if (result.hasErrors()) {
-            model.addAttribute("repositories", repDao.getAll());
-            model.addAttribute("federations", subDao.getAll());
-            return "buscaAvancada";
-        } else {
-            try {
-                if (page == null) {
-                    page = 0;
-                } else {
-                    consulta.setOffsetByPage(page);
-                }
 
-                List<Document> docs = recuperador.buscaAvancada(consulta);
-                model.addAttribute("documentos", docs);
-                PaginationDto pagination = new PaginationDto(consulta.getLimit(), consulta.getSizeResult(), page);
-                model.addAttribute("pagination", pagination);
-                model.addAttribute("avancada", true);
-                if (!StringUtils.isEmpty(cookie)) {
-                    searchesDao.save(consulta.getConsulta(), new Date());
-                }
-                return "resultado";
-            } catch (SolrServerException e) {
-                model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                //TODO: erro GRAVE, deve enviar um aviso ao administrador.
-
-                log.error("Erro ao efetuar a consulta no Solr, possivelmente o serviço está parado. ", e);
-                model.addAttribute("repositories", repDao.getAll());
-                model.addAttribute("federations", subDao.getAll());
-                model.addAttribute("buscaModel", new Consulta());
-                return "buscaAvancada";
-            } catch (Exception e) {
-                model.addAttribute("erro", "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                log.error("FEB ERRO: Erro ao efetuar a consula.", e);
-                return "buscaAvancada";
-            }
-        }
-    }
 
     /**
      * Apenas encaminha para a tela de login.
@@ -339,7 +318,7 @@ public final class FEBController implements ErrorController {
                 if (autor != null) {
                     c.setAutor(autor);
                 }
-                List<Document> docs = recuperador.busca(c);
+                List<Document> docs = recuperador.busca(c).getDocuments();
 
                 xml += "<ListRecords "
                         + "query=\"" + c.getConsulta() + "\" ";

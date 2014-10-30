@@ -1,31 +1,38 @@
 package com.cognitivabrasil.feb.ferramentaBusca;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.solr.query.QuerySolr;
-import com.cognitivabrasil.feb.spring.FebConfig;
-
+import java.util.ArrayList;
 import java.util.List;
-import org.apache.solr.client.solrj.SolrServerException;
+import java.util.stream.Collectors;
 
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.solr.query.Facet;
+import com.cognitivabrasil.feb.solr.query.QuerySolr;
+import com.cognitivabrasil.feb.spring.FebConfig;
+
 /**
  * Recuperador pelo SOLR
  *
  * @author Daniel Epstein
+ * @author Paulo Schreiner
  */
 @Service
 public class Recuperador {
 
     private static final Logger log = LoggerFactory.getLogger(Recuperador.class);
     private static final int rssSizeLimit = 100;
-
+    
     @Autowired
-    private FebConfig config;
+    private QuerySolr q;
     
 
     /**
@@ -35,7 +42,7 @@ public class Recuperador {
      * @return Lista de documentos reais que correspondem ao resultado da busca
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?) 
      */
-    public List<Document> busca(Consulta consulta) throws SolrServerException {
+    public ResultadoBusca busca(Consulta consulta) throws SolrServerException {
 
         List<Document> resultadoConsulta;
         int limit;
@@ -45,42 +52,50 @@ public class Recuperador {
             limit = consulta.getLimit();
         }
 
-        QuerySolr q = new QuerySolr(config);
         log.debug(consulta.getConsulta());
-        q.pesquisaSimples(consulta.getConsulta(), consulta.getOffset(), limit);
-        consulta.setSizeResult(q.getNumDocs());
-        resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), limit);
+        QueryResponse response = q.pesquisaCompleta(consulta, consulta.getOffset(), limit);
+        consulta.setSizeResult(QuerySolr.getNumDocs(response));
+        resultadoConsulta = QuerySolr.getDocumentosReais(response, consulta.getOffset(), limit);
         log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
+        
+        ResultadoBusca r = new ResultadoBusca();
+        r.setDocuments(resultadoConsulta);
+        
+        List<FacetField> facets = response.getFacetFields();
+        
+        List<Facet> facetsProcessed = facets.stream().map(f -> new Facet(f, consulta)).collect(Collectors.toList());
+        
+        r.setSpellCheckResponse(response.getSpellCheckResponse());
+           
+        r.setFacets(facetsProcessed);
+        
+        r.setConsulta(consulta);
+        
+        r.setResultSize(QuerySolr.getNumDocs(response));
 
-        return resultadoConsulta;
+        return r;
 
     }
-
-    /**
-     * Busca avancada que sera enviada para o SOLR
-     *
-     * @param consulta Consulta realizada
-     * @return Lista de documentos reais que correspondem ao resultado da busca
-     */
-    public List<Document> buscaAvancada(Consulta consulta) throws SolrServerException {
-
-        List<Document> resultadoConsulta;
-
-        int limit;
-        if (consulta.isRss()) {
-            limit = rssSizeLimit;
-        } else {
-            limit = consulta.getLimit();
+    
+    public List<String> autosuggest(String partial) {
+        log.debug("Autosuggest for {}", partial);
+        
+        List<String> auto = new ArrayList<>();
+        
+        QueryResponse r = q.autosuggest(partial);
+        
+        SpellCheckResponse spellCheckResponse = r.getSpellCheckResponse();
+        if (spellCheckResponse != null && (!spellCheckResponse.isCorrectlySpelled())) {
+            for (org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion suggestion : r.getSpellCheckResponse().getSuggestions()) {
+                log.debug("Got suggestions: {}", suggestion.getAlternatives());
+                auto.addAll(suggestion.getAlternatives());
+            }
         }
 
-        QuerySolr q = new QuerySolr(config);
-        log.debug(consulta.getConsulta());
-        q.pesquisaCompleta(consulta, consulta.getOffset(), limit);
-        consulta.setSizeResult(q.getNumDocs());
-        resultadoConsulta = q.getDocumentosReais(consulta.getOffset(), limit);
-        log.debug("Numero de resultados a serem apresentados: " + resultadoConsulta.size());
-
-        return resultadoConsulta;
-
+        
+        return auto;
     }
+
+
+
 }

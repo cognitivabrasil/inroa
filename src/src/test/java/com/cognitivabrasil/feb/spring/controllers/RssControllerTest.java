@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.solr.client.solrj.SolrServerException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +41,7 @@ import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.WebConfig;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
-import org.apache.solr.client.solrj.SolrServerException;
+import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class, WebConfig.class })
@@ -62,7 +63,7 @@ public class RssControllerTest extends AbstractTransactionalJUnit4SpringContextT
     private MockMvc mockMvc;
 
     @Before
-    public void setup() throws SolrServerException{
+    public void setup() throws SolrServerException {
         MockitoAnnotations.initMocks(this);
         
         List<Document> items = new ArrayList<>();
@@ -75,8 +76,10 @@ public class RssControllerTest extends AbstractTransactionalJUnit4SpringContextT
         d.setMetadata(metadata);
         
         items.add(d);
+        ResultadoBusca r = new ResultadoBusca();
+        r.setDocuments(items);
         
-        when(recuperador.buscaAvancada(any())).thenReturn(items);
+        when(recuperador.busca(any())).thenReturn(r);
         
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
