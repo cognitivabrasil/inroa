@@ -6,33 +6,41 @@ import org.apache.solr.common.SolrInputDocument;
 
 import cognitivabrasil.obaa.OBAA;
 
+/**
+ * Métodos utilitários para converter objetos OBAA em documentos que possam ser enviados
+ * para o Solr.
+ * 
+ * @author Daniel Esptein
+ * @author Paulo Schreiner
+ */
 public class Converter {
+    
+    private Converter() {
+        
+    }
 
     /**
      * Converte uma Lista de lista de strings para formato SORL (cria um unico
-     * documento com esse parametro)
+     * documento com esse parametro).
      *
      * @param objeto Lista de lista de strings no formatp <field:texto>
      * @return O documento SOLR
      */
     public static SolrInputDocument listToSolrInputDocument(List<List<String>> objeto) {
         SolrInputDocument documento = new SolrInputDocument();
-
-        for (int i = 0; i < objeto.size(); i++) {
-            for (int j = 1; j < objeto.get(i).size(); j++) {
-                documento.addField(objeto.get(i).get(0), objeto.get(i).get(j));
+        
+        for(List<String> field : objeto) {
+            for (int j = 1; j < field.size(); j++) {
+                documento.addField(field.get(0), field.get(j));
             }
         }
+
         return documento;
     }
 
 
-    public static List<List<String>> OBAAToList(OBAA o) {
-        return com.cognitivabrasil.feb.solr.camposObaa.AllFields.getAll(o);
-    }
-
     /**
-     * Converte um objeto do tipo OBAA para um documento SOLR
+     * Converte um objeto do tipo OBAA para um documento SOLR.
      *
      * @param o Objeto Obaa a ser convertido
      * @param entry String com o Entry do objeto (esse entry pode ser encontrado
@@ -45,9 +53,10 @@ public class Converter {
      * nenhum, passar o valor -1)
      * @param federacao Federacao ao qual o objeto pertence (Se nao pertencer a
      * nenhum, passar o valor -1)
+     * @param nomeRep nome do repositório
      * @return Documento SOLR pronto para ser indexado
      */
-    public static SolrInputDocument OBAAToSolrInputDocument(OBAA o, String entry, int id, int rep, int subFeb, int federacao, String nomeRep) {
+    public static SolrInputDocument obaaToSolr(OBAA o, String entry, int id, int rep, int subFeb, int federacao, String nomeRep) {
         SolrInputDocument doc = listToSolrInputDocument(com.cognitivabrasil.feb.solr.camposObaa.AllFields.getAll(o));
 
         doc.addField("obaa.general.identifier.entry", entry);

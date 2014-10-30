@@ -26,19 +26,19 @@ public class FacetCount {
     private final String fieldName;
     private final Long count;
 
-    private final boolean isActive;
+    private final boolean active;
     
-    private static final Map<String, String> fieldShortNameTranslation;
+    private static final Map<String, String> FIELD_NAME_TRANSLATION;
     
     static {
-        fieldShortNameTranslation = new HashMap<>();
-        fieldShortNameTranslation.put("obaa.accessibility.resourcedescription.primary.hasvisual", "hasVisual");
-        fieldShortNameTranslation.put("obaa.accessibility.resourcedescription.primary.hasauditory", "hasAuditory");
-        fieldShortNameTranslation.put("obaa.accessibility.resourcedescription.primary.hastext", "hasText");
-        fieldShortNameTranslation.put("obaa.accessibility.resourcedescription.primary.hastactile", "hasTactile");
-        fieldShortNameTranslation.put("obaa.educational.typicalagerangeint", "ageRangeInt");
+        FIELD_NAME_TRANSLATION = new HashMap<>();
+        FIELD_NAME_TRANSLATION.put("obaa.accessibility.resourcedescription.primary.hasvisual", "hasVisual");
+        FIELD_NAME_TRANSLATION.put("obaa.accessibility.resourcedescription.primary.hasauditory", "hasAuditory");
+        FIELD_NAME_TRANSLATION.put("obaa.accessibility.resourcedescription.primary.hastext", "hasText");
+        FIELD_NAME_TRANSLATION.put("obaa.accessibility.resourcedescription.primary.hastactile", "hasTactile");
+        FIELD_NAME_TRANSLATION.put("obaa.educational.typicalagerangeint", "ageRangeInt");
 
-        fieldShortNameTranslation.put("obaa.subFederacao", "repSubfed");
+        FIELD_NAME_TRANSLATION.put("obaa.subFederacao", "repSubfed");
 
     }
     
@@ -54,7 +54,7 @@ public class FacetCount {
         
                 
         
-        isActive = consulta.isActive(this.fieldName, name);
+        active = consulta.isActive(this.fieldName, name);
                 
         setNewConsulta(new Consulta(consulta));
     }
@@ -68,8 +68,8 @@ public class FacetCount {
      * @return o nome "curto" do campo, pe, obaa.technical.format retorna "format"
      */
     private String getShortName(String fieldName2) {
-        if(fieldShortNameTranslation.get(fieldName2) != null) {
-            return fieldShortNameTranslation.get(fieldName2);
+        if(FIELD_NAME_TRANSLATION.get(fieldName2) != null) {
+            return FIELD_NAME_TRANSLATION.get(fieldName2);
         }
         
         String[] r = fieldName2.split("\\.");
@@ -81,7 +81,7 @@ public class FacetCount {
      * @param c consulta atual
      */
     private void setNewConsulta(Consulta c) {
-        if(isActive) {
+        if(active) {
             c.removeFacetFilter(fieldName, name);
         }
         else {
@@ -118,7 +118,7 @@ public class FacetCount {
      * @return true caso o facet esteja ativado, falso caso contrário.
      */
     public boolean isActive() {
-        return isActive;
+        return active;
 
     }
 

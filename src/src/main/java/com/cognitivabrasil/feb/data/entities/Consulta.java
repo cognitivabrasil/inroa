@@ -1,26 +1,20 @@
 package com.cognitivabrasil.feb.data.entities;
 
-import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
-import com.cognitivabrasil.feb.util.Informacoes;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import scala.remote;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
-import static org.apache.commons.lang3.StringUtils.isBlank;
-import static org.hamcrest.Matchers.equalTo;
+import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 
 /**
  *
@@ -38,32 +32,36 @@ public class Consulta {
     private int sizeResult;
     private String idioma;
     private Boolean adultAge;
+    private String size;
+
     
-    private Map<String, List<? extends Object>> booleanParams; 
-    private static final Map<String, Class> validParams; 
+    private Map<String, List<? extends Object>> params; 
+    private static final Map<String, Class> VALID_PARAMS; 
     
     static {
-        validParams = new HashMap<>(); 
-        validParams.put("hasVisual", Boolean.class);
-        validParams.put("hasAuditory", Boolean.class);
-        validParams.put("hasText", Boolean.class);
-        validParams.put("hasTactile", Boolean.class);
-        validParams.put("cost", Boolean.class);
-        validParams.put("format", String.class);
-        validParams.put("difficulty", String.class);
-        validParams.put("ageRangeInt", Integer.class);
-        validParams.put("federacoes", Integer.class);
-        validParams.put("repSubfed", Integer.class);
-        validParams.put("repositorios", Integer.class);
+        VALID_PARAMS = new HashMap<>(); 
+        VALID_PARAMS.put("hasVisual", Boolean.class);
+        VALID_PARAMS.put("hasAuditory", Boolean.class);
+        VALID_PARAMS.put("hasText", Boolean.class);
+        VALID_PARAMS.put("hasTactile", Boolean.class);
+        VALID_PARAMS.put("cost", Boolean.class);
+        VALID_PARAMS.put("format", String.class);
+        VALID_PARAMS.put("difficulty", String.class);
+        VALID_PARAMS.put("ageRangeInt", Integer.class);
+        VALID_PARAMS.put("federacoes", Integer.class);
+        VALID_PARAMS.put("repSubfed", Integer.class);
+        VALID_PARAMS.put("repositorios", Integer.class);
     }
 
 
-    public String size;
 
     private static final Logger log = LoggerFactory.getLogger(Consulta.class);
 
+    /**
+     * Constrói uma nova consulta.
+     */
     public Consulta() {
-        booleanParams = new HashMap<>();
+        params = new HashMap<>();
         
         rss = false;
         limit = 10;
@@ -78,7 +76,7 @@ public class Consulta {
      * @param consulta Consulta a ser duplicada
      */
     public Consulta(Consulta consulta) {
-        booleanParams = new HashMap<>();
+        params = new HashMap<>();
 
         rss = false;
         limit = 10;
@@ -91,14 +89,14 @@ public class Consulta {
 
         setIdioma(consulta.getIdioma());
         
-        for(String key : consulta.getBooleanParams().keySet()) {
-            booleanParams.put(key, (List<? extends Object>) ((ArrayList)consulta.getBooleanParams().get(key)).clone());
+        for(String key : consulta.getParams().keySet()) {
+            params.put(key, (List<? extends Object>) ((ArrayList)consulta.getParams().get(key)).clone());
             
         }
     }
 
-    protected Map<String, List<? extends Object>>  getBooleanParams() {
-        return booleanParams;
+    protected Map<String, List<? extends Object>>  getParams() {
+        return params;
     }
 
     /**
@@ -130,40 +128,40 @@ public class Consulta {
     }
 
     public List<Integer> getFederacoes() {
-        if (booleanParams.get("federacoes") == null) {
+        if (params.get("federacoes") == null) {
             setFederacoes(new ArrayList<>());
         }
-        return (List<Integer>) booleanParams.get("federacoes");
+        return (List<Integer>) params.get("federacoes");
     }
 
     public void setFederacoes(List<Integer> federacoes) {
-        booleanParams.put("federacoes", federacoes);
+        params.put("federacoes", federacoes);
     }
 
     public List<Integer> getRepSubfed() {
-        if (booleanParams.get("repSubfed") == null) {
+        if (params.get("repSubfed") == null) {
             setRepSubfed(new ArrayList<>());
         }
-        return (List<Integer>) booleanParams.get("repSubfed");
+        return (List<Integer>) params.get("repSubfed");
     }
 
     public void setRepSubfed(List<Integer> repSubfed) {
         // o form envia valoes em branco e o spring seta como null na lista, ai tem que remover
         repSubfed.removeAll(Collections.singleton(null));
-        booleanParams.put("repSubfed",repSubfed);
+        params.put("repSubfed",repSubfed);
     }
 
     public List<Integer> getRepositorios() {
-        if (booleanParams.get("repositorios") == null) {
+        if (params.get("repositorios") == null) {
             setRepositorios(new ArrayList<>());
         }
-        return (List<Integer>) booleanParams.get("repositorios");
+        return (List<Integer>) params.get("repositorios");
     }
 
     public void setRepositorios(List<Integer> repositorios) {
         repositorios.removeAll(Collections.singleton(null));
 
-        booleanParams.put("repositorios", repositorios);
+        params.put("repositorios", repositorios);
     }
 
     public String getIdioma() {
@@ -175,11 +173,11 @@ public class Consulta {
     }
 
     public List<String> getFormat() {
-        return (List<String>)booleanParams.get("format");
+        return (List<String>)params.get("format");
     }
 
     public void setFormat(List<String> format) {
-        booleanParams.put("format", format);
+        params.put("format", format);
     }
 
 
@@ -192,19 +190,19 @@ public class Consulta {
     }
 
     public List<String> getDifficulty() {
-        return (List<String>)booleanParams.get("difficulty");
+        return (List<String>)params.get("difficulty");
     }
 
     public void setDifficulty(List<String> difficulty) {
-        booleanParams.put("difficulty", difficulty);
+        params.put("difficulty", difficulty);
     }
 
     public List<Boolean> getCost() {
-        return (List<Boolean>)booleanParams.get("cost");
+        return (List<Boolean>)params.get("cost");
     }
 
     public void setCost(List<Boolean> cost) {
-        booleanParams.put("cost", cost);
+        params.put("cost", cost);
     }
     public void addCost(boolean b) {
     	if(getCost() == null) {
@@ -214,11 +212,11 @@ public class Consulta {
     }
 
     public List<Boolean> getHasVisual() {
-        return (List<Boolean>)booleanParams.get("hasVisual");
+        return (List<Boolean>)params.get("hasVisual");
     }
 
     public void setHasVisual(List<Boolean> hasVisual) {
-        booleanParams.put("hasVisual", hasVisual);
+        params.put("hasVisual", hasVisual);
     }
     public void addHasVisual(boolean b) {
     	if(getHasVisual() == null) {
@@ -228,11 +226,11 @@ public class Consulta {
     }
 
     public List<Boolean> getHasAuditory() {
-        return (List<Boolean>)booleanParams.get("hasAuditory");
+        return (List<Boolean>)params.get("hasAuditory");
     }
 
     public void setHasAuditory(List<Boolean> hasAuditory) {
-        booleanParams.put("hasAuditory", hasAuditory);
+        params.put("hasAuditory", hasAuditory);
     }
     public void addHasAuditory(boolean b) {
     	if(getHasAuditory() == null) {
@@ -242,11 +240,11 @@ public class Consulta {
     }
 
     public List<Boolean> getHasText() {
-        return (List<Boolean>)booleanParams.get("hasText");
+        return (List<Boolean>)params.get("hasText");
     }
 
     public void setHasText(List<Boolean> hasText) {
-        booleanParams.put("hasText", hasText);
+        params.put("hasText", hasText);
     }
     
     public void addHasText(boolean b) {
@@ -257,7 +255,7 @@ public class Consulta {
     }
 
     public List<Boolean> getHasTactile() {
-        return (List<Boolean>)booleanParams.get("hasTactile");
+        return (List<Boolean>)params.get("hasTactile");
     }
     
     public void addHasTactile(boolean b) {
@@ -268,7 +266,7 @@ public class Consulta {
     }
 
     public void setHasTactile(List<Boolean> hasTactile) {
-        booleanParams.put("hasTactile", hasTactile);
+        params.put("hasTactile", hasTactile);
     }
 
     public String getSize() {
@@ -369,9 +367,9 @@ public class Consulta {
                 encoded += "&size=" + URLEncoder.encode(size, "UTF-8");
             }
             
-            for(String key : booleanParams.keySet()) {
-                if (!isBlankList(booleanParams.get(key))) {
-                    for(Object v : booleanParams.get(key)) {
+            for(String key : params.keySet()) {
+                if (!isBlankList(params.get(key))) {
+                    for(Object v : params.get(key)) {
                         encoded += "&" + key + "=" + URLEncoder.encode(v.toString(), "UTF-8");
                     }
                 }
@@ -386,6 +384,7 @@ public class Consulta {
     }
     
     /**
+     * Sinônimo de {@link #addFacetFilter(String, Object)}
      * @see #addFacetFilter(String, Object)
      */
     public void add(String fieldName, Object value) {
@@ -403,20 +402,20 @@ public class Consulta {
      * @throws IllegalArgumentException quando o campo adicionado não é válido
      */
     public void addFacetFilter(String fieldName, Object value) throws IllegalArgumentException {
-        if(validParams.get(fieldName) == null) {
+        if(VALID_PARAMS.get(fieldName) == null) {
             throw new IllegalArgumentException("Field " + fieldName + " is not valid for Consulta");
         }
         
            
-        if(booleanParams.get(fieldName) == null) {
-            booleanParams.put(fieldName , new ArrayList<>());
+        if(params.get(fieldName) == null) {
+            params.put(fieldName , new ArrayList<>());
         }
-        List<Object> l = (List<Object>) booleanParams.get(fieldName);
+        List<Object> l = (List<Object>) params.get(fieldName);
         
-        if(validParams.get(fieldName) == Boolean.class) {
+        if(VALID_PARAMS.get(fieldName).equals(Boolean.class)) {
             l.add(Boolean.valueOf(value.toString()));
         }
-        else if(validParams.get(fieldName) == Integer.class) {
+        else if(VALID_PARAMS.get(fieldName).equals(Integer.class)) {
             l.add(Integer.valueOf(value.toString()));
         }
         else {
@@ -424,24 +423,36 @@ public class Consulta {
         }
     }
 
+    /**
+     * Remove filtro para este campo e valor.
+     * @param fieldName nome do campo
+     * @param value valor do filtro
+     */
     public void removeFacetFilter(String fieldName, String value) {
-        if(booleanParams.get(fieldName) !=null) {
+        if(params.get(fieldName) !=null) {
             List<Object> l = new ArrayList<>();
-            for(Object o : booleanParams.get(fieldName)) {
+            for(Object o : params.get(fieldName)) {
                 if(!o.toString().equals(value)) {
                     l.add(o);
                 }
             }
-            booleanParams.put(fieldName, l);
+            params.put(fieldName, l);
         }   
     }
 
+    /**
+     * Testa se o campo possui um filtro ativo nesta consulta.
+     * 
+     * @param fieldName nome do campo
+     * @param value nome do valor
+     * @return verdadeiro se esta consulta está filtrando neste campo pelo valor especificado
+     */
     public boolean isActive(String fieldName, String value) {
-        if(booleanParams.get(fieldName) == null) {
+        if(params.get(fieldName) == null) {
             return false;
         }
         else {
-            return booleanParams.get(fieldName).stream().anyMatch(o -> o.toString().equals(value));
+            return params.get(fieldName).stream().anyMatch(o -> o.toString().equals(value));
         }
     }
 
@@ -453,11 +464,11 @@ public class Consulta {
     }
 
     public List<Integer> getAgeRangeInt() {
-        return (List<Integer>)booleanParams.get("ageRangeInt");
+        return (List<Integer>)params.get("ageRangeInt");
     }
     
     public void setAgeRangeInt(List<Integer> ar) {
-        booleanParams.put("ageRangeInt",ar);
+        params.put("ageRangeInt",ar);
     }
 
     public void addAgeRangeInt(Integer i) {

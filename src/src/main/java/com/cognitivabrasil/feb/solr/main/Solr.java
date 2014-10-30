@@ -18,13 +18,11 @@ import org.apache.solr.common.SolrInputDocument;
 public class Solr {
 
     private static final Logger log = LoggerFactory.getLogger(Solr.class);
-    private final Converter convert;
     
     @Autowired
     private IndexarDados indexarDados;
     
     public Solr() {
-        convert = new Converter();
     }
 
     /**
@@ -71,7 +69,7 @@ public class Solr {
                 continue;
             }
 
-            docsSolr.add(convert.OBAAToSolrInputDocument(
+            docsSolr.add(Converter.obaaToSolr(
                     doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao, nomeRep));
 
         }

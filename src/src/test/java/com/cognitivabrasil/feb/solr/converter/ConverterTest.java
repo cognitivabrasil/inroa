@@ -22,7 +22,7 @@ public class ConverterTest {
                         .language("pt-BR")
                         .build();
         
-        SolrInputDocument doc = Converter.OBAAToSolrInputDocument(o, "myEntry", 2, -1, 2, 1, "Meu Rep");
+        SolrInputDocument doc = Converter.obaaToSolr(o, "myEntry", 2, -1, 2, 1, "Meu Rep");
         
         System.out.println(doc.getFieldValues("obaa.general.title"));
         

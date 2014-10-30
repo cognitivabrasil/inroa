@@ -67,15 +67,6 @@ public class IndexarDados {
         return indexarSolrInputDocument(doc);
     }
 
-    /**
-     * Indexa um objeto OBAA no SOLR
-     *
-     * @param objeto Objeto a ser indexado
-     * @return True se o objeto foi indexado com sucesso
-     */
-    public boolean indexarOBAA(OBAA objeto) {
-        return indexarObjeto(Converter.OBAAToList(objeto));
-    }
 
     /**
      * Indexa uma colecao de objetos ja no formato SOLR
