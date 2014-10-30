@@ -3,6 +3,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItemInArray;
 import static org.junit.Assert.assertThat;
 
+import java.util.Arrays;
+
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Test;
 
@@ -70,5 +72,62 @@ public class CriaQueryTest {
         
         assertThat(query.getFilterQueries(), 
                 hasItemInArray("{!tag=hasauditory}obaa.accessibility.resourcedescription.primary.hasauditory:\"true\""));
+    }
+    
+    @Test
+    public void filtrarPorVisual() {
+        Consulta c = new Consulta();
+        c.addHasVisual(true);
+
+        c.setConsulta("consulta");
+        
+        SolrQuery query = CriaQuery.criaQueryCompleta(c);
+        
+        assertThat(query.getFilterQueries(), 
+                hasItemInArray("{!tag=hasvisual}obaa.accessibility.resourcedescription.primary.hasvisual:\"true\""));
+    }
+    
+    @Test
+    public void filtrarPorCostDuplo() {
+        Consulta c = new Consulta();
+        c.addCost(false);
+        c.addCost(true);
+
+        c.setConsulta("consulta");
+        
+        SolrQuery query = CriaQuery.criaQueryCompleta(c);
+        
+        assertThat(query.getFilterQueries(), 
+                hasItemInArray("{!tag=cost}obaa.rights.cost:\"false\" OR obaa.rights.cost:\"true\""));
+    }
+    
+    @Test
+    public void filtrarPorDifficulty() {
+        Consulta c = new Consulta();
+        c.add("difficulty", "hard");
+
+        c.setConsulta("consulta");
+        
+        SolrQuery query = CriaQuery.criaQueryCompleta(c);
+        
+        assertThat(query.getFilterQueries(), 
+                hasItemInArray("{!tag=difficulty}obaa.educational.difficulty:\"hard\""));
+    }
+    
+    @Test
+    public void filtroPorFederacoesRepositorios() {
+        Consulta c = new Consulta();
+        c.setConsulta("consulta");
+        
+        c.setFederacoes(Arrays.asList(2, 3));
+        c.setRepositorios(Arrays.asList(1));
+        c.setRepSubfed(Arrays.asList(4,5));
+        
+        SolrQuery query = CriaQuery.criaQueryCompleta(c);
+        
+        assertThat(query.getFilterQueries(), hasItemInArray("obaa.federacao:(2 3)"));
+        assertThat(query.getFilterQueries(), hasItemInArray("obaa.repositorio:(1)"));
+        assertThat(query.getFilterQueries(), hasItemInArray("obaa.subFederacao:(4 5)"));
+
     }
 }

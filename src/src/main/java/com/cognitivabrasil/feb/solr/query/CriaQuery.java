@@ -85,27 +85,21 @@ public class CriaQuery {
 
         if (!pesquisa.getFederacoes().isEmpty()) {
             String q = "obaa.federacao:(";
-            for (int feds : pesquisa.getFederacoes()) {
-                q += " " + feds;
-            }
+            q += pesquisa.getFederacoes().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
             q += ")";
             query.addFilterQuery(q);
         }
 
         if (!pesquisa.getRepSubfed().isEmpty()) {
             String q = "obaa.subFederacao:(";
-            for (int subFeds : pesquisa.getRepSubfed()) {
-                q += " " + subFeds;
-            }
+            q += pesquisa.getRepSubfed().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
             q += ")";
             query.addFilterQuery(q);
         }
 
         if (!pesquisa.getRepositorios().isEmpty()) {
-            String q = " obaa.repositorio:(";
-            for (int repos : pesquisa.getRepositorios()) {
-                q += " " + repos;
-            }
+            String q = "obaa.repositorio:(";
+            q += pesquisa.getRepositorios().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
             q += ")";
             query.addFilterQuery(q);
         }
