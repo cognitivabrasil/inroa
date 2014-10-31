@@ -46,17 +46,12 @@ public class Solr {
         log.debug("Convertendo obaaXML em SolrXML: Numero de objetos a serem convertidos: " + docs.size());
         for (Document doc : docs) {
             String entry = "";
-            try {
-                entry = doc.getObaaEntry();
-                if (entry.isEmpty()) {
+            entry = doc.getObaaEntry();
+            if(entry == null || entry.isEmpty()) {
                     log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
                     continue;
-                }
-            } catch (NullPointerException | IndexOutOfBoundsException n) {
-                log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
-                continue;
             }
-
+           
             int repositorio = doc.getRepositorio() != null ? doc.getRepositorio().getId() : -1;
             int subFeb = doc.getRepositorioSubFed() != null ? doc.getRepositorioSubFed().getId() : -1;
             int federacao = doc.getRepositorioSubFed() != null
@@ -65,7 +60,11 @@ public class Solr {
             String nomeRep = doc.getNomeRep();
 
             //Foi requerido que objetos sem link não fossem indexados ou apresentados ao usuário (FEB-472)
-            if (doc.getMetadata().getTechnical().getLocationHttp().isEmpty()) {
+            if (doc.getMetadata().getTechnical().getLocationHttp().isEmpty()
+                    || doc.getMetadata().getTechnical().getLocationHttp().values().stream()
+                        .allMatch(v -> !v)
+                    )
+            {
                 continue;
             }
 
