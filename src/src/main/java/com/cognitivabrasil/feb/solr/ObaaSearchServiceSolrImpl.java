@@ -1,4 +1,4 @@
-package com.cognitivabrasil.feb.ferramentaBusca;
+package com.cognitivabrasil.feb.solr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
+import com.cognitivabrasil.feb.services.ObaaSearchService;
 import com.cognitivabrasil.feb.solr.query.Facet;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
 import com.cognitivabrasil.feb.spring.FebConfig;
@@ -26,22 +28,16 @@ import com.cognitivabrasil.feb.spring.FebConfig;
  * @author Paulo Schreiner
  */
 @Service
-public class Recuperador {
+public class ObaaSearchServiceSolrImpl implements ObaaSearchService {
 
-    private static final Logger log = LoggerFactory.getLogger(Recuperador.class);
+    private static final Logger log = LoggerFactory.getLogger(ObaaSearchServiceSolrImpl.class);
     private static final int rssSizeLimit = 100;
     
     @Autowired
     private QuerySolr q;
     
 
-    /**
-     * Envia para o Solr uma consulta
-     *
-     * @param consulta Consulta efetuada
-     * @return Lista de documentos reais que correspondem ao resultado da busca
-     * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?) 
-     */
+    @Override
     public ResultadoBusca busca(Consulta consulta) throws SolrServerException {
 
         List<Document> resultadoConsulta;
@@ -77,6 +73,7 @@ public class Recuperador {
 
     }
     
+    @Override
     public List<String> autosuggest(String partial) {
         log.debug("Autosuggest for {}", partial);
         

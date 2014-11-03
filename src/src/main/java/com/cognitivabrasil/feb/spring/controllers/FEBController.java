@@ -38,8 +38,9 @@ import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.UserService;
-import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
 import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
+import com.cognitivabrasil.feb.services.ObaaSearchService;
+import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
@@ -71,9 +72,9 @@ public final class FEBController implements ErrorController {
     private static final Logger log = LoggerFactory.getLogger(FEBController.class);
     @Autowired
     private SearchService searchesDao;
-
+    
     @Autowired
-    private Recuperador recuperador;
+    private ObaaSearchService obaaSearchService;
 
     @Autowired
     private FebConfig config;
@@ -166,7 +167,7 @@ public final class FEBController implements ErrorController {
     @RequestMapping("/suggestion")
     @ResponseBody
     public String getSuggestions(@RequestParam("query") String query) {
-        List<String> auto = recuperador.autosuggest(query);
+        List<String> auto = obaaSearchService.autosuggest(query);
         
         String json = "[ ";
         
@@ -210,7 +211,7 @@ public final class FEBController implements ErrorController {
                     consulta.setOffsetByPage(page);
                 }
 
-                ResultadoBusca rBusca = recuperador.busca(consulta);
+                ResultadoBusca rBusca = obaaSearchService.busca(consulta);
                 List<Document> docs = rBusca.getDocuments();
                 log.trace("Carregou " + docs.size() + " documentos.");
                 model.addAttribute("results", rBusca);
@@ -318,7 +319,7 @@ public final class FEBController implements ErrorController {
                 if (autor != null) {
                     c.setAutor(autor);
                 }
-                List<Document> docs = recuperador.busca(c).getDocuments();
+                List<Document> docs = obaaSearchService.busca(c).getDocuments();
 
                 xml += "<ListRecords "
                         + "query=\"" + c.getConsulta() + "\" ";

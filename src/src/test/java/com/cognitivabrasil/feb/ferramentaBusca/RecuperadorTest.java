@@ -22,6 +22,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
 
 public class RecuperadorTest {
@@ -29,11 +30,11 @@ public class RecuperadorTest {
     QuerySolr querySolr;
 
     @InjectMocks
-    private Recuperador recuperador;
+    private ObaaSearchServiceSolrImpl recuperador;
 
     @Before
     public void setup() {
-        recuperador = new Recuperador();
+        recuperador = new ObaaSearchServiceSolrImpl();
         MockitoAnnotations.initMocks(this);
 
     }

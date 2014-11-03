@@ -1,6 +1,7 @@
-package com.cognitivabrasil.feb.solr.main;
+package com.cognitivabrasil.feb.solr;
 
 import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.services.ObaaIndexService;
 import com.cognitivabrasil.feb.solr.indexar.IndexarDados;
 import com.cognitivabrasil.feb.solr.converter.Converter;
 
@@ -15,31 +16,22 @@ import java.util.List;
 import org.apache.solr.common.SolrInputDocument;
 
 @Service
-public class Solr {
+public class ObaaIndexServiceSolrImpl implements ObaaIndexService {
 
-    private static final Logger log = LoggerFactory.getLogger(Solr.class);
+    private static final Logger log = LoggerFactory.getLogger(ObaaIndexServiceSolrImpl.class);
     
     @Autowired
     private IndexarDados indexarDados;
     
-    public Solr() {
+    public ObaaIndexServiceSolrImpl() {
     }
 
-    /**
-     * Apaga todo o indice do Solr e todos os documentos contindo nele
-     *
-     * @return True se deu certo. False se houve alguma falha.
-     */
+    @Override
     public boolean apagarIndice() {
         return indexarDados.apagarIndice();
     }
 
-    /**
-     * Recebe uma lista de documentos reais, converte eles para DocumentSolr e envia eles para o sistema indexar
-     * Converte um a um os documentos reais ate atingir maxDocs documentos. Apos, envia eles para o Sorl
-     *
-     * @param docs Lista de documentos reais a serem indexados
-     */
+    @Override
     public void indexarBancoDeDados(List<Document> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<>();
 

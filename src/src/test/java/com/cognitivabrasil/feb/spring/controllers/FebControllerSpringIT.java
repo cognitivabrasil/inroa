@@ -1,9 +1,13 @@
 package com.cognitivabrasil.feb.spring.controllers;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,9 +27,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import cognitivabrasil.obaa.OBAA;
+import cognitivabrasil.obaa.builder.ObaaBuilder;
+
 import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
+import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class })
@@ -39,7 +48,10 @@ public class FebControllerSpringIT extends AbstractTransactionalJUnit4SpringCont
     
     
     @Mock
-    Recuperador recuperador;
+    ObaaSearchServiceSolrImpl recuperador;
+    
+    @Mock
+    private DocumentService docService;
 
     private MockMvc mockMvc;
 
@@ -65,4 +77,5 @@ public class FebControllerSpringIT extends AbstractTransactionalJUnit4SpringCont
 
         assertThat(consulta.getValue().getFormat(), hasItems("abc", "xxx"));
     }
+    
 }

@@ -23,6 +23,7 @@ import cognitivabrasil.obaa.builder.ObaaBuilder;
 
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.solr.ObaaIndexServiceSolrImpl;
 import com.cognitivabrasil.feb.solr.indexar.IndexarDados;
 
 public class SolrTest {
@@ -30,11 +31,11 @@ public class SolrTest {
     private IndexarDados indexar;
     
     @InjectMocks
-    private Solr solr;
+    private ObaaIndexServiceSolrImpl solr;
     
     @Before
     public void setup() {
-        solr = new Solr();
+        solr = new ObaaIndexServiceSolrImpl();
         
         MockitoAnnotations.initMocks(this);
     }

@@ -6,7 +6,8 @@ package com.cognitivabrasil.feb.ferramentaBusca.indexador;
 
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.solr.main.Solr;
+import com.cognitivabrasil.feb.services.ObaaIndexService;
+import com.cognitivabrasil.feb.solr.ObaaIndexServiceSolrImpl;
 import com.cognitivabrasil.feb.util.Operacoes;
 
 import javax.persistence.EntityManager;
@@ -33,9 +34,9 @@ public class Indexador {
     private static final Logger log = LoggerFactory.getLogger(Indexador.class);
     @Autowired
     private DocumentService docService;
-    
+
     @Autowired
-    private Solr solr;
+    private ObaaIndexService indexService;
     
     @PersistenceContext
     private EntityManager em;
@@ -51,17 +52,17 @@ public class Indexador {
     public void populateR1() {
         log.info("Recalculando o indice do Solr...");
 
-        solr.apagarIndice();
+        indexService.apagarIndice();
         Long inicio = System.currentTimeMillis();
         int numMaxDoc = 10000;
 
         Pageable limit = new PageRequest(0, numMaxDoc);
         Page<Document> docs = docService.getlAll(limit);
-        solr.indexarBancoDeDados(docs.getContent());
+        indexService.indexarBancoDeDados(docs.getContent());
 
         while (docs.hasNext()) {
             docs = docService.getlAll(docs.nextPageable());
-            solr.indexarBancoDeDados(docs.getContent());
+            indexService.indexarBancoDeDados(docs.getContent());
             em.clear();
         }
 

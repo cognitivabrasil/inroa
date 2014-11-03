@@ -40,8 +40,8 @@ import cognitivabrasil.obaa.General.General;
 import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.WebConfig;
 import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.ferramentaBusca.Recuperador;
 import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
+import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class, WebConfig.class })
@@ -51,7 +51,7 @@ import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 @DirtiesContext
 public class RssControllerTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Mock
-    Recuperador recuperador;
+    ObaaSearchServiceSolrImpl recuperador;
     
     @Autowired
     @InjectMocks
