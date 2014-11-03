@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 /**
  * Classe que auxilia a páginação no resultado da busca.
  *
@@ -161,4 +163,44 @@ public class PaginationDto {
         Collections.sort(pagesAvaliable);
         return pagesAvaliable;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + currentPage;
+        result = prime * result + itenToPresent;
+        result = prime * result + size;
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        PaginationDto other = (PaginationDto) obj;
+        if (currentPage != other.currentPage)
+            return false;
+        if (itenToPresent != other.itenToPresent)
+            return false;
+        if (size != other.size)
+            return false;
+        return true;
+    }
+    
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
+      }
+    
 }

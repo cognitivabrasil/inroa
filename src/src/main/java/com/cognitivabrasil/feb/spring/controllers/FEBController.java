@@ -1,8 +1,9 @@
 package com.cognitivabrasil.feb.spring.controllers;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Date;
@@ -14,11 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,25 +36,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cognitivabrasil.obaa.OBAA;
+
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
-import com.cognitivabrasil.feb.data.services.UserService;
 import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.services.ObaaSearchService;
-import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-
-import org.apache.solr.client.solrj.SolrServerException;
 
 /**
  * Controller geral para o FEB
@@ -60,8 +59,6 @@ import org.apache.solr.client.solrj.SolrServerException;
 @Controller("feb")
 public final class FEBController implements ErrorController {
 
-    @Autowired
-    private UserService userDao;
     @Autowired
     private RepositoryService repDao;
     @Autowired
@@ -137,13 +134,12 @@ public final class FEBController implements ErrorController {
      * @return appropriate view
      */
     @RequestMapping("/objetos/{id}")
-    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, HttpServletRequest request,
-            Model model, @CookieValue(value = "feb.cookie", required = false) String cookie)
+    public String infoDetalhada(@PathVariable Integer id, HttpServletResponse response, Model model)
             throws IOException {
         Document d = docDao.get(id);
         if (d == null) {
             response.setStatus(404);
-            log.warn("O id " + id + " solicitado não existe!");
+            log.warn("O id {id} solicitado não existe!", id);
             return "";
         } else if (d.isDeleted()) {
             response.setStatus(410);
@@ -164,6 +160,10 @@ public final class FEBController implements ErrorController {
         }
     }
     
+    /**
+     * @param query (início da) consulta
+     * @return json no formato do boostrap typeahed
+     */
     @RequestMapping("/suggestion")
     @ResponseBody
     public String getSuggestions(@RequestParam("query") String query) {
@@ -181,12 +181,25 @@ public final class FEBController implements ErrorController {
         return json;
     }
 
+    /**
+     * @param id id do objeto a ser retornado
+     * @return JSON que representa o Objeto
+     * @see OBAA#getJson()
+     */
     @RequestMapping("/objetos/{id}/json")
     public @ResponseBody
-    String getJson(@PathVariable Integer id) {
+    ResponseEntity<String> getJson(@PathVariable Integer id) {
         Document d = docDao.get(id);
+        
+        if(d == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else if(d.isDeleted()) {
+            return new ResponseEntity<>(HttpStatus.GONE);
+        }
+        
         d.getMetadata().setLocale("pt-BR");
-        return d.getMetadata().getJson();
+        return new ResponseEntity<>(d.getMetadata().getJson(), HttpStatus.OK);
     }
 
     @RequestMapping("/resultado")
@@ -222,22 +235,18 @@ public final class FEBController implements ErrorController {
                     searchesDao.save(consulta.getConsulta(), new Date());
                 }
 
-                PaginationDto pagination = new PaginationDto(consulta.getLimit(), consulta.getSizeResult(), page);
+                PaginationDto pagination = new PaginationDto(consulta.getLimit(), rBusca.getResultSize(), page);
                 model.addAttribute("pagination", pagination);
 
-                log.debug("Resultou em: " + consulta.getSizeResult() + " documentos. Offset: " + consulta.getOffset());
+                log.debug("Resultou em: " + rBusca.getResultSize() + " documentos. Offset: " + consulta.getOffset());
                 return "resultado";
             } catch (SolrServerException e) {
+                log.error("Erro ao efetuar a consulta no Solr, possivelmente o serviço está parado. ", e);
+
                 model.addAttribute("erro",
                         "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
                 //TODO: erro GRAVE, deve enviar um aviso ao administrador.
 
-                log.error("Erro ao efetuar a consulta no Solr, possivelmente o serviço está parado. ", e);
-                return "index";
-            } catch (Exception e) {
-                model.addAttribute("erro",
-                        "Ocorreu um erro ao efetuar a consulta. Tente novamente mais tarde.");
-                log.error("FEB ERRO: Erro ao efetuar a consulta na base de dados. ", e);
                 return "index";
             }
         }
@@ -351,29 +360,6 @@ public final class FEBController implements ErrorController {
         }
     }
 
-    /**
-     * Verificador de URL, recebe como entrada uma url e retorna um boolean informando se ela está ativa ou não. Usar o
-     * {@link #verifyUrl(java.lang.String)}.
-     *
-     *
-     * @param url URL a ser testada, deve iniciar com http://
-     * @return true se a url estiver ativa e false caso contrário
-     */
-    @Deprecated
-    @RequestMapping("verificaURLOld")
-    public @ResponseBody
-    String verifyURL(@RequestParam String url) {
-        try {
-            URL u = new URL(url);
-            HttpURLConnection huc = (HttpURLConnection) u.openConnection();
-            huc.setRequestMethod("HEAD");
-            huc.connect();
-            int code = huc.getResponseCode();
-            return String.valueOf(code >= 200 && code < 400);
-        } catch (IOException e) {
-            return "false";
-        }
-    }
 
     /**
      * Verificador de URL, recebe como entrada uma url e retorna um boolean informando se ela está ativa ou não.
