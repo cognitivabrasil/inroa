@@ -2,8 +2,6 @@ package com.cognitivabrasil.feb.ferramentaBusca;
 
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
-
 /**
  * Representa uma sugestão de SpellCheck.
  * 
@@ -12,16 +10,16 @@ import com.cognitivabrasil.feb.data.entities.Consulta;
  * @author Paulo Schreiner
  */
 public class Suggestion {
-    private final Consulta consulta;
+    private final ConsultaFeb consulta;
     private final SpellCheckResponse spellCheckResponse;
 
     /**
      * @param spellCheckResponse resposta do Solr para o spellcheck
      * @param consulta que gerou esta resposta
      */
-    public Suggestion(SpellCheckResponse spellCheckResponse, Consulta consulta) {
+    public Suggestion(SpellCheckResponse spellCheckResponse, ConsultaFeb consulta) {
         this.spellCheckResponse = spellCheckResponse;
-        this.consulta = new Consulta(consulta);
+        this.consulta = new ConsultaFeb(consulta);
         this.consulta.setConsulta(getText());
     }
     

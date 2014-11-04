@@ -8,13 +8,13 @@ import java.util.Arrays;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.junit.Test;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 
 public class CriaQueryTest {
     
     @Test
     public void usaFilterQueryParaTechnicalFormat() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addFormat("application/pdf");
         c.setConsulta("consulta");
         
@@ -25,7 +25,7 @@ public class CriaQueryTest {
     
     @Test
     public void filtrarPorMultiplosFormados() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addFormat("application/pdf");
         c.addFormat("application/zip");
 
@@ -40,7 +40,7 @@ public class CriaQueryTest {
     
     @Test
     public void comAutor() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setAutor("Paulo Schreiner");
         c.setConsulta("consulta");
         
@@ -52,7 +52,7 @@ public class CriaQueryTest {
     
     @Test
     public void semAutor() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("consulta");
         
         SolrQuery query = CriaQuery.criaQueryCompleta(c);
@@ -63,7 +63,7 @@ public class CriaQueryTest {
     
     @Test
     public void filtrarPorAuditory() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addHasAuditory(true);
 
         c.setConsulta("consulta");
@@ -76,7 +76,7 @@ public class CriaQueryTest {
     
     @Test
     public void filtrarPorVisual() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addHasVisual(true);
 
         c.setConsulta("consulta");
@@ -89,7 +89,7 @@ public class CriaQueryTest {
     
     @Test
     public void filtrarPorCostDuplo() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addCost(false);
         c.addCost(true);
 
@@ -103,7 +103,7 @@ public class CriaQueryTest {
     
     @Test
     public void filtrarPorDifficulty() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.add("difficulty", "hard");
 
         c.setConsulta("consulta");
@@ -116,7 +116,7 @@ public class CriaQueryTest {
     
     @Test
     public void filtroPorFederacoesRepositorios() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("consulta");
         
         c.setFederacoes(Arrays.asList(2, 3));
@@ -125,9 +125,11 @@ public class CriaQueryTest {
         
         SolrQuery query = CriaQuery.criaQueryCompleta(c);
         
-        assertThat(query.getFilterQueries(), hasItemInArray("obaa.federacao:(2 3)"));
-        assertThat(query.getFilterQueries(), hasItemInArray("obaa.repositorio:(1)"));
-        assertThat(query.getFilterQueries(), hasItemInArray("obaa.subFederacao:(4 5)"));
+        System.out.println(query.getFilterQueries());
+        
+        assertThat(query.getFilterQueries(), hasItemInArray("{!tag=federacoes}obaa.federacao:(2 3)"));
+        assertThat(query.getFilterQueries(), hasItemInArray("{!tag=repositorios}obaa.repositorio:(1)"));
+        assertThat(query.getFilterQueries(), hasItemInArray("{!tag=repsubfed}obaa.subFederacao:(4 5)"));
 
     }
 }

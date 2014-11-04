@@ -22,9 +22,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.ObaaSearchAdapterImpl;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
@@ -45,7 +45,7 @@ public class ObaaSearchServiceSolrImplTest {
     
     @Test
     public void testBusca() throws SolrServerException {
-        Consulta consulta = new Consulta();
+        ConsultaFeb consulta = new ConsultaFeb();
         consulta.setLimit(2);
         consulta.setConsulta("bla");
         

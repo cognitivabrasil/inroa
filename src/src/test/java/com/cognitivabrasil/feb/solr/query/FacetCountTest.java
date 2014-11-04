@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.junit.Test;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 
 
 public class FacetCountTest {
@@ -19,7 +19,7 @@ public class FacetCountTest {
     public void test() {
         Count c = fakeCount(10L, "fakeName");
         
-        FacetCount fc = new FacetCount(c, "obaa.technical.format", new Consulta());
+        FacetCount fc = new FacetCount(c, "obaa.technical.format", new ConsultaFeb());
         
         assertThat(fc.getCount(), equalTo(10L));
         assertThat(fc.getName(), equalTo("fakeName"));
@@ -29,7 +29,7 @@ public class FacetCountTest {
     public void testShortName() {
         Count c = fakeCount(10L, "fakeName");
         
-        Consulta cons = mock(Consulta.class);
+        ConsultaFeb cons = mock(ConsultaFeb.class);
         
         FacetCount fc = new FacetCount(c, "obaa.technical.format", cons);
         
@@ -41,7 +41,7 @@ public class FacetCountTest {
     public void problemaComCamelCase() {
         Count c = fakeCount(10L, "true");
         
-        Consulta cons = new Consulta();
+        ConsultaFeb cons = new ConsultaFeb();
         cons.addHasVisual(true);
         
         FacetCount fc = new FacetCount(c, "obaa.accessibility.resourcedescription.primary.hasvisual", cons);
@@ -53,7 +53,7 @@ public class FacetCountTest {
     public void problemaComCamelCase2() {
         Count c = fakeCount(10L, "true");
         
-        Consulta cons = new Consulta();
+        ConsultaFeb cons = new ConsultaFeb();
         
         FacetCount fc = new FacetCount(c, "obaa.accessibility.resourcedescription.primary.hasvisual", cons);
         
@@ -66,7 +66,7 @@ public class FacetCountTest {
     public void seEstaAtivoDesativa() {
         Count c = fakeCount(10L, "fakeFormat");
         
-        Consulta cons = new Consulta();
+        ConsultaFeb cons = new ConsultaFeb();
         cons.addFormat("fakeFormat");
         
         FacetCount fc = new FacetCount(c, "obaa.technical.format", cons);
@@ -79,7 +79,7 @@ public class FacetCountTest {
     public void seNaoEstaAtivoAtiva() {
         Count c = fakeCount(10L, "fakeFormat");
         
-        Consulta cons = new Consulta();
+        ConsultaFeb cons = new ConsultaFeb();
         
         FacetCount fc = new FacetCount(c, "obaa.technical.format", cons);
         

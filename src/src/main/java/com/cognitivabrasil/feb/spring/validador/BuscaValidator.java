@@ -4,7 +4,8 @@
  */
 package com.cognitivabrasil.feb.spring.validador;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -19,12 +20,12 @@ public class BuscaValidator implements Validator {
 
     @Override
     public boolean supports(Class clazz) {
-        return Consulta.class.isAssignableFrom(clazz);
+        return ConsultaFeb.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        Consulta busca = (Consulta) target;
+        ConsultaFeb busca = (ConsultaFeb) target;
 
         if (busca.isEmpty()) {
             errors.rejectValue("consulta", "invalid.consulta", "Nenhuma consulta foi informada.");

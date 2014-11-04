@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
 import com.cognitivabrasil.feb.solr.query.Facet;
@@ -18,15 +17,15 @@ public class ResultadoBusca<T extends ObaaDocument> {
     private List<T> documents;
     private List<Facet> facets;
     private SpellCheckResponse spellCheckResponse;
-    private Consulta consulta;
+    private ConsultaFeb consulta;
     private int resultSize;
     
 
-    public Consulta getConsulta() {
+    public ConsultaFeb getConsulta() {
         return consulta;
     }
 
-    public void setConsulta(Consulta consulta) {
+    public void setConsulta(ConsultaFeb consulta) {
         this.consulta = consulta;
     }
 

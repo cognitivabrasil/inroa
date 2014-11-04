@@ -5,18 +5,17 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 import java.util.ArrayList;
 
 import org.apache.solr.client.solrj.response.FacetField;
 import org.junit.Test;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 
 public class FacetTest {
     @Test
     public void test() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("teste");
         
         FacetField facetField = mock(FacetField.class);
@@ -34,7 +33,7 @@ public class FacetTest {
     
     @Test
     public void getVarNameTest() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("teste");
         
         FacetField facetField = mock(FacetField.class);

@@ -37,9 +37,9 @@ import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.builder.ObaaBuilder;
 
 import com.cognitivabrasil.feb.AppConfig;
-import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
@@ -81,7 +81,7 @@ public class FebControllerSpringIT extends AbstractTransactionalJUnit4SpringCont
         r.setDocuments(new ArrayList<>());
         when(recuperador.busca(any())).thenReturn(r);
         
-        ArgumentCaptor<Consulta> consulta = ArgumentCaptor.forClass(Consulta.class);
+        ArgumentCaptor<ConsultaFeb> consulta = ArgumentCaptor.forClass(ConsultaFeb.class);
         
         mockMvc.perform(get("/resultado?consulta=teste&format=abc&format=xxx")
                 );

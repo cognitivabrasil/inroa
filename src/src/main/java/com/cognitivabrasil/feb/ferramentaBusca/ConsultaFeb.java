@@ -1,4 +1,4 @@
-package com.cognitivabrasil.feb.data.entities;
+package com.cognitivabrasil.feb.ferramentaBusca;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
@@ -6,6 +6,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -14,14 +15,12 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
-
 /**
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  * @author Paulo Schreiner
  */
-public class Consulta {
+public class ConsultaFeb {
 
     // TODO: deve ter transferida para spring.dtos
     private String consulta;
@@ -55,12 +54,12 @@ public class Consulta {
 
 
 
-    private static final Logger log = LoggerFactory.getLogger(Consulta.class);
+    private static final Logger log = LoggerFactory.getLogger(ConsultaFeb.class);
 
     /**
      * Constrói uma nova consulta.
      */
-    public Consulta() {
+    public ConsultaFeb() {
         params = new HashMap<>();
         
         rss = false;
@@ -75,7 +74,7 @@ public class Consulta {
      * 
      * @param consulta Consulta a ser duplicada
      */
-    public Consulta(Consulta consulta) {
+    public ConsultaFeb(ConsultaFeb consulta) {
         params = new HashMap<>();
 
         rss = false;
@@ -473,5 +472,40 @@ public class Consulta {
 
     public void addAgeRangeInt(Integer i) {
         add("ageRangeInt", i);
+    }
+
+    public List get(String string) {
+        return params.get(string);
+    }
+
+    public String getFullName(String string) {
+        Map<String, String> short2Full = new HashMap<>();
+        short2Full.put("hasAuditory", "obaa.accessibility.resourcedescription.primary.hasauditory");
+        short2Full.put("hasVisual", "obaa.accessibility.resourcedescription.primary.hasvisual");
+        short2Full.put("hasText", "obaa.accessibility.resourcedescription.primary.hastext");
+        short2Full.put("hasTactile", "obaa.accessibility.resourcedescription.primary.hastactile");
+        short2Full.put("cost", "obaa.rights.cost");
+        short2Full.put("format", "obaa.technical.format");
+        short2Full.put("difficulty", "obaa.educational.difficulty");
+        short2Full.put("ageRangeInt", "obaa.educational.typicalagerangeint");
+
+        short2Full.put("federacoes", "obaa.federacao");
+        short2Full.put("repSubfed", "obaa.subFederacao");
+        short2Full.put("repositorios", "obaa.repositorio");
+
+        
+        
+       
+        return short2Full.get(string);
+    }
+
+    public String getTagName(String string) {
+        return string.toLowerCase();
+    }
+
+    public List<String> getAll() {
+        // TODO Auto-generated method stub
+        return Arrays.asList("hasAuditory", "hasVisual", "hasText", "hasTactile", "cost", "format", "difficulty", "ageRangeInt"
+                , "federacoes", "repSubfed", "repositorios");
     }
 }

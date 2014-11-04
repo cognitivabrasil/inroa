@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 
 import org.apache.solr.client.solrj.SolrServerException;
@@ -27,7 +27,7 @@ public class RssController {
     private ObaaSearchServiceSolrImpl recuperador;
 
     @RequestMapping(value = "/feed", method = RequestMethod.GET)
-    public ModelAndView getFeedInRss(@ModelAttribute("buscaModel") Consulta consulta) throws SolrServerException {
+    public ModelAndView getFeedInRss(@ModelAttribute("buscaModel") ConsultaFeb consulta) throws SolrServerException {
         log.debug("trying to get feed: {}", consulta);
 
         consulta.setRss(true);

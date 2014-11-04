@@ -38,12 +38,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cognitivabrasil.obaa.OBAA;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.services.ObaaSearchService;
 import com.cognitivabrasil.feb.spring.FebConfig;
@@ -108,7 +108,7 @@ public final class FEBController implements ErrorController {
     public String index(Model model, HttpServletResponse response, HttpServletRequest request,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
 
-        model.addAttribute("buscaModel", new Consulta());
+        model.addAttribute("buscaModel", new ConsultaFeb());
 
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
@@ -204,7 +204,7 @@ public final class FEBController implements ErrorController {
 
     @RequestMapping("/resultado")
     public String consulta(HttpServletRequest request,
-            @ModelAttribute("buscaModel") Consulta consulta,
+            @ModelAttribute("buscaModel") ConsultaFeb consulta,
             BindingResult result, Model model,
             @RequestParam(required = false) Integer page,
             @CookieValue(value = "feb.cookie", required = false) String cookie) {
@@ -258,7 +258,7 @@ public final class FEBController implements ErrorController {
 
         model.addAttribute("repositories", repDao.getAll());
         model.addAttribute("federations", subDao.getAll());
-        model.addAttribute("buscaModel", new Consulta());
+        model.addAttribute("buscaModel", new ConsultaFeb());
 
         if (StringUtils.isEmpty(cookie)) {
             addCookie(response, request);
@@ -313,7 +313,7 @@ public final class FEBController implements ErrorController {
                 xml += "<error code=\"limitExceeded\">The maximum is 100</error> ";
             } else {
 
-                Consulta c = new Consulta();
+                ConsultaFeb c = new ConsultaFeb();
                 if (query != null) {
                     String encodedQuery = URLDecoder.decode(query, "UTF-8");
                     c.setConsulta(encodedQuery);

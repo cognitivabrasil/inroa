@@ -18,8 +18,8 @@ import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.Technical.Technical;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.services.ObaaSearchAdapterImpl;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.solr.ObaaSearchAdapter;
 import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
 
@@ -53,7 +53,7 @@ public class QuerySolr {
      * @return 
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
      */
-    public QueryResponse pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
+    public QueryResponse pesquisaCompleta(ConsultaFeb pesquisa, int offset, int limit) throws SolrServerException {
         SolrQuery query = CriaQuery.criaQueryCompleta(pesquisa);
 
         query.setStart(offset);

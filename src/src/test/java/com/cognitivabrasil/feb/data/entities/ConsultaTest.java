@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,13 +22,13 @@ public class ConsultaTest {
 
     @Test
     public void testIsEmpty() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testEmpty2() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setLimit(10);
         c.setOffset(15);
         c.setRss(true);
@@ -39,7 +41,7 @@ public class ConsultaTest {
 
     @Test
     public void testNotEmpty() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setSize("2");
         assertThat(c.isEmpty(), equalTo(true));
     }
@@ -47,70 +49,70 @@ public class ConsultaTest {
 
     @Test
     public void testNotEmpty3() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setAutor("autor");
         assertThat(c.isEmpty(), equalTo(false));
     }
 
     @Test
     public void testNotEmpty4() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("consulta");
         assertThat(c.isEmpty(), equalTo(false));
     }
 
     @Test
     public void testNotEmpty5() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addCost(true);
         assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty6() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addFacetFilter("difficulty", "dificil");
         assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty7() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addFormat(".pdf");
         assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty8() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addHasAuditory(true);
         assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty9() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addHasText(Boolean.FALSE);
         assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty10() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.addHasVisual(true);
         assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty11() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setIdioma("pt-BR");
         assertThat(c.isEmpty(), equalTo(true));
     }
 
     @Test
     public void testNotEmpty12() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setAdultAge(Boolean.TRUE);
         assertThat(c.isEmpty(), equalTo(true));
     }
@@ -118,7 +120,7 @@ public class ConsultaTest {
       
     @Test
     public void testGetUrlEncodedSimple() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("matemática");
         
         assertThat(c.getUrlEncoded(), containsString("consulta=matem"));
@@ -126,7 +128,7 @@ public class ConsultaTest {
     
     @Test
     public void testHasAuditory() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
         c.addHasAuditory(true);
         
@@ -135,7 +137,7 @@ public class ConsultaTest {
     
     @Test
     public void testHasVisual() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
         c.addHasVisual(false);
         
@@ -144,7 +146,7 @@ public class ConsultaTest {
     
     @Test
     public void testCost() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
         c.addCost(true);
         
@@ -153,7 +155,7 @@ public class ConsultaTest {
     
     @Test
     public void testAgeRange() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
         c.addAgeRangeInt(12);
         
@@ -162,7 +164,7 @@ public class ConsultaTest {
     
     @Test
     public void testHasAuditoryNotSet() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
         
         assertThat(c.getUrlEncoded(), not(containsString("hasAuditory")));
@@ -170,7 +172,7 @@ public class ConsultaTest {
     
     @Test
     public void testIsActive() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
         
         c.addCost(true);
@@ -188,7 +190,7 @@ public class ConsultaTest {
     
     @Test
     public void removeFacetFilterTest() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
         
         c.addCost(true);
@@ -206,14 +208,14 @@ public class ConsultaTest {
     
     @Test
     public void copyWorks() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
         
         c.addCost(true);
         c.addCost(false);
         c.addFormat("bogus");
         
-        Consulta c2 = new Consulta(c);
+        ConsultaFeb c2 = new ConsultaFeb(c);
         
         c2.removeFacetFilter("format", "bogus");
         c2.addFacetFilter("format", "meuFormat");
@@ -224,7 +226,7 @@ public class ConsultaTest {
     
     @Test
     public void testAddRepository() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.setConsulta("bla");
 
         c.add("repositorios", 1);
@@ -234,7 +236,7 @@ public class ConsultaTest {
     
     @Test(expected=IllegalArgumentException.class)
     public void testOnlyAcceptsValidArguments() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         c.add("hasaudio", true);
     }
 }

@@ -30,10 +30,12 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.ui.ExtendedModelMap;
 
 import com.cognitivabrasil.feb.AppConfig;
-import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.data.services.TagCloudService;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
+
 import java.io.IOException;
+
 import org.junit.Ignore;
 import org.springframework.util.StopWatch;
 
@@ -73,7 +75,7 @@ public class FEBControllerIT extends AbstractTransactionalJUnit4SpringContextTes
         
         assertThat(result, equalTo("index"));
         
-        Consulta c = (Consulta) model.get("buscaModel");
+        ConsultaFeb c = (ConsultaFeb) model.get("buscaModel");
         assertThat(c, notNullValue());        
     }
     

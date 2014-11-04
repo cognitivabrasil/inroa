@@ -9,12 +9,10 @@ import static org.mockito.Mockito.when;
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.junit.Test;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
-
 public class SuggestionTest {
     @Test
     public void nullSpellCheckResponseReturns() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         
         Suggestion s = new Suggestion(null, c);
         
@@ -24,7 +22,7 @@ public class SuggestionTest {
     
     @Test
     public void getUrlEncodedDelegaParaConsulta() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         
         SpellCheckResponse sp = mock(SpellCheckResponse.class);
         when(sp.getCollatedResult()).thenReturn("sugestao");
@@ -39,7 +37,7 @@ public class SuggestionTest {
     
     @Test
     public void getUrlText() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         
         SpellCheckResponse sp = mock(SpellCheckResponse.class);
         when(sp.getCollatedResult()).thenReturn("sugestao");
@@ -52,7 +50,7 @@ public class SuggestionTest {
     
     @Test
     public void ifNoSuggestionsIsMisspeledReturnsNull() {
-        Consulta c = new Consulta();
+        ConsultaFeb c = new ConsultaFeb();
         
         Suggestion s = new Suggestion(mock(SpellCheckResponse.class), c);
         

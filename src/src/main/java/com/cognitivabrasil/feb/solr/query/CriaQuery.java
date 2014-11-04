@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
-import com.cognitivabrasil.feb.data.entities.Consulta;
+import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -19,9 +19,9 @@ public class CriaQuery {
      * Identifica todos os campos onde a busca deve acontecer.
      *
      * @param pesquisa Devolve o String de busca pronto para ser utilizado pelo SORL
-     * @return Retorna uma query Solr com todos os campos preenchidos na classe {@link Consulta}.
+     * @return Retorna uma query Solr com todos os campos preenchidos na classe {@link ConsultaFeb}.
      */
-    public static SolrQuery criaQueryCompleta(Consulta pesquisa) {
+    public static SolrQuery criaQueryCompleta(ConsultaFeb pesquisa) {
         SolrQuery query = new SolrQuery();
 
         String resultado = "";
@@ -34,75 +34,57 @@ public class CriaQuery {
             // boost de 100 é extremamente alto para dar prioridade absoluta ao autor caso presente
             resultado += " obaa.lifecycle.entity:(" + pesquisa.getAutor() + ")^100.0";
         }
-
         query.setQuery(resultado);
-
-        if (pesquisa.getHasAuditory() != null) {
-            query.addFilterQuery("{!tag=hasauditory}" + 
-            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hasauditory", pesquisa.getHasAuditory()));
-        }
-        if (pesquisa.getHasVisual() != null) {
-            query.addFilterQuery("{!tag=hasvisual}" + 
-            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hasvisual", pesquisa.getHasVisual()));
-        }
-        if (pesquisa.getHasText() != null) {
-            query.addFilterQuery("{!tag=hastext}" + 
-            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hastext", pesquisa.getHasText()));
-        }
-
-        if (pesquisa.getHasTactile() != null) {
-            query.addFilterQuery("{!tag=hastactile}" + 
-            		orQueryQuoted("obaa.accessibility.resourcedescription.primary.hastactile", pesquisa.getHasTactile()));
-        }
-
-        if (!isBlankList(pesquisa.getCost())) {
-            query.addFilterQuery("{!tag=cost}" + 
-            		orQueryQuoted("obaa.rights.cost", pesquisa.getCost()));
-        }
         
         if (!isBlank(pesquisa.getIdioma())) {
             query.addFilterQuery("obaa.general.language:(" + pesquisa.getIdioma() + ")");
         }
 
-        if (!isBlankList(pesquisa.getFormat())) {
-            query.addFilterQuery("{!tag=format}" + orQueryQuoted("obaa.technical.format", pesquisa.getFormat()));
-        }
 
-        if (!isBlankList(pesquisa.getDifficulty())) {
-            query.addFilterQuery("{!tag=difficulty}" + orQueryQuoted("obaa.educational.difficulty", pesquisa.getDifficulty()));
+        for(String name : pesquisa.getAll()) {
+            List l = pesquisa.get(name);
+            String fullName = pesquisa.getFullName(name);
+            String tagName = pesquisa.getTagName(name);
+            if(l != null) {       
+                query.addFilterQuery("{!tag=" + tagName + "}" + 
+                        orQueryQuoted(fullName, l));
+            }
         }
         
-        if (!isBlankList(pesquisa.getAgeRangeInt())) {
-            query.addFilterQuery("{!tag=agerangeint}" + orQueryQuoted("obaa.educational.typicalagerangeint", pesquisa.getAgeRangeInt()));
+        for(String name : pesquisa.getAll()) {
+            List l = pesquisa.get(name);
+            String fullName = pesquisa.getFullName(name);
+            String tagName = pesquisa.getTagName(name);
+            if(l != null) {       
+                query.addFilterQuery("{!tag=" + tagName + "}" + 
+                        orQueryQuoted(fullName, l));
+            }
         }
-
-        
-        
 
         /**
          * FEDERACOES, REPOSITORIOS E SUBFEDERACOE *
          */
         // TODO: Os 3 IFs abaixo devem ficar no FEB, o resto no ObaaSolrSearch
-        if (!pesquisa.getFederacoes().isEmpty()) {
-            String q = "obaa.federacao:(";
-            q += pesquisa.getFederacoes().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
-            q += ")";
-            query.addFilterQuery(q);
-        }
-
-        if (!pesquisa.getRepSubfed().isEmpty()) {
-            String q = "obaa.subFederacao:(";
-            q += pesquisa.getRepSubfed().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
-            q += ")";
-            query.addFilterQuery(q);
-        }
-
-        if (!pesquisa.getRepositorios().isEmpty()) {
-            String q = "obaa.repositorio:(";
-            q += pesquisa.getRepositorios().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
-            q += ")";
-            query.addFilterQuery(q);
-        }
+//        if (!pesquisa.getFederacoes().isEmpty()) {
+//            String q = "obaa.federacao:(";
+//            q += pesquisa.getFederacoes().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
+//            q += ")";
+//            query.addFilterQuery(q);
+//        }
+//
+//        if (!pesquisa.getRepSubfed().isEmpty()) {
+//            String q = "obaa.subFederacao:(";
+//            q += pesquisa.getRepSubfed().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
+//            q += ")";
+//            query.addFilterQuery(q);
+//        }
+//
+//        if (!pesquisa.getRepositorios().isEmpty()) {
+//            String q = "obaa.repositorio:(";
+//            q += pesquisa.getRepositorios().stream().map(i -> i.toString()).collect(Collectors.joining(" "));
+//            q += ")";
+//            query.addFilterQuery(q);
+//        }
 
         return query;
     }
@@ -114,7 +96,15 @@ public class CriaQuery {
      * @return query pronta para ser adicionada a um QueryFilter do Solr
      */
     private static <T extends Object> String orQueryQuoted(String obaaField, List<T> values) {
-        return values.stream().map(s -> obaaField + ":" + quote(s.toString())).collect(Collectors.joining(" OR "));
+        // query mais bonita para inteiros
+        if(values.get(0).getClass().equals(Integer.class)) {
+            return obaaField + ":("
+                    + values.stream().map(i -> i.toString()).collect(Collectors.joining(" "))
+                    + ")";
+        }
+        else {
+            return values.stream().map(s -> obaaField + ":" + quote(s.toString())).collect(Collectors.joining(" OR "));
+        }
     }
      
     
