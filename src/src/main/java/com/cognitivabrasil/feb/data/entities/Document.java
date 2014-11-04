@@ -5,6 +5,7 @@ import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Location;
 
 import com.cognitivabrasil.feb.data.interfaces.DocumentoFebInterface;
+import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
 
 import java.util.*;
 
@@ -36,7 +37,7 @@ import org.joda.time.DateTime;
 @Entity
 @Table(name = "documentos")
 public class Document implements java.io.Serializable,
-        DocumentoFebInterface, OaiDocument {
+        DocumentoFebInterface, OaiDocument, ObaaDocument {
 
     private static final Logger log = LoggerFactory.getLogger(Document.class);
     private static final long serialVersionUID = 61217365141633065L;

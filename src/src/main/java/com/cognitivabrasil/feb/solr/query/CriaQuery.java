@@ -82,7 +82,7 @@ public class CriaQuery {
         /**
          * FEDERACOES, REPOSITORIOS E SUBFEDERACOE *
          */
-
+        // TODO: Os 3 IFs abaixo devem ficar no FEB, o resto no ObaaSolrSearch
         if (!pesquisa.getFederacoes().isEmpty()) {
             String q = "obaa.federacao:(";
             q += pesquisa.getFederacoes().stream().map(i -> i.toString()).collect(Collectors.joining(" "));

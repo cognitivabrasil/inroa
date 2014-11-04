@@ -1,15 +1,13 @@
 package com.cognitivabrasil.feb.solr.query;
 
+import static com.cognitivabrasil.feb.solr.SolrQueryResponseBuilder.solrQueryResponseBuilder;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -26,9 +24,8 @@ import org.mockito.MockitoAnnotations;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
 import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.data.services.ObaaSearchAdapterImpl;
 import com.cognitivabrasil.feb.solr.SolrDocumentListBuilder;
-
-import static com.cognitivabrasil.feb.solr.SolrQueryResponseBuilder.solrQueryResponseBuilder;
 
 public class QuerySolrTest {
     @Mock
@@ -39,79 +36,12 @@ public class QuerySolrTest {
     
     @Before
     public void setup() {
-        querySolr = new QuerySolr();
+        querySolr = new QuerySolr(new ObaaSearchAdapterImpl());
         
         MockitoAnnotations.initMocks(this);
     }
     
-    @Test
-    public void getDocumentosReaisGetTitle() {
-        QueryResponse queryResponse = solrQueryResponseBuilder()
-                .results(
-                        SolrDocumentListBuilder.solrDocumentListBuilder()
-                            .add()
-                                .field("obaa.general.title", "Title 1")
-                                .field("obaa.general.title", "Title 2")
-                                .field("obaa.general.identifier.entry", "id1")
-                                .field("obaa.idBaseDados", 1)
-                                .build()
-                        ).addHighlighting().build();
-        
-        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 1);
-        
-        assertThat(l.get(0).getTitles(), hasItems("Title 1", "Title 2"));
-    }
-    
-    @Test
-    public void getDocumentosReaisGetDescription() {
-        QueryResponse queryResponse = solrQueryResponseBuilder()
-                .results(
-                        SolrDocumentListBuilder.solrDocumentListBuilder()
-                            .add()
-                                .field("obaa.general.description", "Desc 1")
-                                .field("obaa.general.identifier.entry", "id1")
-                                .field("obaa.idBaseDados", 1)
-                                .build()
-                        ).addHighlighting().build();
-        
-        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 1);
-        
-        assertThat(l.get(0).getDescriptions(), hasItems("Desc 1"));
-    }
-    
-    @Test
-    public void getDocumentosReaisGetKeyword() {
-        QueryResponse queryResponse = solrQueryResponseBuilder()
-                .results(
-                        SolrDocumentListBuilder.solrDocumentListBuilder()
-                            .add()
-                                .field("obaa.general.keyword", "Key 1")
-                                .field("obaa.general.identifier.entry", "id1")
-                                .field("obaa.idBaseDados", 1)
-                                .build()
-                        ).addHighlighting().build();
-        
-        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 1);
-        
-        assertThat(l.get(0).getKeywords(), hasItems("Key 1"));
-    }
-    
-    @Test
-    public void getDocumentosReaisGetLocation() {
-        QueryResponse queryResponse = solrQueryResponseBuilder()
-                .results(
-                        SolrDocumentListBuilder.solrDocumentListBuilder()
-                            .add()
-                                .field("obaa.technical.location", "http://location")
-                                .field("obaa.general.identifier.entry", "id1")
-                                .field("obaa.idBaseDados", 1)
-                                .build()
-                        ).addHighlighting().build();
-        
-        List<Document> l = QuerySolr.getDocumentosReais(queryResponse, 1);
-        
-        assertThat(l.get(0).getLocation().get(0).getText(), equalTo("http://location"));
-    }
+   
     
     @Test
     public void test() throws SolrServerException {

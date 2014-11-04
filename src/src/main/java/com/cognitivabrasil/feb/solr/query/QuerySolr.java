@@ -19,8 +19,9 @@ import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.Technical.Technical;
 
 import com.cognitivabrasil.feb.data.entities.Consulta;
-import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.services.ObaaSearchAdapterImpl;
+import com.cognitivabrasil.feb.solr.ObaaSearchAdapter;
+import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
 
 /**
  * @author Daniel Epstein
@@ -34,6 +35,13 @@ public class QuerySolr {
     @Autowired
     private HttpSolrServer serverSolr;
     
+    private ObaaSearchAdapter obaaSearchAdapter;
+    
+
+    @Autowired
+    public QuerySolr(ObaaSearchAdapterImpl obaaSearchAdapterImpl) {
+        obaaSearchAdapter = obaaSearchAdapterImpl;
+    }
 
     /**
      * Realiza a busca avancada. A funcao verifica quais campos foram escolhidos e realiza a busca neles PERGUNTA:
@@ -77,87 +85,7 @@ public class QuerySolr {
         
     }
 
-    /**
-     * Transforma a resposta fornecida pelo SOLR em Documentos Reais, com hit higlighting e snippets.
-     *
-     * @param queryResponse resultado da busca a ser transformado em documentos reais
-     * @param numberOfDocs Numero de resultados da busca a ser transformado em Document
-     *
-     * @return Lista de DocumentosReais construida a partir da busca.
-     */
-    public static List<Document> getDocumentosReais(QueryResponse queryResponse, int numberOfDocs) {
-
-        List<Document> retorno = new ArrayList<>();
-        SolrDocumentList list = queryResponse.getResults();
-
-        for (int i = 0; i < numberOfDocs && i < list.size(); i++) {
-
-            //O valor de numDoc eh o documento a ser apresentado
-            int numDoc = i;
-
-            Document doc = new Document();
-            OBAA obaa = new OBAA();
-            doc.setMetadata(obaa);
-
-            obaa.setGeneral(new General());
-
-            obaa.setTechnical(new Technical());
-
-            Map<String, Map<String, List<String>>> highlighting = queryResponse.getHighlighting();
-            if (list.get(numDoc).getFieldValues("obaa.general.title") != null) {
-                // id is the uniqueKey field
-                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry");
-
-                if (highlighting.get(id) != null && highlighting.get(id).get("obaa.general.title") != null) {
-                    for (String snippet : highlighting.get(id).get("obaa.general.title")) {
-                        obaa.getGeneral().addTitle(snippet);
-                    }
-                }
-            }
-
-            if (list.get(numDoc).getFieldValues("obaa.general.description") != null) {
-                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry"); 
-
-                if (highlighting.get(id) != null && highlighting.get(id).get("obaa.general.description") != null) {
-                    for (String snippet : highlighting.get(id).get("obaa.general.description")) {
-                        obaa.getGeneral().addDescription(snippet.replaceFirst("^\\.", ""));
-                    }
-                }
-            }
-
-            if (list.get(numDoc).getFieldValues("obaa.general.keyword") != null) {
-                String id = (String) list.get(numDoc).getFieldValue("obaa.general.identifier.entry"); // id is the
-                // uniqueKey field
-
-                if (highlighting.get(id) != null && highlighting.get(id).get("obaa.general.keyword") != null) {
-                    for (String snippet : highlighting.get(id).get("obaa.general.keyword")) {
-                        obaa.getGeneral().addKeyword(snippet);
-                    }
-                }
-
-            }
-
-            if (list.get(numDoc).getFieldValues("obaa.technical.location") != null) {
-                for (Object o : list.get(numDoc).getFieldValues("obaa.technical.location")) {
-                    log.trace((String) o);
-                    obaa.getTechnical().addLocation((String) o);
-                }
-            }
-
-            /**
-             * FEDERACAO, SUBFEDERACAO E REPOSITORIO*
-             */
-            Repositorio rep = new Repositorio();
-            rep.setName((String) list.get(numDoc).getFieldValue("obaa.repName"));
-            doc.setRepositorio(rep);
-
-            doc.setId((Integer) list.get(numDoc).getFieldValue("obaa.idBaseDados"));
-
-            retorno.add(doc);
-        }
-
-        return retorno;
-    }
+   
     
     /**
          * @return Numero de documentos retornados da busca
