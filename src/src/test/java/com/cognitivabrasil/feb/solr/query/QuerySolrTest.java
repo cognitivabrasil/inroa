@@ -1,9 +1,5 @@
 package com.cognitivabrasil.feb.solr.query;
 
-import static com.cognitivabrasil.feb.solr.SolrQueryResponseBuilder.solrQueryResponseBuilder;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.verify;
@@ -22,10 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.data.services.ObaaSearchAdapterImpl;
 import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
-import com.cognitivabrasil.feb.solr.SolrDocumentListBuilder;
 
 public class QuerySolrTest {
     @Mock
@@ -36,7 +29,7 @@ public class QuerySolrTest {
     
     @Before
     public void setup() {
-        querySolr = new QuerySolr(new ObaaSearchAdapterImpl());
+        querySolr = new QuerySolr();
         
         MockitoAnnotations.initMocks(this);
     }

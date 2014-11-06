@@ -7,8 +7,6 @@ import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
-
 /**
  * Essa classe representa um valor de facet específico.
  * 
@@ -21,7 +19,7 @@ import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 public class FacetCount {
     private static final Logger log = LoggerFactory.getLogger(FacetCount.class);
     
-    private ConsultaFeb consulta;
+    private Consulta consulta;
     private final String name;
     private final String fieldName;
     private final Long count;
@@ -45,24 +43,24 @@ public class FacetCount {
     /**
      * @param v Obtido do SOLR
      * @param fieldName nome do campo para o qual está sendo realizado o faceting, eg, obaa.technical.format
-     * @param consulta a consulta atual
+     * @param consulta2 a consulta atual
      */
-    public FacetCount(Count v, String fieldName, ConsultaFeb consulta) {
+    public FacetCount(Count v, String fieldName, Consulta consulta2) {
         name = v.getName();
         this.fieldName = getShortName(fieldName);
         count = v.getCount();
         
                 
         
-        active = consulta.isActive(this.fieldName, name);
+        active = consulta2.isActive(this.fieldName, name);
                 
-        setNewConsulta(new ConsultaFeb(consulta));
+        setNewConsulta(consulta2.clone());
     }
     
     /**
      * Usa uma tabela uma tabela de tradução ou heurística para retornar um nome "curto" deste field.
      * 
-     * Esse nome é usado na classe {@link ConsultaFeb}, e nos gets.
+     * Esse nome é usado na classe {@link Consulta}, e nos gets.
      * 
      * @param fieldName2
      * @return o nome "curto" do campo, pe, obaa.technical.format retorna "format"
@@ -80,7 +78,7 @@ public class FacetCount {
      * Gera uma nova consulta.
      * @param c consulta atual
      */
-    private void setNewConsulta(ConsultaFeb c) {
+    private void setNewConsulta(Consulta c) {
         if(active) {
             c.removeFacetFilter(fieldName, name);
         }
@@ -93,7 +91,7 @@ public class FacetCount {
     /**
      * @return consulta que deve ser executada para ativar a facet.
      */
-    public ConsultaFeb getConsulta() {
+    public Consulta getConsulta() {
         return consulta;
     }
 

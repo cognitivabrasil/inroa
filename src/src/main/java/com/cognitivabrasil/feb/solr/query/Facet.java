@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import org.apache.solr.client.solrj.response.FacetField;
 
-import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 
 /**
  * Representa uma campo facetado.
@@ -22,7 +21,7 @@ public class Facet {
      * @param facetField obtido do Solr
      * @param consulta a consulta atual, que gerou estas facetas
      */
-    public Facet(FacetField facetField, ConsultaFeb consulta) {
+    public Facet(FacetField facetField, Consulta consulta) {
         name = facetField.getName();
         valueCount = facetField.getValueCount();
         

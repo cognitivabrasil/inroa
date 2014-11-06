@@ -7,6 +7,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.junit.Test;
 
@@ -30,6 +32,7 @@ public class FacetCountTest {
         Count c = fakeCount(10L, "fakeName");
         
         ConsultaFeb cons = mock(ConsultaFeb.class);
+        when(cons.clone()).thenReturn(new ConsultaFeb());
         
         FacetCount fc = new FacetCount(c, "obaa.technical.format", cons);
         
@@ -58,7 +61,7 @@ public class FacetCountTest {
         FacetCount fc = new FacetCount(c, "obaa.accessibility.resourcedescription.primary.hasvisual", cons);
         
         assertThat(fc.isActive(), equalTo(false));
-        assertThat(fc.getConsulta().getHasVisual(), hasItem(true));
+        assertThat((List<Boolean>)fc.getConsulta().get("hasVisual"), hasItem(true));
     }
     
     
@@ -72,7 +75,7 @@ public class FacetCountTest {
         FacetCount fc = new FacetCount(c, "obaa.technical.format", cons);
         
         assertThat(fc.isActive(), equalTo(true));
-        assertThat(fc.getConsulta().getFormat(), not(hasItem("fakeFormat")));
+        assertThat((List<String>)fc.getConsulta().get("format"), not(hasItem("fakeFormat")));
     }
     
     @Test
@@ -84,7 +87,7 @@ public class FacetCountTest {
         FacetCount fc = new FacetCount(c, "obaa.technical.format", cons);
         
         assertThat(fc.isActive(), equalTo(false));
-        assertThat(fc.getConsulta().getFormat(), hasItem("fakeFormat"));
+        assertThat((List<String>)fc.getConsulta().get("format"), hasItem("fakeFormat"));
     }
     
 

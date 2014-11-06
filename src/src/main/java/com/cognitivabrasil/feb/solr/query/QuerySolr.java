@@ -1,27 +1,16 @@
 package com.cognitivabrasil.feb.solr.query;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocumentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cognitivabrasil.obaa.OBAA;
-import cognitivabrasil.obaa.General.General;
-import cognitivabrasil.obaa.Technical.Technical;
-
 import com.cognitivabrasil.feb.data.services.ObaaSearchAdapterImpl;
-import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.solr.ObaaSearchAdapter;
-import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
 
 /**
  * @author Daniel Epstein
@@ -35,14 +24,6 @@ public class QuerySolr {
     @Autowired
     private HttpSolrServer serverSolr;
     
-    private ObaaSearchAdapter obaaSearchAdapter;
-    
-
-    @Autowired
-    public QuerySolr(ObaaSearchAdapterImpl obaaSearchAdapterImpl) {
-        obaaSearchAdapter = obaaSearchAdapterImpl;
-    }
-
     /**
      * Realiza a busca avancada. A funcao verifica quais campos foram escolhidos e realiza a busca neles PERGUNTA:
      * REALIZA A BUSCA APENAS NELES OU NOS PRINCIPAIS TAMBEM? E A BUSCA PODE SER DIFERENTE PARA CADA CAMPO?
@@ -53,7 +34,7 @@ public class QuerySolr {
      * @return 
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?)
      */
-    public QueryResponse pesquisaCompleta(ConsultaFeb pesquisa, int offset, int limit) throws SolrServerException {
+    public QueryResponse pesquisaCompleta(Consulta pesquisa, int offset, int limit) throws SolrServerException {
         SolrQuery query = CriaQuery.criaQueryCompleta(pesquisa);
 
         query.setStart(offset);

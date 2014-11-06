@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.solr.client.solrj.SolrServerException;
 
-import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
+import com.cognitivabrasil.feb.solr.query.Consulta;
 
 /**
  * Serviço para realizar todas as buscar por documentos.
@@ -28,6 +28,6 @@ public interface ObaaSearchService {
      * @return Lista de documentos reais que correspondem ao resultado da busca
      * @throws SolrServerException - Não foi possível fazer a pesquisa (server offline?) 
      */
-    ResultadoBusca busca(ConsultaFeb consulta) throws SolrServerException;
+    ResultadoBusca busca(Consulta consulta) throws SolrServerException;
 
 }

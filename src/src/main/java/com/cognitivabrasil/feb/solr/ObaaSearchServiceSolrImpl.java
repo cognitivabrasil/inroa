@@ -24,6 +24,7 @@ import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.services.ObaaSearchService;
 import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
+import com.cognitivabrasil.feb.solr.query.Consulta;
 import com.cognitivabrasil.feb.solr.query.Facet;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
 import com.cognitivabrasil.feb.spring.FebConfig;
@@ -51,7 +52,7 @@ public class ObaaSearchServiceSolrImpl implements ObaaSearchService {
     }
 
     @Override
-    public ResultadoBusca busca(ConsultaFeb consulta) throws SolrServerException {
+    public ResultadoBusca busca(Consulta consulta) throws SolrServerException {
 
         List<ObaaDocument> resultadoConsulta;
         int limit;

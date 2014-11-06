@@ -15,12 +15,14 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cognitivabrasil.feb.solr.query.Consulta;
+
 /**
  *
  * @author Marcos Nunes <marcosn@gmail.com>
  * @author Paulo Schreiner
  */
-public class ConsultaFeb {
+public class ConsultaFeb implements Consulta {
 
     // TODO: deve ter transferida para spring.dtos
     private String consulta;
@@ -33,12 +35,11 @@ public class ConsultaFeb {
     private Boolean adultAge;
     private String size;
 
-    
-    private Map<String, List<? extends Object>> params; 
-    private static final Map<String, Class> VALID_PARAMS; 
-    
+    private Map<String, List<? extends Object>> params;
+    private static final Map<String, Class> VALID_PARAMS;
+
     static {
-        VALID_PARAMS = new HashMap<>(); 
+        VALID_PARAMS = new HashMap<>();
         VALID_PARAMS.put("hasVisual", Boolean.class);
         VALID_PARAMS.put("hasAuditory", Boolean.class);
         VALID_PARAMS.put("hasText", Boolean.class);
@@ -52,8 +53,6 @@ public class ConsultaFeb {
         VALID_PARAMS.put("repositorios", Integer.class);
     }
 
-
-
     private static final Logger log = LoggerFactory.getLogger(ConsultaFeb.class);
 
     /**
@@ -61,7 +60,7 @@ public class ConsultaFeb {
      */
     public ConsultaFeb() {
         params = new HashMap<>();
-        
+
         rss = false;
         limit = 10;
         offset = 0;
@@ -82,25 +81,29 @@ public class ConsultaFeb {
         offset = 0;
         sizeResult = 0;
 
-
         setAutor(consulta.getAutor());
         setConsulta(consulta.getConsulta());
 
         setIdioma(consulta.getIdioma());
-        
-        for(String key : consulta.getParams().keySet()) {
-            params.put(key, (List<? extends Object>) ((ArrayList)consulta.getParams().get(key)).clone());
-            
+
+        for (String key : consulta.getParams().keySet()) {
+            params.put(key, (List<? extends Object>) ((ArrayList) consulta.getParams().get(key)).clone());
+
         }
     }
 
-    protected Map<String, List<? extends Object>>  getParams() {
+    protected Map<String, List<? extends Object>> getParams() {
         return params;
     }
 
+    @Override
+    public Consulta clone() {
+        return new ConsultaFeb(this);
+
+    }
+
     /**
-     * @return verdadeiro se a consulta não tiver nem consulta nem autor (mesmo 
-     * se ela tiver filtros).
+     * @return verdadeiro se a consulta não tiver nem consulta nem autor (mesmo se ela tiver filtros).
      */
     public boolean isEmpty() {
         return isBlank(consulta) && isBlank(autor);
@@ -110,6 +113,7 @@ public class ConsultaFeb {
         return format2 == null || format2.isEmpty();
     }
 
+    @Override
     public String getConsulta() {
         return consulta;
     }
@@ -147,7 +151,7 @@ public class ConsultaFeb {
     public void setRepSubfed(List<Integer> repSubfed) {
         // o form envia valoes em branco e o spring seta como null na lista, ai tem que remover
         repSubfed.removeAll(Collections.singleton(null));
-        params.put("repSubfed",repSubfed);
+        params.put("repSubfed", repSubfed);
     }
 
     public List<Integer> getRepositorios() {
@@ -172,13 +176,12 @@ public class ConsultaFeb {
     }
 
     public List<String> getFormat() {
-        return (List<String>)params.get("format");
+        return (List<String>) params.get("format");
     }
 
     public void setFormat(List<String> format) {
         params.put("format", format);
     }
-
 
     public Boolean isAdultAge() {
         return adultAge;
@@ -189,7 +192,7 @@ public class ConsultaFeb {
     }
 
     public List<String> getDifficulty() {
-        return (List<String>)params.get("difficulty");
+        return (List<String>) params.get("difficulty");
     }
 
     public void setDifficulty(List<String> difficulty) {
@@ -197,71 +200,74 @@ public class ConsultaFeb {
     }
 
     public List<Boolean> getCost() {
-        return (List<Boolean>)params.get("cost");
+        return (List<Boolean>) params.get("cost");
     }
 
     public void setCost(List<Boolean> cost) {
         params.put("cost", cost);
     }
+
     public void addCost(boolean b) {
-    	if(getCost() == null) {
-    		setCost(new ArrayList<>());
-    	}
-    	getCost().add(b);
+        if (getCost() == null) {
+            setCost(new ArrayList<>());
+        }
+        getCost().add(b);
     }
 
     public List<Boolean> getHasVisual() {
-        return (List<Boolean>)params.get("hasVisual");
+        return (List<Boolean>) params.get("hasVisual");
     }
 
     public void setHasVisual(List<Boolean> hasVisual) {
         params.put("hasVisual", hasVisual);
     }
+
     public void addHasVisual(boolean b) {
-    	if(getHasVisual() == null) {
-    		setHasVisual(new ArrayList<>());
-    	}
-    	getHasVisual().add(b);
+        if (getHasVisual() == null) {
+            setHasVisual(new ArrayList<>());
+        }
+        getHasVisual().add(b);
     }
 
     public List<Boolean> getHasAuditory() {
-        return (List<Boolean>)params.get("hasAuditory");
+        return (List<Boolean>) params.get("hasAuditory");
     }
 
     public void setHasAuditory(List<Boolean> hasAuditory) {
         params.put("hasAuditory", hasAuditory);
     }
+
     public void addHasAuditory(boolean b) {
-    	if(getHasAuditory() == null) {
-    		setHasAuditory(new ArrayList<>());
-    	}
-    	getHasAuditory().add(b);
+        if (getHasAuditory() == null) {
+            setHasAuditory(new ArrayList<>());
+        }
+        getHasAuditory().add(b);
     }
 
     public List<Boolean> getHasText() {
-        return (List<Boolean>)params.get("hasText");
+        return (List<Boolean>) params.get("hasText");
     }
 
     public void setHasText(List<Boolean> hasText) {
         params.put("hasText", hasText);
     }
-    
+
     public void addHasText(boolean b) {
-    	if(getHasText() == null) {
-    		setHasText(new ArrayList<>());
-    	}
-    	getHasText().add(b);
+        if (getHasText() == null) {
+            setHasText(new ArrayList<>());
+        }
+        getHasText().add(b);
     }
 
     public List<Boolean> getHasTactile() {
-        return (List<Boolean>)params.get("hasTactile");
+        return (List<Boolean>) params.get("hasTactile");
     }
-    
+
     public void addHasTactile(boolean b) {
-    	if(getHasTactile() == null) {
-    		setHasTactile(new ArrayList<>());
-    	}
-    	getHasTactile().add(b);
+        if (getHasTactile() == null) {
+            setHasTactile(new ArrayList<>());
+        }
+        getHasTactile().add(b);
     }
 
     public void setHasTactile(List<Boolean> hasTactile) {
@@ -333,7 +339,7 @@ public class ConsultaFeb {
     }
 
     /**
-     * @deprecated use {@link ResultadoBusca#getResultSize()} 
+     * @deprecated use {@link ResultadoBusca#getResultSize()}
      */
     @Deprecated
     public int getSizeResult() {
@@ -353,7 +359,7 @@ public class ConsultaFeb {
      */
     public String getUrlEncoded() {
         log.debug("getUrlEncoded {}", this);
-        
+
         try {
             String encoded = "consulta=" + URLEncoder.encode(consulta, "UTF-8");
             if (isNotBlank(autor)) {
@@ -365,10 +371,10 @@ public class ConsultaFeb {
             if (isNotBlank(size)) {
                 encoded += "&size=" + URLEncoder.encode(size, "UTF-8");
             }
-            
-            for(String key : params.keySet()) {
+
+            for (String key : params.keySet()) {
                 if (!isBlankList(params.get(key))) {
-                    for(Object v : params.get(key)) {
+                    for (Object v : params.get(key)) {
                         encoded += "&" + key + "=" + URLEncoder.encode(v.toString(), "UTF-8");
                     }
                 }
@@ -381,9 +387,10 @@ public class ConsultaFeb {
             throw new RuntimeException("FATAL", e);
         }
     }
-    
+
     /**
      * Sinônimo de {@link #addFacetFilter(String, Object)}
+     * 
      * @see #addFacetFilter(String, Object)
      */
     public void add(String fieldName, Object value) {
@@ -393,28 +400,27 @@ public class ConsultaFeb {
     /**
      * Adiciona um filtro à consulta.
      * 
-     * Valida os campos antes de adicionar, e converte o tipo do value quando necessário
-     * para Integer ou Boolean.
+     * Valida os campos antes de adicionar, e converte o tipo do value quando necessário para Integer ou Boolean.
      * 
      * @param fieldName nome do campo a ser adicionado
      * @param value valor a ser adicionado
      * @throws IllegalArgumentException quando o campo adicionado não é válido
      */
+    @Override
     public void addFacetFilter(String fieldName, Object value) throws IllegalArgumentException {
-        if(VALID_PARAMS.get(fieldName) == null) {
+        if (VALID_PARAMS.get(fieldName) == null) {
             throw new IllegalArgumentException("Field " + fieldName + " is not valid for Consulta");
         }
-        
-           
-        if(params.get(fieldName) == null) {
-            params.put(fieldName , new ArrayList<>());
+
+        if (params.get(fieldName) == null) {
+            params.put(fieldName, new ArrayList<>());
         }
         List<Object> l = (List<Object>) params.get(fieldName);
-        
-        if(VALID_PARAMS.get(fieldName).equals(Boolean.class)) {
+
+        if (VALID_PARAMS.get(fieldName).equals(Boolean.class)) {
             l.add(Boolean.valueOf(value.toString()));
         }
-        else if(VALID_PARAMS.get(fieldName).equals(Integer.class)) {
+        else if (VALID_PARAMS.get(fieldName).equals(Integer.class)) {
             l.add(Integer.valueOf(value.toString()));
         }
         else {
@@ -424,19 +430,20 @@ public class ConsultaFeb {
 
     /**
      * Remove filtro para este campo e valor.
+     * 
      * @param fieldName nome do campo
      * @param value valor do filtro
      */
     public void removeFacetFilter(String fieldName, String value) {
-        if(params.get(fieldName) !=null) {
+        if (params.get(fieldName) != null) {
             List<Object> l = new ArrayList<>();
-            for(Object o : params.get(fieldName)) {
-                if(!o.toString().equals(value)) {
+            for (Object o : params.get(fieldName)) {
+                if (!o.toString().equals(value)) {
                     l.add(o);
                 }
             }
             params.put(fieldName, l);
-        }   
+        }
     }
 
     /**
@@ -447,7 +454,7 @@ public class ConsultaFeb {
      * @return verdadeiro se esta consulta está filtrando neste campo pelo valor especificado
      */
     public boolean isActive(String fieldName, String value) {
-        if(params.get(fieldName) == null) {
+        if (params.get(fieldName) == null) {
             return false;
         }
         else {
@@ -463,21 +470,23 @@ public class ConsultaFeb {
     }
 
     public List<Integer> getAgeRangeInt() {
-        return (List<Integer>)params.get("ageRangeInt");
+        return (List<Integer>) params.get("ageRangeInt");
     }
-    
+
     public void setAgeRangeInt(List<Integer> ar) {
-        params.put("ageRangeInt",ar);
+        params.put("ageRangeInt", ar);
     }
 
     public void addAgeRangeInt(Integer i) {
         add("ageRangeInt", i);
     }
 
+    @Override
     public List get(String string) {
         return params.get(string);
     }
 
+    @Override
     public String getFullName(String string) {
         Map<String, String> short2Full = new HashMap<>();
         short2Full.put("hasAuditory", "obaa.accessibility.resourcedescription.primary.hasauditory");
@@ -493,19 +502,18 @@ public class ConsultaFeb {
         short2Full.put("repSubfed", "obaa.subFederacao");
         short2Full.put("repositorios", "obaa.repositorio");
 
-        
-        
-       
         return short2Full.get(string);
     }
 
+    @Override
     public String getTagName(String string) {
         return string.toLowerCase();
     }
 
+    @Override
     public List<String> getAll() {
-        // TODO Auto-generated method stub
-        return Arrays.asList("hasAuditory", "hasVisual", "hasText", "hasTactile", "cost", "format", "difficulty", "ageRangeInt"
-                , "federacoes", "repSubfed", "repositorios");
+        return Arrays.asList("hasAuditory", "hasVisual", "hasText", "hasTactile", "cost", "format", "difficulty",
+                "ageRangeInt", "federacoes", "repSubfed", "repositorios");
     }
+
 }
