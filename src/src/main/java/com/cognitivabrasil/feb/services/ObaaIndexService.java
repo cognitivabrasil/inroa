@@ -2,7 +2,8 @@ package com.cognitivabrasil.feb.services;
 
 import java.util.List;
 
-import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
+
 
 public interface ObaaIndexService {
 
@@ -19,6 +20,8 @@ public interface ObaaIndexService {
      *
      * @param docs Lista de documentos reais a serem indexados
      */
-    void indexarBancoDeDados(List<Document> content);
+    void indexarBancoDeDados(List<? extends ObaaDocument> docs);
+
+
 
 }

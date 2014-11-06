@@ -334,4 +334,26 @@ public class Document implements java.io.Serializable,
         }
         return (obaa.getGeneral().getTitles().get(0));
     }
+    
+    /**
+     * @return os campos extra do FEB que devem ser indexados na ferramenta de busca.
+     */
+    @Override
+    @Transient
+    public Map<String, Object> getExtraSearchFields() {
+        Map<String,Object> m = new HashMap<>();
+        
+        Integer repositorio = getRepositorio() != null ? getRepositorio().getId() : -1;
+        Integer subFeb = getRepositorioSubFed() != null ? getRepositorioSubFed().getId() : -1;
+        Integer federacao = getRepositorioSubFed() != null
+                ? getRepositorioSubFed().getSubFederacao().getId() : -1;
+
+        String nomeRep = getNomeRep();
+        
+        m.put("obaa.repositorio", repositorio);
+        m.put("obaa.subFederacao", subFeb);
+        m.put("obaa.federacao", federacao);
+        m.put("obaa.repName", nomeRep);
+        return m;   
+    }
 }

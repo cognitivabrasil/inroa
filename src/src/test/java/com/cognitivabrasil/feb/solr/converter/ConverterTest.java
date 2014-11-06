@@ -1,5 +1,6 @@
 package com.cognitivabrasil.feb.solr.converter;
 
+import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
@@ -7,6 +8,11 @@ import static org.junit.Assert.assertThat;
 
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
+
+import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.data.entities.Repositorio;
+import com.cognitivabrasil.feb.data.entities.RepositorioSubFed;
+import com.cognitivabrasil.feb.data.entities.SubFederacao;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.builder.ObaaBuilder;
@@ -22,8 +28,22 @@ public class ConverterTest {
                         .language("pt-BR")
                         .build();
         
-        SolrInputDocument doc = Converter.obaaToSolr(o, "myEntry", 2, -1, 2, 1, "Meu Rep");
+        Document d = new Document();
+        d.setId(2);
+        d.setMetadata(o);
+        d.setObaaEntry("myEntry");
         
+        
+        RepositorioSubFed repSubFed = new RepositorioSubFed();
+        repSubFed.setId(2);
+        repSubFed.setName("Meu Rep");
+        SubFederacao subFederacao = new SubFederacao();
+        subFederacao.setId(1);
+        repSubFed.setSubFederacao(subFederacao);
+        d.setRepositorioSubFed(repSubFed);
+        
+        SolrInputDocument doc = Converter.obaaToSolr(d);
+      
         System.out.println(doc.getFieldValues("obaa.general.title"));
         
         assertThat(doc.getFieldValues("obaa.general.title"), hasItems("Título 1", "Bla"));
@@ -34,7 +54,7 @@ public class ConverterTest {
         assertThat(doc.getFieldValue("obaa.repositorio"), equalTo(-1));
         assertThat(doc.getFieldValue("obaa.subFederacao"), equalTo(2));
         assertThat(doc.getFieldValue("obaa.federacao"), equalTo(1));
-        assertThat(doc.getFieldValue("obaa.repName"), equalTo("Meu Rep"));
+        assertThat((String)doc.getFieldValue("obaa.repName"), endsWith("Meu Rep"));
 
     }
 }

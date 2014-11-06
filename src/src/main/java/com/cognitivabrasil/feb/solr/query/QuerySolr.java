@@ -9,9 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cognitivabrasil.feb.data.services.ObaaSearchAdapterImpl;
-import com.cognitivabrasil.feb.solr.ObaaSearchAdapter;
-
 /**
  * @author Daniel Epstein
  * @author Paulo Schreiner

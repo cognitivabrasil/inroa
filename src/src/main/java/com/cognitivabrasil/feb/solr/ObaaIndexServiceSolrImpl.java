@@ -1,8 +1,8 @@
 package com.cognitivabrasil.feb.solr;
 
-import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.services.ObaaIndexService;
 import com.cognitivabrasil.feb.solr.indexar.IndexarDados;
+import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
 import com.cognitivabrasil.feb.solr.converter.Converter;
 
 import org.slf4j.Logger;
@@ -32,24 +32,17 @@ public class ObaaIndexServiceSolrImpl implements ObaaIndexService {
     }
 
     @Override
-    public void indexarBancoDeDados(List<Document> docs) {
+    public void indexarBancoDeDados(List<? extends ObaaDocument> docs) {
         List<SolrInputDocument> docsSolr = new ArrayList<>();
 
         log.debug("Convertendo obaaXML em SolrXML: Numero de objetos a serem convertidos: " + docs.size());
-        for (Document doc : docs) {
+        for (ObaaDocument doc : docs) {
             String entry = "";
             entry = doc.getObaaEntry();
             if(entry == null || entry.isEmpty()) {
                     log.error("Encontrado documento sem obaaEntry. Id: " + doc.getId());
                     continue;
             }
-           
-            int repositorio = doc.getRepositorio() != null ? doc.getRepositorio().getId() : -1;
-            int subFeb = doc.getRepositorioSubFed() != null ? doc.getRepositorioSubFed().getId() : -1;
-            int federacao = doc.getRepositorioSubFed() != null
-                    ? doc.getRepositorioSubFed().getSubFederacao().getId() : -1;
-
-            String nomeRep = doc.getNomeRep();
 
             //Foi requerido que objetos sem link não fossem indexados ou apresentados ao usuário (FEB-472)
             if (doc.getMetadata().getTechnical().getLocationHttp().isEmpty()
@@ -60,8 +53,8 @@ public class ObaaIndexServiceSolrImpl implements ObaaIndexService {
                 continue;
             }
 
-            docsSolr.add(Converter.obaaToSolr(
-                    doc.getMetadata(), entry, doc.getId(), repositorio, subFeb, federacao, nomeRep));
+            
+            docsSolr.add(Converter.obaaToSolr(doc));
 
         }
 
@@ -75,4 +68,5 @@ public class ObaaIndexServiceSolrImpl implements ObaaIndexService {
             }
         }
     }
+
 }
