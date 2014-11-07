@@ -12,7 +12,6 @@ import org.apache.solr.common.SolrInputDocument;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -35,7 +34,7 @@ public class SolrTest {
     
     @Before
     public void setup() {
-        solr = new ObaaIndexServiceSolrImpl();
+        solr = new ObaaIndexServiceSolrImpl(indexar);
         
         MockitoAnnotations.initMocks(this);
     }

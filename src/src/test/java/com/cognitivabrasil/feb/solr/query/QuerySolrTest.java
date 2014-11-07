@@ -29,7 +29,7 @@ public class QuerySolrTest {
     
     @Before
     public void setup() {
-        querySolr = new QuerySolr();
+        querySolr = new QuerySolr(solr);
         
         MockitoAnnotations.initMocks(this);
     }

@@ -31,7 +31,7 @@ public class IndexarDadosTest {
     
     @Before
     public void setup() {
-        indexarDados = new IndexarDados();
+        indexarDados = new IndexarDados(server);
         
         MockitoAnnotations.initMocks(this);
     }

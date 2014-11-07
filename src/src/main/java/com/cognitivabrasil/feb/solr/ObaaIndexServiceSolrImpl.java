@@ -1,29 +1,30 @@
 package com.cognitivabrasil.feb.solr;
 
-import com.cognitivabrasil.feb.services.ObaaIndexService;
 import com.cognitivabrasil.feb.solr.indexar.IndexarDados;
 import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
 import com.cognitivabrasil.feb.solr.converter.Converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
 
-@Service
 public class ObaaIndexServiceSolrImpl implements ObaaIndexService {
 
     private static final Logger log = LoggerFactory.getLogger(ObaaIndexServiceSolrImpl.class);
     
-    @Autowired
     private IndexarDados indexarDados;
     
-    public ObaaIndexServiceSolrImpl() {
+    public ObaaIndexServiceSolrImpl(IndexarDados indexarDados) {
+        this.indexarDados = indexarDados;
+    }
+
+    public ObaaIndexServiceSolrImpl(HttpSolrServer serverSolr) {
+        this.indexarDados = new IndexarDados(serverSolr);
     }
 
     @Override

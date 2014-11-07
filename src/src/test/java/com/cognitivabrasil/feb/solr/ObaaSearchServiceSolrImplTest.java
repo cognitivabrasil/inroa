@@ -25,9 +25,9 @@ import org.mockito.MockitoAnnotations;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.ObaaSearchAdapterImpl;
 import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
-import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
+import com.cognitivabrasil.feb.solr.query.ResultadoBusca;
 
 public class ObaaSearchServiceSolrImplTest {
     @Mock
@@ -38,7 +38,7 @@ public class ObaaSearchServiceSolrImplTest {
 
     @Before
     public void setup() {
-        recuperador = new ObaaSearchServiceSolrImpl(new ObaaSearchAdapterImpl());
+        recuperador = new ObaaSearchServiceSolrImpl(querySolr, new ObaaSearchAdapterImpl());
         MockitoAnnotations.initMocks(this);
 
     }

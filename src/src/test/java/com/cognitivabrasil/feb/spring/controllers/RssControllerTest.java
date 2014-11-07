@@ -40,8 +40,8 @@ import cognitivabrasil.obaa.General.General;
 import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.WebConfig;
 import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
+import com.cognitivabrasil.feb.solr.query.ResultadoBusca;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class, WebConfig.class })

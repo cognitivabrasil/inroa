@@ -4,12 +4,6 @@
  */
 package com.cognitivabrasil.feb.ferramentaBusca.indexador;
 
-import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.services.ObaaIndexService;
-import com.cognitivabrasil.feb.solr.ObaaIndexServiceSolrImpl;
-import com.cognitivabrasil.feb.util.Operacoes;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,6 +14,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.cognitivabrasil.feb.data.entities.Document;
+import com.cognitivabrasil.feb.data.services.DocumentService;
+import com.cognitivabrasil.feb.solr.ObaaIndexService;
+import com.cognitivabrasil.feb.util.Operacoes;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de dados para preparaç&atilde;o da posterior

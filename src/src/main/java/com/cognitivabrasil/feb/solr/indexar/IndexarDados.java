@@ -13,8 +13,7 @@ import org.apache.solr.common.SolrException;
 import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+
 
 import com.cognitivabrasil.feb.solr.converter.Converter;
 
@@ -24,12 +23,14 @@ import com.cognitivabrasil.feb.solr.converter.Converter;
  * @author Daniel Epstein
  * @author Paulo Schreiner
  */
-@Service
 public class IndexarDados {
     private static final Logger log = LoggerFactory.getLogger(IndexarDados.class);
     
-    @Autowired
     private SolrServer server;
+    
+    public IndexarDados(SolrServer server) {
+        this.server = server;
+    }
 
     /**
      * Apaga todo o indice do Solr

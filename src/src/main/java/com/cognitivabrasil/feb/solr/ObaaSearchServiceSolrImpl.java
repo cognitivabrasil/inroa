@@ -6,28 +6,23 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.SpellCheckResponse;
 import org.apache.solr.common.SolrDocumentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.General.General;
 import cognitivabrasil.obaa.Technical.Technical;
 
-import com.cognitivabrasil.feb.data.entities.Document;
-import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
-import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
-import com.cognitivabrasil.feb.services.ObaaSearchService;
 import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
 import com.cognitivabrasil.feb.solr.query.Consulta;
 import com.cognitivabrasil.feb.solr.query.Facet;
 import com.cognitivabrasil.feb.solr.query.QuerySolr;
-import com.cognitivabrasil.feb.spring.FebConfig;
+import com.cognitivabrasil.feb.solr.query.ResultadoBusca;
 
 /**
  * Recuperador pelo SOLR
@@ -35,19 +30,22 @@ import com.cognitivabrasil.feb.spring.FebConfig;
  * @author Daniel Epstein
  * @author Paulo Schreiner
  */
-@Service
 public class ObaaSearchServiceSolrImpl implements ObaaSearchService {
 
     private static final Logger log = LoggerFactory.getLogger(ObaaSearchServiceSolrImpl.class);
     private static final int rssSizeLimit = 100;
     
-    @Autowired
     private QuerySolr q;
     
     private ObaaSearchAdapter obaaSearchAdapter;
     
-    @Autowired
-    public ObaaSearchServiceSolrImpl(ObaaSearchAdapter obaaSearchAdapter) {
+    public ObaaSearchServiceSolrImpl(QuerySolr q, ObaaSearchAdapter obaaSearchAdapter) {
+        this.q = q;
+        this.obaaSearchAdapter = obaaSearchAdapter;
+    }
+
+    public ObaaSearchServiceSolrImpl(HttpSolrServer serverSolr, ObaaSearchAdapter obaaSearchAdapter) {
+        this.q = new QuerySolr(serverSolr);
         this.obaaSearchAdapter = obaaSearchAdapter;
     }
 

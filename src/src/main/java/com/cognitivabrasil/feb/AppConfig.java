@@ -170,12 +170,6 @@ public class AppConfig {
 
         return c;
     }
-    
-    
-    @Bean
-    public HttpSolrServer serverSolr() {
-        HttpSolrServer server = new HttpSolrServer(febConfig().getSolrUrl());
-        return server;
-    }
+
 
 }

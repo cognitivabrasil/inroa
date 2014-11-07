@@ -6,20 +6,20 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * @author Daniel Epstein
  * @author Paulo Schreiner
  */
-@Service
 public class QuerySolr {
     private static final Logger log = LoggerFactory.getLogger(QuerySolr.class);
 
 
-    @Autowired
     private HttpSolrServer serverSolr;
+    
+    public QuerySolr(HttpSolrServer serverSolr) {
+        this.serverSolr = serverSolr;
+    }
     
     /**
      * Realiza a busca avancada. A funcao verifica quais campos foram escolhidos e realiza a busca neles PERGUNTA:

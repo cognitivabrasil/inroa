@@ -40,8 +40,8 @@ import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
-import com.cognitivabrasil.feb.ferramentaBusca.ResultadoBusca;
 import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
+import com.cognitivabrasil.feb.solr.query.ResultadoBusca;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 
 @RunWith(SpringJUnit4ClassRunner.class)
