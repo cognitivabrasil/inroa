@@ -40,9 +40,9 @@ import com.cognitivabrasil.feb.AppConfig;
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
 import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
-import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
-import com.cognitivabrasil.feb.solr.query.ResultadoBusca;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
+import com.cognitivabrasil.obaa.search.ObaaSearchService;
+import com.cognitivabrasil.obaa.search.query.ResultadoBusca;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { AppConfig.class })
@@ -56,7 +56,7 @@ public class FebControllerSpringIT extends AbstractTransactionalJUnit4SpringCont
     
     
     @Mock
-    ObaaSearchServiceSolrImpl recuperador;
+    ObaaSearchService recuperador;
     
     @Mock
     private DocumentService docService;

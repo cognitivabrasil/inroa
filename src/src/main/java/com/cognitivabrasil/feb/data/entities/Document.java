@@ -5,7 +5,7 @@ import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Location;
 
 import com.cognitivabrasil.feb.data.interfaces.DocumentoFebInterface;
-import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
+import com.cognitivabrasil.obaa.search.camposObaa.ObaaDocument;
 
 import java.util.*;
 

@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.cognitivabrasil.feb.solr.ObaaIndexService;
-import com.cognitivabrasil.feb.solr.ObaaIndexServiceSolrImpl;
-import com.cognitivabrasil.feb.solr.ObaaSearchAdapter;
-import com.cognitivabrasil.feb.solr.ObaaSearchService;
-import com.cognitivabrasil.feb.solr.ObaaSearchServiceSolrImpl;
 import com.cognitivabrasil.feb.spring.FebConfig;
+import com.cognitivabrasil.obaa.search.ObaaIndexService;
+import com.cognitivabrasil.obaa.search.ObaaIndexServiceSolrImpl;
+import com.cognitivabrasil.obaa.search.ObaaSearchAdapter;
+import com.cognitivabrasil.obaa.search.ObaaSearchService;
+import com.cognitivabrasil.obaa.search.ObaaSearchServiceSolrImpl;
 
 /**
  * Configuração dos Beans que fazem do ObaaSearch.

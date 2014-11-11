@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.services.DocumentService;
-import com.cognitivabrasil.feb.solr.ObaaIndexService;
 import com.cognitivabrasil.feb.util.Operacoes;
+import com.cognitivabrasil.obaa.search.ObaaIndexService;
 
 /**
  * Indexador é a classe que faz os processos de contruç&atilde;o da base de dados para preparaç&atilde;o da posterior

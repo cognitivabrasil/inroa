@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.data.entities.Repositorio;
-import com.cognitivabrasil.feb.solr.ObaaSearchAdapter;
-import com.cognitivabrasil.feb.solr.camposObaa.ObaaDocument;
+import com.cognitivabrasil.obaa.search.ObaaSearchAdapter;
+import com.cognitivabrasil.obaa.search.camposObaa.ObaaDocument;
 
 @Service
 public class ObaaSearchAdapterImpl implements ObaaSearchAdapter {

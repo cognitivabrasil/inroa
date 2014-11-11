@@ -15,8 +15,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cognitivabrasil.feb.solr.query.Consulta;
-import com.cognitivabrasil.feb.solr.query.ResultadoBusca;
+import com.cognitivabrasil.obaa.search.query.Consulta;
+import com.cognitivabrasil.obaa.search.query.ResultadoBusca;
 
 /**
  *

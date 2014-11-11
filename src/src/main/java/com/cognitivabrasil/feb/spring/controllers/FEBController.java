@@ -44,11 +44,11 @@ import com.cognitivabrasil.feb.data.services.FederationService;
 import com.cognitivabrasil.feb.data.services.RepositoryService;
 import com.cognitivabrasil.feb.data.services.SearchService;
 import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
-import com.cognitivabrasil.feb.solr.ObaaSearchService;
-import com.cognitivabrasil.feb.solr.query.ResultadoBusca;
 import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
+import com.cognitivabrasil.obaa.search.ObaaSearchService;
+import com.cognitivabrasil.obaa.search.query.ResultadoBusca;
 
 /**
  * Controller geral para o FEB
