@@ -98,7 +98,7 @@ public class ConsultaFeb implements Consulta {
     }
 
     @Override
-    public Consulta clone() {
+    public Consulta getCopy() {
         return new ConsultaFeb(this);
 
     }
@@ -447,13 +447,7 @@ public class ConsultaFeb implements Consulta {
         }
     }
 
-    /**
-     * Testa se o campo possui um filtro ativo nesta consulta.
-     * 
-     * @param fieldName nome do campo
-     * @param value nome do valor
-     * @return verdadeiro se esta consulta está filtrando neste campo pelo valor especificado
-     */
+    @Override
     public boolean isActive(String fieldName, String value) {
         if (params.get(fieldName) == null) {
             return false;

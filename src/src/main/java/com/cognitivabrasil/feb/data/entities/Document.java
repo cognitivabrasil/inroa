@@ -5,7 +5,7 @@ import cognitivabrasil.obaa.OBAA;
 import cognitivabrasil.obaa.Technical.Location;
 
 import com.cognitivabrasil.feb.data.interfaces.DocumentoFebInterface;
-import com.cognitivabrasil.obaa.search.camposObaa.ObaaDocument;
+import com.cognitivabrasil.obaa.search.ObaaDocument;
 
 import java.util.*;
 
@@ -340,7 +340,7 @@ public class Document implements java.io.Serializable,
      */
     @Override
     @Transient
-    public Map<String, Object> getExtraSearchFields() {
+    public Map<String, Object> getCustomFields() {
         Map<String,Object> m = new HashMap<>();
         
         Integer repositorio = getRepositorio() != null ? getRepositorio().getId() : -1;
@@ -356,4 +356,16 @@ public class Document implements java.io.Serializable,
         m.put("obaa.repName", nomeRep);
         return m;   
     }
+    
+
+
+    @Override
+    public void setCustomFields(Map<String, Object> map) {
+        Repositorio rep = new Repositorio();
+        rep.setName((String)map.get("obaa.repName"));
+        setRepositorio(rep);
+
+        setId((Integer)map.get("obaa.idBaseDados"));                
+    }
+
 }

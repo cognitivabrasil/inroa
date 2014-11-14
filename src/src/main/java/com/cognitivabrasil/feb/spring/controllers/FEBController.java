@@ -47,7 +47,7 @@ import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
 import com.cognitivabrasil.feb.spring.FebConfig;
 import com.cognitivabrasil.feb.spring.dtos.PaginationDto;
 import com.cognitivabrasil.feb.spring.validador.BuscaValidator;
-import com.cognitivabrasil.obaa.search.ObaaSearchService;
+import com.cognitivabrasil.obaa.search.query.ObaaSearchService;
 import com.cognitivabrasil.obaa.search.query.ResultadoBusca;
 
 /**

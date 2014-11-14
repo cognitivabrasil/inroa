@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cognitivabrasil.feb.data.entities.Document;
 import com.cognitivabrasil.feb.ferramentaBusca.ConsultaFeb;
-import com.cognitivabrasil.obaa.search.ObaaSearchService;
+import com.cognitivabrasil.obaa.search.query.ObaaSearchService;
 
 import org.apache.solr.client.solrj.SolrServerException;
 
