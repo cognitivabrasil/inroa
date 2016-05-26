@@ -76,7 +76,7 @@ public class Harvester {
         caminhosXML.add(caminhoAbsoluto);
 
         
-        //efetua por OAI-PMH o verbo lisRecord com a url, a data inicial, o set e o metadataPrefix recebidos como parametro
+        //efetua por OAI-PMH o verbo listRecord com a url, a data inicial, o set e o metadataPrefix recebidos como parametro
         ListRecords listRecords = new ListRecords(this.endereco, this.dataInicial, null, set, this.metadataPrefix);
         
         //cria uma variavel do tipo ListRecords para efetuar o ResumptionToken se necessario
