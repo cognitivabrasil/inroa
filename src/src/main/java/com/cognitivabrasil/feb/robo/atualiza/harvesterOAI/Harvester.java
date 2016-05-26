@@ -58,7 +58,7 @@ public class Harvester {
         } else {
             //percorre todos os sets que tem que atualizar.
             for (String setInterno : set) {
-                numeroXML = coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, setInterno); //coleta todos os dados do set especificado
+                numeroXML = coletaXMLSet(caminhosXML, nomeArquivo, numeroXML, setInterno.trim()); //coleta todos os dados do set especificado
             }
         }
 
