@@ -101,7 +101,7 @@ Primeira etapa do cadastro de um repositorio
                     </div>
                     <form:label path="colecoesString" cssErrorClass="error">Cole&ccedil;&otilde;es ou Comunidades:</form:label>                    
                         <div class="Value">
-                        <form:input path="colecoesString" maxlength="45" />
+                        <form:input path="colecoesString"/>
                     </div>
                 </div>
 

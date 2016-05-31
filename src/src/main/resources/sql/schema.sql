@@ -49,7 +49,7 @@ CREATE TABLE repositorios (
     mapeamento_id integer NOT NULL,
     metadata_prefix character varying(45),
     name_space character varying(45),
-    internal_set character varying(45),
+    internal_set character varying(200),
     data_xml CLOB,
     PRIMARY KEY (id),
     UNIQUE (nome),
